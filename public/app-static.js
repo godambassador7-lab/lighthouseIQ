@@ -479,6 +479,9 @@ const renderNotices = (notices) => {
   // Render pagination controls
   renderPagination(totalPages, notices.length);
 
+  // Update quick navigation
+  updateQuickNav(totalPages);
+
   // Add save-to-project dropdown handlers
   setupSaveDropdowns(notices);
 };
@@ -562,6 +565,48 @@ const scrollToResults = () => {
   if (resultsSection) {
     resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
+};
+
+const updateQuickNav = (totalPages) => {
+  const quickPrev = document.getElementById('quick-prev');
+  const quickNext = document.getElementById('quick-next');
+  const quickNavInfo = document.getElementById('quick-nav-info');
+
+  if (quickPrev) {
+    quickPrev.disabled = currentPage <= 1;
+  }
+  if (quickNext) {
+    quickNext.disabled = currentPage >= totalPages || totalPages <= 1;
+  }
+  if (quickNavInfo) {
+    if (totalPages <= 1) {
+      quickNavInfo.textContent = 'Page 1';
+    } else {
+      quickNavInfo.textContent = `${currentPage} / ${totalPages}`;
+    }
+  }
+};
+
+const initQuickNav = () => {
+  const quickPrev = document.getElementById('quick-prev');
+  const quickNext = document.getElementById('quick-next');
+
+  quickPrev?.addEventListener('click', () => {
+    if (currentPage > 1) {
+      currentPage--;
+      applyFilters(false);
+      scrollToResults();
+    }
+  });
+
+  quickNext?.addEventListener('click', () => {
+    const totalPages = Math.ceil(currentNotices.length / NOTICES_PER_PAGE);
+    if (currentPage < totalPages) {
+      currentPage++;
+      applyFilters(false);
+      scrollToResults();
+    }
+  });
 };
 
 const setupSaveDropdowns = (notices) => {
@@ -1260,6 +1305,7 @@ const initApp = async () => {
   initStateMultiSelect();
   initCustomStateSelect();
   initFilters();
+  initQuickNav();
   initProjects();
   initCustomNotices();
   initHelpSection();
