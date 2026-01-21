@@ -206,11 +206,23 @@ const setStatus = (status, ok) => {
 const initWeatherMap = async () => {
   if (!usMapContainer) return;
   try {
-    const res = await fetch('./us-map.svg');
-    if (!res.ok) throw new Error('map fetch failed');
-    usMapContainer.innerHTML = await res.text();
+    const candidates = ['./us-map.svg', '/us-map.svg', './apps/web/us-map.svg', 'us-map.svg'];
+    let svgText = '';
+    for (const url of candidates) {
+      try {
+        const res = await fetch(url);
+        if (!res.ok) continue;
+        svgText = await res.text();
+        if (svgText.includes('<svg')) break;
+      } catch {
+        // Try next candidate
+      }
+    }
+    if (!svgText) throw new Error('map fetch failed');
+    usMapContainer.innerHTML = svgText;
   } catch (err) {
     console.error('Failed to load map SVG:', err);
+    usMapContainer.innerHTML = '<div class="empty-state">Map unavailable.</div>';
     return;
   }
 
