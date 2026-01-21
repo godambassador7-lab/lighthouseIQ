@@ -200,6 +200,71 @@ const setStatus = (status, ok) => {
   apiDot.classList.add(ok ? 'ok' : 'bad');
 };
 
+// =============================================================================
+// Map Initialization
+// =============================================================================
+const initWeatherMap = async () => {
+  if (!usMapContainer) return;
+  try {
+    const res = await fetch('./us-map.svg');
+    if (!res.ok) throw new Error('map fetch failed');
+    usMapContainer.innerHTML = await res.text();
+  } catch (err) {
+    console.error('Failed to load map SVG:', err);
+    return;
+  }
+
+  const svg = usMapContainer.querySelector('svg');
+  if (!svg) return;
+
+  if (!svg.getAttribute('viewBox')) {
+    const width = svg.getAttribute('width') || '960';
+    const height = svg.getAttribute('height') || '600';
+    svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+  }
+
+  const shapes = svg.querySelectorAll('path, circle');
+  shapes.forEach((shape) => {
+    const classList = Array.from(shape.classList || []);
+    const stateClass = classList.find((c) => c.length === 2 && /^[a-z]{2}$/i.test(c));
+    const rawId = shape.getAttribute('data-state') || shape.getAttribute('id') || '';
+    const abbrev = (stateClass || rawId).toUpperCase();
+    if (!/^[A-Z]{2}$/.test(abbrev)) return;
+    shape.setAttribute('data-state', abbrev);
+    shape.addEventListener('click', () => toggleStateSelection(abbrev));
+    shape.addEventListener('mouseenter', (e) => showTooltip(e, abbrev));
+    shape.addEventListener('mousemove', (e) => moveTooltip(e));
+    shape.addEventListener('mouseleave', hideTooltip);
+  });
+};
+
+const showTooltip = (e, stateAbbrev) => {
+  if (!mapTooltip) return;
+  const stateName = STATE_NAMES[stateAbbrev] || stateAbbrev;
+  const count = stateData[stateAbbrev] || 0;
+  mapTooltip.innerHTML = `
+    <div class="tooltip-state">${stateName}</div>
+    <div class="tooltip-count">${count} notices</div>
+  `;
+  mapTooltip.classList.add('visible');
+  moveTooltip(e);
+};
+
+const moveTooltip = (e) => {
+  if (!mapTooltip) return;
+  const container = usMapContainer?.closest('.weather-map-container');
+  if (!container) return;
+  const rect = container.getBoundingClientRect();
+  const x = e.clientX - rect.left + 15;
+  const y = e.clientY - rect.top + 15;
+  mapTooltip.style.left = `${x}px`;
+  mapTooltip.style.top = `${y}px`;
+};
+
+const hideTooltip = () => {
+  mapTooltip?.classList.remove('visible');
+};
+
 const setLoading = (message) => {
   noticeList.innerHTML = `<div class="empty-state">${message}</div>`;
 };
@@ -858,7 +923,7 @@ const initCustomNotices = () => {
 // Map Highlighting
 // =============================================================================
 const updateMapHighlights = () => {
-  document.querySelectorAll('.us-map path[data-state]').forEach(path => {
+  document.querySelectorAll('.us-map path[data-state], .us-map circle[data-state]').forEach(path => {
     const state = path.dataset.state;
     path.classList.remove('state-selected', 'state-dimmed');
 
@@ -1020,6 +1085,7 @@ const initApp = async () => {
   initCustomNotices();
   initHelpSection();
   initViewToggle();
+  await initWeatherMap();
 
   // Load data
   await Promise.all([
