@@ -1064,20 +1064,44 @@ const renderBarChart = () => {
 
   const maxCount = sortedStates[0][1];
 
+  // Generate dynamic color based on intensity (green to yellow to red)
+  const getBarColor = (count, max) => {
+    const intensity = count / max;
+    // Hue: 120 (green) -> 60 (yellow) -> 0 (red)
+    const hue = 120 - (intensity * 120);
+    return `hsl(${hue}, 75%, 50%)`;
+  };
+
   barChart.innerHTML = `
-    <div class="bar-chart-title">Top 20 States by Notice Count</div>
-    <div class="bar-chart-bars">
-      ${sortedStates.map(([state, count]) => `
-        <div class="bar-row">
-          <span class="bar-label">${state}</span>
-          <div class="bar-container">
-            <div class="bar" style="width: ${(count / maxCount) * 100}%"></div>
+    <div class="bar-chart-title" style="font-size: 16px; font-weight: 600; color: var(--navy); padding: 0 16px 12px; border-bottom: 1px solid rgba(26, 54, 93, 0.1); margin-bottom: 8px;">
+      Top 20 States by Notice Count
+    </div>
+    <div class="bar-chart-container">
+      ${sortedStates.map(([state, count], index) => {
+        const percentage = (count / maxCount) * 100;
+        const color = getBarColor(count, maxCount);
+        const isSelected = selectedStates.includes(state);
+        return `
+          <div class="bar-chart-row${isSelected ? ' selected' : ''}" data-state="${state}" style="cursor: pointer;">
+            <span class="bar-chart-label">${state}</span>
+            <div class="bar-chart-bar">
+              <div class="bar-chart-fill" style="width: ${percentage}%; background: linear-gradient(90deg, ${color}, ${color}dd);"></div>
+            </div>
+            <span class="bar-chart-count">${count.toLocaleString()}</span>
           </div>
-          <span class="bar-value">${count}</span>
-        </div>
-      `).join('')}
+        `;
+      }).join('')}
     </div>
   `;
+
+  // Add click handlers to bar chart rows
+  barChart.querySelectorAll('.bar-chart-row').forEach(row => {
+    row.addEventListener('click', () => {
+      const state = row.dataset.state;
+      toggleStateSelection(state);
+      renderBarChart(); // Re-render to update selected state
+    });
+  });
 };
 
 // =============================================================================
