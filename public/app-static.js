@@ -73,6 +73,9 @@ let stateData = {};
 let metadata = {};
 let currentMapView = 'map';
 let selectedStates = [];
+let currentPage = 1;
+let searchQuery = '';
+const NOTICES_PER_PAGE = 100;
 
 // =============================================================================
 // Authentication (Simple client-side - data is public)
@@ -390,8 +393,23 @@ const filterNotices = () => {
   return filtered;
 };
 
-const applyFilters = () => {
-  currentNotices = filterNotices();
+const applyFilters = (resetPage = true) => {
+  if (resetPage) currentPage = 1;
+
+  let filtered = filterNotices();
+
+  // Apply search query
+  if (searchQuery.trim()) {
+    const query = searchQuery.toLowerCase();
+    filtered = filtered.filter(n => {
+      const employerName = (n.employer_name || '').toLowerCase();
+      const parentSystem = (n.parent_system || '').toLowerCase();
+      const city = (n.city || '').toLowerCase();
+      return employerName.includes(query) || parentSystem.includes(query) || city.includes(query);
+    });
+  }
+
+  currentNotices = filtered;
   renderNotices(currentNotices);
   updateStats(currentNotices);
   updateMapHighlights();
@@ -401,13 +419,26 @@ const applyFilters = () => {
 // Rendering
 // =============================================================================
 const renderNotices = (notices) => {
+  const paginationContainer = document.getElementById('pagination');
+
   if (!notices.length) {
     noticeList.innerHTML = `<div class="empty-state">No notices match these filters.</div>`;
+    if (paginationContainer) paginationContainer.innerHTML = '';
     return;
   }
 
+  // Calculate pagination
+  const totalPages = Math.ceil(notices.length / NOTICES_PER_PAGE);
+  if (currentPage > totalPages) currentPage = totalPages;
+  if (currentPage < 1) currentPage = 1;
+
+  const startIdx = (currentPage - 1) * NOTICES_PER_PAGE;
+  const endIdx = startIdx + NOTICES_PER_PAGE;
+  const paginatedNotices = notices.slice(startIdx, endIdx);
+
   noticeList.innerHTML = '';
-  notices.forEach((notice, idx) => {
+  paginatedNotices.forEach((notice, idx) => {
+    const globalIdx = startIdx + idx;
     const card = document.createElement('article');
     card.className = notice.isCustom ? 'notice-card custom-notice' : 'notice-card';
     card.style.animationDelay = `${idx * 35}ms`;
@@ -430,8 +461,8 @@ const renderNotices = (notices) => {
         ${customBadge}
         <span class="score">${label} - ${score}</span>
         <div class="save-to-project">
-          <button class="save-to-project-btn" data-notice-idx="${idx}">+ Save</button>
-          <div class="save-dropdown" id="dropdown-${idx}"></div>
+          <button class="save-to-project-btn" data-notice-idx="${globalIdx}">+ Save</button>
+          <div class="save-dropdown" id="dropdown-${globalIdx}"></div>
         </div>
       </div>
       <h4>${employer}</h4>
@@ -445,8 +476,92 @@ const renderNotices = (notices) => {
     noticeList.appendChild(card);
   });
 
+  // Render pagination controls
+  renderPagination(totalPages, notices.length);
+
   // Add save-to-project dropdown handlers
   setupSaveDropdowns(notices);
+};
+
+const renderPagination = (totalPages, totalNotices) => {
+  const paginationContainer = document.getElementById('pagination');
+  if (!paginationContainer) return;
+
+  if (totalPages <= 1) {
+    paginationContainer.innerHTML = `<div class="pagination-info">Showing all ${totalNotices} notices</div>`;
+    return;
+  }
+
+  const startIdx = (currentPage - 1) * NOTICES_PER_PAGE + 1;
+  const endIdx = Math.min(currentPage * NOTICES_PER_PAGE, totalNotices);
+
+  // Generate page numbers (show max 7 pages with ellipsis)
+  let pageNumbers = [];
+  if (totalPages <= 7) {
+    pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
+  } else {
+    if (currentPage <= 4) {
+      pageNumbers = [1, 2, 3, 4, 5, '...', totalPages];
+    } else if (currentPage >= totalPages - 3) {
+      pageNumbers = [1, '...', totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+    } else {
+      pageNumbers = [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages];
+    }
+  }
+
+  paginationContainer.innerHTML = `
+    <div class="pagination-info">
+      Showing ${startIdx.toLocaleString()}-${endIdx.toLocaleString()} of ${totalNotices.toLocaleString()} notices
+    </div>
+    <div class="pagination-controls">
+      <button class="pagination-btn" id="prev-page" ${currentPage === 1 ? 'disabled' : ''}>
+        &laquo; Prev
+      </button>
+      <div class="pagination-pages">
+        ${pageNumbers.map(p => {
+          if (p === '...') {
+            return '<span class="pagination-ellipsis">...</span>';
+          }
+          return `<button class="pagination-page ${p === currentPage ? 'active' : ''}" data-page="${p}">${p}</button>`;
+        }).join('')}
+      </div>
+      <button class="pagination-btn" id="next-page" ${currentPage === totalPages ? 'disabled' : ''}>
+        Next &raquo;
+      </button>
+    </div>
+  `;
+
+  // Add pagination event listeners
+  document.getElementById('prev-page')?.addEventListener('click', () => {
+    if (currentPage > 1) {
+      currentPage--;
+      applyFilters(false);
+      scrollToResults();
+    }
+  });
+
+  document.getElementById('next-page')?.addEventListener('click', () => {
+    if (currentPage < totalPages) {
+      currentPage++;
+      applyFilters(false);
+      scrollToResults();
+    }
+  });
+
+  paginationContainer.querySelectorAll('.pagination-page').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentPage = parseInt(btn.dataset.page);
+      applyFilters(false);
+      scrollToResults();
+    });
+  });
+};
+
+const scrollToResults = () => {
+  const resultsSection = document.querySelector('.results');
+  if (resultsSection) {
+    resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 };
 
 const setupSaveDropdowns = (notices) => {
@@ -697,6 +812,11 @@ const initFilters = () => {
     scoreInput.value = 0;
     if (scoreReadout) scoreReadout.textContent = '0';
     limitInput.value = 100;
+    searchQuery = '';
+    const searchInput = document.getElementById('notice-search');
+    const clearSearchBtn = document.getElementById('clear-search');
+    if (searchInput) searchInput.value = '';
+    if (clearSearchBtn) clearSearchBtn.style.display = 'none';
     applyFilters();
   });
 
@@ -713,6 +833,29 @@ const initFilters = () => {
     applyFilters();
   });
   limitInput.addEventListener('change', applyFilters);
+
+  // Search by employer name
+  const searchInput = document.getElementById('notice-search');
+  const clearSearchBtn = document.getElementById('clear-search');
+
+  if (searchInput) {
+    searchInput.addEventListener('input', debounce(() => {
+      searchQuery = searchInput.value;
+      if (clearSearchBtn) {
+        clearSearchBtn.style.display = searchQuery ? 'block' : 'none';
+      }
+      applyFilters();
+    }, 300));
+  }
+
+  if (clearSearchBtn) {
+    clearSearchBtn.addEventListener('click', () => {
+      searchQuery = '';
+      if (searchInput) searchInput.value = '';
+      clearSearchBtn.style.display = 'none';
+      applyFilters();
+    });
+  }
 };
 
 const debounce = (fn, delay) => {
