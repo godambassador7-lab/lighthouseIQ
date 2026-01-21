@@ -15,10 +15,9 @@ import { getAllAdapters } from '@lni/adapters';
 import type { NormalizedWarnNotice } from '@lni/core';
 import * as fs from 'fs';
 import * as path from 'path';
-import { fileURLToPath } from 'url';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ROOT_DIR = path.resolve(__dirname, '..');
+// Use process.cwd() since this runs from the project root
+const ROOT_DIR = process.cwd();
 const OUTPUT_DIR = path.join(ROOT_DIR, 'public', 'data');
 const BY_STATE_DIR = path.join(OUTPUT_DIR, 'by-state');
 
