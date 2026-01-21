@@ -1,6 +1,9 @@
 import axios from 'axios';
 import * as crypto from 'crypto';
 import { scoreNursingImpact } from '@lni/core';
+import { fetchLayoffdataNotices } from '../layoffdata.js';
+import { fetchWarntrackerNotices } from '../warntracker.js';
+import { fetchUsaTodayNotices } from '../usatoday.js';
 import type { AdapterFetchResult, NormalizedWarnNotice, StateAdapter } from '@lni/core';
 
 // Minnesota DEED publishes WARN reports as monthly PDFs. We discover them via mn.gov portal search JSON.
@@ -146,13 +149,44 @@ export const MNAdapter: StateAdapter = {
       console.warn('MN adapter: Error fetching search data:', (err as Error).message);
     }
 
-    // Deduplicate
-    const seen = new Set<string>();
-    const deduped = notices.filter(n => {
-      if (seen.has(n.id)) return false;
-      seen.add(n.id);
-      return true;
-    });
+    let deduped: NormalizedWarnNotice[] = [];
+    if (notices.length) {
+      const seen = new Set<string>();
+      deduped = notices.filter(n => {
+        if (seen.has(n.id)) return false;
+        seen.add(n.id);
+        return true;
+      });
+    }
+
+    if (!deduped.length) {
+      try {
+        deduped = await fetchLayoffdataNotices({ state: 'MN', retrievedAt });
+      } catch {
+        deduped = [];
+      }
+    }
+
+    if (!deduped.length) {
+      try {
+        deduped = await fetchWarntrackerNotices({
+          state: 'MN',
+          retrievedAt,
+          sourceName: 'WARNTracker (MN)',
+          sourceUrl: 'https://www.warntracker.com/?state=MN'
+        });
+      } catch {
+        deduped = [];
+      }
+    }
+
+    if (!deduped.length) {
+      try {
+        deduped = await fetchUsaTodayNotices({ state: 'MN', retrievedAt });
+      } catch {
+        deduped = [];
+      }
+    }
 
     return {
       state: 'MN',

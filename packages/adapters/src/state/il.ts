@@ -2,11 +2,16 @@ import axios from 'axios';
 import * as crypto from 'crypto';
 import * as xlsx from 'xlsx';
 import { scoreNursingImpact } from '@lni/core';
+import { fetchLayoffdataNotices } from '../layoffdata.js';
+import { fetchWarntrackerNotices } from '../warntracker.js';
+import { fetchUsaTodayNotices } from '../usatoday.js';
 import type { AdapterFetchResult, NormalizedWarnNotice, StateAdapter } from '@lni/core';
 
 // Illinois WARN monthly reports are published as XLSX on Illinois WorkNet.
 const ARCHIVE_URL = 'https://www.illinoisworknet.com/LayoffRecovery/Pages/ArchivedWARNReports.aspx';
 const JINA_ARCHIVE = `https://r.jina.ai/http://${ARCHIVE_URL.replace(/^https?:\/\//, '')}`;
+const REQUEST_TIMEOUT_MS = 15000;
+const MAX_REPORTS = 1;
 
 function hashId(parts: string[]): string {
   return crypto.createHash('sha256').update(parts.join('|')).digest('hex').slice(0, 16);
@@ -107,19 +112,19 @@ export const ILAdapter: StateAdapter = {
 
     try {
       const response = await axios.get(JINA_ARCHIVE, {
-        timeout: 30000,
+        timeout: REQUEST_TIMEOUT_MS,
         headers: {
           'User-Agent': 'Mozilla/5.0 (compatible; LNI-WARNBot/1.0)'
         }
       });
       const text = response.data as string;
-      const reportLinks = extractXlsxLinks(text, 3);
+      const reportLinks = extractXlsxLinks(text, MAX_REPORTS);
 
       for (const reportUrl of reportLinks) {
         try {
           const fileResponse = await axios.get(reportUrl, {
             responseType: 'arraybuffer',
-            timeout: 30000,
+            timeout: REQUEST_TIMEOUT_MS,
             headers: {
               'User-Agent': 'Mozilla/5.0 (compatible; LNI-WARNBot/1.0)'
             }
@@ -176,12 +181,44 @@ export const ILAdapter: StateAdapter = {
       console.warn('IL adapter: Error fetching archive page:', (err as Error).message);
     }
 
-    const seen = new Set<string>();
-    const deduped = notices.filter(n => {
-      if (seen.has(n.id)) return false;
-      seen.add(n.id);
-      return true;
-    });
+    let deduped: NormalizedWarnNotice[] = [];
+    if (notices.length) {
+      const seen = new Set<string>();
+      deduped = notices.filter(n => {
+        if (seen.has(n.id)) return false;
+        seen.add(n.id);
+        return true;
+      });
+    }
+
+    if (!deduped.length) {
+      try {
+        deduped = await fetchLayoffdataNotices({ state: 'IL', retrievedAt });
+      } catch {
+        deduped = [];
+      }
+    }
+
+    if (!deduped.length) {
+      try {
+        deduped = await fetchWarntrackerNotices({
+          state: 'IL',
+          retrievedAt,
+          sourceName: 'WARNTracker (IL)',
+          sourceUrl: 'https://www.warntracker.com/?state=IL'
+        });
+      } catch {
+        deduped = [];
+      }
+    }
+
+    if (!deduped.length) {
+      try {
+        deduped = await fetchUsaTodayNotices({ state: 'IL', retrievedAt });
+      } catch {
+        deduped = [];
+      }
+    }
 
     return {
       state: 'IL',

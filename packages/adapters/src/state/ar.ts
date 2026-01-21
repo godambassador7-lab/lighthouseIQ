@@ -1,8 +1,19 @@
-import axios from 'axios';
-import { scoreNursingImpact } from '@lni/core';
+import { fetchHtmlTableNotices } from '../html-table.js';
+import { fetchLayoffdataNotices } from '../layoffdata.js';
+import { fetchWarntrackerNotices } from '../warntracker.js';
+import { fetchUsaTodayNotices } from '../usatoday.js';
 import type { AdapterFetchResult, NormalizedWarnNotice, StateAdapter } from '@lni/core';
 
-const SOURCE_URL = 'https://dws.arkansas.gov/';
+const SOURCE_URL = 'https://www.dws.arkansas.gov/employers/warn/';
+
+async function fetchOfficialNotices(retrievedAt: string): Promise<NormalizedWarnNotice[]> {
+  return fetchHtmlTableNotices(SOURCE_URL, {
+    state: 'AR',
+    sourceName: 'Arkansas WARN',
+    sourceUrl: SOURCE_URL,
+    retrievedAt
+  });
+}
 
 export const ARAdapter: StateAdapter = {
   state: 'AR',
@@ -10,18 +21,44 @@ export const ARAdapter: StateAdapter = {
   sourceUrl: SOURCE_URL,
   fetchLatest: async (): Promise<AdapterFetchResult> => {
     const retrievedAt = new Date().toISOString();
+    let notices: NormalizedWarnNotice[] = [];
 
-    // Scaffold: replace SOURCE_URL and implement parsing.
-    if (SOURCE_URL && !SOURCE_URL.startsWith('TODO')) {
-      await axios.get(SOURCE_URL);
+    try {
+      notices = await fetchOfficialNotices(retrievedAt);
+    } catch {
+      notices = [];
     }
-
-    const notices: NormalizedWarnNotice[] = [];
+    if (!notices.length) {
+      try {
+        notices = await fetchLayoffdataNotices({ state: 'AR', retrievedAt });
+      } catch {
+        notices = [];
+      }
+    }
+    if (!notices.length) {
+      try {
+        notices = await fetchWarntrackerNotices({
+          state: 'AR',
+          retrievedAt,
+          sourceName: 'WARNTracker (AR)',
+          sourceUrl: 'https://www.warntracker.com/?state=AR'
+        });
+      } catch {
+        notices = [];
+      }
+    }
+    if (!notices.length) {
+      try {
+        notices = await fetchUsaTodayNotices({ state: 'AR', retrievedAt });
+      } catch {
+        notices = [];
+      }
+    }
 
     return {
       state: 'AR',
       fetchedAt: retrievedAt,
-      notices: notices.map(scoreNursingImpact)
+      notices
     };
   }
 };

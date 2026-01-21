@@ -2,6 +2,9 @@ import axios from 'axios';
 import * as crypto from 'crypto';
 import * as xlsx from 'xlsx';
 import { scoreNursingImpact } from '@lni/core';
+import { fetchLayoffdataNotices } from '../layoffdata.js';
+import { fetchWarntrackerNotices } from '../warntracker.js';
+import { fetchUsaTodayNotices } from '../usatoday.js';
 import type { AdapterFetchResult, NormalizedWarnNotice, StateAdapter } from '@lni/core';
 
 // Missouri publishes WARN logs as XLSX files (e.g., "WARN Log CY 2025.xlsx").
@@ -154,12 +157,44 @@ export const MOAdapter: StateAdapter = {
       }
     }
 
-    const seen = new Set<string>();
-    const deduped = notices.filter(n => {
-      if (seen.has(n.id)) return false;
-      seen.add(n.id);
-      return true;
-    });
+    let deduped: NormalizedWarnNotice[] = [];
+    if (notices.length) {
+      const seen = new Set<string>();
+      deduped = notices.filter(n => {
+        if (seen.has(n.id)) return false;
+        seen.add(n.id);
+        return true;
+      });
+    }
+
+    if (!deduped.length) {
+      try {
+        deduped = await fetchLayoffdataNotices({ state: 'MO', retrievedAt });
+      } catch {
+        deduped = [];
+      }
+    }
+
+    if (!deduped.length) {
+      try {
+        deduped = await fetchWarntrackerNotices({
+          state: 'MO',
+          retrievedAt,
+          sourceName: 'WARNTracker (MO)',
+          sourceUrl: 'https://www.warntracker.com/?state=MO'
+        });
+      } catch {
+        deduped = [];
+      }
+    }
+
+    if (!deduped.length) {
+      try {
+        deduped = await fetchUsaTodayNotices({ state: 'MO', retrievedAt });
+      } catch {
+        deduped = [];
+      }
+    }
 
     return {
       state: 'MO',

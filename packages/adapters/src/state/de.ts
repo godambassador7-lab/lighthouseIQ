@@ -1,8 +1,19 @@
-import axios from 'axios';
-import { scoreNursingImpact } from '@lni/core';
+import { fetchHtmlTableNotices } from '../html-table.js';
+import { fetchLayoffdataNotices } from '../layoffdata.js';
+import { fetchWarntrackerNotices } from '../warntracker.js';
+import { fetchUsaTodayNotices } from '../usatoday.js';
 import type { AdapterFetchResult, NormalizedWarnNotice, StateAdapter } from '@lni/core';
 
-const SOURCE_URL = 'https://labor.delaware.gov/divisions/employment-training/employer-services/';
+const SOURCE_URL = 'https://labor.delaware.gov/divisions/employment-development/warn/';
+
+async function fetchOfficialNotices(retrievedAt: string): Promise<NormalizedWarnNotice[]> {
+  return fetchHtmlTableNotices(SOURCE_URL, {
+    state: 'DE',
+    sourceName: 'Delaware WARN',
+    sourceUrl: SOURCE_URL,
+    retrievedAt
+  });
+}
 
 export const DEAdapter: StateAdapter = {
   state: 'DE',
@@ -10,18 +21,44 @@ export const DEAdapter: StateAdapter = {
   sourceUrl: SOURCE_URL,
   fetchLatest: async (): Promise<AdapterFetchResult> => {
     const retrievedAt = new Date().toISOString();
+    let notices: NormalizedWarnNotice[] = [];
 
-    // Scaffold: replace SOURCE_URL and implement parsing.
-    if (SOURCE_URL && !SOURCE_URL.startsWith('TODO')) {
-      await axios.get(SOURCE_URL);
+    try {
+      notices = await fetchOfficialNotices(retrievedAt);
+    } catch {
+      notices = [];
     }
-
-    const notices: NormalizedWarnNotice[] = [];
+    if (!notices.length) {
+      try {
+        notices = await fetchLayoffdataNotices({ state: 'DE', retrievedAt });
+      } catch {
+        notices = [];
+      }
+    }
+    if (!notices.length) {
+      try {
+        notices = await fetchWarntrackerNotices({
+          state: 'DE',
+          retrievedAt,
+          sourceName: 'WARNTracker (DE)',
+          sourceUrl: 'https://www.warntracker.com/?state=DE'
+        });
+      } catch {
+        notices = [];
+      }
+    }
+    if (!notices.length) {
+      try {
+        notices = await fetchUsaTodayNotices({ state: 'DE', retrievedAt });
+      } catch {
+        notices = [];
+      }
+    }
 
     return {
       state: 'DE',
       fetchedAt: retrievedAt,
-      notices: notices.map(scoreNursingImpact)
+      notices
     };
   }
 };
