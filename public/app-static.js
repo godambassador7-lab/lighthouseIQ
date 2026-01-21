@@ -855,6 +855,99 @@ const initCustomNotices = () => {
 };
 
 // =============================================================================
+// Map Loading and Initialization
+// =============================================================================
+const loadMap = async () => {
+  if (!usMapContainer) return;
+
+  try {
+    const response = await fetch('./us-map.svg');
+    const svgText = await response.text();
+    usMapContainer.innerHTML = svgText;
+
+    // Add data-state attributes based on class names
+    const svg = usMapContainer.querySelector('svg');
+    if (svg) {
+      svg.querySelectorAll('path').forEach(path => {
+        const classList = Array.from(path.classList || []);
+        const stateClass = classList.find(c => c.length === 2 && /^[a-z]{2}$/i.test(c));
+        if (stateClass) {
+          const abbrev = stateClass.toUpperCase();
+          path.setAttribute('data-state', abbrev);
+        }
+      });
+
+      // Initialize map interactions
+      initMapInteractions();
+    }
+  } catch (err) {
+    console.error('Failed to load map:', err);
+    usMapContainer.innerHTML = '<div class="empty-state">Failed to load map</div>';
+  }
+};
+
+const initMapInteractions = () => {
+  document.querySelectorAll('.us-map path[data-state]').forEach(path => {
+    const state = path.dataset.state;
+
+    // Apply initial coloring based on state data
+    const count = stateData[state] || 0;
+    const maxCount = Math.max(...Object.values(stateData), 1);
+    const intensity = count / maxCount;
+
+    // Color gradient from green (low) to red (high)
+    const hue = 120 - (intensity * 120); // 120=green, 0=red
+    path.style.fill = `hsl(${hue}, 70%, 50%)`;
+    path.style.fillOpacity = Math.max(0.3, intensity * 0.7 + 0.3);
+    path.style.cursor = 'pointer';
+    path.style.transition = 'fill-opacity 0.2s, stroke 0.2s';
+
+    // Tooltip on hover
+    path.addEventListener('mouseenter', (e) => {
+      if (mapTooltip) {
+        const stateName = STATE_NAMES[state] || state;
+        mapTooltip.innerHTML = `<strong>${stateName}</strong><br>${count} notices`;
+        mapTooltip.style.display = 'block';
+        mapTooltip.style.left = (e.pageX + 10) + 'px';
+        mapTooltip.style.top = (e.pageY + 10) + 'px';
+      }
+      path.style.fillOpacity = '1';
+      path.style.stroke = '#333';
+      path.style.strokeWidth = '2';
+    });
+
+    path.addEventListener('mousemove', (e) => {
+      if (mapTooltip) {
+        mapTooltip.style.left = (e.pageX + 10) + 'px';
+        mapTooltip.style.top = (e.pageY + 10) + 'px';
+      }
+    });
+
+    path.addEventListener('mouseleave', () => {
+      if (mapTooltip) {
+        mapTooltip.style.display = 'none';
+      }
+      path.style.fillOpacity = Math.max(0.3, intensity * 0.7 + 0.3);
+      path.style.stroke = '';
+      path.style.strokeWidth = '';
+    });
+
+    // Click to filter by state
+    path.addEventListener('click', () => {
+      const idx = selectedStates.indexOf(state);
+      if (idx === -1) {
+        selectedStates.push(state);
+      } else {
+        selectedStates.splice(idx, 1);
+      }
+      updateStateMultiSelect();
+      updateMapHighlights();
+      applyFilters();
+    });
+  });
+};
+
+// =============================================================================
 // Map Highlighting
 // =============================================================================
 const updateMapHighlights = () => {
@@ -1026,6 +1119,9 @@ const initApp = async () => {
     loadMetadata(),
     loadStates()
   ]);
+
+  // Load and initialize the map (after state data is available)
+  await loadMap();
 
   await loadAllNotices();
 
