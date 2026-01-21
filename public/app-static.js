@@ -561,9 +561,9 @@ const populateStateDropdown = (regionFilter = '') => {
     option.className = `multi-select-option${isSelected ? ' selected' : ''}`;
     option.dataset.value = abbrev;
     option.innerHTML = `
-      <span class="option-checkbox">${isSelected ? '✓' : ''}</span>
-      <span class="option-label">${abbrev} - ${name}</span>
-      <span class="option-count">${count > 0 ? `(${count})` : ''}</span>
+      <span class="multi-select-checkbox">${isSelected ? '&#10003;' : ''}</span>
+      <span class="multi-select-label">${abbrev} - ${name}</span>
+      <span class="multi-select-count">${count > 0 ? `(${count})` : ''}</span>
     `;
     stateOptions.appendChild(option);
   });
@@ -574,12 +574,12 @@ const updateStateDisplay = () => {
     stateDisplay.innerHTML = '<span class="multi-select-placeholder">All states</span>';
   } else if (selectedStates.length <= 3) {
     stateDisplay.innerHTML = selectedStates
-      .map(s => `<span class="state-tag">${s}<button class="remove-state" data-state="${s}">×</button></span>`)
+      .map(s => `<span class="multi-select-tag">${s}<button class="multi-select-tag-remove" data-state="${s}">&times;</button></span>`)
       .join('');
   } else {
     stateDisplay.innerHTML = `
-      ${selectedStates.slice(0, 2).map(s => `<span class="state-tag">${s}<button class="remove-state" data-state="${s}">×</button></span>`).join('')}
-      <span class="state-tag more">+${selectedStates.length - 2} more</span>
+      ${selectedStates.slice(0, 2).map(s => `<span class="multi-select-tag">${s}<button class="multi-select-tag-remove" data-state="${s}">&times;</button></span>`).join('')}
+      <span class="multi-select-more">+${selectedStates.length - 2} more</span>
     `;
   }
   stateSelect.value = selectedStates.join(',');
@@ -599,13 +599,13 @@ const toggleStateSelection = (state) => {
 
 const initStateMultiSelect = () => {
   stateMultiSelect.addEventListener('click', (e) => {
-    if (e.target.closest('.remove-state')) {
-      const state = e.target.closest('.remove-state').dataset.state;
+    if (e.target.closest('.multi-select-tag-remove')) {
+      const state = e.target.closest('.multi-select-tag-remove').dataset.state;
       toggleStateSelection(state);
       return;
     }
     if (e.target.closest('.multi-select-display')) {
-      stateDropdown.classList.toggle('open');
+      stateMultiSelect.classList.toggle('open');
     }
   });
 
@@ -620,7 +620,7 @@ const initStateMultiSelect = () => {
     const query = e.target.value.toLowerCase();
     document.querySelectorAll('.multi-select-option').forEach(opt => {
       const text = opt.textContent.toLowerCase();
-      opt.style.display = text.includes(query) ? '' : 'none';
+      opt.classList.toggle('hidden', !text.includes(query));
     });
   });
 
@@ -642,7 +642,7 @@ const initStateMultiSelect = () => {
 
   document.addEventListener('click', (e) => {
     if (!stateMultiSelect.contains(e.target)) {
-      stateDropdown.classList.remove('open');
+      stateMultiSelect.classList.remove('open');
     }
   });
 };
@@ -1116,3 +1116,7 @@ const initApp = async () => {
 if (checkAuth()) {
   initApp();
 }
+
+
+
+
