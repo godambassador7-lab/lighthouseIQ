@@ -1,0 +1,40 @@
+[Unit]
+Description=Nursing Layoff Radar API
+Documentation=https://github.com/your-repo/nursing-layoff-radar
+After=network.target postgresql.service
+Wants=postgresql.service
+
+[Service]
+Type=simple
+User=nursing-api
+Group=nursing-api
+WorkingDirectory=/opt/nursing-layoff-radar/apps/api
+
+# Node.js application
+ExecStart=/usr/bin/node dist/index.js
+Restart=always
+RestartSec=10
+TimeoutStopSec=30
+
+# Environment file
+EnvironmentFile=/opt/nursing-layoff-radar/.env
+
+# Security hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/opt/nursing-layoff-radar
+
+# Resource limits
+LimitNOFILE=65535
+MemoryMax=512M
+CPUQuota=80%
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=nursing-api
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: nlr-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: nlr
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-changeme}
+      POSTGRES_DB: nlr
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nlr -d nlr"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - nlr-network
+
+  # Node.js API
+  api:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    container_name: nlr-api
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://nlr:${DB_PASSWORD:-changeme}@postgres:5432/nlr
+      PORT: 8787
+      ACCESS_PASSCODE: ${ACCESS_PASSCODE:?ACCESS_PASSCODE is required}
+      CORS_ORIGINS: ${CORS_ORIGINS:-}
+      STATES: ${STATES:-}
+    ports:
+      - "127.0.0.1:8787:8787"  # Only expose to localhost
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8787/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - nlr-network
+
+  # Cloudflare Tunnel (optional - configure after setup)
+  # cloudflared:
+  #   image: cloudflare/cloudflared:latest
+  #   container_name: nlr-tunnel
+  #   restart: unless-stopped
+  #   command: tunnel --config /etc/cloudflared/config.yml run
+  #   volumes:
+  #     - ./cloudflared:/etc/cloudflared:ro
+  #   depends_on:
+  #     - api
+  #   networks:
+  #     - nlr-network
+
+volumes:
+  postgres_data:
+
+networks:
+  nlr-network:
+    driver: bridge

@@ -1,0 +1,22 @@
+{
+  "name": "lighthouse-nursing-intelligence",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace=@lni/core && npm run build --workspace=@lni/adapters",
+    "build:scripts": "npx tsc -p scripts/tsconfig.json",
+    "export": "npm run build && npm run build:scripts && node dist/scripts/export-notices.js",
+    "dev": "npm -ws run dev",
+    "lint": "npm -ws run lint",
+    "serve": "npx serve public -l 3000"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.7",
+    "@types/pg": "^8.11.10",
+    "serve": "^14.2.1",
+    "typescript": "^5.5.4"
+  }
+}

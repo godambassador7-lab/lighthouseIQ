@@ -1,0 +1,33 @@
+# Cloudflare Tunnel Configuration
+# Replace <TUNNEL_ID> with your actual tunnel ID after running: cloudflared tunnel create nursing-api
+
+tunnel: <TUNNEL_ID>
+credentials-file: /etc/cloudflared/<TUNNEL_ID>.json
+
+# Ingress rules - define how traffic is routed
+ingress:
+  # Main API endpoint
+  - hostname: api.yourdomain.com
+    service: http://localhost:8787
+    originRequest:
+      # Connection settings
+      connectTimeout: 30s
+      noTLSVerify: false
+      # Keep connections alive
+      keepAliveConnections: 100
+      keepAliveTimeout: 90s
+
+  # Health check endpoint (optional separate subdomain)
+  - hostname: health.yourdomain.com
+    service: http://localhost:8787
+    path: /health
+
+  # Catch-all rule (required) - returns 404 for unmatched requests
+  - service: http_status:404
+
+# Logging settings
+loglevel: info
+# logfile: /var/log/cloudflared/tunnel.log
+
+# Metrics server (optional - for monitoring)
+# metrics: localhost:3100
