@@ -396,8 +396,15 @@
           <h3>Recruiter Signal Feed</h3>
           <p>Ranked by nursing impact and recency.</p>
         </div>
+        <div class="search-bar">
+          <input type="text" id="notice-search" placeholder="Search by employer name..." autocomplete="off">
+          <button type="button" id="clear-search" class="clear-search-btn" style="display: none;">&times;</button>
+        </div>
         <div class="notice-list" id="notice-list">
           <div class="empty-state">Loading notices...</div>
+        </div>
+        <div class="pagination" id="pagination">
+          <!-- Pagination controls will be rendered here -->
         </div>
       </section>
       <aside class="detail" id="detail-panel">
