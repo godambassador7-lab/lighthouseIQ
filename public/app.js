@@ -631,8 +631,9 @@ const initWeatherMap = async () => {
   shapes.forEach((shape) => {
     const classList = Array.from(shape.classList || []);
     const stateClass = classList.find((c) => c.length === 2 && /^[a-z]{2}$/i.test(c));
-    if (!stateClass) return;
-    const abbrev = stateClass.toUpperCase();
+    const rawId = shape.getAttribute('data-state') || shape.getAttribute('id') || '';
+    const abbrev = (stateClass || rawId).toUpperCase();
+    if (!/^[A-Z]{2}$/.test(abbrev)) return;
     shape.setAttribute('data-state', abbrev);
     stateShapes.push(shape);
   });
