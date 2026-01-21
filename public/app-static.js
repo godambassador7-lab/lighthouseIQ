@@ -200,6 +200,83 @@ const setStatus = (status, ok) => {
   apiDot.classList.add(ok ? 'ok' : 'bad');
 };
 
+// =============================================================================
+// Map Initialization
+// =============================================================================
+const initWeatherMap = async () => {
+  if (!usMapContainer) return;
+  try {
+    const candidates = ['./us-map.svg', '/us-map.svg', './apps/web/us-map.svg', 'us-map.svg'];
+    let svgText = '';
+    for (const url of candidates) {
+      try {
+        const res = await fetch(url);
+        if (!res.ok) continue;
+        svgText = await res.text();
+        if (svgText.includes('<svg')) break;
+      } catch {
+        // Try next candidate
+      }
+    }
+    if (!svgText) throw new Error('map fetch failed');
+    usMapContainer.innerHTML = svgText;
+  } catch (err) {
+    console.error('Failed to load map SVG:', err);
+    usMapContainer.innerHTML = '<div class="empty-state">Map unavailable.</div>';
+    return;
+  }
+
+  const svg = usMapContainer.querySelector('svg');
+  if (!svg) return;
+
+  if (!svg.getAttribute('viewBox')) {
+    const width = svg.getAttribute('width') || '960';
+    const height = svg.getAttribute('height') || '600';
+    svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+  }
+
+  const shapes = svg.querySelectorAll('path, circle');
+  shapes.forEach((shape) => {
+    const classList = Array.from(shape.classList || []);
+    const stateClass = classList.find((c) => c.length === 2 && /^[a-z]{2}$/i.test(c));
+    const rawId = shape.getAttribute('data-state') || shape.getAttribute('id') || '';
+    const abbrev = (stateClass || rawId).toUpperCase();
+    if (!/^[A-Z]{2}$/.test(abbrev)) return;
+    shape.setAttribute('data-state', abbrev);
+    shape.addEventListener('click', () => toggleStateSelection(abbrev));
+    shape.addEventListener('mouseenter', (e) => showTooltip(e, abbrev));
+    shape.addEventListener('mousemove', (e) => moveTooltip(e));
+    shape.addEventListener('mouseleave', hideTooltip);
+  });
+};
+
+const showTooltip = (e, stateAbbrev) => {
+  if (!mapTooltip) return;
+  const stateName = STATE_NAMES[stateAbbrev] || stateAbbrev;
+  const count = stateData[stateAbbrev] || 0;
+  mapTooltip.innerHTML = `
+    <div class="tooltip-state">${stateName}</div>
+    <div class="tooltip-count">${count} notices</div>
+  `;
+  mapTooltip.classList.add('visible');
+  moveTooltip(e);
+};
+
+const moveTooltip = (e) => {
+  if (!mapTooltip) return;
+  const container = usMapContainer?.closest('.weather-map-container');
+  if (!container) return;
+  const rect = container.getBoundingClientRect();
+  const x = e.clientX - rect.left + 15;
+  const y = e.clientY - rect.top + 15;
+  mapTooltip.style.left = `${x}px`;
+  mapTooltip.style.top = `${y}px`;
+};
+
+const hideTooltip = () => {
+  mapTooltip?.classList.remove('visible');
+};
+
 const setLoading = (message) => {
   noticeList.innerHTML = `<div class="empty-state">${message}</div>`;
 };
@@ -855,103 +932,10 @@ const initCustomNotices = () => {
 };
 
 // =============================================================================
-// Map Loading and Initialization
-// =============================================================================
-const loadMap = async () => {
-  if (!usMapContainer) return;
-
-  try {
-    const response = await fetch('./us-map.svg');
-    const svgText = await response.text();
-    usMapContainer.innerHTML = svgText;
-
-    // Add data-state attributes based on class names
-    const svg = usMapContainer.querySelector('svg');
-    if (svg) {
-      svg.querySelectorAll('path').forEach(path => {
-        const classList = Array.from(path.classList || []);
-        const stateClass = classList.find(c => c.length === 2 && /^[a-z]{2}$/i.test(c));
-        if (stateClass) {
-          const abbrev = stateClass.toUpperCase();
-          path.setAttribute('data-state', abbrev);
-        }
-      });
-
-      // Initialize map interactions
-      initMapInteractions();
-    }
-  } catch (err) {
-    console.error('Failed to load map:', err);
-    usMapContainer.innerHTML = '<div class="empty-state">Failed to load map</div>';
-  }
-};
-
-const initMapInteractions = () => {
-  document.querySelectorAll('.us-map path[data-state]').forEach(path => {
-    const state = path.dataset.state;
-
-    // Apply initial coloring based on state data
-    const count = stateData[state] || 0;
-    const maxCount = Math.max(...Object.values(stateData), 1);
-    const intensity = count / maxCount;
-
-    // Color gradient from green (low) to red (high)
-    const hue = 120 - (intensity * 120); // 120=green, 0=red
-    path.style.fill = `hsl(${hue}, 70%, 50%)`;
-    path.style.fillOpacity = Math.max(0.3, intensity * 0.7 + 0.3);
-    path.style.cursor = 'pointer';
-    path.style.transition = 'fill-opacity 0.2s, stroke 0.2s';
-
-    // Tooltip on hover
-    path.addEventListener('mouseenter', (e) => {
-      if (mapTooltip) {
-        const stateName = STATE_NAMES[state] || state;
-        mapTooltip.innerHTML = `<strong>${stateName}</strong><br>${count} notices`;
-        mapTooltip.style.display = 'block';
-        mapTooltip.style.left = (e.pageX + 10) + 'px';
-        mapTooltip.style.top = (e.pageY + 10) + 'px';
-      }
-      path.style.fillOpacity = '1';
-      path.style.stroke = '#333';
-      path.style.strokeWidth = '2';
-    });
-
-    path.addEventListener('mousemove', (e) => {
-      if (mapTooltip) {
-        mapTooltip.style.left = (e.pageX + 10) + 'px';
-        mapTooltip.style.top = (e.pageY + 10) + 'px';
-      }
-    });
-
-    path.addEventListener('mouseleave', () => {
-      if (mapTooltip) {
-        mapTooltip.style.display = 'none';
-      }
-      path.style.fillOpacity = Math.max(0.3, intensity * 0.7 + 0.3);
-      path.style.stroke = '';
-      path.style.strokeWidth = '';
-    });
-
-    // Click to filter by state
-    path.addEventListener('click', () => {
-      const idx = selectedStates.indexOf(state);
-      if (idx === -1) {
-        selectedStates.push(state);
-      } else {
-        selectedStates.splice(idx, 1);
-      }
-      updateStateMultiSelect();
-      updateMapHighlights();
-      applyFilters();
-    });
-  });
-};
-
-// =============================================================================
 // Map Highlighting
 // =============================================================================
 const updateMapHighlights = () => {
-  document.querySelectorAll('.us-map path[data-state]').forEach(path => {
+  document.querySelectorAll('.us-map path[data-state], .us-map circle[data-state]').forEach(path => {
     const state = path.dataset.state;
     path.classList.remove('state-selected', 'state-dimmed');
 
@@ -1113,15 +1097,13 @@ const initApp = async () => {
   initCustomNotices();
   initHelpSection();
   initViewToggle();
+  await initWeatherMap();
 
   // Load data
   await Promise.all([
     loadMetadata(),
     loadStates()
   ]);
-
-  // Load and initialize the map (after state data is available)
-  await loadMap();
 
   await loadAllNotices();
 
