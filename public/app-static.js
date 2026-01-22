@@ -2160,15 +2160,15 @@ const renderStrategicReview = () => {
         </div>
         <div class="projection-factors">
           <div class="factor">
-            <span class="factor-icon">👴</span>
+            <span class="factor-icon">i</span>
             <span class="factor-text">Median RN Age: ${WORKFORCE_PROJECTIONS.avgAge} years</span>
           </div>
           <div class="factor">
-            <span class="factor-icon">🚪</span>
+            <span class="factor-icon">i</span>
             <span class="factor-text">Annual Retirement: ${WORKFORCE_PROJECTIONS.retirementRate}%</span>
           </div>
           <div class="factor">
-            <span class="factor-icon">📈</span>
+            <span class="factor-icon">i</span>
             <span class="factor-text">Job Growth: ${WORKFORCE_PROJECTIONS.growthRate}% through 2032</span>
           </div>
         </div>
@@ -2179,15 +2179,16 @@ const renderStrategicReview = () => {
 
 const initStrategicReview = () => {
   const toggleBtn = document.getElementById('strategic-toggle');
-  const content = document.getElementById('strategic-review-content');
   const toggleIcon = toggleBtn?.querySelector('.strategic-toggle-icon');
+  const section = toggleBtn?.closest('.strategic-review-section');
 
   toggleBtn?.addEventListener('click', () => {
-    content?.classList.toggle('open');
+    section?.classList.toggle('open');
+    const isOpen = section?.classList.contains('open');
     if (toggleIcon) {
-      toggleIcon.textContent = content?.classList.contains('open') ? '−' : '+';
+      toggleIcon.textContent = isOpen ? '-' : '+';
     }
-    if (content?.classList.contains('open')) {
+    if (isOpen) {
       renderStrategicReview();
     }
   });
@@ -2196,10 +2197,17 @@ const initStrategicReview = () => {
   const originalApplyFilters = applyFilters;
   window.applyFiltersWithStrategic = () => {
     originalApplyFilters();
-    if (content?.classList.contains('open')) {
+    if (section?.classList.contains('open')) {
       renderStrategicReview();
     }
   };
+
+  if (section?.classList.contains('open')) {
+    if (toggleIcon) {
+      toggleIcon.textContent = '-';
+    }
+    renderStrategicReview();
+  }
 };
 
 // Update initApp to include Strategic Review

@@ -1978,20 +1978,51 @@ input[type="range"] {
 }
 
 .strategic-header {
-  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(16, 38, 70, 0.65) 0%, rgba(30, 62, 110, 0.55) 100%);
   padding: 20px 28px;
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow);
+  border: 1px solid rgba(120, 220, 255, 0.25);
+  box-shadow: 0 18px 40px rgba(12, 38, 72, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.18);
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .strategic-header:hover {
   transform: translateY(-2px);
-  box-shadow: 0 28px 70px rgba(26, 54, 93, 0.2);
+  box-shadow: 0 30px 70px rgba(12, 38, 72, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.strategic-header::before,
+.strategic-header::after {
+  content: "";
+  position: absolute;
+  inset: -60% -20% 0 -20%;
+  opacity: 0.8;
+  filter: blur(6px);
+  z-index: 0;
+}
+
+.strategic-header::before {
+  background: radial-gradient(circle at 15% 45%, rgba(64, 210, 255, 0.65), rgba(26, 140, 220, 0.1) 55%);
+  animation: water-slosh-a 12s ease-in-out infinite;
+}
+
+.strategic-header::after {
+  background: radial-gradient(circle at 85% 55%, rgba(54, 190, 255, 0.55), rgba(18, 98, 180, 0.1) 60%);
+  animation: water-slosh-b 14s ease-in-out infinite;
+}
+
+.strategic-header-text,
+.strategic-toggle-icon {
+  position: relative;
+  z-index: 1;
 }
 
 .strategic-header-text h3 {
@@ -2010,13 +2041,37 @@ input[type="range"] {
 .strategic-toggle-icon {
   font-size: 28px;
   font-weight: 600;
-  color: var(--gold);
+  color: rgba(120, 230, 255, 0.9);
   transition: transform 0.3s ease;
   line-height: 1;
 }
 
 .strategic-review-section.open .strategic-toggle-icon {
-  transform: rotate(45deg);
+  transform: rotate(0deg);
+}
+
+@keyframes water-slosh-a {
+  0% {
+    transform: translateX(-6%) translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateX(8%) translateY(6px) rotate(2deg);
+  }
+  100% {
+    transform: translateX(-6%) translateY(0) rotate(-2deg);
+  }
+}
+
+@keyframes water-slosh-b {
+  0% {
+    transform: translateX(5%) translateY(6px) rotate(1deg);
+  }
+  50% {
+    transform: translateX(-8%) translateY(-4px) rotate(-2deg);
+  }
+  100% {
+    transform: translateX(5%) translateY(6px) rotate(1deg);
+  }
 }
 
 .strategic-review-content {
