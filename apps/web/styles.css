@@ -769,6 +769,9 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
+  max-height: 320px;
+  overflow-y: auto;
+  padding-right: 0.35rem;
 }
 
 .insight-row {
@@ -828,6 +831,11 @@ body {
   flex-direction: column;
   gap: 0.4rem;
   font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.input-helper {
+  font-size: 0.72rem;
   color: var(--muted);
 }
 
