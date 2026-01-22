@@ -330,10 +330,15 @@ const renderDetail = (notice) => {
 
   const signals = parseMaybeJson(notice.nursing_signals);
   const keywords = parseMaybeJson(notice.nursing_keywords);
+  const specialties = parseMaybeJson(notice.nursing_specialties);
+  const roleMix = notice.nursing_role_mix || null;
+  const careSetting = notice.nursing_care_setting || 'unknown';
+  const leadTime = notice.lead_time_days;
 
   detailBody.innerHTML = `
     <div class="detail-section">
       <h5>${notice.employer_name || 'Unknown employer'}</h5>
+      <p>${[notice.facility_name, notice.parent_system].filter(Boolean).join(' • ') || 'System unknown'}</p>
       <p>${[notice.address, notice.city, notice.county, notice.state].filter(Boolean).join(', ') || 'Location unknown'}</p>
     </div>
     <div class="detail-section">
@@ -341,6 +346,13 @@ const renderDetail = (notice) => {
       <p>Score: ${notice.nursing_score ?? 0} (${notice.nursing_label ?? 'Unclear'})</p>
       <p>Employees affected: ${formatNumber(notice.employees_affected)}</p>
       <p>NAICS: ${notice.naics ?? 'Unknown'} - Reason: ${notice.reason ?? 'Not provided'}</p>
+    </div>
+    <div class="detail-section">
+      <h5>Nursing Impact Breakdown</h5>
+      <p>Care setting: ${careSetting}</p>
+      <p>Lead time: ${leadTime !== null && leadTime !== undefined ? `${leadTime} days` : 'Unknown'}</p>
+      <p>Role mix: ${roleMix ? `RN ${roleMix.rn}% • LPN ${roleMix.lpn}% • CNA ${roleMix.cna}%` : 'Unavailable'}</p>
+      <p>Specialties: ${specialties.length ? specialties.join(', ') : 'None detected'}</p>
     </div>
     <div class="detail-section">
       <h5>Signals & Keywords</h5>
