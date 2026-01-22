@@ -81,6 +81,7 @@ let stateData = {};
 let metadata = {};
 let currentMapView = 'map';
 let selectedStates = [];
+let selectedSpecialties = [];
 let currentPage = 1;
 let searchQuery = '';
 const NOTICES_PER_PAGE = 100;
@@ -158,6 +159,116 @@ const STATE_NAMES = {
   RI: 'Rhode Island', SC: 'South Carolina', SD: 'South Dakota', TN: 'Tennessee', TX: 'Texas',
   UT: 'Utah', VT: 'Vermont', VA: 'Virginia', WA: 'Washington', WV: 'West Virginia',
   WI: 'Wisconsin', WY: 'Wyoming'
+};
+
+// Exhaustive list of nursing specialties for recruiter search
+const NURSE_SPECIALTIES = {
+  // Critical Care & Emergency
+  'ICU': { name: 'Intensive Care Unit (ICU)', keywords: ['icu', 'intensive care', 'critical care', 'ccu', 'coronary care'] },
+  'MICU': { name: 'Medical ICU', keywords: ['micu', 'medical icu', 'medical intensive'] },
+  'SICU': { name: 'Surgical ICU', keywords: ['sicu', 'surgical icu', 'surgical intensive'] },
+  'CVICU': { name: 'Cardiovascular ICU', keywords: ['cvicu', 'cardiovascular icu', 'cardiac icu', 'heart'] },
+  'NICU': { name: 'Neonatal ICU', keywords: ['nicu', 'neonatal', 'newborn intensive', 'neonate'] },
+  'PICU': { name: 'Pediatric ICU', keywords: ['picu', 'pediatric icu', 'pediatric intensive'] },
+  'ER': { name: 'Emergency Room / ED', keywords: ['emergency', 'er ', 'e.r.', 'ed ', 'emergency department', 'trauma', 'urgent'] },
+  'Trauma': { name: 'Trauma Nursing', keywords: ['trauma', 'level i', 'level ii', 'trauma center'] },
+
+  // Surgical & Perioperative
+  'OR': { name: 'Operating Room', keywords: ['operating room', 'or ', 'o.r.', 'surgical', 'surgery', 'operative'] },
+  'Perioperative': { name: 'Perioperative', keywords: ['perioperative', 'periop', 'pre-op', 'post-op', 'preoperative', 'postoperative'] },
+  'PACU': { name: 'Post-Anesthesia Care Unit', keywords: ['pacu', 'post-anesthesia', 'recovery room', 'post anesthesia'] },
+  'Circulating': { name: 'Circulating Nurse', keywords: ['circulating', 'circulator'] },
+  'Scrub': { name: 'Scrub Nurse', keywords: ['scrub nurse', 'scrub tech'] },
+  'First Assist': { name: 'First Assist (RNFA)', keywords: ['first assist', 'rnfa', 'surgical assist'] },
+
+  // Medical-Surgical
+  'Med-Surg': { name: 'Medical-Surgical', keywords: ['med-surg', 'med surg', 'medical surgical', 'medsurg', 'general medical'] },
+  'Telemetry': { name: 'Telemetry / Step-Down', keywords: ['telemetry', 'tele', 'step-down', 'stepdown', 'progressive care', 'pcu'] },
+  'Orthopedic': { name: 'Orthopedic', keywords: ['orthopedic', 'ortho', 'musculoskeletal', 'joint replacement', 'spine'] },
+  'Neurology': { name: 'Neurology / Neuro', keywords: ['neurology', 'neuro', 'neurological', 'stroke', 'brain', 'neuroscience'] },
+  'Oncology': { name: 'Oncology', keywords: ['oncology', 'onc', 'cancer', 'tumor', 'chemotherapy', 'radiation'] },
+  'Cardiology': { name: 'Cardiology', keywords: ['cardiology', 'cardiac', 'heart', 'cardiovascular', 'cath lab', 'catheterization'] },
+  'Pulmonary': { name: 'Pulmonary / Respiratory', keywords: ['pulmonary', 'respiratory', 'lung', 'pulmonology'] },
+  'Renal': { name: 'Renal / Nephrology', keywords: ['renal', 'nephrology', 'kidney', 'dialysis', 'hemodialysis'] },
+  'GI': { name: 'Gastroenterology', keywords: ['gastroenterology', 'gi ', 'gastrointestinal', 'endoscopy', 'digestive'] },
+  'Urology': { name: 'Urology', keywords: ['urology', 'urological', 'bladder', 'prostate'] },
+
+  // Women's Health & Pediatrics
+  'OB': { name: 'Obstetrics / OB', keywords: ['obstetrics', 'ob ', 'o.b.', 'obstetric', 'prenatal'] },
+  'L&D': { name: 'Labor & Delivery', keywords: ['labor and delivery', 'l&d', 'labor & delivery', 'delivery', 'birthing', 'birth'] },
+  'Postpartum': { name: 'Postpartum / Mother-Baby', keywords: ['postpartum', 'mother-baby', 'mother baby', 'postnatal', 'maternity'] },
+  'LDRP': { name: 'LDRP (Labor/Delivery/Recovery/Postpartum)', keywords: ['ldrp', 'labor delivery recovery'] },
+  'Antepartum': { name: 'Antepartum / High-Risk OB', keywords: ['antepartum', 'high-risk ob', 'high risk pregnancy', 'perinatal'] },
+  'Gynecology': { name: 'Gynecology', keywords: ['gynecology', 'gyn', 'women\'s health', 'womens health'] },
+  'Pediatrics': { name: 'Pediatrics', keywords: ['pediatric', 'peds', 'children', 'child', 'kids', 'pediatric unit'] },
+  'Pediatric ER': { name: 'Pediatric Emergency', keywords: ['pediatric emergency', 'pediatric er', 'peds er', 'children\'s emergency'] },
+  'Pediatric Oncology': { name: 'Pediatric Oncology', keywords: ['pediatric oncology', 'pediatric cancer', 'childhood cancer'] },
+
+  // Mental Health & Behavioral
+  'Psych': { name: 'Psychiatric / Mental Health', keywords: ['psychiatric', 'psych', 'mental health', 'behavioral health', 'psychiatry'] },
+  'Substance Abuse': { name: 'Substance Abuse / Addiction', keywords: ['substance abuse', 'addiction', 'detox', 'rehab', 'recovery', 'chemical dependency'] },
+  'Geriatric Psych': { name: 'Geriatric Psychiatry', keywords: ['geriatric psych', 'geropsych', 'elderly mental health'] },
+  'Child Psych': { name: 'Child/Adolescent Psychiatry', keywords: ['child psych', 'adolescent psych', 'pediatric psych', 'youth mental health'] },
+
+  // Long-Term Care & Geriatrics
+  'LTC': { name: 'Long-Term Care', keywords: ['long-term care', 'ltc', 'long term care', 'nursing home', 'extended care'] },
+  'SNF': { name: 'Skilled Nursing Facility', keywords: ['skilled nursing', 'snf', 'skilled nursing facility'] },
+  'Geriatrics': { name: 'Geriatrics', keywords: ['geriatric', 'elderly', 'senior', 'aging', 'gerontology'] },
+  'Memory Care': { name: 'Memory Care / Dementia', keywords: ['memory care', 'dementia', 'alzheimer', 'cognitive'] },
+  'Rehab': { name: 'Rehabilitation', keywords: ['rehabilitation', 'rehab', 'physical therapy', 'occupational therapy', 'acute rehab'] },
+
+  // Community & Outpatient
+  'Home Health': { name: 'Home Health', keywords: ['home health', 'home care', 'home nursing', 'visiting nurse', 'in-home'] },
+  'Hospice': { name: 'Hospice / Palliative', keywords: ['hospice', 'palliative', 'end of life', 'comfort care', 'terminal'] },
+  'Public Health': { name: 'Public Health', keywords: ['public health', 'community health', 'population health'] },
+  'School Nurse': { name: 'School Nursing', keywords: ['school nurse', 'school nursing', 'student health'] },
+  'Occupational Health': { name: 'Occupational Health', keywords: ['occupational health', 'employee health', 'workplace health', 'industrial'] },
+  'Outpatient': { name: 'Outpatient / Ambulatory', keywords: ['outpatient', 'ambulatory', 'clinic', 'day surgery', 'same day'] },
+  'Infusion': { name: 'Infusion / IV Therapy', keywords: ['infusion', 'iv therapy', 'infusion center', 'chemo infusion'] },
+  'Wound Care': { name: 'Wound Care', keywords: ['wound care', 'wound ostomy', 'wocn', 'wound nurse', 'ostomy'] },
+
+  // Specialty Units
+  'Burn': { name: 'Burn Unit', keywords: ['burn', 'burn unit', 'burn center', 'burn icu'] },
+  'Transplant': { name: 'Transplant', keywords: ['transplant', 'organ transplant', 'bone marrow', 'stem cell'] },
+  'Dialysis': { name: 'Dialysis', keywords: ['dialysis', 'hemodialysis', 'peritoneal dialysis', 'renal replacement'] },
+  'Endoscopy': { name: 'Endoscopy / GI Lab', keywords: ['endoscopy', 'gi lab', 'colonoscopy', 'upper gi'] },
+  'Cath Lab': { name: 'Cardiac Cath Lab', keywords: ['cath lab', 'catheterization', 'cardiac cath', 'interventional cardiology'] },
+  'Electrophysiology': { name: 'Electrophysiology (EP)', keywords: ['electrophysiology', 'ep lab', 'arrhythmia', 'pacemaker'] },
+  'Interventional Radiology': { name: 'Interventional Radiology', keywords: ['interventional radiology', 'ir ', 'i.r.', 'vascular interventional'] },
+  'Pain Management': { name: 'Pain Management', keywords: ['pain management', 'pain clinic', 'chronic pain', 'pain medicine'] },
+  'Sleep Lab': { name: 'Sleep Lab', keywords: ['sleep lab', 'sleep study', 'sleep medicine', 'polysomnography'] },
+
+  // Advanced Practice & Leadership
+  'NP': { name: 'Nurse Practitioner', keywords: ['nurse practitioner', 'np ', 'n.p.', 'aprn', 'advanced practice'] },
+  'CNS': { name: 'Clinical Nurse Specialist', keywords: ['clinical nurse specialist', 'cns', 'c.n.s.'] },
+  'CRNA': { name: 'Nurse Anesthetist (CRNA)', keywords: ['crna', 'nurse anesthetist', 'anesthesia', 'c.r.n.a.'] },
+  'CNM': { name: 'Certified Nurse Midwife', keywords: ['midwife', 'cnm', 'nurse midwife', 'c.n.m.'] },
+  'Nurse Manager': { name: 'Nurse Manager / Director', keywords: ['nurse manager', 'nursing manager', 'nurse director', 'nursing director', 'unit manager'] },
+  'Charge Nurse': { name: 'Charge Nurse', keywords: ['charge nurse', 'charge rn', 'shift supervisor'] },
+  'Case Manager': { name: 'Case Management', keywords: ['case manager', 'case management', 'care coordinator', 'utilization review'] },
+  'Educator': { name: 'Nurse Educator', keywords: ['nurse educator', 'nursing educator', 'clinical educator', 'staff development'] },
+  'Informatics': { name: 'Nursing Informatics', keywords: ['informatics', 'nursing informatics', 'clinical informatics', 'health it'] },
+  'Quality': { name: 'Quality / Performance Improvement', keywords: ['quality', 'performance improvement', 'quality assurance', 'qi ', 'pi '] },
+  'Research': { name: 'Research Nurse', keywords: ['research', 'clinical research', 'clinical trials', 'research nurse'] },
+  'Infection Control': { name: 'Infection Control', keywords: ['infection control', 'infection prevention', 'epidemiology', 'ic nurse'] },
+
+  // Other Specialties
+  'Float Pool': { name: 'Float Pool / Resource', keywords: ['float pool', 'float nurse', 'resource pool', 'prn', 'per diem'] },
+  'Travel': { name: 'Travel Nurse', keywords: ['travel nurse', 'travel nursing', 'traveler', 'agency'] },
+  'Triage': { name: 'Triage', keywords: ['triage', 'phone triage', 'nurse line', 'advice nurse'] },
+  'Flight Nurse': { name: 'Flight / Transport Nurse', keywords: ['flight nurse', 'transport', 'air ambulance', 'critical care transport', 'ccrn'] },
+  'Correctional': { name: 'Correctional Nursing', keywords: ['correctional', 'prison', 'jail', 'detention', 'forensic'] },
+  'Military': { name: 'Military / VA', keywords: ['military', 'va ', 'veterans', 'army', 'navy', 'air force'] },
+  'Parish': { name: 'Parish / Faith Community', keywords: ['parish', 'faith community', 'church', 'faith-based'] },
+  'Legal Nurse': { name: 'Legal Nurse Consultant', keywords: ['legal nurse', 'lnc', 'forensic', 'legal consulting'] },
+  'Aesthetic': { name: 'Aesthetic / Cosmetic', keywords: ['aesthetic', 'cosmetic', 'plastic surgery', 'dermatology', 'med spa'] },
+  'Bariatric': { name: 'Bariatric', keywords: ['bariatric', 'weight loss surgery', 'obesity', 'gastric bypass'] },
+  'Diabetes': { name: 'Diabetes Education', keywords: ['diabetes', 'diabetic', 'endocrine', 'glucose'] },
+  'Allergy': { name: 'Allergy / Immunology', keywords: ['allergy', 'immunology', 'allergist'] },
+  'ENT': { name: 'ENT / Otolaryngology', keywords: ['ent', 'otolaryngology', 'ear nose throat', 'audiology'] },
+  'Ophthalmology': { name: 'Ophthalmology / Eye', keywords: ['ophthalmology', 'eye', 'vision', 'optometry', 'retina'] },
+  'Dermatology': { name: 'Dermatology', keywords: ['dermatology', 'skin', 'dermatologic'] },
+  'Vascular': { name: 'Vascular', keywords: ['vascular', 'vein', 'arterial', 'peripheral vascular'] }
 };
 
 // =============================================================================
@@ -504,6 +615,31 @@ const initForecast = () => {
 // =============================================================================
 // Filtering (Client-side)
 // =============================================================================
+
+// Check if a notice matches any of the selected specialties
+const matchesSpecialty = (notice, specialtyKeys) => {
+  if (!specialtyKeys || specialtyKeys.length === 0) return true;
+
+  // Build searchable text from notice fields
+  const searchText = [
+    notice.employer_name,
+    notice.parent_system,
+    notice.reason,
+    notice.raw_text,
+    notice.nursing_care_setting,
+    ...(parseMaybeJson(notice.nursing_specialties) || []),
+    ...(parseMaybeJson(notice.nursing_keywords) || []),
+    ...(parseMaybeJson(notice.nursing_signals) || [])
+  ].filter(Boolean).join(' ').toLowerCase();
+
+  // Check if any selected specialty matches
+  return specialtyKeys.some(key => {
+    const specialty = NURSE_SPECIALTIES[key];
+    if (!specialty) return false;
+    return specialty.keywords.some(keyword => searchText.includes(keyword));
+  });
+};
+
 const filterNotices = () => {
   let filtered = [...allNotices];
 
@@ -517,6 +653,11 @@ const filterNotices = () => {
   // Filter by selected states
   if (selectedStates.length > 0) {
     filtered = filtered.filter(n => selectedStates.includes(n.state));
+  }
+
+  // Filter by nursing specialty
+  if (selectedSpecialties.length > 0) {
+    filtered = filtered.filter(n => matchesSpecialty(n, selectedSpecialties));
   }
 
   // Filter by organization
@@ -989,6 +1130,153 @@ const initStateMultiSelect = () => {
 };
 
 // =============================================================================
+// Specialty Multi-Select
+// =============================================================================
+const specialtyMultiSelect = document.getElementById('specialty-multi-select');
+const specialtyDisplay = document.getElementById('specialty-display');
+const specialtyOptions = document.getElementById('specialty-options');
+const specialtySearch = document.getElementById('specialty-search');
+
+// Organize specialties by category for dropdown display
+const SPECIALTY_CATEGORIES = {
+  'Critical Care & Emergency': ['ICU', 'MICU', 'SICU', 'CVICU', 'NICU', 'PICU', 'ER', 'Trauma'],
+  'Surgical & Perioperative': ['OR', 'Perioperative', 'PACU', 'Circulating', 'Scrub', 'First Assist'],
+  'Medical-Surgical': ['Med-Surg', 'Telemetry', 'Orthopedic', 'Neurology', 'Oncology', 'Cardiology', 'Pulmonary', 'Renal', 'GI', 'Urology'],
+  'Women\'s Health & Pediatrics': ['OB', 'L&D', 'Postpartum', 'LDRP', 'Antepartum', 'Gynecology', 'Pediatrics', 'Pediatric ER', 'Pediatric Oncology'],
+  'Mental Health & Behavioral': ['Psych', 'Substance Abuse', 'Geriatric Psych', 'Child Psych'],
+  'Long-Term Care & Geriatrics': ['LTC', 'SNF', 'Geriatrics', 'Memory Care', 'Rehab'],
+  'Community & Outpatient': ['Home Health', 'Hospice', 'Public Health', 'School Nurse', 'Occupational Health', 'Outpatient', 'Infusion', 'Wound Care'],
+  'Specialty Units': ['Burn', 'Transplant', 'Dialysis', 'Endoscopy', 'Cath Lab', 'Electrophysiology', 'Interventional Radiology', 'Pain Management', 'Sleep Lab'],
+  'Advanced Practice & Leadership': ['NP', 'CNS', 'CRNA', 'CNM', 'Nurse Manager', 'Charge Nurse', 'Case Manager', 'Educator', 'Informatics', 'Quality', 'Research', 'Infection Control'],
+  'Other Specialties': ['Float Pool', 'Travel', 'Triage', 'Flight Nurse', 'Correctional', 'Military', 'Parish', 'Legal Nurse', 'Aesthetic', 'Bariatric', 'Diabetes', 'Allergy', 'ENT', 'Ophthalmology', 'Dermatology', 'Vascular']
+};
+
+const populateSpecialtyDropdown = () => {
+  if (!specialtyOptions) return;
+  specialtyOptions.innerHTML = '';
+
+  Object.entries(SPECIALTY_CATEGORIES).forEach(([category, specialties]) => {
+    // Add category header
+    const header = document.createElement('div');
+    header.className = 'multi-select-category';
+    header.textContent = category;
+    specialtyOptions.appendChild(header);
+
+    // Add specialty options
+    specialties.forEach(key => {
+      const spec = NURSE_SPECIALTIES[key];
+      if (!spec) return;
+
+      const isSelected = selectedSpecialties.includes(key);
+      const option = document.createElement('div');
+      option.className = `multi-select-option${isSelected ? ' selected' : ''}`;
+      option.dataset.value = key;
+      option.innerHTML = `
+        <span class="multi-select-checkbox">${isSelected ? '&#10003;' : ''}</span>
+        <span class="multi-select-label">${key}</span>
+        <span class="multi-select-sublabel">${spec.name}</span>
+      `;
+      specialtyOptions.appendChild(option);
+    });
+  });
+};
+
+const updateSpecialtyDisplay = () => {
+  if (!specialtyDisplay) return;
+
+  if (selectedSpecialties.length === 0) {
+    specialtyDisplay.innerHTML = '<span class="multi-select-placeholder">All specialties</span>';
+  } else if (selectedSpecialties.length <= 2) {
+    specialtyDisplay.innerHTML = selectedSpecialties
+      .map(s => `<span class="multi-select-tag">${s}<button class="multi-select-tag-remove" data-specialty="${s}">&times;</button></span>`)
+      .join('');
+  } else {
+    specialtyDisplay.innerHTML = `
+      ${selectedSpecialties.slice(0, 2).map(s => `<span class="multi-select-tag">${s}<button class="multi-select-tag-remove" data-specialty="${s}">&times;</button></span>`).join('')}
+      <span class="multi-select-more">+${selectedSpecialties.length - 2} more</span>
+    `;
+  }
+};
+
+const toggleSpecialtySelection = (specialty) => {
+  const idx = selectedSpecialties.indexOf(specialty);
+  if (idx === -1) {
+    selectedSpecialties.push(specialty);
+  } else {
+    selectedSpecialties.splice(idx, 1);
+  }
+  populateSpecialtyDropdown();
+  updateSpecialtyDisplay();
+  applyFilters();
+};
+
+const initSpecialtyMultiSelect = () => {
+  if (!specialtyMultiSelect) return;
+
+  populateSpecialtyDropdown();
+  updateSpecialtyDisplay();
+
+  specialtyMultiSelect.addEventListener('click', (e) => {
+    if (e.target.closest('.multi-select-tag-remove')) {
+      const specialty = e.target.closest('.multi-select-tag-remove').dataset.specialty;
+      toggleSpecialtySelection(specialty);
+      return;
+    }
+    if (e.target.closest('.multi-select-display')) {
+      specialtyMultiSelect.classList.toggle('open');
+    }
+  });
+
+  specialtyOptions?.addEventListener('click', (e) => {
+    const option = e.target.closest('.multi-select-option');
+    if (option) {
+      toggleSpecialtySelection(option.dataset.value);
+    }
+  });
+
+  specialtySearch?.addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase();
+    specialtyOptions?.querySelectorAll('.multi-select-option').forEach(opt => {
+      const text = opt.textContent.toLowerCase();
+      opt.classList.toggle('hidden', !text.includes(query));
+    });
+    // Also show/hide categories based on if they have visible options
+    specialtyOptions?.querySelectorAll('.multi-select-category').forEach(cat => {
+      let nextEl = cat.nextElementSibling;
+      let hasVisibleOption = false;
+      while (nextEl && !nextEl.classList.contains('multi-select-category')) {
+        if (nextEl.classList.contains('multi-select-option') && !nextEl.classList.contains('hidden')) {
+          hasVisibleOption = true;
+          break;
+        }
+        nextEl = nextEl.nextElementSibling;
+      }
+      cat.classList.toggle('hidden', !hasVisibleOption);
+    });
+  });
+
+  document.getElementById('select-all-specialties')?.addEventListener('click', () => {
+    selectedSpecialties = Object.keys(NURSE_SPECIALTIES);
+    populateSpecialtyDropdown();
+    updateSpecialtyDisplay();
+    applyFilters();
+  });
+
+  document.getElementById('clear-all-specialties')?.addEventListener('click', () => {
+    selectedSpecialties = [];
+    populateSpecialtyDropdown();
+    updateSpecialtyDisplay();
+    applyFilters();
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!specialtyMultiSelect?.contains(e.target)) {
+      specialtyMultiSelect?.classList.remove('open');
+    }
+  });
+};
+
+// =============================================================================
 // Region Dropdown
 // =============================================================================
 const initRegionSelect = () => {
@@ -1031,8 +1319,11 @@ const initFilters = () => {
   clearBtn.addEventListener('click', () => {
     regionSelect.value = '';
     selectedStates = [];
+    selectedSpecialties = [];
     populateStateDropdown('');
     updateStateDisplay();
+    populateSpecialtyDropdown();
+    updateSpecialtyDisplay();
     orgInput.value = '';
     sinceInput.value = '';
     scoreInput.value = 0;
@@ -1043,6 +1334,8 @@ const initFilters = () => {
     const clearSearchBtn = document.getElementById('clear-search');
     if (searchInput) searchInput.value = '';
     if (clearSearchBtn) clearSearchBtn.style.display = 'none';
+    const specialtySearchInput = document.getElementById('specialty-search');
+    if (specialtySearchInput) specialtySearchInput.value = '';
     applyFilters();
   });
 
@@ -1484,6 +1777,7 @@ const initApp = async () => {
   // Initialize UI components
   initRegionSelect();
   initStateMultiSelect();
+  initSpecialtyMultiSelect();
   initCustomStateSelect();
   initFilters();
   initQuickNav();
