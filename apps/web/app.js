@@ -29,6 +29,14 @@ const statStates = document.getElementById('stat-states');
 const statUpdated = document.getElementById('stat-updated');
 const usMapContainer = document.getElementById('us-map');
 const mapTooltip = document.getElementById('map-tooltip');
+const alertsList = document.getElementById('alerts-list');
+const heatmapList = document.getElementById('heatmap-list');
+const talentList = document.getElementById('talent-list');
+const employerList = document.getElementById('employer-list');
+const forecastBeds = document.getElementById('forecast-beds');
+const forecastSetting = document.getElementById('forecast-setting');
+const forecastHorizon = document.getElementById('forecast-horizon');
+const forecastOutput = document.getElementById('forecast-output');
 
 // Custom notice form elements
 const customNoticeForm = document.getElementById('custom-notice-form');
@@ -371,6 +379,167 @@ const renderDetail = (notice) => {
       <p>Retrieved: ${formatDate(notice.retrieved_at)}</p>
     </div>
   `;
+};
+
+// =============================================================================
+// Premium Insights (API mode fallback to /data files when available)
+// =============================================================================
+const renderInsightFallback = (element, message) => {
+  if (!element) return;
+  element.innerHTML = `<div class="empty-state">${message}</div>`;
+};
+
+const renderAlerts = (data) => {
+  if (!alertsList) return;
+  const alerts = data?.alerts ?? [];
+  if (!alerts.length) {
+    renderInsightFallback(alertsList, 'No recent alerts.');
+    return;
+  }
+  const top = alerts
+    .sort((a, b) => (b.early_warning === true) - (a.early_warning === true))
+    .slice(0, 8);
+  alertsList.innerHTML = top.map(alert => `
+    <div class="insight-row">
+      <div>
+        <div class="insight-title">${alert.employer_name || 'Unknown employer'}</div>
+        <div class="insight-meta">${[alert.state, alert.facility_name || alert.parent_system].filter(Boolean).join(' • ')}</div>
+      </div>
+      <div>
+        <div class="insight-pill ${alert.early_warning ? 'yellow' : ''}">${alert.early_warning ? 'Early' : 'Signal'}</div>
+        <div class="insight-meta">${alert.lead_time_days ?? 'n/a'}d lead</div>
+      </div>
+    </div>
+  `).join('');
+};
+
+const renderHeatmap = (data) => {
+  if (!heatmapList) return;
+  const locations = data?.locations ?? [];
+  const ranked = locations
+    .filter(loc => loc.risk_level === 'red' || loc.risk_level === 'yellow')
+    .sort((a, b) => b.notices_last_90_days - a.notices_last_90_days)
+    .slice(0, 8);
+  if (!ranked.length) {
+    renderInsightFallback(heatmapList, 'No hotspots detected.');
+    return;
+  }
+  heatmapList.innerHTML = ranked.map(loc => `
+    <div class="insight-row">
+      <div>
+        <div class="insight-title">${loc.city || 'Unknown city'}</div>
+        <div class="insight-meta">${loc.state} • ${loc.notices_last_90_days} in 90d</div>
+      </div>
+      <div class="insight-pill ${loc.risk_level === 'red' ? 'red' : 'yellow'}">${loc.risk_level}</div>
+    </div>
+  `).join('');
+};
+
+const renderTalent = (data) => {
+  if (!talentList) return;
+  const opportunities = data?.opportunities ?? [];
+  const top = opportunities
+    .sort((a, b) => b.estimated_nurses_available - a.estimated_nurses_available)
+    .slice(0, 8);
+  if (!top.length) {
+    renderInsightFallback(talentList, 'No talent signals yet.');
+    return;
+  }
+  talentList.innerHTML = top.map(entry => `
+    <div class="insight-row">
+      <div>
+        <div class="insight-title">${entry.city || 'Unknown city'}</div>
+        <div class="insight-meta">${entry.state} • ${entry.notices_count} notices</div>
+      </div>
+      <div>
+        <div class="insight-pill">${entry.estimated_nurses_available}</div>
+        <div class="insight-meta">${entry.specialties?.slice(0, 2).join(', ') || 'General'}</div>
+      </div>
+    </div>
+  `).join('');
+};
+
+const renderEmployers = (data) => {
+  if (!employerList) return;
+  const employers = data?.employers ?? [];
+  const top = employers
+    .sort((a, b) => b.total_notices - a.total_notices)
+    .slice(0, 8);
+  if (!top.length) {
+    renderInsightFallback(employerList, 'No employer profiles yet.');
+    return;
+  }
+  employerList.innerHTML = top.map(entry => `
+    <div class="insight-row">
+      <div>
+        <div class="insight-title">${entry.employer_name || 'Unknown employer'}</div>
+        <div class="insight-meta">${entry.parent_system || entry.state} • ${entry.total_notices} notices</div>
+      </div>
+      <div class="insight-meta">${entry.avg_lead_time_days ?? 'n/a'}d avg lead</div>
+    </div>
+  `).join('');
+};
+
+const loadInsights = async () => {
+  try {
+    const [alerts, geo, talent, employers] = await Promise.all([
+      fetchJson('/data/alerts.json'),
+      fetchJson('/data/geo.json'),
+      fetchJson('/data/talent.json'),
+      fetchJson('/data/employers.json')
+    ]);
+    renderAlerts(alerts);
+    renderHeatmap(geo);
+    renderTalent(talent);
+    renderEmployers(employers);
+  } catch (err) {
+    console.warn('Insights unavailable in API mode:', err);
+    renderInsightFallback(alertsList, 'Insights unavailable.');
+    renderInsightFallback(heatmapList, 'Insights unavailable.');
+    renderInsightFallback(talentList, 'Insights unavailable.');
+    renderInsightFallback(employerList, 'Insights unavailable.');
+  }
+};
+
+const initForecast = () => {
+  if (!forecastBeds || !forecastSetting || !forecastHorizon || !forecastOutput) return;
+  const roleMixBySetting = {
+    acute: { rn: 70, lpn: 20, cna: 10 },
+    snf: { rn: 35, lpn: 25, cna: 40 },
+    outpatient: { rn: 60, lpn: 25, cna: 15 },
+    home: { rn: 55, lpn: 25, cna: 20 },
+    behavioral: { rn: 60, lpn: 20, cna: 20 }
+  };
+  const multiplierBySetting = {
+    acute: 0.65,
+    snf: 0.45,
+    outpatient: 0.2,
+    home: 0.15,
+    behavioral: 0.35
+  };
+
+  const updateForecast = () => {
+    const beds = Number.parseInt(forecastBeds.value || '0', 10) || 0;
+    const setting = forecastSetting.value || 'acute';
+    const horizon = Number.parseInt(forecastHorizon.value || '0', 10) || 0;
+    const multiplier = multiplierBySetting[setting] ?? 0.4;
+    const totalNurses = Math.max(0, Math.round(beds * multiplier));
+    const mix = roleMixBySetting[setting] ?? roleMixBySetting.acute;
+    const rn = Math.round((totalNurses * mix.rn) / 100);
+    const lpn = Math.round((totalNurses * mix.lpn) / 100);
+    const cna = Math.round((totalNurses * mix.cna) / 100);
+
+    forecastOutput.innerHTML = `
+      Estimated displacement over ${horizon || 60} days:
+      <strong>${totalNurses}</strong> total nurses
+      (RN ${rn} • LPN ${lpn} • CNA ${cna}).
+    `;
+  };
+
+  forecastBeds.addEventListener('input', updateForecast);
+  forecastSetting.addEventListener('change', updateForecast);
+  forecastHorizon.addEventListener('input', updateForecast);
+  updateForecast();
 };
 
 const loadNotices = async () => {
@@ -1508,8 +1677,10 @@ const initApp = () => {
   initHelpSection();
   initMapToggle();
   initStateMultiSelect();
+  initForecast();
   loadHealth();
   loadStatesWithMap();
+  loadInsights();
   loadCustomNotices();
   loadProjects();
   populateCustomStateDropdown();

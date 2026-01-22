@@ -390,6 +390,72 @@
       </div>
     </section>
 
+    <section class="premium-insights">
+      <div class="section-header">
+        <div class="section-header-text">
+          <h3>Premium Intelligence</h3>
+          <p>Early warnings, risk hotspots, and talent opportunity signals.</p>
+        </div>
+      </div>
+      <div class="insight-grid">
+        <div class="insight-card">
+          <h4>Early-Warning Alerts</h4>
+          <p class="insight-subtitle">Recent notices with early signals and short lead times.</p>
+          <div class="insight-list" id="alerts-list">
+            <div class="empty-state">Loading alerts...</div>
+          </div>
+        </div>
+        <div class="insight-card">
+          <h4>Workforce Risk Heatmap</h4>
+          <p class="insight-subtitle">Cities with elevated activity in the last 90 days.</p>
+          <div class="insight-list" id="heatmap-list">
+            <div class="empty-state">Loading hotspots...</div>
+          </div>
+        </div>
+        <div class="insight-card">
+          <h4>Talent Opportunity Signals</h4>
+          <p class="insight-subtitle">Estimated nurse availability by city.</p>
+          <div class="insight-list" id="talent-list">
+            <div class="empty-state">Loading opportunities...</div>
+          </div>
+        </div>
+        <div class="insight-card">
+          <h4>Employer Behavior Watchlist</h4>
+          <p class="insight-subtitle">Systems and facilities with repeated WARN activity.</p>
+          <div class="insight-list" id="employer-list">
+            <div class="empty-state">Loading employer profiles...</div>
+          </div>
+        </div>
+        <div class="insight-card insight-wide">
+          <h4>Scenario Forecasting</h4>
+          <p class="insight-subtitle">Estimate RN/LPN/CNA displacement from a planned change.</p>
+          <div class="forecast-grid">
+            <label>
+              Beds closed
+              <input type="number" id="forecast-beds" min="0" value="30">
+            </label>
+            <label>
+              Care setting
+              <select id="forecast-setting">
+                <option value="acute">Acute / Hospital</option>
+                <option value="snf">Skilled Nursing / LTC</option>
+                <option value="outpatient">Outpatient / Clinic</option>
+                <option value="home">Home Health / Hospice</option>
+                <option value="behavioral">Behavioral Health</option>
+              </select>
+            </label>
+            <label>
+              Planned horizon (days)
+              <input type="number" id="forecast-horizon" min="1" value="60">
+            </label>
+          </div>
+          <div class="forecast-output" id="forecast-output">
+            Enter inputs to estimate displacement.
+          </div>
+        </div>
+      </div>
+    </section>
+
     <main class="content-grid">
       <section class="results">
         <div class="section-header">
