@@ -732,6 +732,128 @@ body {
   color: #38a169;
 }
 
+.premium-insights {
+  margin: 2.5rem 0 3rem;
+}
+
+.insight-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.insight-card {
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(26, 54, 93, 0.08);
+}
+
+.insight-card.insight-wide {
+  grid-column: span 2;
+}
+
+.insight-card h4 {
+  font-size: 1.05rem;
+  margin-bottom: 0.35rem;
+}
+
+.insight-subtitle {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.insight-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.insight-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(26, 54, 93, 0.08);
+}
+
+.insight-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.insight-title {
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.insight-meta {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-top: 0.2rem;
+}
+
+.insight-pill {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(26, 54, 93, 0.08);
+  color: var(--navy);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.insight-pill.red {
+  background: rgba(229, 62, 62, 0.15);
+  color: #c53030;
+}
+
+.insight-pill.yellow {
+  background: rgba(214, 158, 46, 0.2);
+  color: #b7791f;
+}
+
+.forecast-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.forecast-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.forecast-grid input,
+.forecast-grid select {
+  padding: 0.55rem 0.75rem;
+  border-radius: 10px;
+  border: 1px solid rgba(26, 54, 93, 0.15);
+  font-size: 0.95rem;
+  color: var(--navy);
+}
+
+.forecast-output {
+  background: rgba(26, 54, 93, 0.04);
+  border-radius: 12px;
+  padding: 1rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+@media (max-width: 900px) {
+  .insight-card.insight-wide {
+    grid-column: span 1;
+  }
+}
+
 .btn {
   border: none;
   padding: 12px 18px;
