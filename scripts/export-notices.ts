@@ -163,6 +163,20 @@ function hasSilentSignals(notice: NormalizedWarnNotice): boolean {
   return triggers.some(t => text.includes(t));
 }
 
+function isHealthcareNotice(notice: NormalizedWarnNotice): boolean {
+  if ((notice.nursingImpact?.score ?? 0) >= 20) return true;
+  if (notice.nursingImpact?.label === 'Likely' || notice.nursingImpact?.label === 'Possible') return true;
+  if (notice.naics && String(notice.naics).startsWith('62')) return true;
+  const text = `${notice.employerName} ${notice.parentSystem ?? ''} ${notice.reason ?? ''} ${notice.rawText ?? ''}`.toLowerCase();
+  const patterns = [
+    'hospital', 'medical center', 'health system', 'healthcare', 'health care',
+    'clinic', 'nursing', 'skilled nursing', 'long term care', 'ltc', 'snf',
+    'hospice', 'behavioral health', 'rehab', 'home health', 'assisted living',
+    'senior care', 'elder care'
+  ];
+  return patterns.some(pattern => text.includes(pattern));
+}
+
 // Map notice to API-compatible format
 function mapNoticeForExport(n: NormalizedWarnNotice) {
   const { facilityName, parentSystem, employerId } = inferEmployerHierarchy(n);
@@ -359,6 +373,9 @@ async function main() {
   console.log('\n' + '='.repeat(60));
   console.log('Writing output files...\n');
 
+  const healthcareNotices = allNotices.filter(isHealthcareNotice);
+  const exportedHealthcareNotices = healthcareNotices.map(mapNoticeForExport);
+
   // Build employer profiles
   const employerProfiles = new Map<string, EmployerProfile & {
     affectedSum: number;
@@ -367,7 +384,7 @@ async function main() {
     leadCount: number;
   }>();
 
-  for (const notice of exportedNotices) {
+  for (const notice of exportedHealthcareNotices) {
     const employerId = notice.employer_id as string;
     const key = employerId;
     const existing = employerProfiles.get(key) ?? {
@@ -432,7 +449,7 @@ async function main() {
 
   // Build system profiles
   const systemProfiles = new Map<string, SystemProfile & { statesSet: Set<string> }>();
-  for (const notice of exportedNotices) {
+  for (const notice of exportedHealthcareNotices) {
     if (!notice.parent_system) continue;
     const key = notice.parent_system;
     const existing = systemProfiles.get(key) ?? {
@@ -468,7 +485,7 @@ async function main() {
   const last90 = new Date(now.getTime() - 90 * 86400000);
   const geoMap = new Map<string, GeoSummaryEntry>();
 
-  for (const notice of exportedNotices) {
+  for (const notice of exportedHealthcareNotices) {
     const city = notice.city ? String(notice.city) : null;
     const key = `${notice.state}:${city ?? 'unknown'}`;
     const dateToken = notice.notice_date || notice.retrieved_at;
@@ -498,7 +515,7 @@ async function main() {
   const alerts: AlertEntry[] = [];
   const talentMap = new Map<string, { entry: TalentEntry; specialties: Set<string> }>();
 
-  for (const notice of exportedNotices) {
+  for (const notice of exportedHealthcareNotices) {
     const dateToken = notice.notice_date || notice.retrieved_at;
     const date = dateToken ? new Date(dateToken) : null;
     const isRecent = date && !Number.isNaN(date.getTime()) && date >= last14;

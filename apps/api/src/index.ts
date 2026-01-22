@@ -227,6 +227,7 @@ type InsightNotice = {
   effective_date: string | null;
   lead_time_days: number | null;
   employees_affected: number | null;
+  naics: string | null;
   nursing_score: number;
   nursing_specialties: string[];
   raw_text: string | null;
@@ -297,6 +298,7 @@ function rowToInsightNotice(row: any): InsightNotice {
   const noticeDate = row.notice_date ?? row.noticeDate ?? null;
   const effectiveDate = row.effective_date ?? row.effectiveDate ?? null;
   const leadTimeDays = row.lead_time_days ?? calculateLeadTimeDays(noticeDate, effectiveDate);
+  const naics = row.naics ?? null;
   const nursingSpecialties = (() => {
     const raw = row.nursing_specialties ?? row.nursingSpecialties;
     if (!raw) return [];
@@ -319,6 +321,7 @@ function rowToInsightNotice(row: any): InsightNotice {
     effective_date: effectiveDate,
     lead_time_days: leadTimeDays,
     employees_affected: row.employees_affected ?? row.employeesAffected ?? null,
+    naics,
     nursing_score: row.nursing_score ?? row.nursingScore ?? 0,
     nursing_specialties: nursingSpecialties,
     raw_text: row.raw_text ?? row.rawText ?? null,
@@ -344,6 +347,7 @@ function normalizedToInsightNotice(n: NormalizedWarnNotice): InsightNotice {
     effective_date: effectiveDate,
     lead_time_days: calculateLeadTimeDays(noticeDate, effectiveDate),
     employees_affected: n.employeesAffected ?? null,
+    naics: n.naics ?? null,
     nursing_score: n.nursingImpact?.score ?? 0,
     nursing_specialties: n.nursingImpact?.specialties ?? [],
     raw_text: n.rawText ?? null,
@@ -358,7 +362,7 @@ async function getInsightNotices(): Promise<InsightNotice[]> {
   }
   const rows = await query(`
     SELECT id, state, employer_name, parent_system, city, notice_date, effective_date,
-           employees_affected, nursing_score, raw_text, reason, retrieved_at
+           employees_affected, nursing_score, raw_text, reason, retrieved_at, naics
     FROM warn_notices
   `);
   return rows.map(rowToInsightNotice);
@@ -376,7 +380,7 @@ async function getRecentInsightNotices(days: number): Promise<InsightNotice[]> {
   }
   const rows = await query(`
     SELECT id, state, employer_name, parent_system, city, notice_date, effective_date,
-           employees_affected, nursing_score, raw_text, reason, retrieved_at
+           employees_affected, nursing_score, raw_text, reason, retrieved_at, naics
     FROM warn_notices
     WHERE COALESCE(notice_date, retrieved_at) >= $1
   `, [sinceDate]);
@@ -387,6 +391,19 @@ function riskLevelFromCount(count: number): 'green' | 'yellow' | 'red' {
   if (count >= 20) return 'red';
   if (count >= 5) return 'yellow';
   return 'green';
+}
+
+function isHealthcareInsight(notice: InsightNotice): boolean {
+  if ((notice.nursing_score ?? 0) >= 20) return true;
+  if (notice.naics && String(notice.naics).startsWith('62')) return true;
+  const text = `${notice.employer_name} ${notice.parent_system ?? ''} ${notice.reason ?? ''} ${notice.raw_text ?? ''}`.toLowerCase();
+  const patterns = [
+    'hospital', 'medical center', 'health system', 'healthcare', 'health care',
+    'clinic', 'nursing', 'skilled nursing', 'long term care', 'ltc', 'snf',
+    'hospice', 'behavioral health', 'rehab', 'home health', 'assisted living',
+    'senior care', 'elder care'
+  ];
+  return patterns.some(pattern => text.includes(pattern));
 }
 
 function encodeCursor(payload: CursorPayload): string {
@@ -953,8 +970,8 @@ app.get('/states', requirePasscode, apiLimiter, async (_req, res) => {
 });
 
 app.get('/insights/alerts', requirePasscode, apiLimiter, async (_req, res) => {
-  const recent = await getRecentInsightNotices(14);
-  const allNotices = await getInsightNotices();
+  const recent = (await getRecentInsightNotices(14)).filter(isHealthcareInsight);
+  const allNotices = (await getInsightNotices()).filter(isHealthcareInsight);
   const leadMap = new Map<string, { sum: number; count: number }>();
 
   for (const notice of allNotices) {
@@ -990,7 +1007,7 @@ app.get('/insights/alerts', requirePasscode, apiLimiter, async (_req, res) => {
 });
 
 app.get('/insights/geo', requirePasscode, apiLimiter, async (_req, res) => {
-  const recent = await getRecentInsightNotices(90);
+  const recent = (await getRecentInsightNotices(90)).filter(isHealthcareInsight);
   const geoMap = new Map<string, { state: string; city: string | null; total: number }>();
 
   for (const notice of recent) {
@@ -1013,7 +1030,7 @@ app.get('/insights/geo', requirePasscode, apiLimiter, async (_req, res) => {
 });
 
 app.get('/insights/talent', requirePasscode, apiLimiter, async (_req, res) => {
-  const recent = await getRecentInsightNotices(90);
+  const recent = (await getRecentInsightNotices(90)).filter(isHealthcareInsight);
   const talentMap = new Map<string, { state: string; city: string | null; total: number; specialties: Set<string>; notices: number }>();
 
   for (const notice of recent) {
@@ -1049,7 +1066,7 @@ app.get('/insights/talent', requirePasscode, apiLimiter, async (_req, res) => {
 });
 
 app.get('/insights/employers', requirePasscode, apiLimiter, async (_req, res) => {
-  const notices = await getInsightNotices();
+  const notices = (await getInsightNotices()).filter(isHealthcareInsight);
   const map = new Map<string, { employer_id: string; employer_name: string; parent_system: string | null; state: string; total: number; affectedSum: number; affectedCount: number; leadSum: number; leadCount: number; first: string | null; last: string | null }>();
 
   for (const notice of notices) {
@@ -1100,7 +1117,7 @@ app.get('/insights/employers', requirePasscode, apiLimiter, async (_req, res) =>
 });
 
 app.get('/insights/systems', requirePasscode, apiLimiter, async (_req, res) => {
-  const notices = await getInsightNotices();
+  const notices = (await getInsightNotices()).filter(isHealthcareInsight);
   const map = new Map<string, { system_name: string; total: number; affected: number; states: Set<string>; last: string | null }>();
 
   for (const notice of notices) {
