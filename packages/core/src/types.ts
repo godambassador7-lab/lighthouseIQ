@@ -44,6 +44,14 @@ export interface NormalizedWarnNotice {
     label: 'Likely' | 'Possible' | 'Unclear';
     signals: string[];
     keywordsFound: string[];
+    roleMix?: {
+      rn: number;
+      lpn: number;
+      cna: number;
+    };
+    careSetting?: 'acute' | 'snf' | 'outpatient' | 'home' | 'behavioral' | 'unknown';
+    specialties?: string[];
+    explanations?: string[];
   };
 }
 
