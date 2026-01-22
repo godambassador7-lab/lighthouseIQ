@@ -1802,9 +1802,414 @@ const initApp = async () => {
   applyFilters();
 };
 
+// =============================================================================
+// Strategic Review Module - Nursing Market Intelligence
+// =============================================================================
+
+// Comprehensive salary data by state (from BLS, Nurse.org, Vivian 2024-2026)
+const NURSING_SALARY_DATA = {
+  // State: { staffRN: annual, staffHourly, travelWeekly, travelAnnual, shortage: 'surplus'|'shortage'|'balanced', projectedGap: number }
+  AL: { staffRN: 74970, staffHourly: 36, travelWeekly: 1850, travelAnnual: 96200, shortage: 'shortage', projectedGap: -5200 },
+  AK: { staffRN: 112040, staffHourly: 54, travelWeekly: 2564, travelAnnual: 133328, shortage: 'shortage', projectedGap: -1800 },
+  AZ: { staffRN: 89850, staffHourly: 43, travelWeekly: 2150, travelAnnual: 111800, shortage: 'shortage', projectedGap: -8500 },
+  AR: { staffRN: 76890, staffHourly: 37, travelWeekly: 1920, travelAnnual: 99840, shortage: 'shortage', projectedGap: -3200 },
+  CA: { staffRN: 148330, staffHourly: 71, travelWeekly: 2643, travelAnnual: 137436, shortage: 'shortage', projectedGap: -44500 },
+  CO: { staffRN: 106342, staffHourly: 51, travelWeekly: 2280, travelAnnual: 118560, shortage: 'balanced', projectedGap: -2100 },
+  CT: { staffRN: 98760, staffHourly: 47, travelWeekly: 2320, travelAnnual: 120640, shortage: 'balanced', projectedGap: 1200 },
+  DE: { staffRN: 87450, staffHourly: 42, travelWeekly: 2180, travelAnnual: 113360, shortage: 'balanced', projectedGap: -800 },
+  DC: { staffRN: 114282, staffHourly: 55, travelWeekly: 2450, travelAnnual: 127400, shortage: 'balanced', projectedGap: 500 },
+  FL: { staffRN: 84850, staffHourly: 41, travelWeekly: 2050, travelAnnual: 106600, shortage: 'shortage', projectedGap: -18900 },
+  GA: { staffRN: 86240, staffHourly: 41, travelWeekly: 2100, travelAnnual: 109200, shortage: 'shortage', projectedGap: -9800 },
+  HI: { staffRN: 123720, staffHourly: 59, travelWeekly: 2380, travelAnnual: 123760, shortage: 'shortage', projectedGap: -2400 },
+  ID: { staffRN: 82670, staffHourly: 40, travelWeekly: 2050, travelAnnual: 106600, shortage: 'shortage', projectedGap: -1900 },
+  IL: { staffRN: 88760, staffHourly: 43, travelWeekly: 2200, travelAnnual: 114400, shortage: 'shortage', projectedGap: -12300 },
+  IN: { staffRN: 80250, staffHourly: 39, travelWeekly: 2000, travelAnnual: 104000, shortage: 'shortage', projectedGap: -6400 },
+  IA: { staffRN: 77780, staffHourly: 37, travelWeekly: 1950, travelAnnual: 101400, shortage: 'surplus', projectedGap: 2800 },
+  KS: { staffRN: 79180, staffHourly: 38, travelWeekly: 1980, travelAnnual: 102960, shortage: 'balanced', projectedGap: -1100 },
+  KY: { staffRN: 78650, staffHourly: 38, travelWeekly: 1970, travelAnnual: 102440, shortage: 'shortage', projectedGap: -4500 },
+  LA: { staffRN: 79450, staffHourly: 38, travelWeekly: 2020, travelAnnual: 105040, shortage: 'shortage', projectedGap: -5600 },
+  ME: { staffRN: 86780, staffHourly: 42, travelWeekly: 2150, travelAnnual: 111800, shortage: 'shortage', projectedGap: -1400 },
+  MD: { staffRN: 95280, staffHourly: 46, travelWeekly: 2350, travelAnnual: 122200, shortage: 'balanced', projectedGap: -800 },
+  MA: { staffRN: 110449, staffHourly: 53, travelWeekly: 2420, travelAnnual: 125840, shortage: 'balanced', projectedGap: 1500 },
+  MI: { staffRN: 85760, staffHourly: 41, travelWeekly: 2100, travelAnnual: 109200, shortage: 'shortage', projectedGap: -7200 },
+  MN: { staffRN: 96580, staffHourly: 46, travelWeekly: 2280, travelAnnual: 118560, shortage: 'surplus', projectedGap: 3200 },
+  MS: { staffRN: 79470, staffHourly: 38, travelWeekly: 1900, travelAnnual: 98800, shortage: 'shortage', projectedGap: -3800 },
+  MO: { staffRN: 79890, staffHourly: 38, travelWeekly: 2000, travelAnnual: 104000, shortage: 'shortage', projectedGap: -5100 },
+  MT: { staffRN: 83450, staffHourly: 40, travelWeekly: 2100, travelAnnual: 109200, shortage: 'shortage', projectedGap: -1200 },
+  NE: { staffRN: 80120, staffHourly: 39, travelWeekly: 2000, travelAnnual: 104000, shortage: 'balanced', projectedGap: -600 },
+  NV: { staffRN: 102580, staffHourly: 49, travelWeekly: 2350, travelAnnual: 122200, shortage: 'shortage', projectedGap: -4200 },
+  NH: { staffRN: 89760, staffHourly: 43, travelWeekly: 2200, travelAnnual: 114400, shortage: 'balanced', projectedGap: 400 },
+  NJ: { staffRN: 102340, staffHourly: 49, travelWeekly: 2464, travelAnnual: 128128, shortage: 'shortage', projectedGap: -6800 },
+  NM: { staffRN: 88450, staffHourly: 43, travelWeekly: 2150, travelAnnual: 111800, shortage: 'shortage', projectedGap: -2100 },
+  NY: { staffRN: 110642, staffHourly: 53, travelWeekly: 2380, travelAnnual: 123760, shortage: 'shortage', projectedGap: -18200 },
+  NC: { staffRN: 84670, staffHourly: 41, travelWeekly: 2080, travelAnnual: 108160, shortage: 'shortage', projectedGap: -12500 },
+  ND: { staffRN: 107006, staffHourly: 51, travelWeekly: 2200, travelAnnual: 114400, shortage: 'surplus', projectedGap: 1100 },
+  OH: { staffRN: 82340, staffHourly: 40, travelWeekly: 2050, travelAnnual: 106600, shortage: 'shortage', projectedGap: -9400 },
+  OK: { staffRN: 78920, staffHourly: 38, travelWeekly: 1980, travelAnnual: 102960, shortage: 'shortage', projectedGap: -3600 },
+  OR: { staffRN: 120470, staffHourly: 58, travelWeekly: 2380, travelAnnual: 123760, shortage: 'balanced', projectedGap: -1800 },
+  PA: { staffRN: 88450, staffHourly: 43, travelWeekly: 2180, travelAnnual: 113360, shortage: 'shortage', projectedGap: -11200 },
+  PR: { staffRN: 41470, staffHourly: 20, travelWeekly: 1600, travelAnnual: 83200, shortage: 'shortage', projectedGap: -2800 },
+  RI: { staffRN: 95680, staffHourly: 46, travelWeekly: 2490, travelAnnual: 129480, shortage: 'balanced', projectedGap: 200 },
+  SC: { staffRN: 82450, staffHourly: 40, travelWeekly: 2050, travelAnnual: 106600, shortage: 'shortage', projectedGap: -5400 },
+  SD: { staffRN: 72210, staffHourly: 35, travelWeekly: 2481, travelAnnual: 129012, shortage: 'surplus', projectedGap: 800 },
+  TN: { staffRN: 79680, staffHourly: 38, travelWeekly: 2020, travelAnnual: 105040, shortage: 'shortage', projectedGap: -7800 },
+  TX: { staffRN: 91450, staffHourly: 44, travelWeekly: 2180, travelAnnual: 113360, shortage: 'shortage', projectedGap: -28500 },
+  UT: { staffRN: 85670, staffHourly: 41, travelWeekly: 2100, travelAnnual: 109200, shortage: 'shortage', projectedGap: -3400 },
+  VT: { staffRN: 107529, staffHourly: 52, travelWeekly: 2200, travelAnnual: 114400, shortage: 'balanced', projectedGap: -300 },
+  VA: { staffRN: 89450, staffHourly: 43, travelWeekly: 2150, travelAnnual: 111800, shortage: 'shortage', projectedGap: -7600 },
+  WA: { staffRN: 115740, staffHourly: 56, travelWeekly: 2420, travelAnnual: 125840, shortage: 'balanced', projectedGap: -2400 },
+  WV: { staffRN: 78340, staffHourly: 38, travelWeekly: 1950, travelAnnual: 101400, shortage: 'shortage', projectedGap: -2200 },
+  WI: { staffRN: 87650, staffHourly: 42, travelWeekly: 2100, travelAnnual: 109200, shortage: 'balanced', projectedGap: 600 },
+  WY: { staffRN: 84760, staffHourly: 41, travelWeekly: 2080, travelAnnual: 108160, shortage: 'shortage', projectedGap: -700 }
+};
+
+// Travel nurse specialty pay (weekly rates)
+const SPECIALTY_PAY = {
+  'CRNA': { weekly: 4996, annual: 259707, demand: 'very high' },
+  'Cath Lab': { weekly: 4341, annual: 225732, demand: 'very high' },
+  'NICU': { weekly: 2449, annual: 127391, demand: 'high' },
+  'NP': { weekly: 2506, annual: 130295, demand: 'high' },
+  'ICU': { weekly: 2426, annual: 126164, demand: 'very high' },
+  'Telemetry': { weekly: 2321, annual: 120690, demand: 'high' },
+  'L&D': { weekly: 2400, annual: 124800, demand: 'high' },
+  'Oncology': { weekly: 2300, annual: 119600, demand: 'high' },
+  'Med-Surg': { weekly: 2118, annual: 110165, demand: 'moderate' },
+  'OR': { weekly: 1818, annual: 94573, demand: 'high' },
+  'ER': { weekly: 1668, annual: 86737, demand: 'very high' },
+  'Psych': { weekly: 1950, annual: 101400, demand: 'high' },
+  'Home Health': { weekly: 1700, annual: 88400, demand: 'moderate' },
+  'Rehab': { weekly: 1800, annual: 93600, demand: 'moderate' }
+};
+
+// National workforce projections (HRSA/BLS data)
+const WORKFORCE_PROJECTIONS = {
+  currentYear: 2026,
+  nationalSupply: 3150000,
+  nationalDemand: 3450000,
+  projectedGap2030: -350000,
+  projectedGap2035: -500000,
+  growthRate: 6, // percent through 2032
+  retirementRate: 4.5, // percent annually
+  avgAge: 52,
+  medianTenure: 8.5
+};
+
+const renderStrategicReview = () => {
+  const container = document.getElementById('strategic-review-content');
+  if (!container) return;
+
+  // Calculate market metrics from loaded notices
+  const totalLayoffs = currentNotices.reduce((sum, n) => sum + (n.employees_affected || 0), 0);
+  const avgNursingScore = currentNotices.length > 0
+    ? Math.round(currentNotices.reduce((sum, n) => sum + (n.nursing_score || 0), 0) / currentNotices.length)
+    : 0;
+
+  // Group notices by state for analysis
+  const stateLayoffs = {};
+  currentNotices.forEach(n => {
+    if (!stateLayoffs[n.state]) stateLayoffs[n.state] = { count: 0, affected: 0 };
+    stateLayoffs[n.state].count++;
+    stateLayoffs[n.state].affected += n.employees_affected || 0;
+  });
+
+  // Calculate strategic opportunities
+  const opportunities = [];
+  const risks = [];
+
+  Object.entries(stateLayoffs).forEach(([state, data]) => {
+    const salaryData = NURSING_SALARY_DATA[state];
+    if (!salaryData) return;
+
+    const travelPremium = salaryData.travelAnnual - salaryData.staffRN;
+    const estimatedNurses = Math.round(data.affected * 0.35); // ~35% nursing in healthcare layoffs
+
+    if (salaryData.shortage === 'shortage' && estimatedNurses > 50) {
+      opportunities.push({
+        state,
+        estimatedNurses,
+        travelPremium,
+        avgSalary: salaryData.staffRN,
+        travelRate: salaryData.travelWeekly,
+        projectedGap: salaryData.projectedGap,
+        priority: Math.abs(salaryData.projectedGap) + estimatedNurses
+      });
+    }
+
+    if (data.count >= 3 || data.affected >= 200) {
+      risks.push({
+        state,
+        noticeCount: data.count,
+        totalAffected: data.affected,
+        shortage: salaryData.shortage,
+        projectedGap: salaryData.projectedGap
+      });
+    }
+  });
+
+  opportunities.sort((a, b) => b.priority - a.priority);
+  risks.sort((a, b) => b.totalAffected - a.totalAffected);
+
+  // Generate executive summary
+  const shortageStates = Object.entries(NURSING_SALARY_DATA).filter(([_, d]) => d.shortage === 'shortage').length;
+  const surplusStates = Object.entries(NURSING_SALARY_DATA).filter(([_, d]) => d.shortage === 'surplus').length;
+  const totalProjectedGap = Object.values(NURSING_SALARY_DATA).reduce((sum, d) => sum + d.projectedGap, 0);
+
+  container.innerHTML = `
+    <div class="strategic-grid">
+      <!-- Executive Summary Card -->
+      <div class="strategic-card executive-summary">
+        <div class="strategic-card-header">
+          <h4>Executive Summary</h4>
+          <span class="strategic-badge critical">Q1 2026</span>
+        </div>
+        <div class="strategic-metrics">
+          <div class="strategic-metric">
+            <span class="metric-value">${Math.abs(totalProjectedGap).toLocaleString()}</span>
+            <span class="metric-label">Projected RN Shortage (2030)</span>
+          </div>
+          <div class="strategic-metric">
+            <span class="metric-value">${shortageStates}</span>
+            <span class="metric-label">States with Shortages</span>
+          </div>
+          <div class="strategic-metric">
+            <span class="metric-value">${surplusStates}</span>
+            <span class="metric-label">States with Surplus</span>
+          </div>
+          <div class="strategic-metric">
+            <span class="metric-value">${WORKFORCE_PROJECTIONS.growthRate}%</span>
+            <span class="metric-label">Job Growth (2022-2032)</span>
+          </div>
+        </div>
+        <div class="strategic-insight">
+          <strong>Key Insight:</strong> The nursing workforce faces a critical shortage of approximately
+          ${Math.abs(WORKFORCE_PROJECTIONS.projectedGap2030).toLocaleString()} RNs by 2030, driven by
+          an aging workforce (median age ${WORKFORCE_PROJECTIONS.avgAge}) and ${WORKFORCE_PROJECTIONS.retirementRate}%
+          annual retirement rate. Recent layoff activity in ${Object.keys(stateLayoffs).length} states presents
+          strategic recruitment opportunities.
+        </div>
+      </div>
+
+      <!-- Salary Comparison Card -->
+      <div class="strategic-card salary-comparison">
+        <div class="strategic-card-header">
+          <h4>Staff vs Travel Nurse Compensation</h4>
+          <span class="strategic-badge">National Data</span>
+        </div>
+        <div class="salary-table-wrapper">
+          <table class="salary-table">
+            <thead>
+              <tr>
+                <th>State</th>
+                <th>Staff RN</th>
+                <th>Travel Weekly</th>
+                <th>Travel Annual</th>
+                <th>Premium</th>
+                <th>Market</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${Object.entries(NURSING_SALARY_DATA)
+                .sort((a, b) => b[1].staffRN - a[1].staffRN)
+                .slice(0, 15)
+                .map(([state, data]) => `
+                  <tr class="${data.shortage === 'shortage' ? 'shortage-row' : data.shortage === 'surplus' ? 'surplus-row' : ''}">
+                    <td><strong>${state}</strong></td>
+                    <td>$${data.staffRN.toLocaleString()}</td>
+                    <td>$${data.travelWeekly.toLocaleString()}/wk</td>
+                    <td>$${data.travelAnnual.toLocaleString()}</td>
+                    <td class="${data.travelAnnual - data.staffRN > 20000 ? 'premium-high' : 'premium-low'}">
+                      +$${(data.travelAnnual - data.staffRN).toLocaleString()}
+                    </td>
+                    <td>
+                      <span class="market-badge ${data.shortage}">${data.shortage}</span>
+                    </td>
+                  </tr>
+                `).join('')}
+            </tbody>
+          </table>
+        </div>
+        <div class="salary-legend">
+          <span class="legend-item"><span class="dot shortage"></span> Shortage Market</span>
+          <span class="legend-item"><span class="dot surplus"></span> Surplus Market</span>
+          <span class="legend-item"><span class="dot balanced"></span> Balanced</span>
+        </div>
+      </div>
+
+      <!-- Specialty Pay Card -->
+      <div class="strategic-card specialty-pay">
+        <div class="strategic-card-header">
+          <h4>Travel Nurse Pay by Specialty</h4>
+          <span class="strategic-badge">2026 Rates</span>
+        </div>
+        <div class="specialty-list">
+          ${Object.entries(SPECIALTY_PAY)
+            .sort((a, b) => b[1].weekly - a[1].weekly)
+            .map(([specialty, data]) => `
+              <div class="specialty-row">
+                <div class="specialty-info">
+                  <span class="specialty-name">${specialty}</span>
+                  <span class="specialty-demand demand-${data.demand.replace(' ', '-')}">${data.demand} demand</span>
+                </div>
+                <div class="specialty-pay-info">
+                  <span class="specialty-weekly">$${data.weekly.toLocaleString()}/wk</span>
+                  <span class="specialty-annual">$${data.annual.toLocaleString()}/yr</span>
+                </div>
+              </div>
+            `).join('')}
+        </div>
+      </div>
+
+      <!-- Recruitment Opportunities Card -->
+      <div class="strategic-card opportunities">
+        <div class="strategic-card-header">
+          <h4>Strategic Recruitment Opportunities</h4>
+          <span class="strategic-badge opportunity">Based on WARN Data</span>
+        </div>
+        ${opportunities.length > 0 ? `
+          <div class="opportunity-list">
+            ${opportunities.slice(0, 8).map(opp => `
+              <div class="opportunity-row">
+                <div class="opp-state">
+                  <span class="state-code">${opp.state}</span>
+                  <span class="state-name">${STATE_NAMES[opp.state] || opp.state}</span>
+                </div>
+                <div class="opp-metrics">
+                  <span class="opp-metric">
+                    <span class="opp-value">${opp.estimatedNurses}</span>
+                    <span class="opp-label">Est. Nurses</span>
+                  </span>
+                  <span class="opp-metric">
+                    <span class="opp-value">$${opp.travelRate.toLocaleString()}</span>
+                    <span class="opp-label">Travel Rate/wk</span>
+                  </span>
+                  <span class="opp-metric">
+                    <span class="opp-value">${Math.abs(opp.projectedGap).toLocaleString()}</span>
+                    <span class="opp-label">Projected Gap</span>
+                  </span>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        ` : `
+          <div class="empty-state">Apply filters to identify recruitment opportunities from layoff data.</div>
+        `}
+      </div>
+
+      <!-- Risk Assessment Card -->
+      <div class="strategic-card risk-assessment">
+        <div class="strategic-card-header">
+          <h4>Market Risk Assessment</h4>
+          <span class="strategic-badge warning">Monitor</span>
+        </div>
+        ${risks.length > 0 ? `
+          <div class="risk-list">
+            ${risks.slice(0, 6).map(risk => `
+              <div class="risk-row ${risk.shortage}">
+                <div class="risk-state">
+                  <span class="state-code">${risk.state}</span>
+                  <span class="notice-count">${risk.noticeCount} notices</span>
+                </div>
+                <div class="risk-details">
+                  <span class="risk-affected">${risk.totalAffected.toLocaleString()} affected</span>
+                  <span class="risk-projection">
+                    ${risk.projectedGap > 0 ? 'Surplus' : 'Shortage'}: ${Math.abs(risk.projectedGap).toLocaleString()}
+                  </span>
+                </div>
+                <div class="risk-indicator ${risk.noticeCount >= 5 ? 'high' : risk.noticeCount >= 3 ? 'medium' : 'low'}">
+                  ${risk.noticeCount >= 5 ? 'High Activity' : risk.noticeCount >= 3 ? 'Moderate' : 'Low'}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        ` : `
+          <div class="empty-state">No significant risk patterns detected in current filters.</div>
+        `}
+      </div>
+
+      <!-- Workforce Projections Card -->
+      <div class="strategic-card projections">
+        <div class="strategic-card-header">
+          <h4>National Workforce Projections</h4>
+          <span class="strategic-badge">HRSA/BLS Data</span>
+        </div>
+        <div class="projection-timeline">
+          <div class="projection-year">
+            <span class="year">2026</span>
+            <div class="projection-bar">
+              <div class="supply-bar" style="width: 91%;">Supply: 3.15M</div>
+              <div class="demand-bar" style="width: 100%;">Demand: 3.45M</div>
+            </div>
+            <span class="gap negative">Gap: -300K</span>
+          </div>
+          <div class="projection-year">
+            <span class="year">2030</span>
+            <div class="projection-bar">
+              <div class="supply-bar" style="width: 88%;">Supply: 3.30M</div>
+              <div class="demand-bar" style="width: 100%;">Demand: 3.65M</div>
+            </div>
+            <span class="gap negative">Gap: -350K</span>
+          </div>
+          <div class="projection-year">
+            <span class="year">2035</span>
+            <div class="projection-bar">
+              <div class="supply-bar" style="width: 85%;">Supply: 3.40M</div>
+              <div class="demand-bar" style="width: 100%;">Demand: 3.90M</div>
+            </div>
+            <span class="gap negative">Gap: -500K</span>
+          </div>
+        </div>
+        <div class="projection-factors">
+          <div class="factor">
+            <span class="factor-icon">👴</span>
+            <span class="factor-text">Median RN Age: ${WORKFORCE_PROJECTIONS.avgAge} years</span>
+          </div>
+          <div class="factor">
+            <span class="factor-icon">🚪</span>
+            <span class="factor-text">Annual Retirement: ${WORKFORCE_PROJECTIONS.retirementRate}%</span>
+          </div>
+          <div class="factor">
+            <span class="factor-icon">📈</span>
+            <span class="factor-text">Job Growth: ${WORKFORCE_PROJECTIONS.growthRate}% through 2032</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+};
+
+const initStrategicReview = () => {
+  const toggleBtn = document.getElementById('strategic-toggle');
+  const content = document.getElementById('strategic-review-content');
+  const toggleIcon = toggleBtn?.querySelector('.strategic-toggle-icon');
+
+  toggleBtn?.addEventListener('click', () => {
+    content?.classList.toggle('open');
+    if (toggleIcon) {
+      toggleIcon.textContent = content?.classList.contains('open') ? '−' : '+';
+    }
+    if (content?.classList.contains('open')) {
+      renderStrategicReview();
+    }
+  });
+
+  // Re-render when filters change
+  const originalApplyFilters = applyFilters;
+  window.applyFiltersWithStrategic = () => {
+    originalApplyFilters();
+    if (content?.classList.contains('open')) {
+      renderStrategicReview();
+    }
+  };
+};
+
+// Update initApp to include Strategic Review
+const originalInitApp = initApp;
+
 // Start the app if already authenticated
 if (checkAuth()) {
-  initApp();
+  initApp().then(() => {
+    initStrategicReview();
+  });
 }
 
 
