@@ -483,21 +483,34 @@ const renderEmployers = (data) => {
 const loadInsights = async () => {
   try {
     const [alerts, geo, talent, employers] = await Promise.all([
-      fetchJson('/data/alerts.json'),
-      fetchJson('/data/geo.json'),
-      fetchJson('/data/talent.json'),
-      fetchJson('/data/employers.json')
+      fetchJson('/insights/alerts'),
+      fetchJson('/insights/geo'),
+      fetchJson('/insights/talent'),
+      fetchJson('/insights/employers')
     ]);
     renderAlerts(alerts);
     renderHeatmap(geo);
     renderTalent(talent);
     renderEmployers(employers);
   } catch (err) {
-    console.warn('Insights unavailable in API mode:', err);
-    renderInsightFallback(alertsList, 'Insights unavailable.');
-    renderInsightFallback(heatmapList, 'Insights unavailable.');
-    renderInsightFallback(talentList, 'Insights unavailable.');
-    renderInsightFallback(employerList, 'Insights unavailable.');
+    try {
+      const [alerts, geo, talent, employers] = await Promise.all([
+        fetchJson('/data/alerts.json'),
+        fetchJson('/data/geo.json'),
+        fetchJson('/data/talent.json'),
+        fetchJson('/data/employers.json')
+      ]);
+      renderAlerts(alerts);
+      renderHeatmap(geo);
+      renderTalent(talent);
+      renderEmployers(employers);
+    } catch (fallbackErr) {
+      console.warn('Insights unavailable in API mode:', fallbackErr);
+      renderInsightFallback(alertsList, 'Insights unavailable.');
+      renderInsightFallback(heatmapList, 'Insights unavailable.');
+      renderInsightFallback(talentList, 'Insights unavailable.');
+      renderInsightFallback(employerList, 'Insights unavailable.');
+    }
   }
 };
 

@@ -180,16 +180,21 @@ function normalizeCursorDate(value: string | Date): string {
 }
 
 function mapNoticeForApi(n: NormalizedWarnNotice) {
+  const leadTimeDays = calculateLeadTimeDays(n.noticeDate, n.effectiveDate);
+  const employerId = buildEmployerId(n.state, n.employerName, n.parentSystem);
   return {
     id: n.id,
     state: n.state,
     employer_name: n.employerName,
-    parent_system: n.parentSystem,
+    parent_system: n.parentSystem ?? null,
+    employer_id: employerId,
+    facility_name: n.employerName,
     city: n.city,
     county: n.county,
     address: n.address,
     notice_date: n.noticeDate,
     effective_date: n.effectiveDate,
+    lead_time_days: leadTimeDays,
     employees_affected: n.employeesAffected,
     naics: n.naics,
     reason: n.reason,
@@ -202,8 +207,186 @@ function mapNoticeForApi(n: NormalizedWarnNotice) {
     nursing_label: n.nursingImpact?.label ?? 'Unclear',
     nursing_signals: JSON.stringify(n.nursingImpact?.signals ?? []),
     nursing_keywords: JSON.stringify(n.nursingImpact?.keywordsFound ?? []),
+    nursing_role_mix: n.nursingImpact?.roleMix ?? null,
+    nursing_care_setting: n.nursingImpact?.careSetting ?? null,
+    nursing_specialties: JSON.stringify(n.nursingImpact?.specialties ?? []),
+    nursing_explanations: JSON.stringify(n.nursingImpact?.explanations ?? []),
     retrieved_at: n.source.retrievedAt
   };
+}
+
+type InsightNotice = {
+  id: string;
+  state: string;
+  employer_name: string;
+  parent_system: string | null;
+  facility_name: string | null;
+  employer_id: string;
+  city: string | null;
+  notice_date: string | null;
+  effective_date: string | null;
+  lead_time_days: number | null;
+  employees_affected: number | null;
+  nursing_score: number;
+  nursing_specialties: string[];
+  raw_text: string | null;
+  reason: string | null;
+  retrieved_at: string;
+};
+
+const EMPLOYER_SUFFIXES = [
+  'inc', 'llc', 'l.l.c', 'co', 'corp', 'corporation', 'company',
+  'ltd', 'plc', 'lp', 'llp', 'pllc', 'pc', 'limited'
+];
+
+function normalizeEmployerName(value: string): string {
+  const lowered = value.toLowerCase();
+  const noPunct = lowered.replace(/[^a-z0-9\\s]/g, ' ');
+  const tokens = noPunct.split(' ').filter(Boolean).filter(t => !EMPLOYER_SUFFIXES.includes(t));
+  return tokens.join(' ').trim();
+}
+
+function slugify(value: string): string {
+  return value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
+function inferParentSystem(name: string): string | null {
+  const lowered = name.toLowerCase();
+  const matches = ['health system', 'healthcare', 'health care', 'health', 'medical group'];
+  for (const marker of matches) {
+    const idx = lowered.indexOf(marker);
+    if (idx >= 0) {
+      return name.slice(0, idx + marker.length).trim();
+    }
+  }
+  const splitters = [' - ', ' – ', ' — ', ' / '];
+  for (const splitter of splitters) {
+    if (name.includes(splitter)) {
+      return name.split(splitter)[0].trim();
+    }
+  }
+  return null;
+}
+
+function buildEmployerId(state: string, employerName: string, parentSystem?: string | null): string {
+  const base = parentSystem || employerName;
+  const normalized = normalizeEmployerName(base || employerName);
+  return `${state}:${slugify(normalized || employerName)}`;
+}
+
+function calculateLeadTimeDays(noticeDate?: string | null, effectiveDate?: string | null): number | null {
+  if (!noticeDate || !effectiveDate) return null;
+  const start = new Date(noticeDate);
+  const end = new Date(effectiveDate);
+  if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) return null;
+  const diffMs = end.getTime() - start.getTime();
+  return Math.round(diffMs / 86400000);
+}
+
+function hasSilentSignals(reason?: string | null, rawText?: string | null): boolean {
+  const text = `${reason ?? ''} ${rawText ?? ''}`.toLowerCase();
+  const triggers = ['unit closure', 'bed reduction', 'service line', 'ward closure', 'closure'];
+  return triggers.some(t => text.includes(t));
+}
+
+function rowToInsightNotice(row: any): InsightNotice {
+  const employerName = row.employer_name ?? row.employerName ?? '';
+  const parentSystem = row.parent_system ?? row.parentSystem ?? null;
+  const facilityName = row.facility_name ?? employerName ?? null;
+  const employerId = row.employer_id ?? buildEmployerId(row.state, employerName, parentSystem);
+  const noticeDate = row.notice_date ?? row.noticeDate ?? null;
+  const effectiveDate = row.effective_date ?? row.effectiveDate ?? null;
+  const leadTimeDays = row.lead_time_days ?? calculateLeadTimeDays(noticeDate, effectiveDate);
+  const nursingSpecialties = (() => {
+    const raw = row.nursing_specialties ?? row.nursingSpecialties;
+    if (!raw) return [];
+    if (Array.isArray(raw)) return raw;
+    try {
+      return JSON.parse(raw);
+    } catch {
+      return [];
+    }
+  })();
+  return {
+    id: row.id,
+    state: row.state,
+    employer_name: employerName,
+    parent_system: parentSystem,
+    facility_name: facilityName,
+    employer_id: employerId,
+    city: row.city ?? null,
+    notice_date: noticeDate,
+    effective_date: effectiveDate,
+    lead_time_days: leadTimeDays,
+    employees_affected: row.employees_affected ?? row.employeesAffected ?? null,
+    nursing_score: row.nursing_score ?? row.nursingScore ?? 0,
+    nursing_specialties: nursingSpecialties,
+    raw_text: row.raw_text ?? row.rawText ?? null,
+    reason: row.reason ?? null,
+    retrieved_at: row.retrieved_at ?? row.retrievedAt ?? new Date().toISOString()
+  };
+}
+
+function normalizedToInsightNotice(n: NormalizedWarnNotice): InsightNotice {
+  const employerName = n.employerName;
+  const parentSystem = n.parentSystem ?? inferParentSystem(employerName);
+  const noticeDate = n.noticeDate ?? null;
+  const effectiveDate = n.effectiveDate ?? null;
+  return {
+    id: n.id,
+    state: n.state,
+    employer_name: employerName,
+    parent_system: parentSystem,
+    facility_name: employerName,
+    employer_id: buildEmployerId(n.state, employerName, parentSystem),
+    city: n.city ?? null,
+    notice_date: noticeDate,
+    effective_date: effectiveDate,
+    lead_time_days: calculateLeadTimeDays(noticeDate, effectiveDate),
+    employees_affected: n.employeesAffected ?? null,
+    nursing_score: n.nursingImpact?.score ?? 0,
+    nursing_specialties: n.nursingImpact?.specialties ?? [],
+    raw_text: n.rawText ?? null,
+    reason: n.reason ?? null,
+    retrieved_at: n.source.retrievedAt
+  };
+}
+
+async function getInsightNotices(): Promise<InsightNotice[]> {
+  if (!pool) {
+    return cachedNotices.map(normalizedToInsightNotice);
+  }
+  const rows = await query(`
+    SELECT id, state, employer_name, parent_system, city, notice_date, effective_date,
+           employees_affected, nursing_score, raw_text, reason, retrieved_at
+    FROM warn_notices
+  `);
+  return rows.map(rowToInsightNotice);
+}
+
+async function getRecentInsightNotices(days: number): Promise<InsightNotice[]> {
+  const sinceDate = new Date(Date.now() - days * 86400000).toISOString();
+  if (!pool) {
+    return cachedNotices
+      .filter(n => {
+        const dateValue = n.noticeDate || n.source.retrievedAt;
+        return dateValue >= sinceDate;
+      })
+      .map(normalizedToInsightNotice);
+  }
+  const rows = await query(`
+    SELECT id, state, employer_name, parent_system, city, notice_date, effective_date,
+           employees_affected, nursing_score, raw_text, reason, retrieved_at
+    FROM warn_notices
+    WHERE COALESCE(notice_date, retrieved_at) >= $1
+  `, [sinceDate]);
+  return rows.map(rowToInsightNotice);
+}
+
+function riskLevelFromCount(count: number): 'green' | 'yellow' | 'red' {
+  if (count >= 20) return 'red';
+  if (count >= 5) return 'yellow';
+  return 'green';
 }
 
 function encodeCursor(payload: CursorPayload): string {
@@ -448,7 +631,7 @@ app.get('/notices', requirePasscode, apiLimiter, async (req, res) => {
   const limitRaw = sanitizeString(String(req.query.limit ?? '100'), 10).toLowerCase();
   const noLimit = ['all', '0', 'none'].includes(limitRaw);
   const limit = noLimit ? 0 : sanitizeNumber(limitRaw, 1, 500, 100);
-  const minScore = sanitizeNumber(req.query.minScore, 0, 100, 0);
+  const minScore = sanitizeNumber(String(req.query.minScore ?? '0'), 0, 100, 0);
   const stream = sanitizeString(String(req.query.stream ?? ''), 5).toLowerCase() === '1';
   const cursor = noLimit ? null : decodeCursor(String(req.query.cursor ?? ''));
 
@@ -767,6 +950,189 @@ app.get('/states', requirePasscode, apiLimiter, async (_req, res) => {
     `SELECT state, COUNT(*)::int as count FROM warn_notices GROUP BY state ORDER BY state ASC`
   );
   res.json({ states: rows });
+});
+
+app.get('/insights/alerts', requirePasscode, apiLimiter, async (_req, res) => {
+  const recent = await getRecentInsightNotices(14);
+  const allNotices = await getInsightNotices();
+  const leadMap = new Map<string, { sum: number; count: number }>();
+
+  for (const notice of allNotices) {
+    if (typeof notice.lead_time_days !== 'number') continue;
+    const entry = leadMap.get(notice.employer_id) ?? { sum: 0, count: 0 };
+    entry.sum += notice.lead_time_days;
+    entry.count += 1;
+    leadMap.set(notice.employer_id, entry);
+  }
+
+  const alerts = recent.map(notice => {
+    const entry = leadMap.get(notice.employer_id);
+    const expected = entry ? Math.round(entry.sum / entry.count) : null;
+    const leadTime = notice.lead_time_days ?? null;
+    const earlyWarning = expected !== null && leadTime !== null && leadTime <= expected - 2;
+    return {
+      notice_id: notice.id,
+      state: notice.state,
+      employer_name: notice.employer_name,
+      parent_system: notice.parent_system,
+      facility_name: notice.facility_name,
+      notice_date: notice.notice_date,
+      effective_date: notice.effective_date,
+      lead_time_days: leadTime,
+      expected_lead_days: expected,
+      early_warning: Boolean(earlyWarning),
+      nursing_score: notice.nursing_score,
+      silent_signal_flag: hasSilentSignals(notice.reason, notice.raw_text)
+    };
+  });
+
+  res.json({ alerts, count: alerts.length });
+});
+
+app.get('/insights/geo', requirePasscode, apiLimiter, async (_req, res) => {
+  const recent = await getRecentInsightNotices(90);
+  const geoMap = new Map<string, { state: string; city: string | null; total: number }>();
+
+  for (const notice of recent) {
+    const city = notice.city ?? null;
+    const key = `${notice.state}:${city ?? 'unknown'}`;
+    const entry = geoMap.get(key) ?? { state: notice.state, city, total: 0 };
+    entry.total += 1;
+    geoMap.set(key, entry);
+  }
+
+  const locations = Array.from(geoMap.values()).map(entry => ({
+    state: entry.state,
+    city: entry.city,
+    total_notices: entry.total,
+    notices_last_90_days: entry.total,
+    risk_level: riskLevelFromCount(entry.total)
+  }));
+
+  res.json({ locations, count: locations.length });
+});
+
+app.get('/insights/talent', requirePasscode, apiLimiter, async (_req, res) => {
+  const recent = await getRecentInsightNotices(90);
+  const talentMap = new Map<string, { state: string; city: string | null; total: number; specialties: Set<string>; notices: number }>();
+
+  for (const notice of recent) {
+    const city = notice.city ?? null;
+    const key = `${notice.state}:${city ?? 'unknown'}`;
+    const entry = talentMap.get(key) ?? {
+      state: notice.state,
+      city,
+      total: 0,
+      specialties: new Set<string>(),
+      notices: 0
+    };
+    const estimated = typeof notice.employees_affected === 'number'
+      ? Math.round(notice.employees_affected * (notice.nursing_score / 100) * 0.7)
+      : 0;
+    entry.total += estimated;
+    entry.notices += 1;
+    notice.nursing_specialties.forEach(spec => entry.specialties.add(spec));
+    talentMap.set(key, entry);
+  }
+
+  const opportunities = Array.from(talentMap.values())
+    .map(entry => ({
+      state: entry.state,
+      city: entry.city,
+      estimated_nurses_available: entry.total,
+      specialties: Array.from(entry.specialties),
+      notices_count: entry.notices
+    }))
+    .sort((a, b) => b.estimated_nurses_available - a.estimated_nurses_available);
+
+  res.json({ opportunities, count: opportunities.length });
+});
+
+app.get('/insights/employers', requirePasscode, apiLimiter, async (_req, res) => {
+  const notices = await getInsightNotices();
+  const map = new Map<string, { employer_id: string; employer_name: string; parent_system: string | null; state: string; total: number; affectedSum: number; affectedCount: number; leadSum: number; leadCount: number; first: string | null; last: string | null }>();
+
+  for (const notice of notices) {
+    const entry = map.get(notice.employer_id) ?? {
+      employer_id: notice.employer_id,
+      employer_name: notice.employer_name,
+      parent_system: notice.parent_system,
+      state: notice.state,
+      total: 0,
+      affectedSum: 0,
+      affectedCount: 0,
+      leadSum: 0,
+      leadCount: 0,
+      first: null,
+      last: null
+    };
+    entry.total += 1;
+    if (typeof notice.employees_affected === 'number') {
+      entry.affectedSum += notice.employees_affected;
+      entry.affectedCount += 1;
+    }
+    if (typeof notice.lead_time_days === 'number') {
+      entry.leadSum += notice.lead_time_days;
+      entry.leadCount += 1;
+    }
+    const dateValue = notice.notice_date || notice.retrieved_at;
+    if (dateValue) {
+      if (!entry.first || dateValue < entry.first) entry.first = dateValue;
+      if (!entry.last || dateValue > entry.last) entry.last = dateValue;
+    }
+    map.set(notice.employer_id, entry);
+  }
+
+  const employers = Array.from(map.values()).map(entry => ({
+    employer_id: entry.employer_id,
+    employer_name: entry.employer_name,
+    parent_system: entry.parent_system,
+    state: entry.state,
+    total_notices: entry.total,
+    total_affected: entry.affectedSum,
+    avg_affected: entry.affectedCount ? Math.round(entry.affectedSum / entry.affectedCount) : 0,
+    avg_lead_time_days: entry.leadCount ? Math.round(entry.leadSum / entry.leadCount) : null,
+    first_notice_date: entry.first,
+    last_notice_date: entry.last
+  }));
+
+  res.json({ employers, count: employers.length });
+});
+
+app.get('/insights/systems', requirePasscode, apiLimiter, async (_req, res) => {
+  const notices = await getInsightNotices();
+  const map = new Map<string, { system_name: string; total: number; affected: number; states: Set<string>; last: string | null }>();
+
+  for (const notice of notices) {
+    if (!notice.parent_system) continue;
+    const entry = map.get(notice.parent_system) ?? {
+      system_name: notice.parent_system,
+      total: 0,
+      affected: 0,
+      states: new Set<string>(),
+      last: null
+    };
+    entry.total += 1;
+    if (typeof notice.employees_affected === 'number') {
+      entry.affected += notice.employees_affected;
+    }
+    entry.states.add(notice.state);
+    const dateValue = notice.notice_date || notice.retrieved_at;
+    if (dateValue && (!entry.last || dateValue > entry.last)) {
+      entry.last = dateValue;
+    }
+    map.set(notice.parent_system, entry);
+  }
+
+  const systems = Array.from(map.values()).map(entry => ({
+    system_name: entry.system_name,
+    total_notices: entry.total,
+    total_affected: entry.affected,
+    states: Array.from(entry.states),
+    last_notice_date: entry.last
+  }));
+
+  res.json({ systems, count: systems.length });
 });
 
 app.listen(PORT, () => {
