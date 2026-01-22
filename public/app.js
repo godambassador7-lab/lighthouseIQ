@@ -188,7 +188,11 @@ const buildQuery = () => {
   }
   if (sinceInput.value) params.set('since', sinceInput.value);
   if (scoreInput.value) params.set('minScore', scoreInput.value);
-  if (limitInput.value) params.set('limit', limitInput.value);
+  if (!limitInput.value || Number(limitInput.value) <= 0) {
+    params.set('limit', 'all');
+  } else {
+    params.set('limit', limitInput.value);
+  }
   return params.toString();
 };
 
@@ -670,7 +674,7 @@ clearBtn.addEventListener('click', () => {
   sinceInput.value = '';
   scoreInput.value = 0;
   scoreReadout.textContent = '0+';
-  limitInput.value = 100;
+  limitInput.value = '';
   // Update map highlights and reload
   if (currentMapView === 'map') {
     updateMapHighlights();
