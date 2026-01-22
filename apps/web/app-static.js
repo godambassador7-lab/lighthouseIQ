@@ -689,10 +689,10 @@ const filterNotices = () => {
     filtered = filtered.filter(n => (n.nursing_score || 0) >= minScore);
   }
 
-  // Apply limit
-  const limit = parseInt(limitInput.value) || 100;
-  if (limit > 0 && filtered.length > limit) {
-    filtered = filtered.slice(0, limit);
+  // Apply limit only when explicitly set
+  const limitValue = parseInt(limitInput.value, 10);
+  if (Number.isFinite(limitValue) && limitValue > 0 && filtered.length > limitValue) {
+    filtered = filtered.slice(0, limitValue);
   }
 
   // Merge custom notices
@@ -1328,7 +1328,7 @@ const initFilters = () => {
     sinceInput.value = '';
     scoreInput.value = 0;
     if (scoreReadout) scoreReadout.textContent = '0';
-    limitInput.value = 100;
+    limitInput.value = '';
     searchQuery = '';
     const searchInput = document.getElementById('notice-search');
     const clearSearchBtn = document.getElementById('clear-search');
