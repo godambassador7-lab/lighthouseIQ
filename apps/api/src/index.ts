@@ -241,6 +241,18 @@ const EMPLOYER_SUFFIXES = [
   'ltd', 'plc', 'lp', 'llp', 'pllc', 'pc', 'limited'
 ];
 
+const COUNTY_SEAT_BY_STATE: Record<string, Record<string, string>> = {
+  KY: {
+    christian: 'Hopkinsville'
+  },
+  MO: {
+    christian: 'Ozark'
+  },
+  IL: {
+    christian: 'Taylorville'
+  }
+};
+
 function normalizeEmployerName(value: string): string {
   const lowered = value.toLowerCase();
   const noPunct = lowered.replace(/[^a-z0-9\\s]/g, ' ');
@@ -252,7 +264,12 @@ function slugify(value: string): string {
   return value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
 
-function inferCityFromText(text: string, state: string): string | null {
+function normalizeCounty(value?: string | null): string {
+  if (!value) return '';
+  return value.toLowerCase().replace(/county/g, '').trim();
+}
+
+function extractCityFromText(text: string, state: string): string | null {
   if (!text) return null;
   const escapedState = state.replace(/[^A-Z]/g, '');
   if (!escapedState) return null;
@@ -262,6 +279,37 @@ function inferCityFromText(text: string, state: string): string | null {
     const city = match[1].trim();
     return city || null;
   }
+  return null;
+}
+
+function inferCityFromEmployerName(name: string): string | null {
+  if (!name) return null;
+  const trimmed = name.trim();
+  const cityLike = trimmed.match(/^([A-Z][A-Za-z.'-]+(?:\\s[A-Z][A-Za-z.'-]+)?)\\s+(Community|Regional|General|Memorial|County|City|Medical|Health|Healthcare|Clinic|Care|Center|Hospital)/);
+  if (cityLike && cityLike[1]) {
+    const candidate = cityLike[1].trim();
+    const blocked = ['Saint', 'St', 'Saints', 'The', 'New', 'Fort'];
+    if (!blocked.includes(candidate)) {
+      return candidate;
+    }
+  }
+  return null;
+}
+
+function inferCity(
+  state: string,
+  employerName: string,
+  county: string | undefined | null,
+  address: string | undefined | null,
+  rawText: string | undefined | null
+): string | null {
+  const fromAddress = extractCityFromText(`${address ?? ''} ${rawText ?? ''}`, state);
+  if (fromAddress) return fromAddress;
+  const fromEmployer = inferCityFromEmployerName(employerName);
+  if (fromEmployer) return fromEmployer;
+  const normalizedCounty = normalizeCounty(county);
+  const seat = COUNTY_SEAT_BY_STATE[state]?.[normalizedCounty];
+  if (seat) return seat;
   return null;
 }
 
@@ -314,7 +362,8 @@ function rowToInsightNotice(row: any): InsightNotice {
   const leadTimeDays = row.lead_time_days ?? calculateLeadTimeDays(noticeDate, effectiveDate);
   const naics = row.naics ?? null;
   const address = row.address ?? null;
-  const inferredCity = row.city ?? inferCityFromText(`${address ?? ''} ${row.raw_text ?? row.rawText ?? ''}`, row.state);
+  const county = row.county ?? null;
+  const inferredCity = row.city ?? inferCity(row.state, employerName, county, address, row.raw_text ?? row.rawText ?? '');
   const nursingSpecialties = (() => {
     const raw = row.nursing_specialties ?? row.nursingSpecialties;
     if (!raw) return [];
@@ -352,7 +401,7 @@ function normalizedToInsightNotice(n: NormalizedWarnNotice): InsightNotice {
   const parentSystem = n.parentSystem ?? inferParentSystem(employerName);
   const noticeDate = n.noticeDate ?? null;
   const effectiveDate = n.effectiveDate ?? null;
-  const inferredCity = n.city ?? inferCityFromText(`${n.address ?? ''} ${n.rawText ?? ''}`, n.state);
+  const inferredCity = n.city ?? inferCity(n.state, employerName, n.county, n.address, n.rawText);
   return {
     id: n.id,
     state: n.state,
@@ -380,7 +429,7 @@ async function getInsightNotices(): Promise<InsightNotice[]> {
     return cachedNotices.map(normalizedToInsightNotice);
   }
   const rows = await query(`
-    SELECT id, state, employer_name, parent_system, city, address, notice_date, effective_date,
+    SELECT id, state, employer_name, parent_system, city, address, county, notice_date, effective_date,
            employees_affected, nursing_score, raw_text, reason, retrieved_at, naics
     FROM warn_notices
   `);
@@ -398,7 +447,7 @@ async function getRecentInsightNotices(days: number): Promise<InsightNotice[]> {
       .map(normalizedToInsightNotice);
   }
   const rows = await query(`
-    SELECT id, state, employer_name, parent_system, city, address, notice_date, effective_date,
+    SELECT id, state, employer_name, parent_system, city, address, county, notice_date, effective_date,
            employees_affected, nursing_score, raw_text, reason, retrieved_at, naics
     FROM warn_notices
     WHERE COALESCE(notice_date, retrieved_at) >= $1

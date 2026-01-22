@@ -114,7 +114,24 @@ function slugify(value: string): string {
   return value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
 
-function inferCityFromText(text: string, state: string): string | null {
+const COUNTY_SEAT_BY_STATE: Record<string, Record<string, string>> = {
+  KY: {
+    christian: 'Hopkinsville'
+  },
+  MO: {
+    christian: 'Ozark'
+  },
+  IL: {
+    christian: 'Taylorville'
+  }
+};
+
+function normalizeCounty(value?: string | null): string {
+  if (!value) return '';
+  return value.toLowerCase().replace(/county/g, '').trim();
+}
+
+function extractCityFromText(text: string, state: string): string | null {
   if (!text) return null;
   const escapedState = state.replace(/[^A-Z]/g, '');
   if (!escapedState) return null;
@@ -124,6 +141,37 @@ function inferCityFromText(text: string, state: string): string | null {
     const city = match[1].trim();
     return city || null;
   }
+  return null;
+}
+
+function inferCityFromEmployerName(name: string): string | null {
+  if (!name) return null;
+  const trimmed = name.trim();
+  const cityLike = trimmed.match(/^([A-Z][A-Za-z.'-]+(?:\\s[A-Z][A-Za-z.'-]+)?)\\s+(Community|Regional|General|Memorial|County|City|Medical|Health|Healthcare|Clinic|Care|Center|Hospital)/);
+  if (cityLike && cityLike[1]) {
+    const candidate = cityLike[1].trim();
+    const blocked = ['Saint', 'St', 'Saints', 'The', 'New', 'Fort'];
+    if (!blocked.includes(candidate)) {
+      return candidate;
+    }
+  }
+  return null;
+}
+
+function inferCity(
+  state: string,
+  employerName: string,
+  county: string | undefined,
+  address: string | undefined,
+  rawText: string | undefined
+): string | null {
+  const fromAddress = extractCityFromText(`${address ?? ''} ${rawText ?? ''}`, state);
+  if (fromAddress) return fromAddress;
+  const fromEmployer = inferCityFromEmployerName(employerName);
+  if (fromEmployer) return fromEmployer;
+  const normalizedCounty = normalizeCounty(county);
+  const seat = COUNTY_SEAT_BY_STATE[state]?.[normalizedCounty];
+  if (seat) return seat;
   return null;
 }
 
@@ -194,7 +242,7 @@ function isHealthcareNotice(notice: NormalizedWarnNotice): boolean {
 function mapNoticeForExport(n: NormalizedWarnNotice) {
   const { facilityName, parentSystem, employerId } = inferEmployerHierarchy(n);
   const leadTimeDays = calculateLeadTimeDays(n);
-  const inferredCity = n.city ?? inferCityFromText(`${n.address ?? ''} ${n.rawText ?? ''}`, n.state);
+  const inferredCity = n.city ?? inferCity(n.state, n.employerName, n.county, n.address, n.rawText);
   return {
     id: n.id,
     state: n.state,
