@@ -769,9 +769,12 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
-  max-height: 320px;
+  height: 320px;
   overflow-y: auto;
   padding-right: 0.35rem;
+  scrollbar-gutter: stable;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 .insight-row {
