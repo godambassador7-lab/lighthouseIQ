@@ -114,6 +114,19 @@ function slugify(value: string): string {
   return value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
 
+function inferCityFromText(text: string, state: string): string | null {
+  if (!text) return null;
+  const escapedState = state.replace(/[^A-Z]/g, '');
+  if (!escapedState) return null;
+  const regex = new RegExp(`\\b([A-Za-z .'-]+),\\s*${escapedState}\\b`, 'i');
+  const match = text.match(regex);
+  if (match && match[1]) {
+    const city = match[1].trim();
+    return city || null;
+  }
+  return null;
+}
+
 function inferParentSystem(name: string): string | null {
   const lowered = name.toLowerCase();
   const matches = [
@@ -181,6 +194,7 @@ function isHealthcareNotice(notice: NormalizedWarnNotice): boolean {
 function mapNoticeForExport(n: NormalizedWarnNotice) {
   const { facilityName, parentSystem, employerId } = inferEmployerHierarchy(n);
   const leadTimeDays = calculateLeadTimeDays(n);
+  const inferredCity = n.city ?? inferCityFromText(`${n.address ?? ''} ${n.rawText ?? ''}`, n.state);
   return {
     id: n.id,
     state: n.state,
@@ -188,7 +202,7 @@ function mapNoticeForExport(n: NormalizedWarnNotice) {
     parent_system: parentSystem,
     facility_name: facilityName,
     employer_id: employerId,
-    city: n.city ?? null,
+    city: inferredCity,
     county: n.county ?? null,
     address: n.address ?? null,
     notice_date: n.noticeDate ?? null,
