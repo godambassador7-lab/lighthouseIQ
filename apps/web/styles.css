@@ -734,6 +734,13 @@ body {
 
 .premium-insights {
   margin: 2.5rem 0 3rem;
+  padding: 0 64px;
+}
+
+@media (max-width: 760px) {
+  .premium-insights {
+    padding: 0 24px;
+  }
 }
 
 .insight-grid {
@@ -1966,9 +1973,8 @@ input[type="range"] {
    Strategic Review Section
    ============================================================================= */
 .strategic-review-section {
-  max-width: 1400px;
-  margin: 0 auto 40px;
-  padding: 0 40px;
+  margin: 0 0 40px;
+  padding: 0 64px;
 }
 
 .strategic-header {
@@ -2492,10 +2498,6 @@ input[type="range"] {
 }
 
 @media (max-width: 900px) {
-  .strategic-review-section {
-    padding: 0 24px;
-  }
-
   .strategic-grid {
     grid-template-columns: 1fr;
   }
@@ -2513,6 +2515,12 @@ input[type="range"] {
     width: 100%;
     justify-content: space-around;
     margin-top: 12px;
+  }
+}
+
+@media (max-width: 760px) {
+  .strategic-review-section {
+    padding: 0 24px;
   }
 }
 
