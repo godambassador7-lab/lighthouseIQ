@@ -144,6 +144,26 @@
               </div>
               <input type="hidden" id="filter-state" value="" />
             </label>
+            <label class="full-width">
+              Nursing Specialty
+              <div class="multi-select specialty-select" id="specialty-multi-select">
+                <div class="multi-select-display" id="specialty-display">
+                  <span class="multi-select-placeholder">All specialties</span>
+                </div>
+                <div class="multi-select-dropdown specialty-dropdown" id="specialty-dropdown">
+                  <div class="multi-select-search">
+                    <input type="text" id="specialty-search" placeholder="Search specialties (e.g., ICU, OR, Peds)..." />
+                  </div>
+                  <div class="multi-select-actions">
+                    <button type="button" class="multi-select-action" id="select-all-specialties">Select All</button>
+                    <button type="button" class="multi-select-action" id="clear-all-specialties">Clear All</button>
+                  </div>
+                  <div class="multi-select-options specialty-options" id="specialty-options">
+                    <!-- Options will be populated by JS with categorized specialties -->
+                  </div>
+                </div>
+              </div>
+            </label>
             <label>
               Healthcare org keyword
               <input id="filter-org" type="text" placeholder="e.g., Ascension, HCA, Kaiser" />
