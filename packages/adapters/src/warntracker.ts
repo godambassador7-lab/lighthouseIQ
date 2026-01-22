@@ -88,50 +88,67 @@ export async function fetchWarntrackerNotices(params: {
   sourceName: string;
 }): Promise<NormalizedWarnNotice[]> {
   const { state, retrievedAt, sourceUrl, sourceName } = params;
-  const jinaUrl = `https://r.jina.ai/http://www.warntracker.com/?state=${state}`;
-  const res = await axios.get(jinaUrl, {
-    timeout: 30000,
-    headers: {
-      'User-Agent': 'Mozilla/5.0 (compatible; LNI-WARNBot/1.0)'
-    }
-  });
-  const rows = parseMarkdownTable(res.data as string);
+  const currentYear = new Date().getFullYear();
+  const urls = [
+    `https://r.jina.ai/http://www.warntracker.com/?state=${state}&year=${currentYear}`,
+    `https://r.jina.ai/http://www.warntracker.com/?state=${state}&year=${currentYear - 1}`,
+    `https://r.jina.ai/http://www.warntracker.com/?state=${state}`
+  ];
   const noticesById = new Map<string, NormalizedWarnNotice>();
 
-  for (const row of rows) {
-    const employerName = row['Company Name'] || row['Company'] || '';
-    if (!employerName) continue;
+  for (const url of urls) {
+    let rows: Array<Record<string, string>> = [];
+    try {
+      const res = await axios.get(url, {
+        timeout: 30000,
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (compatible; LNI-WARNBot/1.0)'
+        }
+      });
+      rows = parseMarkdownTable(res.data as string);
+    } catch {
+      rows = [];
+    }
 
-    const noticeDate = row['Notice Date']?.trim() || undefined;
-    const effectiveDate = row['Layoff date']?.trim() || undefined;
-    const employeesAffected = parseEmployees(row['# Laid off']);
-    const location = row['City/Jurisdiction'] || row['City'] || row['Location'];
-    const city = parseCityFromLocation(location);
-    const address = parseAddressFromLocation(location);
+    for (const row of rows) {
+      const employerName = row['Company Name'] || row['Company'] || '';
+      if (!employerName) continue;
 
-    const id = hashId([state, employerName, noticeDate || '', city || '', address || '']);
+      const noticeDate = row['Notice Date']?.trim() || undefined;
+      const effectiveDate = row['Layoff date']?.trim() || undefined;
+      const employeesAffected = parseEmployees(row['# Laid off']);
+      const location = row['City/Jurisdiction'] || row['City'] || row['Location'];
+      const city = parseCityFromLocation(location);
+      const address = parseAddressFromLocation(location);
 
-    const notice: NormalizedWarnNotice = {
-      id,
-      state,
-      employerName,
-      city,
-      address,
-      noticeDate,
-      effectiveDate,
-      employeesAffected,
-      source: {
+      const id = hashId([state, employerName, noticeDate || '', city || '', address || '']);
+
+      const notice: NormalizedWarnNotice = {
+        id,
         state,
-        sourceName,
-        sourceUrl,
-        retrievedAt
-      },
-      rawText: location?.trim() || undefined
-    };
+        employerName,
+        city,
+        address,
+        noticeDate,
+        effectiveDate,
+        employeesAffected,
+        source: {
+          state,
+          sourceName,
+          sourceUrl,
+          retrievedAt
+        },
+        rawText: location?.trim() || undefined
+      };
 
-    const scored = scoreNursingImpact(notice);
-    const existing = noticesById.get(scored.id);
-    noticesById.set(scored.id, existing ? mergeNotice(existing, scored) : scored);
+      const scored = scoreNursingImpact(notice);
+      const existing = noticesById.get(scored.id);
+      noticesById.set(scored.id, existing ? mergeNotice(existing, scored) : scored);
+    }
+
+    if (noticesById.size > 0) {
+      break;
+    }
   }
 
   return Array.from(noticesById.values());

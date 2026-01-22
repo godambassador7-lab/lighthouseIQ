@@ -28,30 +28,35 @@ export const MDAdapter: StateAdapter = {
     } catch {
       notices = [];
     }
-    if (!notices.length) {
+    const MIN_RESULTS = 10;
+    if (notices.length < MIN_RESULTS) {
+      let fallback: NormalizedWarnNotice[] = [];
       try {
-        notices = await fetchLayoffdataNotices({ state: 'MD', retrievedAt });
+        fallback = await fetchLayoffdataNotices({ state: 'MD', retrievedAt });
       } catch {
-        notices = [];
+        fallback = [];
       }
-    }
-    if (!notices.length) {
-      try {
-        notices = await fetchWarntrackerNotices({
-          state: 'MD',
-          retrievedAt,
-          sourceName: 'WARNTracker (MD)',
-          sourceUrl: 'https://www.warntracker.com/?state=MD'
-        });
-      } catch {
-        notices = [];
+      if (!fallback.length) {
+        try {
+          fallback = await fetchWarntrackerNotices({
+            state: 'MD',
+            retrievedAt,
+            sourceName: 'WARNTracker (MD)',
+            sourceUrl: 'https://www.warntracker.com/?state=MD'
+          });
+        } catch {
+          fallback = [];
+        }
       }
-    }
-    if (!notices.length) {
-      try {
-        notices = await fetchUsaTodayNotices({ state: 'MD', retrievedAt });
-      } catch {
-        notices = [];
+      if (!fallback.length) {
+        try {
+          fallback = await fetchUsaTodayNotices({ state: 'MD', retrievedAt });
+        } catch {
+          fallback = [];
+        }
+      }
+      if (fallback.length > notices.length) {
+        notices = fallback;
       }
     }
 

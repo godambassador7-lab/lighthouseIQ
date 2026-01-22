@@ -24,30 +24,31 @@ export const ARAdapter: StateAdapter = {
     let notices: NormalizedWarnNotice[] = [];
 
     try {
-      notices = await fetchOfficialNotices(retrievedAt);
+      notices = await fetchWarntrackerNotices({
+        state: 'AR',
+        retrievedAt,
+        sourceName: 'WARNTracker (AR)',
+        sourceUrl: 'https://www.warntracker.com/?state=AR'
+      });
     } catch {
       notices = [];
     }
-    if (!notices.length) {
+    const MIN_RESULTS = 10;
+    if (notices.length < MIN_RESULTS) {
+      try {
+        notices = await fetchOfficialNotices(retrievedAt);
+      } catch {
+        notices = [];
+      }
+    }
+    if (notices.length < MIN_RESULTS) {
       try {
         notices = await fetchLayoffdataNotices({ state: 'AR', retrievedAt });
       } catch {
         notices = [];
       }
     }
-    if (!notices.length) {
-      try {
-        notices = await fetchWarntrackerNotices({
-          state: 'AR',
-          retrievedAt,
-          sourceName: 'WARNTracker (AR)',
-          sourceUrl: 'https://www.warntracker.com/?state=AR'
-        });
-      } catch {
-        notices = [];
-      }
-    }
-    if (!notices.length) {
+    if (notices.length < MIN_RESULTS) {
       try {
         notices = await fetchUsaTodayNotices({ state: 'AR', retrievedAt });
       } catch {
