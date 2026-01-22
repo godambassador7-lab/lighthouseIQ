@@ -447,12 +447,13 @@
           </div>
         </div>
         <div class="insight-card insight-wide">
-          <h4>Scenario Forecasting</h4>
-          <p class="insight-subtitle">Estimate RN/LPN/CNA displacement from a planned change.</p>
+          <h4>Scenario Calculator (Facility Only)</h4>
+          <p class="insight-subtitle">Facility-level estimate — not region-wide. Use for a single hospital or SNF.</p>
           <div class="forecast-grid">
             <label>
               Beds closed
               <input type="number" id="forecast-beds" min="0" value="30">
+              <span class="input-helper">Single facility estimate (not region-wide).</span>
             </label>
             <label>
               Care setting
@@ -463,10 +464,12 @@
                 <option value="home">Home Health / Hospice</option>
                 <option value="behavioral">Behavioral Health</option>
               </select>
+              <span class="input-helper">Choose the facility type for staffing mix.</span>
             </label>
             <label>
               Planned horizon (days)
               <input type="number" id="forecast-horizon" min="1" value="60">
+              <span class="input-helper">Time window for the facility change.</span>
             </label>
           </div>
           <div class="forecast-output" id="forecast-output">
