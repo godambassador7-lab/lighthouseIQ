@@ -191,9 +191,9 @@ const STATE_NAME_MAP: Record<string, USStateAbbrev> = {
 
 const CCNE_STATE_URL_TEMPLATE = process.env.CCNE_STATE_URL_TEMPLATE
   ?? 'https://directory.ccnecommunity.org/reports/rptAccreditedPrograms_New.asp?state={STATE}';
-const CHEA_ACEN_URL = process.env.CHEA_ACEN_URL
-  ?? 'https://www.chea.org/acen-accredited-programs';
 const ACEN_DIRECTORY_URL = process.env.ACEN_DIRECTORY_URL ?? '';
+const ACEN_SEARCH_URL = process.env.ACEN_SEARCH_URL
+  ?? 'https://www.acenursing.org/search-programs';
 const PROGRAMS_REFRESH_MS = 6 * 60 * 60 * 1000;
 
 let cachedPrograms: NursingProgram[] = [];
@@ -308,6 +308,12 @@ function parseHtmlTable(html: string): string[][] {
   return rows;
 }
 
+function extractCmsField(html: string, fieldName: string): string {
+  const pattern = new RegExp(`fs-cmsfilter-field="${fieldName}"[^>]*>([\\s\\S]*?)<\\/`, 'i');
+  const match = html.match(pattern);
+  return match ? stripHtml(match[1]) : '';
+}
+
 function extractProgramLevels(text: string): Array<'ASN' | 'BSN' | 'MSN'> {
   const lowered = text.toLowerCase();
   const levels = new Set<'ASN' | 'BSN' | 'MSN'>();
@@ -415,6 +421,48 @@ function parseCcneProgramsFromHtml(html: string, fallbackState: string): Nursing
   return results;
 }
 
+function parseAcenProgramsFromSearchHtml(html: string): Array<Omit<NursingProgram, 'id'>> {
+  const results: Array<Omit<NursingProgram, 'id'>> = [];
+  const itemRegex = /<div[^>]*class="w-dyn-item"[^>]*>([\s\S]*?)(?=<div[^>]*class="w-dyn-item"|<\/div>\s*<\/div>\s*<\/div>)/gi;
+  let match: RegExpExecArray | null;
+
+  while ((match = itemRegex.exec(html)) !== null) {
+    const block = match[1];
+    const institution = extractCmsField(block, 'governing-org')
+      || extractCmsField(block, 'institution')
+      || extractCmsField(block, 'Institution');
+    const programType = extractCmsField(block, 'program-type')
+      || extractCmsField(block, 'Program Type');
+    const stateName = extractCmsField(block, 'State')
+      || extractCmsField(block, 'state');
+    const status = extractCmsField(block, 'status')
+      || extractCmsField(block, 'Status');
+    const state = parseState(stateName);
+    if (!institution || !state) continue;
+    const programLevels = extractProgramLevels(programType || '');
+    if (!programLevels.length) continue;
+
+    programLevels.forEach(level => {
+      results.push({
+        institution_name: institution,
+        campus_name: null,
+        city: null,
+        state,
+        program_level: level,
+        credential_notes: programType || null,
+        accreditor: 'ACEN',
+        accreditation_status: status || null,
+        source_url: ACEN_SEARCH_URL,
+        school_website_url: null,
+        nces_unitid: null,
+        last_verified_date: new Date().toISOString().slice(0, 10)
+      });
+    });
+  }
+
+  return results;
+}
+
 function buildProgramId(value: Omit<NursingProgram, 'id'>): string {
   const raw = [
     normalizeInstitutionName(value.institution_name),
@@ -502,48 +550,52 @@ async function fetchCcnePrograms(): Promise<NursingProgram[]> {
   return results;
 }
 
-async function fetchCheaAcenPrograms(): Promise<NursingProgram[]> {
-  if (!CHEA_ACEN_URL) return [];
+async function fetchAcenProgramsFromSearch(): Promise<NursingProgram[]> {
+  if (!ACEN_SEARCH_URL) return [];
   const updatedAt = new Date().toISOString().slice(0, 10);
   const results: NursingProgram[] = [];
+
   try {
-    const html = await fetchWithTimeout(CHEA_ACEN_URL, 60000);
-    const rows = parseHtmlTable(html);
-    rows.forEach((cells) => {
-      if (cells.length < 3) return;
-      const [institutionRaw, programInfo, city, state, website = ''] = cells;
-      const institution = institutionRaw?.trim();
-      if (!institution) return;
-      const normalizedState = parseState(state);
-      if (!normalizedState) return;
-      const programLevels = extractProgramLevels(programInfo);
-      if (!programLevels.length) return;
-      programLevels.forEach(level => {
-        results.push(buildProgramRecord({
-          institution_name: institution,
-          campus_name: null,
-          city: city || null,
-          state: normalizedState,
-          program_level: level,
-          credential_notes: programInfo || null,
-          accreditor: 'ACEN',
-          accreditation_status: null,
-          source_url: CHEA_ACEN_URL,
-          school_website_url: website || null,
-          nces_unitid: null,
-          last_verified_date: updatedAt
-        }));
-      });
-    });
+    let page = 1;
+    let pageKey: string | null = null;
+    const maxPages = 200;
+
+    while (page <= maxPages) {
+      const pageUrl = page === 1
+        ? ACEN_SEARCH_URL
+        : pageKey
+          ? `${ACEN_SEARCH_URL}?${pageKey}_page=${page}`
+          : `${ACEN_SEARCH_URL}?page=${page}`;
+
+      let html = '';
+      try {
+        html = await fetchWithTimeout(pageUrl, 60000);
+      } catch (err) {
+        console.warn(`ACEN search scrape failed on page ${page}:`, err);
+        break;
+      }
+
+      if (!pageKey) {
+        const keyMatch = html.match(/\?([0-9a-f]+)_page=2/i);
+        if (keyMatch) pageKey = keyMatch[1];
+      }
+
+      const pagePrograms = parseAcenProgramsFromSearchHtml(html).map(entry => buildProgramRecord(entry));
+      if (!pagePrograms.length) break;
+      results.push(...pagePrograms);
+      page += 1;
+    }
   } catch (err) {
-    console.warn('CHEA ACEN scrape failed:', err);
+    console.warn('ACEN search scrape failed:', err);
   }
+
   programsSources.push({
-    name: 'CHEA (ACEN)',
-    url: CHEA_ACEN_URL,
+    name: 'ACEN (Search)',
+    url: ACEN_SEARCH_URL,
     updatedAt,
     programCount: results.length
   });
+
   return results;
 }
 
@@ -603,12 +655,24 @@ function dedupePrograms(programs: NursingProgram[]): NursingProgram[] {
 async function refreshPrograms() {
   programsSources = [];
   const collected: NursingProgram[] = [];
-  const ccne = await fetchCcnePrograms();
-  collected.push(...ccne);
-  const chea = await fetchCheaAcenPrograms();
-  collected.push(...chea);
-  const acen = await fetchAcenPrograms();
-  collected.push(...acen);
+  try {
+    const ccne = await fetchCcnePrograms();
+    collected.push(...ccne);
+  } catch (err) {
+    console.warn('CCNE scrape failed:', err);
+  }
+  try {
+    const acenSearch = await fetchAcenProgramsFromSearch();
+    collected.push(...acenSearch);
+  } catch (err) {
+    console.warn('ACEN search scrape failed:', err);
+  }
+  try {
+    const acen = await fetchAcenPrograms();
+    collected.push(...acen);
+  } catch (err) {
+    console.warn('ACEN scrape failed:', err);
+  }
   const deduped = dedupePrograms(collected);
   programsLastUpdated = new Date();
 
