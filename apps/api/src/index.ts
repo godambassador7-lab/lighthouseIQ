@@ -100,6 +100,29 @@ async function query<T = any>(sql: string, params: any[] = []): Promise<T[]> {
   return res.rows as T[];
 }
 
+type NursingProgram = {
+  id: string;
+  institution_name: string;
+  campus_name: string | null;
+  city: string | null;
+  state: string;
+  program_level: 'ASN' | 'BSN' | 'MSN';
+  credential_notes: string | null;
+  accreditor: 'CCNE' | 'ACEN';
+  accreditation_status: string | null;
+  source_url: string;
+  school_website_url: string | null;
+  nces_unitid: string | null;
+  last_verified_date: string;
+};
+
+type ProgramSourceMeta = {
+  name: string;
+  url: string;
+  updatedAt: string;
+  programCount: number;
+};
+
 const ALL_STATES: USStateAbbrev[] = [
   'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
   'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD',
@@ -109,6 +132,73 @@ const ALL_STATES: USStateAbbrev[] = [
   'DC', 'PR'
 ];
 const STATE_SET = new Set<string>(ALL_STATES);
+const STATE_NAME_MAP: Record<string, USStateAbbrev> = {
+  ALABAMA: 'AL',
+  ALASKA: 'AK',
+  ARIZONA: 'AZ',
+  ARKANSAS: 'AR',
+  CALIFORNIA: 'CA',
+  COLORADO: 'CO',
+  CONNECTICUT: 'CT',
+  DELAWARE: 'DE',
+  FLORIDA: 'FL',
+  GEORGIA: 'GA',
+  HAWAII: 'HI',
+  IDAHO: 'ID',
+  ILLINOIS: 'IL',
+  INDIANA: 'IN',
+  IOWA: 'IA',
+  KANSAS: 'KS',
+  KENTUCKY: 'KY',
+  LOUISIANA: 'LA',
+  MAINE: 'ME',
+  MARYLAND: 'MD',
+  MASSACHUSETTS: 'MA',
+  MICHIGAN: 'MI',
+  MINNESOTA: 'MN',
+  MISSISSIPPI: 'MS',
+  MISSOURI: 'MO',
+  MONTANA: 'MT',
+  NEBRASKA: 'NE',
+  NEVADA: 'NV',
+  'NEW HAMPSHIRE': 'NH',
+  'NEW JERSEY': 'NJ',
+  'NEW MEXICO': 'NM',
+  'NEW YORK': 'NY',
+  'NORTH CAROLINA': 'NC',
+  'NORTH DAKOTA': 'ND',
+  OHIO: 'OH',
+  OKLAHOMA: 'OK',
+  OREGON: 'OR',
+  PENNSYLVANIA: 'PA',
+  'RHODE ISLAND': 'RI',
+  'SOUTH CAROLINA': 'SC',
+  'SOUTH DAKOTA': 'SD',
+  TENNESSEE: 'TN',
+  TEXAS: 'TX',
+  UTAH: 'UT',
+  VERMONT: 'VT',
+  VIRGINIA: 'VA',
+  WASHINGTON: 'WA',
+  'WEST VIRGINIA': 'WV',
+  WISCONSIN: 'WI',
+  WYOMING: 'WY',
+  'DISTRICT OF COLUMBIA': 'DC',
+  'WASHINGTON DC': 'DC',
+  'WASHINGTON D.C.': 'DC',
+  'PUERTO RICO': 'PR'
+};
+
+const CCNE_STATE_URL_TEMPLATE = process.env.CCNE_STATE_URL_TEMPLATE
+  ?? 'https://directory.ccnecommunity.org/reports/rptAccreditedPrograms_New.asp?state={STATE}';
+const CHEA_ACEN_URL = process.env.CHEA_ACEN_URL
+  ?? 'https://www.chea.org/acen-accredited-programs';
+const ACEN_DIRECTORY_URL = process.env.ACEN_DIRECTORY_URL ?? '';
+const PROGRAMS_REFRESH_MS = 6 * 60 * 60 * 1000;
+
+let cachedPrograms: NursingProgram[] = [];
+let programsLastUpdated: Date | null = null;
+let programsSources: ProgramSourceMeta[] = [];
 
 function requirePasscode(req: express.Request, res: express.Response, next: express.NextFunction) {
   if (!ACCESS_PASSCODE) {
@@ -155,7 +245,9 @@ function parseState(value: string | undefined): USStateAbbrev | undefined {
   if (!value) return undefined;
   const sanitized = sanitizeString(value, 5);
   const normalized = sanitized.toUpperCase();
-  return STATE_SET.has(normalized) ? (normalized as USStateAbbrev) : undefined;
+  if (STATE_SET.has(normalized)) return normalized as USStateAbbrev;
+  const nameKey = sanitizeString(value, 40).toUpperCase().trim();
+  return STATE_NAME_MAP[nameKey];
 }
 
 // Parse multiple comma-separated states
@@ -165,6 +257,348 @@ function parseStates(value: string | undefined): USStateAbbrev[] {
   return sanitized.split(',')
     .map(s => s.trim().toUpperCase())
     .filter(s => STATE_SET.has(s)) as USStateAbbrev[];
+}
+
+function normalizeInstitutionName(value: string): string {
+  return value
+    .toLowerCase()
+    .replace(/&/g, 'and')
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function decodeHtmlEntities(value: string): string {
+  return value
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>');
+}
+
+function stripHtml(value: string): string {
+  return decodeHtmlEntities(value.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim());
+}
+
+function parseHtmlTable(html: string): string[][] {
+  const rows: string[][] = [];
+  const rowRegex = /<tr[^>]*>([\s\S]*?)<\/tr>/gi;
+  let rowMatch: RegExpExecArray | null;
+  while ((rowMatch = rowRegex.exec(html)) !== null) {
+    const rowHtml = rowMatch[1];
+    const cellRegex = /<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/gi;
+    const cells: string[] = [];
+    let cellMatch: RegExpExecArray | null;
+    while ((cellMatch = cellRegex.exec(rowHtml)) !== null) {
+      const cellText = stripHtml(cellMatch[1]);
+      if (cellText) cells.push(cellText);
+    }
+    if (cells.length) rows.push(cells);
+  }
+  return rows;
+}
+
+function extractProgramLevels(text: string): Array<'ASN' | 'BSN' | 'MSN'> {
+  const lowered = text.toLowerCase();
+  const levels = new Set<'ASN' | 'BSN' | 'MSN'>();
+  if (lowered.includes('associate') || lowered.includes('adn') || lowered.includes('asn')) {
+    levels.add('ASN');
+  }
+  if (lowered.includes('baccalaureate') || lowered.includes('bsn')) {
+    levels.add('BSN');
+  }
+  if (lowered.includes('master') || lowered.includes('msn')) {
+    levels.add('MSN');
+  }
+  return Array.from(levels);
+}
+
+function buildProgramId(value: Omit<NursingProgram, 'id'>): string {
+  const raw = [
+    normalizeInstitutionName(value.institution_name),
+    normalizeInstitutionName(value.campus_name ?? ''),
+    normalizeInstitutionName(value.city ?? ''),
+    value.state.toUpperCase(),
+    value.program_level,
+    value.accreditor
+  ].join('|');
+  return crypto.createHash('sha1').update(raw).digest('hex');
+}
+
+async function ensureProgramsSchema() {
+  if (!pool) return;
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS nursing_programs (
+      id TEXT PRIMARY KEY,
+      institution_name TEXT NOT NULL,
+      campus_name TEXT,
+      city TEXT,
+      state TEXT NOT NULL,
+      program_level TEXT NOT NULL,
+      credential_notes TEXT,
+      accreditor TEXT NOT NULL,
+      accreditation_status TEXT,
+      source_url TEXT NOT NULL,
+      school_website_url TEXT,
+      nces_unitid TEXT,
+      last_verified_date DATE NOT NULL
+    )
+  `);
+  await pool.query(`CREATE INDEX IF NOT EXISTS idx_nursing_programs_state ON nursing_programs(state)`);
+  await pool.query(`CREATE INDEX IF NOT EXISTS idx_nursing_programs_level ON nursing_programs(program_level)`);
+  await pool.query(`CREATE INDEX IF NOT EXISTS idx_nursing_programs_accreditor ON nursing_programs(accreditor)`);
+  await pool.query(`CREATE INDEX IF NOT EXISTS idx_nursing_programs_unitid ON nursing_programs(nces_unitid)`);
+}
+
+async function fetchWithTimeout(url: string, timeoutMs = 60000): Promise<string> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const response = await fetch(url, { signal: controller.signal });
+    if (!response.ok) throw new Error(`Fetch failed: ${response.status}`);
+    return await response.text();
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+function buildProgramRecord(partial: Omit<NursingProgram, 'id'>): NursingProgram {
+  return {
+    id: buildProgramId(partial),
+    ...partial
+  };
+}
+
+async function fetchCcnePrograms(): Promise<NursingProgram[]> {
+  const states = ALL_STATES;
+  const results: NursingProgram[] = [];
+  const updatedAt = new Date().toISOString().slice(0, 10);
+  const concurrency = 4;
+  let index = 0;
+
+  async function worker() {
+    while (index < states.length) {
+      const state = states[index++];
+      const url = CCNE_STATE_URL_TEMPLATE.replace('{STATE}', state);
+      try {
+        const html = await fetchWithTimeout(url, 45000);
+        const rows = parseHtmlTable(html);
+        rows.forEach((cells) => {
+          if (cells.length < 2) return;
+          const [institution, city, programInfo = '', status = '', website = ''] = cells;
+          const programLevels = extractProgramLevels(`${programInfo} ${status}`);
+          if (!programLevels.length) return;
+          programLevels.forEach(level => {
+            results.push(buildProgramRecord({
+              institution_name: institution,
+              campus_name: null,
+              city: city || null,
+              state,
+              program_level: level,
+              credential_notes: programInfo || null,
+              accreditor: 'CCNE',
+              accreditation_status: status || null,
+              source_url: url,
+              school_website_url: website || null,
+              nces_unitid: null,
+              last_verified_date: updatedAt
+            }));
+          });
+        });
+      } catch (err) {
+        console.warn(`CCNE scrape failed for ${state}:`, err);
+      }
+    }
+  }
+
+  const workers = Array.from({ length: concurrency }, () => worker());
+  await Promise.all(workers);
+  programsSources.push({
+    name: 'CCNE',
+    url: CCNE_STATE_URL_TEMPLATE,
+    updatedAt,
+    programCount: results.length
+  });
+  return results;
+}
+
+async function fetchCheaAcenPrograms(): Promise<NursingProgram[]> {
+  if (!CHEA_ACEN_URL) return [];
+  const updatedAt = new Date().toISOString().slice(0, 10);
+  const results: NursingProgram[] = [];
+  try {
+    const html = await fetchWithTimeout(CHEA_ACEN_URL, 60000);
+    const rows = parseHtmlTable(html);
+    rows.forEach((cells) => {
+      if (cells.length < 3) return;
+      const [institution, programInfo, city, state, website = ''] = cells;
+      const normalizedState = parseState(state);
+      if (!normalizedState) return;
+      const programLevels = extractProgramLevels(programInfo);
+      if (!programLevels.length) return;
+      programLevels.forEach(level => {
+        results.push(buildProgramRecord({
+          institution_name: institution,
+          campus_name: null,
+          city: city || null,
+          state: normalizedState,
+          program_level: level,
+          credential_notes: programInfo || null,
+          accreditor: 'ACEN',
+          accreditation_status: null,
+          source_url: CHEA_ACEN_URL,
+          school_website_url: website || null,
+          nces_unitid: null,
+          last_verified_date: updatedAt
+        }));
+      });
+    });
+  } catch (err) {
+    console.warn('CHEA ACEN scrape failed:', err);
+  }
+  programsSources.push({
+    name: 'CHEA (ACEN)',
+    url: CHEA_ACEN_URL,
+    updatedAt,
+    programCount: results.length
+  });
+  return results;
+}
+
+async function fetchAcenPrograms(): Promise<NursingProgram[]> {
+  if (!ACEN_DIRECTORY_URL) return [];
+  const updatedAt = new Date().toISOString().slice(0, 10);
+  const results: NursingProgram[] = [];
+  try {
+    const html = await fetchWithTimeout(ACEN_DIRECTORY_URL, 60000);
+    const rows = parseHtmlTable(html);
+    rows.forEach((cells) => {
+      if (cells.length < 3) return;
+      const [institution, city, state, programInfo = '', status = '', website = ''] = cells;
+      const normalizedState = parseState(state);
+      if (!normalizedState) return;
+      const programLevels = extractProgramLevels(`${programInfo} ${status}`);
+      if (!programLevels.length) return;
+      programLevels.forEach(level => {
+        results.push(buildProgramRecord({
+          institution_name: institution,
+          campus_name: null,
+          city: city || null,
+          state: normalizedState,
+          program_level: level,
+          credential_notes: programInfo || null,
+          accreditor: 'ACEN',
+          accreditation_status: status || null,
+          source_url: ACEN_DIRECTORY_URL,
+          school_website_url: website || null,
+          nces_unitid: null,
+          last_verified_date: updatedAt
+        }));
+      });
+    });
+  } catch (err) {
+    console.warn('ACEN scrape failed:', err);
+  }
+  programsSources.push({
+    name: 'ACEN',
+    url: ACEN_DIRECTORY_URL,
+    updatedAt,
+    programCount: results.length
+  });
+  return results;
+}
+
+function dedupePrograms(programs: NursingProgram[]): NursingProgram[] {
+  const map = new Map<string, NursingProgram>();
+  programs.forEach(program => {
+    map.set(program.id, program);
+  });
+  return Array.from(map.values());
+}
+
+async function refreshPrograms() {
+  programsSources = [];
+  const collected: NursingProgram[] = [];
+  const ccne = await fetchCcnePrograms();
+  collected.push(...ccne);
+  const chea = await fetchCheaAcenPrograms();
+  collected.push(...chea);
+  const acen = await fetchAcenPrograms();
+  collected.push(...acen);
+  const deduped = dedupePrograms(collected);
+  programsLastUpdated = new Date();
+
+  if (!pool) {
+    cachedPrograms = deduped;
+    return;
+  }
+
+  await ensureProgramsSchema();
+  const chunkSize = 500;
+  for (let i = 0; i < deduped.length; i += chunkSize) {
+    const chunk = deduped.slice(i, i + chunkSize);
+    const values: any[] = [];
+    const placeholders = chunk.map((entry, idx) => {
+      const offset = idx * 13;
+      values.push(
+        entry.id,
+        entry.institution_name,
+        entry.campus_name,
+        entry.city,
+        entry.state,
+        entry.program_level,
+        entry.credential_notes,
+        entry.accreditor,
+        entry.accreditation_status,
+        entry.source_url,
+        entry.school_website_url,
+        entry.nces_unitid,
+        entry.last_verified_date
+      );
+      return `($${offset + 1}, $${offset + 2}, $${offset + 3}, $${offset + 4}, $${offset + 5}, $${offset + 6}, $${offset + 7}, $${offset + 8}, $${offset + 9}, $${offset + 10}, $${offset + 11}, $${offset + 12}, $${offset + 13})`;
+    });
+    await pool.query(
+      `INSERT INTO nursing_programs (
+        id, institution_name, campus_name, city, state, program_level, credential_notes,
+        accreditor, accreditation_status, source_url, school_website_url, nces_unitid, last_verified_date
+      ) VALUES ${placeholders.join(', ')}
+      ON CONFLICT (id) DO UPDATE SET
+        institution_name = EXCLUDED.institution_name,
+        campus_name = EXCLUDED.campus_name,
+        city = EXCLUDED.city,
+        state = EXCLUDED.state,
+        program_level = EXCLUDED.program_level,
+        credential_notes = EXCLUDED.credential_notes,
+        accreditor = EXCLUDED.accreditor,
+        accreditation_status = EXCLUDED.accreditation_status,
+        source_url = EXCLUDED.source_url,
+        school_website_url = EXCLUDED.school_website_url,
+        nces_unitid = EXCLUDED.nces_unitid,
+        last_verified_date = EXCLUDED.last_verified_date`,
+      values
+    );
+  }
+}
+
+async function getProgramsSnapshot() {
+  if (!pool) {
+    return {
+      programs: cachedPrograms,
+      lastUpdated: programsLastUpdated?.toISOString() ?? null
+    };
+  }
+  const programs = await query<NursingProgram>(`
+    SELECT id, institution_name, campus_name, city, state, program_level, credential_notes,
+           accreditor, accreditation_status, source_url, school_website_url, nces_unitid, last_verified_date
+    FROM nursing_programs
+    ORDER BY state ASC, institution_name ASC
+  `);
+  const meta = await query<{ last_verified_date: string | null }>(
+    `SELECT MAX(last_verified_date) as last_verified_date FROM nursing_programs`
+  );
+  const lastUpdated = meta[0]?.last_verified_date ?? null;
+  return { programs, lastUpdated };
 }
 
 type CursorPayload = {
@@ -505,6 +939,20 @@ app.get('/health', async (_req, res) => {
     res.json({ ok: true, db: Boolean(pool) });
   } catch (e: any) {
     res.status(500).json({ ok: false, error: e?.message ?? 'db_error' });
+  }
+});
+
+app.get('/nursing-programs', requirePasscode, apiLimiter, async (_req, res) => {
+  try {
+    const snapshot = await getProgramsSnapshot();
+    res.json({
+      programs: snapshot.programs,
+      total: snapshot.programs.length,
+      lastUpdated: snapshot.lastUpdated,
+      sources: programsSources
+    });
+  } catch (err: any) {
+    res.status(500).json({ error: err?.message ?? 'programs_unavailable' });
   }
 });
 
@@ -1224,5 +1672,16 @@ app.listen(PORT, () => {
   ensureIndexes().catch(err => {
     console.error('Failed to ensure DB indexes:', err);
   });
+  ensureProgramsSchema().catch(err => {
+    console.error('Failed to ensure programs schema:', err);
+  });
+  refreshPrograms().catch(err => {
+    console.error('Failed to refresh nursing programs:', err);
+  });
+  setInterval(() => {
+    refreshPrograms().catch(err => {
+      console.error('Failed to refresh nursing programs:', err);
+    });
+  }, PROGRAMS_REFRESH_MS);
   console.log(`Lighthouse Nursing Intelligence API listening on http://localhost:${PORT}`);
 });

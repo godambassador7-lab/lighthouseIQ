@@ -44,9 +44,19 @@
           <h1>LighthouseIQ: Market Nursing Intelligence</h1>
         </div>
       </div>
-      <div class="status">
-        <span class="status-dot" id="api-dot"></span>
-        <span id="api-status">Checking API...</span>
+      <div class="top-bar-actions">
+        <div class="status">
+          <span class="status-dot" id="api-dot"></span>
+          <span id="api-status">Checking API...</span>
+        </div>
+        <div class="module-menu">
+          <button class="btn ghost small module-btn" id="modules-menu-btn" type="button">Modules v</button>
+          <div class="module-dropdown" id="modules-menu">
+            <button class="module-item" id="open-programs-module" type="button">
+              Accredited Nursing Programs
+            </button>
+          </div>
+        </div>
       </div>
     </header>
 
@@ -366,6 +376,64 @@
               <button type="button" class="btn ghost" id="export-project-json">Export JSON</button>
               <button type="button" class="btn secondary" id="close-project-detail">Close</button>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Accredited Nursing Programs Modal -->
+      <div class="modal-overlay" id="programs-modal">
+        <div class="modal-card modal-large">
+          <div class="modal-header">
+            <h3>Accredited Nursing Programs</h3>
+            <button class="modal-close" id="programs-modal-close">&times;</button>
+          </div>
+          <div class="modal-body programs-modal-body">
+            <div class="programs-meta">
+              <div class="programs-meta-left">
+                <p class="programs-kicker">CCNE + ACEN master list</p>
+                <p class="programs-subtitle">Each row is a school-campus-program level.</p>
+              </div>
+              <div class="programs-meta-right">
+                <span id="programs-count">0 programs</span>
+                <span id="programs-updated">Last updated --</span>
+              </div>
+            </div>
+            <div class="programs-controls">
+              <input type="text" id="programs-search" placeholder="Search schools, cities, campuses..." />
+              <select id="programs-state-filter">
+                <option value="">All states</option>
+              </select>
+              <select id="programs-level-filter">
+                <option value="">All levels</option>
+                <option value="ASN">ASN</option>
+                <option value="BSN">BSN</option>
+                <option value="MSN">MSN</option>
+              </select>
+            </div>
+            <div class="programs-table-wrap">
+              <table class="programs-table">
+                <thead>
+                  <tr>
+                    <th>Institution</th>
+                    <th>Campus</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Level</th>
+                    <th>Accreditor</th>
+                  </tr>
+                </thead>
+                <tbody id="programs-list">
+                  <tr>
+                    <td colspan="6">Loading programs...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="programs-source-note" id="programs-source-note"></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn ghost" id="programs-download">Download CSV</button>
+            <button type="button" class="btn secondary" id="programs-close">Close</button>
           </div>
         </div>
       </div>

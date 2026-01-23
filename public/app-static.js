@@ -9,6 +9,7 @@
  * - ./data/states.json - State summary
  * - ./data/metadata.json - Last update info
  * - ./data/by-state/{STATE}.json - Per-state data
+ * - ./data/nursing-programs.json - Accredited nursing programs
  */
 
 // =============================================================================
@@ -68,6 +69,20 @@ const projectForm = document.getElementById('project-form');
 const projectDetailModal = document.getElementById('project-detail-modal');
 const projectSearch = document.getElementById('project-search');
 const colorPicker = document.getElementById('color-picker');
+const modulesMenuBtn = document.getElementById('modules-menu-btn');
+const modulesMenu = document.getElementById('modules-menu');
+const programsModal = document.getElementById('programs-modal');
+const programsModalClose = document.getElementById('programs-modal-close');
+const programsClose = document.getElementById('programs-close');
+const programsList = document.getElementById('programs-list');
+const programsCount = document.getElementById('programs-count');
+const programsUpdated = document.getElementById('programs-updated');
+const programsSearch = document.getElementById('programs-search');
+const programsStateFilter = document.getElementById('programs-state-filter');
+const programsLevelFilter = document.getElementById('programs-level-filter');
+const programsSourceNote = document.getElementById('programs-source-note');
+const programsDownload = document.getElementById('programs-download');
+const programsModuleBtn = document.getElementById('open-programs-module');
 
 // =============================================================================
 // State
@@ -84,6 +99,8 @@ let selectedStates = [];
 let selectedSpecialties = [];
 let currentPage = 1;
 let searchQuery = '';
+let nursingPrograms = [];
+let programsLoaded = false;
 const NOTICES_PER_PAGE = 100;
 
 // =============================================================================
@@ -316,6 +333,156 @@ const parseMaybeJson = (value) => {
   return [String(value)];
 };
 
+const escapeHtml = (value) => String(value)
+  .replace(/&/g, '&amp;')
+  .replace(/</g, '&lt;')
+  .replace(/>/g, '&gt;')
+  .replace(/"/g, '&quot;')
+  .replace(/'/g, '&#39;');
+
+const closeModulesMenu = () => {
+  if (modulesMenu) modulesMenu.classList.remove('open');
+};
+
+const toggleModulesMenu = () => {
+  if (!modulesMenu) return;
+  modulesMenu.classList.toggle('open');
+};
+
+const openProgramsModal = () => {
+  if (!programsModal) return;
+  programsModal.classList.add('active');
+  if (!programsLoaded) {
+    loadPrograms();
+  }
+};
+
+const closeProgramsModal = () => {
+  if (!programsModal) return;
+  programsModal.classList.remove('active');
+};
+
+const renderProgramsTable = () => {
+  if (!programsList) return;
+  const search = programsSearch?.value.trim().toLowerCase() ?? '';
+  const stateFilter = programsStateFilter?.value ?? '';
+  const levelFilter = programsLevelFilter?.value ?? '';
+
+  const filtered = nursingPrograms.filter((program) => {
+    if (stateFilter && program.state !== stateFilter) return false;
+    if (levelFilter && program.program_level !== levelFilter) return false;
+    if (!search) return true;
+    const haystack = [
+      program.institution_name,
+      program.campus_name,
+      program.city,
+      program.state,
+      program.program_level,
+      program.accreditor,
+      program.credential_notes
+    ]
+      .filter(Boolean)
+      .join(' ')
+      .toLowerCase();
+    return haystack.includes(search);
+  });
+
+  if (!filtered.length) {
+    programsList.innerHTML = '<tr><td colspan="6">No programs match these filters.</td></tr>';
+    return;
+  }
+
+  programsList.innerHTML = filtered.map((program) => {
+    const credential = program.credential_notes
+      ? `<span class="programs-credential">${escapeHtml(program.credential_notes)}</span>`
+      : '';
+    return `
+      <tr>
+        <td>${escapeHtml(program.institution_name)}${credential}</td>
+        <td>${escapeHtml(program.campus_name || '-')}</td>
+        <td>${escapeHtml(program.city || '-')}</td>
+        <td>${escapeHtml(program.state)}</td>
+        <td>${escapeHtml(program.program_level)}</td>
+        <td>${escapeHtml(program.accreditor)}</td>
+      </tr>
+    `;
+  }).join('');
+};
+
+const populateProgramFilters = () => {
+  if (!programsStateFilter) return;
+  const states = Array.from(new Set(nursingPrograms.map(program => program.state))).sort();
+  programsStateFilter.innerHTML = '<option value="">All states</option>' + states
+    .map(state => `<option value="${escapeHtml(state)}">${escapeHtml(state)}</option>`)
+    .join('');
+};
+
+const downloadProgramsCsv = () => {
+  if (!nursingPrograms.length) return;
+  const headers = [
+    'Institution',
+    'Campus',
+    'City',
+    'State',
+    'Program Level',
+    'Credential Notes',
+    'Accreditor',
+    'Accreditation Status',
+    'Source URL',
+    'School Website',
+    'NCES UnitID',
+    'Last Verified'
+  ];
+  const rows = nursingPrograms.map(program => [
+    program.institution_name,
+    program.campus_name ?? '',
+    program.city ?? '',
+    program.state,
+    program.program_level,
+    program.credential_notes ?? '',
+    program.accreditor,
+    program.accreditation_status ?? '',
+    program.source_url,
+    program.school_website_url ?? '',
+    program.nces_unitid ?? '',
+    program.last_verified_date ?? ''
+  ]);
+  const csv = [headers, ...rows]
+    .map(row => row.map(value => `"${String(value).replace(/"/g, '""')}"`).join(','))
+    .join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'nursing-programs.csv';
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+};
+
+const loadPrograms = async () => {
+  if (!programsList) return;
+  programsList.innerHTML = '<tr><td colspan="6">Loading programs...</td></tr>';
+  try {
+    const res = await fetch(`${DATA_BASE_URL}/nursing-programs.json`);
+    if (!res.ok) throw new Error('programs_unavailable');
+    const data = await res.json();
+    nursingPrograms = Array.isArray(data.programs) ? data.programs : [];
+    programsLoaded = true;
+    programsCount.textContent = `${nursingPrograms.length.toLocaleString()} programs`;
+    programsUpdated.textContent = data.lastUpdated
+      ? `Last updated ${formatDate(data.lastUpdated)}`
+      : 'Last updated --';
+    if (programsSourceNote) {
+      programsSourceNote.textContent = 'Sources refresh every 6 hours.';
+    }
+    populateProgramFilters();
+    renderProgramsTable();
+  } catch (err) {
+    programsList.innerHTML = '<tr><td colspan="6">Programs unavailable. Please try again later.</td></tr>';
+  }
+};
 const setStatus = (status, ok) => {
   apiStatus.textContent = status;
   apiDot.classList.remove('ok', 'bad');
@@ -1554,6 +1721,36 @@ const initProjects = () => {
   });
 };
 
+const initProgramsModule = () => {
+  modulesMenuBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleModulesMenu();
+  });
+
+  programsModuleBtn?.addEventListener('click', () => {
+    closeModulesMenu();
+    openProgramsModal();
+  });
+
+  programsModalClose?.addEventListener('click', closeProgramsModal);
+  programsClose?.addEventListener('click', closeProgramsModal);
+
+  programsModal?.addEventListener('click', (e) => {
+    if (e.target === programsModal) closeProgramsModal();
+  });
+
+  programsSearch?.addEventListener('input', renderProgramsTable);
+  programsStateFilter?.addEventListener('change', renderProgramsTable);
+  programsLevelFilter?.addEventListener('change', renderProgramsTable);
+  programsDownload?.addEventListener('click', downloadProgramsCsv);
+
+  document.addEventListener('click', (e) => {
+    if (!modulesMenu?.contains(e.target) && !modulesMenuBtn?.contains(e.target)) {
+      closeModulesMenu();
+    }
+  });
+};
+
 // =============================================================================
 // Custom Notices
 // =============================================================================
@@ -1782,6 +1979,7 @@ const initApp = async () => {
   initFilters();
   initQuickNav();
   initProjects();
+  initProgramsModule();
   initCustomNotices();
   initHelpSection();
   initViewToggle();
