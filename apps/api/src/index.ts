@@ -281,6 +281,15 @@ function stripHtml(value: string): string {
   return decodeHtmlEntities(value.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim());
 }
 
+function extractLabelValue(html: string, label: string): string {
+  const pattern = new RegExp(
+    `<t[dh][^>]*>\\s*${label}\\s*:?\\s*<\\/t[dh]>\\s*<t[dh][^>]*>([\\s\\S]*?)<\\/t[dh]>`,
+    'i'
+  );
+  const match = html.match(pattern);
+  return match ? stripHtml(match[1]) : '';
+}
+
 function parseHtmlTable(html: string): string[][] {
   const rows: string[][] = [];
   const rowRegex = /<tr[^>]*>([\s\S]*?)<\/tr>/gi;
@@ -323,18 +332,65 @@ function parseCcneProgramsFromHtml(html: string, fallbackState: string): Nursing
     const tableEnd = section.indexOf('</table>');
     const finderBlock = tableEnd >= 0 ? section.slice(0, tableEnd + 8) : section;
     const institutionMatch = finderBlock.match(/<h3[^>]*>([\s\S]*?)<\/h3>/i);
-    const institution = institutionMatch ? stripHtml(institutionMatch[1]) : '';
+    const institutionAltMatch = finderBlock.match(/<h2[^>]*>([\s\S]*?)<\/h2>/i);
+    const institutionFromLabel = extractLabelValue(finderBlock, 'Institution Name')
+      || extractLabelValue(finderBlock, 'Institution')
+      || extractLabelValue(finderBlock, 'School');
+    const institution = stripHtml(
+      institutionMatch?.[1]
+      || institutionAltMatch?.[1]
+      || institutionFromLabel
+      || ''
+    );
     if (!institution) return;
     const locationMatch = finderBlock.match(/([A-Za-z .'-]+),\s*([A-Z]{2})/);
-    const city = locationMatch?.[1]?.trim() || null;
-    const state = parseState(locationMatch?.[2] || fallbackState) ?? fallbackState;
+    const cityFromLabel = extractLabelValue(finderBlock, 'City')
+      || extractLabelValue(finderBlock, 'Location');
+    const stateFromLabel = extractLabelValue(finderBlock, 'State')
+      || extractLabelValue(finderBlock, 'State/Province');
+    const city = cityFromLabel || locationMatch?.[1]?.trim() || null;
+    const state = parseState(stateFromLabel || locationMatch?.[2] || fallbackState) ?? fallbackState;
     const websiteMatch = finderBlock.match(/<a[^>]+href=([^\s>]+)[^>]*>Link to Website/i);
     const website = websiteMatch ? websiteMatch[1].replace(/['"]/g, '') : null;
 
+    const programNames = new Set<string>();
     const programMatches = Array.from(section.matchAll(/<h3><b>([^<]+)<\/b><\/h3>/gi));
     programMatches.forEach(match => {
       const programName = stripHtml(match[1]).trim();
-      if (!programName) return;
+      if (programName) programNames.add(programName);
+    });
+
+    const labelPatterns = [
+      'Program', 'Program Type', 'Program Level', 'Program Track', 'Program Option',
+      'Degree', 'Degree Type'
+    ];
+    labelPatterns.forEach(label => {
+      const value = extractLabelValue(finderBlock, label);
+      if (value) programNames.add(value);
+    });
+
+    if (!programNames.size) {
+      const fallbackLevels = extractProgramLevels(stripHtml(finderBlock));
+      fallbackLevels.forEach(level => {
+        results.push(buildProgramRecord({
+          institution_name: institution,
+          campus_name: null,
+          city,
+          state,
+          program_level: level,
+          credential_notes: null,
+          accreditor: 'CCNE',
+          accreditation_status: null,
+          source_url: CCNE_STATE_URL_TEMPLATE.replace('{STATE}', state),
+          school_website_url: website,
+          nces_unitid: null,
+          last_verified_date: updatedAt
+        }));
+      });
+      return;
+    }
+
+    programNames.forEach(programName => {
       const programLevels = extractProgramLevels(programName);
       if (!programLevels.length) return;
       programLevels.forEach(level => {

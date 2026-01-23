@@ -1941,9 +1941,7 @@ const loadPrograms = async () => {
   try {
     programsLoading?.classList.add('active');
     updateProgramsLoading(0, 1);
-    const response = await fetch('/data/nursing-programs.json');
-    if (!response.ok) throw new Error(`Failed to load programs: ${response.status}`);
-    const data = await response.json();
+    const data = await fetchJson('/nursing-programs');
 
     nursingPrograms = Array.isArray(data) ? data : (data.programs ?? []);
     programsMeta = {
