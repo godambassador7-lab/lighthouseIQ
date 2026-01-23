@@ -102,7 +102,9 @@ let searchQuery = '';
 let nursingPrograms = [];
 let programsLoaded = false;
 let programsModuleInitialized = false;
-const NOTICES_PER_PAGE = 100;
+const NOTICE_MAX_COUNT = 100;
+const NOTICE_WINDOW_COUNT = 25;
+const NOTICES_PER_PAGE = NOTICE_MAX_COUNT;
 
 // =============================================================================
 // Authentication (Simple client-side - data is public)
@@ -900,10 +902,28 @@ const applyFilters = (resetPage = true) => {
 // =============================================================================
 const renderNotices = (notices) => {
   const paginationContainer = document.getElementById('pagination');
+  const applyNoticeListWindow = (count) => {
+    if (!noticeList) return;
+    if (!count) {
+      noticeList.style.maxHeight = '';
+      noticeList.classList.remove('windowed');
+      return;
+    }
+    const firstCard = noticeList.querySelector('.notice-card');
+    if (!firstCard) return;
+    const cardHeight = firstCard.getBoundingClientRect().height;
+    const styles = getComputedStyle(noticeList);
+    const gap = parseFloat(styles.rowGap || styles.gap || '0');
+    const windowCount = Math.min(NOTICE_WINDOW_COUNT, count);
+    const windowHeight = (cardHeight * windowCount) + (gap * Math.max(0, windowCount - 1));
+    noticeList.style.maxHeight = `${Math.ceil(windowHeight)}px`;
+    noticeList.classList.toggle('windowed', count > NOTICE_WINDOW_COUNT);
+  };
 
   if (!notices.length) {
     noticeList.innerHTML = `<div class="empty-state">No notices match these filters.</div>`;
     if (paginationContainer) paginationContainer.innerHTML = '';
+    applyNoticeListWindow(0);
     return;
   }
 
@@ -964,6 +984,8 @@ const renderNotices = (notices) => {
 
   // Add save-to-project dropdown handlers
   setupSaveDropdowns(notices);
+
+  applyNoticeListWindow(paginatedNotices.length);
 };
 
 const renderPagination = (totalPages, totalNotices) => {

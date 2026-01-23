@@ -77,6 +77,8 @@ let selectedStates = []; // Multi-select states
 let nursingPrograms = [];
 let programsLoaded = false;
 let programsModuleInitialized = false;
+const NOTICE_MAX_COUNT = 100;
+const NOTICE_WINDOW_COUNT = 25;
 
 // Login handling - server-side validation
 const SESSION_KEY = 'lni_authenticated';
@@ -415,13 +417,33 @@ const loadStates = async () => {
 };
 
 const renderNotices = (notices) => {
-  if (!notices.length) {
+  const visibleNotices = notices.slice(0, NOTICE_MAX_COUNT);
+  const applyNoticeListWindow = (count) => {
+    if (!noticeList) return;
+    if (!count) {
+      noticeList.style.maxHeight = '';
+      noticeList.classList.remove('windowed');
+      return;
+    }
+    const firstCard = noticeList.querySelector('.notice-card');
+    if (!firstCard) return;
+    const cardHeight = firstCard.getBoundingClientRect().height;
+    const styles = getComputedStyle(noticeList);
+    const gap = parseFloat(styles.rowGap || styles.gap || '0');
+    const windowCount = Math.min(NOTICE_WINDOW_COUNT, count);
+    const windowHeight = (cardHeight * windowCount) + (gap * Math.max(0, windowCount - 1));
+    noticeList.style.maxHeight = `${Math.ceil(windowHeight)}px`;
+    noticeList.classList.toggle('windowed', count > NOTICE_WINDOW_COUNT);
+  };
+
+  if (!visibleNotices.length) {
     noticeList.innerHTML = `<div class="empty-state">No notices match these filters yet.</div>`;
+    applyNoticeListWindow(0);
     return;
   }
 
   noticeList.innerHTML = '';
-  notices.forEach((notice, idx) => {
+  visibleNotices.forEach((notice, idx) => {
     const card = document.createElement('article');
     card.className = notice.isCustom ? 'notice-card custom-notice' : 'notice-card';
     card.style.animationDelay = `${idx * 35}ms`;
@@ -493,12 +515,14 @@ const renderNotices = (notices) => {
       e.stopPropagation();
       const item = e.target.closest('.save-dropdown-item');
       if (item && item.dataset.projectId) {
-        const notice = notices[idx];
+        const notice = visibleNotices[idx];
         saveNoticeToProject(item.dataset.projectId, notice);
         dropdown.classList.remove('active');
       }
     });
   });
+
+  applyNoticeListWindow(visibleNotices.length);
 };
 
 // Close dropdowns when clicking elsewhere
