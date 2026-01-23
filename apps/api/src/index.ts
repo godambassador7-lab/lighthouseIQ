@@ -322,8 +322,9 @@ function parseCcneProgramsFromHtml(html: string, fallbackState: string): Nursing
   sections.forEach(section => {
     const tableEnd = section.indexOf('</table>');
     const finderBlock = tableEnd >= 0 ? section.slice(0, tableEnd + 8) : section;
-    const institutionMatch = finderBlock.match(/<h3>\s*([^<]+?)\s*<\/h3>/i);
+    const institutionMatch = finderBlock.match(/<h3[^>]*>([\s\S]*?)<\/h3>/i);
     const institution = institutionMatch ? stripHtml(institutionMatch[1]) : '';
+    if (!institution) return;
     const locationMatch = finderBlock.match(/([A-Za-z .'-]+),\s*([A-Z]{2})/);
     const city = locationMatch?.[1]?.trim() || null;
     const state = parseState(locationMatch?.[2] || fallbackState) ?? fallbackState;
@@ -338,7 +339,7 @@ function parseCcneProgramsFromHtml(html: string, fallbackState: string): Nursing
       if (!programLevels.length) return;
       programLevels.forEach(level => {
         results.push(buildProgramRecord({
-          institution_name: institution || 'Unknown institution',
+          institution_name: institution,
           campus_name: null,
           city,
           state,
@@ -453,7 +454,9 @@ async function fetchCheaAcenPrograms(): Promise<NursingProgram[]> {
     const rows = parseHtmlTable(html);
     rows.forEach((cells) => {
       if (cells.length < 3) return;
-      const [institution, programInfo, city, state, website = ''] = cells;
+      const [institutionRaw, programInfo, city, state, website = ''] = cells;
+      const institution = institutionRaw?.trim();
+      if (!institution) return;
       const normalizedState = parseState(state);
       if (!normalizedState) return;
       const programLevels = extractProgramLevels(programInfo);
@@ -496,7 +499,9 @@ async function fetchAcenPrograms(): Promise<NursingProgram[]> {
     const rows = parseHtmlTable(html);
     rows.forEach((cells) => {
       if (cells.length < 3) return;
-      const [institution, city, state, programInfo = '', status = '', website = ''] = cells;
+      const [institutionRaw, city, state, programInfo = '', status = '', website = ''] = cells;
+      const institution = institutionRaw?.trim();
+      if (!institution) return;
       const normalizedState = parseState(state);
       if (!normalizedState) return;
       const programLevels = extractProgramLevels(`${programInfo} ${status}`);
