@@ -457,7 +457,7 @@
             <div class="empty-state">Loading employer profiles...</div>
           </div>
         </div>
-        <div class="insight-card insight-wide">
+        <div class="insight-card">
           <h4>Scenario Calculator (Facility Only)</h4>
           <p class="insight-subtitle">Facility-level estimate — not region-wide. Use for a single hospital or SNF.</p>
           <div class="forecast-grid">
@@ -485,6 +485,51 @@
           </div>
           <div class="forecast-output" id="forecast-output">
             Enter inputs to estimate displacement.
+          </div>
+        </div>
+        <div class="insight-card state-calibration">
+          <h4>State Calibration (RN Advantage)</h4>
+          <p class="insight-subtitle">Compare your state to a target state and get recruiter talking points.</p>
+          <div class="calibration-controls">
+            <label>
+              Recruiter state
+              <select id="calibration-home"></select>
+            </label>
+            <label>
+              Target RN state
+              <select id="calibration-target"></select>
+            </label>
+          </div>
+          <div class="calibration-score">
+            <div>
+              <p class="calibration-label">RN State Advantage Score</p>
+              <p class="calibration-value" id="calibration-score">--</p>
+            </div>
+            <div class="calibration-tier" id="calibration-tier">Select states to compare.</div>
+          </div>
+          <div class="calibration-summary">
+            <div>
+              <p class="calibration-label">Lead with</p>
+              <ul class="calibration-list" id="calibration-top"></ul>
+            </div>
+            <div>
+              <p class="calibration-label">Avoid or reframe</p>
+              <ul class="calibration-list" id="calibration-avoid"></ul>
+            </div>
+          </div>
+          <div class="calibration-script" id="calibration-script"></div>
+          <div class="calibration-table-wrap">
+            <table class="calibration-table">
+              <thead>
+                <tr>
+                  <th>Factor</th>
+                  <th>Your State</th>
+                  <th>Target State</th>
+                  <th>Delta</th>
+                </tr>
+              </thead>
+              <tbody id="calibration-rows"></tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -547,7 +592,7 @@
       <a href="./data/metadata.json" target="_blank" rel="noreferrer">Data status</a>
     </footer>
 
-    <!-- Accredited Nursing Programs Modal (outside all sections for proper z-index) -->
+    <!-- Accredited Nursing Programs Modal -->
     <div class="modal-overlay" id="programs-modal">
       <div class="modal-card modal-large">
         <div class="modal-header">
@@ -564,6 +609,12 @@
               <span id="programs-count">0 programs</span>
               <span id="programs-updated">Last updated --</span>
             </div>
+          </div>
+          <div class="programs-loading" id="programs-loading">
+            <div class="programs-loading-bar">
+              <span class="programs-loading-fill" id="programs-progress-bar"></span>
+            </div>
+            <div class="programs-loading-text" id="programs-progress-text">Loading programs... 0%</div>
           </div>
           <div class="programs-controls">
             <input type="text" id="programs-search" placeholder="Search schools, cities, campuses..." />

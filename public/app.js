@@ -50,11 +50,20 @@ const projectForm = document.getElementById('project-form');
 const projectDetailModal = document.getElementById('project-detail-modal');
 const projectSearch = document.getElementById('project-search');
 const colorPicker = document.getElementById('color-picker');
+const calibrationHome = document.getElementById('calibration-home');
+const calibrationTarget = document.getElementById('calibration-target');
+const calibrationScore = document.getElementById('calibration-score');
+const calibrationTier = document.getElementById('calibration-tier');
+const calibrationTop = document.getElementById('calibration-top');
+const calibrationAvoid = document.getElementById('calibration-avoid');
+const calibrationRows = document.getElementById('calibration-rows');
+const calibrationScript = document.getElementById('calibration-script');
 const modulesMenuBtn = document.getElementById('modules-menu-btn');
 const modulesMenu = document.getElementById('modules-menu');
+const openProgramsModuleBtn = document.getElementById('open-programs-module');
 const programsModal = document.getElementById('programs-modal');
 const programsModalClose = document.getElementById('programs-modal-close');
-const programsClose = document.getElementById('programs-close');
+const programsCloseBtn = document.getElementById('programs-close');
 const programsList = document.getElementById('programs-list');
 const programsCount = document.getElementById('programs-count');
 const programsUpdated = document.getElementById('programs-updated');
@@ -63,7 +72,9 @@ const programsStateFilter = document.getElementById('programs-state-filter');
 const programsLevelFilter = document.getElementById('programs-level-filter');
 const programsSourceNote = document.getElementById('programs-source-note');
 const programsDownload = document.getElementById('programs-download');
-const programsModuleBtn = document.getElementById('open-programs-module');
+const programsLoading = document.getElementById('programs-loading');
+const programsProgressBar = document.getElementById('programs-progress-bar');
+const programsProgressText = document.getElementById('programs-progress-text');
 
 let currentNotices = [];
 let customNotices = []; // User-added notices
@@ -74,11 +85,13 @@ let apiHasDb = true;
 let isFetching = false;
 let currentMapView = 'map'; // 'map' or 'chart'
 let selectedStates = []; // Multi-select states
-let nursingPrograms = [];
-let programsLoaded = false;
-let programsModuleInitialized = false;
 const NOTICE_MAX_COUNT = 100;
 const NOTICE_WINDOW_COUNT = 25;
+let calibrationStats = { minCount: 0, maxCount: 0 };
+let nursingPrograms = [];
+let programsMeta = { lastUpdated: null, sources: [] };
+let programsLoaded = false;
+let programsModuleInitialized = false;
 
 // Login handling - server-side validation
 const SESSION_KEY = 'lni_authenticated';
@@ -186,12 +199,14 @@ const parseMaybeJson = (value) => {
   return [String(value)];
 };
 
-const escapeHtml = (value) => String(value)
-  .replace(/&/g, '&amp;')
-  .replace(/</g, '&lt;')
-  .replace(/>/g, '&gt;')
-  .replace(/"/g, '&quot;')
-  .replace(/'/g, '&#39;');
+const escapeHtml = (value) => {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+};
 
 const setStatus = (status, ok) => {
   apiStatus.textContent = status;
@@ -237,152 +252,126 @@ const fetchJson = async (path) => {
   return res.json();
 };
 
-const closeModulesMenu = () => {
-  if (modulesMenu) modulesMenu.classList.remove('open');
+const STATE_CALIBRATION_FACTORS = [
+  { key: 'staffing', label: 'Staffing Safety', pitch: 'staffing stability and coverage' },
+  { key: 'leadership', label: 'Leadership Support', pitch: 'leader support and team advocacy' },
+  { key: 'scheduling', label: 'Scheduling Balance', pitch: 'predictable scheduling and less mandatory overtime' },
+  { key: 'pay', label: 'Pay & Differentials', pitch: 'competitive pay and shift differentials' },
+  { key: 'safety', label: 'Psychological Safety', pitch: 'lower burnout risk and safer care environments' },
+  { key: 'resources', label: 'Resources & Equipment', pitch: 'better resourcing and modern equipment' },
+  { key: 'growth', label: 'Growth Opportunities', pitch: 'specialty growth and career pathways' },
+  { key: 'respect', label: 'Professional Respect', pitch: 'stronger voice in shared governance' }
+];
+
+const clampScore = (value) => Math.max(0, Math.min(10, value));
+
+const scoreFromCount = (state, invert = false) => {
+  const count = stateData[state]?.count ?? 0;
+  const range = calibrationStats.maxCount - calibrationStats.minCount;
+  if (range <= 0) return 5;
+  const ratio = (count - calibrationStats.minCount) / range;
+  const value = invert ? 1 - ratio : ratio;
+  return clampScore(Math.round(value * 100) / 10);
 };
 
-const toggleModulesMenu = () => {
-  if (!modulesMenu) return;
-  modulesMenu.classList.toggle('open');
+const buildStateProfile = (state) => {
+  const staffing = scoreFromCount(state, true);
+  const resources = scoreFromCount(state, false);
+  const growth = scoreFromCount(state, false);
+
+  return {
+    staffing,
+    leadership: clampScore(staffing * 0.85 + 1.2),
+    scheduling: clampScore(staffing * 0.8 + 1),
+    pay: 5,
+    safety: clampScore(staffing * 0.7 + 2),
+    resources,
+    growth,
+    respect: 5
+  };
 };
 
-const openProgramsModal = () => {
-  if (!programsModal) return;
-  programsModal.classList.add('active');
-  if (!programsLoaded) {
-    loadPrograms();
-  }
+const formatDelta = (delta) => {
+  const sign = delta > 0 ? '+' : '';
+  return `${sign}${delta.toFixed(1)}`;
 };
 
-const closeProgramsModal = () => {
-  if (!programsModal) return;
-  programsModal.classList.remove('active');
-};
-
-const renderProgramsTable = () => {
-  if (!programsList) return;
-  const search = programsSearch?.value.trim().toLowerCase() ?? '';
-  const stateFilter = programsStateFilter?.value ?? '';
-  const levelFilter = programsLevelFilter?.value ?? '';
-
-  const filtered = nursingPrograms.filter((program) => {
-    if (stateFilter && program.state !== stateFilter) return false;
-    if (levelFilter && program.program_level !== levelFilter) return false;
-    if (!search) return true;
-    const haystack = [
-      program.institution_name,
-      program.campus_name,
-      program.city,
-      program.state,
-      program.program_level,
-      program.accreditor,
-      program.credential_notes
-    ]
-      .filter(Boolean)
-      .join(' ')
-      .toLowerCase();
-    return haystack.includes(search);
-  });
-
-  if (!filtered.length) {
-    programsList.innerHTML = '<tr><td colspan="6">No programs match these filters.</td></tr>';
+const updateStateCalibration = () => {
+  if (!calibrationHome || !calibrationTarget || !calibrationRows) return;
+  const homeState = calibrationHome.value;
+  const targetState = calibrationTarget.value;
+  if (!homeState || !targetState || homeState === targetState) {
+    calibrationScore.textContent = '--';
+    calibrationTier.textContent = 'Select two different states to compare.';
+    calibrationRows.innerHTML = '';
+    calibrationTop.innerHTML = '<li>Select two different states.</li>';
+    calibrationAvoid.innerHTML = '<li>Select two different states.</li>';
+    calibrationScript.textContent = '';
     return;
   }
 
-  programsList.innerHTML = filtered.map((program) => {
-    const credential = program.credential_notes
-      ? `<span class="programs-credential">${escapeHtml(program.credential_notes)}</span>`
-      : '';
+  const homeProfile = buildStateProfile(homeState);
+  const targetProfile = buildStateProfile(targetState);
+
+  const deltas = STATE_CALIBRATION_FACTORS.map(factor => {
+    const homeValue = homeProfile[factor.key];
+    const targetValue = targetProfile[factor.key];
+    const delta = homeValue - targetValue;
+    return { ...factor, homeValue, targetValue, delta };
+  });
+
+  const positiveDeltas = deltas.filter(entry => entry.delta > 0);
+  const avgPositive = positiveDeltas.length
+    ? positiveDeltas.reduce((sum, entry) => sum + entry.delta, 0) / positiveDeltas.length
+    : 0;
+  const rsas = Math.round(clampScore(avgPositive) * 10);
+
+  calibrationScore.textContent = rsas ? `${rsas}` : '0';
+  if (rsas >= 80) calibrationTier.textContent = 'Very strong relocation pitch.';
+  else if (rsas >= 60) calibrationTier.textContent = 'Solid opportunity. Emphasize strengths.';
+  else if (rsas >= 40) calibrationTier.textContent = 'Selective pitch. Focus on unit-specific needs.';
+  else calibrationTier.textContent = 'Use caution. Avoid leading with relocation.';
+
+  const leadFactors = deltas.filter(entry => entry.delta >= 1.5).slice(0, 3);
+  const avoidFactors = deltas.filter(entry => entry.delta <= -0.5).slice(0, 3);
+
+  calibrationTop.innerHTML = leadFactors.length
+    ? leadFactors.map(entry => `<li>${entry.label}</li>`).join('')
+    : '<li>No strong advantages detected.</li>';
+  calibrationAvoid.innerHTML = avoidFactors.length
+    ? avoidFactors.map(entry => `<li>${entry.label}</li>`).join('')
+    : '<li>No clear weaknesses to avoid.</li>';
+
+  const scriptFactors = leadFactors.length ? leadFactors : deltas.sort((a, b) => b.delta - a.delta).slice(0, 2);
+  const scriptLine = scriptFactors.length
+    ? `Nurses from ${targetState} tell us the biggest difference here is ${scriptFactors.map(f => f.pitch).join(' and ')}.`
+    : `We tailor outreach to what nurses in ${targetState} care about most.`;
+  calibrationScript.textContent = scriptLine;
+
+  calibrationRows.innerHTML = deltas.map(entry => {
+    const deltaClass = entry.delta >= 0.5 ? 'positive' : entry.delta <= -0.5 ? 'negative' : '';
     return `
       <tr>
-        <td>${escapeHtml(program.institution_name)}${credential}</td>
-        <td>${escapeHtml(program.campus_name || '-')}</td>
-        <td>${escapeHtml(program.city || '-')}</td>
-        <td>${escapeHtml(program.state)}</td>
-        <td>${escapeHtml(program.program_level)}</td>
-        <td>${escapeHtml(program.accreditor)}</td>
+        <td>${entry.label}</td>
+        <td>${entry.homeValue.toFixed(1)}</td>
+        <td>${entry.targetValue.toFixed(1)}</td>
+        <td class="calibration-delta ${deltaClass}">${formatDelta(entry.delta)}</td>
       </tr>
     `;
   }).join('');
 };
 
-const populateProgramFilters = () => {
-  if (!programsStateFilter) return;
-  const states = Array.from(new Set(nursingPrograms.map(program => program.state))).sort();
-  programsStateFilter.innerHTML = '<option value="">All states</option>' + states
-    .map(state => `<option value="${escapeHtml(state)}">${escapeHtml(state)}</option>`)
-    .join('');
-};
+const initStateCalibration = () => {
+  if (!calibrationHome || !calibrationTarget) return;
+  const options = ALL_STATES.map(state => `<option value="${state}">${state}</option>`).join('');
+  calibrationHome.innerHTML = `<option value="">Select state</option>${options}`;
+  calibrationTarget.innerHTML = `<option value="">Select state</option>${options}`;
+  calibrationHome.value = ALL_STATES.includes('IN') ? 'IN' : ALL_STATES[0];
+  calibrationTarget.value = ALL_STATES.includes('FL') ? 'FL' : ALL_STATES[1];
 
-const downloadProgramsCsv = () => {
-  if (!nursingPrograms.length) return;
-  const headers = [
-    'Institution',
-    'Campus',
-    'City',
-    'State',
-    'Program Level',
-    'Credential Notes',
-    'Accreditor',
-    'Accreditation Status',
-    'Source URL',
-    'School Website',
-    'NCES UnitID',
-    'Last Verified'
-  ];
-  const rows = nursingPrograms.map(program => [
-    program.institution_name,
-    program.campus_name ?? '',
-    program.city ?? '',
-    program.state,
-    program.program_level,
-    program.credential_notes ?? '',
-    program.accreditor,
-    program.accreditation_status ?? '',
-    program.source_url,
-    program.school_website_url ?? '',
-    program.nces_unitid ?? '',
-    program.last_verified_date ?? ''
-  ]);
-  const csv = [headers, ...rows]
-    .map(row => row.map(value => `"${String(value).replace(/"/g, '""')}"`).join(','))
-    .join('\n');
-  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = 'nursing-programs.csv';
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-  URL.revokeObjectURL(url);
-};
-
-const loadPrograms = async () => {
-  if (!programsList) return;
-  programsList.innerHTML = '<tr><td colspan="6">Loading programs...</td></tr>';
-  try {
-    const data = await fetchJson('/nursing-programs');
-    nursingPrograms = Array.isArray(data.programs) ? data.programs : [];
-    programsLoaded = true;
-    programsCount.textContent = `${nursingPrograms.length.toLocaleString()} programs`;
-    programsUpdated.textContent = data.lastUpdated
-      ? `Last updated ${formatDate(data.lastUpdated)}`
-      : 'Last updated --';
-    if (programsSourceNote) {
-      const sources = Array.isArray(data.sources) ? data.sources : [];
-      if (sources.length) {
-        const sourceNames = sources.map(source => source.name).join(' + ');
-        programsSourceNote.textContent = `Sources: ${sourceNames}. Refreshes every 6 hours.`;
-      } else {
-        programsSourceNote.textContent = 'Sources refresh every 6 hours.';
-      }
-    }
-    populateProgramFilters();
-    renderProgramsTable();
-  } catch (err) {
-    programsList.innerHTML = '<tr><td colspan="6">Programs unavailable. Please try again later.</td></tr>';
-  }
+  calibrationHome.addEventListener('change', updateStateCalibration);
+  calibrationTarget.addEventListener('change', updateStateCalibration);
+  updateStateCalibration();
 };
 
 const loadHealth = async () => {
@@ -526,8 +515,11 @@ const renderNotices = (notices) => {
 };
 
 // Close dropdowns when clicking elsewhere
-document.addEventListener('click', () => {
+document.addEventListener('click', (event) => {
   document.querySelectorAll('.save-dropdown.active').forEach(d => d.classList.remove('active'));
+  if (modulesMenu && !modulesMenu.contains(event.target) && event.target !== modulesMenuBtn) {
+    closeModulesMenu();
+  }
 });
 
 const renderDetail = (notice) => {
@@ -1146,6 +1138,12 @@ const loadStatesWithMap = async () => {
 
     // Update the weather map colors
     updateWeatherMap();
+    const counts = Object.values(stateData).map(entry => entry.count ?? 0);
+    calibrationStats = {
+      minCount: counts.length ? Math.min(...counts) : 0,
+      maxCount: counts.length ? Math.max(...counts) : 0
+    };
+    updateStateCalibration();
   } catch {
     statStates.textContent = '0';
   }
@@ -1757,40 +1755,6 @@ const initProjectEvents = () => {
 
 // ==================== END PROJECTS FUNCTIONALITY ====================
 
-const initProgramsModule = () => {
-  if (programsModuleInitialized) return;
-  programsModuleInitialized = true;
-  modulesMenuBtn?.addEventListener('click', (e) => {
-    e.stopPropagation();
-    toggleModulesMenu();
-  });
-
-  programsModuleBtn?.addEventListener('click', () => {
-    closeModulesMenu();
-    openProgramsModal();
-  });
-
-  programsModalClose?.addEventListener('click', closeProgramsModal);
-  programsClose?.addEventListener('click', closeProgramsModal);
-
-  programsModal?.addEventListener('click', (e) => {
-    if (e.target === programsModal) closeProgramsModal();
-  });
-
-  programsSearch?.addEventListener('input', renderProgramsTable);
-  programsStateFilter?.addEventListener('change', renderProgramsTable);
-  programsLevelFilter?.addEventListener('change', renderProgramsTable);
-  programsDownload?.addEventListener('click', downloadProgramsCsv);
-
-  document.addEventListener('click', (e) => {
-    if (!modulesMenu?.contains(e.target) && !modulesMenuBtn?.contains(e.target)) {
-      closeModulesMenu();
-    }
-  });
-};
-
-initProgramsModule();
-
 // ==================== HELP SECTION ====================
 
 // Help section toggle
@@ -1806,6 +1770,249 @@ const initHelpSection = () => {
 };
 
 // ==================== END HELP SECTION ====================
+
+// ==================== ACCREDITED PROGRAMS MODULE ====================
+
+const updateProgramsCount = (count) => {
+  if (!programsCount) return;
+  const label = count === 1 ? 'program' : 'programs';
+  programsCount.textContent = `${count} ${label}`;
+};
+
+const updateProgramsLoading = (loaded, total) => {
+  if (!programsProgressBar || !programsProgressText) return;
+  const percent = total > 0 ? Math.min(100, Math.round((loaded / total) * 100)) : 0;
+  programsProgressBar.style.width = `${percent}%`;
+  programsProgressText.textContent = `Loading programs... ${percent}%`;
+};
+
+const normalizeProgram = (program) => {
+  return {
+    institution: program.institution ?? program.institution_name ?? program.school ?? 'Unknown',
+    campus: program.campus ?? program.campus_name ?? '-',
+    city: program.city ?? '',
+    state: program.state ?? '',
+    level: program.level ?? program.program_level ?? '',
+    accreditor: program.accreditor ?? program.accreditation ?? '',
+    credentialNotes: program.credential_notes ?? program.credentialNotes ?? ''
+  };
+};
+
+const buildProgramRow = (program) => {
+  const entry = normalizeProgram(program);
+  const credential = entry.credentialNotes
+    ? `<span class="programs-credential">${escapeHtml(entry.credentialNotes)}</span>`
+    : '';
+
+  return `
+    <tr>
+      <td><strong>${escapeHtml(entry.institution)}</strong>${credential}</td>
+      <td>${escapeHtml(entry.campus || '-')}</td>
+      <td>${escapeHtml(entry.city || '-')}</td>
+      <td>${escapeHtml(entry.state || '-')}</td>
+      <td>${escapeHtml(entry.level || '-')}</td>
+      <td>${escapeHtml(entry.accreditor || '-')}</td>
+    </tr>
+  `;
+};
+
+const getFilteredPrograms = () => {
+  const query = programsSearch?.value.trim().toLowerCase() ?? '';
+  const stateFilter = programsStateFilter?.value ?? '';
+  const levelFilter = programsLevelFilter?.value ?? '';
+
+  return nursingPrograms.filter((program) => {
+    const entry = normalizeProgram(program);
+    if (stateFilter && entry.state !== stateFilter) return false;
+    if (levelFilter && entry.level !== levelFilter) return false;
+    if (!query) return true;
+    const haystack = [
+      entry.institution,
+      entry.campus,
+      entry.city,
+      entry.state,
+      entry.level,
+      entry.accreditor,
+      entry.credentialNotes
+    ].filter(Boolean).join(' ').toLowerCase();
+    return haystack.includes(query);
+  });
+};
+
+const renderProgramsTable = (programs) => {
+  if (!programsList) return;
+
+  if (!programs.length) {
+    programsList.innerHTML = '<tr><td colspan="6">No programs match these filters.</td></tr>';
+    updateProgramsCount(0);
+    return;
+  }
+
+  programsList.innerHTML = programs.map(buildProgramRow).join('');
+  updateProgramsCount(programs.length);
+};
+
+const renderProgramsWithProgress = (programs) => {
+  if (!programsList) return;
+  programsList.innerHTML = '';
+
+  if (!programs.length) {
+    programsList.innerHTML = '<tr><td colspan="6">No programs available.</td></tr>';
+    updateProgramsCount(0);
+    programsLoading?.classList.remove('active');
+    return;
+  }
+
+  let rendered = 0;
+  const total = programs.length;
+  const batchSize = 50;
+  programsLoading?.classList.add('active');
+  updateProgramsLoading(0, total);
+  updateProgramsCount(total);
+
+  const appendBatch = () => {
+    const batch = programs.slice(rendered, rendered + batchSize);
+    if (!batch.length) {
+      programsLoading?.classList.remove('active');
+      updateProgramsLoading(total, total);
+      return;
+    }
+
+    programsList.insertAdjacentHTML('beforeend', batch.map(buildProgramRow).join(''));
+    rendered += batch.length;
+    updateProgramsLoading(rendered, total);
+
+    if (rendered < total) {
+      requestAnimationFrame(appendBatch);
+    } else {
+      programsLoading?.classList.remove('active');
+    }
+  };
+
+  requestAnimationFrame(appendBatch);
+};
+
+const populateProgramFilters = (programs) => {
+  if (!programsStateFilter || !programsLevelFilter) return;
+  const states = Array.from(new Set(programs.map(p => normalizeProgram(p).state).filter(Boolean))).sort();
+  const levels = Array.from(new Set(programs.map(p => normalizeProgram(p).level).filter(Boolean))).sort();
+
+  programsStateFilter.innerHTML = '<option value="">All states</option>' +
+    states.map(state => `<option value="${state}">${state}</option>`).join('');
+  programsLevelFilter.innerHTML = '<option value="">All levels</option>' +
+    levels.map(level => `<option value="${level}">${level}</option>`).join('');
+};
+
+const downloadProgramsCsv = () => {
+  const programs = getFilteredPrograms();
+  if (!programs.length) {
+    alert('No programs available to export.');
+    return;
+  }
+
+  const headers = ['Institution', 'Campus', 'City', 'State', 'Level', 'Accreditor', 'Credential Notes'];
+  const rows = programs.map((program) => {
+    const entry = normalizeProgram(program);
+    return [
+      `"${entry.institution.replace(/"/g, '""')}"`,
+      `"${entry.campus.replace(/"/g, '""')}"`,
+      `"${entry.city.replace(/"/g, '""')}"`,
+      `"${entry.state.replace(/"/g, '""')}"`,
+      `"${entry.level.replace(/"/g, '""')}"`,
+      `"${entry.accreditor.replace(/"/g, '""')}"`,
+      `"${entry.credentialNotes.replace(/"/g, '""')}"`
+    ].join(',');
+  });
+
+  const csvContent = [headers.join(','), ...rows].join('\n');
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'accredited_nursing_programs.csv';
+  link.click();
+  URL.revokeObjectURL(url);
+};
+
+const loadPrograms = async () => {
+  if (programsLoaded) return;
+  programsLoaded = true;
+
+  try {
+    programsLoading?.classList.add('active');
+    updateProgramsLoading(0, 1);
+    const response = await fetch('/data/nursing-programs.json');
+    if (!response.ok) throw new Error(`Failed to load programs: ${response.status}`);
+    const data = await response.json();
+
+    nursingPrograms = Array.isArray(data) ? data : (data.programs ?? []);
+    programsMeta = {
+      lastUpdated: data.lastUpdated ?? null,
+      sources: data.sources ?? []
+    };
+
+    if (programsUpdated) {
+      programsUpdated.textContent = programsMeta.lastUpdated
+        ? `Last updated ${formatDate(programsMeta.lastUpdated)}`
+        : 'Last updated --';
+    }
+
+    if (programsSourceNote) {
+      programsSourceNote.textContent = programsMeta.sources.length
+        ? `Sources: ${programsMeta.sources.join(' + ')}`
+        : '';
+    }
+
+    populateProgramFilters(nursingPrograms);
+    renderProgramsWithProgress(nursingPrograms);
+  } catch (err) {
+    programsLoaded = false;
+    if (programsList) {
+      programsList.innerHTML = '<tr><td colspan="6">Unable to load programs.</td></tr>';
+    }
+    programsLoading?.classList.remove('active');
+    console.error(err);
+  }
+};
+
+const closeModulesMenu = () => {
+  modulesMenu?.classList.remove('open');
+};
+
+const openProgramsModal = () => {
+  programsModal?.classList.add('active');
+  closeModulesMenu();
+  loadPrograms();
+  programsSearch?.focus();
+};
+
+const closeProgramsModal = () => {
+  programsModal?.classList.remove('active');
+};
+
+const initProgramsModule = () => {
+  if (programsModuleInitialized) return;
+  programsModuleInitialized = true;
+
+  modulesMenuBtn?.addEventListener('click', (event) => {
+    event.stopPropagation();
+    modulesMenu?.classList.toggle('open');
+  });
+
+  openProgramsModuleBtn?.addEventListener('click', openProgramsModal);
+  programsModalClose?.addEventListener('click', closeProgramsModal);
+  programsCloseBtn?.addEventListener('click', closeProgramsModal);
+  programsModal?.addEventListener('click', (event) => {
+    if (event.target === programsModal) closeProgramsModal();
+  });
+
+  programsSearch?.addEventListener('input', () => renderProgramsTable(getFilteredPrograms()));
+  programsStateFilter?.addEventListener('change', () => renderProgramsTable(getFilteredPrograms()));
+  programsLevelFilter?.addEventListener('change', () => renderProgramsTable(getFilteredPrograms()));
+  programsDownload?.addEventListener('click', downloadProgramsCsv);
+};
+
+// ==================== END ACCREDITED PROGRAMS MODULE ====================
 
 // ==================== MAP/CHART VIEW TOGGLE ====================
 
@@ -1925,6 +2132,7 @@ const initApp = () => {
   initMapToggle();
   initStateMultiSelect();
   initForecast();
+  initProgramsModule();
   loadHealth();
   loadStatesWithMap();
   loadInsights();
@@ -1932,7 +2140,7 @@ const initApp = () => {
   loadProjects();
   populateCustomStateDropdown();
   initProjectEvents();
-  initProgramsModule();
+  initStateCalibration();
   renderProjects();
   loadNotices();
 };
