@@ -1941,7 +1941,7 @@ const loadPrograms = async () => {
   try {
     programsLoading?.classList.add('active');
     updateProgramsLoading(0, 1);
-    const data = await fetchJson('/nursing-programs');
+    const data = await fetchJson('/data/programs.json');
 
     nursingPrograms = Array.isArray(data) ? data : (data.programs ?? []);
     programsMeta = {
