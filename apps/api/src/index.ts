@@ -474,6 +474,7 @@ function buildProgramRecord(partial: Omit<NursingProgram, 'id'>): NursingProgram
 async function fetchCcnePrograms(): Promise<NursingProgram[]> {
   const states = ALL_STATES;
   const results: NursingProgram[] = [];
+  const updatedAt = new Date().toISOString().slice(0, 10);
   const concurrency = 4;
   let index = 0;
 
