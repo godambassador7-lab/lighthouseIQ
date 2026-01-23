@@ -101,6 +101,7 @@ let currentPage = 1;
 let searchQuery = '';
 let nursingPrograms = [];
 let programsLoaded = false;
+let programsModuleInitialized = false;
 const NOTICES_PER_PAGE = 100;
 
 // =============================================================================
@@ -1724,6 +1725,8 @@ const initProjects = () => {
 };
 
 const initProgramsModule = () => {
+  if (programsModuleInitialized) return;
+  programsModuleInitialized = true;
   modulesMenuBtn?.addEventListener('click', (e) => {
     e.stopPropagation();
     toggleModulesMenu();
@@ -1752,6 +1755,8 @@ const initProgramsModule = () => {
     }
   });
 };
+
+initProgramsModule();
 
 // =============================================================================
 // Custom Notices

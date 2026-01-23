@@ -76,6 +76,7 @@ let currentMapView = 'map'; // 'map' or 'chart'
 let selectedStates = []; // Multi-select states
 let nursingPrograms = [];
 let programsLoaded = false;
+let programsModuleInitialized = false;
 
 // Login handling - server-side validation
 const SESSION_KEY = 'lni_authenticated';
@@ -1733,6 +1734,8 @@ const initProjectEvents = () => {
 // ==================== END PROJECTS FUNCTIONALITY ====================
 
 const initProgramsModule = () => {
+  if (programsModuleInitialized) return;
+  programsModuleInitialized = true;
   modulesMenuBtn?.addEventListener('click', (e) => {
     e.stopPropagation();
     toggleModulesMenu();
@@ -1761,6 +1764,8 @@ const initProgramsModule = () => {
     }
   });
 };
+
+initProgramsModule();
 
 // ==================== HELP SECTION ====================
 
