@@ -124,7 +124,9 @@ const handleLogin = (e) => {
     loginOverlay.classList.add('hidden');
     passcodeInput.value = '';
     loginError.textContent = '';
-    initApp();
+    initApp().then(() => {
+      initStrategicReview();
+    });
   } else {
     loginError.textContent = 'Invalid passcode. Please try again.';
     loginError.classList.remove('shake');
