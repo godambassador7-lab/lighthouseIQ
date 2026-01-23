@@ -314,6 +314,50 @@ function extractProgramLevels(text: string): Array<'ASN' | 'BSN' | 'MSN'> {
   return Array.from(levels);
 }
 
+function parseCcneProgramsFromHtml(html: string, fallbackState: string): NursingProgram[] {
+  const results: NursingProgram[] = [];
+  const updatedAt = new Date().toISOString().slice(0, 10);
+  const sections = html.split(/<table[^>]+id="finder"[^>]*>/i).slice(1);
+
+  sections.forEach(section => {
+    const tableEnd = section.indexOf('</table>');
+    const finderBlock = tableEnd >= 0 ? section.slice(0, tableEnd + 8) : section;
+    const institutionMatch = finderBlock.match(/<h3>\s*([^<]+?)\s*<\/h3>/i);
+    const institution = institutionMatch ? stripHtml(institutionMatch[1]) : '';
+    const locationMatch = finderBlock.match(/([A-Za-z .'-]+),\s*([A-Z]{2})/);
+    const city = locationMatch?.[1]?.trim() || null;
+    const state = parseState(locationMatch?.[2] || fallbackState) ?? fallbackState;
+    const websiteMatch = finderBlock.match(/<a[^>]+href=([^\s>]+)[^>]*>Link to Website/i);
+    const website = websiteMatch ? websiteMatch[1].replace(/['"]/g, '') : null;
+
+    const programMatches = Array.from(section.matchAll(/<h3><b>([^<]+)<\/b><\/h3>/gi));
+    programMatches.forEach(match => {
+      const programName = stripHtml(match[1]).trim();
+      if (!programName) return;
+      const programLevels = extractProgramLevels(programName);
+      if (!programLevels.length) return;
+      programLevels.forEach(level => {
+        results.push(buildProgramRecord({
+          institution_name: institution || 'Unknown institution',
+          campus_name: null,
+          city,
+          state,
+          program_level: level,
+          credential_notes: programName || null,
+          accreditor: 'CCNE',
+          accreditation_status: null,
+          source_url: CCNE_STATE_URL_TEMPLATE.replace('{STATE}', state),
+          school_website_url: website,
+          nces_unitid: null,
+          last_verified_date: updatedAt
+        }));
+      });
+    });
+  });
+
+  return results;
+}
+
 function buildProgramId(value: Omit<NursingProgram, 'id'>): string {
   const raw = [
     normalizeInstitutionName(value.institution_name),
@@ -373,7 +417,6 @@ function buildProgramRecord(partial: Omit<NursingProgram, 'id'>): NursingProgram
 async function fetchCcnePrograms(): Promise<NursingProgram[]> {
   const states = ALL_STATES;
   const results: NursingProgram[] = [];
-  const updatedAt = new Date().toISOString().slice(0, 10);
   const concurrency = 4;
   let index = 0;
 
@@ -383,29 +426,7 @@ async function fetchCcnePrograms(): Promise<NursingProgram[]> {
       const url = CCNE_STATE_URL_TEMPLATE.replace('{STATE}', state);
       try {
         const html = await fetchWithTimeout(url, 45000);
-        const rows = parseHtmlTable(html);
-        rows.forEach((cells) => {
-          if (cells.length < 2) return;
-          const [institution, city, programInfo = '', status = '', website = ''] = cells;
-          const programLevels = extractProgramLevels(`${programInfo} ${status}`);
-          if (!programLevels.length) return;
-          programLevels.forEach(level => {
-            results.push(buildProgramRecord({
-              institution_name: institution,
-              campus_name: null,
-              city: city || null,
-              state,
-              program_level: level,
-              credential_notes: programInfo || null,
-              accreditor: 'CCNE',
-              accreditation_status: status || null,
-              source_url: url,
-              school_website_url: website || null,
-              nces_unitid: null,
-              last_verified_date: updatedAt
-            }));
-          });
-        });
+        results.push(...parseCcneProgramsFromHtml(html, state));
       } catch (err) {
         console.warn(`CCNE scrape failed for ${state}:`, err);
       }
@@ -535,6 +556,7 @@ async function refreshPrograms() {
   }
 
   await ensureProgramsSchema();
+  await pool.query('TRUNCATE nursing_programs');
   const chunkSize = 500;
   for (let i = 0; i < deduped.length; i += chunkSize) {
     const chunk = deduped.slice(i, i + chunkSize);
