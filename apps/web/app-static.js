@@ -117,6 +117,8 @@ let nursingPrograms = [];
 let programsMeta = { lastUpdated: null, sources: [] };
 let programsLoaded = false;
 let programsModuleInitialized = false;
+let strategicData = null; // Will be loaded from strategic.json
+let strategicDataLoaded = false;
 
 // =============================================================================
 // Authentication (Simple client-side - data is public)
@@ -788,6 +790,21 @@ const loadInsights = async () => {
     renderInsightFallback(heatmapList, 'Insights unavailable.');
     renderInsightFallback(talentList, 'Insights unavailable.');
     renderInsightFallback(employerList, 'Insights unavailable.');
+  }
+};
+
+// Load strategic market data from JSON
+const loadStrategicData = async () => {
+  if (strategicDataLoaded) return strategicData;
+  try {
+    strategicData = await fetchJson(`${DATA_BASE_URL}/strategic.json`);
+    strategicDataLoaded = true;
+    console.log('Strategic data loaded:', strategicData?.lastUpdated);
+    return strategicData;
+  } catch (err) {
+    console.warn('Strategic data not available, using fallback:', err);
+    strategicDataLoaded = true;
+    return null;
   }
 };
 
@@ -2139,9 +2156,15 @@ const WORKFORCE_PROJECTIONS = {
   medianTenure: 8.5
 };
 
-const renderStrategicReview = () => {
+const renderStrategicReview = async () => {
   const container = document.getElementById('strategic-review-content');
   if (!container) return;
+
+  // Load strategic data from JSON (with fallback to hardcoded)
+  await loadStrategicData();
+  const salaryData = strategicData?.salaryData || NURSING_SALARY_DATA;
+  const specialtyPay = strategicData?.specialtyPay || SPECIALTY_PAY;
+  const projections = strategicData?.workforceProjections || WORKFORCE_PROJECTIONS;
 
   // Calculate market metrics from loaded notices
   const totalLayoffs = currentNotices.reduce((sum, n) => sum + (n.employees_affected || 0), 0);
@@ -2162,21 +2185,21 @@ const renderStrategicReview = () => {
   const risks = [];
 
   Object.entries(stateLayoffs).forEach(([state, data]) => {
-    const salaryData = NURSING_SALARY_DATA[state];
-    if (!salaryData) return;
+    const stateInfo = salaryData[state];
+    if (!stateInfo) return;
 
-    const travelPremium = salaryData.travelAnnual - salaryData.staffRN;
+    const travelPremium = stateInfo.travelAnnual - stateInfo.staffRN;
     const estimatedNurses = Math.round(data.affected * 0.35); // ~35% nursing in healthcare layoffs
 
-    if (salaryData.shortage === 'shortage' && estimatedNurses > 50) {
+    if (stateInfo.shortage === 'shortage' && estimatedNurses > 50) {
       opportunities.push({
         state,
         estimatedNurses,
         travelPremium,
-        avgSalary: salaryData.staffRN,
-        travelRate: salaryData.travelWeekly,
-        projectedGap: salaryData.projectedGap,
-        priority: Math.abs(salaryData.projectedGap) + estimatedNurses
+        avgSalary: stateInfo.staffRN,
+        travelRate: stateInfo.travelWeekly,
+        projectedGap: stateInfo.projectedGap,
+        priority: Math.abs(stateInfo.projectedGap) + estimatedNurses
       });
     }
 
@@ -2185,8 +2208,8 @@ const renderStrategicReview = () => {
         state,
         noticeCount: data.count,
         totalAffected: data.affected,
-        shortage: salaryData.shortage,
-        projectedGap: salaryData.projectedGap
+        shortage: stateInfo.shortage,
+        projectedGap: stateInfo.projectedGap
       });
     }
   });
@@ -2195,9 +2218,9 @@ const renderStrategicReview = () => {
   risks.sort((a, b) => b.totalAffected - a.totalAffected);
 
   // Generate executive summary
-  const shortageStatesList = Object.entries(NURSING_SALARY_DATA).filter(([_, d]) => d.shortage === 'shortage').map(([s]) => s).sort();
-  const surplusStatesList = Object.entries(NURSING_SALARY_DATA).filter(([_, d]) => d.shortage === 'surplus').map(([s]) => s).sort();
-  const totalProjectedGap = Object.values(NURSING_SALARY_DATA).reduce((sum, d) => sum + d.projectedGap, 0);
+  const shortageStatesList = Object.entries(salaryData).filter(([_, d]) => d.shortage === 'shortage').map(([s]) => s).sort();
+  const surplusStatesList = Object.entries(salaryData).filter(([_, d]) => d.shortage === 'surplus').map(([s]) => s).sort();
+  const totalProjectedGap = Object.values(salaryData).reduce((sum, d) => sum + d.projectedGap, 0);
 
   container.innerHTML = `
     <div class="strategic-grid">
@@ -2222,7 +2245,7 @@ const renderStrategicReview = () => {
             <div class="exec-metric-label">States with Surplus</div>
           </div>
           <div class="exec-metric-card">
-            <div class="exec-metric-value">${WORKFORCE_PROJECTIONS.growthRate}%</div>
+            <div class="exec-metric-value">${projections.growthRate}%</div>
             <div class="exec-metric-label">Job Growth (2022-2032)</div>
           </div>
         </div>
@@ -2252,8 +2275,8 @@ const renderStrategicReview = () => {
           <div class="insight-icon">💡</div>
           <div class="insight-content">
             <strong>Key Insight:</strong> The nursing workforce faces a critical shortage of approximately
-            ${Math.abs(WORKFORCE_PROJECTIONS.projectedGap2030).toLocaleString()} RNs by 2030, driven by
-            an aging workforce (median age ${WORKFORCE_PROJECTIONS.avgAge}) and ${WORKFORCE_PROJECTIONS.retirementRate}%
+            ${Math.abs(projections.projectedGap2030).toLocaleString()} RNs by 2030, driven by
+            an aging workforce (median age ${projections.avgAge}) and ${projections.retirementRate}%
             annual retirement rate. Recent layoff activity in ${Object.keys(stateLayoffs).length} states presents
             strategic recruitment opportunities.
           </div>
@@ -2280,7 +2303,7 @@ const renderStrategicReview = () => {
               </tr>
             </thead>
             <tbody>
-              ${Object.entries(NURSING_SALARY_DATA)
+              ${Object.entries(salaryData)
                 .sort((a, b) => b[1].staffRN - a[1].staffRN)
                 .slice(0, 15)
                 .map(([state, data]) => `
@@ -2315,7 +2338,7 @@ const renderStrategicReview = () => {
         </div>
         <p class="card-description">Travel nurse compensation by specialty area</p>
         <div class="specialty-grid">
-          ${Object.entries(SPECIALTY_PAY)
+          ${Object.entries(specialtyPay)
             .sort((a, b) => b[1].weekly - a[1].weekly)
             .map(([specialty, data]) => `
               <div class="specialty-card">
@@ -2451,9 +2474,9 @@ const renderStrategicReview = () => {
           </div>
         </div>
         <div class="projection-facts">
-          <div class="fact"><span class="fact-icon">👤</span> Median RN Age: ${WORKFORCE_PROJECTIONS.avgAge} years</div>
-          <div class="fact"><span class="fact-icon">🎓</span> Annual Retirement: ${WORKFORCE_PROJECTIONS.retirementRate}%</div>
-          <div class="fact"><span class="fact-icon">📊</span> Job Growth: ${WORKFORCE_PROJECTIONS.growthRate}% through 2032</div>
+          <div class="fact"><span class="fact-icon">👤</span> Median RN Age: ${projections.avgAge} years</div>
+          <div class="fact"><span class="fact-icon">🎓</span> Annual Retirement: ${projections.retirementRate}%</div>
+          <div class="fact"><span class="fact-icon">📊</span> Job Growth: ${projections.growthRate}% through 2032</div>
         </div>
       </div>
     </div>

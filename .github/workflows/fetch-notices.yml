@@ -65,6 +65,11 @@ jobs:
         env:
           NODE_OPTIONS: '--max-old-space-size=4096'
 
+      - name: Run strategic data export script
+        run: node dist/scripts/export-strategic.js
+        env:
+          NODE_OPTIONS: '--max-old-space-size=4096'
+
       - name: Copy frontend to public
         run: |
           cp -r apps/web/* public/
