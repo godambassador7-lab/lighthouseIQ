@@ -1,14 +1,34 @@
-// Login elements
+/**
+ * Nursing Layoff Radar - Static Frontend
+ *
+ * This version works with static JSON files hosted on GitHub Pages.
+ * Data is pre-fetched every 6 hours via GitHub Actions.
+ *
+ * Data URLs:
+ * - ./data/notices.json - All notices
+ * - ./data/states.json - State summary
+ * - ./data/metadata.json - Last update info
+ * - ./data/by-state/{STATE}.json - Per-state data
+ */
+
+// =============================================================================
+// Configuration
+// =============================================================================
+const DATA_BASE_URL = './data';
+const PASSCODE = 'IUH126'; // Simple client-side check (data is public anyway)
+
+// =============================================================================
+// DOM Elements
+// =============================================================================
 const loginOverlay = document.getElementById('login-overlay');
 const loginForm = document.getElementById('login-form');
 const passcodeInput = document.getElementById('passcode-input');
 const loginError = document.getElementById('login-error');
 
-// App elements
 const apiDot = document.getElementById('api-dot');
 const apiStatus = document.getElementById('api-status');
 const regionSelect = document.getElementById('filter-region');
-const stateSelect = document.getElementById('filter-state'); // Hidden input for state values
+const stateSelect = document.getElementById('filter-state');
 const stateMultiSelect = document.getElementById('state-multi-select');
 const stateDisplay = document.getElementById('state-display');
 const stateDropdown = document.getElementById('state-dropdown');
@@ -38,11 +58,9 @@ const forecastSetting = document.getElementById('forecast-setting');
 const forecastHorizon = document.getElementById('forecast-horizon');
 const forecastOutput = document.getElementById('forecast-output');
 
-// Custom notice form elements
 const customNoticeForm = document.getElementById('custom-notice-form');
 const customStateSelect = document.getElementById('custom-state');
 
-// Project elements
 const projectsList = document.getElementById('projects-list');
 const newProjectBtn = document.getElementById('new-project-btn');
 const projectModal = document.getElementById('project-modal');
@@ -76,84 +94,64 @@ const programsLoading = document.getElementById('programs-loading');
 const programsProgressBar = document.getElementById('programs-progress-bar');
 const programsProgressText = document.getElementById('programs-progress-text');
 
-let currentNotices = [];
-let customNotices = []; // User-added notices
-let projects = []; // User projects
-let currentProjectId = null; // For editing
+// =============================================================================
+// State
+// =============================================================================
+let allNotices = []; // All loaded notices
+let currentNotices = []; // Filtered notices
+let customNotices = [];
+let projects = [];
+let currentProjectId = null;
 let stateData = {};
-let apiHasDb = true;
-let isFetching = false;
-let currentMapView = 'map'; // 'map' or 'chart'
-let selectedStates = []; // Multi-select states
+let metadata = {};
+let currentMapView = 'map';
+let selectedStates = [];
+let selectedSpecialties = [];
+let currentPage = 1;
+let searchQuery = '';
 const NOTICE_MAX_COUNT = 100;
 const NOTICE_WINDOW_COUNT = 25;
+const NOTICES_PER_PAGE = NOTICE_MAX_COUNT;
 let calibrationStats = { minCount: 0, maxCount: 0 };
 let nursingPrograms = [];
 let programsMeta = { lastUpdated: null, sources: [] };
 let programsLoaded = false;
 let programsModuleInitialized = false;
 
-// Login handling - server-side validation
+// =============================================================================
+// Authentication (Simple client-side - data is public)
+// =============================================================================
 const SESSION_KEY = 'lni_authenticated';
-const PASSCODE_KEY = 'lni_passcode';
 
-const checkAuth = () => {
-  return sessionStorage.getItem(SESSION_KEY) === 'true' && sessionStorage.getItem(PASSCODE_KEY);
-};
+const checkAuth = () => sessionStorage.getItem(SESSION_KEY) === 'true';
 
-const getAuthHeaders = () => {
-  const passcode = sessionStorage.getItem(PASSCODE_KEY);
-  if (!passcode) return {};
-  return { 'Authorization': `Bearer ${passcode}` };
-};
-
-const handleLogin = async (e) => {
+const handleLogin = (e) => {
   e.preventDefault();
   const entered = passcodeInput.value.trim();
-  const loginBtn = loginForm.querySelector('button[type="submit"]');
 
   if (!entered) {
     loginError.textContent = 'Please enter a passcode.';
     return;
   }
 
-  // Disable button during request
-  loginBtn.disabled = true;
-  loginBtn.textContent = 'Verifying...';
-
-  try {
-    const response = await fetch('/auth', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ passcode: entered })
+  if (entered === PASSCODE) {
+    sessionStorage.setItem(SESSION_KEY, 'true');
+    loginOverlay.classList.add('hidden');
+    passcodeInput.value = '';
+    loginError.textContent = '';
+    initApp().then(() => {
+      initStrategicReview();
     });
-
-    const data = await response.json();
-
-    if (data.success) {
-      sessionStorage.setItem(SESSION_KEY, 'true');
-      sessionStorage.setItem(PASSCODE_KEY, entered);
-      loginOverlay.classList.add('hidden');
-      passcodeInput.value = '';
-      loginError.textContent = '';
-      initApp();
-    } else {
-      loginError.textContent = 'Invalid passcode. Please try again.';
-      loginError.classList.remove('shake');
-      void loginError.offsetWidth; // Trigger reflow for animation
-      loginError.classList.add('shake');
-      passcodeInput.value = '';
-      passcodeInput.focus();
-    }
-  } catch (err) {
-    loginError.textContent = 'Connection error. Please try again.';
-  } finally {
-    loginBtn.disabled = false;
-    loginBtn.textContent = 'Access Dashboard';
+  } else {
+    loginError.textContent = 'Invalid passcode. Please try again.';
+    loginError.classList.remove('shake');
+    void loginError.offsetWidth;
+    loginError.classList.add('shake');
+    passcodeInput.value = '';
+    passcodeInput.focus();
   }
 };
 
-// Initialize login
 if (checkAuth()) {
   loginOverlay.classList.add('hidden');
 } else {
@@ -162,9 +160,11 @@ if (checkAuth()) {
 
 loginForm.addEventListener('submit', handleLogin);
 
+// =============================================================================
+// Constants
+// =============================================================================
 const REGIONS = ['Northeast', 'Midwest', 'South', 'West'];
 
-// Region to states mapping (matches backend)
 const REGION_STATES = {
   Northeast: ['CT', 'ME', 'MA', 'NH', 'RI', 'VT', 'NJ', 'NY', 'PA'],
   Midwest: ['IL', 'IN', 'MI', 'OH', 'WI', 'IA', 'KS', 'MN', 'MO', 'NE', 'ND', 'SD'],
@@ -172,6 +172,142 @@ const REGION_STATES = {
   West: ['AZ', 'CO', 'ID', 'MT', 'NV', 'NM', 'UT', 'WY', 'AK', 'CA', 'HI', 'OR', 'WA']
 };
 
+const ALL_STATES = [
+  'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL',
+  'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME',
+  'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH',
+  'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'PR',
+  'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV',
+  'WI', 'WY'
+];
+
+const STATE_NAMES = {
+  AL: 'Alabama', AK: 'Alaska', AZ: 'Arizona', AR: 'Arkansas', CA: 'California',
+  CO: 'Colorado', CT: 'Connecticut', DE: 'Delaware', DC: 'Washington DC', FL: 'Florida',
+  GA: 'Georgia', HI: 'Hawaii', ID: 'Idaho', IL: 'Illinois', IN: 'Indiana',
+  IA: 'Iowa', KS: 'Kansas', KY: 'Kentucky', LA: 'Louisiana', ME: 'Maine',
+  MD: 'Maryland', MA: 'Massachusetts', MI: 'Michigan', MN: 'Minnesota', MS: 'Mississippi',
+  MO: 'Missouri', MT: 'Montana', NE: 'Nebraska', NV: 'Nevada', NH: 'New Hampshire',
+  NJ: 'New Jersey', NM: 'New Mexico', NY: 'New York', NC: 'North Carolina', ND: 'North Dakota',
+  OH: 'Ohio', OK: 'Oklahoma', OR: 'Oregon', PA: 'Pennsylvania', PR: 'Puerto Rico',
+  RI: 'Rhode Island', SC: 'South Carolina', SD: 'South Dakota', TN: 'Tennessee', TX: 'Texas',
+  UT: 'Utah', VT: 'Vermont', VA: 'Virginia', WA: 'Washington', WV: 'West Virginia',
+  WI: 'Wisconsin', WY: 'Wyoming'
+};
+
+// Exhaustive list of nursing specialties for recruiter search
+const NURSE_SPECIALTIES = {
+  // Critical Care & Emergency
+  'ICU': { name: 'Intensive Care Unit (ICU)', keywords: ['icu', 'intensive care', 'critical care', 'ccu', 'coronary care'] },
+  'MICU': { name: 'Medical ICU', keywords: ['micu', 'medical icu', 'medical intensive'] },
+  'SICU': { name: 'Surgical ICU', keywords: ['sicu', 'surgical icu', 'surgical intensive'] },
+  'CVICU': { name: 'Cardiovascular ICU', keywords: ['cvicu', 'cardiovascular icu', 'cardiac icu', 'heart'] },
+  'NICU': { name: 'Neonatal ICU', keywords: ['nicu', 'neonatal', 'newborn intensive', 'neonate'] },
+  'PICU': { name: 'Pediatric ICU', keywords: ['picu', 'pediatric icu', 'pediatric intensive'] },
+  'ER': { name: 'Emergency Room / ED', keywords: ['emergency', 'er ', 'e.r.', 'ed ', 'emergency department', 'trauma', 'urgent'] },
+  'Trauma': { name: 'Trauma Nursing', keywords: ['trauma', 'level i', 'level ii', 'trauma center'] },
+
+  // Surgical & Perioperative
+  'OR': { name: 'Operating Room', keywords: ['operating room', 'or ', 'o.r.', 'surgical', 'surgery', 'operative'] },
+  'Perioperative': { name: 'Perioperative', keywords: ['perioperative', 'periop', 'pre-op', 'post-op', 'preoperative', 'postoperative'] },
+  'PACU': { name: 'Post-Anesthesia Care Unit', keywords: ['pacu', 'post-anesthesia', 'recovery room', 'post anesthesia'] },
+  'Circulating': { name: 'Circulating Nurse', keywords: ['circulating', 'circulator'] },
+  'Scrub': { name: 'Scrub Nurse', keywords: ['scrub nurse', 'scrub tech'] },
+  'First Assist': { name: 'First Assist (RNFA)', keywords: ['first assist', 'rnfa', 'surgical assist'] },
+
+  // Medical-Surgical
+  'Med-Surg': { name: 'Medical-Surgical', keywords: ['med-surg', 'med surg', 'medical surgical', 'medsurg', 'general medical'] },
+  'Telemetry': { name: 'Telemetry / Step-Down', keywords: ['telemetry', 'tele', 'step-down', 'stepdown', 'progressive care', 'pcu'] },
+  'Orthopedic': { name: 'Orthopedic', keywords: ['orthopedic', 'ortho', 'musculoskeletal', 'joint replacement', 'spine'] },
+  'Neurology': { name: 'Neurology / Neuro', keywords: ['neurology', 'neuro', 'neurological', 'stroke', 'brain', 'neuroscience'] },
+  'Oncology': { name: 'Oncology', keywords: ['oncology', 'onc', 'cancer', 'tumor', 'chemotherapy', 'radiation'] },
+  'Cardiology': { name: 'Cardiology', keywords: ['cardiology', 'cardiac', 'heart', 'cardiovascular', 'cath lab', 'catheterization'] },
+  'Pulmonary': { name: 'Pulmonary / Respiratory', keywords: ['pulmonary', 'respiratory', 'lung', 'pulmonology'] },
+  'Renal': { name: 'Renal / Nephrology', keywords: ['renal', 'nephrology', 'kidney', 'dialysis', 'hemodialysis'] },
+  'GI': { name: 'Gastroenterology', keywords: ['gastroenterology', 'gi ', 'gastrointestinal', 'endoscopy', 'digestive'] },
+  'Urology': { name: 'Urology', keywords: ['urology', 'urological', 'bladder', 'prostate'] },
+
+  // Women's Health & Pediatrics
+  'OB': { name: 'Obstetrics / OB', keywords: ['obstetrics', 'ob ', 'o.b.', 'obstetric', 'prenatal'] },
+  'L&D': { name: 'Labor & Delivery', keywords: ['labor and delivery', 'l&d', 'labor & delivery', 'delivery', 'birthing', 'birth'] },
+  'Postpartum': { name: 'Postpartum / Mother-Baby', keywords: ['postpartum', 'mother-baby', 'mother baby', 'postnatal', 'maternity'] },
+  'LDRP': { name: 'LDRP (Labor/Delivery/Recovery/Postpartum)', keywords: ['ldrp', 'labor delivery recovery'] },
+  'Antepartum': { name: 'Antepartum / High-Risk OB', keywords: ['antepartum', 'high-risk ob', 'high risk pregnancy', 'perinatal'] },
+  'Gynecology': { name: 'Gynecology', keywords: ['gynecology', 'gyn', 'women\'s health', 'womens health'] },
+  'Pediatrics': { name: 'Pediatrics', keywords: ['pediatric', 'peds', 'children', 'child', 'kids', 'pediatric unit'] },
+  'Pediatric ER': { name: 'Pediatric Emergency', keywords: ['pediatric emergency', 'pediatric er', 'peds er', 'children\'s emergency'] },
+  'Pediatric Oncology': { name: 'Pediatric Oncology', keywords: ['pediatric oncology', 'pediatric cancer', 'childhood cancer'] },
+
+  // Mental Health & Behavioral
+  'Psych': { name: 'Psychiatric / Mental Health', keywords: ['psychiatric', 'psych', 'mental health', 'behavioral health', 'psychiatry'] },
+  'Substance Abuse': { name: 'Substance Abuse / Addiction', keywords: ['substance abuse', 'addiction', 'detox', 'rehab', 'recovery', 'chemical dependency'] },
+  'Geriatric Psych': { name: 'Geriatric Psychiatry', keywords: ['geriatric psych', 'geropsych', 'elderly mental health'] },
+  'Child Psych': { name: 'Child/Adolescent Psychiatry', keywords: ['child psych', 'adolescent psych', 'pediatric psych', 'youth mental health'] },
+
+  // Long-Term Care & Geriatrics
+  'LTC': { name: 'Long-Term Care', keywords: ['long-term care', 'ltc', 'long term care', 'nursing home', 'extended care'] },
+  'SNF': { name: 'Skilled Nursing Facility', keywords: ['skilled nursing', 'snf', 'skilled nursing facility'] },
+  'Geriatrics': { name: 'Geriatrics', keywords: ['geriatric', 'elderly', 'senior', 'aging', 'gerontology'] },
+  'Memory Care': { name: 'Memory Care / Dementia', keywords: ['memory care', 'dementia', 'alzheimer', 'cognitive'] },
+  'Rehab': { name: 'Rehabilitation', keywords: ['rehabilitation', 'rehab', 'physical therapy', 'occupational therapy', 'acute rehab'] },
+
+  // Community & Outpatient
+  'Home Health': { name: 'Home Health', keywords: ['home health', 'home care', 'home nursing', 'visiting nurse', 'in-home'] },
+  'Hospice': { name: 'Hospice / Palliative', keywords: ['hospice', 'palliative', 'end of life', 'comfort care', 'terminal'] },
+  'Public Health': { name: 'Public Health', keywords: ['public health', 'community health', 'population health'] },
+  'School Nurse': { name: 'School Nursing', keywords: ['school nurse', 'school nursing', 'student health'] },
+  'Occupational Health': { name: 'Occupational Health', keywords: ['occupational health', 'employee health', 'workplace health', 'industrial'] },
+  'Outpatient': { name: 'Outpatient / Ambulatory', keywords: ['outpatient', 'ambulatory', 'clinic', 'day surgery', 'same day'] },
+  'Infusion': { name: 'Infusion / IV Therapy', keywords: ['infusion', 'iv therapy', 'infusion center', 'chemo infusion'] },
+  'Wound Care': { name: 'Wound Care', keywords: ['wound care', 'wound ostomy', 'wocn', 'wound nurse', 'ostomy'] },
+
+  // Specialty Units
+  'Burn': { name: 'Burn Unit', keywords: ['burn', 'burn unit', 'burn center', 'burn icu'] },
+  'Transplant': { name: 'Transplant', keywords: ['transplant', 'organ transplant', 'bone marrow', 'stem cell'] },
+  'Dialysis': { name: 'Dialysis', keywords: ['dialysis', 'hemodialysis', 'peritoneal dialysis', 'renal replacement'] },
+  'Endoscopy': { name: 'Endoscopy / GI Lab', keywords: ['endoscopy', 'gi lab', 'colonoscopy', 'upper gi'] },
+  'Cath Lab': { name: 'Cardiac Cath Lab', keywords: ['cath lab', 'catheterization', 'cardiac cath', 'interventional cardiology'] },
+  'Electrophysiology': { name: 'Electrophysiology (EP)', keywords: ['electrophysiology', 'ep lab', 'arrhythmia', 'pacemaker'] },
+  'Interventional Radiology': { name: 'Interventional Radiology', keywords: ['interventional radiology', 'ir ', 'i.r.', 'vascular interventional'] },
+  'Pain Management': { name: 'Pain Management', keywords: ['pain management', 'pain clinic', 'chronic pain', 'pain medicine'] },
+  'Sleep Lab': { name: 'Sleep Lab', keywords: ['sleep lab', 'sleep study', 'sleep medicine', 'polysomnography'] },
+
+  // Advanced Practice & Leadership
+  'NP': { name: 'Nurse Practitioner', keywords: ['nurse practitioner', 'np ', 'n.p.', 'aprn', 'advanced practice'] },
+  'CNS': { name: 'Clinical Nurse Specialist', keywords: ['clinical nurse specialist', 'cns', 'c.n.s.'] },
+  'CRNA': { name: 'Nurse Anesthetist (CRNA)', keywords: ['crna', 'nurse anesthetist', 'anesthesia', 'c.r.n.a.'] },
+  'CNM': { name: 'Certified Nurse Midwife', keywords: ['midwife', 'cnm', 'nurse midwife', 'c.n.m.'] },
+  'Nurse Manager': { name: 'Nurse Manager / Director', keywords: ['nurse manager', 'nursing manager', 'nurse director', 'nursing director', 'unit manager'] },
+  'Charge Nurse': { name: 'Charge Nurse', keywords: ['charge nurse', 'charge rn', 'shift supervisor'] },
+  'Case Manager': { name: 'Case Management', keywords: ['case manager', 'case management', 'care coordinator', 'utilization review'] },
+  'Educator': { name: 'Nurse Educator', keywords: ['nurse educator', 'nursing educator', 'clinical educator', 'staff development'] },
+  'Informatics': { name: 'Nursing Informatics', keywords: ['informatics', 'nursing informatics', 'clinical informatics', 'health it'] },
+  'Quality': { name: 'Quality / Performance Improvement', keywords: ['quality', 'performance improvement', 'quality assurance', 'qi ', 'pi '] },
+  'Research': { name: 'Research Nurse', keywords: ['research', 'clinical research', 'clinical trials', 'research nurse'] },
+  'Infection Control': { name: 'Infection Control', keywords: ['infection control', 'infection prevention', 'epidemiology', 'ic nurse'] },
+
+  // Other Specialties
+  'Float Pool': { name: 'Float Pool / Resource', keywords: ['float pool', 'float nurse', 'resource pool', 'prn', 'per diem'] },
+  'Travel': { name: 'Travel Nurse', keywords: ['travel nurse', 'travel nursing', 'traveler', 'agency'] },
+  'Triage': { name: 'Triage', keywords: ['triage', 'phone triage', 'nurse line', 'advice nurse'] },
+  'Flight Nurse': { name: 'Flight / Transport Nurse', keywords: ['flight nurse', 'transport', 'air ambulance', 'critical care transport', 'ccrn'] },
+  'Correctional': { name: 'Correctional Nursing', keywords: ['correctional', 'prison', 'jail', 'detention', 'forensic'] },
+  'Military': { name: 'Military / VA', keywords: ['military', 'va ', 'veterans', 'army', 'navy', 'air force'] },
+  'Parish': { name: 'Parish / Faith Community', keywords: ['parish', 'faith community', 'church', 'faith-based'] },
+  'Legal Nurse': { name: 'Legal Nurse Consultant', keywords: ['legal nurse', 'lnc', 'forensic', 'legal consulting'] },
+  'Aesthetic': { name: 'Aesthetic / Cosmetic', keywords: ['aesthetic', 'cosmetic', 'plastic surgery', 'dermatology', 'med spa'] },
+  'Bariatric': { name: 'Bariatric', keywords: ['bariatric', 'weight loss surgery', 'obesity', 'gastric bypass'] },
+  'Diabetes': { name: 'Diabetes Education', keywords: ['diabetes', 'diabetic', 'endocrine', 'glucose'] },
+  'Allergy': { name: 'Allergy / Immunology', keywords: ['allergy', 'immunology', 'allergist'] },
+  'ENT': { name: 'ENT / Otolaryngology', keywords: ['ent', 'otolaryngology', 'ear nose throat', 'audiology'] },
+  'Ophthalmology': { name: 'Ophthalmology / Eye', keywords: ['ophthalmology', 'eye', 'vision', 'optometry', 'retina'] },
+  'Dermatology': { name: 'Dermatology', keywords: ['dermatology', 'skin', 'dermatologic'] },
+  'Vascular': { name: 'Vascular', keywords: ['vascular', 'vein', 'arterial', 'peripheral vascular'] }
+};
+
+// =============================================================================
+// Utility Functions
+// =============================================================================
 const formatDate = (value) => {
   if (!value) return 'Unknown';
   const d = new Date(value);
@@ -186,6 +322,30 @@ const formatNumber = (value) => {
   return n.toLocaleString();
 };
 
+const escapeHtml = (value) => {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+};
+
+const formatRelativeTime = (dateStr) => {
+  if (!dateStr) return 'Unknown';
+  const date = new Date(dateStr);
+  const now = new Date();
+  const diffMs = now - date;
+  const diffMins = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMs / 3600000);
+  const diffDays = Math.floor(diffMs / 86400000);
+
+  if (diffMins < 60) return `${diffMins} minutes ago`;
+  if (diffHours < 24) return `${diffHours} hours ago`;
+  if (diffDays < 7) return `${diffDays} days ago`;
+  return formatDate(dateStr);
+};
+
 const parseMaybeJson = (value) => {
   if (!value) return [];
   if (Array.isArray(value)) return value;
@@ -197,59 +357,6 @@ const parseMaybeJson = (value) => {
     }
   }
   return [String(value)];
-};
-
-const escapeHtml = (value) => {
-  return String(value ?? '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
-};
-
-const setStatus = (status, ok) => {
-  apiStatus.textContent = status;
-  apiDot.classList.remove('ok', 'bad');
-  apiDot.classList.add(ok ? 'ok' : 'bad');
-};
-
-const setLoading = (message) => {
-  noticeList.innerHTML = `<div class="empty-state">${message}</div>`;
-};
-
-const buildQuery = () => {
-  const params = new URLSearchParams();
-  params.set('recruiterFocus', '1');
-  if (orgInput.value.trim()) params.set('org', orgInput.value.trim());
-  if (regionSelect.value) params.set('region', regionSelect.value);
-  // Handle multiple selected states
-  if (selectedStates.length > 0) {
-    params.set('state', selectedStates.join(','));
-  }
-  if (sinceInput.value) params.set('since', sinceInput.value);
-  if (scoreInput.value) params.set('minScore', scoreInput.value);
-  if (!limitInput.value || Number(limitInput.value) <= 0) {
-    params.set('limit', 'all');
-  } else {
-    params.set('limit', limitInput.value);
-  }
-  return params.toString();
-};
-
-const fetchJson = async (path) => {
-  const res = await fetch(path, {
-    headers: getAuthHeaders()
-  });
-  if (res.status === 401) {
-    // Session expired or invalid - force re-login
-    sessionStorage.removeItem(SESSION_KEY);
-    sessionStorage.removeItem(PASSCODE_KEY);
-    loginOverlay.classList.remove('hidden');
-    throw new Error('Session expired. Please log in again.');
-  }
-  if (!res.ok) throw new Error(`Request failed: ${res.status}`);
-  return res.json();
 };
 
 const STATE_CALIBRATION_FACTORS = [
@@ -374,207 +481,149 @@ const initStateCalibration = () => {
   updateStateCalibration();
 };
 
-const loadHealth = async () => {
+const setStatus = (status, ok) => {
+  apiStatus.textContent = status;
+  apiDot.classList.remove('ok', 'bad');
+  apiDot.classList.add(ok ? 'ok' : 'bad');
+};
+
+// =============================================================================
+// Map Initialization
+// =============================================================================
+const initWeatherMap = async () => {
+  if (!usMapContainer) return;
   try {
-    const data = await fetchJson('/health');
-    apiHasDb = Boolean(data.db);
-    if (data.ok) {
-      setStatus(data.db ? 'API connected to Postgres' : 'API running without DB', true);
-    } else {
-      setStatus('API error', false);
+    const candidates = ['./us-map.svg', '/us-map.svg', './apps/web/us-map.svg', 'us-map.svg'];
+    let svgText = '';
+    for (const url of candidates) {
+      try {
+        const res = await fetch(url);
+        if (!res.ok) continue;
+        svgText = await res.text();
+        if (svgText.includes('<svg')) break;
+      } catch {
+        // Try next candidate
+      }
     }
-  } catch {
-    apiHasDb = false;
-    setStatus('API offline', false);
+    if (!svgText) throw new Error('map fetch failed');
+    usMapContainer.innerHTML = svgText;
+  } catch (err) {
+    console.error('Failed to load map SVG:', err);
+    usMapContainer.innerHTML = '<div class="empty-state">Map unavailable.</div>';
+    return;
+  }
+
+  const svg = usMapContainer.querySelector('svg');
+  if (!svg) return;
+
+  if (!svg.getAttribute('viewBox')) {
+    const width = svg.getAttribute('width') || '960';
+    const height = svg.getAttribute('height') || '600';
+    svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+  }
+
+  const shapes = svg.querySelectorAll('path, circle');
+  shapes.forEach((shape) => {
+    const classList = Array.from(shape.classList || []);
+    const stateClass = classList.find((c) => c.length === 2 && /^[a-z]{2}$/i.test(c));
+    const rawId = shape.getAttribute('data-state') || shape.getAttribute('id') || '';
+    const abbrev = (stateClass || rawId).toUpperCase();
+    if (!/^[A-Z]{2}$/.test(abbrev)) return;
+    shape.setAttribute('data-state', abbrev);
+    shape.addEventListener('click', () => toggleStateSelection(abbrev));
+    shape.addEventListener('mouseenter', (e) => showTooltip(e, abbrev));
+    shape.addEventListener('mousemove', (e) => moveTooltip(e));
+    shape.addEventListener('mouseleave', hideTooltip);
+  });
+};
+
+const showTooltip = (e, stateAbbrev) => {
+  if (!mapTooltip) return;
+  const stateName = STATE_NAMES[stateAbbrev] || stateAbbrev;
+  const count = stateData[stateAbbrev]?.count || 0;
+  mapTooltip.innerHTML = `
+    <div class="tooltip-state">${stateName}</div>
+    <div class="tooltip-count">${count} notices</div>
+  `;
+  mapTooltip.classList.add('visible');
+  moveTooltip(e);
+};
+
+const moveTooltip = (e) => {
+  if (!mapTooltip) return;
+  const container = usMapContainer?.closest('.weather-map-container');
+  if (!container) return;
+  const rect = container.getBoundingClientRect();
+  const x = e.clientX - rect.left + 15;
+  const y = e.clientY - rect.top + 15;
+  mapTooltip.style.left = `${x}px`;
+  mapTooltip.style.top = `${y}px`;
+};
+
+const hideTooltip = () => {
+  mapTooltip?.classList.remove('visible');
+};
+
+const setLoading = (message) => {
+  noticeList.innerHTML = `<div class="empty-state">${message}</div>`;
+};
+
+// =============================================================================
+// Data Loading (Static JSON)
+// =============================================================================
+const fetchJson = async (url) => {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Failed to fetch ${url}: ${res.status}`);
+  return res.json();
+};
+
+const loadMetadata = async () => {
+  try {
+    metadata = await fetchJson(`${DATA_BASE_URL}/metadata.json`);
+    setStatus(`Data updated ${formatRelativeTime(metadata.lastUpdated)}`, true);
+    statUpdated.textContent = formatRelativeTime(metadata.lastUpdated);
+  } catch (err) {
+    console.error('Failed to load metadata:', err);
+    setStatus('Data unavailable', false);
   }
 };
 
 const loadStates = async () => {
   try {
-    const data = await fetchJson('/states');
-    const states = data.states ?? [];
-    statStates.textContent = states.length.toString();
-    states.forEach(({ state }) => {
-      const opt = document.createElement('option');
-      opt.value = state;
-      opt.textContent = state;
-      stateSelect.appendChild(opt);
+    const data = await fetchJson(`${DATA_BASE_URL}/states.json`);
+    stateData = {};
+    (data.states ?? []).forEach(({ state, count }) => {
+      stateData[state] = { count };
     });
-  } catch {
+    statStates.textContent = Object.keys(stateData).length.toString();
+    const counts = Object.values(stateData).map(entry => entry.count ?? 0);
+    calibrationStats = {
+      minCount: counts.length ? Math.min(...counts) : 0,
+      maxCount: counts.length ? Math.max(...counts) : 0
+    };
+    updateStateCalibration();
+  } catch (err) {
+    console.error('Failed to load states:', err);
     statStates.textContent = '0';
   }
 };
 
-const renderNotices = (notices) => {
-  const visibleNotices = notices.slice(0, NOTICE_MAX_COUNT);
-  const applyNoticeListWindow = (count) => {
-    if (!noticeList) return;
-    if (!count) {
-      noticeList.style.maxHeight = '';
-      noticeList.classList.remove('windowed');
-      return;
-    }
-    const firstCard = noticeList.querySelector('.notice-card');
-    if (!firstCard) return;
-    const cardHeight = firstCard.getBoundingClientRect().height;
-    const styles = getComputedStyle(noticeList);
-    const gap = parseFloat(styles.rowGap || styles.gap || '0');
-    const windowCount = Math.min(NOTICE_WINDOW_COUNT, count);
-    const windowHeight = (cardHeight * windowCount) + (gap * Math.max(0, windowCount - 1));
-    noticeList.style.maxHeight = `${Math.ceil(windowHeight)}px`;
-    noticeList.classList.toggle('windowed', count > NOTICE_WINDOW_COUNT);
-  };
-
-  if (!visibleNotices.length) {
-    noticeList.innerHTML = `<div class="empty-state">No notices match these filters yet.</div>`;
-    applyNoticeListWindow(0);
-    return;
+const loadAllNotices = async () => {
+  setLoading('Loading notices...');
+  try {
+    const data = await fetchJson(`${DATA_BASE_URL}/notices.json`);
+    allNotices = data.notices ?? [];
+    statTotal.textContent = allNotices.length.toString();
+    return allNotices;
+  } catch (err) {
+    console.error('Failed to load notices:', err);
+    setLoading('Failed to load data. Please refresh the page.');
+    return [];
   }
-
-  noticeList.innerHTML = '';
-  visibleNotices.forEach((notice, idx) => {
-    const card = document.createElement('article');
-    card.className = notice.isCustom ? 'notice-card custom-notice' : 'notice-card';
-    card.style.animationDelay = `${idx * 35}ms`;
-    card.dataset.noticeId = notice.id;
-
-    // Handle both API format and custom notice format
-    const label = notice.nursing_label ?? notice.nursingImpact?.label ?? 'Unclear';
-    const score = notice.nursing_score ?? notice.nursingImpact?.score ?? 0;
-    const employer = notice.employer_name ?? notice.employerName ?? 'Unknown employer';
-    const city = notice.city;
-    const state = notice.state;
-    const location = [city, state].filter(Boolean).join(', ') || state;
-    const noticeDate = formatDate(notice.notice_date ?? notice.noticeDate ?? notice.retrieved_at ?? notice.createdAt);
-    const affected = notice.employees_affected ?? notice.affectedCount;
-
-    const customBadge = notice.isCustom ? '<span class="custom-badge">Custom</span>' : '';
-
-    card.innerHTML = `
-      <div class="notice-top">
-        <span class="pill">${state}</span>
-        ${customBadge}
-        <span class="score">${label} - ${score}</span>
-        <div class="save-to-project">
-          <button class="save-to-project-btn" data-notice-idx="${idx}">+ Save</button>
-          <div class="save-dropdown" id="dropdown-${idx}"></div>
-        </div>
-      </div>
-      <h4>${employer}</h4>
-      <div class="notice-meta">
-        <span>${location}</span>
-        <span>${noticeDate}</span>
-        <span>${formatNumber(affected)} impacted</span>
-      </div>
-    `;
-
-    noticeList.appendChild(card);
-  });
-
-  // Add save-to-project dropdown handlers
-  document.querySelectorAll('.save-to-project-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const idx = btn.dataset.noticeIdx;
-      const dropdown = document.getElementById(`dropdown-${idx}`);
-
-      // Close all other dropdowns
-      document.querySelectorAll('.save-dropdown.active').forEach(d => {
-        if (d !== dropdown) d.classList.remove('active');
-      });
-
-      // Build dropdown content
-      if (projects.length === 0) {
-        dropdown.innerHTML = `<div class="save-dropdown-item" style="color: var(--muted);">No projects yet. Create one first.</div>`;
-      } else {
-        dropdown.innerHTML = projects.map(p => `
-          <div class="save-dropdown-item" data-project-id="${p.id}" style="border-left-color: ${p.color}">
-            ${p.name}
-          </div>
-        `).join('');
-      }
-
-      dropdown.classList.toggle('active');
-    });
-  });
-
-  // Handle dropdown item clicks
-  document.querySelectorAll('.save-dropdown').forEach((dropdown, idx) => {
-    dropdown.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const item = e.target.closest('.save-dropdown-item');
-      if (item && item.dataset.projectId) {
-        const notice = visibleNotices[idx];
-        saveNoticeToProject(item.dataset.projectId, notice);
-        dropdown.classList.remove('active');
-      }
-    });
-  });
-
-  applyNoticeListWindow(visibleNotices.length);
-};
-
-// Close dropdowns when clicking elsewhere
-document.addEventListener('click', (event) => {
-  document.querySelectorAll('.save-dropdown.active').forEach(d => d.classList.remove('active'));
-  if (modulesMenu && !modulesMenu.contains(event.target) && event.target !== modulesMenuBtn) {
-    closeModulesMenu();
-  }
-});
-
-const renderDetail = (notice) => {
-  if (!notice) {
-    detailBody.innerHTML = `<div class="empty-detail">No notice selected.</div>`;
-    return;
-  }
-
-  const signals = parseMaybeJson(notice.nursing_signals);
-  const keywords = parseMaybeJson(notice.nursing_keywords);
-  const specialties = parseMaybeJson(notice.nursing_specialties);
-  const roleMix = notice.nursing_role_mix || null;
-  const careSetting = notice.nursing_care_setting || 'unknown';
-  const leadTime = notice.lead_time_days;
-
-  detailBody.innerHTML = `
-    <div class="detail-section">
-      <h5>${notice.employer_name || 'Unknown employer'}</h5>
-      <p>${[notice.facility_name, notice.parent_system].filter(Boolean).join(' • ') || 'System unknown'}</p>
-      <p>${[notice.address, notice.city, notice.county, notice.state].filter(Boolean).join(', ') || 'Location unknown'}</p>
-    </div>
-    <div class="detail-section">
-      <h5>Impact Summary</h5>
-      <p>Score: ${notice.nursing_score ?? 0} (${notice.nursing_label ?? 'Unclear'})</p>
-      <p>Employees affected: ${formatNumber(notice.employees_affected)}</p>
-      <p>NAICS: ${notice.naics ?? 'Unknown'} - Reason: ${notice.reason ?? 'Not provided'}</p>
-    </div>
-    <div class="detail-section">
-      <h5>Nursing Impact Breakdown</h5>
-      <p>Care setting: ${careSetting}</p>
-      <p>Lead time: ${leadTime !== null && leadTime !== undefined ? `${leadTime} days` : 'Unknown'}</p>
-      <p>Role mix: ${roleMix ? `RN ${roleMix.rn}% • LPN ${roleMix.lpn}% • CNA ${roleMix.cna}%` : 'Unavailable'}</p>
-      <p>Specialties: ${specialties.length ? specialties.join(', ') : 'None detected'}</p>
-    </div>
-    <div class="detail-section">
-      <h5>Signals & Keywords</h5>
-      <p>${signals.length ? signals.join(', ') : 'No signals captured yet.'}</p>
-      <p>${keywords.length ? `Keywords: ${keywords.join(', ')}` : 'No keywords logged.'}</p>
-    </div>
-    <div class="detail-section detail-links">
-      <h5>Source</h5>
-      <p>Source: ${notice.source_name ?? 'Unknown source'}</p>
-      <p><a href="${notice.source_url}" target="_blank" rel="noreferrer">Open source page</a></p>
-    </div>
-    <div class="detail-section">
-      <h5>Timeline</h5>
-      <p>Notice date: ${formatDate(notice.notice_date)}</p>
-      <p>Effective date: ${formatDate(notice.effective_date)}</p>
-      <p>Retrieved: ${formatDate(notice.retrieved_at)}</p>
-    </div>
-  `;
 };
 
 // =============================================================================
-// Premium Insights (API mode fallback to /data files when available)
+// Premium Insights (Static JSON)
 // =============================================================================
 const renderInsightFallback = (element, message) => {
   if (!element) return;
@@ -675,34 +724,21 @@ const renderEmployers = (data) => {
 const loadInsights = async () => {
   try {
     const [alerts, geo, talent, employers] = await Promise.all([
-      fetchJson('/insights/alerts'),
-      fetchJson('/insights/geo'),
-      fetchJson('/insights/talent'),
-      fetchJson('/insights/employers')
+      fetchJson(`${DATA_BASE_URL}/alerts.json`),
+      fetchJson(`${DATA_BASE_URL}/geo.json`),
+      fetchJson(`${DATA_BASE_URL}/talent.json`),
+      fetchJson(`${DATA_BASE_URL}/employers.json`)
     ]);
     renderAlerts(alerts);
     renderHeatmap(geo);
     renderTalent(talent);
     renderEmployers(employers);
   } catch (err) {
-    try {
-      const [alerts, geo, talent, employers] = await Promise.all([
-        fetchJson('/data/alerts.json'),
-        fetchJson('/data/geo.json'),
-        fetchJson('/data/talent.json'),
-        fetchJson('/data/employers.json')
-      ]);
-      renderAlerts(alerts);
-      renderHeatmap(geo);
-      renderTalent(talent);
-      renderEmployers(employers);
-    } catch (fallbackErr) {
-      console.warn('Insights unavailable in API mode:', fallbackErr);
-      renderInsightFallback(alertsList, 'Insights unavailable.');
-      renderInsightFallback(heatmapList, 'Insights unavailable.');
-      renderInsightFallback(talentList, 'Insights unavailable.');
-      renderInsightFallback(employerList, 'Insights unavailable.');
-    }
+    console.error('Failed to load insights:', err);
+    renderInsightFallback(alertsList, 'Insights unavailable.');
+    renderInsightFallback(heatmapList, 'Insights unavailable.');
+    renderInsightFallback(talentList, 'Insights unavailable.');
+    renderInsightFallback(employerList, 'Insights unavailable.');
   }
 };
 
@@ -747,45 +783,431 @@ const initForecast = () => {
   updateForecast();
 };
 
-const loadNotices = async () => {
-  setLoading('Loading notices...');
-  const query = buildQuery();
-  try {
-    const data = await fetchJson(`/notices?${query}`);
-    let notices = data.notices ?? [];
+// =============================================================================
+// Filtering (Client-side)
+// =============================================================================
 
-    // Merge in custom notices from localStorage
-    if (customNotices.length > 0) {
-      notices = [...customNotices, ...notices];
-    }
+// Check if a notice matches any of the selected specialties
+const matchesSpecialty = (notice, specialtyKeys) => {
+  if (!specialtyKeys || specialtyKeys.length === 0) return true;
 
-    currentNotices = notices;
-    renderNotices(currentNotices);
-    updateStats(currentNotices);
-    if (!currentNotices.length) {
-      if (!apiHasDb) {
-        noticeList.innerHTML = `<div class="empty-state">No database connected. Start Postgres and run the worker to load notices.</div>`;
-      }
-      renderDetail(null);
+  // Build searchable text from notice fields
+  const searchText = [
+    notice.employer_name,
+    notice.parent_system,
+    notice.reason,
+    notice.raw_text,
+    notice.nursing_care_setting,
+    ...(parseMaybeJson(notice.nursing_specialties) || []),
+    ...(parseMaybeJson(notice.nursing_keywords) || []),
+    ...(parseMaybeJson(notice.nursing_signals) || [])
+  ].filter(Boolean).join(' ').toLowerCase();
+
+  // Check if any selected specialty matches
+  return specialtyKeys.some(key => {
+    const specialty = NURSE_SPECIALTIES[key];
+    if (!specialty) return false;
+    return specialty.keywords.some(keyword => searchText.includes(keyword));
+  });
+};
+
+const filterNotices = () => {
+  let filtered = [...allNotices];
+
+  // Filter by region
+  const region = regionSelect.value;
+  if (region && REGION_STATES[region]) {
+    const regionStates = REGION_STATES[region];
+    filtered = filtered.filter(n => regionStates.includes(n.state));
+  }
+
+  // Filter by selected states
+  if (selectedStates.length > 0) {
+    filtered = filtered.filter(n => selectedStates.includes(n.state));
+  }
+
+  // Filter by nursing specialty
+  if (selectedSpecialties.length > 0) {
+    filtered = filtered.filter(n => matchesSpecialty(n, selectedSpecialties));
+  }
+
+  // Filter by organization
+  const org = orgInput.value.trim().toLowerCase();
+  if (org) {
+    filtered = filtered.filter(n => {
+      const text = [
+        n.employer_name,
+        n.parent_system,
+        n.reason,
+        n.raw_text
+      ].filter(Boolean).join(' ').toLowerCase();
+      return text.includes(org);
+    });
+  }
+
+  // Filter by date
+  const since = sinceInput.value;
+  if (since) {
+    filtered = filtered.filter(n => {
+      const noticeDate = n.notice_date || n.retrieved_at;
+      return noticeDate && noticeDate >= since;
+    });
+  }
+
+  // Filter by score
+  const minScore = parseInt(scoreInput.value) || 0;
+  if (minScore > 0) {
+    filtered = filtered.filter(n => (n.nursing_score || 0) >= minScore);
+  }
+
+  // Apply limit only when explicitly set
+  const limitValue = parseInt(limitInput.value, 10);
+  if (Number.isFinite(limitValue) && limitValue > 0 && filtered.length > limitValue) {
+    filtered = filtered.slice(0, limitValue);
+  }
+
+  // Merge custom notices
+  if (customNotices.length > 0) {
+    filtered = [...customNotices, ...filtered];
+  }
+
+  return filtered;
+};
+
+const applyFilters = (resetPage = true) => {
+  if (resetPage) currentPage = 1;
+
+  let filtered = filterNotices();
+
+  // Apply search query
+  if (searchQuery.trim()) {
+    const query = searchQuery.toLowerCase();
+    filtered = filtered.filter(n => {
+      const employerName = (n.employer_name || '').toLowerCase();
+      const parentSystem = (n.parent_system || '').toLowerCase();
+      const city = (n.city || '').toLowerCase();
+      return employerName.includes(query) || parentSystem.includes(query) || city.includes(query);
+    });
+  }
+
+  currentNotices = filtered;
+  renderNotices(currentNotices);
+  updateStats(currentNotices);
+  updateMapHighlights();
+};
+
+// =============================================================================
+// Rendering
+// =============================================================================
+const renderNotices = (notices) => {
+  const paginationContainer = document.getElementById('pagination');
+  const applyNoticeListWindow = (count) => {
+    if (!noticeList) return;
+    if (!count) {
+      noticeList.style.maxHeight = '';
+      noticeList.classList.remove('windowed');
+      return;
     }
-  } catch (err) {
-    // Still show custom notices even if API fails
-    if (customNotices.length > 0) {
-      currentNotices = [...customNotices];
-      renderNotices(currentNotices);
-      updateStats(currentNotices);
+    const firstCard = noticeList.querySelector('.notice-card');
+    if (!firstCard) return;
+    const cardHeight = firstCard.getBoundingClientRect().height;
+    const styles = getComputedStyle(noticeList);
+    const gap = parseFloat(styles.rowGap || styles.gap || '0');
+    const windowCount = Math.min(NOTICE_WINDOW_COUNT, count);
+    const windowHeight = (cardHeight * windowCount) + (gap * Math.max(0, windowCount - 1));
+    noticeList.style.maxHeight = `${Math.ceil(windowHeight)}px`;
+    noticeList.classList.toggle('windowed', count > NOTICE_WINDOW_COUNT);
+  };
+
+  if (!notices.length) {
+    noticeList.innerHTML = `<div class="empty-state">No notices match these filters.</div>`;
+    if (paginationContainer) paginationContainer.innerHTML = '';
+    applyNoticeListWindow(0);
+    return;
+  }
+
+  // Calculate pagination
+  const totalPages = Math.ceil(notices.length / NOTICES_PER_PAGE);
+  if (currentPage > totalPages) currentPage = totalPages;
+  if (currentPage < 1) currentPage = 1;
+
+  const startIdx = (currentPage - 1) * NOTICES_PER_PAGE;
+  const endIdx = startIdx + NOTICES_PER_PAGE;
+  const paginatedNotices = notices.slice(startIdx, endIdx);
+
+  noticeList.innerHTML = '';
+  paginatedNotices.forEach((notice, idx) => {
+    const globalIdx = startIdx + idx;
+    const card = document.createElement('article');
+    card.className = notice.isCustom ? 'notice-card custom-notice' : 'notice-card';
+    card.style.animationDelay = `${idx * 35}ms`;
+    card.dataset.noticeId = notice.id;
+
+    const label = notice.nursing_label ?? 'Unclear';
+    const score = notice.nursing_score ?? 0;
+    const employer = notice.employer_name ?? 'Unknown employer';
+    const city = notice.city;
+    const state = notice.state;
+    const location = [city, state].filter(Boolean).join(', ') || state;
+    const noticeDate = formatDate(notice.notice_date ?? notice.retrieved_at);
+    const affected = notice.employees_affected;
+
+    const customBadge = notice.isCustom ? '<span class="custom-badge">Custom</span>' : '';
+
+    card.innerHTML = `
+      <div class="notice-top">
+        <span class="pill">${state}</span>
+        ${customBadge}
+        <span class="score">${label} - ${score}</span>
+        <div class="save-to-project">
+          <button class="save-to-project-btn" data-notice-idx="${globalIdx}">+ Save</button>
+          <div class="save-dropdown" id="dropdown-${globalIdx}"></div>
+        </div>
+      </div>
+      <h4>${employer}</h4>
+      <div class="notice-meta">
+        <span>${location}</span>
+        <span>${noticeDate}</span>
+        <span>${formatNumber(affected)} impacted</span>
+      </div>
+    `;
+
+    noticeList.appendChild(card);
+  });
+
+  // Render pagination controls
+  renderPagination(totalPages, notices.length);
+
+  // Update quick navigation
+  updateQuickNav(totalPages);
+
+  // Add save-to-project dropdown handlers
+  setupSaveDropdowns(notices);
+
+  applyNoticeListWindow(paginatedNotices.length);
+};
+
+const renderPagination = (totalPages, totalNotices) => {
+  const paginationContainer = document.getElementById('pagination');
+  if (!paginationContainer) return;
+
+  if (totalPages <= 1) {
+    paginationContainer.innerHTML = `<div class="pagination-info">Showing all ${totalNotices} notices</div>`;
+    return;
+  }
+
+  const startIdx = (currentPage - 1) * NOTICES_PER_PAGE + 1;
+  const endIdx = Math.min(currentPage * NOTICES_PER_PAGE, totalNotices);
+
+  // Generate page numbers (show max 7 pages with ellipsis)
+  let pageNumbers = [];
+  if (totalPages <= 7) {
+    pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
+  } else {
+    if (currentPage <= 4) {
+      pageNumbers = [1, 2, 3, 4, 5, '...', totalPages];
+    } else if (currentPage >= totalPages - 3) {
+      pageNumbers = [1, '...', totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
     } else {
-      setLoading('Unable to load notices. Is the API running?');
-      statTotal.textContent = '0';
+      pageNumbers = [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages];
     }
-    renderDetail(null);
+  }
+
+  paginationContainer.innerHTML = `
+    <div class="pagination-info">
+      Showing ${startIdx.toLocaleString()}-${endIdx.toLocaleString()} of ${totalNotices.toLocaleString()} notices
+    </div>
+    <div class="pagination-controls">
+      <button class="pagination-btn" id="prev-page" ${currentPage === 1 ? 'disabled' : ''}>
+        &laquo; Prev
+      </button>
+      <div class="pagination-pages">
+        ${pageNumbers.map(p => {
+          if (p === '...') {
+            return '<span class="pagination-ellipsis">...</span>';
+          }
+          return `<button class="pagination-page ${p === currentPage ? 'active' : ''}" data-page="${p}">${p}</button>`;
+        }).join('')}
+      </div>
+      <button class="pagination-btn" id="next-page" ${currentPage === totalPages ? 'disabled' : ''}>
+        Next &raquo;
+      </button>
+    </div>
+  `;
+
+  // Add pagination event listeners
+  document.getElementById('prev-page')?.addEventListener('click', () => {
+    if (currentPage > 1) {
+      currentPage--;
+      applyFilters(false);
+      scrollToResults();
+    }
+  });
+
+  document.getElementById('next-page')?.addEventListener('click', () => {
+    if (currentPage < totalPages) {
+      currentPage++;
+      applyFilters(false);
+      scrollToResults();
+    }
+  });
+
+  paginationContainer.querySelectorAll('.pagination-page').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentPage = parseInt(btn.dataset.page);
+      applyFilters(false);
+      scrollToResults();
+    });
+  });
+};
+
+const scrollToResults = () => {
+  const resultsSection = document.querySelector('.results');
+  if (resultsSection) {
+    resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 };
 
-// Update stats display
+const updateQuickNav = (totalPages) => {
+  const quickPrev = document.getElementById('quick-prev');
+  const quickNext = document.getElementById('quick-next');
+  const quickNavInfo = document.getElementById('quick-nav-info');
+
+  if (quickPrev) {
+    quickPrev.disabled = currentPage <= 1;
+  }
+  if (quickNext) {
+    quickNext.disabled = currentPage >= totalPages || totalPages <= 1;
+  }
+  if (quickNavInfo) {
+    if (totalPages <= 1) {
+      quickNavInfo.textContent = 'Page 1';
+    } else {
+      quickNavInfo.textContent = `${currentPage} / ${totalPages}`;
+    }
+  }
+};
+
+const initQuickNav = () => {
+  const quickPrev = document.getElementById('quick-prev');
+  const quickNext = document.getElementById('quick-next');
+
+  quickPrev?.addEventListener('click', () => {
+    if (currentPage > 1) {
+      currentPage--;
+      applyFilters(false);
+      scrollToResults();
+    }
+  });
+
+  quickNext?.addEventListener('click', () => {
+    const totalPages = Math.ceil(currentNotices.length / NOTICES_PER_PAGE);
+    if (currentPage < totalPages) {
+      currentPage++;
+      applyFilters(false);
+      scrollToResults();
+    }
+  });
+};
+
+const setupSaveDropdowns = (notices) => {
+  document.querySelectorAll('.save-to-project-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const idx = btn.dataset.noticeIdx;
+      const dropdown = document.getElementById(`dropdown-${idx}`);
+
+      document.querySelectorAll('.save-dropdown.active').forEach(d => {
+        if (d !== dropdown) d.classList.remove('active');
+      });
+
+      if (projects.length === 0) {
+        dropdown.innerHTML = `<div class="save-dropdown-item" style="color: var(--muted);">No projects yet. Create one first.</div>`;
+      } else {
+        dropdown.innerHTML = projects.map(p => `
+          <div class="save-dropdown-item" data-project-id="${p.id}" style="border-left-color: ${p.color}">
+            ${p.name}
+          </div>
+        `).join('');
+      }
+
+      dropdown.classList.toggle('active');
+    });
+  });
+
+  document.querySelectorAll('.save-dropdown').forEach((dropdown, idx) => {
+    dropdown.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const item = e.target.closest('.save-dropdown-item');
+      if (item && item.dataset.projectId) {
+        const notice = notices[idx];
+        saveNoticeToProject(item.dataset.projectId, notice);
+        dropdown.classList.remove('active');
+      }
+    });
+  });
+};
+
+document.addEventListener('click', (event) => {
+  document.querySelectorAll('.save-dropdown.active').forEach(d => d.classList.remove('active'));
+  if (modulesMenu && !modulesMenu.contains(event.target) && event.target !== modulesMenuBtn) {
+    closeModulesMenu();
+  }
+});
+
+const renderDetail = (notice) => {
+  if (!notice) {
+    detailBody.innerHTML = `<div class="empty-detail">No notice selected.</div>`;
+    return;
+  }
+
+  const signals = parseMaybeJson(notice.nursing_signals);
+  const keywords = parseMaybeJson(notice.nursing_keywords);
+  const specialties = parseMaybeJson(notice.nursing_specialties);
+  const roleMix = notice.nursing_role_mix || null;
+  const careSetting = notice.nursing_care_setting || 'unknown';
+  const leadTime = notice.lead_time_days;
+
+  detailBody.innerHTML = `
+    <div class="detail-section">
+      <h5>${notice.employer_name || 'Unknown employer'}</h5>
+      <p>${[notice.facility_name, notice.parent_system].filter(Boolean).join(' • ') || 'System unknown'}</p>
+      <p>${[notice.address, notice.city, notice.county, notice.state].filter(Boolean).join(', ') || 'Location unknown'}</p>
+    </div>
+    <div class="detail-section">
+      <h5>Impact Summary</h5>
+      <p>Score: ${notice.nursing_score ?? 0} (${notice.nursing_label ?? 'Unclear'})</p>
+      <p>Employees affected: ${formatNumber(notice.employees_affected)}</p>
+      <p>NAICS: ${notice.naics ?? 'Unknown'} - Reason: ${notice.reason ?? 'Not provided'}</p>
+    </div>
+    <div class="detail-section">
+      <h5>Nursing Impact Breakdown</h5>
+      <p>Care setting: ${careSetting}</p>
+      <p>Lead time: ${leadTime !== null && leadTime !== undefined ? `${leadTime} days` : 'Unknown'}</p>
+      <p>Role mix: ${roleMix ? `RN ${roleMix.rn}% • LPN ${roleMix.lpn}% • CNA ${roleMix.cna}%` : 'Unavailable'}</p>
+      <p>Specialties: ${specialties.length ? specialties.join(', ') : 'None detected'}</p>
+    </div>
+    <div class="detail-section">
+      <h5>Signals & Keywords</h5>
+      <p>${signals.length ? signals.join(', ') : 'No signals captured yet.'}</p>
+      <p>${keywords.length ? `Keywords: ${keywords.join(', ')}` : 'No keywords logged.'}</p>
+    </div>
+    <div class="detail-section detail-links">
+      <h5>Source</h5>
+      <p>Source: ${notice.source_name ?? 'Unknown source'}</p>
+      ${notice.source_url ? `<p><a href="${notice.source_url}" target="_blank" rel="noreferrer">Open source page</a></p>` : ''}
+    </div>
+    <div class="detail-section">
+      <h5>Timeline</h5>
+      <p>Notice date: ${formatDate(notice.notice_date)}</p>
+      <p>Effective date: ${formatDate(notice.effective_date)}</p>
+      <p>Retrieved: ${formatDate(notice.retrieved_at)}</p>
+    </div>
+  `;
+};
+
 const updateStats = (notices) => {
   statTotal.textContent = notices.length.toString();
-  statUpdated.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 };
 
 noticeList.addEventListener('click', (event) => {
@@ -795,515 +1217,105 @@ noticeList.addEventListener('click', (event) => {
   renderDetail(notice);
 });
 
-scoreInput.addEventListener('input', () => {
-  scoreReadout.textContent = `${scoreInput.value}+`;
-});
-
-refreshBtn.addEventListener('click', loadNotices);
-
-// Fetch live data from state adapters
-const fetchLiveData = async () => {
-  if (isFetching) return;
-  isFetching = true;
-  fetchBtn.disabled = true;
-  fetchBtn.classList.add('fetching');
-  fetchBtn.textContent = 'Fetching...';
-  setLoading('Fetching live data from state WARN sources... This may take a minute.');
-
-  try {
-    const res = await fetch('/fetch', {
-      method: 'POST',
-      headers: getAuthHeaders()
-    });
-
-    if (res.status === 401) {
-      sessionStorage.removeItem(SESSION_KEY);
-      sessionStorage.removeItem(PASSCODE_KEY);
-      loginOverlay.classList.remove('hidden');
-      throw new Error('Session expired. Please log in again.');
-    }
-
-    const data = await res.json();
-
-    if (data.success) {
-      fetchBtn.textContent = `Fetched ${data.count} notices`;
-      setStatus(`Fetched ${data.count} from ${data.states?.length || 0} states`, true);
-      // Reload notices and states
-      await loadStates();
-      await loadNotices();
-    } else {
-      fetchBtn.textContent = 'Fetch Failed';
-      setStatus('Fetch error: ' + (data.error || 'Unknown'), false);
-    }
-  } catch (err) {
-    fetchBtn.textContent = 'Fetch Failed';
-    setStatus('Fetch error: ' + err.message, false);
-  } finally {
-    isFetching = false;
-    fetchBtn.disabled = false;
-    fetchBtn.classList.remove('fetching');
-    setTimeout(() => {
-      fetchBtn.textContent = 'Fetch Live Data';
-    }, 3000);
-  }
-};
-
-fetchBtn.addEventListener('click', fetchLiveData);
-
-clearBtn.addEventListener('click', () => {
-  regionSelect.value = '';
-  // Clear multi-select states
-  selectedStates = [];
-  stateSelect.value = '';
-  populateStateDropdown('');
-  updateStateDisplay();
-  // Clear other filters
-  orgInput.value = '';
-  sinceInput.value = '';
-  scoreInput.value = 0;
-  scoreReadout.textContent = '0+';
-  limitInput.value = '';
-  // Update map highlights and reload
-  if (currentMapView === 'map') {
-    updateMapHighlights();
-  } else {
-    renderBarChart();
-  }
-  loadNotices();
-});
-
-regionSelect.addEventListener('change', () => {
-  // Update state dropdown to show only states in the selected region
-  populateStateDropdown(regionSelect.value);
-  // Update map/chart highlights
-  if (currentMapView === 'map') {
-    updateMapHighlights();
-  } else {
-    renderBarChart();
-  }
-  // Trigger data reload
-  loadNotices();
-});
-
-// State selection is now handled by the multi-select component via onStateSelectionChange()
-
-orgInput.addEventListener('input', () => {
-  if (!orgInput.value.trim()) {
-    loadNotices();
-  }
-});
-
-// US State abbreviation to full name mapping
-const STATE_NAMES = {
-  AL: 'Alabama', AK: 'Alaska', AZ: 'Arizona', AR: 'Arkansas', CA: 'California',
-  CO: 'Colorado', CT: 'Connecticut', DE: 'Delaware', FL: 'Florida', GA: 'Georgia',
-  HI: 'Hawaii', ID: 'Idaho', IL: 'Illinois', IN: 'Indiana', IA: 'Iowa',
-  KS: 'Kansas', KY: 'Kentucky', LA: 'Louisiana', ME: 'Maine', MD: 'Maryland',
-  MA: 'Massachusetts', MI: 'Michigan', MN: 'Minnesota', MS: 'Mississippi', MO: 'Missouri',
-  MT: 'Montana', NE: 'Nebraska', NV: 'Nevada', NH: 'New Hampshire', NJ: 'New Jersey',
-  NM: 'New Mexico', NY: 'New York', NC: 'North Carolina', ND: 'North Dakota', OH: 'Ohio',
-  OK: 'Oklahoma', OR: 'Oregon', PA: 'Pennsylvania', RI: 'Rhode Island', SC: 'South Carolina',
-  SD: 'South Dakota', TN: 'Tennessee', TX: 'Texas', UT: 'Utah', VT: 'Vermont',
-  VA: 'Virginia', WA: 'Washington', WV: 'West Virginia', WI: 'Wisconsin', WY: 'Wyoming',
-  DC: 'District of Columbia'
-};
-
-// US state SVG - using standard Albers USA projection
-const US_STATES_SVG = `
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" preserveAspectRatio="xMidYMid meet" style="background:#f8f8f8">
-  <path id="AL" d="M628.5,405.6l-1.8-16.1l-2.7-19.9l-1.9-15.7l1.6-4.1l2.7-7.1l4.5-8.7l0.4-6l4.2-9.8l0.8-4.7l-1.4-5.7l0.2-2.9l34.4-3.5l11.3-1.1l0.5,1.7l2.9,12.6l3.5,16.9l1.9,10.5l0.4,23.9l-0.7,5.4l1.9,5.3l0.5,5.9l1.9,4.5l-1.5,5l-0.1,3.9l1.8,3.7l3.3,4.9l-1.9,4.7l-15.8,1.8l-5.8,0.2l-1.5,6l-4.6,13.2l-2.6,5.5l3.2,5.6l-2.3,3.6l-26.7,3.3l-2.4-12.9l0.5-6.3l-2.1-6.2l0.1-5.6l-3.9-10.9z"/>
-  <path id="AK" d="M158.1,573.7l-0.3-0.6l0.8-2.1l2.1-1l2.4-0.1l1,0.6l-0.3,1l-2.2,1.2l-2.2,0.9l-0.9,0.2zM162.9,571.2l0.8-1.3l1.9,0.1l0,0.9l-1.3,0.8l-1.1,0z"/>
-  <path id="AZ" d="M214.9,404l-0.5-1.1l-1.7-1.1l-0.6-1.6l0.5-1.1l-0.3-0.7l-2.2-0.7l-0.5-2l1.2-2.6l0.8-1l0-1.9l-1.8-2.4l-3.9-5.8l-3.4-3.6l-1.5-5l-2.7-2.7l-1-3.6l-2.9-2.1l0.6-2.7l1.9-4.7l0.2-11.5l-0.7-3.6l0.6-5.3l-0.2-5.3l-2.9-7.8l-0.7-5.8l-2-3.2l0-1.9l12.1-70.3l38.4,7.2l38.6,6.2l-14.9,100.6l-21.6-3l-30.9-4.7l-0.6,6.5l0.5,1.1l-1.5,2.4l-0.6,4.7l1.7,5.6l0.9,4.9l0.4,2.4l2.4,2.3l0.1,1.9l-2.3,0.1l-1.9,2.5l-1.4,4.3l0.3,2.4l-1.2,0.3z"/>
-  <path id="AR" d="M583.7,340.7l-5.4,0.5l-2.9-3.2l0.5-3.7l-1.9-4l1.9-2.5l-1.6-4.1l2.1-5.3l-2.7-4.3l2-1.2l-0.9-4.5l-40.6,1.5l-35.4,1l0.7,5.4l0,8.4l1.9,7.1l-0.2,4.1l2.1,5.3l0.3,3l-1.2,5.1l0.5,3.5l2.9,4l-0.6,2.7l3.3,0.9l0.9,3.7l1.9-1.7l2.6,1l0.4,29.3l23.5-0.4l24.5-0.8l12.8-0.8l5.4-0.5l1.8-5.7l3.6-3.6l-0.2-3.9l3.6-6.2l3.7-2.2l-0.2-7.9l-2.7-2.9l2.7-1.9l-0.6-5.9l2.9-5.9l2-0.2l-1.1-5.3z"/>
-  <path id="CA" d="M122.7,374.3l-0.7-2.5l-1.5-1.2l-0.8-2.9l1.2-2.4l-1-2.9l0.7-2.2l-1.3-2l0.1-1.8l1.8-2.3l1.8,0.5l1.4-1.6l-2.6-2.9l-1.9-2.6l-1.9-3.4l0.3-2.6l-0.9-4.1l-2.5-4.9l-0.1-3.3l-1.9-3.5l0.3-1.6l-1.4-2.7l-1.7-1l-0.1-2.4l-3.9-5.5l-1.6-5.2l-0.3-2.6l-1.9-3.5l-1.9-4.3l-0.2-2.9l-1.3-2.5l-3.2-2.4l-0.2-1.2l-2.4-2.9l-0.3-2.9l-3.4-3.6l-0.9-2.8l0.3-5.7l-1-1.9l-0.4-3.7l-0.3-3.9l0.7-2.9l-1.9-2l-0.2-0.6l1.6-5.9l3.5-5.9l0.2-3.1l1.7-3.9l2.9-1.6l1.7-3.9l-0.1-3.1l1.4-2.7l0-2.9l-0.4-2.5l4.4-6.6l3.9-4.7l0.9-3l3.9-4.9l0.6-2.9l-0.4-1.5l2.2-4.2l1.5-4l2.4-3.9l-0.9-1l0.7-1.2l6.5-0.9l2.9-1.7l2.6-2.3l0.7-4.6l-1.6-1.7l2.5-5.9l36.2,8.7l33.7,7.5l-10.9,49.6l12.8,16.6l27.5,36.9l18.8,24l-0.9,3.4l0.5,4.5l-0.2,11.5l-1.9,4.7l-0.6,2.7l-22.9-3l-51.9-9.1l1.3,7.4l4.2,12.7l5.1,9.1l0.6,2.3l2.9,3.6l-0.1,4.6l2.2,3.8l-0.1,2.3l4.7,6.3l-0.7,2.9l-4.9-0.2l-6.6-1l-5.5-3.7l-3.5,0.2l-5.3-2.1l-4.2-1.3l-1.9,0.4l-6.5-1.4l-5.6-3.7l-4.7-1.9z"/>
-  <path id="CO" d="M380.6,254l-1.7-14.9l-1.9-13.9l-2.8-18.9l-1.9-16.6l-44.3,3.3l-45.5,2.3l-42.6,0.7l3.5,23.7l3.7,26.1l3.7,23l3.5,25.2l41.9-2.9l42.5-4.1l42.5-5.3z"/>
-  <path id="CT" d="M852.1,175l-4.6-17.9l-0.6-3.5l-6.1,1.4l-22.3,5.1l0.9,5l1.9,8.3l-0.6,6.7l-1.5,2.1l1.4,2.2l5.9-3.9l3.5-3.5l1.3,0.8l3.5-1l5.9-1.2l8.7-1.8z"/>
-  <path id="DE" d="M820.8,228.1l0.4-3.4l0.6-1.9l-1-1.6l-1.5-0.3l0.1-2.7l-2.6-0.6l-1.8-3.3l-0.4-4.7l-4.9-2.6l-1.9-3.3l4.7-0.7l3.8-0.2l1.8,0.3l3,10.7l2.2,7.9l-0.4,3.5l-1.3,0.6z"/>
-  <path id="FL" d="M752.7,488.5l-2.6-3.9l-2.3-5.7l-2.8-4.9l-2.9-7.6l-2.5-3.8l-1.7-5.4l-3.7-5.8l-1.1-2l0.2-2.3l-3-4.9l-4.5-3.9l-3.7-6.2l-3.9-3.9l-2.7-4.7l-0.5-4.5l-1.6,0.7l-1.9,3.5l2.1,4.9l4.7,5.3l3.4,5.7l4.9,5.7l2.2,4.9l3.6,5.2l2.9,3.5l2.3,6.4l3,4.9l0.4,2.6l-2.3,0.9l-0.9,2.5l0.5,3.7l-1.3,1l-3.5,0.1l0.4,3.4l0.9,1.9l-1.7,4.1l-3.9,1.6l-1.3,3.5l-3.3,0.3l-2.7,1.7l-4.9,1.2l-2.3,1.5l-5,1.7l-0.3,2.4l-3.7,0.7l-5.6,2.4l-3.7,0.7l-3.1,2.2l-4.9,1.3l-0.8,1.8l-5.7,2.4l-4.5,0.6l-1.7-1l-2.5,1.7l-4.5-0.8l-3.9,1.6l-2.8-0.9l-1.9,0.9l-3.2-1.9l0.5-2l-3.3-2.5l-4-0.9l-0.9,0.9l-2.9-2.1l-4.9-0.7l-2.5-2l-4.2-0.7l-2.7-2.9l-0.2-2.1l-3.5-0.7l-4.5-3l-5.9-2.6l-2-3.9l-0.9-5.1l-3.2-3.8l1-1.9l-3.3-3.7l-1.6-4.9l0.2-3.5l1.2-0.5l-0.9-3.5l3.9-1.8l6.9-2l5.9-0.9l4.9,1l4.3,1.7l3.3-0.7l4.5,1l4.8,3.9l2.5,1l4.9,0.3l6,1.7l3.9-1.6l1.2-2.9l3.3-2.4l1.5-3.3l-0.7-1.9l2.3-0.6l-0.2-2.2l26.9-3.3l5.7-0.1l15.9-1.9l1.9-4.4l-3.3-5.1l-1.8-3.9l0.9-5.9l-0.5-6l-2.1-6.3l0.4-2.9l2.1,0.4l1.3-2.2l21.5-2.5l19.9-0.6l2.6,2.5l3.7,5l2.7,3.3l0.9,2.7l3.7,4.9l0.5,2.9l1.9,4l6.9,8.3l4.9,3.3l0.4,4.6l4.3,0.5l0.1,3.2l2.5,5.7l-0.3,5.5l-1.1,5.9l0.8,3l-0.8,4.6l-3.1,4.2l0.7,5.5l-1.8,4.1l-0.6,4.4l2.2,3.2l-2.9,4.5l-2.9,1l-1.9,3.8l-0.1,4.3l-1.3,1.5z"/>
-  <path id="GA" d="M699.6,413.9l-7.5,1.1l-7.6,0.9l-4.6,0.1l-2.5-2.5l-1.6-4.1l-4.8-5.5l-3.7-5.8l-4.8-4.1l-1.7-4.7l-3.1-4.7l-4.9-3.9l-0.5-2.9l-3.1-5.7l-0.7-2.9l-2.1-2.7l-3.3-4.7l-2.3-5.9l1.5-4.9l-1.9-4.5l-0.5-5.9l-1.9-5.3l0.7-5.4l-0.4-23.9l-1.9-10.5l-3.5-16.9l-2.9-12.6l-0.5-1.7l21.9-2.6l29.8-3.3l7.9,0.4l2.2,4.2l3.1,5.7l1.2,2.9l4.3,5.6l2.6,3.9l3.9,3.8l1.7,2.9l3.2,2.9l1,3.4l-3.9,5.9l1.3,2.2l0.4,4.7l2.9,4.3l0.7,2.2l-0.7,5.7l2.1,4.9l1.9,2.2l-1.2,5.9l2.9,5l0.9,3.3l2.5,3.7l-0.9,2.8l2.6,2.9l1.9,4.1l4.2,2.2l0.9,3.3l3.1,4.7l-1.9,5l-2.1,2.1l0.2,3l-3.9,5.6l-0.7,2.9l-1.7,0.5l-0.3,3.5l-2.9,5.8l-4.3,0.9l-1.1,2.3l-3.9,2.9l-3.1,0.5l-2.4,5.4z"/>
-  <path id="HI" d="M233.1,519.3l1.9-3.6l2.3-0.9l0.3-0.8l-0.3-2.3l-2.7-0.1l-1.8,1.4l-1.3,2.7l0.1,2.1l1.5,1.5zM243.1,515.6l3.5-2.2l0.6-0.1l1.1,1.5l-0.1,1.3l-1.9,1.5l-2.5,0.4l-1.1-1.3l0.4-1.1zM244.4,525.1l1.2-1.7l3-0.1l1.4-0.8l1.8,0l0.5,1.4l-2,2.4l-2.6,0.3l-1.7-0.1l-1.6-1.4zM262.4,527.6l2.6-1l1.4,0.4l2.1-0.9l1.4,1.2l-0.5,1.4l-2.8,0.6l-1.8,1.1l-2.2-0.3l-0.3-1.5l0.1-1zM274.9,530.6l0.8,2.1l1.5,0.7l0.2,0.8l-0.9,1.7l-2.9,1.1l-2.5-0.3l-0.5-1l0.2-1.7l1.7-2.2l2.4-1.2zM281.9,542.6l-0.5,2.5l-0.4,1.9l0.8,1.8l2.6,0.9l2.2-0.5l3.7-2.3l0.2-1.4l-1.4-2.3l-3.2-1.5l-1.6,0.3l-2.4,0.6z"/>
-  <path id="ID" d="M173.4,188.9l-4.4-0.8l-1.7-2.6l0.2-2.2l-2.2-2.9l-1.9-1.3l-3.5-4l-0.2-2.9l2.3-3.4l0-3.9l0.9-0.5l-0.7-2.5l0.9-3.5l2-1.7l0-1.1l-3-3.2l-0.9-0.2l-2.9-4.4l0.1-3.5l-3.1-3.9l0.9-4.8l2.5-3.9l-0.1-1.2l-1.1-1.3l0.7-4.1l-0.4-4.4l2.7-3.5l0.2-5.9l0.9-5.7l-1.1-2.3l0.5-2.5l-0.9-4.5l-2.5-4.1l0.1-1l3.7-6l1.1-2.9l-0.9-2.9l1.3-1.7l-0.5-2.1l11.5,2.6l-3.3,15.2l2.2,4.8l-0.7,3.2l2.5,3.1l3,2.9l1.2,4.7l1.3,1.1l0.1,2.9l2.8,3.2l0.1,3.7l0.8,1l-0.6,2.7l5.5,7.7l3.7,2.2l0.6,1.8l4.9,3.5l0.4,1.9l2.6,1.8l1.3,2.7l0.2,0.9l-2.2,6.5l1.9,3.6l-0.7,3.5l0.6,2.8l-11.7,53.7l-15.5-3.5z"/>
-  <path id="IL" d="M585.4,259.9l0.6-1.9l-0.2-3.5l-1.9-3.3l-0.9-4.2l1.1-4.1l2.7-3.6l0.9-4.9l-0.6-5.8l-2.1-3.4l-1.2-5.9l0.5-6.7l1.5-3.1l-1.4-1.8l-2.7-0.4l-1.2-2.9l-3.2-3.5l0.7-2.6l0.1-3.2l-1.7-3.3l-2.1-6.3l-2.7-3.3l-0.4-3.5l4-4.2l-0.1-3.6l-2.9-0.7l-0.9-3.3l-3.9-1l-0.1-1.9l-14.7,1.3l-6.8,0.1l-6.8,0.3l0,4.2l-2.2,2.9l-0.6,2.9l2.6,3.7l0.1,6.3l-1.7,4.2l0.1,5.5l-0.3,3.9l1.7,5l7.7,8.6l0.5,5l-1.9,7.3l-0.5,5.7l1.5,4.3l5.9,6.6l0.7,3.1l-1.5,3.9l-4.1,4.1l-1,3.3l0.5,2.7l3.7,2.5l4.7,5.5l4.5,0.2l3,2.7l4.3-0.4l1.8-3.9l4.5-2.3l2.4-3.6l2.9,0.6l3.1,3.7l2.7-0.2l1.2-1.2l5.7,1.1z"/>
-  <path id="IN" d="M612,271.3l0.8-4.5l3-4.5l1.8-6.4l-0.4-5.7l-1.2-3.6l1.7-3.9l-0.3-10.6l-0.8-18.2l-0.6-17.9l-1.9-0.8l-3.7,0.5l-2.9-2.9l-6.5,0.6l-21.9,1.8l0.1,1.9l3.9,1l0.9,3.3l2.9,0.7l0.1,3.6l-4,4.2l0.4,3.5l2.7,3.3l2.1,6.3l1.7,3.3l-0.1,3.2l-0.7,2.6l3.2,3.5l1.2,2.9l2.7,0.4l1.4,1.8l-1.5,3.1l-0.5,6.7l1.2,5.9l2.1,3.4l0.6,5.8l-0.9,4.9l-2.7,3.6l-1.1,4.1l0.9,4.2l1.9,3.3l0.2,3.5l2.9,2.8l2.2-1.9l3.6-5.9l3.6,0.2l2.2-1.6l0.6-4z"/>
-  <path id="IA" d="M543.1,199.1l0.9-4.5l-0.6-3.3l-2.6-2.8l-0.7-3.2l0.9-3.9l-2.1-4.9l-2.5-5.3l-0.1-3l-4.3-4.1l-0.5-3.4l2.1-4.1l1.7-5l-1.5-2.9l-0.3-2.1l-47.1,1.9l-42.7,0.6l-0.9,4.1l1.9,4.1l2.6,2.3l0.2,2.9l3.7,3.9l3.5,1.4l4.9,6.9l6.1,1.1l1.5,1.9l-2.3,4.7l-0.7,3.9l2,2.1l-0.1,4.4l-2.3,1.8l-0.9,2.1l0.9,2.9l2.3,1.5l4.1,1.1l1.3,1.9l5.5-2.7l4.6-1l1.7,1.6l2.7,0.3l1.7-2.3l3.2-0.9l1.5,0.7l2.9-2.2l2.9,1.7l1.5,2.8l2.7,1.6l2.5-0.8l4.6,0.8l4.1,0.1l2.5-1.7l0.8-2.7l2.2-1l3.7,0.6l3.2-1.2l1.5,0.7l3.2,0.1l3.1-4.7l2.7-1.2l-0.9-4.6l3.1-1.6z"/>
-  <path id="KS" d="M498.3,276.6l-48.3,0.7l-50.7-0.3l-44.1-1.3l-17.9-0.5l1.5,29.8l2.8,44.9l23.7,0.9l48.3,1.1l45.9-0.3l40.2-1.6l-0.2-11l-1.3-34.9l0-27.4z"/>
-  <path id="KY" d="M683.3,296.2l-4.9,4.1l-5.5,5.7l-2.5,4.1l-4.1,2.1l-0.5,4.4l-3.6,3.2l-0.9,2.1l-2.9-0.9l-3.5,2l-4.9,5.9l-4.5,0.1l-1.5-2.3l-4.1-0.1l-1.9,2.5l-5.2,0.2l-1.5,3.7l-2.3,0.7l-2.7-0.9l-3.1,2.3l-5.2-1.2l-4.9,3.2l-2.2,3.6l-5.7,2.2l-1.9,3.5l-4.3,2.7l-3.9-3.2l-5.9-0.5l0.3-2.3l-1.5-2.3l2.6-4.1l0.9-4.9l-2.1-2.7l3.1-2.4l3.5-1.7l0.4-4.9l5.3-0.8l1.9-2.4l2.7,0.5l2.5-4.5l4.9-3.5l4.1-1.4l0.5-2.9l2.9-0.3l1.5-2.5l-2.9-2.8l-0.2-3.5l-0.6,1.9l-5.7-1.1l-1.2,1.2l-2.7,0.2l-3.1-3.7l-2.9-0.6l-2.4,3.6l-4.5,2.3l-1.8,3.9l-4.3,0.4l-3-2.7l-4.5-0.2l-4.7-5.5l-3.7-2.5l-0.5-2.7l1-3.3l4.1-4.1l1.5-3.9l-0.7-3.1l11.9-1l13.7-1.2l8.8-0.9l5-0.6l6-0.7l14.9-1.3l15.9-1.7l13.1-1.9l11-0.7l0.9,4.2l4.4,0.9l1.9,2.1l3.4-0.1l3.9,2.3l0.6,2.9l3.2,0.5z"/>
-  <path id="LA" d="M586.4,449.9l-2.2-7.7l-2.3-6.2l-0.2-3.9l-2.7-0.2l-6.6,0.4l-29.3,0.2l0.3,5.6l1.3,5.8l2.1,6.7l3.2,5.5l6.2,7.2l-1.3,4.5l3,1.9l-0.5,1.6l-2.5,0.9l0.9,2l-2.1,1.5l0.8,3.7l5.9,4.1l-0.1,4.9l-2.8,4.2l1.4,2.1l-0.9,3.7l5.7,0.6l6.7,1.7l5.9,0.3l2.9,2l3.8,0.5l3.7,1.8l0.9-2.9l-2.9-1.3l2.2-3.9l0.3-4.9l3.9-1.9l1.7,1.7l1.6-0.7l3.3,1.7l0-2l2.4-3l-1.2-1.5l2.3-2.2l3.9-0.3l4.7,1.5l4.5-2l0.9-4.1l3.7-0.9l1.9-2.6l-1.9-1.8l2.6-5.5l-2-2.8l0.9-2.2l-2.9-2.3l-4.9,2l-3.9-1.9l-1.1,1.1l-1.2-2l2.9-2.5l0.3-3.4l-1.4-2.2l-0.5-5.9z"/>
-  <path id="ME" d="M891.9,96.3l1.9-2.5l1.8-3.4l-1.6-4.3l2.2-4.2l-1.9-4.7l-1.5-5.7l-1.5-1.2l-0.8-3.3l-2.2-1.9l0.7-0.9l0.4-3.9l-2.9-6.1l-2.4-5.3l-0.6-3l-3.3-0.4l-1,3.1l0.2,2.9l-1.8-0.9l-1.2,0.7l0.7,4.2l-0.7,4l-1.6,3l-1.3-1.4l-0.3-3.9l-1.2-0.2l-1,2.6l0.6,3.4l-3.2,4.7l-3.6,1.3l-4.9,9.6l-4.1,3.6l-0.9,1.4l0.3,5.3l-5.4,4.9l-0.5,2.6l0.9,0.8l-0.7,1.9l-7.9,4.3l-1.7,0.4l-3.7,2.3l-0.5,1.9l-1.7-0.7l-3.3,3l0.9,3.9l-0.9,2.6l-0.5,3l-2.5,2.9l1,5.7l3.4,2.8l0.7-1l2.9,2.1l9.5,30.8l2.2,0.2l1.3-1.4l1.9-1.9l0.8,1.2l2.4,0l2.8-3l0.9-2.7l-0.5-4.6l2.7-3.9l-0.9-3l-2.2-0.9l-0.3-1.8l-0.5-2.1l1.5-2.9l0.9-3l1.3,0.1l0.9-3.6l-1.1-2.2l1.1-1.3l0.3-0.4l2.2-4.4l0.9,0.6l1.7-0.4l1.4-3.8l3.3-4l0.4-2.3l-1.4-2.9l2.3-3.7l0.9-4.5l-0.5-1.9l0.9-0.5l-0.2-1.9l2.7,0.1l1.4-4.3l1.6-3l-0.3-1.5l0.8-0.9l2.4,1.9l0.6,2.4l2.8-0.9l1.2-1.6l1.1-6.9l3.8-3l0.9-3.9l0.9,0.9l1.9-1.6z"/>
-  <path id="MD" d="M789.8,236l-1.9-1.9l-1.3,0.7l-0.5-1.7l-2-0.6l-0.8-1.9l-2.1,0.7l-1.1-0.5l-0.3-2.9l-2.3-1.7l-1.7-2.7l-2.1-1l-2.7-1.3l-1.7-0.9l0.9-2.7l-2.5-0.4l-3.4,0.7l-2.7-0.7l-2.4,0.7l-2.6-0.7l-3.7,1l-5.9,0.2l-4.7,0.2l-17.9,2.9l-16.7,2.4l-2.9,0.3l1.3,7.7l18.3-3l3.9,0.3l-0.5,2.9l2.2,1.5l2.5,2l1.9-3.5l2.9,1.9l-0.7,3.7l4.5,0.7l2.5-1.9l2,3.7l-0.5,1.9l3.5,2.1l2.5,0.9l-0.1,5l2.1,2.2l0.2,2l-1.3,2.1l0.5,2.9l0.8,2.2l1.7-0.1l0.2-2.2l-1.9-1l-0.3-3.8l1.5-1.9l0.8-3.8l-2.1-3.3l0.2-1.3l1.7,0.1l2.2,2.5l1.1-0.5l1.5,1.7l-2.1,0.3l-0.2,4.2l1.1,0.7l2.2-3.1l0.8,5.7l4.5,0.6l-2.2,3.5l0.7,2.5l3.2,0.6l1.7,2.1l2.9,1.1l3-0.9l0.9-4.7l1.8-4.9l1.5-5.2l-0.9-2.1l0.6-1.9l-0.4-3.4l11.7-2.5z"/>
-  <path id="MA" d="M879.5,160.5l0.7-2.2l-1.1-2.6l2.9-0.6l1.1-2.2l-4.5,0.8l-7.2,0.3l-0.3,1.7l2.5,0.4l0.1,1.6l-2.6,0.8l-1.2,0l0.9,2.5l2.5-0.5l3.2-0.6l1.7,1.6zM864.1,155.4l2.8-2.4l0.5,1.2l2.3-1.5l-1.1-1.7l-2.3,0.4l-1.6,1.9l-2.2,0.9l0.3,1.5zM852.5,152.4l-2.6-0.3l-0.7-1.1l-2.5,0.3l-4.9-0.4l-2.2,2.4l2.7,1.9l2.2-1.7l1.9,0.4l0.2,3.9l1.2,1.9l2.4-1.6l-0.7-3.5l2.5-0.5l0.8,1.7l2.9-0.3l-0.2-1.9l-3-1.2zM847.7,160.7l4.9-0.6l0.5,0.9l3.7,0.9l5.6-3.4l2.5-4l-2.1-5.8l-5.2-0.8l-2.3,0.2l0.2,1.8l-1.5,0.1l-2.3,4.1l1.6,1.7l-2.6,1l0,1.7l-3.1-0.4l-0.5,2.4z"/>
-  <path id="MI" d="M612.8,162.9l2.1-3.8l2.8-3.9l2.6-3.9l0.1-4.9l1.7-2.9l-0.6-9.7l-1.5-3.9l-1.8-1.5l-3.9-0.1l-0.5-4.4l3.9-2l-0.1-3.2l1.7-3.2l-0.9-1.9l-3.9-0.3l-4.6-1.9l-3.5-4.5l-3-2.3l-0.2-2.9l1-1.7l-0.8-1.9l-3.2,0.1l-1.9,1.7l-1.9-1.1l-4.1-0.4l-1.8-3.2l-1.3-3.5l-3.4-5.7l-3.2,0.9l-3.8,1.3l-0.4,7.5l-0.9,3.9l0.8,4l1.5,2.7l-0.2,4.7l-1.9,4.6l1.3,1.5l2.2,0.9l-0.6,2.7l-2.3,4.1l-0.9,4.9l1.2,2l0.9,4.7l-1.9,3.2l-2.9,3.2l-2.9,0.5l-1.3,3.9l0.5,1.9l-2.9,1.5l-2.1-0.2l-1.7,1.1l-0.5,2.3l-3.5,0.5l0.3,2l0.7,2.9l2.9,1.4l1.4,1.5l-0.3,1.9l0.9,1.1l-0.9,4.5l-1.9,4.7l1.1,5.9l2.3,4.8l0.1,1.9l2.9-0.4l2.5-0.9l3.9-2.5l2.5,2l5,1.1l4.9-1.8l1.3-2.5l0.9-4.3l2.5-1.3l-0.5-1.5l2.1-1.2l2.5,0.9l1.5-0.2l0.9-0.6l-0.1-2l2.3-0.4l5.3-1.1l1.9-1.7l0.5-5.9l1.5-3.8l-0.9-4.9zM545.6,113.9l1.5-1.9l0.6-2.7l3.8-5.9l0.9-2.9l-1.1-2.5l-3,0.9l-1.7,3.1l-1.7,0.7l-2.9,4.2l-0.6,3.4l-0.7,2.9l0.6,2.2l-0.6,3.2l2.7-2l2.2-2.7z"/>
-  <path id="MN" d="M525.5,89.9l-0.8-5.9l-2.2-4.1l-0.4-6.7l-1.8-3.5l-0.3-5.7l0.1-4l-0.8-3.7l-0.9-6.9l-1.5-2.9l-1.9-7.7l0.3-3l1.1-0.5l6.9-0.3l0.2-7.9l0.3-0.9l43.2-0.4l0.1,4.7l2.1,3.7l3.5,1.7l2.1,0.1l2.7,4.8l4.5,4.9l0.4,5.9l1.4,2.3l0.9,6.9l1.4,1.2l3.5,0.4l0.6,0.9l5.3-0.3l1.1-2.3l0.3-3l3.3-1.2l1.5-2.8l0.1-3.6l0.7-2.9l4.2-0.9l3.2,0.7l4.9,3.1l0.2,12.9l-1.9,3.2l-2.7,1.8l-0.3,10.7l1.1,1.4l-0.3,11.2l-0.7,1.5l0.4,3.9l-3.4,4.6l-2,1.9l-0.3,3.9l0.9,4.4l-2.5,2.5l-1.1,1.5l-0.4,2.1l-4.9,0.2l-1.9,2.9l-2.2,1l-7.9,0.6l-11.3,0.3l-10.2,0.2l-23.1,0.3l-0.8-4.7l-2.5-3.7l-0.6-4.1l-0.8-2l-5.2-4.5l-1.1-3.2l-0.3-4.7z"/>
-  <path id="MS" d="M614.5,431.9l-5.6,0.5l-21.9,1.7l-15.1,0.8l-0.1,9.6l-2,5l2.5,5.9l0.5,5.9l1.4,2.2l-0.3,3.4l-2.9,2.5l1.2,2l1.1-1.1l3.9,1.9l4.9-2l2.9,2.3l-0.9,2.2l2,2.8l-2.6,5.5l1.9,1.8l-1.9,2.6l-3.7,0.9l-0.9,4.1l-4.5,2l-4.7-1.5l-3.9,0.3l-2.3,2.2l1.2,1.5l-2.4,3l0,2l30.5-0.2l4.9-0.4l-0.3-3.5l3.3-5.3l1.4-5.9l3.4-5.1l0.3-3.1l-2.1-2.2l1.2-5.6l1.4-9.1l-0.4-11l1.1-7l0.9-8.9l1.8-6.7l1.9-5.4l-3,0z"/>
-  <path id="MO" d="M583.7,340.7l1.1,5.3l-2,0.2l-2.9,5.9l0.6,5.9l-2.7,1.9l2.7,2.9l0.2,7.9l-3.7,2.2l-3.6,6.2l0.2,3.9l-3.6,3.6l-1.8,5.7l-5.4,0.5l-12.8,0.8l-24.5,0.8l-23.5,0.4l-0.4-29.3l-2.6-1l-1.9,1.7l-0.9-3.7l-3.3-0.9l0.6-2.7l-2.9-4l-0.5-3.5l1.2-5.1l-0.3-3l-2.1-5.3l0.2-4.1l-1.9-7.1l0-8.4l-0.7-5.4l0.2-27.4l43.7,0.8l36.1-0.4l9.9-0.4l0.9,4.5l-2,1.2l2.7,4.3l-2.1,5.3l1.6,4.1l-1.9,2.5l1.9,4l-0.5,3.7l2.9,3.2l5.4-0.5l0.1,5.3l2.7,2.2l0,2.1l-3.1,2.6l-0.4,1.3l4,5.4l4.9,1.7l3.2,3.2z"/>
-  <path id="MT" d="M312.9,58.5l-0.4-5.1l1.5-7.5l0.3-4.5l1.7-7.2l1.9-4.7l0.2-3.9l-1.5-3.9l-57.7,5.2l-58.2,3.1l-48.9,1.1l5.7,37.2l5.2,34.2l3.9,22.7l3,18.5l-0.5,2.1l1.3,1.7l-1.3,1.7l0.9,2.9l-1.1,2.9l-3.7,6l-0.1,1l2.5,4.1l0.9,4.5l-0.5,2.5l1.1,2.3l-0.9,5.7l-0.2,5.9l-2.7,3.5l0.4,4.4l-0.7,4.1l15.5,3.5l11.7-53.7l41.2,8.5l41.4,7l37.5,5.5l1.3-7.6l-2.9-5l-0.2-4.6l1.3-0.3l0.9-3.7l2-0.3l1.9-2.9l0-1.1l-3.7-4.1l-0.3-1.9l3.1-5.5l0.2-3.8l-2.9-2.5l-1.7-2.2l-0.8-3.9l-1.2-1.9l-0.3-2.7l-4.7-7.5l1.9-6.7l-1.7-3l-1.9-1.9l0.2-5.9l1-0.9l-0.1-4.5z"/>
-  <path id="NE" d="M451.3,183.6l-50.3,2.5l-51.6,1.1l-0.9-8.7l-17.7,0.8l-2.9,0l2.9,19.9l2.5,18.6l2.4,21.2l2.7,25.3l17.9,0.5l44.1,1.3l50.7,0.3l48.3-0.7l-0.7-17.5l-2.9-2.2l-3.3-0.4l0-2.5l-3.5-4.6l-4.3-2.1l-3.7-0.4l-4.5-2.7l-5.7-1.1l-2.3-2.3l-3.2-0.3l-2.4-1.9l-8.4,0.5l-3.9-4.7l-4.9-1.4l-0.4-3.5l-2.7-3.9l-0.4-7.9l-1.1-2.5z"/>
-  <path id="NV" d="M167.9,314.4l20.9-96.6l-29.1-6.4l-28.3-6.6l-17.1-4.3l-7.6,35.7l-8.5,41.6l-9.9,48.2l30.9,4.7l21.6,3l0.6-6.5l1.7-1.8l-1.2-2.4l0.8-2.9l4.9-3.4l1.7-3l1-0.3l1.2,1.5l2.2-1l3.5-4.6l3.5-1.9l3.2,2.3z"/>
-  <path id="NH" d="M857.3,139.5l-3.4-13l-3.1-14.2l-1.2-2.8l0.6-2l-1.7-3.7l-3.1-1.7l-0.3-5l1.1-3.5l-0.6-2.3l0.2-6.6l-0.9-2.5l0.5-3l-2.5-0.5l-1.2,2.8l-0.7,4.7l-2.9,2l-1.1,2l0.6,5.3l-3.1,1.5l-0.9,1.3l-0.4,5.9l-1,1.8l0.3,0.9l0.7,4.3l-2.5,3.8l-0.8,3.4l0.9,3.5l-1.1,3.2l1.7,4.5l0.1,3.6l-2.9,2l0.5,1.1l3.5,0.5l5.1,19.5l6.1-1.4l0.6,3.5l4.6,17.9l2.6-0.7l0.9-1.7l-0.3-3.9l1.3-2.7l-0.8-3.7l1.6-3.2l-0.6-3.7l1.5-3.7l0.4-3.4l0.1-5.7z"/>
-  <path id="NJ" d="M822.2,211.9l-0.2-4.7l-2.5-1.5l-1.3-0.1l-2.9-4.5l-1.4,0.7l-1.7,2.4l1.3,2l0.3,3.9l-2.7,2.2l0.5,2.3l2.6,0.6l-0.1,2.7l1.5,0.3l1,1.6l-0.6,1.9l-0.4,3.4l1.9,3.3l4.9,2.6l0.4,4.7l1.8,3.3l4.9,4.9l3.6,1.7l3.5-0.5l1.9-2.1l-0.5-2.9l-2.1-0.7l-3.7-0.2l-2.1-2.3l0.4-2.1l2.1-1.1l0.5-2.7l-0.9-2.3l-0.3-3.5l-2.3-2.5l-1.7-5.5l0.8-2.5l-2.3-1.9z"/>
-  <path id="NM" d="M299,406.9l3.3-30.5l7.5-73.2l-40.1-4.3l-37.5-5.3l-13.3,97.7l3.2,0.3l0.3,4.2l7.3,0.9l0.2,6.4l30.4,3.1l38.7,3.5z"/>
-  <path id="NY" d="M826.9,190.9l-1.9-1.4l-3,0.9l-4.1,1.7l-6.3,2.1l-2.4,1.3l-2.5,0.1l-4.9,1.5l-5.6,1.6l-0.6-3.6l1.4-0.9l2.5-2.7l2.2-3.9l-2.7-0.8l-4.6,0.9l-4.4,0.1l-3.5-2.1l-6.1,0.2l-7.3,0.9l-7.6,0.5l-7.3-22.8l-3.1-11.3l-2.2-5.6l-5.7,1.1l-27.9,5.8l-5.2,0.9l0.7,4l3.4,2.2l-0.9,3.3l-2.6,6.9l-3.1,5.7l-2.1,3.7l1.5,1.9l-0.2,3.9l-3.2,3.4l-2.9,0.6l-3.7,3.9l-2.2,0.6l-2.2,1.7l-2.4,0.5l-0.8,1.8l3.6,3.6l3.9,0.8l3.7-1.5l2.7-2.6l1-2.4l3.2-2l2-0.3l3.4,1.6l3.9,0.5l1.9-1.1l2.4,1.1l-2,3.9l-0.4,3.5l1.6,1.2l-0.7,4.9l-1.1,5l0.7,2.6l-0.9,2.7l-5,6l2.3,1.9l-0.8,2.5l1.7,5.5l2.3,2.5l0.3,3.5l0.9,2.3l-0.5,2.7l-2.1,1.1l-0.4,2.1l2.1,2.3l3.7,0.2l2.1,0.7l0.5,2.9l3.9-3.7l1.5-2.5l1.2-3.3l2.2-2.8l2.3-1.6l4.9-1.3l4.3,0.1l3.1-2.7l5.1-7.9l3.6-4.2l3.3-2.7l2.5-1.7l4.7-4.1l3.9-5.5l1.7-3.7l0.4-4.5l-0.7-1.4l2.3-2.5l1.6-0.9l0.2,4.7l1.9,1.4l2.6-0.5l3.7-2.3l1-4.9l4.8-7.9l1.5-1l0.7-3.3l-1.9-3.7l1.1-1.2z"/>
-  <path id="NC" d="M824.4,298l-3.8,3.1l-4.6,4.7l-1.7,3.2l0.1,2.4l-3.6,4.4l-5.3,0.5l-3.1,1.5l-4.5,5.9l-5.7,3.6l-2.2,0.7l-2.1,3.1l-3.9,3.4l-0.7,1.6l-4.9-0.1l-2.9,3.5l-3.2,1.2l-2.7,2.3l-3.9-0.4l-5.7,3.6l-4.3,1.2l-3.5,3.6l-3.7,0.7l-0.5-1.9l-5.6,4l-4,0.5l-1.9,1.5l-2.1-0.8l-3.4,2.4l-8.5,0.8l-9.1,1.4l-25.5,2.8l-19.3,1.5l-17.9,0.8l-3.7-0.3l2.4-5.4l3.1-0.5l3.9-2.9l1.1-2.3l4.3-0.9l2.9-5.8l0.3-3.5l1.7-0.5l0.7-2.9l3.9-5.6l-0.2-3l2.1-2.1l1.9-5l9.5-0.9l17.3-1.9l24.7-3.3l19.3-2.9l23.2-4.9l23.9-5.3l12.8-1.3l6.9-3.7l5.3-2.1l2.1,0l1.2-1.7l4.9,0.2l-0.4,4.5l0.2,1.5z"/>
-  <path id="ND" d="M454.2,75.5l-0.5-5.1l-2.2-6.9l0.5-4.3l-0.9-7.1l-0.5-9.9l-1.9-7.8l-0.3-5.2l-0.5-3.6l-46.2,0.9l-46.6,0l-42.3-0.9l0.4,5.1l1.2,1.9l0.3,2.7l1.2,1.9l0.8,3.9l1.7,2.2l2.9,2.5l-0.2,3.8l-3.1,5.5l0.3,1.9l3.7,4.1l0,1.1l-1.9,2.9l-2,0.3l-0.9,3.7l-1.3,0.3l0.2,4.6l2.9,5l-1.3,7.6l50.5-0.7l50.5-1.9l34.6-2.4z"/>
-  <path id="OH" d="M684.9,209.7l-4.3,3.5l-4.7,2.2l-2.5,2.9l-4.1,2.3l-1.1,3.6l-4.4,3l-2.6,0.5l-1.9,2.8l-2,0.7l-1.7,2.2l-1.5,4.2l-3.2,3.2l1,5.7l4.2,4.9l2,4.3l4.7,5.5l0.2,3.9l-3.4,6.3l1.9,3.5l5.7,1.9l3.9,0.2l2.9-2l2.1,1.8l3.1-0.6l5.7-3.9l4.6-1.9l2.5,1l3.2,0.5l-0.6-2.9l-3.9-2.3l-3.4,0.1l-1.9-2.1l-4.4-0.9l-0.9-4.2l-11,0.7l-13.1,1.9l1.8-6.4l-0.4-5.7l-1.2-3.6l1.7-3.9l-0.3-10.6l-0.8-18.2l-0.6-17.9l5-4.1l17.6-1.7l18.9-2l6.6-0.9l3.9,3.5l2.9,3.4l1.5,3.5l3.7,2.9l0.3,2.9l-2.9,1.1l-2.3,1.9l-1.3,3.4l-2.9,3.9l0.5,2.3l-3.3,2.9l-2.6-1.5l-2.5,2.5l-2.9,0.7l-0.6,4z"/>
-  <path id="OK" d="M423.9,360.9l-0.1-16.7l-29.2-0.3l-29.7-1.1l-3.1,0.5l-1.5,3.1l-5.2-3.9l-1.9,0.7l1.7,5.7l0.2,7.7l-2.7,3.2l-0.2,3.1l2.4,3.7l-0.7,3l-1.9,1.6l2.3,4.2l-0.1,3.7l3.6,0.3l0.3,10l-2.3,6.7l1.4,5.2l2,1.3l1.3-2.1l2.9,1.5l1.9,1.8l2.6-3.6l3.9,1.5l2.7-3.3l2.1,1.9l2.2-0.9l1.9,2.6l4.3,0.5l3.3,1.6l3.3-0.7l3.3,1.7l2.7-2.4l3.2,1l2.7-1.1l2.3,0.5l2.3-2.7l2.9,0.7l4.2,1.6l2-0.7l0.7-3l3.7-0.9l1.5-3.7l3.5-1.3l1.9-0.5l0.8-3.2l4.1-1.5l3.7-0.1l2.4-1.3l0.3-3.9l4.4-1.2l0.4-0.9l-0.6-2.6l-2-1.7l0.8-4.4l-2.2-2.9l1.2-4.2l-2.4-2.5l3.1-6.8l-2.5-1.8z"/>
-  <path id="OR" d="M149.1,195.9l-2.7-1.8l-2.6-1.8l-0.4-1.9l-4.9-3.5l-0.6-1.8l-3.7-2.2l-5.5-7.7l0.6-2.7l-0.8-1l-0.1-3.7l-2.8-3.2l-0.1-2.9l-1.3-1.1l-1.2-4.7l-3-2.9l-2.5-3.1l0.7-3.2l-2.2-4.8l3.3-15.2l-11.5-2.6l-9.2-2.5l-22.9-6.1l-22-5.9l-17.6-5.1l-0.5,2.6l0.4,3.5l-2.7,3.9l-0.3,3.1l-1.8,0.4l-1.1,4.5l0.3,5.7l1.2,3.7l0.3,4.6l-0.6,4l2.4,4.9l1.9,1.7l1.5,3l0.6,4.9l-1,5.2l0.7,4.2l0.3,7.2l-0.9,2.1l1.4,3.9l3.9,1.2l2.3,2.6l6,2.5l1.6,1.3l3.6,1l1.9,1.3l5.9,1.5l4.1-0.5l5.7,1.3l2.9-0.1l0.9-1.9l2.6,0.5l3.6,2.6l4.2,1.5l4.4-0.7l1.1,1l2.2-2.7l4.2-0.6l0.9-0.7l-1-3.9l0.7-3.2l1.7-0.3l0.5-3.9l2.5-0.9l3.4-6.6l5.9-6.7l1.8-0.8l0.3-3.5l3.8-4.2l1.1,0.7l3.2,0.1l1.7,1.5l6.7,1.2l17.1,4.3z"/>
-  <path id="PA" d="M789.3,195.5l0.2,4.7l-3.9,3.7l-3.3,1.2l-2.2,2.7l-2.1,1.6l2.2,4.6l2.6,1.7l2.7,3.4l3.5,4l1.2,3.2l0.2,4.7l-1.8,0.2l-3-0.7l-3.4,1.4l-7.7,3.1l-4.7,0.2l-5.9,1.8l-4.1,2.2l-2.1,0.7l-1.3-7.7l2.9-0.3l16.7-2.4l17.9-2.9l4.7-0.2l5.9-0.2l3.7-1l2.6,0.7l2.4-0.7l2.7,0.7l3.4-0.7l2.5,0.4l-0.9,2.7l-13.9,3l-35.9,7.3l-11.9,2.4l2.7-3.3l0.4-3.5l0.7-4.9l-1.6-1.2l0.4-3.5l2-3.9l-2.4-1.1l-1.9,1.1l-3.9-0.5l-3.4-1.6l-2,0.3l-3.2,2l-1,2.4l-2.7,2.6l-3.7,1.5l-3.9-0.8l-3.6-3.6l0.8-1.8l2.4-0.5l2.2-1.7l2.2-0.6l3.7-3.9l2.9-0.6l3.2-3.4l0.2-3.9l-1.5-1.9l2.1-3.7l3.1-5.7l2.6-6.9l0.9-3.3l-3.4-2.2l-0.7-4l5.2-0.9l27.9-5.8l5.7-1.1l20.2-4.7l2.9,15.6z"/>
-  <path id="RI" d="M867,175.7l-1.9-8.3l-0.9-5l5.3-1.4l1.6,2.9l2.7,3.3l2.9,4.1l-1.2,0.9l-2.5-0.4l-1.5,3.2l-2.5,0.9l-1.3-0.5z"/>
-  <path id="SC" d="M699.6,413.9l2.4-5.4l3.1-0.5l3.9-2.9l1.1-2.3l4.3-0.9l2.9-5.8l0.3-3.5l1.7-0.5l0.7-2.9l3.9-5.6l-0.2-3l2.1-2.1l1.9-5l-3.1-4.7l-0.9-3.3l-4.2-2.2l-1.9-4.1l-2.6-2.9l0.9-2.8l-2.5-3.7l-0.9-3.3l-2.9-5l1.2-5.9l-1.9-2.2l-2.1-4.9l0.7-5.7l-0.7-2.2l-2.9-4.3l-0.4-4.7l-1.3-2.2l3.9-5.9l25.5-2.8l9.1-1.4l8.5-0.8l2.1,3.3l3.4,5.9l6.6,8l3.9,7.5l5,10.9l-1.5,4.3l-3.7,2.5l0.9,3.9l-4.6,2.5l-3.8,4.6l-2.8,4.2l-4.7,3.9l-2.3,4.1l-1.3,0.6l-1.5,3.5l-6.7,4.9l-4.9,1.8l-3.7,5.2l-4.3,1.5l-2.5,1.9l-5.9,0.1l-2.6,1.5l-3,4.3l-3.9,1.9l-1.5,2l0.5,3.2l-4.3,2.5l-3.2,0.1l-1.9,2l-2.2,0.1z"/>
-  <path id="SD" d="M454.2,75.5l-34.6,2.4l-50.5,1.9l-50.5,0.7l-37.5-5.5l1.1-2.5l-0.2-4.9l4.3-5.9l3.3-0.3l2.1-3.5l-0.3-5.5l2.2-7.9l1.6-10.3l-1.5-3.9l1.5-4.9l-2.2-2.1l0.8-5.9l42.3,0.9l46.6,0l46.2-0.9l0.5,3.6l0.3,5.2l1.9,7.8l0.5,9.9l0.9,7.1l-0.5,4.3l2.2,6.9l0.5,5.1l2.1,5.8l2.8,3.7l0,3.5l3.9,6l0.2,3.1l-4.5,0.7l-4.2-0.3l-1.4,1.9l-9.9,0.5l-1.4-2.1l-4.6,0.2l-4.1-0.3l-6.8-0.9l0.1-4.9l-2.1-4.8l-3.9-1.8l-2.9-0.4z"/>
-  <path id="TN" d="M682,305.9l-5.7,0.4l-5.3,0.4l-7.1,0.8l-26.5,2.3l-4.9,0.2l-9.9,0.7l-20.3,1.4l-3.2,3.2l-4.9,1.7l-0.1,5.3l-2.7,2.2l-0.1,2.1l7.1-0.4l42.8-3.2l6.5-0.6l0.4-2.5l3.2-1.7l1.9,0.7l1.7-3.4l5.4-0.2l1.9-2.5l4.1,0.1l1.5,2.3l4.5-0.1l4.9-5.9l3.5-2l2.9,0.9l0.9-2.1l3.6-3.2l0.5-4.4l4.1-2.1l2.5-4.1l5.5-5.7l4.9-4.1l-3.2-0.5l-0.6-2.9l-3.9-2.3l-3.4,0.1l-1.9-2.1l-4.4-0.9l-0.9-4.2l-13.1,1.9l-15.9,1.7l-14.9,1.3l-6,0.7l0.3,2.9l-5.3,0.8l-0.4,4.9l-3.5,1.7l-3.1,2.4l2.1,2.7l-0.9,4.9l-2.6,4.1l1.5,2.3l-0.3,2.3l5.9,0.5l3.9,3.2l4.3-2.7l1.9-3.5l5.7-2.2l2.2-3.6l4.9-3.2l5.2,1.2l3.1-2.3l2.7,0.9l2.3-0.7l1.5-3.7l5.2-0.2z"/>
-  <path id="TX" d="M423.9,360.9l2.5,1.8l-3.1,6.8l2.4,2.5l-1.2,4.2l2.2,2.9l-0.8,4.4l2,1.7l0.6,2.6l-0.4,0.9l-4.4,1.2l-0.3,3.9l-2.4,1.3l-3.7,0.1l-4.1,1.5l-0.8,3.2l-1.9,0.5l-3.5,1.3l-1.5,3.7l-3.7,0.9l-0.7,3l-2,0.7l-4.2-1.6l-2.9-0.7l-2.3,2.7l-2.3-0.5l-2.7,1.1l-3.2-1l-2.7,2.4l-3.3-1.7l-3.3,0.7l-3.3-1.6l-4.3-0.5l-1.9-2.6l-2.2,0.9l-2.1-1.9l-2.7,3.3l-3.9-1.5l-2.6,3.6l-1.9-1.8l-2.9-1.5l-1.3,2.1l-2-1.3l-1.4-5.2l2.3-6.7l-0.3-10l-3.6-0.3l0.1-3.7l-2.3-4.2l1.9-1.6l0.7-3l-2.4-3.7l0.2-3.1l2.7-3.2l-0.2-7.7l-1.7-5.7l1.9-0.7l5.2,3.9l1.5-3.1l3.1-0.5l-1.9-54.4l-0.9-27.4l35.6,1.8l35.5,1.1l0.1,16.7l1.6,29l0,21.3l0.9,5.9l1.4,3.5l-1.1,2.5l1.5,2l-0.5,4.9l1.1,5.5l2.7,3.2l0.9,2.9l3.6,4.2l1.5,3.2l2.3,1.3l0.8,2.2l-0.1,4.2l-0.6,4.4l3.6,3.5l1.3,4l2.9,1.9l-0.7,2.9l1.7,4.9l1.5,1.9l-0.7,1.8l1.2,2.7l0.3,4.2l1.1,1.5l-0.7,5.2l2.2,3.6l0.6,3.2l4.7,5.2l1.9,0.7l2.2,3l2.6,0.3l3.2,1.6l3.9,1.8l1.9,2.6l3.1,1.3l2.6,2.1l3.1,0.4l2.1-2.1l1.3-3.5l3.4-4.4l0.1-2.7l1.2-3.5l-0.7-2.4l-2.6-0.9l1.5-6.5l2.3-4.1l0.1-2.8l1.1-4l-0.9-1.7l2-6.1l-1-1.7l0.9-2.7l-1.7-5.9l2.4-0.6l0.7-2.5l0.9-2.4l-0.5-1.9l0.7-4.6l2.4-3.1l-0.9-1.7l0.9-3.2l1.9-2.5l2.2-2.3l1.4-4.2l3.5-5l1.7-7.7l3.9-6.9l0.5-3.9l1.5-0.9l0.7-2.7l1.5-0.7l0.7-3.2l1.9-2.7l-0.9-1.4l2.9-5.2l2.9-1.7l-0.5-1.9l-1.1-1.4l0.2-2.4l2.3-0.7l0.2-3.5l1.2-2.2l0.1-2.2l-2.4-3.4l-1.2-3.9l-2.2-1.7l0.5-5.5l-3-2.9l-0.7-4l-40.2,1.6l-45.9,0.3z"/>
-  <path id="UT" d="M243.9,288.5l-42-6.5l-13.8-2.6l13.3-72.3l-20.9,96.6l-3.2-2.3l-3.5,1.9l-3.5,4.6l-2.2,1l-1.2-1.5l-1,0.3l-1.7,3l-4.9,3.4l-0.8,2.9l1.2,2.4l-1.7,1.8l14.9,100.6l54.6-8z"/>
-  <path id="VT" d="M828.3,125.9l2.2,5.6l3.1,11.3l0.2,4.7l-1.7,3.6l2.1,4.1l-0.2,2.9l-0.9,2l-23.9,5.6l-0.5-1.1l2.9-2l-0.1-3.6l-1.7-4.5l1.1-3.2l-0.9-3.5l0.8-3.4l2.5-3.8l-0.7-4.3l-0.3-0.9l1-1.8l0.4-5.9l0.9-1.3l3.1-1.5l-0.6-5.3l1.1-2l2.9-2l0.7-4.7l1.2-2.8l2.5,0.5l5.1,19.2z"/>
-  <path id="VA" d="M795.7,288.7l-2.5,4.2l-1.1,1.7l1.7,1.6l-0.9,3.5l-4.9,0.1l0.7,1.6l-3.5-0.7l-0.5,1.9l3.7-0.7l3.5-3.6l4.3-1.2l5.7-3.6l3.9,0.4l2.7-2.3l3.2-1.2l2.9-3.5l4.9,0.1l0.7-1.6l3.9-3.4l2.1-3.1l2.2-0.7l5.7-3.6l4.5-5.9l3.1-1.5l5.3-0.5l-1.7-1.8l0.2-2l-1.5-2.6l-1.2-1.6l-1.9,1.6l-0.9-1.2l0.4-2l-2.6-0.3l-1.5-2.6l0.7-0.7l-0.9-3.3l-2.7-2.2l-0.9,1.7l-0.5-1.2l0.8-2.3l-1.7-1.3l0.7-5l-0.5-3.7l0.5-0.3l1.1,0.9l1.5-1.1l-0.3-1.1l-2.9-1.1l-1.7-2.1l-3.2-0.6l-0.7-2.5l2.2-3.5l-4.5-0.6l-0.8-5.7l-2.2,3.1l-1.1-0.7l0.2-4.2l2.1-0.3l-1.5-1.7l-1.1,0.5l-2.2-2.5l-1.7-0.1l-0.2,1.3l2.1,3.3l-0.8,3.8l-1.5,1.9l0.3,3.8l1.9,1l-0.2,2.2l-1.7,0.1l-0.8-2.2l-0.5-2.9l1.3-2.1l-0.2-2l-2.1-2.2l0.1-5l-2.5-0.9l-3.5-2.1l0.5-1.9l-2-3.7l-2.9-1.9l0.7-3.7l-2.5,1.9l-4.5-0.7l-0.7-4.8l-1.9,0.7l-3.3-0.3l-1.9-1.2l-2.5,3.9l-2.7,1.6l1.3,6.9l-3.4,0.1l-3.3,1.5l-5.9,0.9l-6.5,0.8l-0.4,2.5l2.3,2.5l-2.9,5.9l0.9,4.9l2.9,3.6l3.5,2.3l3.4,5.5l-0.1,3.9l4.5,4.7l-0.9,3.5l0.7,2.5l-0.5,3l-2.7,5.6l2.4,3.6l2.7-3.9l1.7,2l-2.3,4.7l0.9,1.2l-1.5,4.5z"/>
-  <path id="WA" d="M172.1,23l-7.7-2.2l-6.7-1l-5.7-2.3l-5.9-0.8l-1.7-2l-5.3-0.4l-3.3,0.5l-5.4-1.5l-3.9,0.1l-6.1-1.5l1.1,0l-3.7-0.6l1.9,3.2l1.1,3.2l0.5,3.7l2.1,4l2.5,4.2l1.1,4.7l0,4.9l-0.5,2.2l1.9,3.9l0.5,3.7l1.4,1.6l0.5,2.9l-0.3,3.7l0.5,3.6l-0.3,3.7l1.6,2.7l-1.7,0.7l0.7,3l-2.2,0.5l0.5,2.6l17.6,5.1l22,5.9l22.9,6.1l9.2,2.5l-3.3-15.2l-0.9-4.8l-1.8-5.5l0.4-20.9l-2.7-2.9l-1.2-2.9l0.5-4.7l-2.5-0.3l-1.8-3.4l-0.6-5.5l-3.3-5.3l-0.9-3.5l-6.2-0.8z"/>
-  <path id="WV" d="M732.9,237.4l3.3,1.5l1.9,1.2l3.3,0.3l1.9-0.7l0.7,4.8l4.5,0.7l2.5-1.9l-0.7,3.7l2.9,1.9l2,3.7l-0.5,1.9l3.5,2.1l2.5,0.9l-0.1,5l2.1,2.2l0.2,2l-1.3,2.1l0.5,2.9l0.8,2.2l1.7,0.1l0.2-2.2l-1.9-1l-0.3-3.8l1.5-1.9l0.8-3.8l-2.1-3.3l0.2-1.3l1.7,0.1l2.2,2.5l1.1-0.5l1.5,1.7l-2.1,0.3l-0.2,4.2l1.1,0.7l2.2-3.1l0.8,5.7l4.5,0.6l-0.7-2.5l0.7-2.5l2.2-3.5l-4.5-0.6l-0.7-2.6l1.1-5l0.7-4.9l1.6-1.2l-0.4-3.5l-2-3.9l-0.2-1.5l0.4-4.5l-4.9-0.2l-1.2,1.7l-2.1,0l-5.3,2.1l-6.9,3.7l-12.8,1.3l0.2,1.5l-2.7-0.5l-2.5,4.5l-2.7-0.5l-1.9,2.4l-5.3,0.8l-2.9,0.3l-0.5,2.9l-4.1,1.4l-4.9,3.5l4.3-0.1l1.9-2.5l5.2-0.2l1.5-3.7l2.3-0.7l2.7,0.9l3.1-2.3l5.2,1.2z"/>
-  <path id="WI" d="M579.5,108.4l-1.3-2.5l0.2-2.7l1.5-3.1l-0.8-2.7l0.2-2l-1.6-2.6l-1.5-4.6l-1.9-2.7l0.1-2l-4.5-3.4l-3.2-0.2l-0.9-4.7l-2.4-1.3l-0.1-2.2l0.8-2.7l-0.6-1.8l-0.1-3.2l-1.4-0.5l-1.4-3l-3.7-1.5l-0.1-2.6l-1.9-0.5l-0.9,1.8l-0.4,4.3l-3.5,5.7l-2.3,0.5l-0.6,2.5l1.3,2.4l-0.3,3.8l-1.1,4.1l0.9,1.9l-1.7,3.2l0.1,3.2l-3.9,2l0.5,4.4l3.9,0.1l1.8,1.5l1.5,3.9l0.6,9.7l-1.7,2.9l-0.1,4.9l-2.6,3.9l-2.8,3.9l-2.1,3.8l0.2,3.1l3.9,1.1l2.2,0.3l0.5-2.5l2.1-2.6l1.9-0.4l2.2-2.5l2.9,1.3l3.9,3.5l4.7,0.2l0.8-1.5l1.5-0.3l0.5,1.7l-1.1,2.7l0.1,1.9l2.9,0.9l2.7-0.9l0.7-3l2.6-1.1l0.5-2l1.5-0.6l0.2-2.9l-0.1-3.1l-2.8-1.2l1.2-1.1l2.9-0.6l0.5-4.2l2.7-4.8l0.4-4.2l-0.3-4.1l0.9-4.1l-0.6-3.3l-2.6-2.8l-0.7-3.2z"/>
-  <path id="WY" d="M335.9,194.7l-3.7-23l-3.7-26.1l-3.5-23.7l-42.9,4.3l-39.5,2.8l-41.9,1.9l3.8,36l4.6,43.5l41.9-2.9l42.5-4.1l42.5-5.3z"/>
-</svg>
-`;
-
-const MAP_PALETTE = [
-  '#ef476f', '#ffd166', '#06d6a0', '#118ab2', '#f8961e',
-  '#8ecae6', '#fb8500', '#9b5de5', '#f15bb5', '#00bbf9',
-  '#90be6d', '#f3722c'
-];
-
-const getStateColor = (abbrev) => {
-  let hash = 0;
-  for (let i = 0; i < abbrev.length; i++) {
-    hash = (hash * 31 + abbrev.charCodeAt(i)) % MAP_PALETTE.length;
-  }
-  return MAP_PALETTE[hash];
-};
-
-// Get fog level (0-7) based on notice count
-const getFogLevel = (count, maxCount) => {
-  if (count === 0) return 0;
-  if (maxCount === 0) return 0;
-  const ratio = count / maxCount;
-  if (ratio <= 0.05) return 1;
-  if (ratio <= 0.15) return 2;
-  if (ratio <= 0.25) return 3;
-  if (ratio <= 0.4) return 4;
-  if (ratio <= 0.6) return 5;
-  if (ratio <= 0.8) return 6;
-  return 7;
-};
-
-// Initialize the weather map
-const initWeatherMap = async () => {
-  try {
-    const res = await fetch('/us-map.svg');
-    if (!res.ok) throw new Error('map fetch failed');
-    usMapContainer.innerHTML = await res.text();
-  } catch {
-    usMapContainer.innerHTML = US_STATES_SVG;
-  }
-
-  const svg = usMapContainer.querySelector('svg');
-  if (!svg) return;
-
-  if (!svg.getAttribute('viewBox')) {
-    const width = svg.getAttribute('width') || '960';
-    const height = svg.getAttribute('height') || '600';
-    svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
-  }
-
-  const shapes = svg.querySelectorAll('path, circle');
-  const stateShapes = [];
-
-  shapes.forEach((shape) => {
-    const classList = Array.from(shape.classList || []);
-    const stateClass = classList.find((c) => c.length === 2 && /^[a-z]{2}$/i.test(c));
-    const rawId = shape.getAttribute('data-state') || shape.getAttribute('id') || '';
-    const abbrev = (stateClass || rawId).toUpperCase();
-    if (!/^[A-Z]{2}$/.test(abbrev)) return;
-    shape.setAttribute('data-state', abbrev);
-    stateShapes.push(shape);
-  });
-
-  stateShapes.forEach((shape) => {
-    const stateId = shape.getAttribute('data-state');
-    const baseColor = getStateColor(stateId);
-    shape.style.fill = baseColor;
-    shape.style.fillOpacity = '0.28';
-    shape.setAttribute('data-base-fill', baseColor);
-    shape.addEventListener('mouseenter', (e) => showTooltip(e, stateId));
-    shape.addEventListener('mousemove', (e) => moveTooltip(e));
-    shape.addEventListener('mouseleave', hideTooltip);
-    shape.addEventListener('click', () => {
-      stateSelect.value = stateId;
-      loadNotices();
-    });
-  });
-
-  const labelGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-  labelGroup.setAttribute('class', 'state-labels');
-  stateShapes.forEach((shape) => {
-    const bbox = shape.getBBox();
-    if (bbox.width < 22 || bbox.height < 12) return;
-    const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    label.textContent = shape.getAttribute('data-state');
-    label.setAttribute('x', String(bbox.x + bbox.width / 2));
-    label.setAttribute('y', String(bbox.y + bbox.height / 2));
-    label.setAttribute('text-anchor', 'middle');
-    label.setAttribute('dominant-baseline', 'middle');
-    labelGroup.appendChild(label);
-  });
-  svg.appendChild(labelGroup);
-};
-
-// Show tooltip
-const showTooltip = (e, stateAbbrev) => {
-  const stateName = STATE_NAMES[stateAbbrev] || stateAbbrev;
-  const data = stateData[stateAbbrev] || { count: 0 };
-
-  mapTooltip.innerHTML = `
-    <div class="tooltip-state">${stateName}</div>
-    <div class="tooltip-count">${data.count} nursing-related notices</div>
-  `;
-  mapTooltip.classList.add('visible');
-  moveTooltip(e);
-};
-
-// Move tooltip to follow mouse
-const moveTooltip = (e) => {
-  const container = usMapContainer.closest('.weather-map-container');
-  const rect = container.getBoundingClientRect();
-  const x = e.clientX - rect.left + 15;
-  const y = e.clientY - rect.top + 15;
-
-  mapTooltip.style.left = `${x}px`;
-  mapTooltip.style.top = `${y}px`;
-};
-
-// Hide tooltip
-const hideTooltip = () => {
-  mapTooltip.classList.remove('visible');
-};
-
-// Update weather map colors based on state data
-const updateWeatherMap = () => {
-  const counts = Object.values(stateData).map(s => s.count || 0);
-  const maxCount = Math.max(...counts, 1);
-
-  const shapes = usMapContainer.querySelectorAll('[data-state]');
-  shapes.forEach(shape => {
-    const stateAbbrev = shape.getAttribute('data-state');
-    const count = stateData[stateAbbrev]?.count || 0;
-    const fogLevel = getFogLevel(count, maxCount);
-    const baseFill = shape.getAttribute('data-base-fill');
-    shape.style.fill = baseFill || getStateColor(stateAbbrev);
-    shape.style.fillOpacity = `${0.22 + fogLevel * 0.08}`;
-
-    // Remove all fog classes
-    for (let i = 0; i <= 7; i++) {
-      shape.classList.remove(`fog-${i}`);
-    }
-    // Add the appropriate fog class
-    shape.classList.add(`fog-${fogLevel}`);
-  });
-};
-
-// Modified loadStates to also update weather map
-const originalLoadStates = loadStates;
-const loadStatesWithMap = async () => {
-  try {
-    const data = await fetchJson('/states');
-    const states = data.states ?? [];
-    statStates.textContent = states.length.toString();
-
-    regionSelect.innerHTML = '';
-    const regionDefault = document.createElement('option');
-    regionDefault.value = '';
-    regionDefault.textContent = 'All regions';
-    regionSelect.appendChild(regionDefault);
-    REGIONS.forEach((region) => {
-      const opt = document.createElement('option');
-      opt.value = region;
-      opt.textContent = region;
-      regionSelect.appendChild(opt);
-    });
-
-    // Build state data from API response
-    stateData = {};
-    states.forEach(({ state, count }) => {
-      stateData[state] = { count };
-    });
-
-    // Populate state dropdown with all states
-    populateStateDropdown();
-
-    // Update the weather map colors
-    updateWeatherMap();
-    const counts = Object.values(stateData).map(entry => entry.count ?? 0);
-    calibrationStats = {
-      minCount: counts.length ? Math.min(...counts) : 0,
-      maxCount: counts.length ? Math.max(...counts) : 0
-    };
-    updateStateCalibration();
-  } catch {
-    statStates.textContent = '0';
-  }
-};
-
-// Populate the multi-select state dropdown
-const populateStateDropdown = (selectedRegion = '') => {
-  if (!stateOptions) return;
-
-  // Determine which states to show
-  let statesToShow = ALL_STATES;
-  if (selectedRegion && REGION_STATES[selectedRegion]) {
-    statesToShow = REGION_STATES[selectedRegion].slice().sort();
-  }
-
-  // Clear existing options
+// =============================================================================
+// Multi-Select State Dropdown
+// =============================================================================
+const populateStateDropdown = (regionFilter = '') => {
   stateOptions.innerHTML = '';
 
-  // Add state options with counts where available
-  statesToShow.forEach(state => {
-    const count = stateData[state]?.count || 0;
-    const isSelected = selectedStates.includes(state);
+  let statesToShow = ALL_STATES;
+  if (regionFilter && REGION_STATES[regionFilter]) {
+    statesToShow = REGION_STATES[regionFilter];
+  }
+
+  statesToShow.forEach(abbrev => {
+    const count = stateData[abbrev]?.count || 0;
+    const name = STATE_NAMES[abbrev] || abbrev;
+    const isSelected = selectedStates.includes(abbrev);
+
     const option = document.createElement('div');
     option.className = `multi-select-option${isSelected ? ' selected' : ''}`;
-    option.dataset.state = state;
+    option.dataset.value = abbrev;
     option.innerHTML = `
-      <div class="multi-select-checkbox"></div>
-      <span class="multi-select-label">${state}</span>
-      ${count > 0 ? `<span class="multi-select-count">${count}</span>` : ''}
+      <span class="multi-select-checkbox">${isSelected ? '&#10003;' : ''}</span>
+      <span class="multi-select-label">${abbrev} - ${name}</span>
+      <span class="multi-select-count">${count > 0 ? `(${count})` : ''}</span>
     `;
     stateOptions.appendChild(option);
   });
-
-  // Filter out selected states that are no longer in the visible list
-  if (selectedRegion) {
-    selectedStates = selectedStates.filter(s => statesToShow.includes(s));
-  }
-
-  // Update the display
-  updateStateDisplay();
 };
 
-// Update the state display to show selected tags
 const updateStateDisplay = () => {
-  if (!stateDisplay) return;
-
   if (selectedStates.length === 0) {
     stateDisplay.innerHTML = '<span class="multi-select-placeholder">All states</span>';
   } else if (selectedStates.length <= 3) {
-    stateDisplay.innerHTML = selectedStates.map(state => `
-      <span class="multi-select-tag" data-state="${state}">
-        ${state}
-        <span class="multi-select-tag-remove" data-state="${state}">&times;</span>
-      </span>
-    `).join('');
+    stateDisplay.innerHTML = selectedStates
+      .map(s => `<span class="multi-select-tag">${s}<button class="multi-select-tag-remove" data-state="${s}">&times;</button></span>`)
+      .join('');
   } else {
-    const visibleStates = selectedStates.slice(0, 2);
-    stateDisplay.innerHTML = visibleStates.map(state => `
-      <span class="multi-select-tag" data-state="${state}">
-        ${state}
-        <span class="multi-select-tag-remove" data-state="${state}">&times;</span>
-      </span>
-    `).join('') + `<span class="multi-select-more">+${selectedStates.length - 2} more</span>`;
+    stateDisplay.innerHTML = `
+      ${selectedStates.slice(0, 2).map(s => `<span class="multi-select-tag">${s}<button class="multi-select-tag-remove" data-state="${s}">&times;</button></span>`).join('')}
+      <span class="multi-select-more">+${selectedStates.length - 2} more</span>
+    `;
   }
-
-  // Update hidden input
   stateSelect.value = selectedStates.join(',');
 };
 
-// Toggle state selection
 const toggleStateSelection = (state) => {
-  const index = selectedStates.indexOf(state);
-  if (index === -1) {
+  const idx = selectedStates.indexOf(state);
+  if (idx === -1) {
     selectedStates.push(state);
   } else {
-    selectedStates.splice(index, 1);
+    selectedStates.splice(idx, 1);
   }
-
-  // Update option visual
-  const option = stateOptions?.querySelector(`[data-state="${state}"]`);
-  if (option) {
-    option.classList.toggle('selected', selectedStates.includes(state));
-  }
-
+  populateStateDropdown(regionSelect.value);
   updateStateDisplay();
-  onStateSelectionChange();
+  applyFilters();
 };
 
-// Handle state selection change - update map/chart and reload data
-const onStateSelectionChange = () => {
-  if (currentMapView === 'map') {
-    updateMapHighlights();
-  } else {
-    renderBarChart();
-  }
-  loadNotices();
-};
-
-// Initialize multi-select dropdown
 const initStateMultiSelect = () => {
-  if (!stateMultiSelect) return;
-
-  // Toggle dropdown on display click
-  stateDisplay?.addEventListener('click', (e) => {
-    // Don't toggle if clicking remove button
-    if (e.target.classList.contains('multi-select-tag-remove')) {
-      const state = e.target.dataset.state;
-      if (state) toggleStateSelection(state);
+  stateMultiSelect.addEventListener('click', (e) => {
+    if (e.target.closest('.multi-select-tag-remove')) {
+      const state = e.target.closest('.multi-select-tag-remove').dataset.state;
+      toggleStateSelection(state);
       return;
     }
-    stateMultiSelect.classList.toggle('open');
-  });
-
-  // Handle option clicks
-  stateOptions?.addEventListener('click', (e) => {
-    const option = e.target.closest('.multi-select-option');
-    if (option) {
-      const state = option.dataset.state;
-      if (state) toggleStateSelection(state);
+    if (e.target.closest('.multi-select-display')) {
+      stateMultiSelect.classList.toggle('open');
     }
   });
 
-  // Search functionality
-  stateSearch?.addEventListener('input', (e) => {
-    const searchTerm = e.target.value.toLowerCase();
-    const options = stateOptions?.querySelectorAll('.multi-select-option');
-    options?.forEach(option => {
-      const state = option.dataset.state;
-      const stateName = STATE_NAMES[state] || state;
-      const matches = state.toLowerCase().includes(searchTerm) ||
-                      stateName.toLowerCase().includes(searchTerm);
-      option.classList.toggle('hidden', !matches);
+  stateOptions.addEventListener('click', (e) => {
+    const option = e.target.closest('.multi-select-option');
+    if (option) {
+      toggleStateSelection(option.dataset.value);
+    }
+  });
+
+  stateSearch.addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase();
+    document.querySelectorAll('.multi-select-option').forEach(opt => {
+      const text = opt.textContent.toLowerCase();
+      opt.classList.toggle('hidden', !text.includes(query));
     });
   });
 
-  // Select all button
   document.getElementById('select-all-states')?.addEventListener('click', () => {
-    const visibleOptions = stateOptions?.querySelectorAll('.multi-select-option:not(.hidden)');
-    visibleOptions?.forEach(option => {
-      const state = option.dataset.state;
-      if (state && !selectedStates.includes(state)) {
-        selectedStates.push(state);
-        option.classList.add('selected');
-      }
-    });
+    const region = regionSelect.value;
+    const states = region && REGION_STATES[region] ? REGION_STATES[region] : ALL_STATES;
+    selectedStates = [...states];
+    populateStateDropdown(region);
     updateStateDisplay();
-    onStateSelectionChange();
+    applyFilters();
   });
 
-  // Clear all button
   document.getElementById('clear-all-states')?.addEventListener('click', () => {
     selectedStates = [];
-    stateOptions?.querySelectorAll('.multi-select-option').forEach(opt => {
-      opt.classList.remove('selected');
-    });
+    populateStateDropdown(regionSelect.value);
     updateStateDisplay();
-    onStateSelectionChange();
+    applyFilters();
   });
 
-  // Close dropdown when clicking outside
   document.addEventListener('click', (e) => {
     if (!stateMultiSelect.contains(e.target)) {
       stateMultiSelect.classList.remove('open');
@@ -1311,248 +1323,348 @@ const initStateMultiSelect = () => {
   });
 };
 
-// All US states + DC for dropdowns
-const ALL_STATES = [
-  'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'GA',
-  'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD',
-  'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ',
-  'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC',
-  'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
-];
+// =============================================================================
+// Specialty Multi-Select
+// =============================================================================
+const specialtyMultiSelect = document.getElementById('specialty-multi-select');
+const specialtyDisplay = document.getElementById('specialty-display');
+const specialtyOptions = document.getElementById('specialty-options');
+const specialtySearch = document.getElementById('specialty-search');
 
-// Populate custom state dropdown
-const populateCustomStateDropdown = () => {
-  ALL_STATES.forEach(state => {
+// Organize specialties by category for dropdown display
+const SPECIALTY_CATEGORIES = {
+  'Critical Care & Emergency': ['ICU', 'MICU', 'SICU', 'CVICU', 'NICU', 'PICU', 'ER', 'Trauma'],
+  'Surgical & Perioperative': ['OR', 'Perioperative', 'PACU', 'Circulating', 'Scrub', 'First Assist'],
+  'Medical-Surgical': ['Med-Surg', 'Telemetry', 'Orthopedic', 'Neurology', 'Oncology', 'Cardiology', 'Pulmonary', 'Renal', 'GI', 'Urology'],
+  'Women\'s Health & Pediatrics': ['OB', 'L&D', 'Postpartum', 'LDRP', 'Antepartum', 'Gynecology', 'Pediatrics', 'Pediatric ER', 'Pediatric Oncology'],
+  'Mental Health & Behavioral': ['Psych', 'Substance Abuse', 'Geriatric Psych', 'Child Psych'],
+  'Long-Term Care & Geriatrics': ['LTC', 'SNF', 'Geriatrics', 'Memory Care', 'Rehab'],
+  'Community & Outpatient': ['Home Health', 'Hospice', 'Public Health', 'School Nurse', 'Occupational Health', 'Outpatient', 'Infusion', 'Wound Care'],
+  'Specialty Units': ['Burn', 'Transplant', 'Dialysis', 'Endoscopy', 'Cath Lab', 'Electrophysiology', 'Interventional Radiology', 'Pain Management', 'Sleep Lab'],
+  'Advanced Practice & Leadership': ['NP', 'CNS', 'CRNA', 'CNM', 'Nurse Manager', 'Charge Nurse', 'Case Manager', 'Educator', 'Informatics', 'Quality', 'Research', 'Infection Control'],
+  'Other Specialties': ['Float Pool', 'Travel', 'Triage', 'Flight Nurse', 'Correctional', 'Military', 'Parish', 'Legal Nurse', 'Aesthetic', 'Bariatric', 'Diabetes', 'Allergy', 'ENT', 'Ophthalmology', 'Dermatology', 'Vascular']
+};
+
+const populateSpecialtyDropdown = () => {
+  if (!specialtyOptions) return;
+  specialtyOptions.innerHTML = '';
+
+  Object.entries(SPECIALTY_CATEGORIES).forEach(([category, specialties]) => {
+    // Add category header
+    const header = document.createElement('div');
+    header.className = 'multi-select-category';
+    header.textContent = category;
+    specialtyOptions.appendChild(header);
+
+    // Add specialty options
+    specialties.forEach(key => {
+      const spec = NURSE_SPECIALTIES[key];
+      if (!spec) return;
+
+      const isSelected = selectedSpecialties.includes(key);
+      const option = document.createElement('div');
+      option.className = `multi-select-option${isSelected ? ' selected' : ''}`;
+      option.dataset.value = key;
+      option.innerHTML = `
+        <span class="multi-select-checkbox">${isSelected ? '&#10003;' : ''}</span>
+        <span class="multi-select-label">${key}</span>
+        <span class="multi-select-sublabel">${spec.name}</span>
+      `;
+      specialtyOptions.appendChild(option);
+    });
+  });
+};
+
+const updateSpecialtyDisplay = () => {
+  if (!specialtyDisplay) return;
+
+  if (selectedSpecialties.length === 0) {
+    specialtyDisplay.innerHTML = '<span class="multi-select-placeholder">All specialties</span>';
+  } else if (selectedSpecialties.length <= 2) {
+    specialtyDisplay.innerHTML = selectedSpecialties
+      .map(s => `<span class="multi-select-tag">${s}<button class="multi-select-tag-remove" data-specialty="${s}">&times;</button></span>`)
+      .join('');
+  } else {
+    specialtyDisplay.innerHTML = `
+      ${selectedSpecialties.slice(0, 2).map(s => `<span class="multi-select-tag">${s}<button class="multi-select-tag-remove" data-specialty="${s}">&times;</button></span>`).join('')}
+      <span class="multi-select-more">+${selectedSpecialties.length - 2} more</span>
+    `;
+  }
+};
+
+const toggleSpecialtySelection = (specialty) => {
+  const idx = selectedSpecialties.indexOf(specialty);
+  if (idx === -1) {
+    selectedSpecialties.push(specialty);
+  } else {
+    selectedSpecialties.splice(idx, 1);
+  }
+  populateSpecialtyDropdown();
+  updateSpecialtyDisplay();
+  applyFilters();
+};
+
+const initSpecialtyMultiSelect = () => {
+  if (!specialtyMultiSelect) return;
+
+  populateSpecialtyDropdown();
+  updateSpecialtyDisplay();
+
+  specialtyMultiSelect.addEventListener('click', (e) => {
+    if (e.target.closest('.multi-select-tag-remove')) {
+      const specialty = e.target.closest('.multi-select-tag-remove').dataset.specialty;
+      toggleSpecialtySelection(specialty);
+      return;
+    }
+    if (e.target.closest('.multi-select-display')) {
+      specialtyMultiSelect.classList.toggle('open');
+    }
+  });
+
+  specialtyOptions?.addEventListener('click', (e) => {
+    const option = e.target.closest('.multi-select-option');
+    if (option) {
+      toggleSpecialtySelection(option.dataset.value);
+    }
+  });
+
+  specialtySearch?.addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase();
+    specialtyOptions?.querySelectorAll('.multi-select-option').forEach(opt => {
+      const text = opt.textContent.toLowerCase();
+      opt.classList.toggle('hidden', !text.includes(query));
+    });
+    // Also show/hide categories based on if they have visible options
+    specialtyOptions?.querySelectorAll('.multi-select-category').forEach(cat => {
+      let nextEl = cat.nextElementSibling;
+      let hasVisibleOption = false;
+      while (nextEl && !nextEl.classList.contains('multi-select-category')) {
+        if (nextEl.classList.contains('multi-select-option') && !nextEl.classList.contains('hidden')) {
+          hasVisibleOption = true;
+          break;
+        }
+        nextEl = nextEl.nextElementSibling;
+      }
+      cat.classList.toggle('hidden', !hasVisibleOption);
+    });
+  });
+
+  document.getElementById('select-all-specialties')?.addEventListener('click', () => {
+    selectedSpecialties = Object.keys(NURSE_SPECIALTIES);
+    populateSpecialtyDropdown();
+    updateSpecialtyDisplay();
+    applyFilters();
+  });
+
+  document.getElementById('clear-all-specialties')?.addEventListener('click', () => {
+    selectedSpecialties = [];
+    populateSpecialtyDropdown();
+    updateSpecialtyDisplay();
+    applyFilters();
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!specialtyMultiSelect?.contains(e.target)) {
+      specialtyMultiSelect?.classList.remove('open');
+    }
+  });
+};
+
+// =============================================================================
+// Region Dropdown
+// =============================================================================
+const initRegionSelect = () => {
+  regionSelect.innerHTML = '<option value="">All regions</option>';
+  REGIONS.forEach(region => {
     const opt = document.createElement('option');
-    opt.value = state;
-    opt.textContent = state;
+    opt.value = region;
+    opt.textContent = region;
+    regionSelect.appendChild(opt);
+  });
+
+  regionSelect.addEventListener('change', () => {
+    selectedStates = [];
+    populateStateDropdown(regionSelect.value);
+    updateStateDisplay();
+    applyFilters();
+  });
+};
+
+// =============================================================================
+// Custom State Select (for custom notices)
+// =============================================================================
+const initCustomStateSelect = () => {
+  if (!customStateSelect) return;
+  customStateSelect.innerHTML = '<option value="">Select state</option>';
+  ALL_STATES.forEach(abbrev => {
+    const opt = document.createElement('option');
+    opt.value = abbrev;
+    opt.textContent = `${abbrev} - ${STATE_NAMES[abbrev] || abbrev}`;
     customStateSelect.appendChild(opt);
   });
 };
 
-// Load custom notices from localStorage
-const loadCustomNotices = () => {
-  try {
-    const stored = localStorage.getItem('lni_custom_notices');
-    if (stored) {
-      customNotices = JSON.parse(stored);
-    }
-  } catch (e) {
-    console.error('Failed to load custom notices:', e);
-    customNotices = [];
+// =============================================================================
+// Filter Controls
+// =============================================================================
+const initFilters = () => {
+  refreshBtn.addEventListener('click', applyFilters);
+
+  clearBtn.addEventListener('click', () => {
+    regionSelect.value = '';
+    selectedStates = [];
+    selectedSpecialties = [];
+    populateStateDropdown('');
+    updateStateDisplay();
+    populateSpecialtyDropdown();
+    updateSpecialtyDisplay();
+    orgInput.value = '';
+    sinceInput.value = '';
+    scoreInput.value = 0;
+    if (scoreReadout) scoreReadout.textContent = '0';
+    limitInput.value = '';
+    searchQuery = '';
+    const searchInput = document.getElementById('notice-search');
+    const clearSearchBtn = document.getElementById('clear-search');
+    if (searchInput) searchInput.value = '';
+    if (clearSearchBtn) clearSearchBtn.style.display = 'none';
+    const specialtySearchInput = document.getElementById('specialty-search');
+    if (specialtySearchInput) specialtySearchInput.value = '';
+    applyFilters();
+  });
+
+  // Disable fetch button (data is static)
+  fetchBtn.textContent = 'Data Updated Every 6 Hours';
+  fetchBtn.disabled = true;
+  fetchBtn.title = 'Data is automatically refreshed every 6 hours via GitHub Actions';
+
+  // Live filter on input changes
+  orgInput.addEventListener('input', debounce(applyFilters, 300));
+  sinceInput.addEventListener('change', applyFilters);
+  scoreInput.addEventListener('input', () => {
+    if (scoreReadout) scoreReadout.textContent = scoreInput.value;
+    applyFilters();
+  });
+  limitInput.addEventListener('change', applyFilters);
+
+  // Search by employer name
+  const searchInput = document.getElementById('notice-search');
+  const clearSearchBtn = document.getElementById('clear-search');
+
+  if (searchInput) {
+    searchInput.addEventListener('input', debounce(() => {
+      searchQuery = searchInput.value;
+      if (clearSearchBtn) {
+        clearSearchBtn.style.display = searchQuery ? 'block' : 'none';
+      }
+      applyFilters();
+    }, 300));
+  }
+
+  if (clearSearchBtn) {
+    clearSearchBtn.addEventListener('click', () => {
+      searchQuery = '';
+      if (searchInput) searchInput.value = '';
+      clearSearchBtn.style.display = 'none';
+      applyFilters();
+    });
   }
 };
 
-// Save custom notices to localStorage
-const saveCustomNotices = () => {
-  try {
-    localStorage.setItem('lni_custom_notices', JSON.stringify(customNotices));
-  } catch (e) {
-    console.error('Failed to save custom notices:', e);
-  }
-};
-
-// Handle custom notice form submission
-const handleCustomNoticeSubmit = (e) => {
-  e.preventDefault();
-
-  const employer = document.getElementById('custom-employer').value.trim();
-  const state = document.getElementById('custom-state').value;
-  const affected = document.getElementById('custom-affected').value;
-  const noticeDate = document.getElementById('custom-date').value;
-  const layoffDate = document.getElementById('custom-layoff-date').value;
-  const location = document.getElementById('custom-location').value.trim();
-  const notes = document.getElementById('custom-notes').value.trim();
-
-  if (!employer || !state) {
-    alert('Please fill in the required fields (Employer Name and State).');
-    return;
-  }
-
-  const customNotice = {
-    id: `custom-${Date.now()}`,
-    employerName: employer,
-    state: state,
-    affectedCount: affected ? parseInt(affected, 10) : null,
-    noticeDate: noticeDate || new Date().toISOString().split('T')[0],
-    layoffDate: layoffDate || null,
-    city: location || null,
-    rawText: notes || null,
-    isCustom: true,
-    nursingImpact: { score: 50, label: 'Custom' },
-    createdAt: new Date().toISOString()
+const debounce = (fn, delay) => {
+  let timeout;
+  return (...args) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => fn(...args), delay);
   };
-
-  customNotices.unshift(customNotice);
-  saveCustomNotices();
-
-  // Add to current notices and re-render
-  currentNotices.unshift(customNotice);
-  renderNotices(currentNotices);
-  updateStats(currentNotices);
-
-  // Reset form
-  customNoticeForm.reset();
-
-  alert(`Custom notice for "${employer}" has been added!`);
 };
 
-// Initialize custom notice form
-if (customNoticeForm) {
-  customNoticeForm.addEventListener('submit', handleCustomNoticeSubmit);
-}
-
-// ==================== PROJECTS FUNCTIONALITY ====================
-
+// =============================================================================
+// Projects (localStorage)
+// =============================================================================
 const PROJECTS_KEY = 'lni_projects';
+const CUSTOM_NOTICES_KEY = 'lni_custom_notices';
 
-// Load projects from localStorage
 const loadProjects = () => {
   try {
-    const stored = localStorage.getItem(PROJECTS_KEY);
-    if (stored) {
-      projects = JSON.parse(stored);
-    }
-  } catch (e) {
-    console.error('Failed to load projects:', e);
+    projects = JSON.parse(localStorage.getItem(PROJECTS_KEY) || '[]');
+  } catch {
     projects = [];
   }
 };
 
-// Save projects to localStorage
 const saveProjects = () => {
+  localStorage.setItem(PROJECTS_KEY, JSON.stringify(projects));
+};
+
+const loadCustomNotices = () => {
   try {
-    localStorage.setItem(PROJECTS_KEY, JSON.stringify(projects));
-  } catch (e) {
-    console.error('Failed to save projects:', e);
+    customNotices = JSON.parse(localStorage.getItem(CUSTOM_NOTICES_KEY) || '[]');
+  } catch {
+    customNotices = [];
   }
 };
 
-// Render projects list
-const renderProjects = (searchTerm = '') => {
-  const filtered = searchTerm
-    ? projects.filter(p =>
-        p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        p.description?.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    : projects;
-
-  if (!filtered.length) {
-    projectsList.innerHTML = `<div class="empty-state">${
-      searchTerm ? 'No projects match your search.' : 'No projects yet. Create one to start organizing notices.'
-    }</div>`;
-    return;
-  }
-
-  projectsList.innerHTML = filtered.map(project => `
-    <div class="project-card" data-project-id="${project.id}" style="border-left-color: ${project.color}">
-      <div class="project-card-header">
-        <h4>${project.name}</h4>
-        <span class="project-card-count">${project.notices?.length || 0} notices</span>
-      </div>
-      <p>${project.description || 'No description'}</p>
-      <div class="project-card-meta">Created ${formatDate(project.createdAt)}</div>
-    </div>
-  `).join('');
+const saveCustomNotices = () => {
+  localStorage.setItem(CUSTOM_NOTICES_KEY, JSON.stringify(customNotices));
 };
 
-// Open project modal
-const openProjectModal = (projectId = null) => {
-  currentProjectId = projectId;
-  const modalTitle = document.getElementById('modal-title');
-  const nameInput = document.getElementById('project-name');
-  const descInput = document.getElementById('project-description');
-
-  if (projectId) {
-    const project = projects.find(p => p.id === projectId);
-    if (project) {
-      modalTitle.textContent = 'Edit Project';
-      nameInput.value = project.name;
-      descInput.value = project.description || '';
-      // Select the color
-      document.querySelectorAll('.color-option').forEach(opt => {
-        opt.classList.toggle('selected', opt.dataset.color === project.color);
-      });
-    }
-  } else {
-    modalTitle.textContent = 'Create New Project';
-    projectForm.reset();
-    document.querySelectorAll('.color-option').forEach((opt, i) => {
-      opt.classList.toggle('selected', i === 0);
-    });
-  }
-
-  projectModal.classList.add('active');
-};
-
-// Close project modal
-const closeProjectModal = () => {
-  projectModal.classList.remove('active');
-  currentProjectId = null;
-};
-
-// Handle project form submit
-const handleProjectSubmit = (e) => {
-  e.preventDefault();
-
-  const name = document.getElementById('project-name').value.trim();
-  const description = document.getElementById('project-description').value.trim();
-  const selectedColor = document.querySelector('.color-option.selected');
-  const color = selectedColor ? selectedColor.dataset.color : '#3182ce';
-
-  if (!name) {
-    alert('Please enter a project name.');
-    return;
-  }
-
-  if (currentProjectId) {
-    // Update existing project
-    const project = projects.find(p => p.id === currentProjectId);
-    if (project) {
-      project.name = name;
-      project.description = description;
-      project.color = color;
-      project.updatedAt = new Date().toISOString();
-    }
-  } else {
-    // Create new project
-    const newProject = {
-      id: `project-${Date.now()}`,
-      name,
-      description,
-      color,
-      notices: [],
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
-    };
-    projects.unshift(newProject);
-  }
-
-  saveProjects();
-  renderProjects();
-  closeProjectModal();
-};
-
-// Open project detail modal
-const openProjectDetail = (projectId) => {
+const saveNoticeToProject = (projectId, notice) => {
   const project = projects.find(p => p.id === projectId);
   if (!project) return;
 
+  if (!project.notices) project.notices = [];
+  if (project.notices.some(n => n.id === notice.id)) {
+    alert('Notice already saved to this project.');
+    return;
+  }
+
+  project.notices.push(notice);
+  saveProjects();
+  alert(`Saved to "${project.name}"`);
+};
+
+const renderProjects = () => {
+  if (!projectsList) return;
+
+  if (projects.length === 0) {
+    projectsList.innerHTML = `<div class="empty-state">No projects yet. Create one to start organizing notices.</div>`;
+    return;
+  }
+
+  projectsList.innerHTML = projects.map(p => `
+    <div class="project-card" data-project-id="${p.id}" style="border-left-color: ${p.color}">
+      <div class="project-card-header">
+        <h4>${p.name}</h4>
+        <span class="project-count">${(p.notices || []).length} notices</span>
+      </div>
+      <p class="project-desc">${p.description || 'No description'}</p>
+    </div>
+  `).join('');
+
+  projectsList.querySelectorAll('.project-card').forEach(card => {
+    card.addEventListener('click', () => openProjectDetail(card.dataset.projectId));
+  });
+};
+
+const openProjectDetail = (projectId) => {
+  const project = projects.find(p => p.id === projectId);
+  if (!project || !projectDetailModal) return;
+
   currentProjectId = projectId;
-  document.getElementById('project-detail-title').textContent = project.name;
+  document.getElementById('project-detail-name').textContent = project.name;
   document.getElementById('project-detail-desc').textContent = project.description || 'No description';
 
   const noticesList = document.getElementById('project-notices-list');
-  if (!project.notices?.length) {
-    noticesList.innerHTML = `<div class="empty-state">No notices saved to this project yet. Click "Save to Project" on any notice card.</div>`;
+  if ((project.notices || []).length === 0) {
+    noticesList.innerHTML = `<div class="empty-state">No notices saved to this project yet.</div>`;
   } else {
-    noticesList.innerHTML = project.notices.map(notice => `
-      <div class="project-notice-item" data-notice-id="${notice.id}">
-        <div class="project-notice-item-info">
-          <h5>${notice.employerName || notice.employer_name || 'Unknown'}</h5>
-          <span>${notice.state} • ${formatDate(notice.noticeDate || notice.notice_date)} • ${formatNumber(notice.affectedCount || notice.employees_affected)} affected</span>
-        </div>
-        <button onclick="removeNoticeFromProject('${projectId}', '${notice.id}')" title="Remove from project">&times;</button>
+    noticesList.innerHTML = project.notices.map(n => `
+      <div class="project-notice-item">
+        <span class="pill">${n.state}</span>
+        <span>${n.employer_name || 'Unknown'}</span>
+        <span>${formatDate(n.notice_date)}</span>
+        <button class="remove-notice-btn" data-notice-id="${n.id}">Remove</button>
       </div>
     `).join('');
   }
@@ -1560,216 +1672,739 @@ const openProjectDetail = (projectId) => {
   projectDetailModal.classList.add('active');
 };
 
-// Close project detail modal
-const closeProjectDetail = () => {
-  projectDetailModal.classList.remove('active');
-  currentProjectId = null;
-};
+const initProjects = () => {
+  loadProjects();
+  renderProjects();
 
-// Delete project
-const deleteProject = () => {
-  if (!currentProjectId) return;
+  newProjectBtn?.addEventListener('click', () => {
+    currentProjectId = null;
+    projectForm?.reset();
+    projectModal?.classList.add('active');
+  });
 
-  const project = projects.find(p => p.id === currentProjectId);
-  if (!project) return;
+  projectForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('project-name')?.value?.trim();
+    const description = document.getElementById('project-desc')?.value?.trim();
+    const color = document.querySelector('.color-option.selected')?.dataset?.color || '#3b82f6';
 
-  if (confirm(`Are you sure you want to delete "${project.name}"? This cannot be undone.`)) {
-    projects = projects.filter(p => p.id !== currentProjectId);
+    if (!name) return;
+
+    if (currentProjectId) {
+      const project = projects.find(p => p.id === currentProjectId);
+      if (project) {
+        project.name = name;
+        project.description = description;
+        project.color = color;
+      }
+    } else {
+      projects.push({
+        id: Date.now().toString(),
+        name,
+        description,
+        color,
+        notices: [],
+        createdAt: new Date().toISOString()
+      });
+    }
+
     saveProjects();
     renderProjects();
-    closeProjectDetail();
-  }
-};
-
-// Save notice to project
-const saveNoticeToProject = (projectId, notice) => {
-  const project = projects.find(p => p.id === projectId);
-  if (!project) return;
-
-  // Check if already saved
-  const exists = project.notices?.some(n => n.id === notice.id);
-  if (exists) {
-    alert('This notice is already saved to this project.');
-    return;
-  }
-
-  if (!project.notices) project.notices = [];
-
-  // Save a simplified copy of the notice
-  project.notices.push({
-    id: notice.id,
-    employerName: notice.employer_name || notice.employerName,
-    state: notice.state,
-    noticeDate: notice.notice_date || notice.noticeDate,
-    affectedCount: notice.employees_affected || notice.affectedCount,
-    city: notice.city,
-    savedAt: new Date().toISOString()
+    projectModal?.classList.remove('active');
   });
 
-  project.updatedAt = new Date().toISOString();
-  saveProjects();
-  renderProjects();
-  alert(`Notice saved to "${project.name}"`);
-};
+  document.getElementById('close-project-modal')?.addEventListener('click', () => {
+    projectModal?.classList.remove('active');
+  });
 
-// Remove notice from project
-const removeNoticeFromProject = (projectId, noticeId) => {
-  const project = projects.find(p => p.id === projectId);
-  if (!project) return;
+  document.getElementById('close-project-detail')?.addEventListener('click', () => {
+    projectDetailModal?.classList.remove('active');
+  });
 
-  project.notices = project.notices.filter(n => n.id !== noticeId);
-  project.updatedAt = new Date().toISOString();
-  saveProjects();
-
-  // Re-render the detail modal
-  openProjectDetail(projectId);
-};
-
-// Make this function global for onclick handlers
-window.removeNoticeFromProject = removeNoticeFromProject;
-
-// Export project to CSV
-const exportProjectCSV = () => {
-  if (!currentProjectId) return;
-  const project = projects.find(p => p.id === currentProjectId);
-  if (!project || !project.notices?.length) {
-    alert('No notices to export in this project.');
-    return;
-  }
-
-  const headers = ['Employer Name', 'State', 'City', 'Notice Date', 'Layoff Date', 'Affected Employees', 'Impact Score'];
-  const rows = project.notices.map(notice => [
-    `"${(notice.employerName || notice.employer_name || 'Unknown').replace(/"/g, '""')}"`,
-    notice.state || '',
-    `"${(notice.city || '').replace(/"/g, '""')}"`,
-    notice.noticeDate || notice.notice_date || '',
-    notice.layoffDate || notice.layoff_date || '',
-    notice.affectedCount || notice.employees_affected || '',
-    notice.nursingImpact?.score || ''
-  ]);
-
-  const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = `${project.name.replace(/[^a-z0-9]/gi, '_')}_export.csv`;
-  link.click();
-  URL.revokeObjectURL(url);
-};
-
-// Export project to JSON
-const exportProjectJSON = () => {
-  if (!currentProjectId) return;
-  const project = projects.find(p => p.id === currentProjectId);
-  if (!project || !project.notices?.length) {
-    alert('No notices to export in this project.');
-    return;
-  }
-
-  const exportData = {
-    projectName: project.name,
-    description: project.description || '',
-    exportedAt: new Date().toISOString(),
-    noticeCount: project.notices.length,
-    notices: project.notices.map(notice => ({
-      employerName: notice.employerName || notice.employer_name || 'Unknown',
-      state: notice.state || '',
-      city: notice.city || '',
-      noticeDate: notice.noticeDate || notice.notice_date || '',
-      layoffDate: notice.layoffDate || notice.layoff_date || '',
-      affectedEmployees: notice.affectedCount || notice.employees_affected || null,
-      impactScore: notice.nursingImpact?.score || null,
-      impactLabel: notice.nursingImpact?.label || ''
-    }))
-  };
-
-  const jsonContent = JSON.stringify(exportData, null, 2);
-  const blob = new Blob([jsonContent], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = `${project.name.replace(/[^a-z0-9]/gi, '_')}_export.json`;
-  link.click();
-  URL.revokeObjectURL(url);
-};
-
-// Initialize project event listeners
-const initProjectEvents = () => {
-  // New project button
-  if (newProjectBtn) {
-    newProjectBtn.addEventListener('click', () => openProjectModal());
-  }
-
-  // Modal close buttons
-  document.getElementById('modal-close')?.addEventListener('click', closeProjectModal);
-  document.getElementById('modal-cancel')?.addEventListener('click', closeProjectModal);
-  document.getElementById('project-detail-close')?.addEventListener('click', closeProjectDetail);
-  document.getElementById('close-project-detail')?.addEventListener('click', closeProjectDetail);
-  document.getElementById('delete-project-btn')?.addEventListener('click', deleteProject);
-
-  // Export buttons
-  document.getElementById('export-project-csv')?.addEventListener('click', exportProjectCSV);
-  document.getElementById('export-project-json')?.addEventListener('click', exportProjectJSON);
-
-  // Project form submit
-  if (projectForm) {
-    projectForm.addEventListener('submit', handleProjectSubmit);
-  }
+  document.getElementById('delete-project-btn')?.addEventListener('click', () => {
+    if (currentProjectId && confirm('Delete this project?')) {
+      projects = projects.filter(p => p.id !== currentProjectId);
+      saveProjects();
+      renderProjects();
+      projectDetailModal?.classList.remove('active');
+    }
+  });
 
   // Color picker
-  if (colorPicker) {
-    colorPicker.addEventListener('click', (e) => {
-      if (e.target.classList.contains('color-option')) {
-        document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
-        e.target.classList.add('selected');
-      }
+  colorPicker?.querySelectorAll('.color-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      colorPicker.querySelectorAll('.color-option').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
     });
-  }
+  });
 
   // Project search
-  if (projectSearch) {
-    projectSearch.addEventListener('input', (e) => {
-      renderProjects(e.target.value);
+  projectSearch?.addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase();
+    document.querySelectorAll('.project-card').forEach(card => {
+      const text = card.textContent.toLowerCase();
+      card.style.display = text.includes(query) ? '' : 'none';
     });
-  }
+  });
+};
 
-  // Project card clicks
-  if (projectsList) {
-    projectsList.addEventListener('click', (e) => {
-      const card = e.target.closest('.project-card');
-      if (card) {
-        openProjectDetail(card.dataset.projectId);
+// =============================================================================
+// Custom Notices
+// =============================================================================
+const initCustomNotices = () => {
+  loadCustomNotices();
+
+  customNoticeForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const employer = document.getElementById('custom-employer')?.value?.trim();
+    const state = customStateSelect?.value;
+    const affected = parseInt(document.getElementById('custom-affected')?.value) || null;
+    const noticeDate = document.getElementById('custom-notice-date')?.value || null;
+    const effectiveDate = document.getElementById('custom-effective-date')?.value || null;
+
+    if (!employer || !state) {
+      alert('Employer name and state are required.');
+      return;
+    }
+
+    const notice = {
+      id: `custom-${Date.now()}`,
+      employer_name: employer,
+      state,
+      employees_affected: affected,
+      notice_date: noticeDate,
+      effective_date: effectiveDate,
+      nursing_score: 50,
+      nursing_label: 'Custom',
+      isCustom: true,
+      createdAt: new Date().toISOString()
+    };
+
+    customNotices.unshift(notice);
+    saveCustomNotices();
+    customNoticeForm.reset();
+    applyFilters();
+  });
+};
+
+// =============================================================================
+// Map Highlighting
+// =============================================================================
+const updateMapHighlights = () => {
+  document.querySelectorAll('.us-map path[data-state], .us-map circle[data-state]').forEach(path => {
+    const state = path.dataset.state;
+    path.classList.remove('state-selected', 'state-dimmed');
+
+    if (selectedStates.length > 0) {
+      if (selectedStates.includes(state)) {
+        path.classList.add('state-selected');
+      } else {
+        path.classList.add('state-dimmed');
       }
-    });
-  }
-
-  // Close modals on overlay click
-  projectModal?.addEventListener('click', (e) => {
-    if (e.target === projectModal) closeProjectModal();
-  });
-  projectDetailModal?.addEventListener('click', (e) => {
-    if (e.target === projectDetailModal) closeProjectDetail();
+    } else if (regionSelect.value && REGION_STATES[regionSelect.value]) {
+      if (REGION_STATES[regionSelect.value].includes(state)) {
+        path.classList.add('state-selected');
+      } else {
+        path.classList.add('state-dimmed');
+      }
+    }
   });
 };
 
-// ==================== END PROJECTS FUNCTIONALITY ====================
-
-// ==================== HELP SECTION ====================
-
-// Help section toggle
+// =============================================================================
+// Help Section
+// =============================================================================
 const initHelpSection = () => {
-  const helpSection = document.querySelector('.help-section');
   const helpToggle = document.getElementById('help-toggle');
+  const helpContent = document.getElementById('help-content');
+  const toggleIcon = helpToggle?.querySelector('.help-toggle-icon');
 
-  if (helpToggle && helpSection) {
-    helpToggle.addEventListener('click', () => {
-      helpSection.classList.toggle('open');
-    });
-  }
+  helpToggle?.addEventListener('click', () => {
+    helpContent?.classList.toggle('open');
+    if (toggleIcon) {
+      toggleIcon.textContent = helpContent?.classList.contains('open') ? '−' : '+';
+    }
+  });
 };
 
-// ==================== END HELP SECTION ====================
+// =============================================================================
+// Export Functions
+// =============================================================================
+const exportProjectCSV = () => {
+  const project = projects.find(p => p.id === currentProjectId);
+  if (!project || !project.notices?.length) {
+    alert('No notices to export.');
+    return;
+  }
+
+  const headers = ['ID', 'State', 'Employer', 'City', 'Notice Date', 'Employees Affected', 'Nursing Score'];
+  const rows = project.notices.map(n => [
+    n.id,
+    n.state,
+    `"${(n.employer_name || '').replace(/"/g, '""')}"`,
+    `"${(n.city || '').replace(/"/g, '""')}"`,
+    n.notice_date || '',
+    n.employees_affected || '',
+    n.nursing_score || 0
+  ]);
+
+  const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+  downloadFile(csv, `${project.name.replace(/\s+/g, '_')}_notices.csv`, 'text/csv');
+};
+
+const exportProjectJSON = () => {
+  const project = projects.find(p => p.id === currentProjectId);
+  if (!project || !project.notices?.length) {
+    alert('No notices to export.');
+    return;
+  }
+
+  const json = JSON.stringify(project.notices, null, 2);
+  downloadFile(json, `${project.name.replace(/\s+/g, '_')}_notices.json`, 'application/json');
+};
+
+const downloadFile = (content, filename, type) => {
+  const blob = new Blob([content], { type });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+};
+
+document.getElementById('export-project-csv')?.addEventListener('click', exportProjectCSV);
+document.getElementById('export-project-json')?.addEventListener('click', exportProjectJSON);
+
+// =============================================================================
+// View Toggle (Map/Chart)
+// =============================================================================
+const initViewToggle = () => {
+  const mapViewBtn = document.getElementById('map-view-btn');
+  const chartViewBtn = document.getElementById('chart-view-btn');
+  const usMap = document.getElementById('us-map');
+  const barChart = document.getElementById('bar-chart');
+
+  mapViewBtn?.addEventListener('click', () => {
+    currentMapView = 'map';
+    mapViewBtn.classList.add('active');
+    chartViewBtn?.classList.remove('active');
+    if (usMap) usMap.style.display = '';
+    if (barChart) barChart.style.display = 'none';
+  });
+
+  chartViewBtn?.addEventListener('click', () => {
+    currentMapView = 'chart';
+    chartViewBtn.classList.add('active');
+    mapViewBtn?.classList.remove('active');
+    if (usMap) usMap.style.display = 'none';
+    if (barChart) {
+      barChart.style.display = '';
+      renderBarChart();
+    }
+  });
+};
+
+const renderBarChart = () => {
+  const barChart = document.getElementById('bar-chart');
+  if (!barChart) return;
+
+  const sortedStates = Object.entries(stateData)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 20);
+
+  if (sortedStates.length === 0) {
+    barChart.innerHTML = '<div class="empty-state">No state data available.</div>';
+    return;
+  }
+
+  const maxCount = sortedStates[0][1];
+
+  // Generate dynamic color based on intensity (green to yellow to red)
+  const getBarColor = (count, max) => {
+    const intensity = count / max;
+    // Hue: 120 (green) -> 60 (yellow) -> 0 (red)
+    const hue = 120 - (intensity * 120);
+    return `hsl(${hue}, 75%, 50%)`;
+  };
+
+  barChart.innerHTML = `
+    <div class="bar-chart-title" style="font-size: 16px; font-weight: 600; color: var(--navy); padding: 0 16px 12px; border-bottom: 1px solid rgba(26, 54, 93, 0.1); margin-bottom: 8px;">
+      Top 20 States by Notice Count
+    </div>
+    <div class="bar-chart-container">
+      ${sortedStates.map(([state, count], index) => {
+        const percentage = (count / maxCount) * 100;
+        const color = getBarColor(count, maxCount);
+        const isSelected = selectedStates.includes(state);
+        return `
+          <div class="bar-chart-row${isSelected ? ' selected' : ''}" data-state="${state}" style="cursor: pointer;">
+            <span class="bar-chart-label">${state}</span>
+            <div class="bar-chart-bar">
+              <div class="bar-chart-fill" style="width: ${percentage}%; background: linear-gradient(90deg, ${color}, ${color}dd);"></div>
+            </div>
+            <span class="bar-chart-count">${count.toLocaleString()}</span>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+
+  // Add click handlers to bar chart rows
+  barChart.querySelectorAll('.bar-chart-row').forEach(row => {
+    row.addEventListener('click', () => {
+      const state = row.dataset.state;
+      toggleStateSelection(state);
+      renderBarChart(); // Re-render to update selected state
+    });
+  });
+};
+
+// =============================================================================
+// App Initialization
+// =============================================================================
+const initApp = async () => {
+  if (!checkAuth()) return;
+
+  setLoading('Loading data...');
+
+  // Initialize UI components
+  initRegionSelect();
+  initStateMultiSelect();
+  initSpecialtyMultiSelect();
+  initCustomStateSelect();
+  initFilters();
+  initQuickNav();
+  initProjects();
+  initStateCalibration();
+  initCustomNotices();
+  initHelpSection();
+  initViewToggle();
+  initForecast();
+  initProgramsModule();
+  await initWeatherMap();
+
+  // Load data
+  await Promise.all([
+    loadMetadata(),
+    loadStates()
+  ]);
+
+  await loadAllNotices();
+  await loadInsights();
+
+  // Populate state dropdown and apply initial filters
+  populateStateDropdown('');
+  applyFilters();
+};
+
+// =============================================================================
+// Strategic Review Module - Nursing Market Intelligence
+// =============================================================================
+
+// Comprehensive salary data by state (from BLS, Nurse.org, Vivian 2024-2026)
+const NURSING_SALARY_DATA = {
+  // State: { staffRN: annual, staffHourly, travelWeekly, travelAnnual, shortage: 'surplus'|'shortage'|'balanced', projectedGap: number }
+  AL: { staffRN: 74970, staffHourly: 36, travelWeekly: 1850, travelAnnual: 96200, shortage: 'shortage', projectedGap: -5200 },
+  AK: { staffRN: 112040, staffHourly: 54, travelWeekly: 2564, travelAnnual: 133328, shortage: 'shortage', projectedGap: -1800 },
+  AZ: { staffRN: 89850, staffHourly: 43, travelWeekly: 2150, travelAnnual: 111800, shortage: 'shortage', projectedGap: -8500 },
+  AR: { staffRN: 76890, staffHourly: 37, travelWeekly: 1920, travelAnnual: 99840, shortage: 'shortage', projectedGap: -3200 },
+  CA: { staffRN: 148330, staffHourly: 71, travelWeekly: 2643, travelAnnual: 137436, shortage: 'shortage', projectedGap: -44500 },
+  CO: { staffRN: 106342, staffHourly: 51, travelWeekly: 2280, travelAnnual: 118560, shortage: 'balanced', projectedGap: -2100 },
+  CT: { staffRN: 98760, staffHourly: 47, travelWeekly: 2320, travelAnnual: 120640, shortage: 'balanced', projectedGap: 1200 },
+  DE: { staffRN: 87450, staffHourly: 42, travelWeekly: 2180, travelAnnual: 113360, shortage: 'balanced', projectedGap: -800 },
+  DC: { staffRN: 114282, staffHourly: 55, travelWeekly: 2450, travelAnnual: 127400, shortage: 'balanced', projectedGap: 500 },
+  FL: { staffRN: 84850, staffHourly: 41, travelWeekly: 2050, travelAnnual: 106600, shortage: 'shortage', projectedGap: -18900 },
+  GA: { staffRN: 86240, staffHourly: 41, travelWeekly: 2100, travelAnnual: 109200, shortage: 'shortage', projectedGap: -9800 },
+  HI: { staffRN: 123720, staffHourly: 59, travelWeekly: 2380, travelAnnual: 123760, shortage: 'shortage', projectedGap: -2400 },
+  ID: { staffRN: 82670, staffHourly: 40, travelWeekly: 2050, travelAnnual: 106600, shortage: 'shortage', projectedGap: -1900 },
+  IL: { staffRN: 88760, staffHourly: 43, travelWeekly: 2200, travelAnnual: 114400, shortage: 'shortage', projectedGap: -12300 },
+  IN: { staffRN: 80250, staffHourly: 39, travelWeekly: 2000, travelAnnual: 104000, shortage: 'shortage', projectedGap: -6400 },
+  IA: { staffRN: 77780, staffHourly: 37, travelWeekly: 1950, travelAnnual: 101400, shortage: 'surplus', projectedGap: 2800 },
+  KS: { staffRN: 79180, staffHourly: 38, travelWeekly: 1980, travelAnnual: 102960, shortage: 'balanced', projectedGap: -1100 },
+  KY: { staffRN: 78650, staffHourly: 38, travelWeekly: 1970, travelAnnual: 102440, shortage: 'shortage', projectedGap: -4500 },
+  LA: { staffRN: 79450, staffHourly: 38, travelWeekly: 2020, travelAnnual: 105040, shortage: 'shortage', projectedGap: -5600 },
+  ME: { staffRN: 86780, staffHourly: 42, travelWeekly: 2150, travelAnnual: 111800, shortage: 'shortage', projectedGap: -1400 },
+  MD: { staffRN: 95280, staffHourly: 46, travelWeekly: 2350, travelAnnual: 122200, shortage: 'balanced', projectedGap: -800 },
+  MA: { staffRN: 110449, staffHourly: 53, travelWeekly: 2420, travelAnnual: 125840, shortage: 'balanced', projectedGap: 1500 },
+  MI: { staffRN: 85760, staffHourly: 41, travelWeekly: 2100, travelAnnual: 109200, shortage: 'shortage', projectedGap: -7200 },
+  MN: { staffRN: 96580, staffHourly: 46, travelWeekly: 2280, travelAnnual: 118560, shortage: 'surplus', projectedGap: 3200 },
+  MS: { staffRN: 79470, staffHourly: 38, travelWeekly: 1900, travelAnnual: 98800, shortage: 'shortage', projectedGap: -3800 },
+  MO: { staffRN: 79890, staffHourly: 38, travelWeekly: 2000, travelAnnual: 104000, shortage: 'shortage', projectedGap: -5100 },
+  MT: { staffRN: 83450, staffHourly: 40, travelWeekly: 2100, travelAnnual: 109200, shortage: 'shortage', projectedGap: -1200 },
+  NE: { staffRN: 80120, staffHourly: 39, travelWeekly: 2000, travelAnnual: 104000, shortage: 'balanced', projectedGap: -600 },
+  NV: { staffRN: 102580, staffHourly: 49, travelWeekly: 2350, travelAnnual: 122200, shortage: 'shortage', projectedGap: -4200 },
+  NH: { staffRN: 89760, staffHourly: 43, travelWeekly: 2200, travelAnnual: 114400, shortage: 'balanced', projectedGap: 400 },
+  NJ: { staffRN: 102340, staffHourly: 49, travelWeekly: 2464, travelAnnual: 128128, shortage: 'shortage', projectedGap: -6800 },
+  NM: { staffRN: 88450, staffHourly: 43, travelWeekly: 2150, travelAnnual: 111800, shortage: 'shortage', projectedGap: -2100 },
+  NY: { staffRN: 110642, staffHourly: 53, travelWeekly: 2380, travelAnnual: 123760, shortage: 'shortage', projectedGap: -18200 },
+  NC: { staffRN: 84670, staffHourly: 41, travelWeekly: 2080, travelAnnual: 108160, shortage: 'shortage', projectedGap: -12500 },
+  ND: { staffRN: 107006, staffHourly: 51, travelWeekly: 2200, travelAnnual: 114400, shortage: 'surplus', projectedGap: 1100 },
+  OH: { staffRN: 82340, staffHourly: 40, travelWeekly: 2050, travelAnnual: 106600, shortage: 'shortage', projectedGap: -9400 },
+  OK: { staffRN: 78920, staffHourly: 38, travelWeekly: 1980, travelAnnual: 102960, shortage: 'shortage', projectedGap: -3600 },
+  OR: { staffRN: 120470, staffHourly: 58, travelWeekly: 2380, travelAnnual: 123760, shortage: 'balanced', projectedGap: -1800 },
+  PA: { staffRN: 88450, staffHourly: 43, travelWeekly: 2180, travelAnnual: 113360, shortage: 'shortage', projectedGap: -11200 },
+  PR: { staffRN: 41470, staffHourly: 20, travelWeekly: 1600, travelAnnual: 83200, shortage: 'shortage', projectedGap: -2800 },
+  RI: { staffRN: 95680, staffHourly: 46, travelWeekly: 2490, travelAnnual: 129480, shortage: 'balanced', projectedGap: 200 },
+  SC: { staffRN: 82450, staffHourly: 40, travelWeekly: 2050, travelAnnual: 106600, shortage: 'shortage', projectedGap: -5400 },
+  SD: { staffRN: 72210, staffHourly: 35, travelWeekly: 2481, travelAnnual: 129012, shortage: 'surplus', projectedGap: 800 },
+  TN: { staffRN: 79680, staffHourly: 38, travelWeekly: 2020, travelAnnual: 105040, shortage: 'shortage', projectedGap: -7800 },
+  TX: { staffRN: 91450, staffHourly: 44, travelWeekly: 2180, travelAnnual: 113360, shortage: 'shortage', projectedGap: -28500 },
+  UT: { staffRN: 85670, staffHourly: 41, travelWeekly: 2100, travelAnnual: 109200, shortage: 'shortage', projectedGap: -3400 },
+  VT: { staffRN: 107529, staffHourly: 52, travelWeekly: 2200, travelAnnual: 114400, shortage: 'balanced', projectedGap: -300 },
+  VA: { staffRN: 89450, staffHourly: 43, travelWeekly: 2150, travelAnnual: 111800, shortage: 'shortage', projectedGap: -7600 },
+  WA: { staffRN: 115740, staffHourly: 56, travelWeekly: 2420, travelAnnual: 125840, shortage: 'balanced', projectedGap: -2400 },
+  WV: { staffRN: 78340, staffHourly: 38, travelWeekly: 1950, travelAnnual: 101400, shortage: 'shortage', projectedGap: -2200 },
+  WI: { staffRN: 87650, staffHourly: 42, travelWeekly: 2100, travelAnnual: 109200, shortage: 'balanced', projectedGap: 600 },
+  WY: { staffRN: 84760, staffHourly: 41, travelWeekly: 2080, travelAnnual: 108160, shortage: 'shortage', projectedGap: -700 }
+};
+
+// Travel nurse specialty pay (weekly rates)
+const SPECIALTY_PAY = {
+  'CRNA': { weekly: 4996, annual: 259707, demand: 'very high' },
+  'Cath Lab': { weekly: 4341, annual: 225732, demand: 'very high' },
+  'NICU': { weekly: 2449, annual: 127391, demand: 'high' },
+  'NP': { weekly: 2506, annual: 130295, demand: 'high' },
+  'ICU': { weekly: 2426, annual: 126164, demand: 'very high' },
+  'Telemetry': { weekly: 2321, annual: 120690, demand: 'high' },
+  'L&D': { weekly: 2400, annual: 124800, demand: 'high' },
+  'Oncology': { weekly: 2300, annual: 119600, demand: 'high' },
+  'Med-Surg': { weekly: 2118, annual: 110165, demand: 'moderate' },
+  'OR': { weekly: 1818, annual: 94573, demand: 'high' },
+  'ER': { weekly: 1668, annual: 86737, demand: 'very high' },
+  'Psych': { weekly: 1950, annual: 101400, demand: 'high' },
+  'Home Health': { weekly: 1700, annual: 88400, demand: 'moderate' },
+  'Rehab': { weekly: 1800, annual: 93600, demand: 'moderate' }
+};
+
+// National workforce projections (HRSA/BLS data)
+const WORKFORCE_PROJECTIONS = {
+  currentYear: 2026,
+  nationalSupply: 3150000,
+  nationalDemand: 3450000,
+  projectedGap2030: -350000,
+  projectedGap2035: -500000,
+  growthRate: 6, // percent through 2032
+  retirementRate: 4.5, // percent annually
+  avgAge: 52,
+  medianTenure: 8.5
+};
+
+const renderStrategicReview = () => {
+  const container = document.getElementById('strategic-review-content');
+  if (!container) return;
+
+  // Calculate market metrics from loaded notices
+  const totalLayoffs = currentNotices.reduce((sum, n) => sum + (n.employees_affected || 0), 0);
+  const avgNursingScore = currentNotices.length > 0
+    ? Math.round(currentNotices.reduce((sum, n) => sum + (n.nursing_score || 0), 0) / currentNotices.length)
+    : 0;
+
+  // Group notices by state for analysis
+  const stateLayoffs = {};
+  currentNotices.forEach(n => {
+    if (!stateLayoffs[n.state]) stateLayoffs[n.state] = { count: 0, affected: 0 };
+    stateLayoffs[n.state].count++;
+    stateLayoffs[n.state].affected += n.employees_affected || 0;
+  });
+
+  // Calculate strategic opportunities
+  const opportunities = [];
+  const risks = [];
+
+  Object.entries(stateLayoffs).forEach(([state, data]) => {
+    const salaryData = NURSING_SALARY_DATA[state];
+    if (!salaryData) return;
+
+    const travelPremium = salaryData.travelAnnual - salaryData.staffRN;
+    const estimatedNurses = Math.round(data.affected * 0.35); // ~35% nursing in healthcare layoffs
+
+    if (salaryData.shortage === 'shortage' && estimatedNurses > 50) {
+      opportunities.push({
+        state,
+        estimatedNurses,
+        travelPremium,
+        avgSalary: salaryData.staffRN,
+        travelRate: salaryData.travelWeekly,
+        projectedGap: salaryData.projectedGap,
+        priority: Math.abs(salaryData.projectedGap) + estimatedNurses
+      });
+    }
+
+    if (data.count >= 3 || data.affected >= 200) {
+      risks.push({
+        state,
+        noticeCount: data.count,
+        totalAffected: data.affected,
+        shortage: salaryData.shortage,
+        projectedGap: salaryData.projectedGap
+      });
+    }
+  });
+
+  opportunities.sort((a, b) => b.priority - a.priority);
+  risks.sort((a, b) => b.totalAffected - a.totalAffected);
+
+  // Generate executive summary
+  const shortageStates = Object.entries(NURSING_SALARY_DATA).filter(([_, d]) => d.shortage === 'shortage').length;
+  const surplusStates = Object.entries(NURSING_SALARY_DATA).filter(([_, d]) => d.shortage === 'surplus').length;
+  const totalProjectedGap = Object.values(NURSING_SALARY_DATA).reduce((sum, d) => sum + d.projectedGap, 0);
+
+  container.innerHTML = `
+    <div class="strategic-grid">
+      <!-- Executive Summary Card -->
+      <div class="strategic-card executive-summary">
+        <div class="strategic-card-header">
+          <h4>Executive Summary</h4>
+          <span class="strategic-badge critical">Q1 2026</span>
+        </div>
+        <div class="strategic-metrics">
+          <div class="strategic-metric">
+            <span class="metric-value">${Math.abs(totalProjectedGap).toLocaleString()}</span>
+            <span class="metric-label">Projected RN Shortage (2030)</span>
+          </div>
+          <div class="strategic-metric">
+            <span class="metric-value">${shortageStates}</span>
+            <span class="metric-label">States with Shortages</span>
+          </div>
+          <div class="strategic-metric">
+            <span class="metric-value">${surplusStates}</span>
+            <span class="metric-label">States with Surplus</span>
+          </div>
+          <div class="strategic-metric">
+            <span class="metric-value">${WORKFORCE_PROJECTIONS.growthRate}%</span>
+            <span class="metric-label">Job Growth (2022-2032)</span>
+          </div>
+        </div>
+        <div class="strategic-insight">
+          <strong>Key Insight:</strong> The nursing workforce faces a critical shortage of approximately
+          ${Math.abs(WORKFORCE_PROJECTIONS.projectedGap2030).toLocaleString()} RNs by 2030, driven by
+          an aging workforce (median age ${WORKFORCE_PROJECTIONS.avgAge}) and ${WORKFORCE_PROJECTIONS.retirementRate}%
+          annual retirement rate. Recent layoff activity in ${Object.keys(stateLayoffs).length} states presents
+          strategic recruitment opportunities.
+        </div>
+      </div>
+
+      <!-- Salary Comparison Card -->
+      <div class="strategic-card salary-comparison">
+        <div class="strategic-card-header">
+          <h4>Staff vs Travel Nurse Compensation</h4>
+          <span class="strategic-badge">National Data</span>
+        </div>
+        <div class="salary-table-wrapper">
+          <table class="salary-table">
+            <thead>
+              <tr>
+                <th>State</th>
+                <th>Staff RN</th>
+                <th>Travel Weekly</th>
+                <th>Travel Annual</th>
+                <th>Premium</th>
+                <th>Market</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${Object.entries(NURSING_SALARY_DATA)
+                .sort((a, b) => b[1].staffRN - a[1].staffRN)
+                .slice(0, 15)
+                .map(([state, data]) => `
+                  <tr class="${data.shortage === 'shortage' ? 'shortage-row' : data.shortage === 'surplus' ? 'surplus-row' : ''}">
+                    <td><strong>${state}</strong></td>
+                    <td>$${data.staffRN.toLocaleString()}</td>
+                    <td>$${data.travelWeekly.toLocaleString()}/wk</td>
+                    <td>$${data.travelAnnual.toLocaleString()}</td>
+                    <td class="${data.travelAnnual - data.staffRN > 20000 ? 'premium-high' : 'premium-low'}">
+                      +$${(data.travelAnnual - data.staffRN).toLocaleString()}
+                    </td>
+                    <td>
+                      <span class="market-badge ${data.shortage}">${data.shortage}</span>
+                    </td>
+                  </tr>
+                `).join('')}
+            </tbody>
+          </table>
+        </div>
+        <div class="salary-legend">
+          <span class="legend-item"><span class="dot shortage"></span> Shortage Market</span>
+          <span class="legend-item"><span class="dot surplus"></span> Surplus Market</span>
+          <span class="legend-item"><span class="dot balanced"></span> Balanced</span>
+        </div>
+      </div>
+
+      <!-- Specialty Pay Card -->
+      <div class="strategic-card specialty-pay">
+        <div class="strategic-card-header">
+          <h4>Travel Nurse Pay by Specialty</h4>
+          <span class="strategic-badge">2026 Rates</span>
+        </div>
+        <div class="specialty-list">
+          ${Object.entries(SPECIALTY_PAY)
+            .sort((a, b) => b[1].weekly - a[1].weekly)
+            .map(([specialty, data]) => `
+              <div class="specialty-row">
+                <div class="specialty-info">
+                  <span class="specialty-name">${specialty}</span>
+                  <span class="specialty-demand demand-${data.demand.replace(' ', '-')}">${data.demand} demand</span>
+                </div>
+                <div class="specialty-pay-info">
+                  <span class="specialty-weekly">$${data.weekly.toLocaleString()}/wk</span>
+                  <span class="specialty-annual">$${data.annual.toLocaleString()}/yr</span>
+                </div>
+              </div>
+            `).join('')}
+        </div>
+      </div>
+
+      <!-- Recruitment Opportunities Card -->
+      <div class="strategic-card opportunities">
+        <div class="strategic-card-header">
+          <h4>Strategic Recruitment Opportunities</h4>
+          <span class="strategic-badge opportunity">Based on WARN Data</span>
+        </div>
+        ${opportunities.length > 0 ? `
+          <div class="opportunity-list">
+            ${opportunities.slice(0, 8).map(opp => `
+              <div class="opportunity-row">
+                <div class="opp-state">
+                  <span class="state-code">${opp.state}</span>
+                  <span class="state-name">${STATE_NAMES[opp.state] || opp.state}</span>
+                </div>
+                <div class="opp-metrics">
+                  <span class="opp-metric">
+                    <span class="opp-value">${opp.estimatedNurses}</span>
+                    <span class="opp-label">Est. Nurses</span>
+                  </span>
+                  <span class="opp-metric">
+                    <span class="opp-value">$${opp.travelRate.toLocaleString()}</span>
+                    <span class="opp-label">Travel Rate/wk</span>
+                  </span>
+                  <span class="opp-metric">
+                    <span class="opp-value">${Math.abs(opp.projectedGap).toLocaleString()}</span>
+                    <span class="opp-label">Projected Gap</span>
+                  </span>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        ` : `
+          <div class="empty-state">Apply filters to identify recruitment opportunities from layoff data.</div>
+        `}
+      </div>
+
+      <!-- Risk Assessment Card -->
+      <div class="strategic-card risk-assessment">
+        <div class="strategic-card-header">
+          <h4>Market Risk Assessment</h4>
+          <span class="strategic-badge warning">Monitor</span>
+        </div>
+        ${risks.length > 0 ? `
+          <div class="risk-list">
+            ${risks.slice(0, 6).map(risk => `
+              <div class="risk-row ${risk.shortage}">
+                <div class="risk-state">
+                  <span class="state-code">${risk.state}</span>
+                  <span class="notice-count">${risk.noticeCount} notices</span>
+                </div>
+                <div class="risk-details">
+                  <span class="risk-affected">${risk.totalAffected.toLocaleString()} affected</span>
+                  <span class="risk-projection">
+                    ${risk.projectedGap > 0 ? 'Surplus' : 'Shortage'}: ${Math.abs(risk.projectedGap).toLocaleString()}
+                  </span>
+                </div>
+                <div class="risk-indicator ${risk.noticeCount >= 5 ? 'high' : risk.noticeCount >= 3 ? 'medium' : 'low'}">
+                  ${risk.noticeCount >= 5 ? 'High Activity' : risk.noticeCount >= 3 ? 'Moderate' : 'Low'}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        ` : `
+          <div class="empty-state">No significant risk patterns detected in current filters.</div>
+        `}
+      </div>
+
+      <!-- Workforce Projections Card -->
+      <div class="strategic-card projections">
+        <div class="strategic-card-header">
+          <h4>National Workforce Projections</h4>
+          <span class="strategic-badge">HRSA/BLS Data</span>
+        </div>
+        <div class="projection-timeline">
+          <div class="projection-year">
+            <span class="year">2026</span>
+            <div class="projection-bar">
+              <div class="supply-bar" style="width: 91%;">Supply: 3.15M</div>
+              <div class="demand-bar" style="width: 100%;">Demand: 3.45M</div>
+            </div>
+            <span class="gap negative">Gap: -300K</span>
+          </div>
+          <div class="projection-year">
+            <span class="year">2030</span>
+            <div class="projection-bar">
+              <div class="supply-bar" style="width: 88%;">Supply: 3.30M</div>
+              <div class="demand-bar" style="width: 100%;">Demand: 3.65M</div>
+            </div>
+            <span class="gap negative">Gap: -350K</span>
+          </div>
+          <div class="projection-year">
+            <span class="year">2035</span>
+            <div class="projection-bar">
+              <div class="supply-bar" style="width: 85%;">Supply: 3.40M</div>
+              <div class="demand-bar" style="width: 100%;">Demand: 3.90M</div>
+            </div>
+            <span class="gap negative">Gap: -500K</span>
+          </div>
+        </div>
+        <div class="projection-factors">
+          <div class="factor">
+            <span class="factor-icon">i</span>
+            <span class="factor-text">Median RN Age: ${WORKFORCE_PROJECTIONS.avgAge} years</span>
+          </div>
+          <div class="factor">
+            <span class="factor-icon">i</span>
+            <span class="factor-text">Annual Retirement: ${WORKFORCE_PROJECTIONS.retirementRate}%</span>
+          </div>
+          <div class="factor">
+            <span class="factor-icon">i</span>
+            <span class="factor-text">Job Growth: ${WORKFORCE_PROJECTIONS.growthRate}% through 2032</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+};
+
+const initStrategicReview = () => {
+  const toggleBtn = document.getElementById('strategic-toggle');
+  const toggleIcon = toggleBtn?.querySelector('.strategic-toggle-icon');
+  const section = toggleBtn?.closest('.strategic-review-section');
+
+  toggleBtn?.addEventListener('click', () => {
+    section?.classList.toggle('open');
+    const isOpen = section?.classList.contains('open');
+    if (toggleIcon) {
+      toggleIcon.textContent = isOpen ? '-' : '+';
+    }
+    if (isOpen) {
+      renderStrategicReview();
+    }
+  });
+
+  // Re-render when filters change
+  const originalApplyFilters = applyFilters;
+  window.applyFiltersWithStrategic = () => {
+    originalApplyFilters();
+    if (section?.classList.contains('open')) {
+      renderStrategicReview();
+    }
+  };
+
+  if (section?.classList.contains('open')) {
+    if (toggleIcon) {
+      toggleIcon.textContent = '-';
+    }
+    renderStrategicReview();
+  }
+};
 
 // ==================== ACCREDITED PROGRAMS MODULE ====================
 
@@ -1941,7 +2576,9 @@ const loadPrograms = async () => {
   try {
     programsLoading?.classList.add('active');
     updateProgramsLoading(0, 1);
-    const data = await fetchJson('/data/programs.json');
+    const response = await fetch(`${DATA_BASE_URL}/programs.json`);
+    if (!response.ok) throw new Error(`Failed to load programs: ${response.status}`);
+    const data = await response.json();
 
     nursingPrograms = Array.isArray(data) ? data : (data.programs ?? []);
     programsMeta = {
@@ -2012,138 +2649,16 @@ const initProgramsModule = () => {
 
 // ==================== END ACCREDITED PROGRAMS MODULE ====================
 
-// ==================== MAP/CHART VIEW TOGGLE ====================
+// Update initApp to include Strategic Review
+const originalInitApp = initApp;
 
-// Render bar chart view
-const renderBarChart = () => {
-  const barChart = document.getElementById('bar-chart');
-  if (!barChart) return;
-
-  // Get all states with their counts, sorted by count descending
-  const statesWithCounts = ALL_STATES.map(state => ({
-    state,
-    count: stateData[state]?.count || 0
-  })).sort((a, b) => b.count - a.count);
-
-  const maxCount = Math.max(...statesWithCounts.map(s => s.count), 1);
-
-  // Determine which states to highlight
-  const selectedRegion = regionSelect.value;
-  let statesToHighlight = [];
-
-  if (selectedStates.length > 0) {
-    // Use the multi-select selected states
-    statesToHighlight = selectedStates;
-  } else if (selectedRegion && REGION_STATES[selectedRegion]) {
-    // Fall back to region states if no specific states selected
-    statesToHighlight = REGION_STATES[selectedRegion];
-  }
-
-  barChart.innerHTML = statesWithCounts.map(({ state, count }) => {
-    const percentage = (count / maxCount) * 100;
-    const isSelected = statesToHighlight.length === 0 || statesToHighlight.includes(state);
-    const selectedClass = statesToHighlight.length > 0 && statesToHighlight.includes(state) ? 'selected' : '';
-
-    return `
-      <div class="bar-chart-row ${selectedClass}" data-state="${state}" style="${!isSelected && statesToHighlight.length > 0 ? 'opacity: 0.4;' : ''}">
-        <span class="bar-chart-label">${state}</span>
-        <div class="bar-chart-bar">
-          <div class="bar-chart-fill" style="width: ${percentage}%"></div>
-        </div>
-        <span class="bar-chart-count">${count}</span>
-      </div>
-    `;
-  }).join('');
-};
-
-// Toggle between map and chart view
-const toggleMapView = (view) => {
-  currentMapView = view;
-  const mapContainer = document.getElementById('us-map');
-  const barChart = document.getElementById('bar-chart');
-  const mapLegend = document.getElementById('map-legend');
-  const mapViewBtn = document.getElementById('map-view-btn');
-  const chartViewBtn = document.getElementById('chart-view-btn');
-
-  if (view === 'map') {
-    mapContainer.style.display = 'block';
-    barChart.style.display = 'none';
-    mapLegend.style.display = 'flex';
-    mapViewBtn.classList.add('active');
-    chartViewBtn.classList.remove('active');
-    updateMapHighlights();
-  } else {
-    mapContainer.style.display = 'none';
-    barChart.style.display = 'block';
-    mapLegend.style.display = 'none';
-    mapViewBtn.classList.remove('active');
-    chartViewBtn.classList.add('active');
-    renderBarChart();
-  }
-};
-
-// Update map highlights based on selected region/state
-const updateMapHighlights = () => {
-  const shapes = usMapContainer.querySelectorAll('[data-state]');
-  const selectedRegion = regionSelect.value;
-
-  // Determine which states to highlight
-  let statesToHighlight = [];
-
-  if (selectedStates.length > 0) {
-    // Use the multi-select selected states
-    statesToHighlight = selectedStates;
-  } else if (selectedRegion && REGION_STATES[selectedRegion]) {
-    // Fall back to region states if no specific states selected
-    statesToHighlight = REGION_STATES[selectedRegion];
-  }
-
-  shapes.forEach(shape => {
-    const stateAbbrev = shape.getAttribute('data-state');
-    shape.classList.remove('state-selected', 'state-dimmed');
-
-    if (statesToHighlight.length > 0) {
-      if (statesToHighlight.includes(stateAbbrev)) {
-        shape.classList.add('state-selected');
-      } else {
-        shape.classList.add('state-dimmed');
-      }
-    }
-  });
-};
-
-// Initialize map/chart toggle
-const initMapToggle = () => {
-  const mapViewBtn = document.getElementById('map-view-btn');
-  const chartViewBtn = document.getElementById('chart-view-btn');
-
-  mapViewBtn?.addEventListener('click', () => toggleMapView('map'));
-  chartViewBtn?.addEventListener('click', () => toggleMapView('chart'));
-};
-
-// ==================== END MAP/CHART VIEW TOGGLE ====================
-
-// Initialize app (called after login)
-const initApp = () => {
-  initWeatherMap();
-  initHelpSection();
-  initMapToggle();
-  initStateMultiSelect();
-  initForecast();
-  initProgramsModule();
-  loadHealth();
-  loadStatesWithMap();
-  loadInsights();
-  loadCustomNotices();
-  loadProjects();
-  populateCustomStateDropdown();
-  initProjectEvents();
-  initStateCalibration();
-  renderProjects();
-  loadNotices();
-};
-
-// Auto-init if already authenticated
+// Start the app if already authenticated
 if (checkAuth()) {
-  initApp();
+  initApp().then(() => {
+    initStrategicReview();
+  });
 }
+
+
+
+

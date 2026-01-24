@@ -2576,7 +2576,7 @@ const loadPrograms = async () => {
   try {
     programsLoading?.classList.add('active');
     updateProgramsLoading(0, 1);
-    const response = await fetch(`${DATA_BASE_URL}/nursing-programs.json`);
+    const response = await fetch(`${DATA_BASE_URL}/programs.json`);
     if (!response.ok) throw new Error(`Failed to load programs: ${response.status}`);
     const data = await response.json();
 
