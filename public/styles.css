@@ -1884,11 +1884,12 @@ input[type="range"] {
   height: 12px;
   border-radius: 6px;
   background: linear-gradient(to right,
-    rgba(11, 122, 117, 0.1) 0%,
-    rgba(11, 122, 117, 0.3) 25%,
-    rgba(255, 203, 92, 0.5) 50%,
-    rgba(255, 92, 42, 0.7) 75%,
-    rgba(180, 40, 20, 0.9) 100%
+    #e8f5e9 0%,
+    #a5d6a7 20%,
+    #fff176 40%,
+    #ffcc80 55%,
+    #ef9a9a 75%,
+    #c62828 100%
   );
 }
 
@@ -1923,22 +1924,27 @@ input[type="range"] {
   filter: brightness(1.1);
 }
 
-.us-map svg path.fog-0,
-.us-map svg circle.fog-0 { filter: saturate(0.6); }
-.us-map svg path.fog-1,
-.us-map svg circle.fog-1 { filter: saturate(0.7); }
-.us-map svg path.fog-2,
-.us-map svg circle.fog-2 { filter: saturate(0.8); }
-.us-map svg path.fog-3,
-.us-map svg circle.fog-3 { filter: saturate(0.9); }
-.us-map svg path.fog-4,
-.us-map svg circle.fog-4 { filter: saturate(1.05); }
-.us-map svg path.fog-5,
-.us-map svg circle.fog-5 { filter: saturate(1.15); }
-.us-map svg path.fog-6,
-.us-map svg circle.fog-6 { filter: saturate(1.25); }
-.us-map svg path.fog-7,
-.us-map svg circle.fog-7 { filter: saturate(1.35); }
+/* Layoff intensity color scale - green to yellow to red */
+.us-map svg path.layoff-0,
+.us-map svg circle.layoff-0 { fill: #e8f5e9; } /* Very light green - no layoffs */
+.us-map svg path.layoff-1,
+.us-map svg circle.layoff-1 { fill: #c8e6c9; } /* Light green - very low */
+.us-map svg path.layoff-2,
+.us-map svg circle.layoff-2 { fill: #a5d6a7; } /* Green - low */
+.us-map svg path.layoff-3,
+.us-map svg circle.layoff-3 { fill: #fff9c4; } /* Light yellow - moderate */
+.us-map svg path.layoff-4,
+.us-map svg circle.layoff-4 { fill: #fff176; } /* Yellow - medium */
+.us-map svg path.layoff-5,
+.us-map svg circle.layoff-5 { fill: #ffcc80; } /* Orange - elevated */
+.us-map svg path.layoff-6,
+.us-map svg circle.layoff-6 { fill: #ffab91; } /* Light red - high */
+.us-map svg path.layoff-7,
+.us-map svg circle.layoff-7 { fill: #ef9a9a; } /* Red - very high */
+.us-map svg path.layoff-8,
+.us-map svg circle.layoff-8 { fill: #e57373; } /* Dark red - severe */
+.us-map svg path.layoff-9,
+.us-map svg circle.layoff-9 { fill: #c62828; } /* Deep red - critical */
 
 .us-map svg .state-labels text {
   font-size: 11px;

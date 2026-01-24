@@ -421,6 +421,44 @@
       </div>
     </section>
 
+    <!-- Notice Feed and Detail Panel - moved after weather map -->
+    <main class="content-grid">
+      <section class="results">
+        <div class="section-header">
+          <h3>Recruiter Signal Feed</h3>
+          <p>Ranked by nursing impact and recency.</p>
+        </div>
+        <div class="search-nav-row">
+          <div class="search-bar">
+            <input type="text" id="notice-search" placeholder="Search by employer name..." autocomplete="off">
+            <button type="button" id="clear-search" class="clear-search-btn" style="display: none;">&times;</button>
+          </div>
+          <div class="quick-nav" id="quick-nav">
+            <button class="quick-nav-btn" id="quick-prev" title="Previous page" disabled>&laquo;</button>
+            <span class="quick-nav-info" id="quick-nav-info">Page 1</span>
+            <button class="quick-nav-btn" id="quick-next" title="Next page" disabled>&raquo;</button>
+          </div>
+        </div>
+        <div class="notice-list" id="notice-list">
+          <div class="empty-state">Loading notices...</div>
+        </div>
+        <div class="pagination" id="pagination">
+          <!-- Pagination controls will be rendered here -->
+        </div>
+      </section>
+      <aside class="detail" id="detail-panel">
+        <div class="detail-shell">
+          <div class="detail-header">
+            <h3>Notice Detail</h3>
+            <p>Click a notice to reveal full context.</p>
+          </div>
+          <div class="detail-body" id="detail-body">
+            <div class="empty-detail">No notice selected.</div>
+          </div>
+        </div>
+      </aside>
+    </main>
+
     <section class="premium-insights">
       <div class="section-header">
         <div class="section-header-text">
@@ -551,43 +589,6 @@
         <div class="empty-state">Loading strategic analysis...</div>
       </div>
     </section>
-
-    <main class="content-grid">
-      <section class="results">
-        <div class="section-header">
-          <h3>Recruiter Signal Feed</h3>
-          <p>Ranked by nursing impact and recency.</p>
-        </div>
-        <div class="search-nav-row">
-          <div class="search-bar">
-            <input type="text" id="notice-search" placeholder="Search by employer name..." autocomplete="off">
-            <button type="button" id="clear-search" class="clear-search-btn" style="display: none;">&times;</button>
-          </div>
-          <div class="quick-nav" id="quick-nav">
-            <button class="quick-nav-btn" id="quick-prev" title="Previous page" disabled>&laquo;</button>
-            <span class="quick-nav-info" id="quick-nav-info">Page 1</span>
-            <button class="quick-nav-btn" id="quick-next" title="Next page" disabled>&raquo;</button>
-          </div>
-        </div>
-        <div class="notice-list" id="notice-list">
-          <div class="empty-state">Loading notices...</div>
-        </div>
-        <div class="pagination" id="pagination">
-          <!-- Pagination controls will be rendered here -->
-        </div>
-      </section>
-      <aside class="detail" id="detail-panel">
-        <div class="detail-shell">
-          <div class="detail-header">
-            <h3>Notice Detail</h3>
-            <p>Click a notice to reveal full context.</p>
-          </div>
-          <div class="detail-body" id="detail-body">
-            <div class="empty-detail">No notice selected.</div>
-          </div>
-        </div>
-      </aside>
-    </main>
 
     <footer class="footer">
       <p>Powered by state layoff feeds. Data updated every 6 hours. Score is directional, not a guarantee.</p>
