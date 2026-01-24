@@ -1894,7 +1894,8 @@ const renderProgramsWithProgress = (programs) => {
 
 const populateProgramFilters = (programs) => {
   if (!programsStateFilter || !programsLevelFilter) return;
-  const states = Array.from(new Set(programs.map(p => normalizeProgram(p).state).filter(Boolean))).sort();
+  // Filter to only valid US state codes
+  const states = Array.from(new Set(programs.map(p => normalizeProgram(p).state).filter(s => s && ALL_STATES.includes(s)))).sort();
   const levels = Array.from(new Set(programs.map(p => normalizeProgram(p).level).filter(Boolean))).sort();
 
   programsStateFilter.innerHTML = '<option value="">All states</option>' +
@@ -1956,8 +1957,9 @@ const loadPrograms = async () => {
     }
 
     if (programsSourceNote) {
-      programsSourceNote.textContent = programsMeta.sources.length
-        ? `Sources: ${programsMeta.sources.join(' + ')}`
+      const sourceNames = programsMeta.sources.map(s => typeof s === 'string' ? s : s.name).filter(Boolean);
+      programsSourceNote.textContent = sourceNames.length
+        ? `Sources: ${sourceNames.join(' + ')}`
         : '';
     }
 
