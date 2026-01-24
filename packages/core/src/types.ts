@@ -49,7 +49,7 @@ export interface NormalizedWarnNotice {
       lpn: number;
       cna: number;
     };
-    careSetting?: 'acute' | 'snf' | 'outpatient' | 'home' | 'behavioral' | 'unknown';
+    careSetting?: 'acute' | 'snf' | 'outpatient' | 'home' | 'behavioral' | 'occupational' | 'unknown';
     specialties?: string[];
     explanations?: string[];
   };

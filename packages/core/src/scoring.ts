@@ -9,6 +9,16 @@ const KEYWORDS: string[] = [
   'certified nursing assistant',
   'nurse',
   'nurses',
+  'occupational health',
+  'employee health',
+  'industrial nurse',
+  'occupational nurse',
+  'workplace health',
+  'onsite clinic',
+  'on-site clinic',
+  'plant nurse',
+  'first aid',
+  'occupational medicine',
   'clinical staff',
   'patient care',
   'bed closure',
@@ -24,18 +34,32 @@ const ROLE_KEYWORDS: Record<'rn' | 'lpn' | 'cna', string[]> = {
   cna: ['cna', 'certified nursing assistant']
 };
 
-const SETTING_KEYWORDS: Record<'acute' | 'snf' | 'outpatient' | 'home' | 'behavioral', string[]> = {
+const OCCUPATIONAL_KEYWORDS = [
+  'occupational health',
+  'employee health',
+  'industrial nurse',
+  'occupational nurse',
+  'workplace health',
+  'onsite clinic',
+  'on-site clinic',
+  'plant nurse',
+  'first aid',
+  'occupational medicine'
+];
+
+const SETTING_KEYWORDS: Record<'acute' | 'snf' | 'outpatient' | 'home' | 'behavioral' | 'occupational', string[]> = {
   acute: ['hospital', 'medical center', 'acute care', 'inpatient'],
   snf: ['skilled nursing', 'nursing home', 'long term care', 'ltc', 'assisted living', 'snf'],
   outpatient: ['clinic', 'ambulatory', 'outpatient', 'surgery center', 'urgent care'],
   home: ['home health', 'homecare', 'hospice'],
-  behavioral: ['behavioral health', 'psychiatric', 'psych', 'mental health']
+  behavioral: ['behavioral health', 'psychiatric', 'psych', 'mental health'],
+  occupational: OCCUPATIONAL_KEYWORDS
 };
 
 const SPECIALTY_KEYWORDS: Record<string, string[]> = {
   ICU: ['icu', 'intensive care'],
   ED: ['ed', 'emergency department', 'emergency room'],
-  OR: ['or', 'operating room', 'surgery'],
+  OR: ['operating room', 'surgery', 'surgical'],
   MedSurg: ['med surg', 'medical-surgical', 'medical surgical'],
   OB: ['ob', 'obgyn', 'labor and delivery', 'maternity'],
   Oncology: ['oncology', 'cancer center'],
@@ -44,6 +68,20 @@ const SPECIALTY_KEYWORDS: Record<string, string[]> = {
 
 function normalizeText(t?: string): string {
   return (t ?? '').toLowerCase();
+}
+
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function keywordRegex(keyword: string): RegExp {
+  const escaped = escapeRegExp(keyword.trim().toLowerCase());
+  const spaced = escaped.replace(/\s+/g, '[-\\s]+');
+  return new RegExp(`\\b${spaced}\\b`, 'i');
+}
+
+function hasKeyword(text: string, keyword: string): boolean {
+  return keywordRegex(keyword).test(text);
 }
 
 function looksLikeHealthcare(notice: NormalizedWarnNotice): { ok: boolean; signals: string[] } {
@@ -57,7 +95,7 @@ function looksLikeHealthcare(notice: NormalizedWarnNotice): { ok: boolean; signa
 
   const text = normalizeText(`${notice.employerName} ${notice.reason ?? ''} ${notice.rawText ?? ''}`);
   const employerHints = ['hospital', 'medical center', 'health system', 'clinic', 'nursing', 'rehab', 'behavioral health', 'hospice'];
-  if (employerHints.some(h => text.includes(h))) {
+  if (employerHints.some(h => hasKeyword(text, h))) {
     signals.push('employer_text_healthcare');
   }
 
@@ -67,7 +105,7 @@ function looksLikeHealthcare(notice: NormalizedWarnNotice): { ok: boolean; signa
 function keywordHits(text: string): string[] {
   const found: string[] = [];
   for (const k of KEYWORDS) {
-    if (text.includes(k)) found.push(k);
+    if (hasKeyword(text, k)) found.push(k);
   }
   return [...new Set(found)];
 }
@@ -75,7 +113,7 @@ function keywordHits(text: string): string[] {
 function inferCareSetting(
   text: string,
   naics?: string
-): { setting: 'acute' | 'snf' | 'outpatient' | 'home' | 'behavioral' | 'unknown'; signals: string[] } {
+): { setting: 'acute' | 'snf' | 'outpatient' | 'home' | 'behavioral' | 'occupational' | 'unknown'; signals: string[] } {
   const signals: string[] = [];
   const normalized = text.toLowerCase();
 
@@ -93,9 +131,9 @@ function inferCareSetting(
   }
 
   for (const [setting, keywords] of Object.entries(SETTING_KEYWORDS)) {
-    if (keywords.some(k => normalized.includes(k))) {
+    if (keywords.some(k => hasKeyword(normalized, k))) {
       signals.push(`setting:${setting}`);
-      return { setting: setting as 'acute' | 'snf' | 'outpatient' | 'home' | 'behavioral', signals };
+      return { setting: setting as 'acute' | 'snf' | 'outpatient' | 'home' | 'behavioral' | 'occupational', signals };
     }
   }
 
@@ -104,20 +142,26 @@ function inferCareSetting(
 
 function inferRoleMix(
   text: string,
-  setting: 'acute' | 'snf' | 'outpatient' | 'home' | 'behavioral' | 'unknown'
+  setting: 'acute' | 'snf' | 'outpatient' | 'home' | 'behavioral' | 'occupational' | 'unknown',
+  relevant: boolean
 ) {
+  if (!relevant) return null;
+  if (setting === 'occupational') {
+    return { rn: 100, lpn: 0, cna: 0 };
+  }
+
   let rn = 30;
   let lpn = 30;
   let cna = 30;
 
   for (const k of ROLE_KEYWORDS.rn) {
-    if (text.includes(k)) rn += 40;
+    if (hasKeyword(text, k)) rn += 40;
   }
   for (const k of ROLE_KEYWORDS.lpn) {
-    if (text.includes(k)) lpn += 30;
+    if (hasKeyword(text, k)) lpn += 30;
   }
   for (const k of ROLE_KEYWORDS.cna) {
-    if (text.includes(k)) cna += 30;
+    if (hasKeyword(text, k)) cna += 30;
   }
 
   if (setting === 'acute') rn += 20;
@@ -143,7 +187,7 @@ function inferSpecialties(text: string): string[] {
   const normalized = text.toLowerCase();
   const matches: string[] = [];
   for (const [label, keywords] of Object.entries(SPECIALTY_KEYWORDS)) {
-    if (keywords.some(k => normalized.includes(k))) {
+    if (keywords.some(k => hasKeyword(normalized, k))) {
       matches.push(label);
     }
   }
@@ -162,6 +206,7 @@ export function scoreNursingImpact(notice: NormalizedWarnNotice): NormalizedWarn
 
   const text = normalizeText(`${notice.employerName} ${notice.reason ?? ''} ${notice.rawText ?? ''}`);
   const found = keywordHits(text);
+  const occupationalHits = OCCUPATIONAL_KEYWORDS.filter(k => hasKeyword(text, k));
   if (found.length > 0) {
     score += Math.min(40, found.length * 10);
     signals.push('nursing_keywords');
@@ -170,8 +215,12 @@ export function scoreNursingImpact(notice: NormalizedWarnNotice): NormalizedWarn
   const { setting, signals: settingSignals } = inferCareSetting(text, notice.naics);
   signals.push(...settingSignals);
 
-  const roleMix = inferRoleMix(text, setting);
-  const specialties = inferSpecialties(text);
+  const relevant = healthcareOk || found.length > 0 || occupationalHits.length > 0;
+  const roleMix = inferRoleMix(text, setting, relevant);
+  const specialties = relevant ? inferSpecialties(text) : [];
+  if (occupationalHits.length) {
+    signals.push('occupational_health');
+  }
   if (specialties.length) {
     signals.push('specialties_detected');
   }
