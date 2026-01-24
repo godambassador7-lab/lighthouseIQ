@@ -332,7 +332,7 @@ const updateStateCalibration = () => {
   else if (rsas >= 40) calibrationTier.textContent = 'Selective pitch. Focus on unit-specific needs.';
   else calibrationTier.textContent = 'Use caution. Avoid leading with relocation.';
 
-  const leadFactors = deltas.filter(entry => entry.delta >= 1.5).slice(0, 3);
+  const leadFactors = deltas.filter(entry => entry.delta >= 0.4).slice(0, 3);
   const avoidFactors = deltas.filter(entry => entry.delta <= -0.5).slice(0, 3);
 
   calibrationTop.innerHTML = leadFactors.length
