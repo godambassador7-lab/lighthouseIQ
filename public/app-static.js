@@ -2152,59 +2152,86 @@ const renderStrategicReview = () => {
   risks.sort((a, b) => b.totalAffected - a.totalAffected);
 
   // Generate executive summary
-  const shortageStates = Object.entries(NURSING_SALARY_DATA).filter(([_, d]) => d.shortage === 'shortage').length;
-  const surplusStates = Object.entries(NURSING_SALARY_DATA).filter(([_, d]) => d.shortage === 'surplus').length;
+  const shortageStatesList = Object.entries(NURSING_SALARY_DATA).filter(([_, d]) => d.shortage === 'shortage').map(([s]) => s).sort();
+  const surplusStatesList = Object.entries(NURSING_SALARY_DATA).filter(([_, d]) => d.shortage === 'surplus').map(([s]) => s).sort();
   const totalProjectedGap = Object.values(NURSING_SALARY_DATA).reduce((sum, d) => sum + d.projectedGap, 0);
 
   container.innerHTML = `
     <div class="strategic-grid">
       <!-- Executive Summary Card -->
-      <div class="strategic-card executive-summary">
+      <div class="strategic-card executive-summary full-width">
         <div class="strategic-card-header">
-          <h4>Executive Summary</h4>
+          <h4><span class="card-icon">📊</span> Executive Summary</h4>
           <span class="strategic-badge critical">Q1 2026</span>
         </div>
-        <div class="strategic-metrics">
-          <div class="strategic-metric">
-            <span class="metric-value">${Math.abs(totalProjectedGap).toLocaleString()}</span>
-            <span class="metric-label">Projected RN Shortage (2030)</span>
+
+        <div class="exec-metrics-row">
+          <div class="exec-metric-card">
+            <div class="exec-metric-value negative">${Math.abs(totalProjectedGap).toLocaleString()}</div>
+            <div class="exec-metric-label">Projected RN Shortage by 2030</div>
           </div>
-          <div class="strategic-metric">
-            <span class="metric-value">${shortageStates}</span>
-            <span class="metric-label">States with Shortages</span>
+          <div class="exec-metric-card">
+            <div class="exec-metric-value">${shortageStatesList.length}</div>
+            <div class="exec-metric-label">States with Shortages</div>
           </div>
-          <div class="strategic-metric">
-            <span class="metric-value">${surplusStates}</span>
-            <span class="metric-label">States with Surplus</span>
+          <div class="exec-metric-card">
+            <div class="exec-metric-value positive">${surplusStatesList.length}</div>
+            <div class="exec-metric-label">States with Surplus</div>
           </div>
-          <div class="strategic-metric">
-            <span class="metric-value">${WORKFORCE_PROJECTIONS.growthRate}%</span>
-            <span class="metric-label">Job Growth (2022-2032)</span>
+          <div class="exec-metric-card">
+            <div class="exec-metric-value">${WORKFORCE_PROJECTIONS.growthRate}%</div>
+            <div class="exec-metric-label">Job Growth (2022-2032)</div>
           </div>
         </div>
+
+        <div class="state-lists-container">
+          <div class="state-list-section shortage">
+            <div class="state-list-header">
+              <span class="state-list-icon">⚠️</span>
+              <span class="state-list-title">Shortage States (${shortageStatesList.length})</span>
+            </div>
+            <div class="state-pills">
+              ${shortageStatesList.map(s => `<span class="state-pill shortage">${s}</span>`).join('')}
+            </div>
+          </div>
+          <div class="state-list-section surplus">
+            <div class="state-list-header">
+              <span class="state-list-icon">✓</span>
+              <span class="state-list-title">Surplus States (${surplusStatesList.length})</span>
+            </div>
+            <div class="state-pills">
+              ${surplusStatesList.map(s => `<span class="state-pill surplus">${s}</span>`).join('')}
+            </div>
+          </div>
+        </div>
+
         <div class="strategic-insight">
-          <strong>Key Insight:</strong> The nursing workforce faces a critical shortage of approximately
-          ${Math.abs(WORKFORCE_PROJECTIONS.projectedGap2030).toLocaleString()} RNs by 2030, driven by
-          an aging workforce (median age ${WORKFORCE_PROJECTIONS.avgAge}) and ${WORKFORCE_PROJECTIONS.retirementRate}%
-          annual retirement rate. Recent layoff activity in ${Object.keys(stateLayoffs).length} states presents
-          strategic recruitment opportunities.
+          <div class="insight-icon">💡</div>
+          <div class="insight-content">
+            <strong>Key Insight:</strong> The nursing workforce faces a critical shortage of approximately
+            ${Math.abs(WORKFORCE_PROJECTIONS.projectedGap2030).toLocaleString()} RNs by 2030, driven by
+            an aging workforce (median age ${WORKFORCE_PROJECTIONS.avgAge}) and ${WORKFORCE_PROJECTIONS.retirementRate}%
+            annual retirement rate. Recent layoff activity in ${Object.keys(stateLayoffs).length} states presents
+            strategic recruitment opportunities.
+          </div>
         </div>
       </div>
 
       <!-- Salary Comparison Card -->
       <div class="strategic-card salary-comparison">
         <div class="strategic-card-header">
-          <h4>Staff vs Travel Nurse Compensation</h4>
-          <span class="strategic-badge">National Data</span>
+          <h4><span class="card-icon">💰</span> Compensation Comparison</h4>
+          <span class="strategic-badge">Top 15 States</span>
         </div>
+        <p class="card-description">Staff RN vs Travel Nurse annual compensation by state</p>
         <div class="salary-table-wrapper">
           <table class="salary-table">
             <thead>
               <tr>
                 <th>State</th>
                 <th>Staff RN</th>
-                <th>Travel Weekly</th>
-                <th>Travel Annual</th>
+                <th>Travel/Wk</th>
+                <th>Travel/Yr</th>
                 <th>Premium</th>
                 <th>Market</th>
               </tr>
@@ -2216,10 +2243,10 @@ const renderStrategicReview = () => {
                 .map(([state, data]) => `
                   <tr class="${data.shortage === 'shortage' ? 'shortage-row' : data.shortage === 'surplus' ? 'surplus-row' : ''}">
                     <td><strong>${state}</strong></td>
-                    <td>$${data.staffRN.toLocaleString()}</td>
-                    <td>$${data.travelWeekly.toLocaleString()}/wk</td>
-                    <td>$${data.travelAnnual.toLocaleString()}</td>
-                    <td class="${data.travelAnnual - data.staffRN > 20000 ? 'premium-high' : 'premium-low'}">
+                    <td class="salary-cell">$${data.staffRN.toLocaleString()}</td>
+                    <td class="salary-cell travel">$${data.travelWeekly.toLocaleString()}</td>
+                    <td class="salary-cell travel">$${data.travelAnnual.toLocaleString()}</td>
+                    <td class="premium-cell ${data.travelAnnual - data.staffRN > 25000 ? 'high' : data.travelAnnual - data.staffRN > 15000 ? 'medium' : 'low'}">
                       +$${(data.travelAnnual - data.staffRN).toLocaleString()}
                     </td>
                     <td>
@@ -2231,8 +2258,8 @@ const renderStrategicReview = () => {
           </table>
         </div>
         <div class="salary-legend">
-          <span class="legend-item"><span class="dot shortage"></span> Shortage Market</span>
-          <span class="legend-item"><span class="dot surplus"></span> Surplus Market</span>
+          <span class="legend-item"><span class="dot shortage"></span> Shortage</span>
+          <span class="legend-item"><span class="dot surplus"></span> Surplus</span>
           <span class="legend-item"><span class="dot balanced"></span> Balanced</span>
         </div>
       </div>
@@ -2240,22 +2267,19 @@ const renderStrategicReview = () => {
       <!-- Specialty Pay Card -->
       <div class="strategic-card specialty-pay">
         <div class="strategic-card-header">
-          <h4>Travel Nurse Pay by Specialty</h4>
+          <h4><span class="card-icon">🏥</span> Specialty Pay Rates</h4>
           <span class="strategic-badge">2026 Rates</span>
         </div>
-        <div class="specialty-list">
+        <p class="card-description">Travel nurse compensation by specialty area</p>
+        <div class="specialty-grid">
           ${Object.entries(SPECIALTY_PAY)
             .sort((a, b) => b[1].weekly - a[1].weekly)
             .map(([specialty, data]) => `
-              <div class="specialty-row">
-                <div class="specialty-info">
-                  <span class="specialty-name">${specialty}</span>
-                  <span class="specialty-demand demand-${data.demand.replace(' ', '-')}">${data.demand} demand</span>
-                </div>
-                <div class="specialty-pay-info">
-                  <span class="specialty-weekly">$${data.weekly.toLocaleString()}/wk</span>
-                  <span class="specialty-annual">$${data.annual.toLocaleString()}/yr</span>
-                </div>
+              <div class="specialty-card">
+                <div class="specialty-name">${specialty}</div>
+                <div class="specialty-weekly">$${data.weekly.toLocaleString()}<span>/wk</span></div>
+                <div class="specialty-annual">$${data.annual.toLocaleString()}/yr</div>
+                <div class="demand-badge ${data.demand.replace(' ', '-').toLowerCase()}">${data.demand}</div>
               </div>
             `).join('')}
         </div>
@@ -2264,30 +2288,32 @@ const renderStrategicReview = () => {
       <!-- Recruitment Opportunities Card -->
       <div class="strategic-card opportunities">
         <div class="strategic-card-header">
-          <h4>Strategic Recruitment Opportunities</h4>
-          <span class="strategic-badge opportunity">Based on WARN Data</span>
+          <h4><span class="card-icon">🎯</span> Recruitment Opportunities</h4>
+          <span class="strategic-badge opportunity">WARN Data</span>
         </div>
+        <p class="card-description">States with layoffs in shortage markets</p>
         ${opportunities.length > 0 ? `
           <div class="opportunity-list">
-            ${opportunities.slice(0, 8).map(opp => `
-              <div class="opportunity-row">
-                <div class="opp-state">
-                  <span class="state-code">${opp.state}</span>
-                  <span class="state-name">${STATE_NAMES[opp.state] || opp.state}</span>
+            ${opportunities.slice(0, 6).map((opp, i) => `
+              <div class="opportunity-item">
+                <div class="opp-rank">${i + 1}</div>
+                <div class="opp-info">
+                  <div class="opp-state-name">${STATE_NAMES[opp.state] || opp.state}</div>
+                  <div class="opp-state-code">${opp.state}</div>
                 </div>
-                <div class="opp-metrics">
-                  <span class="opp-metric">
-                    <span class="opp-value">${opp.estimatedNurses}</span>
-                    <span class="opp-label">Est. Nurses</span>
-                  </span>
-                  <span class="opp-metric">
-                    <span class="opp-value">$${opp.travelRate.toLocaleString()}</span>
-                    <span class="opp-label">Travel Rate/wk</span>
-                  </span>
-                  <span class="opp-metric">
-                    <span class="opp-value">${Math.abs(opp.projectedGap).toLocaleString()}</span>
-                    <span class="opp-label">Projected Gap</span>
-                  </span>
+                <div class="opp-stats">
+                  <div class="opp-stat">
+                    <span class="stat-value">${opp.estimatedNurses}</span>
+                    <span class="stat-label">Nurses</span>
+                  </div>
+                  <div class="opp-stat">
+                    <span class="stat-value">$${opp.travelRate.toLocaleString()}</span>
+                    <span class="stat-label">Weekly</span>
+                  </div>
+                  <div class="opp-stat">
+                    <span class="stat-value">${Math.abs(opp.projectedGap).toLocaleString()}</span>
+                    <span class="stat-label">Gap</span>
+                  </div>
                 </div>
               </div>
             `).join('')}
@@ -2300,79 +2326,91 @@ const renderStrategicReview = () => {
       <!-- Risk Assessment Card -->
       <div class="strategic-card risk-assessment">
         <div class="strategic-card-header">
-          <h4>Market Risk Assessment</h4>
+          <h4><span class="card-icon">⚡</span> Market Risk Assessment</h4>
           <span class="strategic-badge warning">Monitor</span>
         </div>
+        <p class="card-description">States with high layoff activity</p>
         ${risks.length > 0 ? `
           <div class="risk-list">
-            ${risks.slice(0, 6).map(risk => `
-              <div class="risk-row ${risk.shortage}">
-                <div class="risk-state">
-                  <span class="state-code">${risk.state}</span>
-                  <span class="notice-count">${risk.noticeCount} notices</span>
-                </div>
-                <div class="risk-details">
-                  <span class="risk-affected">${risk.totalAffected.toLocaleString()} affected</span>
-                  <span class="risk-projection">
-                    ${risk.projectedGap > 0 ? 'Surplus' : 'Shortage'}: ${Math.abs(risk.projectedGap).toLocaleString()}
+            ${risks.slice(0, 5).map(risk => `
+              <div class="risk-item">
+                <div class="risk-header">
+                  <span class="risk-state">${risk.state}</span>
+                  <span class="risk-badge ${risk.noticeCount >= 5 ? 'high' : risk.noticeCount >= 3 ? 'medium' : 'low'}">
+                    ${risk.noticeCount >= 5 ? 'High' : risk.noticeCount >= 3 ? 'Medium' : 'Low'}
                   </span>
                 </div>
-                <div class="risk-indicator ${risk.noticeCount >= 5 ? 'high' : risk.noticeCount >= 3 ? 'medium' : 'low'}">
-                  ${risk.noticeCount >= 5 ? 'High Activity' : risk.noticeCount >= 3 ? 'Moderate' : 'Low'}
+                <div class="risk-stats">
+                  <span>${risk.noticeCount} notices</span>
+                  <span>•</span>
+                  <span>${risk.totalAffected.toLocaleString()} affected</span>
+                  <span>•</span>
+                  <span class="${risk.projectedGap > 0 ? 'surplus-text' : 'shortage-text'}">
+                    ${risk.projectedGap > 0 ? 'Surplus' : 'Shortage'}: ${Math.abs(risk.projectedGap).toLocaleString()}
+                  </span>
                 </div>
               </div>
             `).join('')}
           </div>
         ` : `
-          <div class="empty-state">No significant risk patterns detected in current filters.</div>
+          <div class="empty-state">No significant risk patterns detected.</div>
         `}
       </div>
 
       <!-- Workforce Projections Card -->
-      <div class="strategic-card projections">
+      <div class="strategic-card projections full-width">
         <div class="strategic-card-header">
-          <h4>National Workforce Projections</h4>
+          <h4><span class="card-icon">📈</span> Workforce Supply vs Demand</h4>
           <span class="strategic-badge">HRSA/BLS Data</span>
         </div>
-        <div class="projection-timeline">
-          <div class="projection-year">
-            <span class="year">2026</span>
-            <div class="projection-bar">
-              <div class="supply-bar" style="width: 91%;">Supply: 3.15M</div>
-              <div class="demand-bar" style="width: 100%;">Demand: 3.45M</div>
+        <div class="projection-grid">
+          <div class="projection-card">
+            <div class="projection-year">2026</div>
+            <div class="projection-bars">
+              <div class="bar-group">
+                <div class="bar-label">Supply</div>
+                <div class="bar supply" style="width: 91%;"><span>3.15M</span></div>
+              </div>
+              <div class="bar-group">
+                <div class="bar-label">Demand</div>
+                <div class="bar demand" style="width: 100%;"><span>3.45M</span></div>
+              </div>
             </div>
-            <span class="gap negative">Gap: -300K</span>
+            <div class="projection-gap negative">Gap: -300K</div>
           </div>
-          <div class="projection-year">
-            <span class="year">2030</span>
-            <div class="projection-bar">
-              <div class="supply-bar" style="width: 88%;">Supply: 3.30M</div>
-              <div class="demand-bar" style="width: 100%;">Demand: 3.65M</div>
+          <div class="projection-card">
+            <div class="projection-year">2030</div>
+            <div class="projection-bars">
+              <div class="bar-group">
+                <div class="bar-label">Supply</div>
+                <div class="bar supply" style="width: 90%;"><span>3.30M</span></div>
+              </div>
+              <div class="bar-group">
+                <div class="bar-label">Demand</div>
+                <div class="bar demand" style="width: 100%;"><span>3.65M</span></div>
+              </div>
             </div>
-            <span class="gap negative">Gap: -350K</span>
+            <div class="projection-gap negative">Gap: -350K</div>
           </div>
-          <div class="projection-year">
-            <span class="year">2035</span>
-            <div class="projection-bar">
-              <div class="supply-bar" style="width: 85%;">Supply: 3.40M</div>
-              <div class="demand-bar" style="width: 100%;">Demand: 3.90M</div>
+          <div class="projection-card">
+            <div class="projection-year">2035</div>
+            <div class="projection-bars">
+              <div class="bar-group">
+                <div class="bar-label">Supply</div>
+                <div class="bar supply" style="width: 87%;"><span>3.40M</span></div>
+              </div>
+              <div class="bar-group">
+                <div class="bar-label">Demand</div>
+                <div class="bar demand" style="width: 100%;"><span>3.90M</span></div>
+              </div>
             </div>
-            <span class="gap negative">Gap: -500K</span>
+            <div class="projection-gap negative">Gap: -500K</div>
           </div>
         </div>
-        <div class="projection-factors">
-          <div class="factor">
-            <span class="factor-icon">i</span>
-            <span class="factor-text">Median RN Age: ${WORKFORCE_PROJECTIONS.avgAge} years</span>
-          </div>
-          <div class="factor">
-            <span class="factor-icon">i</span>
-            <span class="factor-text">Annual Retirement: ${WORKFORCE_PROJECTIONS.retirementRate}%</span>
-          </div>
-          <div class="factor">
-            <span class="factor-icon">i</span>
-            <span class="factor-text">Job Growth: ${WORKFORCE_PROJECTIONS.growthRate}% through 2032</span>
-          </div>
+        <div class="projection-facts">
+          <div class="fact"><span class="fact-icon">👤</span> Median RN Age: ${WORKFORCE_PROJECTIONS.avgAge} years</div>
+          <div class="fact"><span class="fact-icon">🎓</span> Annual Retirement: ${WORKFORCE_PROJECTIONS.retirementRate}%</div>
+          <div class="fact"><span class="fact-icon">📊</span> Job Growth: ${WORKFORCE_PROJECTIONS.growthRate}% through 2032</div>
         </div>
       </div>
     </div>
