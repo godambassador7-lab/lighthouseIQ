@@ -665,15 +665,18 @@ const renderHeatmap = (data) => {
     renderInsightFallback(heatmapList, 'No hotspots detected.');
     return;
   }
-  heatmapList.innerHTML = ranked.map(loc => `
+  heatmapList.innerHTML = ranked.map(loc => {
+    const cityDisplay = loc.city && loc.city !== 'unknown' ? loc.city : `${loc.state} Statewide`;
+    return `
     <div class="insight-row">
       <div>
-        <div class="insight-title">${loc.city || 'Unknown city'}</div>
+        <div class="insight-title">${cityDisplay}</div>
         <div class="insight-meta">${loc.state} • ${loc.notices_last_90_days} in 90d</div>
       </div>
-      <div class="insight-pill ${loc.risk_level === 'red' ? 'red' : 'yellow'}">${loc.risk_level}</div>
+      <div class="insight-pill ${loc.risk_level === 'red' ? 'red' : 'yellow'}">${loc.risk_level.toUpperCase()}</div>
     </div>
-  `).join('');
+  `;
+  }).join('');
 };
 
 const renderTalent = (data) => {
@@ -686,10 +689,12 @@ const renderTalent = (data) => {
     renderInsightFallback(talentList, 'No talent signals yet.');
     return;
   }
-  talentList.innerHTML = top.map(entry => `
+  talentList.innerHTML = top.map(entry => {
+    const cityDisplay = entry.city && entry.city !== 'unknown' ? entry.city : `${entry.state} Statewide`;
+    return `
     <div class="insight-row">
       <div>
-        <div class="insight-title">${entry.city || 'Unknown city'}</div>
+        <div class="insight-title">${cityDisplay}</div>
         <div class="insight-meta">${entry.state} • ${entry.notices_count} notices</div>
       </div>
       <div>
@@ -697,7 +702,8 @@ const renderTalent = (data) => {
         <div class="insight-meta">${entry.specialties?.slice(0, 2).join(', ') || 'General'}</div>
       </div>
     </div>
-  `).join('');
+  `;
+  }).join('');
 };
 
 const renderEmployers = (data) => {
