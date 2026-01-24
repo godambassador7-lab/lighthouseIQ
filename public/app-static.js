@@ -602,10 +602,53 @@ const loadStates = async () => {
       maxCount: counts.length ? Math.max(...counts) : 0
     };
     updateStateCalibration();
+    updateMapColors(); // Color states based on layoff count
   } catch (err) {
     console.error('Failed to load states:', err);
     statStates.textContent = '0';
   }
+};
+
+// Color each state based on layoff count (green = low, red = high)
+const updateMapColors = () => {
+  const counts = Object.values(stateData).map(entry => entry.count ?? 0);
+  const maxCount = Math.max(...counts, 1); // Avoid division by zero
+
+  document.querySelectorAll('.us-map path[data-state], .us-map circle[data-state]').forEach(shape => {
+    const state = shape.dataset.state;
+    const count = stateData[state]?.count ?? 0;
+
+    // Remove all existing layoff classes
+    for (let i = 0; i <= 9; i++) {
+      shape.classList.remove(`layoff-${i}`);
+    }
+
+    // Calculate intensity level (0-9) based on count relative to max
+    let level = 0;
+    if (count === 0) {
+      level = 0;
+    } else if (count <= maxCount * 0.05) {
+      level = 1;
+    } else if (count <= maxCount * 0.1) {
+      level = 2;
+    } else if (count <= maxCount * 0.2) {
+      level = 3;
+    } else if (count <= maxCount * 0.3) {
+      level = 4;
+    } else if (count <= maxCount * 0.4) {
+      level = 5;
+    } else if (count <= maxCount * 0.55) {
+      level = 6;
+    } else if (count <= maxCount * 0.7) {
+      level = 7;
+    } else if (count <= maxCount * 0.85) {
+      level = 8;
+    } else {
+      level = 9;
+    }
+
+    shape.classList.add(`layoff-${level}`);
+  });
 };
 
 const loadAllNotices = async () => {
