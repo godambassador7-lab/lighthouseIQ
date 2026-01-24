@@ -2374,18 +2374,20 @@ input[type="range"] {
 .strategic-header {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, rgba(16, 38, 70, 0.65) 0%, rgba(30, 62, 110, 0.55) 100%);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.38) 0%, rgba(160, 198, 230, 0.22) 60%, rgba(60, 110, 165, 0.18) 100%);
   padding: 20px 28px;
   border-radius: var(--radius-lg);
-  border: 1px solid rgba(120, 220, 255, 0.25);
-  box-shadow: 0 18px 40px rgba(12, 38, 72, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(120, 200, 240, 0.28);
+  box-shadow: 0 18px 40px rgba(12, 38, 72, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -18px 28px rgba(40, 90, 140, 0.15);
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .strategic-header:hover {
@@ -2397,20 +2399,25 @@ input[type="range"] {
 .strategic-header::after {
   content: "";
   position: absolute;
-  inset: -60% -20% 0 -20%;
-  opacity: 0.8;
-  filter: blur(6px);
+  inset: -40% -15% 0 -15%;
+  opacity: 0.85;
+  filter: blur(8px);
   z-index: 0;
+  mix-blend-mode: screen;
 }
 
 .strategic-header::before {
-  background: radial-gradient(circle at 15% 45%, rgba(64, 210, 255, 0.65), rgba(26, 140, 220, 0.1) 55%);
-  animation: water-slosh-a 12s ease-in-out infinite;
+  background-image:
+    radial-gradient(circle at 20% 35%, rgba(90, 200, 255, 0.55), rgba(60, 140, 220, 0.08) 58%),
+    linear-gradient(120deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0));
+  animation: water-slosh-a 11s ease-in-out infinite;
 }
 
 .strategic-header::after {
-  background: radial-gradient(circle at 85% 55%, rgba(54, 190, 255, 0.55), rgba(18, 98, 180, 0.1) 60%);
-  animation: water-slosh-b 14s ease-in-out infinite;
+  background-image:
+    radial-gradient(circle at 80% 60%, rgba(90, 180, 255, 0.45), rgba(25, 90, 180, 0.08) 62%),
+    linear-gradient(300deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0));
+  animation: water-slosh-b 13s ease-in-out infinite;
 }
 
 .strategic-header-text,
@@ -2422,14 +2429,14 @@ input[type="range"] {
 .strategic-header-text h3 {
   margin: 0;
   font-size: 20px;
-  color: #fff;
+  color: #f5fbff;
   font-family: "Fraunces", serif;
 }
 
 .strategic-header-text p {
   margin: 6px 0 0;
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(240, 250, 255, 0.78);
 }
 
 .strategic-toggle-icon {
