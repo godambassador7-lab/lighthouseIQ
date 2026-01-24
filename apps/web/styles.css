@@ -2374,20 +2374,17 @@ input[type="range"] {
 .strategic-header {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, rgba(16, 38, 70, 0.85) 0%, rgba(30, 62, 110, 0.75) 100%);
+  background: linear-gradient(180deg, #0a3a5c 0%, #145580 40%, #1a6a9a 100%);
   padding: 20px 28px;
   border-radius: var(--radius-lg);
   border: 1px solid rgba(80, 180, 255, 0.35);
   box-shadow: 0 18px 40px rgba(12, 38, 72, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15),
-    inset 0 -20px 40px rgba(20, 60, 120, 0.3);
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
 }
 
 .strategic-header:hover {
@@ -2395,27 +2392,37 @@ input[type="range"] {
   box-shadow: 0 30px 70px rgba(12, 38, 72, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
+/* Ocean wave layers */
 .strategic-header::before,
 .strategic-header::after {
   content: "";
   position: absolute;
-  inset: -60% -20% 0 -20%;
-  opacity: 0.9;
-  filter: blur(6px);
+  left: 0;
+  right: 0;
+  height: 100%;
   z-index: 0;
-  mix-blend-mode: screen;
-  background-size: 160% 160%;
-  background-position: 0% 50%;
+  pointer-events: none;
+  background-repeat: repeat-x;
 }
 
+/* Front wave - faster, sharp cyan peaks */
 .strategic-header::before {
-  background: radial-gradient(circle at 15% 45%, rgba(64, 210, 255, 0.7), rgba(26, 140, 220, 0.12) 55%);
-  animation: water-slosh-a 10s ease-in-out infinite;
+  bottom: 0;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 70' preserveAspectRatio='none'%3E%3Cpath d='M0,35 L25,15 L50,40 L75,10 L100,35 L125,18 L150,42 L175,12 L200,35 L200,70 L0,70 Z' fill='rgba(70,200,255,0.5)'/%3E%3C/svg%3E");
+  background-size: 200px 70px;
+  background-position: 0 bottom;
+  animation: wave-move-fast 1.5s linear infinite;
 }
 
+/* Back wave - slower, lighter sharp peaks */
 .strategic-header::after {
-  background: radial-gradient(circle at 85% 55%, rgba(54, 200, 255, 0.6), rgba(18, 98, 180, 0.12) 60%);
-  animation: water-slosh-b 12s ease-in-out infinite;
+  bottom: 0;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 60' preserveAspectRatio='none'%3E%3Cpath d='M0,30 L40,12 L80,35 L120,8 L160,32 L200,15 L240,38 L280,10 L300,30 L300,60 L0,60 Z' fill='rgba(100,220,255,0.35)'/%3E%3C/svg%3E");
+  background-size: 300px 60px;
+  background-position: 0 bottom;
+  animation: wave-move-slow 2.5s linear infinite;
 }
 
 .strategic-header-text,
@@ -2450,49 +2457,22 @@ input[type="range"] {
   transform: rotate(0deg);
 }
 
-@keyframes water-slosh-a {
+/* Ocean wave animations - continuous rightward motion */
+@keyframes wave-move-fast {
   0% {
-    transform: translateX(-8%) translateY(4px) rotate(-1deg);
-    background-position: 0% 40%;
-  }
-  25% {
-    transform: translateX(-2%) translateY(-6px) rotate(1.5deg);
-    background-position: 30% 45%;
-  }
-  50% {
-    transform: translateX(6%) translateY(6px) rotate(-1.5deg);
-    background-position: 60% 52%;
-  }
-  75% {
-    transform: translateX(2%) translateY(-5px) rotate(1deg);
-    background-position: 80% 46%;
+    background-position-x: 0;
   }
   100% {
-    transform: translateX(-8%) translateY(4px) rotate(-1deg);
-    background-position: 100% 40%;
+    background-position-x: 200px;
   }
 }
 
-@keyframes water-slosh-b {
+@keyframes wave-move-slow {
   0% {
-    transform: translateX(8%) translateY(-4px) rotate(1deg);
-    background-position: 100% 55%;
-  }
-  25% {
-    transform: translateX(2%) translateY(7px) rotate(-1.5deg);
-    background-position: 70% 60%;
-  }
-  50% {
-    transform: translateX(-6%) translateY(-7px) rotate(1.2deg);
-    background-position: 40% 50%;
-  }
-  75% {
-    transform: translateX(-2%) translateY(6px) rotate(-1deg);
-    background-position: 20% 58%;
+    background-position-x: 0;
   }
   100% {
-    transform: translateX(8%) translateY(-4px) rotate(1deg);
-    background-position: 0% 55%;
+    background-position-x: 300px;
   }
 }
 
