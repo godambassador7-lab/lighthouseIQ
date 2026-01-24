@@ -110,7 +110,7 @@ let selectedSpecialties = [];
 let currentPage = 1;
 let searchQuery = '';
 const NOTICE_MAX_COUNT = 100;
-const NOTICE_WINDOW_COUNT = 25;
+const NOTICE_WINDOW_COUNT = 20;
 const NOTICES_PER_PAGE = NOTICE_MAX_COUNT;
 let calibrationStats = { minCount: 0, maxCount: 0 };
 let nursingPrograms = [];
@@ -1005,7 +1005,12 @@ const renderNotices = (notices) => {
   paginatedNotices.forEach((notice, idx) => {
     const globalIdx = startIdx + idx;
     const card = document.createElement('article');
-    card.className = notice.isCustom ? 'notice-card custom-notice' : 'notice-card';
+    const careSetting = notice.nursing_care_setting || 'unknown';
+    const isManufacturing = careSetting === 'occupational';
+    let cardClasses = 'notice-card';
+    if (notice.isCustom) cardClasses += ' custom-notice';
+    if (isManufacturing) cardClasses += ' manufacturing-notice';
+    card.className = cardClasses;
     card.style.animationDelay = `${idx * 35}ms`;
     card.dataset.noticeId = notice.id;
 
@@ -1019,11 +1024,13 @@ const renderNotices = (notices) => {
     const affected = notice.employees_affected;
 
     const customBadge = notice.isCustom ? '<span class="custom-badge">Custom</span>' : '';
+    const manufacturingBadge = isManufacturing ? '<span class="manufacturing-badge">Industrial</span>' : '';
 
     card.innerHTML = `
       <div class="notice-top">
         <span class="pill">${state}</span>
         ${customBadge}
+        ${manufacturingBadge}
         <span class="score">${label} - ${score}</span>
         <div class="save-to-project">
           <button class="save-to-project-btn" data-notice-idx="${globalIdx}">+ Save</button>
