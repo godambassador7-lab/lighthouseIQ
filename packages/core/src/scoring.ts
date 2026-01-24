@@ -144,8 +144,8 @@ function inferRoleMix(
   text: string,
   setting: 'acute' | 'snf' | 'outpatient' | 'home' | 'behavioral' | 'occupational' | 'unknown',
   relevant: boolean
-) {
-  if (!relevant) return null;
+): { rn: number; lpn: number; cna: number } | undefined {
+  if (!relevant) return undefined;
   if (setting === 'occupational') {
     return { rn: 100, lpn: 0, cna: 0 };
   }
