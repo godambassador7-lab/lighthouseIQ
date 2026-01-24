@@ -68,6 +68,8 @@ jobs:
       - name: Copy frontend to public
         run: |
           cp -r apps/web/* public/
+          # Use static app.js for GitHub Pages (client-side auth)
+          cp apps/web/app-static.js public/app.js
           # Remove any server-side files if present
           rm -f public/*.ts public/tsconfig.json 2>/dev/null || true
 
