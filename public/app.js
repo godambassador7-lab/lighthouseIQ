@@ -967,6 +967,9 @@ const applyFilters = (resetPage = true) => {
 // =============================================================================
 const renderNotices = (notices) => {
   const paginationContainer = document.getElementById('pagination');
+  const CARD_HEIGHT = 115; // Fixed card height (min-height 95px + padding/margin)
+  const CARD_GAP = 16; // Gap between cards
+
   const applyNoticeListWindow = (count) => {
     if (!noticeList) return;
     if (!count) {
@@ -974,14 +977,9 @@ const renderNotices = (notices) => {
       noticeList.classList.remove('windowed');
       return;
     }
-    const firstCard = noticeList.querySelector('.notice-card');
-    if (!firstCard) return;
-    const cardHeight = firstCard.getBoundingClientRect().height;
-    const styles = getComputedStyle(noticeList);
-    const gap = parseFloat(styles.rowGap || styles.gap || '0');
-    const windowCount = Math.min(NOTICE_WINDOW_COUNT, count);
-    const windowHeight = (cardHeight * windowCount) + (gap * Math.max(0, windowCount - 1));
-    noticeList.style.maxHeight = `${Math.ceil(windowHeight)}px`;
+    // Always use fixed 10-item window height
+    const windowHeight = (CARD_HEIGHT * NOTICE_WINDOW_COUNT) + (CARD_GAP * (NOTICE_WINDOW_COUNT - 1));
+    noticeList.style.maxHeight = `${windowHeight}px`;
     noticeList.classList.toggle('windowed', count > NOTICE_WINDOW_COUNT);
   };
 
