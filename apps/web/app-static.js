@@ -2317,8 +2317,8 @@ const renderStrategicReview = async () => {
                     <td class="salary-cell">$${data.staffRN.toLocaleString()}</td>
                     <td class="salary-cell travel">$${data.travelWeekly.toLocaleString()}</td>
                     <td class="salary-cell travel">$${data.travelAnnual.toLocaleString()}</td>
-                    <td class="premium-cell ${data.travelAnnual - data.staffRN > 25000 ? 'high' : data.travelAnnual - data.staffRN > 15000 ? 'medium' : 'low'}">
-                      +$${(data.travelAnnual - data.staffRN).toLocaleString()}
+                    <td class="premium-cell ${data.travelAnnual - data.staffRN > 25000 ? 'high' : data.travelAnnual - data.staffRN > 15000 ? 'medium' : data.travelAnnual - data.staffRN < 0 ? 'negative' : 'low'}">
+                      ${data.travelAnnual - data.staffRN >= 0 ? '+' : '-'}$${Math.abs(data.travelAnnual - data.staffRN).toLocaleString()}
                     </td>
                     <td>
                       <span class="market-badge ${data.shortage}">${data.shortage}</span>
