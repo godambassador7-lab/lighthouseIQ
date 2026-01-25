@@ -705,6 +705,33 @@ body {
   font-size: 0.85rem;
 }
 
+.accreditor-links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+  font-size: 0.8rem;
+}
+
+.accreditor-links span {
+  color: var(--muted);
+}
+
+.accreditor-links a {
+  color: var(--sea);
+  font-weight: 600;
+  text-decoration: none;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: rgba(26, 54, 93, 0.08);
+  transition: all 0.2s ease;
+}
+
+.accreditor-links a:hover {
+  background: var(--sea);
+  color: #fff;
+}
+
 .programs-meta-right {
   display: flex;
   flex-direction: column;
