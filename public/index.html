@@ -616,8 +616,8 @@
               <p class="programs-subtitle">Each row is a school-campus-program level.</p>
               <div class="accreditor-links">
                 <span>Verify accreditation:</span>
-                <a href="https://www.aacnnursing.org/ccne-accreditation" target="_blank" rel="noreferrer">CCNE</a>
-                <a href="https://www.acenursing.org/accredited-programs/" target="_blank" rel="noreferrer">ACEN</a>
+                <a href="https://directory.ccnecommunity.org/reports/accprog.asp" target="_blank" rel="noreferrer">CCNE</a>
+                <a href="https://www.acenursing.org/search-programs" target="_blank" rel="noreferrer">ACEN</a>
                 <a href="https://cnea.nln.org/accredited-programs" target="_blank" rel="noreferrer">CNEA</a>
               </div>
             </div>
@@ -637,14 +637,23 @@
             <select id="programs-state-filter">
               <option value="">All states</option>
             </select>
-            <select id="programs-level-filter">
-              <option value="">All levels</option>
-              <option value="LPN">LPN</option>
-              <option value="ASN">ASN</option>
-              <option value="BSN">BSN</option>
-              <option value="MSN">MSN</option>
-              <option value="DNP">DNP</option>
-            </select>
+            <div class="programs-level-checkboxes" id="programs-level-filter">
+              <label class="level-checkbox">
+                <input type="checkbox" value="LPN" /> LPN
+              </label>
+              <label class="level-checkbox">
+                <input type="checkbox" value="ASN" checked /> ASN
+              </label>
+              <label class="level-checkbox">
+                <input type="checkbox" value="BSN" checked /> BSN
+              </label>
+              <label class="level-checkbox">
+                <input type="checkbox" value="MSN" checked /> MSN
+              </label>
+              <label class="level-checkbox">
+                <input type="checkbox" value="DNP" /> DNP
+              </label>
+            </div>
           </div>
           <div class="programs-table-wrap">
             <table class="programs-table">
