@@ -1,7 +1,7 @@
 /**
  * Export Nursing Programs Script
  *
- * Fetches accredited nursing programs from CCNE and writes to static JSON.
+ * Fetches accredited nursing programs from CCNE and CNEA and writes to static JSON.
  * Used by GitHub Actions to generate data for GitHub Pages.
  *
  * Output: public/data/programs.json
@@ -15,6 +15,7 @@ const ROOT_DIR = process.cwd();
 const OUTPUT_DIR = path.join(ROOT_DIR, 'public', 'data');
 
 const CCNE_STATE_URL_TEMPLATE = 'https://directory.ccnecommunity.org/reports/rptAccreditedPrograms_New.asp?state={STATE}';
+const CNEA_DIRECTORY_URL = process.env.CNEA_DIRECTORY_URL ?? 'https://cnea.nln.org/accredited-programs';
 
 const ALL_STATES = [
   'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
@@ -23,6 +24,62 @@ const ALL_STATES = [
   'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC',
   'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY', 'DC'
 ];
+const STATE_SET = new Set(ALL_STATES);
+const STATE_NAME_MAP: Record<string, string> = {
+  ALABAMA: 'AL',
+  ALASKA: 'AK',
+  ARIZONA: 'AZ',
+  ARKANSAS: 'AR',
+  CALIFORNIA: 'CA',
+  COLORADO: 'CO',
+  CONNECTICUT: 'CT',
+  DELAWARE: 'DE',
+  FLORIDA: 'FL',
+  GEORGIA: 'GA',
+  HAWAII: 'HI',
+  IDAHO: 'ID',
+  ILLINOIS: 'IL',
+  INDIANA: 'IN',
+  IOWA: 'IA',
+  KANSAS: 'KS',
+  KENTUCKY: 'KY',
+  LOUISIANA: 'LA',
+  MAINE: 'ME',
+  MARYLAND: 'MD',
+  MASSACHUSETTS: 'MA',
+  MICHIGAN: 'MI',
+  MINNESOTA: 'MN',
+  MISSISSIPPI: 'MS',
+  MISSOURI: 'MO',
+  MONTANA: 'MT',
+  NEBRASKA: 'NE',
+  NEVADA: 'NV',
+  'NEW HAMPSHIRE': 'NH',
+  'NEW JERSEY': 'NJ',
+  'NEW MEXICO': 'NM',
+  'NEW YORK': 'NY',
+  'NORTH CAROLINA': 'NC',
+  'NORTH DAKOTA': 'ND',
+  OHIO: 'OH',
+  OKLAHOMA: 'OK',
+  OREGON: 'OR',
+  PENNSYLVANIA: 'PA',
+  'RHODE ISLAND': 'RI',
+  'SOUTH CAROLINA': 'SC',
+  'SOUTH DAKOTA': 'SD',
+  TENNESSEE: 'TN',
+  TEXAS: 'TX',
+  UTAH: 'UT',
+  VERMONT: 'VT',
+  VIRGINIA: 'VA',
+  WASHINGTON: 'WA',
+  'WEST VIRGINIA': 'WV',
+  WISCONSIN: 'WI',
+  WYOMING: 'WY',
+  'DISTRICT OF COLUMBIA': 'DC',
+  'WASHINGTON DC': 'DC',
+  'WASHINGTON D.C.': 'DC'
+};
 
 interface NursingProgram {
   id: string;
@@ -58,6 +115,37 @@ function decodeHtmlEntities(value: string): string {
 
 function stripHtml(value: string): string {
   return decodeHtmlEntities(value.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim());
+}
+
+function parseState(value: string | null | undefined): string | null {
+  if (!value) return null;
+  const normalized = value.trim().toUpperCase();
+  if (STATE_SET.has(normalized)) return normalized;
+  return STATE_NAME_MAP[normalized] ?? null;
+}
+
+function parseHtmlTable(html: string): string[][] {
+  const rows: string[][] = [];
+  const rowRegex = /<tr[^>]*>([\s\S]*?)<\/tr>/gi;
+  let rowMatch: RegExpExecArray | null;
+  while ((rowMatch = rowRegex.exec(html)) !== null) {
+    const rowHtml = rowMatch[1];
+    const cellRegex = /<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/gi;
+    const cells: string[] = [];
+    let cellMatch: RegExpExecArray | null;
+    while ((cellMatch = cellRegex.exec(rowHtml)) !== null) {
+      const cellText = stripHtml(cellMatch[1]);
+      if (cellText) cells.push(cellText);
+    }
+    if (cells.length) rows.push(cells);
+  }
+  return rows;
+}
+
+function extractCmsField(html: string, fieldName: string): string {
+  const pattern = new RegExp(`fs-cmsfilter-field="${fieldName}"[^>]*>([\\s\\S]*?)<\\/`, 'i');
+  const match = html.match(pattern);
+  return match ? stripHtml(match[1]) : '';
 }
 
 function extractProgramLevels(text: string): Array<'ASN' | 'BSN' | 'MSN'> {
@@ -181,6 +269,127 @@ function parseCcneProgramsFromHtml(html: string, fallbackState: string): Nursing
   return results;
 }
 
+function parseCneaProgramsFromHtml(html: string): NursingProgram[] {
+  const results: NursingProgram[] = [];
+  const updatedAt = new Date().toISOString().slice(0, 10);
+  const itemRegex = /<div[^>]*class="w-dyn-item"[^>]*>([\s\S]*?)(?=<div[^>]*class="w-dyn-item"|<\/div>\s*<\/div>\s*<\/div>)/gi;
+  let match: RegExpExecArray | null;
+  let sawCms = false;
+
+  while ((match = itemRegex.exec(html)) !== null) {
+    sawCms = true;
+    const block = match[1];
+    const institution = extractCmsField(block, 'institution')
+      || extractCmsField(block, 'institution-name')
+      || extractCmsField(block, 'school')
+      || extractCmsField(block, 'school-name')
+      || extractCmsField(block, 'governing-org');
+    const program = extractCmsField(block, 'program')
+      || extractCmsField(block, 'program-name')
+      || extractCmsField(block, 'program-type')
+      || extractCmsField(block, 'degree')
+      || extractCmsField(block, 'degree-level')
+      || extractCmsField(block, 'program-level');
+    const city = extractCmsField(block, 'city') || '';
+    const stateRaw = extractCmsField(block, 'state') || '';
+    const location = extractCmsField(block, 'location')
+      || extractCmsField(block, 'city-state');
+    const status = extractCmsField(block, 'status')
+      || extractCmsField(block, 'accreditation-status')
+      || extractCmsField(block, 'accreditation');
+
+    let state = parseState(stateRaw);
+    let resolvedCity: string | null = city || null;
+
+    if (!state && location) {
+      const locationMatch = location.match(/(.+?),\s*([A-Z]{2})\b/);
+      if (locationMatch) {
+        resolvedCity = resolvedCity || locationMatch[1].trim();
+        state = parseState(locationMatch[2]);
+      }
+    }
+
+    if (!institution || !state) continue;
+    const programLevels = extractProgramLevels(program || '');
+    if (!programLevels.length) continue;
+
+    programLevels.forEach(level => {
+      const programRecord: NursingProgram = {
+        id: '',
+        institution_name: institution,
+        campus_name: null,
+        city: resolvedCity,
+        state,
+        program_level: level,
+        credential_notes: program || null,
+        accreditor: 'CNEA',
+        accreditation_status: status || null,
+        source_url: CNEA_DIRECTORY_URL,
+        school_website_url: null,
+        nces_unitid: null,
+        last_verified_date: updatedAt
+      };
+      programRecord.id = generateProgramId(programRecord);
+      results.push(programRecord);
+    });
+  }
+
+  if (results.length || sawCms) return results;
+
+  const rows = parseHtmlTable(html);
+  if (!rows.length) return results;
+
+  const header = rows[0].map(cell => cell.toLowerCase());
+  const hasHeader = header.some(cell =>
+    cell.includes('state') || cell.includes('institution') || cell.includes('program')
+  );
+  const startIndex = hasHeader ? 1 : 0;
+  const findHeader = (key: string) => header.findIndex(cell => cell.includes(key));
+  const idxInstitution = hasHeader ? findHeader('institution') : -1;
+  const idxProgram = hasHeader ? findHeader('program') : -1;
+  const idxCity = hasHeader ? findHeader('city') : -1;
+  const idxState = hasHeader ? findHeader('state') : -1;
+  const idxStatus = hasHeader ? findHeader('status') : -1;
+  const idxWebsite = hasHeader ? findHeader('website') : -1;
+
+  for (let i = startIndex; i < rows.length; i += 1) {
+    const cells = rows[i];
+    if (!cells.length) continue;
+    const institution = (idxInstitution >= 0 ? cells[idxInstitution] : cells[0])?.trim();
+    if (!institution) continue;
+    const program = (idxProgram >= 0 ? cells[idxProgram] : cells[1] ?? '').trim();
+    const city = (idxCity >= 0 ? cells[idxCity] : cells[2] ?? '').trim();
+    const state = parseState(idxState >= 0 ? cells[idxState] : cells[3]);
+    if (!state) continue;
+    const status = idxStatus >= 0 ? cells[idxStatus] : '';
+    const website = idxWebsite >= 0 ? cells[idxWebsite] : '';
+    const programLevels = extractProgramLevels(`${program} ${status}`);
+    if (!programLevels.length) continue;
+
+    programLevels.forEach(level => {
+      const programRecord: NursingProgram = {
+        id: '',
+        institution_name: institution,
+        campus_name: null,
+        city: city || null,
+        state,
+        program_level: level,
+        credential_notes: program || null,
+        accreditor: 'CNEA',
+        accreditation_status: status || null,
+        source_url: CNEA_DIRECTORY_URL,
+        school_website_url: website || null,
+        nces_unitid: null,
+        last_verified_date: updatedAt
+      };
+      programRecord.id = generateProgramId(programRecord);
+      results.push(programRecord);
+    });
+  }
+
+  return results;
+}
+
 async function fetchCcnePrograms(): Promise<NursingProgram[]> {
   const results: NursingProgram[] = [];
   const concurrency = 4;
@@ -212,6 +421,17 @@ async function fetchCcnePrograms(): Promise<NursingProgram[]> {
   return results;
 }
 
+async function fetchCneaPrograms(): Promise<NursingProgram[]> {
+  if (!CNEA_DIRECTORY_URL) return [];
+  try {
+    const html = await fetchWithTimeout(CNEA_DIRECTORY_URL, 60000);
+    return parseCneaProgramsFromHtml(html);
+  } catch (err: any) {
+    console.warn(`  âœ— CNEA: ${err?.message || err}`);
+    return [];
+  }
+}
+
 function ensureDirectories() {
   if (!fs.existsSync(OUTPUT_DIR)) {
     fs.mkdirSync(OUTPUT_DIR, { recursive: true });
@@ -232,7 +452,9 @@ async function main() {
   ensureDirectories();
 
   const startTime = Date.now();
-  const programs = await fetchCcnePrograms();
+  const ccnePrograms = await fetchCcnePrograms();
+  const cneaPrograms = await fetchCneaPrograms();
+  const programs = [...ccnePrograms, ...cneaPrograms];
   const duration = Date.now() - startTime;
 
   // Deduplicate by ID
@@ -246,7 +468,10 @@ async function main() {
   writeJsonFile(path.join(OUTPUT_DIR, 'programs.json'), {
     programs: uniquePrograms,
     count: uniquePrograms.length,
-    sources: [{ name: 'CCNE', url: CCNE_STATE_URL_TEMPLATE }],
+    sources: [
+      { name: 'CCNE', url: CCNE_STATE_URL_TEMPLATE },
+      { name: 'CNEA', url: CNEA_DIRECTORY_URL }
+    ],
     lastUpdated: new Date().toISOString()
   });
 

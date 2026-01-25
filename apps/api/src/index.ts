@@ -108,7 +108,7 @@ type NursingProgram = {
   state: string;
   program_level: 'ASN' | 'BSN' | 'MSN';
   credential_notes: string | null;
-  accreditor: 'CCNE' | 'ACEN';
+  accreditor: 'CCNE' | 'ACEN' | 'CNEA';
   accreditation_status: string | null;
   source_url: string;
   school_website_url: string | null;
@@ -194,6 +194,8 @@ const CCNE_STATE_URL_TEMPLATE = process.env.CCNE_STATE_URL_TEMPLATE
 const ACEN_DIRECTORY_URL = process.env.ACEN_DIRECTORY_URL ?? '';
 const ACEN_SEARCH_URL = process.env.ACEN_SEARCH_URL
   ?? 'https://www.acenursing.org/search-programs';
+const CNEA_DIRECTORY_URL = process.env.CNEA_DIRECTORY_URL
+  ?? 'https://cnea.nln.org/accredited-programs';
 const PROGRAMS_REFRESH_MS = 6 * 60 * 60 * 1000;
 
 let cachedPrograms: NursingProgram[] = [];
@@ -320,7 +322,7 @@ function extractProgramLevels(text: string): Array<'ASN' | 'BSN' | 'MSN'> {
   if (lowered.includes('associate') || lowered.includes('adn') || lowered.includes('asn')) {
     levels.add('ASN');
   }
-  if (lowered.includes('baccalaureate') || lowered.includes('bsn')) {
+  if (lowered.includes('baccalaureate') || lowered.includes('bsn') || lowered.includes('bachelor')) {
     levels.add('BSN');
   }
   if (lowered.includes('master') || lowered.includes('msn')) {
@@ -456,6 +458,121 @@ function parseAcenProgramsFromSearchHtml(html: string): Array<Omit<NursingProgra
         school_website_url: null,
         nces_unitid: null,
         last_verified_date: new Date().toISOString().slice(0, 10)
+      });
+    });
+  }
+
+  return results;
+}
+
+function parseCneaProgramsFromHtml(html: string): Array<Omit<NursingProgram, 'id'>> {
+  const results: Array<Omit<NursingProgram, 'id'>> = [];
+  const updatedAt = new Date().toISOString().slice(0, 10);
+  const itemRegex = /<div[^>]*class="w-dyn-item"[^>]*>([\s\S]*?)(?=<div[^>]*class="w-dyn-item"|<\/div>\s*<\/div>\s*<\/div>)/gi;
+  let match: RegExpExecArray | null;
+  let sawCms = false;
+
+  while ((match = itemRegex.exec(html)) !== null) {
+    sawCms = true;
+    const block = match[1];
+    const institution = extractCmsField(block, 'institution')
+      || extractCmsField(block, 'institution-name')
+      || extractCmsField(block, 'school')
+      || extractCmsField(block, 'school-name')
+      || extractCmsField(block, 'governing-org');
+    const program = extractCmsField(block, 'program')
+      || extractCmsField(block, 'program-name')
+      || extractCmsField(block, 'program-type')
+      || extractCmsField(block, 'degree')
+      || extractCmsField(block, 'degree-level')
+      || extractCmsField(block, 'program-level');
+    const city = extractCmsField(block, 'city') || '';
+    const stateRaw = extractCmsField(block, 'state') || '';
+    const location = extractCmsField(block, 'location')
+      || extractCmsField(block, 'city-state');
+    const status = extractCmsField(block, 'status')
+      || extractCmsField(block, 'accreditation-status')
+      || extractCmsField(block, 'accreditation');
+
+    let state = parseState(stateRaw);
+    let resolvedCity: string | null = city || null;
+
+    if (!state && location) {
+      const locationMatch = location.match(/(.+?),\s*([A-Z]{2})\b/);
+      if (locationMatch) {
+        resolvedCity = resolvedCity || locationMatch[1].trim();
+        state = parseState(locationMatch[2]);
+      }
+    }
+
+    if (!institution || !state) continue;
+    const programLevels = extractProgramLevels(program || '');
+    if (!programLevels.length) continue;
+
+    programLevels.forEach(level => {
+      results.push({
+        institution_name: institution,
+        campus_name: null,
+        city: resolvedCity,
+        state,
+        program_level: level,
+        credential_notes: program || null,
+        accreditor: 'CNEA',
+        accreditation_status: status || null,
+        source_url: CNEA_DIRECTORY_URL,
+        school_website_url: null,
+        nces_unitid: null,
+        last_verified_date: updatedAt
+      });
+    });
+  }
+
+  if (results.length || sawCms) return results;
+
+  const rows = parseHtmlTable(html);
+  if (!rows.length) return results;
+
+  const header = rows[0].map(cell => cell.toLowerCase());
+  const hasHeader = header.some(cell =>
+    cell.includes('state') || cell.includes('institution') || cell.includes('program')
+  );
+  const startIndex = hasHeader ? 1 : 0;
+  const findHeader = (key: string) => header.findIndex(cell => cell.includes(key));
+  const idxInstitution = hasHeader ? findHeader('institution') : -1;
+  const idxProgram = hasHeader ? findHeader('program') : -1;
+  const idxCity = hasHeader ? findHeader('city') : -1;
+  const idxState = hasHeader ? findHeader('state') : -1;
+  const idxStatus = hasHeader ? findHeader('status') : -1;
+  const idxWebsite = hasHeader ? findHeader('website') : -1;
+
+  for (let i = startIndex; i < rows.length; i += 1) {
+    const cells = rows[i];
+    if (!cells.length) continue;
+    const institution = (idxInstitution >= 0 ? cells[idxInstitution] : cells[0])?.trim();
+    if (!institution) continue;
+    const program = (idxProgram >= 0 ? cells[idxProgram] : cells[1] ?? '').trim();
+    const city = (idxCity >= 0 ? cells[idxCity] : cells[2] ?? '').trim();
+    const state = parseState(idxState >= 0 ? cells[idxState] : cells[3]);
+    if (!state) continue;
+    const status = idxStatus >= 0 ? cells[idxStatus] : '';
+    const website = idxWebsite >= 0 ? cells[idxWebsite] : '';
+    const programLevels = extractProgramLevels(`${program} ${status}`);
+    if (!programLevels.length) continue;
+
+    programLevels.forEach(level => {
+      results.push({
+        institution_name: institution,
+        campus_name: null,
+        city: city || null,
+        state,
+        program_level: level,
+        credential_notes: program || null,
+        accreditor: 'CNEA',
+        accreditation_status: status || null,
+        source_url: CNEA_DIRECTORY_URL,
+        school_website_url: website || null,
+        nces_unitid: null,
+        last_verified_date: updatedAt
       });
     });
   }
@@ -644,6 +761,26 @@ async function fetchAcenPrograms(): Promise<NursingProgram[]> {
   return results;
 }
 
+async function fetchCneaPrograms(): Promise<NursingProgram[]> {
+  if (!CNEA_DIRECTORY_URL) return [];
+  const updatedAt = new Date().toISOString().slice(0, 10);
+  const results: NursingProgram[] = [];
+  try {
+    const html = await fetchWithTimeout(CNEA_DIRECTORY_URL, 60000);
+    const programs = parseCneaProgramsFromHtml(html).map(entry => buildProgramRecord(entry));
+    results.push(...programs);
+  } catch (err) {
+    console.warn('CNEA scrape failed:', err);
+  }
+  programsSources.push({
+    name: 'CNEA',
+    url: CNEA_DIRECTORY_URL,
+    updatedAt,
+    programCount: results.length
+  });
+  return results;
+}
+
 function dedupePrograms(programs: NursingProgram[]): NursingProgram[] {
   const map = new Map<string, NursingProgram>();
   programs.forEach(program => {
@@ -672,6 +809,12 @@ async function refreshPrograms() {
     collected.push(...acen);
   } catch (err) {
     console.warn('ACEN scrape failed:', err);
+  }
+  try {
+    const cnea = await fetchCneaPrograms();
+    collected.push(...cnea);
+  } catch (err) {
+    console.warn('CNEA scrape failed:', err);
   }
   const deduped = dedupePrograms(collected);
   programsLastUpdated = new Date();
