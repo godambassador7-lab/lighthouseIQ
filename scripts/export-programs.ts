@@ -1,7 +1,7 @@
 /**
  * Export Nursing Programs Script
  *
- * Fetches accredited nursing programs from CCNE and CNEA and writes to static JSON.
+ * Fetches accredited nursing programs from ACEN, CCNE, and CNEA and writes to static JSON.
  * Used by GitHub Actions to generate data for GitHub Pages.
  *
  * Output: public/data/programs.json
@@ -14,6 +14,7 @@ import * as crypto from 'crypto';
 const ROOT_DIR = process.cwd();
 const OUTPUT_DIR = path.join(ROOT_DIR, 'public', 'data');
 
+const ACEN_DIRECTORY_URL = 'https://www.acenursing.org/search-programs?governing-org=United+States';
 const CCNE_STATE_URL_TEMPLATE = 'https://directory.ccnecommunity.org/reports/rptAccreditedPrograms_New.asp?state={STATE}';
 const CNEA_DIRECTORY_URL = process.env.CNEA_DIRECTORY_URL ?? 'https://cnea.nln.org/accredited-programs';
 
@@ -151,7 +152,10 @@ function extractCmsField(html: string, fieldName: string): string {
 function extractProgramLevels(text: string): Array<'ASN' | 'BSN' | 'MSN'> {
   const lowered = text.toLowerCase();
   const levels = new Set<'ASN' | 'BSN' | 'MSN'>();
-  if (lowered.includes('associate') || lowered.includes('adn') || lowered.includes('asn')) {
+  // ASN/ADN level includes associate, practical (LPN/LVN), and diploma programs
+  if (lowered.includes('associate') || lowered.includes('adn') || lowered.includes('asn') ||
+      lowered.includes('practical') || lowered.includes('lpn') || lowered.includes('lvn') ||
+      lowered.includes('diploma')) {
     levels.add('ASN');
   }
   if (lowered.includes('baccalaureate') || lowered.includes('bsn') || lowered.includes('bachelor')) {
@@ -427,7 +431,182 @@ async function fetchCneaPrograms(): Promise<NursingProgram[]> {
     const html = await fetchWithTimeout(CNEA_DIRECTORY_URL, 60000);
     return parseCneaProgramsFromHtml(html);
   } catch (err: any) {
-    console.warn(`  âœ— CNEA: ${err?.message || err}`);
+    console.warn(`  ✗ CNEA: ${err?.message || err}`);
+    return [];
+  }
+}
+
+function parseAcenProgramsFromHtml(html: string): NursingProgram[] {
+  const results: NursingProgram[] = [];
+  const updatedAt = new Date().toISOString().slice(0, 10);
+
+  // ACEN uses table rows or list items for programs
+  // Try multiple parsing strategies
+
+  // Strategy 1: Parse table rows with program data
+  const tableRows = parseHtmlTable(html);
+  if (tableRows.length > 1) {
+    const header = tableRows[0].map(cell => cell.toLowerCase());
+    const hasHeader = header.some(cell =>
+      cell.includes('institution') || cell.includes('program') || cell.includes('state')
+    );
+    const startIndex = hasHeader ? 1 : 0;
+
+    const findHeader = (keys: string[]) => header.findIndex(cell =>
+      keys.some(k => cell.includes(k))
+    );
+
+    const idxInstitution = hasHeader ? findHeader(['institution', 'school', 'organization', 'governing']) : 0;
+    const idxProgram = hasHeader ? findHeader(['program', 'type', 'degree', 'level']) : 1;
+    const idxCity = hasHeader ? findHeader(['city', 'location']) : -1;
+    const idxState = hasHeader ? findHeader(['state']) : 2;
+    const idxStatus = hasHeader ? findHeader(['status', 'accreditation']) : -1;
+
+    for (let i = startIndex; i < tableRows.length; i++) {
+      const cells = tableRows[i];
+      if (cells.length < 3) continue;
+
+      const institution = (idxInstitution >= 0 && idxInstitution < cells.length ? cells[idxInstitution] : cells[0])?.trim();
+      if (!institution) continue;
+
+      const programType = (idxProgram >= 0 && idxProgram < cells.length ? cells[idxProgram] : cells[1] ?? '').trim();
+      const city = idxCity >= 0 && idxCity < cells.length ? cells[idxCity]?.trim() : null;
+      const stateRaw = idxState >= 0 && idxState < cells.length ? cells[idxState] : cells[2];
+      const state = parseState(stateRaw);
+      const status = idxStatus >= 0 && idxStatus < cells.length ? cells[idxStatus]?.trim() : 'Accredited';
+
+      if (!state) continue;
+
+      const programLevels = extractProgramLevels(programType);
+      if (!programLevels.length) continue;
+
+      programLevels.forEach(level => {
+        const program: NursingProgram = {
+          id: '',
+          institution_name: institution,
+          campus_name: null,
+          city,
+          state,
+          program_level: level,
+          credential_notes: programType || null,
+          accreditor: 'ACEN',
+          accreditation_status: status || null,
+          source_url: ACEN_DIRECTORY_URL,
+          school_website_url: null,
+          nces_unitid: null,
+          last_verified_date: updatedAt
+        };
+        program.id = generateProgramId(program);
+        results.push(program);
+      });
+    }
+  }
+
+  // Strategy 2: Parse div-based list items (common in modern websites)
+  if (results.length === 0) {
+    // Look for repeated structural patterns with institution/program/state data
+    const itemRegex = /<(?:div|tr|li)[^>]*class="[^"]*(?:item|row|result|program)[^"]*"[^>]*>([\s\S]*?)(?=<(?:div|tr|li)[^>]*class="[^"]*(?:item|row|result|program)|$)/gi;
+    let match: RegExpExecArray | null;
+
+    while ((match = itemRegex.exec(html)) !== null) {
+      const block = match[1];
+
+      // Extract institution - look for links or strong text
+      const instMatch = block.match(/<a[^>]*>([^<]+)<\/a>/) ||
+                       block.match(/<strong[^>]*>([^<]+)<\/strong>/) ||
+                       block.match(/<h[1-6][^>]*>([^<]+)<\/h[1-6]>/);
+      const institution = instMatch ? stripHtml(instMatch[1]) : '';
+      if (!institution) continue;
+
+      // Extract state - look for two-letter state code or full state name
+      const stateMatch = block.match(/\b([A-Z]{2})\b(?:\s*(?:,|United States))?/) ||
+                        block.match(/(?:^|[,\s])([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)\s*(?:,\s*)?United States/);
+      const state = stateMatch ? parseState(stateMatch[1]) : null;
+      if (!state) continue;
+
+      // Extract program type
+      const programMatch = block.match(/(?:Practical|Associate|Baccalaureate|Bachelor|Master|Diploma|ADN|ASN|BSN|MSN|LPN|LVN)/i);
+      const programType = programMatch ? programMatch[0] : '';
+
+      const programLevels = extractProgramLevels(programType || block);
+      if (!programLevels.length) continue;
+
+      // Extract city if available
+      const cityMatch = block.match(/([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)\s*,\s*[A-Z]{2}/);
+      const city = cityMatch ? cityMatch[1].trim() : null;
+
+      programLevels.forEach(level => {
+        const program: NursingProgram = {
+          id: '',
+          institution_name: institution,
+          campus_name: null,
+          city,
+          state,
+          program_level: level,
+          credential_notes: programType || null,
+          accreditor: 'ACEN',
+          accreditation_status: 'Accredited',
+          source_url: ACEN_DIRECTORY_URL,
+          school_website_url: null,
+          nces_unitid: null,
+          last_verified_date: updatedAt
+        };
+        program.id = generateProgramId(program);
+        results.push(program);
+      });
+    }
+  }
+
+  // Strategy 3: Look for specific ACEN patterns with links
+  if (results.length === 0) {
+    const linkRegex = /<a[^>]*href="[^"]*"[^>]*>([^<]+)<\/a>\s*[\s\S]*?(Practical|Associate|Baccalaureate|Bachelor|Master|Diploma)[\s\S]*?([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)\s*(?:,\s*)?(?:United States|USA)/gi;
+    let linkMatch: RegExpExecArray | null;
+
+    while ((linkMatch = linkRegex.exec(html)) !== null) {
+      const institution = stripHtml(linkMatch[1]);
+      const programType = linkMatch[2];
+      const stateRaw = linkMatch[3];
+      const state = parseState(stateRaw);
+
+      if (!institution || !state) continue;
+
+      const programLevels = extractProgramLevels(programType);
+      if (!programLevels.length) continue;
+
+      programLevels.forEach(level => {
+        const program: NursingProgram = {
+          id: '',
+          institution_name: institution,
+          campus_name: null,
+          city: null,
+          state,
+          program_level: level,
+          credential_notes: programType || null,
+          accreditor: 'ACEN',
+          accreditation_status: 'Accredited',
+          source_url: ACEN_DIRECTORY_URL,
+          school_website_url: null,
+          nces_unitid: null,
+          last_verified_date: updatedAt
+        };
+        program.id = generateProgramId(program);
+        results.push(program);
+      });
+    }
+  }
+
+  return results;
+}
+
+async function fetchAcenPrograms(): Promise<NursingProgram[]> {
+  console.log('\nFetching ACEN programs...\n');
+  try {
+    const html = await fetchWithTimeout(ACEN_DIRECTORY_URL, 60000);
+    const programs = parseAcenProgramsFromHtml(html);
+    console.log(`  ✓ ACEN: ${programs.length} programs`);
+    return programs;
+  } catch (err: any) {
+    console.warn(`  ✗ ACEN: ${err?.message || err}`);
     return [];
   }
 }
@@ -445,16 +624,17 @@ function writeJsonFile(filePath: string, data: any) {
 
 async function main() {
   console.log('='.repeat(60));
-  console.log('Nursing Programs Export');
+  console.log('Nursing Programs Export (ACEN + CCNE + CNEA)');
   console.log('='.repeat(60));
   console.log(`Started at: ${new Date().toISOString()}`);
 
   ensureDirectories();
 
   const startTime = Date.now();
+  const acenPrograms = await fetchAcenPrograms();
   const ccnePrograms = await fetchCcnePrograms();
   const cneaPrograms = await fetchCneaPrograms();
-  const programs = [...ccnePrograms, ...cneaPrograms];
+  const programs = [...acenPrograms, ...ccnePrograms, ...cneaPrograms];
   const duration = Date.now() - startTime;
 
   // Deduplicate by ID
@@ -469,6 +649,7 @@ async function main() {
     programs: uniquePrograms,
     count: uniquePrograms.length,
     sources: [
+      { name: 'ACEN', url: ACEN_DIRECTORY_URL },
       { name: 'CCNE', url: CCNE_STATE_URL_TEMPLATE },
       { name: 'CNEA', url: CNEA_DIRECTORY_URL }
     ],
@@ -478,7 +659,10 @@ async function main() {
   console.log('\n' + '='.repeat(60));
   console.log('Export Complete!');
   console.log('='.repeat(60));
-  console.log(`Total programs: ${uniquePrograms.length}`);
+  console.log(`ACEN: ${acenPrograms.length} programs`);
+  console.log(`CCNE: ${ccnePrograms.length} programs`);
+  console.log(`CNEA: ${cneaPrograms.length} programs`);
+  console.log(`Total unique: ${uniquePrograms.length}`);
   console.log(`Duration: ${(duration / 1000).toFixed(1)}s`);
   console.log(`Finished at: ${new Date().toISOString()}`);
 }
