@@ -118,6 +118,26 @@ function stripHtml(value: string): string {
   return decodeHtmlEntities(value.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim());
 }
 
+// Filter out navigation links and invalid institution names
+const INVALID_INSTITUTION_NAMES = new Set([
+  'contact us', 'contact', 'home', 'about', 'about us', 'login', 'sign in',
+  'register', 'search', 'help', 'faq', 'privacy', 'terms', 'disclaimer',
+  'sitemap', 'menu', 'navigation', 'skip to content', 'back to top',
+  'read more', 'learn more', 'click here', 'view all', 'see all',
+  'adn', 'bsn', 'msn', 'dnp', 'lpn', 'lvn', 'rn' // standalone degree abbreviations
+]);
+
+function isValidInstitutionName(name: string): boolean {
+  if (!name || name.length < 3) return false;
+  const lowered = name.toLowerCase().trim();
+  if (INVALID_INSTITUTION_NAMES.has(lowered)) return false;
+  // Must contain at least one letter and be reasonably long
+  if (!/[a-zA-Z]/.test(name)) return false;
+  // Filter out if it's just a single short word
+  if (name.split(/\s+/).length === 1 && name.length < 5) return false;
+  return true;
+}
+
 function parseState(value: string | null | undefined): string | null {
   if (!value) return null;
   const normalized = value.trim().toUpperCase();
@@ -216,7 +236,7 @@ function parseCcneProgramsFromHtml(html: string, fallbackState: string): Nursing
     // Extract institution name from h3 tag
     const institutionMatch = finderBlock.match(/<h3[^>]*>([\s\S]*?)<\/h3>/i);
     const institution = institutionMatch ? stripHtml(institutionMatch[1]) : '';
-    if (!institution) return;
+    if (!institution || !isValidInstitutionName(institution)) return;
 
     // Extract location
     const locationMatch = finderBlock.match(/([A-Za-z .'-]+),\s*([A-Z]{2})/);
@@ -330,7 +350,7 @@ function parseCneaProgramsFromHtml(html: string): NursingProgram[] {
       }
     }
 
-    if (!institution || !state) continue;
+    if (!institution || !state || !isValidInstitutionName(institution)) continue;
     const programLevels = extractProgramLevels(program || '');
     if (!programLevels.length) continue;
 
@@ -377,7 +397,7 @@ function parseCneaProgramsFromHtml(html: string): NursingProgram[] {
     const cells = rows[i];
     if (!cells.length) continue;
     const institution = (idxInstitution >= 0 ? cells[idxInstitution] : cells[0])?.trim();
-    if (!institution) continue;
+    if (!institution || !isValidInstitutionName(institution)) continue;
     const program = (idxProgram >= 0 ? cells[idxProgram] : cells[1] ?? '').trim();
     const city = (idxCity >= 0 ? cells[idxCity] : cells[2] ?? '').trim();
     const state = parseState(idxState >= 0 ? cells[idxState] : cells[3]);
@@ -484,7 +504,7 @@ function parseAcenProgramsFromHtml(html: string): NursingProgram[] {
       if (cells.length < 3) continue;
 
       const institution = (idxInstitution >= 0 && idxInstitution < cells.length ? cells[idxInstitution] : cells[0])?.trim();
-      if (!institution) continue;
+      if (!institution || !isValidInstitutionName(institution)) continue;
 
       const programType = (idxProgram >= 0 && idxProgram < cells.length ? cells[idxProgram] : cells[1] ?? '').trim();
       const city = idxCity >= 0 && idxCity < cells.length ? cells[idxCity]?.trim() : null;
@@ -533,7 +553,7 @@ function parseAcenProgramsFromHtml(html: string): NursingProgram[] {
                        block.match(/<strong[^>]*>([^<]+)<\/strong>/) ||
                        block.match(/<h[1-6][^>]*>([^<]+)<\/h[1-6]>/);
       const institution = instMatch ? stripHtml(instMatch[1]) : '';
-      if (!institution) continue;
+      if (!institution || !isValidInstitutionName(institution)) continue;
 
       // Extract state - look for two-letter state code or full state name
       const stateMatch = block.match(/\b([A-Z]{2})\b(?:\s*(?:,|United States))?/) ||
@@ -585,7 +605,7 @@ function parseAcenProgramsFromHtml(html: string): NursingProgram[] {
       const stateRaw = linkMatch[3];
       const state = parseState(stateRaw);
 
-      if (!institution || !state) continue;
+      if (!institution || !state || !isValidInstitutionName(institution)) continue;
 
       const programLevels = extractProgramLevels(programType);
       if (!programLevels.length) continue;

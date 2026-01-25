@@ -2566,15 +2566,21 @@ const buildProgramRow = (program) => {
   `;
 };
 
+const getSelectedLevels = () => {
+  if (!programsLevelFilter) return [];
+  const checkboxes = programsLevelFilter.querySelectorAll('input[type="checkbox"]:checked');
+  return Array.from(checkboxes).map(cb => cb.value);
+};
+
 const getFilteredPrograms = () => {
   const query = programsSearch?.value.trim().toLowerCase() ?? '';
   const stateFilter = programsStateFilter?.value ?? '';
-  const levelFilter = programsLevelFilter?.value ?? '';
+  const selectedLevels = getSelectedLevels();
 
   return nursingPrograms.filter((program) => {
     const entry = normalizeProgram(program);
     if (stateFilter && entry.state !== stateFilter) return false;
-    if (levelFilter && entry.level !== levelFilter) return false;
+    if (selectedLevels.length > 0 && !selectedLevels.includes(entry.level)) return false;
     if (!query) return true;
     const haystack = [
       entry.institution,
@@ -2643,15 +2649,13 @@ const renderProgramsWithProgress = (programs) => {
 };
 
 const populateProgramFilters = (programs) => {
-  if (!programsStateFilter || !programsLevelFilter) return;
+  if (!programsStateFilter) return;
   // Filter to only valid US state codes
   const states = Array.from(new Set(programs.map(p => normalizeProgram(p).state).filter(s => s && ALL_STATES.includes(s)))).sort();
-  const levels = Array.from(new Set(programs.map(p => normalizeProgram(p).level).filter(Boolean))).sort();
 
   programsStateFilter.innerHTML = '<option value="">All states</option>' +
     states.map(state => `<option value="${state}">${state}</option>`).join('');
-  programsLevelFilter.innerHTML = '<option value="">All levels</option>' +
-    levels.map(level => `<option value="${level}">${level}</option>`).join('');
+  // Level checkboxes are now static in HTML with ASN, BSN, MSN checked by default
 };
 
 const downloadProgramsCsv = () => {
@@ -2760,7 +2764,10 @@ const initProgramsModule = () => {
 
   programsSearch?.addEventListener('input', () => renderProgramsTable(getFilteredPrograms()));
   programsStateFilter?.addEventListener('change', () => renderProgramsTable(getFilteredPrograms()));
-  programsLevelFilter?.addEventListener('change', () => renderProgramsTable(getFilteredPrograms()));
+  // Add change listeners to all level checkboxes
+  programsLevelFilter?.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+    cb.addEventListener('change', () => renderProgramsTable(getFilteredPrograms()));
+  });
   programsDownload?.addEventListener('click', downloadProgramsCsv);
 };
 
