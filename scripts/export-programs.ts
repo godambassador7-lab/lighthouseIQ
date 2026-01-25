@@ -88,7 +88,7 @@ interface NursingProgram {
   campus_name: string | null;
   city: string | null;
   state: string;
-  program_level: 'ASN' | 'BSN' | 'MSN';
+  program_level: 'LPN' | 'ASN' | 'BSN' | 'MSN' | 'DNP';
   credential_notes: string | null;
   accreditor: string;
   accreditation_status: string | null;
@@ -149,21 +149,38 @@ function extractCmsField(html: string, fieldName: string): string {
   return match ? stripHtml(match[1]) : '';
 }
 
-function extractProgramLevels(text: string): Array<'ASN' | 'BSN' | 'MSN'> {
+function extractProgramLevels(text: string): Array<'LPN' | 'ASN' | 'BSN' | 'MSN' | 'DNP'> {
   const lowered = text.toLowerCase();
-  const levels = new Set<'ASN' | 'BSN' | 'MSN'>();
-  // ASN/ADN level includes associate, practical (LPN/LVN), and diploma programs
+  const levels = new Set<'LPN' | 'ASN' | 'BSN' | 'MSN' | 'DNP'>();
+
+  // LPN/LVN - Licensed Practical/Vocational Nurse (certificate programs)
+  if (lowered.includes('practical') || lowered.includes('lpn') || lowered.includes('lvn') ||
+      (lowered.includes('vocational') && lowered.includes('nurs'))) {
+    levels.add('LPN');
+  }
+
+  // ASN/ADN - Associate Degree in Nursing
   if (lowered.includes('associate') || lowered.includes('adn') || lowered.includes('asn') ||
-      lowered.includes('practical') || lowered.includes('lpn') || lowered.includes('lvn') ||
-      lowered.includes('diploma')) {
+      (lowered.includes('diploma') && !lowered.includes('practical'))) {
     levels.add('ASN');
   }
+
+  // BSN - Bachelor of Science in Nursing
   if (lowered.includes('baccalaureate') || lowered.includes('bsn') || lowered.includes('bachelor')) {
     levels.add('BSN');
   }
-  if (lowered.includes('master') || lowered.includes('msn')) {
+
+  // MSN - Master of Science in Nursing
+  if ((lowered.includes('master') && !lowered.includes('postmaster')) || lowered.includes('msn')) {
     levels.add('MSN');
   }
+
+  // DNP - Doctor of Nursing Practice (and other doctoral programs)
+  if (lowered.includes('dnp') || lowered.includes('doctor') || lowered.includes('doctoral') ||
+      lowered.includes('phd') || lowered.includes('dns') || lowered.includes('postmaster')) {
+    levels.add('DNP');
+  }
+
   return Array.from(levels);
 }
 
