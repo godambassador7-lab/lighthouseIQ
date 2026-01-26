@@ -2058,7 +2058,7 @@ const loadPrograms = async () => {
     }
 
     populateProgramFilters(nursingPrograms);
-    renderProgramsWithProgress(nursingPrograms);
+    renderProgramsWithProgress(getFilteredPrograms());
   } catch (err) {
     programsLoaded = false;
     if (programsList) {
