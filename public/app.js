@@ -94,6 +94,7 @@ const programsDownload = document.getElementById('programs-download');
 const programsLoading = document.getElementById('programs-loading');
 const programsProgressBar = document.getElementById('programs-progress-bar');
 const programsProgressText = document.getElementById('programs-progress-text');
+const noticeSortSelect = document.getElementById('notice-sort');
 
 // =============================================================================
 // State
@@ -110,6 +111,7 @@ let selectedStates = [];
 let selectedSpecialties = [];
 let currentPage = 1;
 let searchQuery = '';
+let currentSort = 'newest'; // Default sort: newest first
 const NOTICE_MAX_COUNT = 100;
 const NOTICE_WINDOW_COUNT = 15;
 const NOTICES_PER_PAGE = NOTICE_MAX_COUNT;
@@ -992,6 +994,35 @@ const filterNotices = () => {
   return filtered;
 };
 
+const sortNotices = (notices, sortBy) => {
+  const sorted = [...notices];
+  switch (sortBy) {
+    case 'newest':
+      sorted.sort((a, b) => {
+        const dateA = a.notice_date || a.retrieved_at || '';
+        const dateB = b.notice_date || b.retrieved_at || '';
+        return dateB.localeCompare(dateA);
+      });
+      break;
+    case 'oldest':
+      sorted.sort((a, b) => {
+        const dateA = a.notice_date || a.retrieved_at || '';
+        const dateB = b.notice_date || b.retrieved_at || '';
+        return dateA.localeCompare(dateB);
+      });
+      break;
+    case 'score':
+      sorted.sort((a, b) => (b.nursing_score || 0) - (a.nursing_score || 0));
+      break;
+    case 'affected':
+      sorted.sort((a, b) => (b.employees_affected || 0) - (a.employees_affected || 0));
+      break;
+    default:
+      break;
+  }
+  return sorted;
+};
+
 const applyFilters = (resetPage = true) => {
   if (resetPage) currentPage = 1;
 
@@ -1007,6 +1038,9 @@ const applyFilters = (resetPage = true) => {
       return employerName.includes(query) || parentSystem.includes(query) || city.includes(query);
     });
   }
+
+  // Apply sorting
+  filtered = sortNotices(filtered, currentSort);
 
   currentNotices = filtered;
   renderNotices(currentNotices);
@@ -1029,10 +1063,10 @@ const renderNotices = (notices) => {
       noticeList.classList.remove('windowed');
       return;
     }
-    // Always use fixed 10-item window height
+    // Always use fixed 10-item window height with scroll
     const windowHeight = (CARD_HEIGHT * NOTICE_WINDOW_COUNT) + (CARD_GAP * (NOTICE_WINDOW_COUNT - 1));
     noticeList.style.maxHeight = `${windowHeight}px`;
-    noticeList.classList.toggle('windowed', count > NOTICE_WINDOW_COUNT);
+    noticeList.classList.add('windowed');
   };
 
   if (!notices.length) {
@@ -1669,6 +1703,14 @@ const initFilters = () => {
     applyFilters();
   });
   limitInput.addEventListener('change', applyFilters);
+
+  // Sort dropdown
+  if (noticeSortSelect) {
+    noticeSortSelect.addEventListener('change', () => {
+      currentSort = noticeSortSelect.value;
+      applyFilters();
+    });
+  }
 
   // Search by employer name
   const searchInput = document.getElementById('notice-search');
