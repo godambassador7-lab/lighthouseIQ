@@ -90,6 +90,15 @@ npm run serve
 # Open http://localhost:3000
 ```
 
+## Git LFS
+
+This repo tracks large BLS files with Git LFS. After cloning, run:
+
+```bash
+git lfs install
+git lfs pull
+```
+
 ## Configuration
 
 ### Change Update Schedule
