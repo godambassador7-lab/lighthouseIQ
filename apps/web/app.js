@@ -1097,11 +1097,7 @@ const hideTooltip = () => {
 let zeroProtocolInProgress = false;
 
 const showMapToast = (message, duration = 3000) => {
-  console.log('showMapToast:', message, 'mapToast element:', mapToast);
-  if (!mapToast) {
-    console.warn('Map toast element not found!');
-    return;
-  }
+  if (!mapToast) return;
   mapToast.textContent = message;
   mapToast.classList.remove('hidden');
   mapToast.classList.add('visible');
@@ -1125,19 +1121,9 @@ const refetchStateNotices = async (stateAbbrev) => {
 };
 
 const runZeroProtocol = async () => {
-  console.log('Zero Protocol: Starting...');
-  console.log('Zero Protocol: selectedStates =', selectedStates);
-  console.log('Zero Protocol: stateData =', stateData);
-
   // Only run if no state filters are selected
-  if (selectedStates.length > 0) {
-    console.log('Zero Protocol: Skipped - state filters are active');
-    return;
-  }
-  if (zeroProtocolInProgress) {
-    console.log('Zero Protocol: Skipped - already in progress');
-    return;
-  }
+  if (selectedStates.length > 0) return;
+  if (zeroProtocolInProgress) return;
 
   // Find states in stateData with 0 notices
   const zeroStates = Object.keys(stateData).filter(state => {
@@ -1145,27 +1131,18 @@ const runZeroProtocol = async () => {
     return count === 0;
   });
 
-  console.log('Zero Protocol: States with 0 notices:', zeroStates);
-
-  if (zeroStates.length === 0) {
-    console.log('Zero Protocol: No states with 0 notices found');
-    return;
-  }
+  if (zeroStates.length === 0) return;
 
   zeroProtocolInProgress = true;
 
   for (const stateAbbrev of zeroStates) {
     const stateName = STATE_NAMES[stateAbbrev] || stateAbbrev;
-    console.log(`Zero Protocol: Refetching for ${stateName}...`);
     showMapToast(`Refetching for ${stateName}...`, 2500);
 
     const newCount = await refetchStateNotices(stateAbbrev);
-    console.log(`Zero Protocol: ${stateName} returned ${newCount} notices`);
 
     if (newCount > 0) {
-      // Update the state data with the new count
       stateData[stateAbbrev] = { count: newCount };
-      console.log(`Zero Protocol: ${stateName} updated to ${newCount} notices`);
     }
 
     // Small delay between requests to avoid overwhelming the server
@@ -1184,7 +1161,6 @@ const runZeroProtocol = async () => {
   updateStateCalibration();
 
   zeroProtocolInProgress = false;
-  console.log('Zero Protocol: Completed');
 };
 
 // Update weather map colors based on state data
@@ -1232,7 +1208,15 @@ const loadStatesWithMap = async () => {
 
     // Build state data from API response
     stateData = {};
-    states.forEach(({ state, count }) => {
+    states.forEach((entry) => {
+      const state = entry.state;
+      // Handle both { state, count: X } and { state, count: { count: X } } formats
+      let count = 0;
+      if (typeof entry.count === 'number') {
+        count = entry.count;
+      } else if (entry.count && typeof entry.count.count === 'number') {
+        count = entry.count.count;
+      }
       stateData[state] = { count };
     });
 
@@ -2135,10 +2119,20 @@ const renderBarChart = () => {
   if (!barChart) return;
 
   // Get all states with their counts, sorted by count descending
-  const statesWithCounts = ALL_STATES.map(state => ({
-    state,
-    count: stateData[state]?.count || 0
-  })).sort((a, b) => b.count - a.count);
+  const statesWithCounts = ALL_STATES.map(state => {
+    const entry = stateData[state];
+    // Handle both { count: X } and just X formats
+    let count = 0;
+    if (typeof entry === 'number') {
+      count = entry;
+    } else if (entry && typeof entry.count === 'number') {
+      count = entry.count;
+    } else if (entry && typeof entry.count === 'object' && entry.count?.count) {
+      // Handle nested { count: { count: X } } case
+      count = entry.count.count;
+    }
+    return { state, count };
+  }).sort((a, b) => b.count - a.count);
 
   const maxCount = Math.max(...statesWithCounts.map(s => s.count), 1);
 
@@ -2165,7 +2159,7 @@ const renderBarChart = () => {
         <div class="bar-chart-bar">
           <div class="bar-chart-fill" style="width: ${percentage}%"></div>
         </div>
-        <span class="bar-chart-count">${count}</span>
+        <span class="bar-chart-count">${count.toLocaleString()}</span>
       </div>
     `;
   }).join('');
