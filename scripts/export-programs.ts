@@ -740,10 +740,33 @@ function parseAcenProgramsFromHtml(html: string): NursingProgram[] {
 async function fetchAcenPrograms(): Promise<NursingProgram[]> {
   console.log('\nFetching ACEN programs...\n');
   try {
-    const html = await fetchWithTimeout(ACEN_DIRECTORY_URL, 60000);
-    const programs = parseAcenProgramsFromHtml(html);
-    console.log(`  ✓ ACEN: ${programs.length} programs`);
-    return programs;
+    const results: NursingProgram[] = [];
+    let page = 1;
+    let pageKey: string | null = null;
+    const maxPages = 200;
+    const hasQuery = ACEN_DIRECTORY_URL.includes('?');
+
+    while (page <= maxPages) {
+      const pageUrl = page === 1
+        ? ACEN_DIRECTORY_URL
+        : pageKey
+          ? `${ACEN_DIRECTORY_URL}${hasQuery ? '&' : '?'}${pageKey}_page=${page}`
+          : `${ACEN_DIRECTORY_URL}${hasQuery ? '&' : '?'}page=${page}`;
+
+      const html = await fetchWithTimeout(pageUrl, 60000);
+      if (!pageKey) {
+        const keyMatch = html.match(/\?([0-9a-f]+)_page=2/i);
+        if (keyMatch) pageKey = keyMatch[1];
+      }
+
+      const programs = parseAcenProgramsFromHtml(html);
+      if (!programs.length) break;
+      results.push(...programs);
+      page += 1;
+    }
+
+    console.log(`  ✓ ACEN: ${results.length} programs`);
+    return results;
   } catch (err: any) {
     console.warn(`  ✗ ACEN: ${err?.message || err}`);
     return [];
