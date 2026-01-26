@@ -1097,7 +1097,11 @@ const hideTooltip = () => {
 let zeroProtocolInProgress = false;
 
 const showMapToast = (message, duration = 3000) => {
-  if (!mapToast) return;
+  console.log('showMapToast:', message, 'mapToast element:', mapToast);
+  if (!mapToast) {
+    console.warn('Map toast element not found!');
+    return;
+  }
   mapToast.textContent = message;
   mapToast.classList.remove('hidden');
   mapToast.classList.add('visible');
@@ -1121,25 +1125,42 @@ const refetchStateNotices = async (stateAbbrev) => {
 };
 
 const runZeroProtocol = async () => {
-  // Only run if no state filters are selected
-  if (selectedStates.length > 0) return;
-  if (zeroProtocolInProgress) return;
+  console.log('Zero Protocol: Starting...');
+  console.log('Zero Protocol: selectedStates =', selectedStates);
+  console.log('Zero Protocol: stateData =', stateData);
 
-  // Find states with 0 notices that should have data
-  const zeroStates = ALL_STATES.filter(state => {
+  // Only run if no state filters are selected
+  if (selectedStates.length > 0) {
+    console.log('Zero Protocol: Skipped - state filters are active');
+    return;
+  }
+  if (zeroProtocolInProgress) {
+    console.log('Zero Protocol: Skipped - already in progress');
+    return;
+  }
+
+  // Find states in stateData with 0 notices
+  const zeroStates = Object.keys(stateData).filter(state => {
     const count = stateData[state]?.count ?? 0;
     return count === 0;
   });
 
-  if (zeroStates.length === 0) return;
+  console.log('Zero Protocol: States with 0 notices:', zeroStates);
+
+  if (zeroStates.length === 0) {
+    console.log('Zero Protocol: No states with 0 notices found');
+    return;
+  }
 
   zeroProtocolInProgress = true;
 
   for (const stateAbbrev of zeroStates) {
     const stateName = STATE_NAMES[stateAbbrev] || stateAbbrev;
+    console.log(`Zero Protocol: Refetching for ${stateName}...`);
     showMapToast(`Refetching for ${stateName}...`, 2500);
 
     const newCount = await refetchStateNotices(stateAbbrev);
+    console.log(`Zero Protocol: ${stateName} returned ${newCount} notices`);
 
     if (newCount > 0) {
       // Update the state data with the new count
@@ -1163,6 +1184,7 @@ const runZeroProtocol = async () => {
   updateStateCalibration();
 
   zeroProtocolInProgress = false;
+  console.log('Zero Protocol: Completed');
 };
 
 // Update weather map colors based on state data
