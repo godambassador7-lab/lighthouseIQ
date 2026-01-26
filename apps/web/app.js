@@ -93,6 +93,19 @@ let nursingPrograms = [];
 let programsMeta = { lastUpdated: null, sources: [] };
 let programsLoaded = false;
 let programsModuleInitialized = false;
+let programsRefreshPrompted = false;
+
+const REQUIRED_PROGRAM_ACCREDITORS = ['CCNE', 'ACEN', 'CNEA'];
+
+const getLoadedAccreditors = (programs) => {
+  const accreditors = new Set();
+  programs.forEach((program) => {
+    const normalized = normalizeProgram(program);
+    const accreditor = normalized.accreditor.trim().toUpperCase();
+    if (accreditor) accreditors.add(accreditor);
+  });
+  return accreditors;
+};
 
 // Login handling - server-side validation
 const SESSION_KEY = 'lni_authenticated';
@@ -2033,14 +2046,14 @@ const downloadProgramsCsv = () => {
   URL.revokeObjectURL(url);
 };
 
-const loadPrograms = async () => {
-  if (programsLoaded) return;
+const loadPrograms = async (force = false) => {
+  if (programsLoaded && !force) return;
   programsLoaded = true;
 
   try {
     programsLoading?.classList.add('active');
     updateProgramsLoading(0, 1);
-    const data = await fetchJson('/data/programs.json');
+    const data = await fetchJson(`/data/programs.json?ts=${Date.now()}`);
 
     nursingPrograms = Array.isArray(data) ? data : (data.programs ?? []);
     programsMeta = {
@@ -2059,6 +2072,21 @@ const loadPrograms = async () => {
       programsSourceNote.textContent = sourceNames.length
         ? `Sources: ${sourceNames.join(' + ')}`
         : '';
+    }
+
+    const accreditorSet = getLoadedAccreditors(nursingPrograms);
+    const missingAccreditors = REQUIRED_PROGRAM_ACCREDITORS.filter(
+      (accreditor) => !accreditorSet.has(accreditor)
+    );
+    if (missingAccreditors.length && !programsRefreshPrompted) {
+      programsRefreshPrompted = true;
+      const shouldReload = window.confirm(
+        `Some accreditor data did not load (${missingAccreditors.join(', ')}). Refresh now?`
+      );
+      if (shouldReload) {
+        window.location.reload();
+        return;
+      }
     }
 
     populateProgramFilters(nursingPrograms);
@@ -2111,6 +2139,7 @@ const initProgramsModule = () => {
     cb.addEventListener('change', () => renderProgramsTable(getFilteredPrograms()));
   });
   programsDownload?.addEventListener('click', downloadProgramsCsv);
+  loadPrograms(true);
 };
 
 // ==================== END ACCREDITED PROGRAMS MODULE ====================
