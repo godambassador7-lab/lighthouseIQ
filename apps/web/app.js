@@ -29,6 +29,7 @@ const statStates = document.getElementById('stat-states');
 const statUpdated = document.getElementById('stat-updated');
 const usMapContainer = document.getElementById('us-map');
 const mapTooltip = document.getElementById('map-tooltip');
+const mapToast = document.getElementById('map-toast');
 const alertsList = document.getElementById('alerts-list');
 const heatmapList = document.getElementById('heatmap-list');
 const talentList = document.getElementById('talent-list');
@@ -1090,6 +1091,80 @@ const hideTooltip = () => {
   mapTooltip.classList.remove('visible');
 };
 
+// =============================================================================
+// Zero Protocol - Auto-refetch states with 0 notices
+// =============================================================================
+let zeroProtocolInProgress = false;
+
+const showMapToast = (message, duration = 3000) => {
+  if (!mapToast) return;
+  mapToast.textContent = message;
+  mapToast.classList.remove('hidden');
+  mapToast.classList.add('visible');
+
+  setTimeout(() => {
+    mapToast.classList.remove('visible');
+    mapToast.classList.add('hidden');
+  }, duration);
+};
+
+const refetchStateNotices = async (stateAbbrev) => {
+  try {
+    // Fetch fresh notices for this specific state
+    const response = await fetchJson(`/notices?state=${stateAbbrev}&limit=500`);
+    const notices = response.notices ?? [];
+    return notices.length;
+  } catch (err) {
+    console.error(`Failed to refetch notices for ${stateAbbrev}:`, err);
+    return 0;
+  }
+};
+
+const runZeroProtocol = async () => {
+  // Only run if no state filters are selected
+  if (selectedStates.length > 0) return;
+  if (zeroProtocolInProgress) return;
+
+  // Find states with 0 notices that should have data
+  const zeroStates = ALL_STATES.filter(state => {
+    const count = stateData[state]?.count ?? 0;
+    return count === 0;
+  });
+
+  if (zeroStates.length === 0) return;
+
+  zeroProtocolInProgress = true;
+
+  for (const stateAbbrev of zeroStates) {
+    const stateName = STATE_NAMES[stateAbbrev] || stateAbbrev;
+    showMapToast(`Refetching for ${stateName}...`, 2500);
+
+    const newCount = await refetchStateNotices(stateAbbrev);
+
+    if (newCount > 0) {
+      // Update the state data with the new count
+      stateData[stateAbbrev] = { count: newCount };
+      console.log(`Zero Protocol: ${stateName} updated to ${newCount} notices`);
+    }
+
+    // Small delay between requests to avoid overwhelming the server
+    await new Promise(resolve => setTimeout(resolve, 500));
+  }
+
+  // Update the map with new data
+  updateWeatherMap();
+
+  // Recalculate calibration stats
+  const counts = Object.values(stateData).map(entry => entry.count ?? 0);
+  calibrationStats = {
+    minCount: counts.length ? Math.min(...counts) : 0,
+    maxCount: counts.length ? Math.max(...counts) : 0
+  };
+  updateStateCalibration();
+
+  zeroProtocolInProgress = false;
+};
+
 // Update weather map colors based on state data
 const updateWeatherMap = () => {
   const counts = Object.values(stateData).map(s => s.count || 0);
@@ -1150,6 +1225,9 @@ const loadStatesWithMap = async () => {
       maxCount: counts.length ? Math.max(...counts) : 0
     };
     updateStateCalibration();
+
+    // Run zero protocol to refetch data for states showing 0 notices
+    runZeroProtocol();
   } catch {
     statStates.textContent = '0';
   }
