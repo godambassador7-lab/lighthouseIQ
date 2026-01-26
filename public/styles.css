@@ -3799,42 +3799,6 @@ input[type="range"] {
   color: var(--ink);
 }
 
-/* Sort Control */
-.sort-control {
-  flex-shrink: 0;
-}
-
-.sort-control select {
-  padding: 10px 12px;
-  border-radius: 8px;
-  border: 2px solid rgba(26, 54, 93, 0.1);
-  font-size: 13px;
-  font-weight: 500;
-  background: var(--card);
-  color: var(--ink);
-  cursor: pointer;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  min-width: 140px;
-}
-
-.sort-control select:focus {
-  outline: none;
-  border-color: var(--ocean);
-  box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.15);
-}
-
-.sort-control select:hover {
-  border-color: rgba(26, 54, 93, 0.2);
-}
-
-@media (max-width: 600px) {
-  .sort-control select {
-    min-width: 120px;
-    font-size: 12px;
-    padding: 8px 10px;
-  }
-}
-
 /* =============================================================================
    Pagination
    ============================================================================= */
