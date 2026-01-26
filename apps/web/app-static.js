@@ -111,7 +111,7 @@ let selectedSpecialties = [];
 let currentPage = 1;
 let searchQuery = '';
 const NOTICE_MAX_COUNT = 100;
-const NOTICE_WINDOW_COUNT = 10;
+const NOTICE_WINDOW_COUNT = 15;
 const NOTICES_PER_PAGE = NOTICE_MAX_COUNT;
 let calibrationStats = { minCount: 0, maxCount: 0 };
 let nursingPrograms = [];
@@ -121,6 +121,27 @@ let programsModuleInitialized = false;
 let programsRefreshPrompted = false;
 
 const REQUIRED_PROGRAM_ACCREDITORS = ['CCNE', 'ACEN', 'CNEA'];
+const HEALTHCARE_KEYWORDS = [
+  'hospital',
+  'healthcare',
+  'health care',
+  'medical',
+  'clinic',
+  'nursing',
+  'rehab',
+  'rehabilitation',
+  'hospice',
+  'dialysis',
+  'behavioral health',
+  'mental health',
+  'urgent care',
+  'surgery',
+  'surgical',
+  'home health',
+  'assisted living',
+  'skilled nursing',
+  'long term care'
+];
 
 const getLoadedAccreditors = (programs) => {
   const accreditors = new Set();
@@ -130,6 +151,21 @@ const getLoadedAccreditors = (programs) => {
     if (accreditor) accreditors.add(accreditor);
   });
   return accreditors;
+};
+const isHealthcareNotice = (notice) => {
+  if (notice.isCustom) return true;
+  const naicsRaw = notice.naics ?? notice.naics_code ?? '';
+  const naics = String(naicsRaw).trim();
+  if (naics.startsWith('62')) return true;
+  const haystack = [
+    notice.employer_name,
+    notice.employerName,
+    notice.facility_name,
+    notice.parent_system,
+    notice.industry,
+    notice.business_name
+  ].filter(Boolean).join(' ').toLowerCase();
+  return HEALTHCARE_KEYWORDS.some(keyword => haystack.includes(keyword));
 };
 let strategicData = null; // Will be loaded from strategic.json
 let strategicDataLoaded = false;
@@ -893,6 +929,8 @@ const matchesSpecialty = (notice, specialtyKeys) => {
 
 const filterNotices = () => {
   let filtered = [...allNotices];
+
+  filtered = filtered.filter(isHealthcareNotice);
 
   // Filter by region
   const region = regionSelect.value;

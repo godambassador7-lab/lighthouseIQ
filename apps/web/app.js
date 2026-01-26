@@ -87,7 +87,28 @@ let isFetching = false;
 let currentMapView = 'map'; // 'map' or 'chart'
 let selectedStates = []; // Multi-select states
 const NOTICE_MAX_COUNT = 100;
-const NOTICE_WINDOW_COUNT = 25;
+const NOTICE_WINDOW_COUNT = 15;
+const HEALTHCARE_KEYWORDS = [
+  'hospital',
+  'healthcare',
+  'health care',
+  'medical',
+  'clinic',
+  'nursing',
+  'rehab',
+  'rehabilitation',
+  'hospice',
+  'dialysis',
+  'behavioral health',
+  'mental health',
+  'urgent care',
+  'surgery',
+  'surgical',
+  'home health',
+  'assisted living',
+  'skilled nursing',
+  'long term care'
+];
 let calibrationStats = { minCount: 0, maxCount: 0 };
 let nursingPrograms = [];
 let programsMeta = { lastUpdated: null, sources: [] };
@@ -105,6 +126,22 @@ const getLoadedAccreditors = (programs) => {
     if (accreditor) accreditors.add(accreditor);
   });
   return accreditors;
+};
+
+const isHealthcareNotice = (notice) => {
+  if (notice.isCustom) return true;
+  const naicsRaw = notice.naics ?? notice.naics_code ?? '';
+  const naics = String(naicsRaw).trim();
+  if (naics.startsWith('62')) return true;
+  const haystack = [
+    notice.employer_name,
+    notice.employerName,
+    notice.facility_name,
+    notice.parent_system,
+    notice.industry,
+    notice.business_name
+  ].filter(Boolean).join(' ').toLowerCase();
+  return HEALTHCARE_KEYWORDS.some(keyword => haystack.includes(keyword));
 };
 
 // Login handling - server-side validation
@@ -778,6 +815,7 @@ const loadNotices = async () => {
     if (customNotices.length > 0) {
       notices = [...customNotices, ...notices];
     }
+    notices = notices.filter(isHealthcareNotice);
 
     currentNotices = notices;
     renderNotices(currentNotices);
