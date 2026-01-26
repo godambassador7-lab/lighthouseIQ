@@ -772,19 +772,30 @@ body {
 }
 
 .programs-controls {
-  display: grid;
-  grid-template-columns: minmax(220px, 2fr) repeat(2, minmax(140px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 0.75rem;
+  align-items: center;
 }
 
-.programs-controls input,
+.programs-controls > input[type="text"] {
+  flex: 1 1 180px;
+  max-width: 240px;
+}
+
+.programs-controls > select {
+  flex: 0 1 120px;
+}
+
+.programs-controls input[type="text"],
 .programs-controls select {
-  padding: 0.6rem 0.75rem;
-  border-radius: 12px;
+  padding: 0.5rem 0.65rem;
+  border-radius: 10px;
   border: 1px solid rgba(26, 54, 93, 0.15);
   background: #fafbfc;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: var(--navy);
+  height: 36px;
 }
 
 .programs-controls input:focus,
@@ -797,27 +808,28 @@ body {
 .programs-level-checkboxes {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 1rem;
+  gap: 0.25rem 0.75rem;
   align-items: center;
-  padding: 0.5rem 0.75rem;
-  border-radius: 12px;
+  padding: 0.35rem 0.6rem;
+  border-radius: 10px;
   border: 1px solid rgba(26, 54, 93, 0.15);
   background: #fafbfc;
+  height: 36px;
 }
 
 .level-checkbox {
   display: flex;
   align-items: center;
-  gap: 0.35rem;
-  font-size: 0.85rem;
+  gap: 0.25rem;
+  font-size: 0.75rem;
   color: var(--navy);
   cursor: pointer;
   user-select: none;
 }
 
 .level-checkbox input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   accent-color: var(--ocean);
   cursor: pointer;
 }
@@ -1142,7 +1154,17 @@ body {
   }
 
   .programs-controls {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .programs-controls > input[type="text"],
+  .programs-controls > select {
+    max-width: 100%;
+    flex: 1 1 auto;
+  }
+  .programs-level-checkboxes {
+    height: auto;
+    justify-content: center;
   }
 }
 
@@ -2736,6 +2758,65 @@ input[type="range"] {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   gap: 12px;
+}
+
+.specialty-signal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 12px;
+  max-height: 420px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.specialty-signal-card {
+  background: rgba(26, 54, 93, 0.04);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  border: 1px solid rgba(26, 54, 93, 0.08);
+  display: grid;
+  gap: 8px;
+}
+
+.specialty-signal-card.pending {
+  opacity: 0.7;
+}
+
+.specialty-signal-title {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--navy);
+}
+
+.specialty-signal-rows {
+  display: grid;
+  gap: 4px;
+  font-size: 0.75rem;
+}
+
+.specialty-signal-rows .label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.62rem;
+  color: var(--muted);
+  margin-right: 6px;
+}
+
+.specialty-signal-rows .value {
+  color: var(--navy);
+  font-weight: 600;
+}
+
+.specialty-signal-tip {
+  font-size: 0.72rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.specialty-signal-note {
+  margin: 0;
+  font-size: 0.72rem;
+  color: var(--muted);
 }
 
 .specialty-card {
