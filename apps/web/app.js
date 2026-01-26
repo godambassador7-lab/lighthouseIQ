@@ -1906,10 +1906,14 @@ const buildProgramRow = (program) => {
   `;
 };
 
+const DEFAULT_PROGRAM_LEVELS = ['ASN', 'BSN', 'MSN'];
+
 const getSelectedLevels = () => {
-  if (!programsLevelFilter) return [];
+  if (!programsLevelFilter) return DEFAULT_PROGRAM_LEVELS;
   const checkboxes = programsLevelFilter.querySelectorAll('input[type="checkbox"]:checked');
-  return Array.from(checkboxes).map(cb => cb.value);
+  const levels = Array.from(checkboxes).map(cb => cb.value);
+  // If no checkboxes found or none checked, return defaults
+  return levels.length > 0 ? levels : DEFAULT_PROGRAM_LEVELS;
 };
 
 const getFilteredPrograms = () => {
