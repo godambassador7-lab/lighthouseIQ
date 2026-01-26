@@ -49,6 +49,7 @@ const statStates = document.getElementById('stat-states');
 const statUpdated = document.getElementById('stat-updated');
 const usMapContainer = document.getElementById('us-map');
 const mapTooltip = document.getElementById('map-tooltip');
+const mapToast = document.getElementById('map-toast');
 const alertsList = document.getElementById('alerts-list');
 const heatmapList = document.getElementById('heatmap-list');
 const talentList = document.getElementById('talent-list');
@@ -2170,6 +2171,48 @@ const renderStrategicReview = async () => {
   const salaryData = strategicData?.salaryData || NURSING_SALARY_DATA;
   const specialtyPay = strategicData?.specialtyPay || SPECIALTY_PAY;
   const projections = strategicData?.workforceProjections || WORKFORCE_PROJECTIONS;
+  const specialtySignals = strategicData?.specialtySignals || null;
+  const specialtySignalCards = Array.isArray(specialtySignals?.cards) ? specialtySignals.cards : [];
+  const specialtySignalSources = Array.isArray(specialtySignals?.sources) ? specialtySignals.sources : [];
+  const specialtySignalStatus = specialtySignals?.status || 'pending';
+  const specialtySourceText = specialtySignalSources.map(source => source.name).filter(Boolean).join(' + ');
+
+  const formatSignalValue = (entry) => {
+    if (!entry || !entry.state) return '--';
+    const value = entry.value ?? entry.count ?? entry.score ?? null;
+    return value !== null && value !== undefined ? `${entry.state} • ${value}` : entry.state;
+  };
+
+  const renderSpecialtySignals = () => {
+    if (specialtySignalCards.length) {
+      return specialtySignalCards.map((card) => {
+        const top = card.topState || card.most || card.highest || null;
+        const low = card.bottomState || card.least || card.lowest || null;
+        const tip = card.tip || card.tips || card.notes || 'Target top states for near-term outreach.';
+        return `
+          <div class="specialty-signal-card">
+            <div class="specialty-signal-title">${card.specialty || card.name || 'Specialty'}</div>
+            <div class="specialty-signal-rows">
+              <div><span class="label">Top</span><span class="value">${formatSignalValue(top)}</span></div>
+              <div><span class="label">Least</span><span class="value">${formatSignalValue(low)}</span></div>
+            </div>
+            <div class="specialty-signal-tip">${tip}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    return Object.values(NURSE_SPECIALTIES).map((spec) => `
+      <div class="specialty-signal-card pending">
+        <div class="specialty-signal-title">${spec.name}</div>
+        <div class="specialty-signal-rows">
+          <div><span class="label">Top</span><span class="value">--</span></div>
+          <div><span class="label">Least</span><span class="value">--</span></div>
+        </div>
+        <div class="specialty-signal-tip">Signal pipeline warming up.</div>
+      </div>
+    `).join('');
+  };
 
   // Calculate market metrics from loaded notices
   const totalLayoffs = currentNotices.reduce((sum, n) => sum + (n.employees_affected || 0), 0);
@@ -2354,6 +2397,21 @@ const renderStrategicReview = async () => {
               </div>
             `).join('')}
         </div>
+      </div>
+
+      <!-- Specialty Targeting Card -->
+      <div class="strategic-card specialty-signals">
+        <div class="strategic-card-header">
+          <h4><span class="card-icon">🧭</span> Specialty Targeting Signals</h4>
+          <span class="strategic-badge">${specialtySignalStatus === 'ready' ? 'Live' : 'Auto refresh'}</span>
+        </div>
+        <p class="card-description">State-by-state supply and demand signals per specialty.</p>
+        <div class="specialty-signal-grid">
+          ${renderSpecialtySignals()}
+        </div>
+        <p class="specialty-signal-note">
+          ${specialtySourceText ? `Sources: ${specialtySourceText}` : 'Sources queued for ingestion.'}
+        </p>
       </div>
 
       <!-- Recruitment Opportunities Card -->
