@@ -118,6 +118,14 @@ function stripHtml(value: string): string {
   return decodeHtmlEntities(value.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim());
 }
 
+function extractHtmlLines(value: string): string[] {
+  const withBreaks = value.replace(/<br\s*\/?>/gi, '\n');
+  return stripHtml(withBreaks)
+    .split('\n')
+    .map(line => line.trim())
+    .filter(Boolean);
+}
+
 // Filter out navigation links and invalid institution names
 const INVALID_INSTITUTION_NAMES = new Set([
   'contact us', 'contact', 'home', 'about', 'about us', 'login', 'sign in',
@@ -313,6 +321,59 @@ function parseCcneProgramsFromHtml(html: string, fallbackState: string): Nursing
 function parseCneaProgramsFromHtml(html: string): NursingProgram[] {
   const results: NursingProgram[] = [];
   const updatedAt = new Date().toISOString().slice(0, 10);
+  const accordionMarker = 'accordion-item';
+  if (html.includes(accordionMarker)) {
+    const segments = html.split(accordionMarker).slice(1);
+    segments.forEach(segment => {
+      const block = segment;
+      const titleMatch = block.match(/<h[1-6][^>]*>([^<]+)<\/h[1-6]>/i);
+      const institution = titleMatch ? stripHtml(titleMatch[1]) : '';
+      if (!institution || !isValidInstitutionName(institution)) return;
+
+      const lines = extractHtmlLines(block);
+      const locationLine = lines.find(line => /,\s*[A-Z]{2}\s*\d{5}/.test(line));
+      const locationMatch = locationLine?.match(/(.+?),\s*([A-Z]{2})\s*(\d{5})?/);
+      const city = locationMatch?.[1]?.trim() ?? null;
+      const state = parseState(locationMatch?.[2] ?? '');
+      if (!state) return;
+
+      const strongMatches = Array.from(block.matchAll(/<strong>([^<]+)<\/strong>/gi))
+        .map(match => stripHtml(match[1]));
+      const programLine = strongMatches.find(line =>
+        /nurs|degree|diploma|associate|baccalaureate|bachelor|master|doctoral|dnp|phd|dns|practical/i.test(line)
+      ) || '';
+
+      const statusLine = lines.find(line =>
+        /accreditation|candidate|candidacy/i.test(line)
+      ) || null;
+
+      const programLevels = extractProgramLevels(programLine || lines.join(' '));
+      if (!programLevels.length) return;
+
+      programLevels.forEach(level => {
+        const programRecord: NursingProgram = {
+          id: '',
+          institution_name: institution,
+          campus_name: null,
+          city,
+          state,
+          program_level: level,
+          credential_notes: programLine || null,
+          accreditor: 'CNEA',
+          accreditation_status: statusLine,
+          source_url: CNEA_DIRECTORY_URL,
+          school_website_url: null,
+          nces_unitid: null,
+          last_verified_date: updatedAt
+        };
+        programRecord.id = generateProgramId(programRecord);
+        results.push(programRecord);
+      });
+    });
+  }
+
+  if (results.length) return results;
+
   const itemRegex = /<div[^>]*class="w-dyn-item"[^>]*>([\s\S]*?)(?=<div[^>]*class="w-dyn-item"|<\/div>\s*<\/div>\s*<\/div>)/gi;
   let match: RegExpExecArray | null;
   let sawCms = false;
@@ -479,9 +540,50 @@ function parseAcenProgramsFromHtml(html: string): NursingProgram[] {
 
   // ACEN uses table rows or list items for programs
   // Try multiple parsing strategies
+  // Strategy 0: Webflow CMS list items
+  const listItemMarker = '<div role="listitem" class="w-dyn-item">';
+  const listItems = html.split(listItemMarker).slice(1);
+  if (listItems.length) {
+    listItems.forEach(segment => {
+      const block = segment;
+      const institution = extractCmsField(block, 'governing-org')
+        || extractCmsField(block, 'institution')
+        || extractCmsField(block, 'Institution');
+      const programType = extractCmsField(block, 'program-type')
+        || extractCmsField(block, 'Program Type');
+      const stateName = extractCmsField(block, 'State')
+        || extractCmsField(block, 'state');
+      const status = extractCmsField(block, 'status')
+        || extractCmsField(block, 'Status');
+      const state = parseState(stateName);
+      if (!institution || !state || !isValidInstitutionName(institution)) return;
+      const programLevels = extractProgramLevels(programType || block);
+      if (!programLevels.length) return;
+
+      programLevels.forEach(level => {
+        const program: NursingProgram = {
+          id: '',
+          institution_name: institution,
+          campus_name: null,
+          city: null,
+          state,
+          program_level: level,
+          credential_notes: programType || null,
+          accreditor: 'ACEN',
+          accreditation_status: status || null,
+          source_url: ACEN_DIRECTORY_URL,
+          school_website_url: null,
+          nces_unitid: null,
+          last_verified_date: updatedAt
+        };
+        program.id = generateProgramId(program);
+        results.push(program);
+      });
+    });
+  }
 
   // Strategy 1: Parse table rows with program data
-  const tableRows = parseHtmlTable(html);
+  const tableRows = results.length ? [] : parseHtmlTable(html);
   if (tableRows.length > 1) {
     const header = tableRows[0].map(cell => cell.toLowerCase());
     const hasHeader = header.some(cell =>
