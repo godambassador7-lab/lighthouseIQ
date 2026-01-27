@@ -30,6 +30,9 @@ const statUpdated = document.getElementById('stat-updated');
 const usMapContainer = document.getElementById('us-map');
 const mapTooltip = document.getElementById('map-tooltip');
 const mapToast = document.getElementById('map-toast');
+const mapScopeHealthcareBtn = document.getElementById('map-scope-healthcare');
+const mapScopeAllBtn = document.getElementById('map-scope-all');
+const mapScopeLabel = document.getElementById('map-scope-label');
 const alertsList = document.getElementById('alerts-list');
 const heatmapList = document.getElementById('heatmap-list');
 const talentList = document.getElementById('talent-list');
@@ -82,10 +85,14 @@ let customNotices = []; // User-added notices
 let projects = []; // User projects
 let currentProjectId = null; // For editing
 let stateData = {};
+let stateDataAll = {};
+let stateDataHealthcare = {};
+let mapStateData = {};
 let apiHasDb = true;
 let isFetching = false;
 let currentMapView = 'map'; // 'map' or 'chart'
 let selectedStates = []; // Multi-select states
+let mapScope = 'healthcare'; // 'healthcare' or 'all'
 const NOTICE_MAX_COUNT = 100;
 const NOTICE_WINDOW_COUNT = 15;
 const HEALTHCARE_KEYWORDS = [
@@ -1138,11 +1145,12 @@ const initWeatherMap = async () => {
 // Show tooltip
 const showTooltip = (e, stateAbbrev) => {
   const stateName = STATE_NAMES[stateAbbrev] || stateAbbrev;
-  const data = stateData[stateAbbrev] || { count: 0 };
+  const data = mapStateData[stateAbbrev] || { count: 0 };
+  const scopeLabel = mapScope === 'all' ? 'total notices' : 'healthcare notices';
 
   mapTooltip.innerHTML = `
     <div class="tooltip-state">${stateName}</div>
-    <div class="tooltip-count">${data.count} nursing-related notices</div>
+    <div class="tooltip-count">${data.count} ${scopeLabel}</div>
   `;
   mapTooltip.classList.add('visible');
   moveTooltip(e);
@@ -1238,13 +1246,13 @@ const runZeroProtocol = async () => {
 
 // Update weather map colors based on state data
 const updateWeatherMap = () => {
-  const counts = Object.values(stateData).map(s => s.count || 0);
+  const counts = Object.values(mapStateData).map(s => s.count || 0);
   const maxCount = Math.max(...counts, 1);
 
   const shapes = usMapContainer.querySelectorAll('[data-state]');
   shapes.forEach(shape => {
     const stateAbbrev = shape.getAttribute('data-state');
-    const count = stateData[stateAbbrev]?.count || 0;
+    const count = mapStateData[stateAbbrev]?.count || 0;
     const fogLevel = getFogLevel(count, maxCount);
     const baseFill = shape.getAttribute('data-base-fill');
     shape.style.fill = baseFill || getStateColor(stateAbbrev);
@@ -1259,12 +1267,33 @@ const updateWeatherMap = () => {
   });
 };
 
+const normalizeStateCounts = (states) => {
+  const normalized = {};
+  states.forEach((entry) => {
+    const state = entry.state;
+    let count = 0;
+    if (typeof entry.count === 'number') {
+      count = entry.count;
+    } else if (entry.count && typeof entry.count.count === 'number') {
+      count = entry.count.count;
+    }
+    normalized[state] = { count };
+  });
+  return normalized;
+};
+
 // Modified loadStates to also update weather map
 const originalLoadStates = loadStates;
 const loadStatesWithMap = async () => {
   try {
-    const data = await fetchJson('/states');
-    const states = data.states ?? [];
+    const allData = await fetchJson('/states');
+    let healthcareData = { states: [] };
+    try {
+      healthcareData = await fetchJson('/states?recruiterFocus=1');
+    } catch {
+      healthcareData = { states: [] };
+    }
+    const states = allData.states ?? [];
     statStates.textContent = states.length.toString();
 
     regionSelect.innerHTML = '';
@@ -1279,19 +1308,13 @@ const loadStatesWithMap = async () => {
       regionSelect.appendChild(opt);
     });
 
-    // Build state data from API response
-    stateData = {};
-    states.forEach((entry) => {
-      const state = entry.state;
-      // Handle both { state, count: X } and { state, count: { count: X } } formats
-      let count = 0;
-      if (typeof entry.count === 'number') {
-        count = entry.count;
-      } else if (entry.count && typeof entry.count.count === 'number') {
-        count = entry.count.count;
-      }
-      stateData[state] = { count };
-    });
+    // Build state data from API responses
+    stateDataAll = normalizeStateCounts(states);
+    stateDataHealthcare = normalizeStateCounts(healthcareData.states ?? []);
+    stateData = stateDataAll;
+    mapStateData = mapScope === 'all' || Object.keys(stateDataHealthcare).length === 0
+      ? stateDataAll
+      : stateDataHealthcare;
 
     // Populate state dropdown with all states
     populateStateDropdown();
@@ -1307,6 +1330,7 @@ const loadStatesWithMap = async () => {
 
     // Run zero protocol to refetch data for states showing 0 notices
     runZeroProtocol();
+    setMapScope(mapScope);
   } catch {
     statStates.textContent = '0';
   }
@@ -2213,7 +2237,7 @@ const renderBarChart = () => {
 
   // Get all states with their counts, sorted by count descending
   const statesWithCounts = ALL_STATES.map(state => {
-    const entry = stateData[state];
+    const entry = mapStateData[state];
     // Handle both { count: X } and just X formats
     let count = 0;
     if (typeof entry === 'number') {
@@ -2314,6 +2338,32 @@ const updateMapHighlights = () => {
   });
 };
 
+const setMapScope = (scope) => {
+  mapScope = scope === 'all' ? 'all' : 'healthcare';
+  mapStateData = mapScope === 'all' ? stateDataAll : stateDataHealthcare;
+  if (!mapStateData || Object.keys(mapStateData).length === 0) {
+    mapStateData = stateDataAll;
+  }
+
+  if (mapScopeHealthcareBtn && mapScopeAllBtn) {
+    mapScopeHealthcareBtn.classList.toggle('active', mapScope === 'healthcare');
+    mapScopeAllBtn.classList.toggle('active', mapScope === 'all');
+  }
+  if (mapScopeLabel) {
+    mapScopeLabel.textContent = mapScope === 'all' ? 'All notices' : 'Healthcare';
+  }
+
+  updateWeatherMap();
+  if (currentMapView === 'chart') {
+    renderBarChart();
+  }
+};
+
+const initMapScopeToggle = () => {
+  mapScopeHealthcareBtn?.addEventListener('click', () => setMapScope('healthcare'));
+  mapScopeAllBtn?.addEventListener('click', () => setMapScope('all'));
+};
+
 // Initialize map/chart toggle
 const initMapToggle = () => {
   const mapViewBtn = document.getElementById('map-view-btn');
@@ -2325,17 +2375,100 @@ const initMapToggle = () => {
 
 // ==================== END MAP/CHART VIEW TOGGLE ====================
 
+// =============================================================================
+// Daily News Feed
+// =============================================================================
+let newsArticles = [];
+let newsVisibleCount = 10;
+const NEWS_PAGE_SIZE = 10;
+
+const getSourceBadgeClass = (source) => {
+  const s = source.toLowerCase();
+  if (s.includes('becker')) return 'beckers';
+  if (s.includes('stat')) return 'stat-news';
+  if (s.includes('healthcare dive')) return 'healthcare-dive';
+  if (s.includes('fierce')) return 'fierce';
+  if (s.includes('health affairs')) return 'health-affairs';
+  return 'default';
+};
+
+const formatNewsDate = (dateStr) => {
+  if (!dateStr) return '';
+  try {
+    const d = new Date(dateStr + 'T00:00:00');
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  } catch {
+    return dateStr;
+  }
+};
+
+const renderNewsFeed = () => {
+  const list = document.getElementById('news-feed-list');
+  const footer = document.getElementById('news-feed-footer');
+  if (!list) return;
+
+  if (!newsArticles.length) {
+    list.innerHTML = '<div class="empty-state">No news articles available.</div>';
+    if (footer) footer.style.display = 'none';
+    return;
+  }
+
+  const visible = newsArticles.slice(0, newsVisibleCount);
+
+  list.innerHTML = visible.map(article => `
+    <a class="news-card" href="${article.url}" target="_blank" rel="noopener noreferrer">
+      <div class="news-card-body">
+        <h4 class="news-card-title">${article.title}</h4>
+        <p class="news-card-summary">${article.summary}</p>
+      </div>
+      <div class="news-card-meta">
+        <span class="news-source-badge ${getSourceBadgeClass(article.source)}">${article.source}</span>
+        <span class="news-card-date">${formatNewsDate(article.publishedAt)}</span>
+      </div>
+    </a>
+  `).join('');
+
+  if (footer) {
+    footer.style.display = newsVisibleCount < newsArticles.length ? '' : 'none';
+  }
+};
+
+const loadNews = async () => {
+  try {
+    const data = await fetchJson('/data/news.json');
+    newsArticles = data.articles ?? [];
+    renderNewsFeed();
+  } catch (err) {
+    console.warn('News feed not available:', err.message);
+    const list = document.getElementById('news-feed-list');
+    if (list) list.innerHTML = '<div class="empty-state">News feed unavailable.</div>';
+  }
+};
+
+const initNewsFeed = () => {
+  const showMoreBtn = document.getElementById('news-show-more');
+  if (showMoreBtn) {
+    showMoreBtn.addEventListener('click', () => {
+      newsVisibleCount += NEWS_PAGE_SIZE;
+      renderNewsFeed();
+    });
+  }
+};
+
 // Initialize app (called after login)
 const initApp = () => {
   initWeatherMap();
   initHelpSection();
   initMapToggle();
+  initMapScopeToggle();
   initStateMultiSelect();
   initForecast();
   initProgramsModule();
+  initNewsFeed();
   loadHealth();
   loadStatesWithMap();
   loadInsights();
+  loadNews();
   loadCustomNotices();
   loadProjects();
   populateCustomStateDropdown();

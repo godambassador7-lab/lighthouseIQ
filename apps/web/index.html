@@ -389,27 +389,49 @@
 
     </section>
 
+    <!-- Daily News Feed Section -->
+    <section class="news-feed-section">
+      <div class="section-header">
+        <h3>Daily News Feed</h3>
+        <p>Hospital &amp; nursing industry headlines refreshed every 6 hours.</p>
+      </div>
+      <div class="news-feed-container">
+        <div class="news-feed-list" id="news-feed-list">
+          <div class="empty-state">Loading news...</div>
+        </div>
+        <div class="news-feed-footer" id="news-feed-footer" style="display: none;">
+          <button class="btn secondary" id="news-show-more">Show more</button>
+        </div>
+      </div>
+    </section>
+
     <section class="weather-map-section">
       <div class="section-header">
         <div class="section-header-text">
           <h3>Layoff Weather Map</h3>
-          <p>Fog intensity shows layoff activity by state. Darker = more nursing-related layoffs.</p>
+          <p>Fog intensity shows layoff activity by state. Darker = more layoffs in the current scope. <span class="map-scope-note">Scope: <strong id="map-scope-label">Healthcare</strong></span></p>
         </div>
-        <div class="view-toggle">
-          <button class="view-toggle-btn active" id="map-view-btn" title="Map View">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4z"/>
-              <path d="M8 2v16"/>
-              <path d="M16 6v16"/>
-            </svg>
-          </button>
-          <button class="view-toggle-btn" id="chart-view-btn" title="Bar Chart View">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="12" width="4" height="9"/>
-              <rect x="10" y="8" width="4" height="13"/>
-              <rect x="17" y="4" width="4" height="17"/>
-            </svg>
-          </button>
+        <div class="map-controls">
+          <div class="view-toggle">
+            <button class="view-toggle-btn active" id="map-view-btn" title="Map View">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4z"/>
+                <path d="M8 2v16"/>
+                <path d="M16 6v16"/>
+              </svg>
+            </button>
+            <button class="view-toggle-btn" id="chart-view-btn" title="Bar Chart View">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="12" width="4" height="9"/>
+                <rect x="10" y="8" width="4" height="13"/>
+                <rect x="17" y="4" width="4" height="17"/>
+              </svg>
+            </button>
+          </div>
+          <div class="scope-toggle" id="map-scope-toggle">
+            <button class="scope-btn active" id="map-scope-healthcare" title="Healthcare notices only">Healthcare</button>
+            <button class="scope-btn" id="map-scope-all" title="All notices">All</button>
+          </div>
         </div>
       </div>
       <div class="weather-map-container">
