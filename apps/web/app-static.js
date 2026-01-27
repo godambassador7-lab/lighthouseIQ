@@ -420,6 +420,17 @@ const parseMaybeJson = (value) => {
   return [String(value)];
 };
 
+const getNoticeDateValue = (notice) => {
+  const raw = notice.notice_date || notice.noticeDate || notice.retrieved_at || notice.createdAt || notice.retrievedAt;
+  if (!raw) return 0;
+  const ts = new Date(raw).getTime();
+  return Number.isFinite(ts) ? ts : 0;
+};
+
+const sortNoticesByNewest = (notices) => (
+  notices.slice().sort((a, b) => getNoticeDateValue(b) - getNoticeDateValue(a))
+);
+
 const normalizeStateCounts = (states) => {
   const normalized = {};
   states.forEach((entry) => {
@@ -1070,7 +1081,7 @@ const filterNotices = () => {
     filtered = [...customNotices, ...filtered];
   }
 
-  return filtered;
+  return sortNoticesByNewest(filtered);
 };
 
 const applyFilters = (resetPage = true) => {

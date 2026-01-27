@@ -259,6 +259,17 @@ const parseMaybeJson = (value) => {
   return [String(value)];
 };
 
+const getNoticeDateValue = (notice) => {
+  const raw = notice.notice_date || notice.noticeDate || notice.retrieved_at || notice.createdAt || notice.retrievedAt;
+  if (!raw) return 0;
+  const ts = new Date(raw).getTime();
+  return Number.isFinite(ts) ? ts : 0;
+};
+
+const sortNoticesByNewest = (notices) => (
+  notices.slice().sort((a, b) => getNoticeDateValue(b) - getNoticeDateValue(a))
+);
+
 const refreshNoticeListWindow = (count = lastNoticeWindowCount) => {
   if (!noticeList) return;
   lastNoticeWindowCount = count;
@@ -845,6 +856,7 @@ const loadNotices = async () => {
       notices = [...customNotices, ...notices];
     }
     notices = notices.filter(isHealthcareNotice);
+    notices = sortNoticesByNewest(notices);
 
     currentNotices = notices;
     renderNotices(currentNotices);
@@ -858,7 +870,7 @@ const loadNotices = async () => {
   } catch (err) {
     // Still show custom notices even if API fails
     if (customNotices.length > 0) {
-      currentNotices = [...customNotices];
+      currentNotices = sortNoticesByNewest([...customNotices]);
       renderNotices(currentNotices);
       updateStats(currentNotices);
     } else {
