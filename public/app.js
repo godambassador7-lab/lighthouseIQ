@@ -2057,6 +2057,10 @@ const renderBarChart = () => {
   if (!barChart) return;
 
   const sortedStates = Object.entries(stateData)
+    .map(([state, entry]) => {
+      const count = typeof entry === 'number' ? entry : (entry?.count ?? 0);
+      return [state, count];
+    })
     .sort((a, b) => b[1] - a[1])
     .slice(0, 20);
 
@@ -2065,7 +2069,7 @@ const renderBarChart = () => {
     return;
   }
 
-  const maxCount = sortedStates[0][1];
+  const maxCount = sortedStates[0][1] || 1;
 
   // Generate dynamic color based on intensity (green to yellow to red)
   const getBarColor = (count, max) => {
