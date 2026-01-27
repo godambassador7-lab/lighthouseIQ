@@ -1794,6 +1794,151 @@ input[type="range"] {
   font-weight: 600;
 }
 
+/* =============================================================================
+   Daily News Feed Section
+   ============================================================================= */
+.news-feed-section {
+  padding: 2rem clamp(20px, 5vw, 60px);
+  position: relative;
+  z-index: 1;
+}
+
+.news-feed-container {
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.news-feed-list {
+  display: grid;
+  gap: 0;
+}
+
+.news-card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(26, 54, 93, 0.08);
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.15s ease;
+  cursor: pointer;
+}
+
+.news-card:first-child {
+  padding-top: 0;
+}
+
+.news-card:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.news-card:hover {
+  background: rgba(49, 130, 206, 0.04);
+}
+
+.news-card-body {
+  min-width: 0;
+}
+
+.news-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--navy);
+  margin: 0 0 6px;
+  line-height: 1.4;
+}
+
+.news-card:hover .news-card-title {
+  color: var(--ocean);
+}
+
+.news-card-summary {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.5;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.news-card-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+
+.news-source-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.news-source-badge.beckers {
+  background: rgba(229, 62, 62, 0.1);
+  color: #c53030;
+}
+
+.news-source-badge.stat-news {
+  background: rgba(49, 130, 206, 0.1);
+  color: #2b6cb0;
+}
+
+.news-source-badge.healthcare-dive {
+  background: rgba(56, 161, 105, 0.1);
+  color: #276749;
+}
+
+.news-source-badge.fierce {
+  background: rgba(214, 158, 46, 0.12);
+  color: #975a16;
+}
+
+.news-source-badge.health-affairs {
+  background: rgba(128, 90, 213, 0.1);
+  color: #553c9a;
+}
+
+.news-source-badge.default {
+  background: rgba(26, 54, 93, 0.08);
+  color: var(--muted);
+}
+
+.news-card-date {
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.news-feed-footer {
+  text-align: center;
+  padding-top: 16px;
+  border-top: 1px solid rgba(26, 54, 93, 0.08);
+  margin-top: 8px;
+}
+
+@media (max-width: 600px) {
+  .news-card {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .news-card-meta {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
 /* Weather Map Section */
 .weather-map-section {
   padding: 20px 64px 40px;

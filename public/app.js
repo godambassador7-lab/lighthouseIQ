@@ -2133,6 +2133,7 @@ const initApp = async () => {
   initViewToggle();
   initForecast();
   initProgramsModule();
+  initNewsFeed();
   await initWeatherMap();
 
   // Load data
@@ -2143,10 +2144,91 @@ const initApp = async () => {
 
   await loadAllNotices();
   await loadInsights();
+  loadNews(); // Load in background, no await needed
 
   // Populate state dropdown and apply initial filters
   populateStateDropdown('');
   applyFilters();
+};
+
+// =============================================================================
+// Daily News Feed
+// =============================================================================
+let newsArticles = [];
+let newsVisibleCount = 10;
+const NEWS_PAGE_SIZE = 10;
+
+const getSourceBadgeClass = (source) => {
+  const s = source.toLowerCase();
+  if (s.includes('becker')) return 'beckers';
+  if (s.includes('stat')) return 'stat-news';
+  if (s.includes('healthcare dive')) return 'healthcare-dive';
+  if (s.includes('fierce')) return 'fierce';
+  if (s.includes('health affairs')) return 'health-affairs';
+  return 'default';
+};
+
+const formatNewsDate = (dateStr) => {
+  if (!dateStr) return '';
+  try {
+    const d = new Date(dateStr + 'T00:00:00');
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  } catch {
+    return dateStr;
+  }
+};
+
+const renderNewsFeed = () => {
+  const list = document.getElementById('news-feed-list');
+  const footer = document.getElementById('news-feed-footer');
+  if (!list) return;
+
+  if (!newsArticles.length) {
+    list.innerHTML = '<div class="empty-state">No news articles available.</div>';
+    if (footer) footer.style.display = 'none';
+    return;
+  }
+
+  const visible = newsArticles.slice(0, newsVisibleCount);
+
+  list.innerHTML = visible.map(article => `
+    <a class="news-card" href="${article.url}" target="_blank" rel="noopener noreferrer">
+      <div class="news-card-body">
+        <h4 class="news-card-title">${article.title}</h4>
+        <p class="news-card-summary">${article.summary}</p>
+      </div>
+      <div class="news-card-meta">
+        <span class="news-source-badge ${getSourceBadgeClass(article.source)}">${article.source}</span>
+        <span class="news-card-date">${formatNewsDate(article.publishedAt)}</span>
+      </div>
+    </a>
+  `).join('');
+
+  if (footer) {
+    footer.style.display = newsVisibleCount < newsArticles.length ? '' : 'none';
+  }
+};
+
+const loadNews = async () => {
+  try {
+    const data = await fetchJson(`${DATA_BASE_URL}/news.json`);
+    newsArticles = data.articles ?? [];
+    renderNewsFeed();
+  } catch (err) {
+    console.warn('News feed not available:', err.message);
+    const list = document.getElementById('news-feed-list');
+    if (list) list.innerHTML = '<div class="empty-state">News feed unavailable.</div>';
+  }
+};
+
+const initNewsFeed = () => {
+  const showMoreBtn = document.getElementById('news-show-more');
+  if (showMoreBtn) {
+    showMoreBtn.addEventListener('click', () => {
+      newsVisibleCount += NEWS_PAGE_SIZE;
+      renderNewsFeed();
+    });
+  }
 };
 
 // =============================================================================
