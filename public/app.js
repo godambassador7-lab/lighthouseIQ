@@ -2033,7 +2033,7 @@ const renderBarChart = () => {
   if (!barChart) return;
 
   const sortedStates = Object.entries(stateData)
-    .sort((a, b) => b[1] - a[1])
+    .sort((a, b) => (b[1].count ?? 0) - (a[1].count ?? 0))
     .slice(0, 20);
 
   if (sortedStates.length === 0) {
@@ -2041,7 +2041,7 @@ const renderBarChart = () => {
     return;
   }
 
-  const maxCount = sortedStates[0][1];
+  const maxCount = sortedStates[0][1].count ?? 1;
 
   // Generate dynamic color based on intensity (green to yellow to red)
   const getBarColor = (count, max) => {
@@ -2056,7 +2056,8 @@ const renderBarChart = () => {
       Top 20 States by Notice Count
     </div>
     <div class="bar-chart-container">
-      ${sortedStates.map(([state, count], index) => {
+      ${sortedStates.map(([state, data]) => {
+        const count = data.count ?? 0;
         const percentage = (count / maxCount) * 100;
         const color = getBarColor(count, maxCount);
         const isSelected = selectedStates.includes(state);
