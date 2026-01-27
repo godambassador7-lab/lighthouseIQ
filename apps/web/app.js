@@ -115,6 +115,8 @@ let programsMeta = { lastUpdated: null, sources: [] };
 let programsLoaded = false;
 let programsModuleInitialized = false;
 let programsRefreshPrompted = false;
+let lastNoticeWindowCount = 0;
+let noticeWindowRaf = null;
 
 const REQUIRED_PROGRAM_ACCREDITORS = ['CCNE', 'ACEN', 'CNEA'];
 
@@ -248,6 +250,43 @@ const parseMaybeJson = (value) => {
     }
   }
   return [String(value)];
+};
+
+const refreshNoticeListWindow = (count = lastNoticeWindowCount) => {
+  if (!noticeList) return;
+  lastNoticeWindowCount = count;
+  if (!count) {
+    noticeList.style.maxHeight = '';
+    noticeList.classList.remove('windowed');
+    return;
+  }
+
+  if (noticeWindowRaf) {
+    cancelAnimationFrame(noticeWindowRaf);
+  }
+
+  noticeWindowRaf = requestAnimationFrame(() => {
+    const firstCard = noticeList.querySelector('.notice-card');
+    if (!firstCard) {
+      noticeWindowRaf = requestAnimationFrame(() => refreshNoticeListWindow(count));
+      return;
+    }
+
+    const cardHeight = firstCard.getBoundingClientRect().height;
+    if (!Number.isFinite(cardHeight) || cardHeight <= 0) {
+      noticeWindowRaf = requestAnimationFrame(() => refreshNoticeListWindow(count));
+      return;
+    }
+
+    const styles = getComputedStyle(noticeList);
+    const gapValue = styles.rowGap || styles.gap || '0';
+    const gap = Number.parseFloat(gapValue);
+    const safeGap = Number.isFinite(gap) ? gap : 0;
+    const windowCount = Math.min(NOTICE_WINDOW_COUNT, count);
+    const windowHeight = (cardHeight * windowCount) + (safeGap * Math.max(0, windowCount - 1));
+    noticeList.style.maxHeight = `${Math.ceil(windowHeight)}px`;
+    noticeList.classList.toggle('windowed', count > NOTICE_WINDOW_COUNT);
+  });
 };
 
 const escapeHtml = (value) => {
@@ -458,27 +497,10 @@ const loadStates = async () => {
 
 const renderNotices = (notices) => {
   const visibleNotices = notices.slice(0, NOTICE_MAX_COUNT);
-  const applyNoticeListWindow = (count) => {
-    if (!noticeList) return;
-    if (!count) {
-      noticeList.style.maxHeight = '';
-      noticeList.classList.remove('windowed');
-      return;
-    }
-    const firstCard = noticeList.querySelector('.notice-card');
-    if (!firstCard) return;
-    const cardHeight = firstCard.getBoundingClientRect().height;
-    const styles = getComputedStyle(noticeList);
-    const gap = parseFloat(styles.rowGap || styles.gap || '0');
-    const windowCount = Math.min(NOTICE_WINDOW_COUNT, count);
-    const windowHeight = (cardHeight * windowCount) + (gap * Math.max(0, windowCount - 1));
-    noticeList.style.maxHeight = `${Math.ceil(windowHeight)}px`;
-    noticeList.classList.toggle('windowed', count > NOTICE_WINDOW_COUNT);
-  };
 
   if (!visibleNotices.length) {
     noticeList.innerHTML = `<div class="empty-state">No notices match these filters yet.</div>`;
-    applyNoticeListWindow(0);
+    refreshNoticeListWindow(0);
     return;
   }
 
@@ -562,7 +584,7 @@ const renderNotices = (notices) => {
     });
   });
 
-  applyNoticeListWindow(visibleNotices.length);
+  refreshNoticeListWindow(visibleNotices.length);
 };
 
 // Close dropdowns when clicking elsewhere
@@ -2322,6 +2344,11 @@ const initApp = () => {
   renderProjects();
   loadNotices();
 };
+
+window.addEventListener('resize', () => refreshNoticeListWindow());
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(() => refreshNoticeListWindow());
+}
 
 // Auto-init if already authenticated
 if (checkAuth()) {
