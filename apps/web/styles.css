@@ -1815,6 +1815,35 @@ input[type="range"] {
   gap: 0;
 }
 
+.news-feed-list.news-feed-windowed {
+  overflow-y: auto;
+  padding-right: 6px;
+  scrollbar-gutter: stable;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.news-feed-list.news-feed-windowed::-webkit-scrollbar {
+  width: 10px;
+}
+
+.news-feed-list.news-feed-windowed::-webkit-scrollbar-track {
+  background: rgba(26, 54, 93, 0.06);
+  border-radius: 6px;
+}
+
+.news-feed-list.news-feed-windowed::-webkit-scrollbar-thumb {
+  background: rgba(26, 54, 93, 0.25);
+  border-radius: 6px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.news-feed-list.news-feed-windowed::-webkit-scrollbar-thumb:hover {
+  background: rgba(26, 54, 93, 0.4);
+  background-clip: content-box;
+}
+
 .news-card {
   display: grid;
   grid-template-columns: 1fr auto;

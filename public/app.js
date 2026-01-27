@@ -2225,8 +2225,7 @@ const initApp = async () => {
 // Daily News Feed
 // =============================================================================
 let newsArticles = [];
-let newsVisibleCount = 10;
-const NEWS_PAGE_SIZE = 10;
+const NEWS_WINDOW_COUNT = 5;
 
 const getSourceBadgeClass = (source) => {
   const s = source.toLowerCase();
@@ -2250,18 +2249,16 @@ const formatNewsDate = (dateStr) => {
 
 const renderNewsFeed = () => {
   const list = document.getElementById('news-feed-list');
-  const footer = document.getElementById('news-feed-footer');
   if (!list) return;
 
   if (!newsArticles.length) {
     list.innerHTML = '<div class="empty-state">No news articles available.</div>';
-    if (footer) footer.style.display = 'none';
+    list.style.maxHeight = '';
+    list.classList.remove('news-feed-windowed');
     return;
   }
 
-  const visible = newsArticles.slice(0, newsVisibleCount);
-
-  list.innerHTML = visible.map(article => `
+  list.innerHTML = newsArticles.map(article => `
     <a class="news-card" href="${article.url}" target="_blank" rel="noopener noreferrer">
       <div class="news-card-body">
         <h4 class="news-card-title">${article.title}</h4>
@@ -2274,9 +2271,21 @@ const renderNewsFeed = () => {
     </a>
   `).join('');
 
-  if (footer) {
-    footer.style.display = newsVisibleCount < newsArticles.length ? '' : 'none';
-  }
+  requestAnimationFrame(() => {
+    const cards = list.querySelectorAll('.news-card');
+    if (cards.length <= NEWS_WINDOW_COUNT) {
+      list.style.maxHeight = '';
+      list.classList.remove('news-feed-windowed');
+      return;
+    }
+    let height = 0;
+    for (let i = 0; i < Math.min(NEWS_WINDOW_COUNT, cards.length); i++) {
+      height += cards[i].getBoundingClientRect().height;
+    }
+    height += NEWS_WINDOW_COUNT - 1;
+    list.style.maxHeight = `${Math.ceil(height)}px`;
+    list.classList.add('news-feed-windowed');
+  });
 };
 
 const loadNews = async () => {
@@ -2291,15 +2300,7 @@ const loadNews = async () => {
   }
 };
 
-const initNewsFeed = () => {
-  const showMoreBtn = document.getElementById('news-show-more');
-  if (showMoreBtn) {
-    showMoreBtn.addEventListener('click', () => {
-      newsVisibleCount += NEWS_PAGE_SIZE;
-      renderNewsFeed();
-    });
-  }
-};
+const initNewsFeed = () => {};
 
 // =============================================================================
 // Strategic Review Module - Nursing Market Intelligence
@@ -2408,10 +2409,16 @@ const renderStrategicReview = async () => {
   const specialtySignalStatus = specialtySignals?.status || 'pending';
   const specialtySourceText = specialtySignalSources.map(source => source.name).filter(Boolean).join(' + ');
 
-  const formatSignalValue = (entry) => {
+  const formatSignalValue = (entry, isProxy) => {
     if (!entry || !entry.state) return '--';
+    const stateName = STATE_NAMES[entry.state] || entry.state;
+    if (isProxy) return stateName;
     const value = entry.value ?? entry.count ?? entry.score ?? null;
-    return value !== null && value !== undefined ? `${entry.state} • ${value}` : entry.state;
+    if (value !== null && value !== undefined) {
+      const formatted = value >= 1000 ? `${(value / 1000).toFixed(1)}K` : value.toLocaleString();
+      return `${stateName} • ${formatted}`;
+    }
+    return stateName;
   };
 
   const renderSpecialtySignals = () => {
@@ -2420,14 +2427,15 @@ const renderStrategicReview = async () => {
         const top = card.topState || card.most || card.highest || null;
         const low = card.bottomState || card.least || card.lowest || null;
         const tip = card.tip || card.tips || card.notes || 'Target top states for near-term outreach.';
+        const isProxy = (tip && tip.includes('not specialty-specific')) || (card.source && card.source.includes('proxy'));
         return `
           <div class="specialty-signal-card">
             <div class="specialty-signal-title">${card.specialty || card.name || 'Specialty'}</div>
             <div class="specialty-signal-rows">
-              <div><span class="label">Top</span><span class="value">${formatSignalValue(top)}</span></div>
-              <div><span class="label">Least</span><span class="value">${formatSignalValue(low)}</span></div>
+              <div><span class="label">Highest supply</span><span class="value">${formatSignalValue(top, isProxy)}</span></div>
+              <div><span class="label">Lowest supply</span><span class="value">${formatSignalValue(low, isProxy)}</span></div>
             </div>
-            <div class="specialty-signal-tip">${tip}</div>
+            <div class="specialty-signal-tip">${isProxy ? 'Based on total RN employment. Specialty-specific data coming soon.' : tip}</div>
           </div>
         `;
       }).join('');

@@ -94,7 +94,7 @@ let currentMapView = 'map'; // 'map' or 'chart'
 let selectedStates = []; // Multi-select states
 let mapScope = 'healthcare'; // 'healthcare' or 'all'
 const NOTICE_MAX_COUNT = 100;
-const NOTICE_WINDOW_COUNT = 15;
+const NOTICE_WINDOW_COUNT = 10;
 const HEALTHCARE_KEYWORDS = [
   'hospital',
   'healthcare',
@@ -292,7 +292,7 @@ const refreshNoticeListWindow = (count = lastNoticeWindowCount) => {
     const windowCount = Math.min(NOTICE_WINDOW_COUNT, count);
     const windowHeight = (cardHeight * windowCount) + (safeGap * Math.max(0, windowCount - 1));
     noticeList.style.maxHeight = `${Math.ceil(windowHeight)}px`;
-    noticeList.classList.toggle('windowed', count > NOTICE_WINDOW_COUNT);
+    noticeList.classList.add('windowed');
   });
 };
 
@@ -2379,8 +2379,7 @@ const initMapToggle = () => {
 // Daily News Feed
 // =============================================================================
 let newsArticles = [];
-let newsVisibleCount = 10;
-const NEWS_PAGE_SIZE = 10;
+const NEWS_WINDOW_COUNT = 5;
 
 const getSourceBadgeClass = (source) => {
   const s = source.toLowerCase();
@@ -2404,18 +2403,16 @@ const formatNewsDate = (dateStr) => {
 
 const renderNewsFeed = () => {
   const list = document.getElementById('news-feed-list');
-  const footer = document.getElementById('news-feed-footer');
   if (!list) return;
 
   if (!newsArticles.length) {
     list.innerHTML = '<div class="empty-state">No news articles available.</div>';
-    if (footer) footer.style.display = 'none';
+    list.style.maxHeight = '';
+    list.classList.remove('news-feed-windowed');
     return;
   }
 
-  const visible = newsArticles.slice(0, newsVisibleCount);
-
-  list.innerHTML = visible.map(article => `
+  list.innerHTML = newsArticles.map(article => `
     <a class="news-card" href="${article.url}" target="_blank" rel="noopener noreferrer">
       <div class="news-card-body">
         <h4 class="news-card-title">${article.title}</h4>
@@ -2428,9 +2425,21 @@ const renderNewsFeed = () => {
     </a>
   `).join('');
 
-  if (footer) {
-    footer.style.display = newsVisibleCount < newsArticles.length ? '' : 'none';
-  }
+  requestAnimationFrame(() => {
+    const cards = list.querySelectorAll('.news-card');
+    if (cards.length <= NEWS_WINDOW_COUNT) {
+      list.style.maxHeight = '';
+      list.classList.remove('news-feed-windowed');
+      return;
+    }
+    let height = 0;
+    for (let i = 0; i < Math.min(NEWS_WINDOW_COUNT, cards.length); i++) {
+      height += cards[i].getBoundingClientRect().height;
+    }
+    height += NEWS_WINDOW_COUNT - 1;
+    list.style.maxHeight = `${Math.ceil(height)}px`;
+    list.classList.add('news-feed-windowed');
+  });
 };
 
 const loadNews = async () => {
@@ -2445,15 +2454,7 @@ const loadNews = async () => {
   }
 };
 
-const initNewsFeed = () => {
-  const showMoreBtn = document.getElementById('news-show-more');
-  if (showMoreBtn) {
-    showMoreBtn.addEventListener('click', () => {
-      newsVisibleCount += NEWS_PAGE_SIZE;
-      renderNewsFeed();
-    });
-  }
-};
+const initNewsFeed = () => {};
 
 // Initialize app (called after login)
 const initApp = () => {
