@@ -1815,11 +1815,36 @@ app.get('/notices', requirePasscode, apiLimiter, async (req, res) => {
   res.json({ notices: rows, nextCursor });
 });
 
-app.get('/states', requirePasscode, apiLimiter, async (_req, res) => {
+app.get('/states', requirePasscode, apiLimiter, async (req, res) => {
+  const recruiterFocus = sanitizeString(String(req.query.recruiterFocus ?? ''), 10).toLowerCase();
+
+  const healthcarePatterns = [
+    'hospital', 'medical center', 'health system', 'healthcare', 'health care',
+    'clinic', 'nursing', 'skilled nursing', 'long term care', 'ltc', 'snf',
+    'hospice', 'behavioral health', 'rehab', 'home health', 'assisted living',
+    'senior care', 'elder care', 'medical', 'patient', 'physician'
+  ];
+
+  const isHealthcareRelated = (notice: NormalizedWarnNotice): boolean => {
+    if (notice.naics && notice.naics.startsWith('62')) return true;
+    if (notice.nursingImpact?.label === 'Likely' || notice.nursingImpact?.label === 'Possible') return true;
+    if ((notice.nursingImpact?.score ?? 0) >= 20) return true;
+    const textToSearch = [
+      notice.employerName,
+      notice.parentSystem,
+      notice.reason,
+      notice.rawText
+    ].filter(Boolean).join(' ').toLowerCase();
+    return healthcarePatterns.some(pattern => textToSearch.includes(pattern));
+  };
+
   if (!pool) {
     // Build from cache
     const counts: Record<string, number> = {};
-    for (const n of cachedNotices) {
+    const source = (recruiterFocus === '1' || recruiterFocus === 'true')
+      ? cachedNotices.filter(isHealthcareRelated)
+      : cachedNotices;
+    for (const n of source) {
       counts[n.state] = (counts[n.state] || 0) + 1;
     }
     const states = Object.entries(counts)
@@ -1827,6 +1852,27 @@ app.get('/states', requirePasscode, apiLimiter, async (_req, res) => {
       .sort((a, b) => a.state.localeCompare(b.state));
     return res.json({ states, cached: true });
   }
+  if (recruiterFocus === '1' || recruiterFocus === 'true') {
+    const rows = await query<{ state: string; count: number }>(
+      `
+        SELECT state, COUNT(*)::int as count
+        FROM warn_notices
+        WHERE (
+          COALESCE(nursing_label, 'Unclear') <> 'Unclear'
+          OR (naics IS NOT NULL AND naics LIKE '62%')
+          OR employer_name ILIKE ANY($1)
+          OR parent_system ILIKE ANY($1)
+          OR reason ILIKE ANY($1)
+          OR raw_text ILIKE ANY($1)
+        )
+        GROUP BY state
+        ORDER BY state ASC
+      `,
+      [healthcarePatterns.map(pattern => `%${pattern}%`)]
+    );
+    return res.json({ states: rows });
+  }
+
   const rows = await query<{ state: string; count: number }>(
     `SELECT state, COUNT(*)::int as count FROM warn_notices GROUP BY state ORDER BY state ASC`
   );
