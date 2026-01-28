@@ -19,6 +19,7 @@ const REFRESH_TOKEN_TTL_DAYS = Number(process.env.REFRESH_TOKEN_TTL_DAYS ?? 7);
 const TOKEN_SECRET = process.env.TOKEN_SECRET ?? crypto.randomBytes(32).toString('hex');
 const REFRESH_SECRET = process.env.REFRESH_SECRET ?? crypto.randomBytes(32).toString('hex');
 const AUDIT_LOG_PATH = process.env.AUDIT_LOG_PATH ?? path.resolve(process.cwd(), 'logs', 'audit.log');
+const COOKIE_SAMESITE = (process.env.COOKIE_SAMESITE ?? 'lax').toLowerCase();
 const CORS_ORIGINS = (process.env.CORS_ORIGINS ?? '')
   .split(',')
   .map(origin => origin.trim())
@@ -35,6 +36,7 @@ type AuthContext = {
   exp: number;
   jti: string;
   ua: string;
+  role: string;
 };
 
 declare global {
@@ -46,6 +48,7 @@ declare global {
 }
 
 const refreshStore = new Map<string, { exp: number; ua: string }>();
+const ACCESS_ROLE = process.env.ACCESS_ROLE ?? 'admin';
 
 // Security headers
 app.use(helmet({
@@ -141,7 +144,7 @@ const getUserAgentHash = (req: express.Request) => {
   return crypto.createHash('sha256').update(ua).digest('hex');
 };
 
-const issueTokens = (uaHash: string) => {
+const issueTokens = (uaHash: string, role: string) => {
   const now = Math.floor(Date.now() / 1000);
   for (const [jti, data] of refreshStore.entries()) {
     if (data.exp < now) refreshStore.delete(jti);
@@ -152,7 +155,7 @@ const issueTokens = (uaHash: string) => {
   const refreshJti = crypto.randomBytes(24).toString('hex');
 
   const accessToken = signToken(
-    { sub: 'access', jti: accessJti, exp: accessExp, ua: uaHash },
+    { sub: 'access', jti: accessJti, exp: accessExp, ua: uaHash, role },
     TOKEN_SECRET
   );
   const refreshToken = signToken(
@@ -164,12 +167,43 @@ const issueTokens = (uaHash: string) => {
   return { accessToken, refreshToken, accessExp };
 };
 
+const storeRefreshToken = async (jti: string, uaHash: string, role: string, expSeconds: number) => {
+  if (!pool) return;
+  const expiresAt = new Date(expSeconds * 1000);
+  await pool.query(
+    `INSERT INTO auth_refresh_tokens (jti, ua_hash, role, expires_at)
+     VALUES ($1, $2, $3, $4)
+     ON CONFLICT (jti) DO NOTHING`,
+    [jti, uaHash, role, expiresAt]
+  );
+};
+
+const getRefreshTokenRecord = async (jti: string) => {
+  if (!pool) return null;
+  const rows = await query<{ jti: string; ua_hash: string; role: string; expires_at: Date; revoked: boolean }>(
+    `SELECT jti, ua_hash, role, expires_at, revoked FROM auth_refresh_tokens WHERE jti = $1`,
+    [jti]
+  );
+  return rows[0] ?? null;
+};
+
+const revokeRefreshToken = async (jti: string) => {
+  if (!pool) return;
+  await pool.query(`UPDATE auth_refresh_tokens SET revoked = true WHERE jti = $1`, [jti]);
+};
+
+const revokeAllRefreshTokens = async () => {
+  if (!pool) return;
+  await pool.query(`UPDATE auth_refresh_tokens SET revoked = true WHERE revoked = false`);
+};
+
 const setAuthCookies = (res: express.Response, tokens: { accessToken: string; refreshToken: string }) => {
   const secure = process.env.NODE_ENV === 'production';
+  const sameSite = (COOKIE_SAMESITE === 'none' ? 'none' : COOKIE_SAMESITE === 'strict' ? 'strict' : 'lax') as 'lax' | 'strict' | 'none';
   const common = {
     httpOnly: true,
     secure,
-    sameSite: 'lax' as const,
+    sameSite,
     path: '/'
   };
   res.cookie('access_token', tokens.accessToken, {
@@ -180,6 +214,19 @@ const setAuthCookies = (res: express.Response, tokens: { accessToken: string; re
     ...common,
     maxAge: REFRESH_TOKEN_TTL_DAYS * 24 * 60 * 60 * 1000
   });
+};
+
+const setCsrfCookie = (res: express.Response) => {
+  const secure = process.env.NODE_ENV === 'production';
+  const sameSite = (COOKIE_SAMESITE === 'none' ? 'none' : COOKIE_SAMESITE === 'strict' ? 'strict' : 'lax') as 'lax' | 'strict' | 'none';
+  const token = crypto.randomBytes(24).toString('hex');
+  res.cookie('csrf_token', token, {
+    httpOnly: false,
+    secure,
+    sameSite,
+    path: '/'
+  });
+  return token;
 };
 
 const clearAuthCookies = (res: express.Response) => {
@@ -213,6 +260,24 @@ const authAudit = (req: express.Request, res: express.Response, next: express.Ne
   next();
 };
 
+const requireCsrf = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  if (req.method === 'GET' || req.method === 'HEAD') return next();
+  const csrfCookie = getCookie(req, 'csrf_token');
+  const csrfHeader = String(req.headers['x-csrf-token'] ?? '');
+  if (!csrfCookie || !csrfHeader || csrfCookie !== csrfHeader) {
+    return res.status(403).json({ success: false, error: 'CSRF validation failed' });
+  }
+  return next();
+};
+
+const requireRole = (role: string) => (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const current = req.auth?.role ?? 'user';
+  if (current !== role) {
+    return res.status(403).json({ success: false, error: 'Insufficient role' });
+  }
+  return next();
+};
+
 const REGION_STATES: Record<string, string[]> = {
   Northeast: ['CT', 'ME', 'MA', 'NH', 'RI', 'VT', 'NJ', 'NY', 'PA'],
   Midwest: ['IL', 'IN', 'MI', 'OH', 'WI', 'IA', 'KS', 'MN', 'MO', 'NE', 'ND', 'SD'],
@@ -239,6 +304,25 @@ async function query<T = any>(sql: string, params: any[] = []): Promise<T[]> {
   const res = await pool.query(sql, params);
   return res.rows as T[];
 }
+
+async function ensureAuthTables(): Promise<void> {
+  if (!pool) return;
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS auth_refresh_tokens (
+      jti TEXT PRIMARY KEY,
+      ua_hash TEXT NOT NULL,
+      role TEXT NOT NULL,
+      expires_at TIMESTAMP NOT NULL,
+      revoked BOOLEAN NOT NULL DEFAULT false,
+      created_at TIMESTAMP NOT NULL DEFAULT NOW()
+    )
+  `);
+  await pool.query(`CREATE INDEX IF NOT EXISTS idx_auth_refresh_tokens_expires ON auth_refresh_tokens(expires_at)`);
+}
+
+ensureAuthTables().catch(() => {
+  // ignore table bootstrap errors
+});
 
 type NursingProgram = {
   id: string;
@@ -362,7 +446,8 @@ function requireAuth(req: express.Request, res: express.Response, next: express.
     sub: 'user',
     exp: payload.exp,
     jti: payload.jti ?? 'unknown',
-    ua: uaHash
+    ua: uaHash,
+    role: payload.role ?? 'user'
   };
   return next();
 }
@@ -1480,12 +1565,17 @@ app.post('/auth/login', authLimiter, (req, res) => {
   }
 
   const uaHash = getUserAgentHash(req);
-  const tokens = issueTokens(uaHash);
+  const tokens = issueTokens(uaHash, ACCESS_ROLE);
   setAuthCookies(res, tokens);
-  return res.json({ success: true, expiresAt: tokens.accessExp });
+  const csrfToken = setCsrfCookie(res);
+  const refreshPayload = verifyToken(tokens.refreshToken, REFRESH_SECRET);
+  if (refreshPayload?.jti) {
+    await storeRefreshToken(refreshPayload.jti, uaHash, ACCESS_ROLE, refreshPayload.exp);
+  }
+  return res.json({ success: true, expiresAt: tokens.accessExp, csrfToken });
 });
 
-app.post('/auth/refresh', authLimiter, (req, res) => {
+app.post('/auth/refresh', authLimiter, requireCsrf, (req, res) => {
   const refreshToken = getCookie(req, 'refresh_token');
   if (!refreshToken) {
     return res.status(401).json({ success: false, error: 'Refresh token required' });
@@ -1494,27 +1584,49 @@ app.post('/auth/refresh', authLimiter, (req, res) => {
   if (!payload || payload.sub !== 'refresh') {
     return res.status(401).json({ success: false, error: 'Invalid refresh token' });
   }
-  const stored = refreshStore.get(payload.jti);
   const uaHash = getUserAgentHash(req);
-  if (!stored || stored.ua !== uaHash) {
-    return res.status(401).json({ success: false, error: 'Refresh token revoked' });
+  if (pool) {
+    const record = await getRefreshTokenRecord(payload.jti);
+    if (!record || record.revoked || record.ua_hash !== uaHash) {
+      await revokeAllRefreshTokens();
+      clearAuthCookies(res);
+      return res.status(401).json({ success: false, error: 'Refresh token revoked' });
+    }
+    await revokeRefreshToken(payload.jti);
+  } else {
+    const stored = refreshStore.get(payload.jti);
+    if (!stored || stored.ua !== uaHash) {
+      refreshStore.clear();
+      clearAuthCookies(res);
+      return res.status(401).json({ success: false, error: 'Refresh token revoked' });
+    }
+    refreshStore.delete(payload.jti);
   }
 
-  refreshStore.delete(payload.jti);
-  const tokens = issueTokens(uaHash);
+  const tokens = issueTokens(uaHash, payload.role ?? ACCESS_ROLE);
   setAuthCookies(res, tokens);
-  return res.json({ success: true, expiresAt: tokens.accessExp });
+  const csrfToken = setCsrfCookie(res);
+  const refreshPayload = verifyToken(tokens.refreshToken, REFRESH_SECRET);
+  if (refreshPayload?.jti) {
+    await storeRefreshToken(refreshPayload.jti, uaHash, payload.role ?? ACCESS_ROLE, refreshPayload.exp);
+  }
+  return res.json({ success: true, expiresAt: tokens.accessExp, csrfToken });
 });
 
-app.post('/auth/logout', authLimiter, (req, res) => {
+app.post('/auth/logout', authLimiter, requireCsrf, (req, res) => {
   const refreshToken = getCookie(req, 'refresh_token');
   if (refreshToken) {
     const payload = verifyToken(refreshToken, REFRESH_SECRET);
     if (payload?.jti) {
-      refreshStore.delete(payload.jti);
+      if (pool) {
+        await revokeRefreshToken(payload.jti);
+      } else {
+        refreshStore.delete(payload.jti);
+      }
     }
   }
   clearAuthCookies(res);
+  res.clearCookie('csrf_token', { path: '/' });
   return res.json({ success: true });
 });
 
@@ -1527,7 +1639,8 @@ app.get('/auth/session', authLimiter, (req, res) => {
   if (!payload) {
     return res.status(401).json({ success: false, error: 'Invalid or expired token' });
   }
-  return res.json({ success: true, expiresAt: payload.exp });
+  const csrfToken = setCsrfCookie(res);
+  return res.json({ success: true, expiresAt: payload.exp, csrfToken });
 });
 
 // Backwards compatibility for old clients
@@ -1664,7 +1777,7 @@ async function upsertNotices(notices: NormalizedWarnNotice[]): Promise<void> {
 }
 
 // POST /fetch - Force fetch from all adapters (live mode)
-app.post('/fetch', requireAuth, apiLimiter, authAudit, async (req, res) => {
+app.post('/fetch', requireAuth, requireRole('admin'), apiLimiter, authAudit, requireCsrf, async (req, res) => {
   const stateParam = String(req.query.state ?? req.body?.state ?? '').toUpperCase();
   const state = parseState(stateParam);
   if (stateParam && !state) {
@@ -1696,7 +1809,7 @@ app.post('/fetch', requireAuth, apiLimiter, authAudit, async (req, res) => {
   }
 });
 
-app.get('/fetch', requireAuth, apiLimiter, authAudit, (_req, res) => {
+app.get('/fetch', requireAuth, requireRole('admin'), apiLimiter, authAudit, (_req, res) => {
   res.status(405).json({ success: false, error: 'Use POST /fetch' });
 });
 
@@ -2096,7 +2209,7 @@ app.get('/states', requireAuth, apiLimiter, authAudit, async (req, res) => {
   res.json({ states: rows });
 });
 
-app.get('/insights/alerts', requireAuth, apiLimiter, authAudit, async (_req, res) => {
+app.get('/insights/alerts', requireAuth, requireRole('admin'), apiLimiter, authAudit, async (_req, res) => {
   const recent = (await getRecentInsightNotices(14)).filter(isHealthcareInsight);
   const allNotices = (await getInsightNotices()).filter(isHealthcareInsight);
   const leadMap = new Map<string, { sum: number; count: number }>();
@@ -2133,7 +2246,7 @@ app.get('/insights/alerts', requireAuth, apiLimiter, authAudit, async (_req, res
   res.json({ alerts, count: alerts.length });
 });
 
-app.get('/insights/geo', requireAuth, apiLimiter, authAudit, async (_req, res) => {
+app.get('/insights/geo', requireAuth, requireRole('admin'), apiLimiter, authAudit, async (_req, res) => {
   const recent = (await getRecentInsightNotices(90)).filter(isHealthcareInsight);
   const geoMap = new Map<string, { state: string; city: string | null; total: number }>();
 
@@ -2156,7 +2269,7 @@ app.get('/insights/geo', requireAuth, apiLimiter, authAudit, async (_req, res) =
   res.json({ locations, count: locations.length });
 });
 
-app.get('/insights/talent', requireAuth, apiLimiter, authAudit, async (_req, res) => {
+app.get('/insights/talent', requireAuth, requireRole('admin'), apiLimiter, authAudit, async (_req, res) => {
   const recent = (await getRecentInsightNotices(90)).filter(isHealthcareInsight);
   const talentMap = new Map<string, { state: string; city: string | null; total: number; specialties: Set<string>; notices: number }>();
 
@@ -2192,7 +2305,7 @@ app.get('/insights/talent', requireAuth, apiLimiter, authAudit, async (_req, res
   res.json({ opportunities, count: opportunities.length });
 });
 
-app.get('/insights/employers', requireAuth, apiLimiter, authAudit, async (_req, res) => {
+app.get('/insights/employers', requireAuth, requireRole('admin'), apiLimiter, authAudit, async (_req, res) => {
   const notices = (await getInsightNotices()).filter(isHealthcareInsight);
   const map = new Map<string, { employer_id: string; employer_name: string; parent_system: string | null; state: string; total: number; affectedSum: number; affectedCount: number; leadSum: number; leadCount: number; first: string | null; last: string | null }>();
 
@@ -2243,7 +2356,7 @@ app.get('/insights/employers', requireAuth, apiLimiter, authAudit, async (_req, 
   res.json({ employers, count: employers.length });
 });
 
-app.get('/insights/systems', requireAuth, apiLimiter, authAudit, async (_req, res) => {
+app.get('/insights/systems', requireAuth, requireRole('admin'), apiLimiter, authAudit, async (_req, res) => {
   const notices = (await getInsightNotices()).filter(isHealthcareInsight);
   const map = new Map<string, { system_name: string; total: number; affected: number; states: Set<string>; last: string | null }>();
 

@@ -127,12 +127,20 @@ const clearAuthState = () => {
   loginOverlay.classList.remove('hidden');
 };
 
+const getCsrfToken = () => {
+  const match = document.cookie.split(';').map(c => c.trim()).find(c => c.startsWith('csrf_token='));
+  return match ? decodeURIComponent(match.split('=')[1]) : '';
+};
+
 let refreshPromise = null;
 const refreshSession = async () => {
   if (refreshPromise) return refreshPromise;
   refreshPromise = fetch('/auth/refresh', {
     method: 'POST',
-    credentials: 'include'
+    credentials: 'include',
+    headers: {
+      'X-CSRF-Token': getCsrfToken()
+    }
   })
     .then(res => res.ok)
     .catch(() => false)
@@ -332,14 +340,22 @@ const buildQuery = () => {
 };
 
 const fetchJson = async (path, opts = {}) => {
+  const method = (opts.method || 'GET').toUpperCase();
+  const headers = {
+    ...(opts.headers || {})
+  };
+  if (method !== 'GET' && method !== 'HEAD') {
+    headers['X-CSRF-Token'] = getCsrfToken();
+  }
   const res = await fetch(path, {
     credentials: 'include',
+    headers,
     ...opts
   });
   if (res.status === 401) {
     const refreshed = await refreshSession();
     if (refreshed) {
-      const retry = await fetch(path, { credentials: 'include', ...opts });
+      const retry = await fetch(path, { credentials: 'include', headers, ...opts });
       if (!retry.ok) throw new Error(`Request failed: ${retry.status}`);
       return retry.json();
     }
