@@ -140,7 +140,6 @@ const getLoadedAccreditors = (programs) => {
   });
   return accreditors;
 };
-
 const HEALTHCARE_KEYWORDS = [
   'hospital',
   'healthcare',
@@ -185,6 +184,7 @@ let strategicDataLoaded = false;
 // Authentication (Simple client-side - data is public)
 // =============================================================================
 const SESSION_KEY = 'lni_authenticated';
+
 const checkAuth = () => true;
 
 const handleLogin = (e) => {
@@ -2295,7 +2295,7 @@ const renderNewsFeed = () => {
 
 const loadNews = async () => {
   try {
-    const data = await fetchJson(`${DATA_BASE_URL}/news.json`);
+    const data = await (await fetch('/data/news.json')).json();
     newsArticles = data.articles ?? [];
     renderNewsFeed();
   } catch (err) {
@@ -3002,7 +3002,7 @@ const loadPrograms = async (force = false) => {
   try {
     programsLoading?.classList.add('active');
     updateProgramsLoading(0, 1);
-    const response = await fetch(`${DATA_BASE_URL}/programs.json?ts=${Date.now()}`);
+    const response = await fetch(`/data/programs.json?ts=${Date.now()}`);
     if (!response.ok) throw new Error(`Failed to load programs: ${response.status}`);
     const data = await response.json();
 
