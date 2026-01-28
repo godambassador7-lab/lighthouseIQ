@@ -101,6 +101,12 @@ jobs:
           git fetch origin main
           git rebase origin/main
           git push
+      
+      - name: Trigger Vercel deploy (optional)
+        if: ${{ secrets.VERCEL_DEPLOY_HOOK != '' }}
+        run: curl -fsS -X POST "$VERCEL_DEPLOY_HOOK"
+        env:
+          VERCEL_DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
