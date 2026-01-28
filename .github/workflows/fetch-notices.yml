@@ -37,41 +37,63 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Checkout lighthouse-core
+        uses: actions/checkout@v4
+        with:
+          repository: godambassador7-lab/lighthouse-core
+          token: ${{ secrets.LIGHTHOUSE_CORE_TOKEN }}
+          path: core
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
+          cache-dependency-path: core/package-lock.json
 
-      - name: Install dependencies
+      - name: Install core dependencies
         run: npm ci
+        working-directory: core
 
-      - name: Build core package
-        run: npm run build --workspace=@lni/core
+      - name: Build core packages
+        run: npm run build --workspace=@lni/core && npm run build --workspace=@lni/adapters
+        working-directory: core
 
-      - name: Build adapters package
-        run: npm run build --workspace=@lni/adapters
-
-      - name: Build export script
+      - name: Build export scripts
         run: npx tsc -p scripts/tsconfig.json
+        working-directory: core
+
+      - name: Ensure public data directory
+        run: |
+          mkdir -p public/data
+          mkdir -p public/data/by-state
 
       - name: Run export script
         run: node dist/scripts/export-notices.js
         env:
           NODE_OPTIONS: '--max-old-space-size=4096'
+          LNI_OUTPUT_DIR: ${{ github.workspace }}/public/data
+        working-directory: core
 
       - name: Run programs export script
         run: node dist/scripts/export-programs.js
         env:
           NODE_OPTIONS: '--max-old-space-size=4096'
+          LNI_OUTPUT_DIR: ${{ github.workspace }}/public/data
+        working-directory: core
 
       - name: Run strategic data export script
         run: node dist/scripts/export-strategic.js
         env:
           NODE_OPTIONS: '--max-old-space-size=4096'
+          LNI_OUTPUT_DIR: ${{ github.workspace }}/public/data
+        working-directory: core
 
       - name: Run news feed export script
         run: node dist/scripts/export-news.js
+        env:
+          LNI_OUTPUT_DIR: ${{ github.workspace }}/public/data
+        working-directory: core
 
       - name: Copy frontend to public
         run: |
