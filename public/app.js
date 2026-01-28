@@ -47,6 +47,7 @@ const detailBody = document.getElementById('detail-body');
 const statTotal = document.getElementById('stat-total');
 const statStates = document.getElementById('stat-states');
 const statUpdated = document.getElementById('stat-updated');
+const dataRefreshBadge = document.getElementById('data-refresh-badge');
 const usMapContainer = document.getElementById('us-map');
 const mapTooltip = document.getElementById('map-tooltip');
 const mapToast = document.getElementById('map-toast');
@@ -712,7 +713,11 @@ const loadMetadata = async () => {
   try {
     metadata = await fetchJson(`${DATA_BASE_URL}/metadata.json`);
     setStatus(`Data updated ${formatRelativeTime(metadata.lastUpdated)}`, true);
-    statUpdated.textContent = formatRelativeTime(metadata.lastUpdated);
+    const refreshedLabel = formatRelativeTime(metadata.lastUpdated);
+    statUpdated.textContent = refreshedLabel;
+    if (dataRefreshBadge) {
+      dataRefreshBadge.textContent = `Data refresh: ${refreshedLabel}`;
+    }
   } catch (err) {
     console.error('Failed to load metadata:', err);
     setStatus('Data unavailable', false);
