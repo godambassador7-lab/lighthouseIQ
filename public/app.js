@@ -14,8 +14,8 @@
 // =============================================================================
 // Configuration
 // =============================================================================
-const DATA_BASE_URL = './data';
-const PASSCODE = ''; // Static site: no secret passcode on the client
+const API_BASE_URL = window.LNI_API_BASE_URL || '';
+const PASSCODE = ''; // Static site: token auth still uses passcode to access API
 
 // =============================================================================
 // DOM Elements
@@ -130,27 +130,6 @@ let programsModuleInitialized = false;
 let programsRefreshPrompted = false;
 
 const REQUIRED_PROGRAM_ACCREDITORS = ['CCNE', 'ACEN', 'CNEA'];
-const HEALTHCARE_KEYWORDS = [
-  'hospital',
-  'healthcare',
-  'health care',
-  'medical',
-  'clinic',
-  'nursing',
-  'rehab',
-  'rehabilitation',
-  'hospice',
-  'dialysis',
-  'behavioral health',
-  'mental health',
-  'urgent care',
-  'surgery',
-  'surgical',
-  'home health',
-  'assisted living',
-  'skilled nursing',
-  'long term care'
-];
 
 const getLoadedAccreditors = (programs) => {
   const accreditors = new Set();
@@ -161,21 +140,7 @@ const getLoadedAccreditors = (programs) => {
   });
   return accreditors;
 };
-const isHealthcareNotice = (notice) => {
-  if (notice.isCustom) return true;
-  const naicsRaw = notice.naics ?? notice.naics_code ?? '';
-  const naics = String(naicsRaw).trim();
-  if (naics.startsWith('62')) return true;
-  const haystack = [
-    notice.employer_name,
-    notice.employerName,
-    notice.facility_name,
-    notice.parent_system,
-    notice.industry,
-    notice.business_name
-  ].filter(Boolean).join(' ').toLowerCase();
-  return HEALTHCARE_KEYWORDS.some(keyword => haystack.includes(keyword));
-};
+const isHealthcareNotice = (_notice) => true;
 let strategicData = null; // Will be loaded from strategic.json
 let strategicDataLoaded = false;
 
@@ -183,32 +148,88 @@ let strategicDataLoaded = false;
 // Authentication (Simple client-side - data is public)
 // =============================================================================
 const SESSION_KEY = 'lni_authenticated';
+const ACCESS_TOKEN_KEY = 'lni_access_token';
+const REFRESH_TOKEN_KEY = 'lni_refresh_token';
+const ACCESS_EXPIRES_KEY = 'lni_access_expires';
 
-const checkAuth = () => true;
+const checkAuth = () => {
+  const token = sessionStorage.getItem(ACCESS_TOKEN_KEY);
+  const expires = Number(sessionStorage.getItem(ACCESS_EXPIRES_KEY) || 0);
+  return Boolean(token) && Number.isFinite(expires) && expires * 1000 > Date.now();
+};
+
+const setAuthTokens = (data) => {
+  sessionStorage.setItem(SESSION_KEY, 'true');
+  sessionStorage.setItem(ACCESS_TOKEN_KEY, data.accessToken);
+  sessionStorage.setItem(REFRESH_TOKEN_KEY, data.refreshToken);
+  sessionStorage.setItem(ACCESS_EXPIRES_KEY, String(data.expiresAt));
+};
+
+const clearAuthTokens = () => {
+  sessionStorage.removeItem(SESSION_KEY);
+  sessionStorage.removeItem(ACCESS_TOKEN_KEY);
+  sessionStorage.removeItem(REFRESH_TOKEN_KEY);
+  sessionStorage.removeItem(ACCESS_EXPIRES_KEY);
+};
+
+const refreshAccessToken = async () => {
+  const refreshToken = sessionStorage.getItem(REFRESH_TOKEN_KEY);
+  if (!refreshToken) return false;
+  const res = await fetch(`${API_BASE_URL}/auth/refresh-token`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ refreshToken })
+  });
+  if (!res.ok) return false;
+  const data = await res.json();
+  if (!data?.accessToken) return false;
+  setAuthTokens(data);
+  return true;
+};
 
 const handleLogin = (e) => {
   e.preventDefault();
   const entered = passcodeInput.value.trim();
 
-  if (!PASSCODE || entered === PASSCODE) {
-    sessionStorage.setItem(SESSION_KEY, 'true');
+  if (!entered) {
+    loginError.textContent = 'Please enter a passcode.';
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API_BASE_URL}/auth/token`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ passcode: entered })
+    });
+    const data = await res.json();
+    if (!res.ok || !data.success) {
+      throw new Error('Invalid passcode');
+    }
+    setAuthTokens(data);
     loginOverlay.classList.add('hidden');
     passcodeInput.value = '';
     loginError.textContent = '';
     initApp().then(() => {
       initStrategicReview();
     });
-  } else {
+  } catch {
     loginError.textContent = 'Invalid passcode. Please try again.';
     loginError.classList.remove('shake');
     void loginError.offsetWidth;
     loginError.classList.add('shake');
     passcodeInput.value = '';
     passcodeInput.focus();
+  } else {
+    // no-op
   }
 };
 
-loginOverlay.classList.add('hidden');
+if (checkAuth()) {
+  loginOverlay.classList.add('hidden');
+} else {
+  passcodeInput.focus();
+}
 
 loginForm.addEventListener('submit', handleLogin);
 
@@ -702,16 +723,37 @@ const setLoading = (message) => {
 // Data Loading (Static JSON)
 // =============================================================================
 const fetchJson = async (url) => {
-  const res = await fetch(url);
+  const token = sessionStorage.getItem(ACCESS_TOKEN_KEY);
+  let res = await fetch(`${API_BASE_URL}${url}`, {
+    headers: token ? { Authorization: `Bearer ${token}` } : {}
+  });
+  if (res.status === 401) {
+    const refreshed = await refreshAccessToken();
+    if (refreshed) {
+      const newToken = sessionStorage.getItem(ACCESS_TOKEN_KEY);
+      res = await fetch(`${API_BASE_URL}${url}`, {
+        headers: newToken ? { Authorization: `Bearer ${newToken}` } : {}
+      });
+    }
+  }
+  if (res.status === 401) {
+    clearAuthTokens();
+    loginOverlay.classList.remove('hidden');
+    throw new Error('Session expired. Please log in again.');
+  }
   if (!res.ok) throw new Error(`Failed to fetch ${url}: ${res.status}`);
   return res.json();
 };
 
 const loadMetadata = async () => {
   try {
-    metadata = await fetchJson(`${DATA_BASE_URL}/metadata.json`);
-    setStatus(`Data updated ${formatRelativeTime(metadata.lastUpdated)}`, true);
-    statUpdated.textContent = formatRelativeTime(metadata.lastUpdated);
+    const data = await fetchJson('/health');
+    if (data?.ok) {
+      setStatus('Live data connected', true);
+      statUpdated.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      return;
+    }
+    setStatus('Data unavailable', false);
   } catch (err) {
     console.error('Failed to load metadata:', err);
     setStatus('Data unavailable', false);
@@ -720,7 +762,7 @@ const loadMetadata = async () => {
 
 const loadStates = async () => {
   try {
-    const data = await fetchJson(`${DATA_BASE_URL}/states.json`);
+    const data = await fetchJson('/states');
     stateDataAll = normalizeStateCounts(data.states ?? []);
     stateData = stateDataAll;
     mapStateData = mapScope === 'all' ? stateDataAll : stateDataHealthcare;
@@ -787,7 +829,7 @@ const updateMapColors = () => {
 const loadAllNotices = async () => {
   setLoading('Loading notices...');
   try {
-    const data = await fetchJson(`${DATA_BASE_URL}/notices.json`);
+    const data = await fetchJson('/notices?limit=all&order=recent&recruiterFocus=1');
     allNotices = data.notices ?? [];
     statTotal.textContent = allNotices.length.toString();
     stateDataHealthcare = buildHealthcareStateCounts(allNotices);
@@ -908,10 +950,10 @@ const renderEmployers = (data) => {
 const loadInsights = async () => {
   try {
     const [alerts, geo, talent, employers] = await Promise.all([
-      fetchJson(`${DATA_BASE_URL}/alerts.json`),
-      fetchJson(`${DATA_BASE_URL}/geo.json`),
-      fetchJson(`${DATA_BASE_URL}/talent.json`),
-      fetchJson(`${DATA_BASE_URL}/employers.json`)
+      fetchJson('/insights/alerts'),
+      fetchJson('/insights/geo'),
+      fetchJson('/insights/talent'),
+      fetchJson('/insights/employers')
     ]);
     renderAlerts(alerts);
     renderHeatmap(geo);
@@ -930,7 +972,7 @@ const loadInsights = async () => {
 const loadStrategicData = async () => {
   if (strategicDataLoaded) return strategicData;
   try {
-    strategicData = await fetchJson(`${DATA_BASE_URL}/strategic.json`);
+    strategicData = await fetchJson('/insights/systems');
     strategicDataLoaded = true;
     console.log('Strategic data loaded:', strategicData?.lastUpdated);
     return strategicData;
@@ -2294,7 +2336,7 @@ const renderNewsFeed = () => {
 
 const loadNews = async () => {
   try {
-    const data = await fetchJson(`${DATA_BASE_URL}/news.json`);
+    const data = await (await fetch('/data/news.json')).json();
     newsArticles = data.articles ?? [];
     renderNewsFeed();
   } catch (err) {
@@ -3001,7 +3043,7 @@ const loadPrograms = async (force = false) => {
   try {
     programsLoading?.classList.add('active');
     updateProgramsLoading(0, 1);
-    const response = await fetch(`${DATA_BASE_URL}/programs.json?ts=${Date.now()}`);
+    const response = await fetch(`/data/programs.json?ts=${Date.now()}`);
     if (!response.ok) throw new Error(`Failed to load programs: ${response.status}`);
     const data = await response.json();
 

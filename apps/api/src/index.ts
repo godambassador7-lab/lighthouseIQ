@@ -1575,6 +1575,70 @@ app.post('/auth/login', authLimiter, (req, res) => {
   return res.json({ success: true, expiresAt: tokens.accessExp, csrfToken });
 });
 
+// Token-based auth for static/remote clients
+app.post('/auth/token', authLimiter, async (req, res) => {
+  if (!ACCESS_PASSCODE) {
+    return res.status(500).json({ success: false, error: 'Access passcode is not configured' });
+  }
+  const rawPasscode = req.body?.passcode;
+  if (!rawPasscode || typeof rawPasscode !== 'string') {
+    return res.status(400).json({ success: false, error: 'Passcode required' });
+  }
+  const passcode = sanitizeString(rawPasscode, 100);
+  if (!passcode) {
+    return res.status(400).json({ success: false, error: 'Invalid passcode format' });
+  }
+
+  const isValid = passcode.length === ACCESS_PASSCODE.length &&
+    crypto.timingSafeEqual(Buffer.from(passcode), Buffer.from(ACCESS_PASSCODE));
+  if (!isValid) {
+    return res.status(401).json({ success: false, error: 'Invalid passcode' });
+  }
+
+  const uaHash = getUserAgentHash(req);
+  const tokens = issueTokens(uaHash, ACCESS_ROLE);
+  const refreshPayload = verifyToken(tokens.refreshToken, REFRESH_SECRET);
+  if (refreshPayload?.jti) {
+    await storeRefreshToken(refreshPayload.jti, uaHash, ACCESS_ROLE, refreshPayload.exp);
+  }
+  return res.json({ success: true, accessToken: tokens.accessToken, refreshToken: tokens.refreshToken, expiresAt: tokens.accessExp });
+});
+
+app.post('/auth/refresh-token', authLimiter, async (req, res) => {
+  const rawRefresh = req.body?.refreshToken;
+  if (!rawRefresh || typeof rawRefresh !== 'string') {
+    return res.status(401).json({ success: false, error: 'Refresh token required' });
+  }
+  const payload = verifyToken(rawRefresh, REFRESH_SECRET);
+  if (!payload || payload.sub !== 'refresh') {
+    return res.status(401).json({ success: false, error: 'Invalid refresh token' });
+  }
+  const uaHash = getUserAgentHash(req);
+
+  if (pool) {
+    const record = await getRefreshTokenRecord(payload.jti);
+    if (!record || record.revoked || record.ua_hash !== uaHash) {
+      await revokeAllRefreshTokens();
+      return res.status(401).json({ success: false, error: 'Refresh token revoked' });
+    }
+    await revokeRefreshToken(payload.jti);
+  } else {
+    const stored = refreshStore.get(payload.jti);
+    if (!stored || stored.ua !== uaHash) {
+      refreshStore.clear();
+      return res.status(401).json({ success: false, error: 'Refresh token revoked' });
+    }
+    refreshStore.delete(payload.jti);
+  }
+
+  const tokens = issueTokens(uaHash, payload.role ?? ACCESS_ROLE);
+  const refreshPayload = verifyToken(tokens.refreshToken, REFRESH_SECRET);
+  if (refreshPayload?.jti) {
+    await storeRefreshToken(refreshPayload.jti, uaHash, payload.role ?? ACCESS_ROLE, refreshPayload.exp);
+  }
+  return res.json({ success: true, accessToken: tokens.accessToken, refreshToken: tokens.refreshToken, expiresAt: tokens.accessExp });
+});
+
 app.post('/auth/refresh', authLimiter, requireCsrf, (req, res) => {
   const refreshToken = getCookie(req, 'refresh_token');
   if (!refreshToken) {
