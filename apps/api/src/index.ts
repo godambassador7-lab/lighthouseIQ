@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import path from 'path';
 import crypto from 'crypto';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { Pool } from 'pg';
 import { getAllAdapters, getAdapter } from '@lni/adapters';
@@ -13,6 +14,11 @@ import type { NormalizedWarnNotice, USStateAbbrev } from '@lni/core';
 const PORT = Number(process.env.PORT ?? 8787);
 const DATABASE_URL = process.env.DATABASE_URL;
 const ACCESS_PASSCODE = process.env.ACCESS_PASSCODE;
+const ACCESS_TOKEN_TTL_MIN = Number(process.env.ACCESS_TOKEN_TTL_MIN ?? 15);
+const REFRESH_TOKEN_TTL_DAYS = Number(process.env.REFRESH_TOKEN_TTL_DAYS ?? 7);
+const TOKEN_SECRET = process.env.TOKEN_SECRET ?? crypto.randomBytes(32).toString('hex');
+const REFRESH_SECRET = process.env.REFRESH_SECRET ?? crypto.randomBytes(32).toString('hex');
+const AUDIT_LOG_PATH = process.env.AUDIT_LOG_PATH ?? path.resolve(process.cwd(), 'logs', 'audit.log');
 const CORS_ORIGINS = (process.env.CORS_ORIGINS ?? '')
   .split(',')
   .map(origin => origin.trim())
@@ -23,6 +29,23 @@ let cachedNotices: NormalizedWarnNotice[] = [];
 let lastFetchTime: Date | null = null;
 
 const app = express();
+
+type AuthContext = {
+  sub: string;
+  exp: number;
+  jti: string;
+  ua: string;
+};
+
+declare global {
+  namespace Express {
+    interface Request {
+      auth?: AuthContext;
+    }
+  }
+}
+
+const refreshStore = new Map<string, { exp: number; ua: string }>();
 
 // Security headers
 app.use(helmet({
@@ -49,7 +72,8 @@ if (CORS_ORIGINS.length > 0) {
       if (!origin) return callback(null, true);
       if (CORS_ORIGINS.includes(origin)) return callback(null, true);
       return callback(new Error('Not allowed by CORS'), false);
-    }
+    },
+    credentials: true
   }));
 }
 
@@ -69,9 +93,125 @@ const apiLimiter = rateLimit({
   message: { success: false, error: 'Too many requests. Please slow down.' },
   standardHeaders: true,
   legacyHeaders: false,
+  keyGenerator: (req) => req.auth?.sub ?? req.ip,
 });
 
 app.use(express.json({ limit: '1mb' })); // Limit request body size
+
+const base64url = (input: string) => Buffer.from(input).toString('base64url');
+const signToken = (payload: Record<string, any>, secret: string) => {
+  const header = { alg: 'HS256', typ: 'JWT' };
+  const data = `${base64url(JSON.stringify(header))}.${base64url(JSON.stringify(payload))}`;
+  const signature = crypto.createHmac('sha256', secret).update(data).digest('base64url');
+  return `${data}.${signature}`;
+};
+
+const verifyToken = (token: string, secret: string): Record<string, any> | null => {
+  const parts = token.split('.');
+  if (parts.length !== 3) return null;
+  const [headerB64, payloadB64, signature] = parts;
+  const data = `${headerB64}.${payloadB64}`;
+  const expected = crypto.createHmac('sha256', secret).update(data).digest('base64url');
+  if (!crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected))) return null;
+  let payload: Record<string, any>;
+  try {
+    payload = JSON.parse(Buffer.from(payloadB64, 'base64url').toString('utf8'));
+  } catch {
+    return null;
+  }
+  if (typeof payload.exp !== 'number') return null;
+  const now = Math.floor(Date.now() / 1000);
+  if (payload.exp < now) return null;
+  return payload;
+};
+
+const getCookie = (req: express.Request, name: string): string | null => {
+  const header = req.headers.cookie;
+  if (!header) return null;
+  const parts = header.split(';').map(part => part.trim());
+  for (const part of parts) {
+    const [key, ...rest] = part.split('=');
+    if (key === name) return decodeURIComponent(rest.join('='));
+  }
+  return null;
+};
+
+const getUserAgentHash = (req: express.Request) => {
+  const ua = String(req.headers['user-agent'] ?? '');
+  return crypto.createHash('sha256').update(ua).digest('hex');
+};
+
+const issueTokens = (uaHash: string) => {
+  const now = Math.floor(Date.now() / 1000);
+  for (const [jti, data] of refreshStore.entries()) {
+    if (data.exp < now) refreshStore.delete(jti);
+  }
+  const accessExp = now + ACCESS_TOKEN_TTL_MIN * 60;
+  const refreshExp = now + REFRESH_TOKEN_TTL_DAYS * 24 * 60 * 60;
+  const accessJti = crypto.randomBytes(16).toString('hex');
+  const refreshJti = crypto.randomBytes(24).toString('hex');
+
+  const accessToken = signToken(
+    { sub: 'access', jti: accessJti, exp: accessExp, ua: uaHash },
+    TOKEN_SECRET
+  );
+  const refreshToken = signToken(
+    { sub: 'refresh', jti: refreshJti, exp: refreshExp, ua: uaHash },
+    REFRESH_SECRET
+  );
+
+  refreshStore.set(refreshJti, { exp: refreshExp, ua: uaHash });
+  return { accessToken, refreshToken, accessExp };
+};
+
+const setAuthCookies = (res: express.Response, tokens: { accessToken: string; refreshToken: string }) => {
+  const secure = process.env.NODE_ENV === 'production';
+  const common = {
+    httpOnly: true,
+    secure,
+    sameSite: 'lax' as const,
+    path: '/'
+  };
+  res.cookie('access_token', tokens.accessToken, {
+    ...common,
+    maxAge: ACCESS_TOKEN_TTL_MIN * 60 * 1000
+  });
+  res.cookie('refresh_token', tokens.refreshToken, {
+    ...common,
+    maxAge: REFRESH_TOKEN_TTL_DAYS * 24 * 60 * 60 * 1000
+  });
+};
+
+const clearAuthCookies = (res: express.Response) => {
+  res.clearCookie('access_token', { path: '/' });
+  res.clearCookie('refresh_token', { path: '/' });
+};
+
+const auditLog = (req: express.Request, status: number) => {
+  if (!req.auth) return;
+  const entry = {
+    ts: new Date().toISOString(),
+    sub: req.auth.sub,
+    jti: req.auth.jti,
+    ip: req.ip,
+    ua: req.headers['user-agent'] ?? '',
+    method: req.method,
+    path: req.originalUrl,
+    status
+  };
+  try {
+    const dir = path.dirname(AUDIT_LOG_PATH);
+    fs.mkdirSync(dir, { recursive: true });
+    fs.appendFileSync(AUDIT_LOG_PATH, `${JSON.stringify(entry)}\n`);
+  } catch {
+    // ignore audit log failures
+  }
+};
+
+const authAudit = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  res.on('finish', () => auditLog(req, res.statusCode));
+  next();
+};
 
 const REGION_STATES: Record<string, string[]> = {
   Northeast: ['CT', 'ME', 'MA', 'NH', 'RI', 'VT', 'NJ', 'NY', 'PA'],
@@ -202,21 +342,28 @@ let cachedPrograms: NursingProgram[] = [];
 let programsLastUpdated: Date | null = null;
 let programsSources: ProgramSourceMeta[] = [];
 
-function requirePasscode(req: express.Request, res: express.Response, next: express.NextFunction) {
-  if (!ACCESS_PASSCODE) {
-    return res.status(500).json({ success: false, error: 'Access passcode is not configured' });
+function requireAuth(req: express.Request, res: express.Response, next: express.NextFunction) {
+  const bearer = String(req.headers['authorization'] ?? '');
+  const bearerToken = bearer.toLowerCase().startsWith('bearer ') ? bearer.slice(7).trim() : '';
+  const cookieToken = getCookie(req, 'access_token') ?? '';
+  const token = bearerToken || cookieToken;
+  if (!token) {
+    return res.status(401).json({ success: false, error: 'Authentication required' });
   }
-  const header = String(req.headers['authorization'] ?? '');
-  const headerPasscode = header.toLowerCase().startsWith('bearer ') ? header.slice(7).trim() : '';
-  const passcode = headerPasscode || String(req.headers['x-passcode'] ?? '');
-  if (!passcode || typeof passcode !== 'string') {
-    return res.status(401).json({ success: false, error: 'Passcode required' });
+  const payload = verifyToken(token, TOKEN_SECRET);
+  if (!payload) {
+    return res.status(401).json({ success: false, error: 'Invalid or expired token' });
   }
-  const isValid = passcode.length === ACCESS_PASSCODE.length &&
-    crypto.timingSafeEqual(Buffer.from(passcode), Buffer.from(ACCESS_PASSCODE));
-  if (!isValid) {
-    return res.status(401).json({ success: false, error: 'Invalid passcode' });
+  const uaHash = getUserAgentHash(req);
+  if (payload.ua && payload.ua !== uaHash) {
+    return res.status(401).json({ success: false, error: 'Session mismatch' });
   }
+  req.auth = {
+    sub: 'user',
+    exp: payload.exp,
+    jti: payload.jti ?? 'unknown',
+    ua: uaHash
+  };
   return next();
 }
 
@@ -1290,7 +1437,7 @@ app.get('/health', async (_req, res) => {
   }
 });
 
-app.get('/nursing-programs', requirePasscode, apiLimiter, async (_req, res) => {
+app.get('/nursing-programs', requireAuth, apiLimiter, authAudit, async (_req, res) => {
   try {
     const snapshot = await getProgramsSnapshot();
     res.json({
@@ -1304,8 +1451,8 @@ app.get('/nursing-programs', requirePasscode, apiLimiter, async (_req, res) => {
   }
 });
 
-// Authentication endpoint with rate limiting
-app.post('/auth', authLimiter, (req, res) => {
+// Authentication endpoints with rate limiting
+app.post('/auth/login', authLimiter, (req, res) => {
   if (!ACCESS_PASSCODE) {
     return res.status(500).json({ success: false, error: 'Access passcode is not configured' });
   }
@@ -1328,11 +1475,65 @@ app.post('/auth', authLimiter, (req, res) => {
       Buffer.from(ACCESS_PASSCODE)
     );
 
-  if (isValid) {
-    return res.json({ success: true });
-  } else {
+  if (!isValid) {
     return res.status(401).json({ success: false, error: 'Invalid passcode' });
   }
+
+  const uaHash = getUserAgentHash(req);
+  const tokens = issueTokens(uaHash);
+  setAuthCookies(res, tokens);
+  return res.json({ success: true, expiresAt: tokens.accessExp });
+});
+
+app.post('/auth/refresh', authLimiter, (req, res) => {
+  const refreshToken = getCookie(req, 'refresh_token');
+  if (!refreshToken) {
+    return res.status(401).json({ success: false, error: 'Refresh token required' });
+  }
+  const payload = verifyToken(refreshToken, REFRESH_SECRET);
+  if (!payload || payload.sub !== 'refresh') {
+    return res.status(401).json({ success: false, error: 'Invalid refresh token' });
+  }
+  const stored = refreshStore.get(payload.jti);
+  const uaHash = getUserAgentHash(req);
+  if (!stored || stored.ua !== uaHash) {
+    return res.status(401).json({ success: false, error: 'Refresh token revoked' });
+  }
+
+  refreshStore.delete(payload.jti);
+  const tokens = issueTokens(uaHash);
+  setAuthCookies(res, tokens);
+  return res.json({ success: true, expiresAt: tokens.accessExp });
+});
+
+app.post('/auth/logout', authLimiter, (req, res) => {
+  const refreshToken = getCookie(req, 'refresh_token');
+  if (refreshToken) {
+    const payload = verifyToken(refreshToken, REFRESH_SECRET);
+    if (payload?.jti) {
+      refreshStore.delete(payload.jti);
+    }
+  }
+  clearAuthCookies(res);
+  return res.json({ success: true });
+});
+
+app.get('/auth/session', authLimiter, (req, res) => {
+  const accessToken = getCookie(req, 'access_token');
+  if (!accessToken) {
+    return res.status(401).json({ success: false, error: 'Not authenticated' });
+  }
+  const payload = verifyToken(accessToken, TOKEN_SECRET);
+  if (!payload) {
+    return res.status(401).json({ success: false, error: 'Invalid or expired token' });
+  }
+  return res.json({ success: true, expiresAt: payload.exp });
+});
+
+// Backwards compatibility for old clients
+app.post('/auth', authLimiter, (req, res) => {
+  req.url = '/auth/login';
+  return app.handle(req, res);
 });
 
 // Live fetch from adapters (no DB mode)
@@ -1463,7 +1664,7 @@ async function upsertNotices(notices: NormalizedWarnNotice[]): Promise<void> {
 }
 
 // POST /fetch - Force fetch from all adapters (live mode)
-app.post('/fetch', requirePasscode, async (req, res) => {
+app.post('/fetch', requireAuth, apiLimiter, authAudit, async (req, res) => {
   const stateParam = String(req.query.state ?? req.body?.state ?? '').toUpperCase();
   const state = parseState(stateParam);
   if (stateParam && !state) {
@@ -1495,18 +1696,19 @@ app.post('/fetch', requirePasscode, async (req, res) => {
   }
 });
 
-app.get('/fetch', (_req, res) => {
+app.get('/fetch', requireAuth, apiLimiter, authAudit, (_req, res) => {
   res.status(405).json({ success: false, error: 'Use POST /fetch' });
 });
 
 // GET /notices?state=IN,KY,FL&since=2026-01-01&limit=100&minScore=50
-app.get('/notices', requirePasscode, apiLimiter, async (req, res) => {
+app.get('/notices', requireAuth, apiLimiter, authAudit, async (req, res) => {
   const stateParam = sanitizeString(String(req.query.state ?? ''), 200);
   // Support multiple comma-separated states
   const states = parseStates(stateParam);
   const region = sanitizeString(String(req.query.region ?? ''), 20);
   const org = sanitizeString(String(req.query.org ?? ''), 200);
   const recruiterFocus = sanitizeString(String(req.query.recruiterFocus ?? ''), 10).toLowerCase();
+  const order = sanitizeString(String(req.query.order ?? ''), 20).toLowerCase();
   const sinceRaw = sanitizeString(String(req.query.since ?? ''), 10);
   const since = isValidDateString(sinceRaw) ? sinceRaw : '1970-01-01';
   const limitRaw = sanitizeString(String(req.query.limit ?? '100'), 10).toLowerCase();
@@ -1579,15 +1781,23 @@ app.get('/notices', requirePasscode, apiLimiter, async (req, res) => {
       filtered = filtered.filter(n => !n.noticeDate || n.noticeDate >= since);
     }
 
-    // Sort by nursing score (desc), then by date (desc)
-    filtered.sort((a, b) => {
-      const scoreA = a.nursingImpact?.score ?? 0;
-      const scoreB = b.nursingImpact?.score ?? 0;
-      if (scoreB !== scoreA) return scoreB - scoreA;
-      const dateA = a.noticeDate || a.source.retrievedAt;
-      const dateB = b.noticeDate || b.source.retrievedAt;
-      return dateB.localeCompare(dateA);
-    });
+    if (order === 'recent') {
+      filtered.sort((a, b) => {
+        const dateA = a.noticeDate || a.source.retrievedAt;
+        const dateB = b.noticeDate || b.source.retrievedAt;
+        return dateB.localeCompare(dateA);
+      });
+    } else {
+      // Sort by nursing score (desc), then by date (desc)
+      filtered.sort((a, b) => {
+        const scoreA = a.nursingImpact?.score ?? 0;
+        const scoreB = b.nursingImpact?.score ?? 0;
+        if (scoreB !== scoreA) return scoreB - scoreA;
+        const dateA = a.noticeDate || a.source.retrievedAt;
+        const dateB = b.noticeDate || b.source.retrievedAt;
+        return dateB.localeCompare(dateA);
+      });
+    }
 
     if (cursor) {
       filtered = filtered.filter(n => {
@@ -1702,7 +1912,11 @@ app.get('/notices', requirePasscode, apiLimiter, async (req, res) => {
     params.push(cursor.date, cursor.id);
     paramIndex += 2;
   }
-  sql += ` ORDER BY COALESCE(notice_date, retrieved_at) DESC NULLS LAST`;
+  if (order === 'recent') {
+    sql += ` ORDER BY COALESCE(notice_date, retrieved_at) DESC NULLS LAST, id DESC`;
+  } else {
+    sql += ` ORDER BY COALESCE(nursing_score, 0) DESC, COALESCE(notice_date, retrieved_at) DESC NULLS LAST, id DESC`;
+  }
   if (!noLimit) {
     sql += ` LIMIT $2`;
   }
@@ -1787,7 +2001,10 @@ app.get('/notices', requirePasscode, apiLimiter, async (req, res) => {
         pageParams.push(pageCursor.date, pageCursor.id);
         pageParamIndex += 2;
       }
-      pageSql += ` ORDER BY COALESCE(notice_date, retrieved_at) DESC NULLS LAST LIMIT $2`;
+      const orderBy = order === 'recent'
+        ? 'COALESCE(notice_date, retrieved_at) DESC NULLS LAST, id DESC'
+        : 'COALESCE(nursing_score, 0) DESC, COALESCE(notice_date, retrieved_at) DESC NULLS LAST, id DESC';
+      pageSql += ` ORDER BY ${orderBy} LIMIT $2`;
 
       const pageRows = await query(pageSql, pageParams);
       if (pageRows.length === 0) break;
@@ -1815,7 +2032,7 @@ app.get('/notices', requirePasscode, apiLimiter, async (req, res) => {
   res.json({ notices: rows, nextCursor });
 });
 
-app.get('/states', requirePasscode, apiLimiter, async (req, res) => {
+app.get('/states', requireAuth, apiLimiter, authAudit, async (req, res) => {
   const recruiterFocus = sanitizeString(String(req.query.recruiterFocus ?? ''), 10).toLowerCase();
 
   const healthcarePatterns = [
@@ -1879,7 +2096,7 @@ app.get('/states', requirePasscode, apiLimiter, async (req, res) => {
   res.json({ states: rows });
 });
 
-app.get('/insights/alerts', requirePasscode, apiLimiter, async (_req, res) => {
+app.get('/insights/alerts', requireAuth, apiLimiter, authAudit, async (_req, res) => {
   const recent = (await getRecentInsightNotices(14)).filter(isHealthcareInsight);
   const allNotices = (await getInsightNotices()).filter(isHealthcareInsight);
   const leadMap = new Map<string, { sum: number; count: number }>();
@@ -1916,7 +2133,7 @@ app.get('/insights/alerts', requirePasscode, apiLimiter, async (_req, res) => {
   res.json({ alerts, count: alerts.length });
 });
 
-app.get('/insights/geo', requirePasscode, apiLimiter, async (_req, res) => {
+app.get('/insights/geo', requireAuth, apiLimiter, authAudit, async (_req, res) => {
   const recent = (await getRecentInsightNotices(90)).filter(isHealthcareInsight);
   const geoMap = new Map<string, { state: string; city: string | null; total: number }>();
 
@@ -1939,7 +2156,7 @@ app.get('/insights/geo', requirePasscode, apiLimiter, async (_req, res) => {
   res.json({ locations, count: locations.length });
 });
 
-app.get('/insights/talent', requirePasscode, apiLimiter, async (_req, res) => {
+app.get('/insights/talent', requireAuth, apiLimiter, authAudit, async (_req, res) => {
   const recent = (await getRecentInsightNotices(90)).filter(isHealthcareInsight);
   const talentMap = new Map<string, { state: string; city: string | null; total: number; specialties: Set<string>; notices: number }>();
 
@@ -1975,7 +2192,7 @@ app.get('/insights/talent', requirePasscode, apiLimiter, async (_req, res) => {
   res.json({ opportunities, count: opportunities.length });
 });
 
-app.get('/insights/employers', requirePasscode, apiLimiter, async (_req, res) => {
+app.get('/insights/employers', requireAuth, apiLimiter, authAudit, async (_req, res) => {
   const notices = (await getInsightNotices()).filter(isHealthcareInsight);
   const map = new Map<string, { employer_id: string; employer_name: string; parent_system: string | null; state: string; total: number; affectedSum: number; affectedCount: number; leadSum: number; leadCount: number; first: string | null; last: string | null }>();
 
@@ -2026,7 +2243,7 @@ app.get('/insights/employers', requirePasscode, apiLimiter, async (_req, res) =>
   res.json({ employers, count: employers.length });
 });
 
-app.get('/insights/systems', requirePasscode, apiLimiter, async (_req, res) => {
+app.get('/insights/systems', requireAuth, apiLimiter, authAudit, async (_req, res) => {
   const notices = (await getInsightNotices()).filter(isHealthcareInsight);
   const map = new Map<string, { system_name: string; total: number; affected: number; states: Set<string>; last: string | null }>();
 

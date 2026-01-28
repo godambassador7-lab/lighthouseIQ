@@ -15,7 +15,7 @@
 // Configuration
 // =============================================================================
 const DATA_BASE_URL = './data';
-const PASSCODE = 'IUH126'; // Simple client-side check (data is public anyway)
+const PASSCODE = ''; // Static site: no secret passcode on the client
 
 // =============================================================================
 // DOM Elements
@@ -184,18 +184,13 @@ let strategicDataLoaded = false;
 // =============================================================================
 const SESSION_KEY = 'lni_authenticated';
 
-const checkAuth = () => sessionStorage.getItem(SESSION_KEY) === 'true';
+const checkAuth = () => true;
 
 const handleLogin = (e) => {
   e.preventDefault();
   const entered = passcodeInput.value.trim();
 
-  if (!entered) {
-    loginError.textContent = 'Please enter a passcode.';
-    return;
-  }
-
-  if (entered === PASSCODE) {
+  if (!PASSCODE || entered === PASSCODE) {
     sessionStorage.setItem(SESSION_KEY, 'true');
     loginOverlay.classList.add('hidden');
     passcodeInput.value = '';
@@ -213,11 +208,7 @@ const handleLogin = (e) => {
   }
 };
 
-if (checkAuth()) {
-  loginOverlay.classList.add('hidden');
-} else {
-  passcodeInput.focus();
-}
+loginOverlay.classList.add('hidden');
 
 loginForm.addEventListener('submit', handleLogin);
 

@@ -95,27 +95,6 @@ let selectedStates = []; // Multi-select states
 let mapScope = 'healthcare'; // 'healthcare' or 'all'
 const NOTICE_MAX_COUNT = 100;
 const NOTICE_WINDOW_COUNT = 10;
-const HEALTHCARE_KEYWORDS = [
-  'hospital',
-  'healthcare',
-  'health care',
-  'medical',
-  'clinic',
-  'nursing',
-  'rehab',
-  'rehabilitation',
-  'hospice',
-  'dialysis',
-  'behavioral health',
-  'mental health',
-  'urgent care',
-  'surgery',
-  'surgical',
-  'home health',
-  'assisted living',
-  'skilled nursing',
-  'long term care'
-];
 let calibrationStats = { minCount: 0, maxCount: 0 };
 let nursingPrograms = [];
 let programsMeta = { lastUpdated: null, sources: [] };
@@ -137,34 +116,30 @@ const getLoadedAccreditors = (programs) => {
   return accreditors;
 };
 
-const isHealthcareNotice = (notice) => {
-  if (notice.isCustom) return true;
-  const naicsRaw = notice.naics ?? notice.naics_code ?? '';
-  const naics = String(naicsRaw).trim();
-  if (naics.startsWith('62')) return true;
-  const haystack = [
-    notice.employer_name,
-    notice.employerName,
-    notice.facility_name,
-    notice.parent_system,
-    notice.industry,
-    notice.business_name
-  ].filter(Boolean).join(' ').toLowerCase();
-  return HEALTHCARE_KEYWORDS.some(keyword => haystack.includes(keyword));
-};
 
 // Login handling - server-side validation
 const SESSION_KEY = 'lni_authenticated';
-const PASSCODE_KEY = 'lni_passcode';
 
-const checkAuth = () => {
-  return sessionStorage.getItem(SESSION_KEY) === 'true' && sessionStorage.getItem(PASSCODE_KEY);
+const checkAuth = () => sessionStorage.getItem(SESSION_KEY) === 'true';
+
+const clearAuthState = () => {
+  sessionStorage.removeItem(SESSION_KEY);
+  loginOverlay.classList.remove('hidden');
 };
 
-const getAuthHeaders = () => {
-  const passcode = sessionStorage.getItem(PASSCODE_KEY);
-  if (!passcode) return {};
-  return { 'Authorization': `Bearer ${passcode}` };
+let refreshPromise = null;
+const refreshSession = async () => {
+  if (refreshPromise) return refreshPromise;
+  refreshPromise = fetch('/auth/refresh', {
+    method: 'POST',
+    credentials: 'include'
+  })
+    .then(res => res.ok)
+    .catch(() => false)
+    .finally(() => {
+      refreshPromise = null;
+    });
+  return refreshPromise;
 };
 
 const handleLogin = async (e) => {
@@ -182,9 +157,10 @@ const handleLogin = async (e) => {
   loginBtn.textContent = 'Verifying...';
 
   try {
-    const response = await fetch('/auth', {
+    const response = await fetch('/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
       body: JSON.stringify({ passcode: entered })
     });
 
@@ -192,7 +168,6 @@ const handleLogin = async (e) => {
 
     if (data.success) {
       sessionStorage.setItem(SESSION_KEY, 'true');
-      sessionStorage.setItem(PASSCODE_KEY, entered);
       loginOverlay.classList.add('hidden');
       passcodeInput.value = '';
       loginError.textContent = '';
@@ -214,11 +189,21 @@ const handleLogin = async (e) => {
 };
 
 // Initialize login
-if (checkAuth()) {
-  loginOverlay.classList.add('hidden');
-} else {
+const bootstrapAuth = async () => {
+  try {
+    const res = await fetch('/auth/session', { credentials: 'include' });
+    if (res.ok) {
+      sessionStorage.setItem(SESSION_KEY, 'true');
+      loginOverlay.classList.add('hidden');
+      initApp();
+      return;
+    }
+  } catch {
+    // ignore
+  }
+  clearAuthState();
   passcodeInput.focus();
-}
+};
 
 loginForm.addEventListener('submit', handleLogin);
 
@@ -337,6 +322,7 @@ const buildQuery = () => {
   }
   if (sinceInput.value) params.set('since', sinceInput.value);
   if (scoreInput.value) params.set('minScore', scoreInput.value);
+  params.set('order', 'recent');
   if (!limitInput.value || Number(limitInput.value) <= 0) {
     params.set('limit', 'all');
   } else {
@@ -345,15 +331,19 @@ const buildQuery = () => {
   return params.toString();
 };
 
-const fetchJson = async (path) => {
+const fetchJson = async (path, opts = {}) => {
   const res = await fetch(path, {
-    headers: getAuthHeaders()
+    credentials: 'include',
+    ...opts
   });
   if (res.status === 401) {
-    // Session expired or invalid - force re-login
-    sessionStorage.removeItem(SESSION_KEY);
-    sessionStorage.removeItem(PASSCODE_KEY);
-    loginOverlay.classList.remove('hidden');
+    const refreshed = await refreshSession();
+    if (refreshed) {
+      const retry = await fetch(path, { credentials: 'include', ...opts });
+      if (!retry.ok) throw new Error(`Request failed: ${retry.status}`);
+      return retry.json();
+    }
+    clearAuthState();
     throw new Error('Session expired. Please log in again.');
   }
   if (!res.ok) throw new Error(`Request failed: ${res.status}`);
@@ -855,7 +845,6 @@ const loadNotices = async () => {
     if (customNotices.length > 0) {
       notices = [...customNotices, ...notices];
     }
-    notices = notices.filter(isHealthcareNotice);
     notices = sortNoticesByNewest(notices);
 
     currentNotices = notices;
@@ -2497,6 +2486,4 @@ if (document.fonts && document.fonts.ready) {
 }
 
 // Auto-init if already authenticated
-if (checkAuth()) {
-  initApp();
-}
+bootstrapAuth();
