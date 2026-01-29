@@ -2390,7 +2390,9 @@ const renderNewsFeed = () => {
 
 const loadNews = async () => {
   try {
-    const data = await (await fetch('/data/news.json')).json();
+    const response = await fetch(`${DATA_BASE_URL}/news.json?ts=${Date.now()}`);
+    if (!response.ok) throw new Error(`Failed to load news: ${response.status}`);
+    const data = await response.json();
     newsArticles = data.articles ?? [];
     renderNewsFeed();
   } catch (err) {
