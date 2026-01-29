@@ -106,6 +106,7 @@ const openStateBeaconBtn = document.getElementById('open-state-beacon');
 const stateBeaconModal = document.getElementById('state-beacon-modal');
 const stateBeaconCloseBtn = document.getElementById('state-beacon-close');
 const stateBeaconCloseFooter = document.getElementById('state-beacon-close-footer');
+const stateBeaconHomeSelect = document.getElementById('state-beacon-home');
 const stateBeaconStateSelect = document.getElementById('state-beacon-state');
 const stateBeaconUseSelection = document.getElementById('state-beacon-use-selection');
 const stateBeaconMeta = document.getElementById('state-beacon-meta');
@@ -163,6 +164,7 @@ let stateBeaconData = null;
 let stateBeaconLoaded = false;
 let stateBeaconInputs = null;
 const STATE_BEACON_DEFAULT = 'FL';
+const STATE_BEACON_HOME_DEFAULT = 'IN';
 const STATE_BEACON_INPUTS_KEY = 'lni_state_beacon_inputs';
 const STATE_BEACON_NOTES_KEY = 'lni_state_beacon_notes';
 
@@ -3416,6 +3418,7 @@ const renderStateBeacon = async (state) => {
   }
 
   const inputs = getStateBeaconInputs() || {
+    homeState: STATE_BEACON_HOME_DEFAULT,
     specialty: 'General RN',
     experience: '3-5 years',
     shift: 'Day',
@@ -3430,10 +3433,12 @@ const renderStateBeacon = async (state) => {
   if (stateBeaconTargetPay) stateBeaconTargetPay.value = inputs.targetPay;
   if (stateBeaconTimeline) stateBeaconTimeline.value = inputs.timeline;
   if (stateBeaconLicense) stateBeaconLicense.value = inputs.license;
+  if (stateBeaconHomeSelect) stateBeaconHomeSelect.value = inputs.homeState || STATE_BEACON_HOME_DEFAULT;
 
   const metro = entry.priorityMetros?.[0] || entry.name;
   const tokens = {
     state: entry.name,
+    homeState: STATE_NAMES[inputs.homeState] || inputs.homeState || STATE_BEACON_HOME_DEFAULT,
     specialty: inputs.specialty,
     shift: inputs.shift,
     targetPay: inputs.targetPay ? `$${inputs.targetPay}/hr` : 'competitive rates',
@@ -3578,14 +3583,18 @@ const closeStateBeacon = () => {
 };
 
 const initStateBeacon = () => {
-  if (!stateBeaconStateSelect) return;
-  stateBeaconStateSelect.innerHTML = ALL_STATES.map((state) => (
+  if (!stateBeaconStateSelect || !stateBeaconHomeSelect) return;
+  const options = ALL_STATES.map((state) => (
     `<option value="${state}">${state} - ${STATE_NAMES[state] || ''}</option>`
   )).join('');
+  stateBeaconStateSelect.innerHTML = options;
+  stateBeaconHomeSelect.innerHTML = options;
   stateBeaconStateSelect.value = STATE_BEACON_DEFAULT;
+  stateBeaconHomeSelect.value = STATE_BEACON_HOME_DEFAULT;
 
   const onInputsChange = () => {
     const inputs = {
+      homeState: stateBeaconHomeSelect?.value || STATE_BEACON_HOME_DEFAULT,
       specialty: stateBeaconSpecialty?.value || 'General RN',
       experience: stateBeaconExperience?.value || '3-5 years',
       shift: stateBeaconShift?.value || 'Day',
@@ -3597,7 +3606,7 @@ const initStateBeacon = () => {
     renderStateBeacon(stateBeaconStateSelect.value);
   };
 
-  [stateBeaconSpecialty, stateBeaconExperience, stateBeaconShift, stateBeaconTargetPay, stateBeaconTimeline, stateBeaconLicense]
+  [stateBeaconHomeSelect, stateBeaconSpecialty, stateBeaconExperience, stateBeaconShift, stateBeaconTargetPay, stateBeaconTimeline, stateBeaconLicense]
     .filter(Boolean)
     .forEach((el) => el.addEventListener('change', onInputsChange));
 
