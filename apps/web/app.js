@@ -103,6 +103,8 @@ const stateBeaconShift = document.getElementById('state-beacon-shift');
 const stateBeaconTargetPay = document.getElementById('state-beacon-target-pay');
 const stateBeaconTimeline = document.getElementById('state-beacon-timeline');
 const stateBeaconLicense = document.getElementById('state-beacon-license');
+const stateBeaconExportJson = document.getElementById('state-beacon-export-json');
+const stateBeaconExportCsv = document.getElementById('state-beacon-export-csv');
 
 let currentNotices = [];
 let customNotices = []; // User-added notices
@@ -2541,6 +2543,122 @@ const renderStateBeacon = async (state) => {
   `);
 };
 
+const buildStateBeaconExport = (state) => {
+  const entry = getBeaconEntry(state);
+  const notices = getStateNotices(state);
+  const { best, worst } = buildHospitalRank(notices);
+  const competitionSystems = entry.competition?.systems?.length
+    ? entry.competition.systems
+    : Array.from(groupBy(notices, (n) => n.parent_system || n.employer_name || n.employerName).entries())
+      .map(([name, items]) => ({ name, presence: `${items.length} notices`, notes: 'Derived from WARN activity.' }))
+      .slice(0, 6);
+
+  const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === state);
+  const programsByLevel = programsInState.reduce((acc, program) => {
+    const level = normalizeProgram(program).level || 'Other';
+    acc[level] = (acc[level] || 0) + 1;
+    return acc;
+  }, {});
+
+  const inputs = getStateBeaconInputs() || {};
+  const notes = getStateBeaconNotes();
+  const savedNotes = notes[state] || {};
+  const exportNotes = {
+    attractions: savedNotes.attractions ?? entry.attractions.join('\n'),
+    drawbacks: savedNotes.drawbacks ?? entry.drawbacks.join('\n')
+  };
+
+  return {
+    generatedAt: new Date().toISOString(),
+    state,
+    name: entry.name,
+    inputs,
+    summary: entry.summary,
+    compensation: entry.compensation,
+    licensing: entry.licensing,
+    market: entry.market,
+    competition: {
+      systems: competitionSystems,
+      agencyPresence: entry.competition?.agencyPresence || '',
+      privateEquity: entry.competition?.privateEquity || ''
+    },
+    hospitals: {
+      best,
+      watchlist: worst
+    },
+    pipeline: {
+      programsCount: programsInState.length,
+      programsByLevel,
+      majorPrograms: entry.pipeline?.majorPrograms || [],
+      residencies: entry.pipeline?.residencies || [],
+      clinicalPartners: entry.pipeline?.clinicalPartners || []
+    },
+    pros: entry.pros,
+    cons: entry.cons,
+    attractions: exportNotes.attractions,
+    drawbacks: exportNotes.drawbacks,
+    talkingPoints: entry.talkingPoints,
+    objections: entry.objections
+  };
+};
+
+const exportStateBeaconJson = () => {
+  if (!stateBeaconStateSelect) return;
+  const data = buildStateBeaconExport(stateBeaconStateSelect.value);
+  const content = JSON.stringify(data, null, 2);
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(new Blob([content], { type: 'application/json' }));
+  link.download = `state-beacon-${data.state}.json`;
+  link.click();
+  URL.revokeObjectURL(link.href);
+};
+
+const exportStateBeaconCsv = () => {
+  if (!stateBeaconStateSelect) return;
+  const data = buildStateBeaconExport(stateBeaconStateSelect.value);
+  const rows = [['Section', 'Item', 'Detail']];
+  const pushRow = (section, item, detail = '') => {
+    rows.push([section, item, detail].map((value) => `"${String(value).replace(/"/g, '""')}"`));
+  };
+
+  pushRow('Overview', 'State', data.name);
+  pushRow('Overview', 'Generated At', data.generatedAt);
+  Object.entries(data.inputs || {}).forEach(([key, value]) => pushRow('Recruiter Inputs', key, value));
+
+  Object.entries(data.summary || {}).forEach(([key, value]) => pushRow('Summary', key, value));
+  Object.entries(data.compensation || {}).forEach(([key, value]) => pushRow('Compensation', key, Array.isArray(value) ? value.join('; ') : value));
+  Object.entries(data.licensing || {}).forEach(([key, value]) => pushRow('Licensing', key, Array.isArray(value) ? value.join('; ') : value));
+  Object.entries(data.market || {}).forEach(([key, value]) => pushRow('Market', key, Array.isArray(value) ? value.join('; ') : value));
+
+  data.competition?.systems?.forEach((system) => {
+    pushRow('Competition', system.name, [system.presence, system.notes].filter(Boolean).join(' • '));
+  });
+
+  data.hospitals?.best?.forEach((item) => pushRow('Hospitals Best', item.employer, `${item.notices} notices`));
+  data.hospitals?.watchlist?.forEach((item) => pushRow('Hospitals Watchlist', item.employer, `${item.notices} notices`));
+
+  pushRow('Pipeline', 'Programs count', data.pipeline.programsCount);
+  Object.entries(data.pipeline.programsByLevel || {}).forEach(([level, count]) => pushRow('Pipeline', level, count));
+  data.pipeline.majorPrograms?.forEach((program) => pushRow('Pipeline Major Programs', program, ''));
+  data.pipeline.residencies?.forEach((entry) => pushRow('Pipeline Residencies', entry, ''));
+  data.pipeline.clinicalPartners?.forEach((entry) => pushRow('Pipeline Clinical Partners', entry, ''));
+
+  data.pros?.forEach((item) => pushRow('Pros', item, ''));
+  data.cons?.forEach((item) => pushRow('Cons', item, ''));
+  if (data.attractions) pushRow('Attractions', data.attractions, '');
+  if (data.drawbacks) pushRow('Drawbacks', data.drawbacks, '');
+
+  data.talkingPoints?.forEach((point) => pushRow('Recruiter Script', point, ''));
+  data.objections?.forEach((item) => pushRow('Objections', item.concern, item.response));
+
+  const csv = rows.map((row) => row.join(',')).join('\n');
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+  link.download = `state-beacon-${data.state}.csv`;
+  link.click();
+  URL.revokeObjectURL(link.href);
+};
+
 const openStateBeacon = async (state) => {
   const defaultState = state || STATE_BEACON_DEFAULT;
   if (stateBeaconStateSelect) stateBeaconStateSelect.value = defaultState;
@@ -2595,6 +2713,8 @@ const initStateBeacon = () => {
     saveStateBeaconNotes(notes);
   });
 
+  stateBeaconExportJson?.addEventListener('click', exportStateBeaconJson);
+  stateBeaconExportCsv?.addEventListener('click', exportStateBeaconCsv);
   openStateBeaconBtn?.addEventListener('click', () => openStateBeacon(stateBeaconStateSelect.value));
   stateBeaconCloseBtn?.addEventListener('click', closeStateBeacon);
   stateBeaconCloseFooter?.addEventListener('click', closeStateBeacon);
