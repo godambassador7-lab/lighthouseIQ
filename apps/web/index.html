@@ -795,9 +795,13 @@
           </div>
           <div class="state-beacon-grid">
             <div class="state-beacon-panel">
-              <h4>Best → Worst Hospitals (Layoff Impact)</h4>
-              <p class="state-beacon-subtitle">Proxy based on layoff notices, not quality.</p>
+              <h4>Best → Worst Hospitals (Review + WARN)</h4>
+              <p class="state-beacon-subtitle">Review/news ranking with WARN penalty (major systems only).</p>
               <div id="state-beacon-hospitals" class="state-beacon-list"></div>
+              <h5 class="state-beacon-subsection">All Hospitals (AHCA Inventory)</h5>
+              <div id="state-beacon-hospitals-all" class="state-beacon-list state-beacon-list-compact"></div>
+              <h5 class="state-beacon-subsection">Flagship Clinics</h5>
+              <div id="state-beacon-clinics" class="state-beacon-list state-beacon-list-compact"></div>
             </div>
             <div class="state-beacon-panel">
               <h4>Local News (State Mentions)</h4>

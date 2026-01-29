@@ -803,6 +803,31 @@ body {
   gap: 0.5rem;
 }
 
+.state-beacon-list-compact {
+  max-height: 220px;
+  overflow: auto;
+  padding-right: 0.25rem;
+}
+
+.state-beacon-subsection {
+  margin: 1rem 0 0.35rem;
+  font-size: 0.85rem;
+  color: var(--navy);
+}
+
+.state-beacon-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  background: rgba(56, 118, 255, 0.12);
+  color: var(--navy);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
 .state-beacon-item {
   display: flex;
   justify-content: space-between;
@@ -819,6 +844,9 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
+  max-height: 260px;
+  overflow: auto;
+  padding-right: 0.25rem;
 }
 
 .state-beacon-news a {

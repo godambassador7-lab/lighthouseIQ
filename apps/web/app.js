@@ -88,6 +88,8 @@ const stateBeaconStateSelect = document.getElementById('state-beacon-state');
 const stateBeaconUseSelection = document.getElementById('state-beacon-use-selection');
 const stateBeaconMeta = document.getElementById('state-beacon-meta');
 const stateBeaconHospitals = document.getElementById('state-beacon-hospitals');
+const stateBeaconHospitalsAll = document.getElementById('state-beacon-hospitals-all');
+const stateBeaconClinics = document.getElementById('state-beacon-clinics');
 const stateBeaconNews = document.getElementById('state-beacon-news');
 const stateBeaconCompetition = document.getElementById('state-beacon-competition');
 const stateBeaconScript = document.getElementById('state-beacon-script');
@@ -131,6 +133,8 @@ let programsRefreshPrompted = false;
 let stateBeaconData = null;
 let stateBeaconLoaded = false;
 let stateBeaconInputs = null;
+let stateNewsData = null;
+let stateNewsLoaded = false;
 const STATE_BEACON_DEFAULT = 'FL';
 const STATE_BEACON_HOME_DEFAULT = 'IN';
 const STATE_BEACON_INPUTS_KEY = 'lni_state_beacon_inputs';
@@ -382,6 +386,22 @@ const saveStateBeaconNotes = (notes) => {
 
 const replaceTokens = (template, tokens) => (
   template.replace(/\{(\w+)\}/g, (_, key) => tokens[key] ?? '')
+);
+
+const isMajorSystemNotice = (notice, majorSystems) => {
+  if (!majorSystems || !majorSystems.length) return true;
+  const employer = String(notice.employer_name || notice.employerName || '').toLowerCase();
+  const system = String(notice.parent_system || '').toLowerCase();
+  return majorSystems.some((name) => {
+    const target = String(name).toLowerCase();
+    return employer.includes(target) || system.includes(target);
+  });
+};
+
+const filterNoticesByMajorSystems = (notices, majorSystems) => (
+  majorSystems && majorSystems.length
+    ? notices.filter((notice) => isMajorSystemNotice(notice, majorSystems))
+    : notices
 );
 
 const getStateNotices = (state) => currentNotices.filter((notice) => notice.state === state);
@@ -2346,6 +2366,24 @@ const loadStateBeaconData = async () => {
   return stateBeaconData;
 };
 
+const loadStateNewsData = async () => {
+  if (stateNewsLoaded) return stateNewsData;
+  try {
+    stateNewsData = await fetchJson(`/data/state-news.json?ts=${Date.now()}`);
+  } catch (err) {
+    stateNewsData = null;
+  }
+  stateNewsLoaded = true;
+  return stateNewsData;
+};
+
+const getStateNewsFeed = (state, entry) => {
+  const entryFeed = Array.isArray(entry.newsFeed) ? entry.newsFeed : [];
+  if (entryFeed.length) return entryFeed;
+  const stateFeed = stateNewsData?.states?.[state] || stateNewsData?.[state] || [];
+  return Array.isArray(stateFeed) ? stateFeed : [];
+};
+
 const ensureProgramsDataForBeacon = async () => {
   if (nursingPrograms.length) return;
   try {
@@ -2379,6 +2417,10 @@ const getBeaconEntry = (state) => {
     drawbacks: entry.drawbacks ?? [],
     talkingPoints: entry.talkingPoints ?? [],
     objections: entry.objections ?? [],
+    warnMajorSystems: entry.warnMajorSystems ?? [],
+    hospitalRegistry: entry.hospitalRegistry ?? [],
+    clinicRegistry: entry.clinicRegistry ?? [],
+    newsFeed: entry.newsFeed ?? [],
     newsKeywords: entry.newsKeywords ?? [STATE_NAMES[state], state].filter(Boolean),
     priorityMetros: entry.priorityMetros ?? []
   };
@@ -2393,9 +2435,11 @@ const renderBeaconList = (container, items, formatter) => {
   container.innerHTML = items.map((item) => formatter(item)).join('');
 };
 
-const buildHospitalRank = (notices) => {
+const buildHospitalRank = (notices, majorSystems = []) => {
   const grouped = [];
-  groupBy(notices, (notice) => notice.employer_name || notice.employerName).forEach((items, employer) => {
+  const healthcareNotices = filterNoticesByMajorSystems(notices, majorSystems)
+    .filter((notice) => isHealthcareNotice(notice));
+  groupBy(healthcareNotices, (notice) => notice.employer_name || notice.employerName).forEach((items, employer) => {
     const totalAffected = items.reduce((sum, n) => sum + Number(n.affectedCount || n.employees_affected || 0), 0);
     grouped.push({
       employer,
@@ -2409,13 +2453,35 @@ const buildHospitalRank = (notices) => {
   return { best, worst };
 };
 
+const getWarnCountForHospital = (notices, hospital, majorSystems = []) => {
+  const targets = [
+    hospital.match,
+    hospital.name,
+    hospital.system
+  ]
+    .filter(Boolean)
+    .map((value) => String(value).toLowerCase());
+
+  if (!targets.length) return 0;
+
+  return notices.filter((notice) => {
+    if (!isHealthcareNotice(notice)) return false;
+    if (!isMajorSystemNotice(notice, majorSystems)) return false;
+    const employer = String(notice.employer_name || notice.employerName || '').toLowerCase();
+    const system = String(notice.parent_system || '').toLowerCase();
+    return targets.some((target) => employer.includes(target) || system.includes(target));
+  }).length;
+};
+
 const renderStateBeacon = async (state) => {
   await loadStateBeaconData();
   await ensureProgramsDataForBeacon();
+  await loadStateNewsData();
 
   const entry = getBeaconEntry(state);
   const notices = getStateNotices(state);
-  const noticeCount = notices.length;
+  const majorNotices = filterNoticesByMajorSystems(notices, entry.warnMajorSystems);
+  const noticeCount = majorNotices.length;
   const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === state);
 
   const chips = [];
@@ -2423,27 +2489,74 @@ const renderStateBeacon = async (state) => {
   if (entry.summary?.demand) chips.push(`Demand: ${entry.summary.demand}`);
   if (entry.summary?.unionization) chips.push(`Union: ${entry.summary.unionization}`);
   if (programsInState.length) chips.push(`Pipeline: ${programsInState.length} programs`);
-  if (noticeCount) chips.push(`WARN notices: ${noticeCount}`);
+  if (noticeCount) chips.push(`WARN notices (major systems): ${noticeCount}`);
 
   if (stateBeaconMeta) {
     stateBeaconMeta.innerHTML = chips.map((chip) => `<span class="state-beacon-chip">${escapeHtml(chip)}</span>`).join('');
   }
 
-  const { best, worst } = buildHospitalRank(notices);
-  const hospitalItems = [
-    ...best.map((item) => ({ ...item, label: 'Best (low WARN activity)' })),
-    ...worst.map((item) => ({ ...item, label: 'Watchlist (high WARN activity)' }))
-  ];
-  renderBeaconList(stateBeaconHospitals, hospitalItems, (item) => `
+  let hospitalItems = [];
+  if (entry.hospitalRankings?.length) {
+    const scored = entry.hospitalRankings.map((hospital) => {
+      const baseScore = Number(hospital.baseScore ?? 50);
+      const warnWeight = Number(hospital.warnWeight ?? 1);
+      const warnCount = getWarnCountForHospital(majorNotices, hospital, entry.warnMajorSystems);
+      const score = baseScore - (warnCount * warnWeight);
+      return { ...hospital, warnCount, score };
+    }).sort((a, b) => b.score - a.score);
+
+    const best = scored.slice(0, 5);
+    const worst = scored.slice(-5).reverse();
+    hospitalItems = [
+      ...best.map((item) => ({ ...item, label: 'Best (review + news score)' })),
+      ...worst.map((item) => ({ ...item, label: 'Watchlist (review + WARN)' }))
+    ];
+
+    renderBeaconList(stateBeaconHospitals, hospitalItems, (item) => `
+      <div class="state-beacon-item">
+        <strong>${escapeHtml(item.name)}</strong>
+        <span>${escapeHtml(item.label)} • Score ${item.score.toFixed(1)} • WARN ${item.warnCount}</span>
+      </div>
+    `);
+  } else {
+    const { best, worst } = buildHospitalRank(majorNotices, entry.warnMajorSystems);
+    hospitalItems = [
+      ...best.map((item) => ({ ...item, label: 'Best (low WARN activity)' })),
+      ...worst.map((item) => ({ ...item, label: 'Watchlist (high WARN activity)' }))
+    ];
+    renderBeaconList(stateBeaconHospitals, hospitalItems, (item) => `
+      <div class="state-beacon-item">
+        <strong>${escapeHtml(item.employer)}</strong>
+        <span>${escapeHtml(item.label)} • ${item.notices} notices</span>
+      </div>
+    `);
+  }
+
+  const hospitalRegistry = entry.hospitalRegistry || [];
+  renderBeaconList(stateBeaconHospitalsAll, hospitalRegistry, (item) => `
     <div class="state-beacon-item">
-      <strong>${escapeHtml(item.employer)}</strong>
-      <span>${escapeHtml(item.label)} • ${item.notices} notices</span>
+      <strong>${escapeHtml(item.name)}</strong>
+      <span>
+        ${item.flagship ? '<span class="state-beacon-badge">Flagship</span>' : ''}
+        ${item.county ? `${escapeHtml(item.county)} County` : ''}
+      </span>
+    </div>
+  `);
+
+  const clinicRegistry = entry.clinicRegistry || [];
+  renderBeaconList(stateBeaconClinics, clinicRegistry, (item) => `
+    <div class="state-beacon-item">
+      <strong>${escapeHtml(item.name)}</strong>
+      <span>
+        ${item.flagship ? '<span class="state-beacon-badge">Flagship</span>' : ''}
+        ${item.metro ? `• ${escapeHtml(item.metro)}` : ''}
+      </span>
     </div>
   `);
 
   const competitionSystems = entry.competition?.systems?.length
     ? entry.competition.systems
-    : Array.from(groupBy(notices, (n) => n.parent_system || n.employer_name || n.employerName).entries())
+    : Array.from(groupBy(majorNotices, (n) => n.parent_system || n.employer_name || n.employerName).entries())
       .map(([name, items]) => ({ name, presence: `${items.length} notices`, notes: 'Derived from WARN activity.' }))
       .slice(0, 6);
 
@@ -2471,15 +2584,24 @@ const renderStateBeacon = async (state) => {
     </div>
   `);
 
-  const keywords = (entry.newsKeywords || []).map((word) => word.toLowerCase());
-  const newsMatches = newsArticles.filter((article) => {
-    const haystack = `${article.title} ${article.summary}`.toLowerCase();
-    return keywords.some((word) => word && haystack.includes(word));
-  }).slice(0, 6);
+  const stateFeed = getStateNewsFeed(state, entry);
+  let newsMatches = [];
+  if (stateFeed.length) {
+    newsMatches = stateFeed
+      .slice()
+      .sort((a, b) => new Date(b.publishedAt || b.date || 0) - new Date(a.publishedAt || a.date || 0))
+      .slice(0, 12);
+  } else {
+    const keywords = (entry.newsKeywords || []).map((word) => word.toLowerCase());
+    newsMatches = newsArticles.filter((article) => {
+      const haystack = `${article.title} ${article.summary}`.toLowerCase();
+      return keywords.some((word) => word && haystack.includes(word));
+    }).slice(0, 6);
+  }
   renderBeaconList(stateBeaconNews, newsMatches, (article) => `
     <a href="${article.url}" target="_blank" rel="noopener noreferrer">
       <strong>${escapeHtml(article.title)}</strong>
-      <div class="state-beacon-subtitle">${escapeHtml(article.source || '')}</div>
+      <div class="state-beacon-subtitle">${escapeHtml(article.source || '')}${article.publishedAt ? ` • ${escapeHtml(article.publishedAt)}` : ''}</div>
     </a>
   `);
 
@@ -2525,6 +2647,9 @@ const renderStateBeacon = async (state) => {
   const tokens = {
     state: entry.name,
     homeState: STATE_NAMES[inputs.homeState] || inputs.homeState || STATE_BEACON_HOME_DEFAULT,
+    homeStateAbbr: inputs.homeState || STATE_BEACON_HOME_DEFAULT,
+    targetState: STATE_NAMES[state] || state,
+    targetStateAbbr: state,
     specialty: inputs.specialty,
     shift: inputs.shift,
     targetPay: inputs.targetPay ? `$${inputs.targetPay}/hr` : 'competitive rates',
@@ -2542,8 +2667,8 @@ const renderStateBeacon = async (state) => {
 
   renderBeaconList(stateBeaconObjections, entry.objections, (item) => `
     <div class="state-beacon-item">
-      <strong>${escapeHtml(item.concern)}</strong>
-      <span>${escapeHtml(item.response)}</span>
+      <strong>${escapeHtml(replaceTokens(item.concern, tokens))}</strong>
+      <span>${escapeHtml(replaceTokens(item.response, tokens))}</span>
     </div>
   `);
 };
@@ -2551,10 +2676,11 @@ const renderStateBeacon = async (state) => {
 const buildStateBeaconExport = (state) => {
   const entry = getBeaconEntry(state);
   const notices = getStateNotices(state);
-  const { best, worst } = buildHospitalRank(notices);
+  const majorNotices = filterNoticesByMajorSystems(notices, entry.warnMajorSystems);
+  const { best, worst } = buildHospitalRank(majorNotices, entry.warnMajorSystems);
   const competitionSystems = entry.competition?.systems?.length
     ? entry.competition.systems
-    : Array.from(groupBy(notices, (n) => n.parent_system || n.employer_name || n.employerName).entries())
+    : Array.from(groupBy(majorNotices, (n) => n.parent_system || n.employer_name || n.employerName).entries())
       .map(([name, items]) => ({ name, presence: `${items.length} notices`, notes: 'Derived from WARN activity.' }))
       .slice(0, 6);
 
@@ -2566,6 +2692,26 @@ const buildStateBeaconExport = (state) => {
   }, {});
 
   const inputs = getStateBeaconInputs() || {};
+  const metro = entry.priorityMetros?.[0] || entry.name;
+  const tokens = {
+    state: entry.name,
+    homeState: STATE_NAMES[inputs.homeState] || inputs.homeState || STATE_BEACON_HOME_DEFAULT,
+    homeStateAbbr: inputs.homeState || STATE_BEACON_HOME_DEFAULT,
+    targetState: STATE_NAMES[state] || state,
+    targetStateAbbr: state,
+    specialty: inputs.specialty || 'General RN',
+    shift: inputs.shift || 'Day',
+    targetPay: inputs.targetPay ? `$${inputs.targetPay}/hr` : 'competitive rates',
+    timeline: inputs.timeline || '31-60 days',
+    license: inputs.license || (entry.compact ? 'Compact' : 'No license'),
+    metro
+  };
+  const talkingPoints = entry.talkingPoints.map((point) => replaceTokens(point, tokens));
+  const objections = entry.objections.map((item) => ({
+    concern: replaceTokens(item.concern, tokens),
+    response: replaceTokens(item.response, tokens)
+  }));
+  const newsFeed = getStateNewsFeed(state, entry);
   const notes = getStateBeaconNotes();
   const savedNotes = notes[state] || {};
   const exportNotes = {
@@ -2591,6 +2737,8 @@ const buildStateBeaconExport = (state) => {
       best,
       watchlist: worst
     },
+    hospitalRegistry: entry.hospitalRegistry,
+    clinicRegistry: entry.clinicRegistry,
     pipeline: {
       programsCount: programsInState.length,
       programsByLevel,
@@ -2602,8 +2750,9 @@ const buildStateBeaconExport = (state) => {
     cons: entry.cons,
     attractions: exportNotes.attractions,
     drawbacks: exportNotes.drawbacks,
-    talkingPoints: entry.talkingPoints,
-    objections: entry.objections
+    talkingPoints,
+    objections,
+    newsFeed
   };
 };
 
