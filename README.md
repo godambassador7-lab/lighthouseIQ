@@ -1,8 +1,16 @@
 # Nursing Layoff Radar (LighthouseIQ)
 
-A dashboard for tracking WARN Act layoff notices in the healthcare/nursing sector across all US states.
+A public UI for tracking WARN Act layoff notices in the healthcare/nursing sector across all US states.
 
-**100% Free & Serverless** - Runs entirely on GitHub Actions + GitHub Pages.
+## Public/Private Split
+
+This repository contains the public UI only. All data collection, scoring, enrichment, and backend mechanics
+live in the private core repository and run in GitHub Actions.
+
+- Public UI (this repo): `apps/web/`, `public/`
+- Private core (separate repo): adapters, scoring, exports, API
+
+The workflow in this repo checks out the private core to generate JSON into `public/data`.
 
 ## Live Demo
 
@@ -13,35 +21,35 @@ Default passcode: `IUH126`
 ## How It Works
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                    GitHub Actions (Every 6 Hours)                │
-│                                                                  │
-│  1. Fetches WARN notices from 50+ state adapters                │
-│  2. Scores notices for nursing relevance                        │
-│  3. Writes JSON to public/data/                                  │
-│  4. Deploys to GitHub Pages                                      │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                        GitHub Pages                              │
-│                                                                  │
-│  Static JSON API:                                               │
-│  - /data/notices.json      (all notices)                        │
-│  - /data/states.json       (state counts)                       │
-│  - /data/metadata.json     (last update)                        │
-│  - /data/by-state/XX.json  (per-state)                          │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                      Static Frontend                             │
-│                                                                  │
-│  - Client-side filtering and search                             │
-│  - Interactive US map with layoff intensity                     │
-│  - Project management (localStorage)                            │
-│  - CSV/JSON export                                              │
-└─────────────────────────────────────────────────────────────────┘
++--------------------------------------------------------------------------+
+�                 GitHub Actions (Every 6 Hours)                           �
+�                                                                          �
+�  1. Checks out private lighthouse-core                                   �
+�  2. Fetches WARN notices and enriches data                               �
+�  3. Writes JSON to public/data/                                          �
+�  4. Deploys to GitHub Pages / triggers Vercel                            �
++--------------------------------------------------------------------------+
+                              �
+                              ?
++--------------------------------------------------------------------------+
+�                        Static Host (Pages/Vercel)                         �
+�                                                                          �
+�  Static JSON API:                                                        �
+�  - /data/notices.json      (all notices)                                 �
+�  - /data/states.json       (state counts)                                �
+�  - /data/metadata.json     (last update)                                 �
+�  - /data/by-state/XX.json  (per-state)                                   �
++--------------------------------------------------------------------------+
+                              �
+                              ?
++--------------------------------------------------------------------------+
+�                      Static Frontend                                     �
+�                                                                          �
+�  - Client-side filtering and search                                      �
+�  - Interactive US map with layoff intensity                              �
+�  - Project management (localStorage)                                     �
+�  - CSV/JSON export                                                       �
++--------------------------------------------------------------------------+
 ```
 
 ## Features
@@ -62,12 +70,12 @@ Click "Fork" on GitHub.
 
 ### 2. Enable GitHub Pages
 
-1. Go to **Settings** → **Pages**
+1. Go to **Settings** ? **Pages**
 2. Source: **GitHub Actions**
 
 ### 3. Trigger First Build
 
-1. Go to **Actions** → **Fetch WARN Notices**
+1. Go to **Actions** ? **Fetch WARN Notices**
 2. Click **Run workflow**
 
 ### 4. Access Your Dashboard
@@ -78,26 +86,8 @@ https://<your-username>.github.io/nursing-layoff-radar/
 
 ## Local Development
 
-```bash
-# Install dependencies
-npm install
-
-# Build and export data
-npm run export
-
-# Serve locally
-npm run serve
-# Open http://localhost:3000
-```
-
-## Git LFS
-
-This repo tracks large BLS files with Git LFS. After cloning, run:
-
-```bash
-git lfs install
-git lfs pull
-```
+The public repo is UI-only. To run data exports locally, use the private
+`lighthouse-core` repo.
 
 ## Configuration
 
@@ -124,32 +114,16 @@ const PASSCODE = 'your-new-passcode';
 
 ```
 nursing-layoff-radar/
-├── .github/workflows/      # GitHub Actions
-│   └── fetch-notices.yml   # Scheduled data fetch
-├── apps/web/               # Frontend
-│   ├── index.html
-│   ├── app-static.js       # Static JSON client
-│   └── styles.css
-├── packages/
-│   ├── core/               # Types & scoring
-│   └── adapters/           # State WARN fetchers
-├── scripts/
-│   └── export-notices.ts   # Data export script
-├── public/                 # GitHub Pages output
-│   └── data/               # Generated JSON
-└── package.json
++-- .github/workflows/      # GitHub Actions
+�   +-- fetch-notices.yml   # Scheduled data fetch (uses lighthouse-core)
++-- apps/web/               # Frontend
+�   +-- index.html
+�   +-- app-static.js       # Static JSON client
+�   +-- styles.css
++-- public/                 # Pages/Vercel output
+�   +-- data/               # Generated JSON
++-- README.md
 ```
-
-## State Adapters
-
-Includes adapters for all 50 states + DC + PR:
-
-| Region | States |
-|--------|--------|
-| Northeast | CT, ME, MA, NH, NJ, NY, PA, RI, VT |
-| Midwest | IL, IN, IA, KS, MI, MN, MO, NE, ND, OH, SD, WI |
-| South | AL, AR, DC, DE, FL, GA, KY, LA, MD, MS, NC, OK, SC, TN, TX, VA, WV |
-| West | AK, AZ, CA, CO, HI, ID, MT, NM, NV, OR, UT, WA, WY |
 
 ## Manual Data Refresh
 
@@ -159,4 +133,4 @@ Includes adapters for all 50 states + DC + PR:
 
 ## License
 
-MIT
+All rights reserved.
