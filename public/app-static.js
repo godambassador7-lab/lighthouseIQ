@@ -14,7 +14,11 @@
 // =============================================================================
 // Configuration
 // =============================================================================
-const DATA_BASE_URL = './data';
+const DATA_BASE_URL = (() => {
+  const path = window.location.pathname;
+  const basePath = path.endsWith('/') ? path : path.replace(/\/[^/]*$/, '/');
+  return `${basePath}data`;
+})();
 const PASSCODE = ''; // Static site: no secret passcode on the client
 
 // =============================================================================
@@ -3258,7 +3262,8 @@ const renderBeaconList = (container, items, formatter) => {
 
 const buildHospitalRank = (notices) => {
   const grouped = [];
-  groupBy(notices, (notice) => notice.employer_name || notice.employerName).forEach((items, employer) => {
+  const healthcareNotices = notices.filter((notice) => isHealthcareNotice(notice));
+  groupBy(healthcareNotices, (notice) => notice.employer_name || notice.employerName).forEach((items, employer) => {
     const totalAffected = items.reduce((sum, n) => sum + Number(n.affectedCount || n.employees_affected || 0), 0);
     grouped.push({
       employer,
@@ -3270,6 +3275,25 @@ const buildHospitalRank = (notices) => {
   const worst = grouped.slice(0, 5);
   const best = grouped.slice(-5).reverse();
   return { best, worst };
+};
+
+const getWarnCountForHospital = (notices, hospital) => {
+  const targets = [
+    hospital.match,
+    hospital.name,
+    hospital.system
+  ]
+    .filter(Boolean)
+    .map((value) => String(value).toLowerCase());
+
+  if (!targets.length) return 0;
+
+  return notices.filter((notice) => {
+    if (!isHealthcareNotice(notice)) return false;
+    const employer = String(notice.employer_name || notice.employerName || '').toLowerCase();
+    const system = String(notice.parent_system || '').toLowerCase();
+    return targets.some((target) => employer.includes(target) || system.includes(target));
+  }).length;
 };
 
 const renderStateBeacon = async (state) => {
@@ -3292,17 +3316,42 @@ const renderStateBeacon = async (state) => {
     stateBeaconMeta.innerHTML = chips.map((chip) => `<span class="state-beacon-chip">${escapeHtml(chip)}</span>`).join('');
   }
 
-  const { best, worst } = buildHospitalRank(notices);
-  const hospitalItems = [
-    ...best.map((item) => ({ ...item, label: 'Best (low WARN activity)' })),
-    ...worst.map((item) => ({ ...item, label: 'Watchlist (high WARN activity)' }))
-  ];
-  renderBeaconList(stateBeaconHospitals, hospitalItems, (item) => `
-    <div class="state-beacon-item">
-      <strong>${escapeHtml(item.employer)}</strong>
-      <span>${escapeHtml(item.label)} • ${item.notices} notices</span>
-    </div>
-  `);
+  let hospitalItems = [];
+  if (entry.hospitalRankings?.length) {
+    const scored = entry.hospitalRankings.map((hospital) => {
+      const baseScore = Number(hospital.baseScore ?? 50);
+      const warnWeight = Number(hospital.warnWeight ?? 1);
+      const warnCount = getWarnCountForHospital(notices, hospital);
+      const score = baseScore - (warnCount * warnWeight);
+      return { ...hospital, warnCount, score };
+    }).sort((a, b) => b.score - a.score);
+
+    const best = scored.slice(0, 5);
+    const worst = scored.slice(-5).reverse();
+    hospitalItems = [
+      ...best.map((item) => ({ ...item, label: 'Best (review + news score)' })),
+      ...worst.map((item) => ({ ...item, label: 'Watchlist (review + WARN)' }))
+    ];
+
+    renderBeaconList(stateBeaconHospitals, hospitalItems, (item) => `
+      <div class="state-beacon-item">
+        <strong>${escapeHtml(item.name)}</strong>
+        <span>${escapeHtml(item.label)} • Score ${item.score.toFixed(1)} • WARN ${item.warnCount}</span>
+      </div>
+    `);
+  } else {
+    const { best, worst } = buildHospitalRank(notices);
+    hospitalItems = [
+      ...best.map((item) => ({ ...item, label: 'Best (low WARN activity)' })),
+      ...worst.map((item) => ({ ...item, label: 'Watchlist (high WARN activity)' }))
+    ];
+    renderBeaconList(stateBeaconHospitals, hospitalItems, (item) => `
+      <div class="state-beacon-item">
+        <strong>${escapeHtml(item.employer)}</strong>
+        <span>${escapeHtml(item.label)} • ${item.notices} notices</span>
+      </div>
+    `);
+  }
 
   const competitionSystems = entry.competition?.systems?.length
     ? entry.competition.systems
