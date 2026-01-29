@@ -79,6 +79,30 @@ const programsDownload = document.getElementById('programs-download');
 const programsLoading = document.getElementById('programs-loading');
 const programsProgressBar = document.getElementById('programs-progress-bar');
 const programsProgressText = document.getElementById('programs-progress-text');
+const openStateBeaconBtn = document.getElementById('open-state-beacon');
+const stateBeaconModal = document.getElementById('state-beacon-modal');
+const stateBeaconCloseBtn = document.getElementById('state-beacon-close');
+const stateBeaconCloseFooter = document.getElementById('state-beacon-close-footer');
+const stateBeaconStateSelect = document.getElementById('state-beacon-state');
+const stateBeaconUseSelection = document.getElementById('state-beacon-use-selection');
+const stateBeaconMeta = document.getElementById('state-beacon-meta');
+const stateBeaconHospitals = document.getElementById('state-beacon-hospitals');
+const stateBeaconNews = document.getElementById('state-beacon-news');
+const stateBeaconCompetition = document.getElementById('state-beacon-competition');
+const stateBeaconScript = document.getElementById('state-beacon-script');
+const stateBeaconPipeline = document.getElementById('state-beacon-pipeline');
+const stateBeaconPros = document.getElementById('state-beacon-pros');
+const stateBeaconCons = document.getElementById('state-beacon-cons');
+const stateBeaconAttractions = document.getElementById('state-beacon-attractions');
+const stateBeaconDrawbacks = document.getElementById('state-beacon-drawbacks');
+const stateBeaconSave = document.getElementById('state-beacon-save');
+const stateBeaconObjections = document.getElementById('state-beacon-objections');
+const stateBeaconSpecialty = document.getElementById('state-beacon-specialty');
+const stateBeaconExperience = document.getElementById('state-beacon-experience');
+const stateBeaconShift = document.getElementById('state-beacon-shift');
+const stateBeaconTargetPay = document.getElementById('state-beacon-target-pay');
+const stateBeaconTimeline = document.getElementById('state-beacon-timeline');
+const stateBeaconLicense = document.getElementById('state-beacon-license');
 
 let currentNotices = [];
 let customNotices = []; // User-added notices
@@ -101,6 +125,12 @@ let programsMeta = { lastUpdated: null, sources: [] };
 let programsLoaded = false;
 let programsModuleInitialized = false;
 let programsRefreshPrompted = false;
+let stateBeaconData = null;
+let stateBeaconLoaded = false;
+let stateBeaconInputs = null;
+const STATE_BEACON_DEFAULT = 'FL';
+const STATE_BEACON_INPUTS_KEY = 'lni_state_beacon_inputs';
+const STATE_BEACON_NOTES_KEY = 'lni_state_beacon_notes';
 let lastNoticeWindowCount = 0;
 let noticeWindowRaf = null;
 
@@ -307,6 +337,60 @@ const escapeHtml = (value) => {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
+};
+
+const getStateBeaconInputs = () => {
+  if (stateBeaconInputs) return stateBeaconInputs;
+  try {
+    const stored = localStorage.getItem(STATE_BEACON_INPUTS_KEY);
+    stateBeaconInputs = stored ? JSON.parse(stored) : null;
+  } catch {
+    stateBeaconInputs = null;
+  }
+  return stateBeaconInputs;
+};
+
+const saveStateBeaconInputs = (inputs) => {
+  stateBeaconInputs = inputs;
+  try {
+    localStorage.setItem(STATE_BEACON_INPUTS_KEY, JSON.stringify(inputs));
+  } catch {
+    // ignore
+  }
+};
+
+const getStateBeaconNotes = () => {
+  try {
+    const stored = localStorage.getItem(STATE_BEACON_NOTES_KEY);
+    return stored ? JSON.parse(stored) : {};
+  } catch {
+    return {};
+  }
+};
+
+const saveStateBeaconNotes = (notes) => {
+  try {
+    localStorage.setItem(STATE_BEACON_NOTES_KEY, JSON.stringify(notes));
+  } catch {
+    // ignore
+  }
+};
+
+const replaceTokens = (template, tokens) => (
+  template.replace(/\{(\w+)\}/g, (_, key) => tokens[key] ?? '')
+);
+
+const getStateNotices = (state) => currentNotices.filter((notice) => notice.state === state);
+
+const groupBy = (items, keyFn) => {
+  const map = new Map();
+  items.forEach((item) => {
+    const key = keyFn(item);
+    if (!key) return;
+    if (!map.has(key)) map.set(key, []);
+    map.get(key).push(item);
+  });
+  return map;
 };
 
 const setStatus = (status, ok) => {
@@ -2245,6 +2329,279 @@ const initProgramsModule = () => {
 
 // ==================== END ACCREDITED PROGRAMS MODULE ====================
 
+// ==================== STATE BEACON MODULE ====================
+const loadStateBeaconData = async () => {
+  if (stateBeaconLoaded) return stateBeaconData;
+  try {
+    stateBeaconData = await fetchJson(`/data/state-beacon.json?ts=${Date.now()}`);
+  } catch (err) {
+    console.warn('State Beacon unavailable:', err.message);
+    stateBeaconData = { lastUpdated: null, states: {} };
+  }
+  stateBeaconLoaded = true;
+  return stateBeaconData;
+};
+
+const ensureProgramsDataForBeacon = async () => {
+  if (nursingPrograms.length) return;
+  try {
+    const data = await fetchJson(`/data/programs.json?ts=${Date.now()}`);
+    nursingPrograms = Array.isArray(data) ? data : (data.programs ?? []);
+    programsMeta = {
+      lastUpdated: data.lastUpdated ?? null,
+      sources: data.sources ?? []
+    };
+    programsLoaded = true;
+  } catch (err) {
+    console.warn('Programs data unavailable for State Beacon:', err.message);
+    programsLoaded = false;
+  }
+};
+
+const getBeaconEntry = (state) => {
+  const entry = stateBeaconData?.states?.[state] ?? {};
+  return {
+    name: entry.name || STATE_NAMES[state] || state,
+    compact: entry.compact ?? null,
+    summary: entry.summary ?? {},
+    compensation: entry.compensation ?? {},
+    licensing: entry.licensing ?? {},
+    market: entry.market ?? {},
+    competition: entry.competition ?? {},
+    pipeline: entry.pipeline ?? {},
+    pros: entry.pros ?? [],
+    cons: entry.cons ?? [],
+    attractions: entry.attractions ?? [],
+    drawbacks: entry.drawbacks ?? [],
+    talkingPoints: entry.talkingPoints ?? [],
+    objections: entry.objections ?? [],
+    newsKeywords: entry.newsKeywords ?? [STATE_NAMES[state], state].filter(Boolean),
+    priorityMetros: entry.priorityMetros ?? []
+  };
+};
+
+const renderBeaconList = (container, items, formatter) => {
+  if (!container) return;
+  if (!items.length) {
+    container.innerHTML = '<div class="empty-state">No data available yet.</div>';
+    return;
+  }
+  container.innerHTML = items.map((item) => formatter(item)).join('');
+};
+
+const buildHospitalRank = (notices) => {
+  const grouped = [];
+  groupBy(notices, (notice) => notice.employer_name || notice.employerName).forEach((items, employer) => {
+    const totalAffected = items.reduce((sum, n) => sum + Number(n.affectedCount || n.employees_affected || 0), 0);
+    grouped.push({
+      employer,
+      notices: items.length,
+      affected: totalAffected
+    });
+  });
+  grouped.sort((a, b) => b.affected - a.affected || b.notices - a.notices);
+  const worst = grouped.slice(0, 5);
+  const best = grouped.slice(-5).reverse();
+  return { best, worst };
+};
+
+const renderStateBeacon = async (state) => {
+  await loadStateBeaconData();
+  await ensureProgramsDataForBeacon();
+
+  const entry = getBeaconEntry(state);
+  const notices = getStateNotices(state);
+  const noticeCount = notices.length;
+  const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === state);
+
+  const chips = [];
+  if (entry.compact !== null) chips.push(`Compact: ${entry.compact ? 'Yes' : 'No'}`);
+  if (entry.summary?.demand) chips.push(`Demand: ${entry.summary.demand}`);
+  if (entry.summary?.unionization) chips.push(`Union: ${entry.summary.unionization}`);
+  if (programsInState.length) chips.push(`Pipeline: ${programsInState.length} programs`);
+  if (noticeCount) chips.push(`WARN notices: ${noticeCount}`);
+
+  if (stateBeaconMeta) {
+    stateBeaconMeta.innerHTML = chips.map((chip) => `<span class="state-beacon-chip">${escapeHtml(chip)}</span>`).join('');
+  }
+
+  const { best, worst } = buildHospitalRank(notices);
+  const hospitalItems = [
+    ...best.map((item) => ({ ...item, label: 'Best (low WARN activity)' })),
+    ...worst.map((item) => ({ ...item, label: 'Watchlist (high WARN activity)' }))
+  ];
+  renderBeaconList(stateBeaconHospitals, hospitalItems, (item) => `
+    <div class="state-beacon-item">
+      <strong>${escapeHtml(item.employer)}</strong>
+      <span>${escapeHtml(item.label)} • ${item.notices} notices</span>
+    </div>
+  `);
+
+  const competitionSystems = entry.competition?.systems?.length
+    ? entry.competition.systems
+    : Array.from(groupBy(notices, (n) => n.parent_system || n.employer_name || n.employerName).entries())
+      .map(([name, items]) => ({ name, presence: `${items.length} notices`, notes: 'Derived from WARN activity.' }))
+      .slice(0, 6);
+
+  renderBeaconList(stateBeaconCompetition, competitionSystems, (system) => `
+    <div class="state-beacon-item">
+      <strong>${escapeHtml(system.name)}</strong>
+      <span>${escapeHtml(system.presence || '')} ${system.notes ? `• ${escapeHtml(system.notes)}` : ''}</span>
+    </div>
+  `);
+
+  const programsByLevel = programsInState.reduce((acc, program) => {
+    const level = normalizeProgram(program).level || 'Other';
+    acc[level] = (acc[level] || 0) + 1;
+    return acc;
+  }, {});
+  const pipelineItems = [
+    ...(entry.pipeline?.majorPrograms || []).map((name) => ({ title: name, detail: 'Major program' })),
+    ...Object.entries(programsByLevel).map(([level, count]) => ({ title: level, detail: `${count} programs` })),
+    ...(entry.pipeline?.residencies || []).map((name) => ({ title: name, detail: 'Residency pipeline' }))
+  ];
+  renderBeaconList(stateBeaconPipeline, pipelineItems, (item) => `
+    <div class="state-beacon-item">
+      <strong>${escapeHtml(item.title)}</strong>
+      <span>${escapeHtml(item.detail)}</span>
+    </div>
+  `);
+
+  const keywords = (entry.newsKeywords || []).map((word) => word.toLowerCase());
+  const newsMatches = newsArticles.filter((article) => {
+    const haystack = `${article.title} ${article.summary}`.toLowerCase();
+    return keywords.some((word) => word && haystack.includes(word));
+  }).slice(0, 6);
+  renderBeaconList(stateBeaconNews, newsMatches, (article) => `
+    <a href="${article.url}" target="_blank" rel="noopener noreferrer">
+      <strong>${escapeHtml(article.title)}</strong>
+      <div class="state-beacon-subtitle">${escapeHtml(article.source || '')}</div>
+    </a>
+  `);
+
+  if (stateBeaconPros) {
+    stateBeaconPros.innerHTML = entry.pros.length
+      ? entry.pros.map((item) => `<li>${escapeHtml(item)}</li>`).join('')
+      : '<li>No pros listed yet.</li>';
+  }
+  if (stateBeaconCons) {
+    stateBeaconCons.innerHTML = entry.cons.length
+      ? entry.cons.map((item) => `<li>${escapeHtml(item)}</li>`).join('')
+      : '<li>No cons listed yet.</li>';
+  }
+
+  const notes = getStateBeaconNotes();
+  const savedNotes = notes[state] || {};
+  if (stateBeaconAttractions) {
+    stateBeaconAttractions.value = savedNotes.attractions ?? entry.attractions.join('\n');
+  }
+  if (stateBeaconDrawbacks) {
+    stateBeaconDrawbacks.value = savedNotes.drawbacks ?? entry.drawbacks.join('\n');
+  }
+
+  const inputs = getStateBeaconInputs() || {
+    specialty: 'General RN',
+    experience: '3-5 years',
+    shift: 'Day',
+    targetPay: '',
+    timeline: '31-60 days',
+    license: entry.compact ? 'Compact' : 'No license'
+  };
+
+  if (stateBeaconSpecialty) stateBeaconSpecialty.value = inputs.specialty;
+  if (stateBeaconExperience) stateBeaconExperience.value = inputs.experience;
+  if (stateBeaconShift) stateBeaconShift.value = inputs.shift;
+  if (stateBeaconTargetPay) stateBeaconTargetPay.value = inputs.targetPay;
+  if (stateBeaconTimeline) stateBeaconTimeline.value = inputs.timeline;
+  if (stateBeaconLicense) stateBeaconLicense.value = inputs.license;
+
+  const metro = entry.priorityMetros?.[0] || entry.name;
+  const tokens = {
+    state: entry.name,
+    specialty: inputs.specialty,
+    shift: inputs.shift,
+    targetPay: inputs.targetPay ? `$${inputs.targetPay}/hr` : 'competitive rates',
+    timeline: inputs.timeline,
+    license: inputs.license,
+    metro
+  };
+
+  renderBeaconList(stateBeaconScript, entry.talkingPoints, (point) => `
+    <div class="state-beacon-item">
+      <strong>•</strong>
+      <span>${escapeHtml(replaceTokens(point, tokens))}</span>
+    </div>
+  `);
+
+  renderBeaconList(stateBeaconObjections, entry.objections, (item) => `
+    <div class="state-beacon-item">
+      <strong>${escapeHtml(item.concern)}</strong>
+      <span>${escapeHtml(item.response)}</span>
+    </div>
+  `);
+};
+
+const openStateBeacon = async (state) => {
+  const defaultState = state || STATE_BEACON_DEFAULT;
+  if (stateBeaconStateSelect) stateBeaconStateSelect.value = defaultState;
+  await renderStateBeacon(defaultState);
+  stateBeaconModal?.classList.add('active');
+  closeModulesMenu();
+};
+
+const closeStateBeacon = () => {
+  stateBeaconModal?.classList.remove('active');
+};
+
+const initStateBeacon = () => {
+  if (!stateBeaconStateSelect) return;
+  stateBeaconStateSelect.innerHTML = ALL_STATES.map((state) => (
+    `<option value="${state}">${state} - ${STATE_NAMES[state] || ''}</option>`
+  )).join('');
+  stateBeaconStateSelect.value = STATE_BEACON_DEFAULT;
+
+  const onInputsChange = () => {
+    const inputs = {
+      specialty: stateBeaconSpecialty?.value || 'General RN',
+      experience: stateBeaconExperience?.value || '3-5 years',
+      shift: stateBeaconShift?.value || 'Day',
+      targetPay: stateBeaconTargetPay?.value || '',
+      timeline: stateBeaconTimeline?.value || '31-60 days',
+      license: stateBeaconLicense?.value || 'Compact'
+    };
+    saveStateBeaconInputs(inputs);
+    renderStateBeacon(stateBeaconStateSelect.value);
+  };
+
+  [stateBeaconSpecialty, stateBeaconExperience, stateBeaconShift, stateBeaconTargetPay, stateBeaconTimeline, stateBeaconLicense]
+    .filter(Boolean)
+    .forEach((el) => el.addEventListener('change', onInputsChange));
+
+  stateBeaconStateSelect.addEventListener('change', () => renderStateBeacon(stateBeaconStateSelect.value));
+
+  stateBeaconUseSelection?.addEventListener('click', () => {
+    const preferred = selectedStates.length === 1 ? selectedStates[0] : (stateSelect?.value || STATE_BEACON_DEFAULT);
+    stateBeaconStateSelect.value = preferred;
+    renderStateBeacon(preferred);
+  });
+
+  stateBeaconSave?.addEventListener('click', () => {
+    const notes = getStateBeaconNotes();
+    const state = stateBeaconStateSelect.value;
+    notes[state] = {
+      attractions: stateBeaconAttractions?.value || '',
+      drawbacks: stateBeaconDrawbacks?.value || ''
+    };
+    saveStateBeaconNotes(notes);
+  });
+
+  openStateBeaconBtn?.addEventListener('click', () => openStateBeacon(stateBeaconStateSelect.value));
+  stateBeaconCloseBtn?.addEventListener('click', closeStateBeacon);
+  stateBeaconCloseFooter?.addEventListener('click', closeStateBeacon);
+};
+
+// ==================== END STATE BEACON MODULE ====================
+
 // ==================== MAP/CHART VIEW TOGGLE ====================
 
 // Render bar chart view
@@ -2479,10 +2836,11 @@ const initApp = () => {
   initHelpSection();
   initMapToggle();
   initMapScopeToggle();
-  initStateMultiSelect();
-  initForecast();
-  initProgramsModule();
-  initNewsFeed();
+    initStateMultiSelect();
+    initForecast();
+    initProgramsModule();
+    initStateBeacon();
+    initNewsFeed();
   loadHealth();
   loadStatesWithMap();
   loadInsights();
