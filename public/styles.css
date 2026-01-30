@@ -725,8 +725,17 @@ body {
 /* State Beacon Module - Modern Redesign */
 .state-beacon-card {
   max-width: 1000px;
+  max-height: 90vh;
   border-radius: 20px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.state-beacon-card .modal-body {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
 }
 
 .beacon-header {
@@ -1116,8 +1125,6 @@ body {
   padding: 0.85rem 1rem;
   font-size: 0.8rem;
   color: var(--ink);
-  max-height: 280px;
-  overflow-y: auto;
 }
 
 .beacon-card-body::-webkit-scrollbar {
@@ -1148,7 +1155,7 @@ body {
 }
 
 .beacon-scroll-list {
-  max-height: 120px;
+  max-height: 150px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -1160,6 +1167,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 .beacon-news-list a {
