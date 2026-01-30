@@ -771,6 +771,19 @@ const initWeatherMap = async () => {
     svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
   }
 
+  // Inject golden gradient definition for home state
+  const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+  defs.innerHTML = `
+    <linearGradient id="home-state-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fff7cc;stop-opacity:1" />
+      <stop offset="25%" style="stop-color:#ffd700;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#ffb300;stop-opacity:1" />
+      <stop offset="75%" style="stop-color:#ffd700;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fff7cc;stop-opacity:1" />
+    </linearGradient>
+  `;
+  svg.insertBefore(defs, svg.firstChild);
+
   const shapes = svg.querySelectorAll('path, circle');
   shapes.forEach((shape) => {
     const classList = Array.from(shape.classList || []);
