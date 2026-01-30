@@ -780,16 +780,23 @@ const initWeatherMap = async () => {
     svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
   }
 
-  // Inject golden gradient definition for home state
+  // Inject golden gradient definition for home state (rich metallic gold with luminous highlight)
   const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
   defs.innerHTML = `
     <linearGradient id="home-state-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#fff7cc;stop-opacity:1" />
-      <stop offset="25%" style="stop-color:#ffd700;stop-opacity:1" />
-      <stop offset="50%" style="stop-color:#ffb300;stop-opacity:1" />
-      <stop offset="75%" style="stop-color:#ffd700;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#fff7cc;stop-opacity:1" />
+      <stop offset="0%" style="stop-color:#f0e68c;stop-opacity:1" />
+      <stop offset="15%" style="stop-color:#e6c84a;stop-opacity:1" />
+      <stop offset="35%" style="stop-color:#d4a017;stop-opacity:1" />
+      <stop offset="55%" style="stop-color:#c9a227;stop-opacity:1" />
+      <stop offset="75%" style="stop-color:#b8960b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a67c00;stop-opacity:1" />
     </linearGradient>
+    <radialGradient id="home-state-shine" cx="30%" cy="25%" r="60%" fx="25%" fy="20%">
+      <stop offset="0%" style="stop-color:#fffde7;stop-opacity:0.9" />
+      <stop offset="30%" style="stop-color:#f5e6a3;stop-opacity:0.5" />
+      <stop offset="70%" style="stop-color:#d4a017;stop-opacity:0.2" />
+      <stop offset="100%" style="stop-color:#c9a227;stop-opacity:0" />
+    </radialGradient>
   `;
   svg.insertBefore(defs, svg.firstChild);
 
@@ -3858,6 +3865,13 @@ const buildStateBeaconExport = (state) => {
 // Metro data for states (Indiana as default, can be extended)
 const STATE_METRO_DATA = {
   IN: {
+    nursingEducation: {
+      iuSystemPercentage: 35,
+      ivyTechPercentage: 28,
+      otherSchoolsPercentage: 37,
+      totalGraduatesAnnual: 4100,
+      retentionRate: 62
+    },
     metros: [
       {
         name: 'Indianapolis',
@@ -3865,24 +3879,45 @@ const STATE_METRO_DATA = {
         population: '2.1M',
         competition: 'high',
         hospitals: [
-          { name: 'IU Health Methodist Hospital', system: 'IU Health', score: 94, beds: 802, reviews: 4.2 },
-          { name: 'St. Vincent Hospital', system: 'Ascension', score: 91, beds: 725, reviews: 4.0 },
+          { name: 'IU Health Methodist Hospital', system: 'IU Health', score: 96, beds: 802, reviews: 4.3 },
+          { name: 'IU Health University Hospital', system: 'IU Health', score: 95, beds: 350, reviews: 4.4 },
+          { name: 'Riley Hospital for Children', system: 'IU Health', score: 94, beds: 375, reviews: 4.6 },
+          { name: 'Ascension St. Vincent Indianapolis', system: 'Ascension St. Vincent', score: 91, beds: 725, reviews: 4.0 },
           { name: 'Community Hospital East', system: 'Community Health Network', score: 88, beds: 350, reviews: 3.9 },
+          { name: 'Community Hospital North', system: 'Community Health Network', score: 87, beds: 303, reviews: 4.0 },
+          { name: 'Community Hospital South', system: 'Community Health Network', score: 85, beds: 158, reviews: 3.8 },
           { name: 'Franciscan Health Indianapolis', system: 'Franciscan Health', score: 87, beds: 485, reviews: 4.1 },
-          { name: 'Eskenazi Health', system: 'Health & Hospital Corp', score: 85, beds: 315, reviews: 3.8 }
+          { name: 'Eskenazi Health', system: 'Health & Hospital Corp', score: 85, beds: 315, reviews: 3.8 },
+          { name: 'IU Health Saxony Hospital', system: 'IU Health', score: 84, beds: 48, reviews: 4.2 },
+          { name: 'IU Health North Hospital', system: 'IU Health', score: 86, beds: 149, reviews: 4.1 },
+          { name: 'IU Health West Hospital', system: 'IU Health', score: 85, beds: 127, reviews: 4.0 },
+          { name: 'Ascension St. Vincent Carmel', system: 'Ascension St. Vincent', score: 86, beds: 104, reviews: 4.1 },
+          { name: 'Ascension St. Vincent Fishers', system: 'Ascension St. Vincent', score: 85, beds: 44, reviews: 4.2 },
+          { name: 'Ascension St. Vincent Heart Center', system: 'Ascension St. Vincent', score: 89, beds: 88, reviews: 4.3 },
+          { name: 'Franciscan Health Carmel', system: 'Franciscan Health', score: 84, beds: 42, reviews: 4.0 },
+          { name: 'Community Westview Hospital', system: 'Community Health Network', score: 82, beds: 72, reviews: 3.7 },
+          { name: 'Riverview Health', system: 'Riverview Health', score: 83, beds: 156, reviews: 4.0 },
+          { name: 'Witham Health Services', system: 'Witham Health', score: 81, beds: 97, reviews: 3.9 },
+          { name: 'Hendricks Regional Health', system: 'Hendricks Regional', score: 84, beds: 127, reviews: 4.1 },
+          { name: 'Johnson Memorial Hospital', system: 'Johnson Memorial', score: 80, beds: 81, reviews: 3.8 },
+          { name: 'Hancock Regional Hospital', system: 'Hancock Health', score: 82, beds: 65, reviews: 4.0 },
+          { name: 'Franciscan Health Mooresville', system: 'Franciscan Health', score: 81, beds: 115, reviews: 3.9 },
+          { name: 'Major Health Partners', system: 'Major Health', score: 78, beds: 65, reviews: 3.7 }
         ],
         systems: [
           { name: 'IU Health', facilities: 8, marketShare: '35%' },
-          { name: 'Ascension St. Vincent', facilities: 6, marketShare: '25%' },
-          { name: 'Community Health Network', facilities: 5, marketShare: '20%' },
-          { name: 'Franciscan Health', facilities: 3, marketShare: '12%' }
+          { name: 'Ascension St. Vincent', facilities: 5, marketShare: '22%' },
+          { name: 'Community Health Network', facilities: 5, marketShare: '18%' },
+          { name: 'Franciscan Health', facilities: 3, marketShare: '10%' },
+          { name: 'Independent Hospitals', facilities: 8, marketShare: '15%' }
         ],
-        salary: { staffRN: '$32-42/hr', travelRN: '$2,200-2,800/wk', signOn: '$10-20K' },
+        salary: { staffRN: '$32-45/hr', travelRN: '$2,200-2,800/wk', signOn: '$10-25K' },
         factors: [
-          { text: 'Major academic medical center', type: 'positive' },
-          { text: 'High demand for ICU/ED', type: 'positive' },
-          { text: 'Competitive market', type: 'neutral' },
-          { text: 'Urban cost of living', type: 'negative' }
+          { text: 'Major academic medical center (IU Health)', type: 'positive' },
+          { text: 'High demand for ICU/ED/OR specialties', type: 'positive' },
+          { text: 'Strong nurse residency programs', type: 'positive' },
+          { text: 'Competitive multi-system market', type: 'neutral' },
+          { text: 'Higher cost of living for Indiana', type: 'negative' }
         ]
       },
       {
@@ -3892,18 +3927,32 @@ const STATE_METRO_DATA = {
         competition: 'medium',
         hospitals: [
           { name: 'Parkview Regional Medical Center', system: 'Parkview Health', score: 90, beds: 700, reviews: 4.3 },
+          { name: 'Parkview Hospital Randallia', system: 'Parkview Health', score: 85, beds: 160, reviews: 4.0 },
+          { name: 'Parkview Ortho Hospital', system: 'Parkview Health', score: 87, beds: 37, reviews: 4.4 },
           { name: 'Lutheran Hospital', system: 'Lutheran Health Network', score: 86, beds: 396, reviews: 4.0 },
-          { name: 'Dupont Hospital', system: 'Lutheran Health Network', score: 84, beds: 131, reviews: 4.1 }
+          { name: 'Lutheran Hospital Downtown', system: 'Lutheran Health Network', score: 83, beds: 140, reviews: 3.8 },
+          { name: 'Dupont Hospital', system: 'Lutheran Health Network', score: 84, beds: 131, reviews: 4.1 },
+          { name: 'Parkview Wabash Hospital', system: 'Parkview Health', score: 79, beds: 25, reviews: 3.9 },
+          { name: 'Parkview Whitley Hospital', system: 'Parkview Health', score: 80, beds: 30, reviews: 4.0 },
+          { name: 'Parkview Huntington Hospital', system: 'Parkview Health', score: 79, beds: 36, reviews: 3.8 },
+          { name: 'Parkview DeKalb Hospital', system: 'Parkview Health', score: 81, beds: 50, reviews: 4.0 },
+          { name: 'Parkview LaGrange Hospital', system: 'Parkview Health', score: 78, beds: 25, reviews: 3.7 },
+          { name: 'Parkview Noble Hospital', system: 'Parkview Health', score: 79, beds: 31, reviews: 3.8 },
+          { name: 'Kosciusko Community Hospital', system: 'Lutheran Health Network', score: 80, beds: 72, reviews: 3.9 },
+          { name: 'Bluffton Regional Medical Center', system: 'Lutheran Health Network', score: 78, beds: 79, reviews: 3.7 }
         ],
         systems: [
-          { name: 'Parkview Health', facilities: 5, marketShare: '55%' },
-          { name: 'Lutheran Health Network', facilities: 4, marketShare: '35%' }
+          { name: 'Parkview Health', facilities: 10, marketShare: '55%' },
+          { name: 'Lutheran Health Network', facilities: 5, marketShare: '35%' },
+          { name: 'Independent', facilities: 2, marketShare: '10%' }
         ],
-        salary: { staffRN: '$28-38/hr', travelRN: '$1,900-2,400/wk', signOn: '$8-15K' },
+        salary: { staffRN: '$28-40/hr', travelRN: '$1,900-2,500/wk', signOn: '$8-18K' },
         factors: [
-          { text: 'Growing healthcare hub', type: 'positive' },
-          { text: 'Lower cost of living', type: 'positive' },
-          { text: 'Less travel demand', type: 'neutral' }
+          { text: 'Parkview dominates market with excellent benefits', type: 'positive' },
+          { text: 'Growing regional healthcare hub', type: 'positive' },
+          { text: 'Lower cost of living than Indianapolis', type: 'positive' },
+          { text: 'Strong community hospital culture', type: 'positive' },
+          { text: 'Less specialty career options', type: 'neutral' }
         ]
       },
       {
@@ -3913,37 +3962,84 @@ const STATE_METRO_DATA = {
         competition: 'medium',
         hospitals: [
           { name: 'Deaconess Midtown Hospital', system: 'Deaconess Health', score: 88, beds: 476, reviews: 4.1 },
-          { name: 'St. Vincent Evansville', system: 'Ascension', score: 85, beds: 342, reviews: 3.9 }
+          { name: 'Deaconess Gateway Hospital', system: 'Deaconess Health', score: 86, beds: 192, reviews: 4.0 },
+          { name: 'Deaconess Gibson General Hospital', system: 'Deaconess Health', score: 79, beds: 70, reviews: 3.8 },
+          { name: 'The Women\'s Hospital', system: 'Deaconess Health', score: 87, beds: 74, reviews: 4.3 },
+          { name: 'Ascension St. Vincent Evansville', system: 'Ascension St. Vincent', score: 85, beds: 342, reviews: 3.9 },
+          { name: 'Good Samaritan Hospital', system: 'Good Samaritan', score: 80, beds: 161, reviews: 3.7 },
+          { name: 'Daviess Community Hospital', system: 'Daviess Community', score: 77, beds: 42, reviews: 3.6 },
+          { name: 'Memorial Hospital Jasper', system: 'Memorial Hospital Jasper', score: 79, beds: 63, reviews: 3.8 },
+          { name: 'Perry County Memorial Hospital', system: 'Perry County Memorial', score: 75, beds: 25, reviews: 3.5 }
         ],
         systems: [
-          { name: 'Deaconess Health System', facilities: 4, marketShare: '60%' },
-          { name: 'Ascension St. Vincent', facilities: 2, marketShare: '30%' }
+          { name: 'Deaconess Health System', facilities: 5, marketShare: '60%' },
+          { name: 'Ascension St. Vincent', facilities: 1, marketShare: '25%' },
+          { name: 'Independent Regional', facilities: 4, marketShare: '15%' }
         ],
-        salary: { staffRN: '$27-36/hr', travelRN: '$1,800-2,300/wk', signOn: '$7-12K' },
+        salary: { staffRN: '$27-38/hr', travelRN: '$1,800-2,400/wk', signOn: '$7-15K' },
         factors: [
-          { text: 'Tri-state regional hub', type: 'positive' },
-          { text: 'Affordable housing', type: 'positive' },
-          { text: 'Limited specialty care', type: 'negative' }
+          { text: 'Tri-state regional healthcare hub (IN/KY/IL)', type: 'positive' },
+          { text: 'Very affordable housing market', type: 'positive' },
+          { text: 'Deaconess offers strong benefits package', type: 'positive' },
+          { text: 'Limited Level I trauma coverage', type: 'neutral' },
+          { text: 'Rural areas have chronic shortages', type: 'neutral' }
         ]
       },
       {
-        name: 'South Bend',
+        name: 'South Bend-Elkhart',
         size: 'medium',
         population: '325K',
         competition: 'medium',
         hospitals: [
-          { name: 'Memorial Hospital', system: 'Beacon Health', score: 87, beds: 537, reviews: 4.0 },
-          { name: 'St. Joseph Regional Medical Center', system: 'Trinity Health', score: 85, beds: 254, reviews: 3.8 }
+          { name: 'Memorial Hospital of South Bend', system: 'Beacon Health System', score: 87, beds: 537, reviews: 4.0 },
+          { name: 'Elkhart General Hospital', system: 'Beacon Health System', score: 84, beds: 263, reviews: 3.9 },
+          { name: 'St. Joseph Regional Medical Center', system: 'Trinity Health', score: 85, beds: 254, reviews: 3.8 },
+          { name: 'Goshen Health', system: 'Goshen Health', score: 82, beds: 123, reviews: 4.0 }
         ],
         systems: [
-          { name: 'Beacon Health System', facilities: 3, marketShare: '50%' },
-          { name: 'Trinity Health', facilities: 2, marketShare: '35%' }
+          { name: 'Beacon Health System', facilities: 2, marketShare: '50%' },
+          { name: 'Trinity Health', facilities: 1, marketShare: '30%' },
+          { name: 'Goshen Health', facilities: 1, marketShare: '15%' }
         ],
-        salary: { staffRN: '$28-37/hr', travelRN: '$1,850-2,400/wk', signOn: '$8-14K' },
+        salary: { staffRN: '$28-39/hr', travelRN: '$1,850-2,500/wk', signOn: '$8-16K' },
         factors: [
-          { text: 'Notre Dame community', type: 'positive' },
-          { text: 'Michigan border access', type: 'positive' },
-          { text: 'Seasonal weather challenges', type: 'negative' }
+          { text: 'Notre Dame University community', type: 'positive' },
+          { text: 'Access to Michigan job market', type: 'positive' },
+          { text: 'Growing Beacon Health system', type: 'positive' },
+          { text: 'Seasonal lake-effect weather', type: 'negative' }
+        ]
+      },
+      {
+        name: 'Northwest Indiana',
+        size: 'medium',
+        population: '775K',
+        competition: 'high',
+        hospitals: [
+          { name: 'Franciscan Health Hammond', system: 'Franciscan Health', score: 85, beds: 402, reviews: 3.9 },
+          { name: 'Franciscan Health Crown Point', system: 'Franciscan Health', score: 86, beds: 254, reviews: 4.0 },
+          { name: 'Franciscan Health Dyer', system: 'Franciscan Health', score: 84, beds: 215, reviews: 3.9 },
+          { name: 'Franciscan Health Michigan City', system: 'Franciscan Health', score: 82, beds: 171, reviews: 3.8 },
+          { name: 'Franciscan Health Munster', system: 'Franciscan Health', score: 83, beds: 32, reviews: 4.0 },
+          { name: 'Methodist Hospitals Northlake', system: 'Methodist Hospitals', score: 83, beds: 186, reviews: 3.8 },
+          { name: 'Methodist Hospitals Southlake', system: 'Methodist Hospitals', score: 81, beds: 151, reviews: 3.7 },
+          { name: 'St. Catherine Hospital', system: 'Community Healthcare System', score: 82, beds: 189, reviews: 3.8 },
+          { name: 'St. Mary Medical Center', system: 'Community Healthcare System', score: 83, beds: 195, reviews: 3.9 },
+          { name: 'Porter Regional Hospital', system: 'Northwest Health', score: 81, beds: 276, reviews: 3.7 },
+          { name: 'LaPorte Hospital', system: 'Northwest Health', score: 79, beds: 153, reviews: 3.6 }
+        ],
+        systems: [
+          { name: 'Franciscan Health', facilities: 5, marketShare: '45%' },
+          { name: 'Community Healthcare System', facilities: 2, marketShare: '20%' },
+          { name: 'Methodist Hospitals', facilities: 2, marketShare: '15%' },
+          { name: 'Northwest Health', facilities: 2, marketShare: '15%' }
+        ],
+        salary: { staffRN: '$30-42/hr', travelRN: '$2,000-2,600/wk', signOn: '$8-18K' },
+        factors: [
+          { text: 'Chicago metro spillover demand', type: 'positive' },
+          { text: 'Higher wages due to Illinois competition', type: 'positive' },
+          { text: 'Strong union presence (SEIU)', type: 'neutral' },
+          { text: 'Urban challenges in Gary/Hammond', type: 'negative' },
+          { text: 'Commute options to Chicago hospitals', type: 'positive' }
         ]
       },
       {
@@ -3952,15 +4048,18 @@ const STATE_METRO_DATA = {
         population: '175K',
         competition: 'low',
         hospitals: [
-          { name: 'IU Health Bloomington Hospital', system: 'IU Health', score: 86, beds: 275, reviews: 4.2 }
+          { name: 'IU Health Bloomington Hospital', system: 'IU Health', score: 86, beds: 275, reviews: 4.2 },
+          { name: 'IU Health Bedford Hospital', system: 'IU Health', score: 77, beds: 25, reviews: 3.7 },
+          { name: 'IU Health Paoli Hospital', system: 'IU Health', score: 76, beds: 25, reviews: 3.6 }
         ],
         systems: [
-          { name: 'IU Health', facilities: 1, marketShare: '90%' }
+          { name: 'IU Health', facilities: 3, marketShare: '95%' }
         ],
-        salary: { staffRN: '$27-35/hr', travelRN: '$1,700-2,200/wk', signOn: '$6-10K' },
+        salary: { staffRN: '$27-37/hr', travelRN: '$1,700-2,300/wk', signOn: '$6-12K' },
         factors: [
-          { text: 'University town culture', type: 'positive' },
-          { text: 'Single major employer', type: 'neutral' },
+          { text: 'Indiana University campus culture', type: 'positive' },
+          { text: 'Close connection to IU School of Nursing', type: 'positive' },
+          { text: 'Single system dominance', type: 'neutral' },
           { text: 'Limited specialty positions', type: 'negative' }
         ]
       },
@@ -3971,16 +4070,20 @@ const STATE_METRO_DATA = {
         competition: 'low',
         hospitals: [
           { name: 'IU Health Arnett Hospital', system: 'IU Health', score: 84, beds: 191, reviews: 4.0 },
-          { name: 'Franciscan Health Lafayette', system: 'Franciscan Health', score: 82, beds: 168, reviews: 3.9 }
+          { name: 'Franciscan Health Lafayette East', system: 'Franciscan Health', score: 82, beds: 168, reviews: 3.9 },
+          { name: 'Franciscan Health Crawfordsville', system: 'Franciscan Health', score: 78, beds: 42, reviews: 3.7 },
+          { name: 'Franciscan Health Rensselaer', system: 'Franciscan Health', score: 76, beds: 25, reviews: 3.6 },
+          { name: 'IU Health White Memorial Hospital', system: 'IU Health', score: 75, beds: 25, reviews: 3.5 }
         ],
         systems: [
-          { name: 'IU Health', facilities: 1, marketShare: '55%' },
-          { name: 'Franciscan Health', facilities: 1, marketShare: '40%' }
+          { name: 'IU Health', facilities: 2, marketShare: '50%' },
+          { name: 'Franciscan Health', facilities: 3, marketShare: '45%' }
         ],
-        salary: { staffRN: '$26-34/hr', travelRN: '$1,650-2,100/wk', signOn: '$5-10K' },
+        salary: { staffRN: '$26-36/hr', travelRN: '$1,650-2,200/wk', signOn: '$5-12K' },
         factors: [
-          { text: 'Purdue University proximity', type: 'positive' },
-          { text: 'Growing tech sector', type: 'positive' },
+          { text: 'Purdue University community', type: 'positive' },
+          { text: 'Growing tech sector jobs', type: 'positive' },
+          { text: 'Two-system competition', type: 'positive' },
           { text: 'Smaller facility sizes', type: 'neutral' }
         ]
       },
@@ -3990,36 +4093,144 @@ const STATE_METRO_DATA = {
         population: '170K',
         competition: 'low',
         hospitals: [
-          { name: 'Regional Hospital', system: 'Regional Health', score: 80, beds: 208, reviews: 3.7 },
-          { name: 'Terre Haute Regional Hospital', system: 'HCA Healthcare', score: 78, beds: 175, reviews: 3.5 }
+          { name: 'Union Hospital', system: 'Union Health', score: 81, beds: 208, reviews: 3.8 },
+          { name: 'Terre Haute Regional Hospital', system: 'HCA Healthcare', score: 78, beds: 175, reviews: 3.5 },
+          { name: 'Union Hospital Clinton', system: 'Union Health', score: 75, beds: 25, reviews: 3.5 },
+          { name: 'Sullivan County Community Hospital', system: 'Sullivan County', score: 73, beds: 25, reviews: 3.4 },
+          { name: 'Greene County General Hospital', system: 'Greene County', score: 72, beds: 25, reviews: 3.3 }
         ],
         systems: [
-          { name: 'Regional Health', facilities: 1, marketShare: '50%' },
-          { name: 'HCA Healthcare', facilities: 1, marketShare: '45%' }
+          { name: 'Union Health', facilities: 2, marketShare: '50%' },
+          { name: 'HCA Healthcare', facilities: 1, marketShare: '40%' },
+          { name: 'Independent', facilities: 2, marketShare: '10%' }
         ],
-        salary: { staffRN: '$25-33/hr', travelRN: '$1,600-2,000/wk', signOn: '$5-8K' },
+        salary: { staffRN: '$25-34/hr', travelRN: '$1,600-2,100/wk', signOn: '$5-10K' },
         factors: [
-          { text: 'Very affordable living', type: 'positive' },
+          { text: 'Very affordable cost of living', type: 'positive' },
+          { text: 'Indiana State University', type: 'positive' },
           { text: 'Rural healthcare needs', type: 'neutral' },
-          { text: 'Limited career advancement', type: 'negative' }
+          { text: 'Limited career advancement', type: 'negative' },
+          { text: 'Economic challenges in region', type: 'negative' }
         ]
       },
       {
-        name: 'Muncie',
+        name: 'Muncie-Anderson',
         size: 'small',
-        population: '115K',
+        population: '185K',
         competition: 'low',
         hospitals: [
-          { name: 'IU Health Ball Memorial Hospital', system: 'IU Health', score: 83, beds: 304, reviews: 3.9 }
+          { name: 'IU Health Ball Memorial Hospital', system: 'IU Health', score: 83, beds: 304, reviews: 3.9 },
+          { name: 'IU Health Blackford Hospital', system: 'IU Health', score: 74, beds: 15, reviews: 3.5 },
+          { name: 'IU Health Jay Hospital', system: 'IU Health', score: 75, beds: 25, reviews: 3.5 },
+          { name: 'Ascension St. Vincent Anderson', system: 'Ascension St. Vincent', score: 80, beds: 141, reviews: 3.7 },
+          { name: 'Community Hospital Anderson', system: 'Community Health Network', score: 79, beds: 202, reviews: 3.6 }
         ],
         systems: [
-          { name: 'IU Health', facilities: 1, marketShare: '95%' }
+          { name: 'IU Health', facilities: 3, marketShare: '50%' },
+          { name: 'Ascension St. Vincent', facilities: 1, marketShare: '25%' },
+          { name: 'Community Health Network', facilities: 1, marketShare: '25%' }
         ],
-        salary: { staffRN: '$25-32/hr', travelRN: '$1,550-1,950/wk', signOn: '$5-8K' },
+        salary: { staffRN: '$25-34/hr', travelRN: '$1,550-2,050/wk', signOn: '$5-10K' },
         factors: [
-          { text: 'Ball State University', type: 'positive' },
-          { text: 'Single hospital market', type: 'neutral' },
-          { text: 'Economic challenges', type: 'negative' }
+          { text: 'Ball State University nursing program', type: 'positive' },
+          { text: 'Lower cost of living', type: 'positive' },
+          { text: 'Multi-system presence', type: 'neutral' },
+          { text: 'Economic challenges in region', type: 'negative' }
+        ]
+      },
+      {
+        name: 'Kokomo-Marion',
+        size: 'small',
+        population: '145K',
+        competition: 'low',
+        hospitals: [
+          { name: 'Ascension St. Vincent Kokomo', system: 'Ascension St. Vincent', score: 81, beds: 152, reviews: 3.8 },
+          { name: 'Community Howard Regional Health', system: 'Community Health Network', score: 80, beds: 140, reviews: 3.7 },
+          { name: 'Marion General Hospital', system: 'Marion Health', score: 78, beds: 109, reviews: 3.6 },
+          { name: 'Logansport Memorial Hospital', system: 'Logansport Memorial', score: 76, beds: 70, reviews: 3.5 },
+          { name: 'Dukes Memorial Hospital', system: 'Dukes Memorial', score: 74, beds: 25, reviews: 3.4 }
+        ],
+        systems: [
+          { name: 'Ascension St. Vincent', facilities: 1, marketShare: '35%' },
+          { name: 'Community Health Network', facilities: 1, marketShare: '30%' },
+          { name: 'Independent', facilities: 3, marketShare: '35%' }
+        ],
+        salary: { staffRN: '$24-33/hr', travelRN: '$1,500-1,950/wk', signOn: '$4-8K' },
+        factors: [
+          { text: 'Strong community hospital culture', type: 'positive' },
+          { text: 'Very affordable living', type: 'positive' },
+          { text: 'IU Kokomo nursing program nearby', type: 'positive' },
+          { text: 'Declining population', type: 'negative' },
+          { text: 'Limited specialty opportunities', type: 'negative' }
+        ]
+      },
+      {
+        name: 'Columbus-Seymour',
+        size: 'small',
+        population: '130K',
+        competition: 'low',
+        hospitals: [
+          { name: 'Columbus Regional Hospital', system: 'Columbus Regional', score: 84, beds: 225, reviews: 4.1 },
+          { name: 'Schneck Medical Center', system: 'Schneck Medical', score: 82, beds: 93, reviews: 4.0 },
+          { name: 'Decatur County Memorial Hospital', system: 'Decatur County Memorial', score: 78, beds: 83, reviews: 3.7 }
+        ],
+        systems: [
+          { name: 'Columbus Regional Health', facilities: 1, marketShare: '60%' },
+          { name: 'Schneck Medical Center', facilities: 1, marketShare: '25%' },
+          { name: 'Independent', facilities: 1, marketShare: '15%' }
+        ],
+        salary: { staffRN: '$26-35/hr', travelRN: '$1,600-2,100/wk', signOn: '$5-10K' },
+        factors: [
+          { text: 'Cummins Inc. corporate headquarters', type: 'positive' },
+          { text: 'Strong local economy', type: 'positive' },
+          { text: 'Community-focused hospitals', type: 'positive' },
+          { text: 'Limited metro amenities', type: 'neutral' }
+        ]
+      },
+      {
+        name: 'Richmond-Connersville',
+        size: 'small',
+        population: '95K',
+        competition: 'low',
+        hospitals: [
+          { name: 'Reid Health', system: 'Reid Health', score: 83, beds: 217, reviews: 4.0 },
+          { name: 'Margaret Mary Health', system: 'Margaret Mary Health', score: 79, beds: 25, reviews: 3.8 }
+        ],
+        systems: [
+          { name: 'Reid Health', facilities: 1, marketShare: '85%' },
+          { name: 'Margaret Mary Health', facilities: 1, marketShare: '15%' }
+        ],
+        salary: { staffRN: '$25-33/hr', travelRN: '$1,550-2,000/wk', signOn: '$5-8K' },
+        factors: [
+          { text: 'Strong community hospital reputation', type: 'positive' },
+          { text: 'Ohio border access', type: 'positive' },
+          { text: 'Very affordable living', type: 'positive' },
+          { text: 'Single dominant employer', type: 'neutral' },
+          { text: 'Declining population', type: 'negative' }
+        ]
+      },
+      {
+        name: 'New Albany-Jeffersonville',
+        size: 'small',
+        population: '180K',
+        competition: 'medium',
+        hospitals: [
+          { name: 'Baptist Health Floyd', system: 'Baptist Health', score: 85, beds: 236, reviews: 4.0 },
+          { name: 'Clark Memorial Health', system: 'Clark Memorial', score: 82, beds: 180, reviews: 3.8 },
+          { name: 'King\'s Daughters\' Health', system: 'King\'s Daughters\'', score: 80, beds: 75, reviews: 3.7 },
+          { name: 'Harrison County Hospital', system: 'Harrison County', score: 76, beds: 25, reviews: 3.5 }
+        ],
+        systems: [
+          { name: 'Baptist Health (Louisville)', facilities: 1, marketShare: '45%' },
+          { name: 'Clark Memorial', facilities: 1, marketShare: '30%' },
+          { name: 'Independent', facilities: 2, marketShare: '25%' }
+        ],
+        salary: { staffRN: '$28-38/hr', travelRN: '$1,800-2,400/wk', signOn: '$7-14K' },
+        factors: [
+          { text: 'Louisville metro spillover demand', type: 'positive' },
+          { text: 'Access to Kentucky job market', type: 'positive' },
+          { text: 'Higher wages due to Louisville competition', type: 'positive' },
+          { text: 'IU Southeast nursing program nearby', type: 'positive' }
         ]
       }
     ]
