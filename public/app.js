@@ -2629,7 +2629,7 @@ const renderStrategicReview = async () => {
   const specialtySignals = strategicData?.specialtySignals || null;
   const specialtySignalCards = Array.isArray(specialtySignals?.cards) ? specialtySignals.cards : [];
   const specialtySignalSources = Array.isArray(specialtySignals?.sources) ? specialtySignals.sources : [];
-  const specialtySignalStatus = specialtySignals?.status || 'pending';
+  const specialtySignalStatusRaw = specialtySignals?.status || 'pending';
   const specialtySourceText = specialtySignalSources.map(source => source.name).filter(Boolean).join(' + ');
   const homeStateForSignals = (getStateBeaconInputs()?.homeState) || STATE_BEACON_HOME_DEFAULT;
 
@@ -2659,6 +2659,10 @@ const renderStrategicReview = async () => {
     );
   };
 
+  const rnSignalCards = specialtySignalCards
+    .filter((card) => isRNOnlySpecialty(card.specialty || card.name || ''));
+  const specialtySignalStatus = rnSignalCards.length ? specialtySignalStatusRaw : 'pending';
+
   const formatSignalValue = (entry, isProxy) => {
     if (!entry || !entry.state) return '--';
     const stateName = STATE_NAMES[entry.state] || entry.state;
@@ -2672,11 +2676,8 @@ const renderStrategicReview = async () => {
   };
 
   const renderSpecialtySignals = () => {
-    if (specialtySignalCards.length) {
-      const filteredCards = specialtySignalCards
-        .filter((card) => isRNOnlySpecialty(card.specialty || card.name || ''));
-      if (filteredCards.length) {
-        return filteredCards.map((card) => {
+    if (rnSignalCards.length) {
+      return rnSignalCards.map((card) => {
         const top = card.topState || card.most || card.highest || null;
         const low = card.bottomState || card.least || card.lowest || null;
         const tip = card.tip || card.tips || card.notes || 'Target top states for near-term outreach.';
@@ -2692,8 +2693,7 @@ const renderStrategicReview = async () => {
             <div class="specialty-signal-tip">${isProxy ? 'Based on total RN employment. Specialty-specific data coming soon.' : tip}</div>
           </div>
         `;
-        }).join('');
-      }
+      }).join('');
     }
 
     return Object.values(NURSE_SPECIALTIES)
