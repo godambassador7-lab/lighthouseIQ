@@ -2675,6 +2675,48 @@ const renderStrategicReview = async () => {
     return stateName;
   };
 
+  const pickProxyMetric = (name) => {
+    const lowered = String(name || '').toLowerCase();
+    const matches = (terms) => terms.some(term => lowered.includes(term));
+    if (matches(['icu', 'er', 'emergency', 'trauma', 'nicu', 'picu', 'labor', 'delivery', 'ob', 'cvicu', 'micu', 'sicu'])) {
+      return 'demand';
+    }
+    if (matches(['or', 'periop', 'perioperative', 'pacu', 'cath', 'electrophysiology', 'interventional', 'endoscopy'])) {
+      return 'pay';
+    }
+    if (matches(['home health', 'hospice', 'ltc', 'snf', 'geriatric', 'rehab', 'outpatient', 'ambulatory', 'clinic', 'school', 'public health', 'occupational', 'correctional'])) {
+      return 'supply';
+    }
+    return 'demand';
+  };
+
+  const getProxyStatesForSpecialty = (name) => {
+    const metric = pickProxyMetric(name);
+    const entries = Object.entries(salaryData);
+    const metricValue = (data) => {
+      if (metric === 'supply') return Number(data.staffRN ?? 0);
+      if (metric === 'pay') return Number(data.travelWeekly ?? 0);
+      return -Number(data.projectedGap ?? 0);
+    };
+    const sorted = entries
+      .slice()
+      .sort((a, b) => metricValue(b[1]) - metricValue(a[1]));
+    const topState = sorted[0]?.[0] || null;
+    const leastState = sorted[sorted.length - 1]?.[0] || null;
+    return { topState, leastState, metric };
+  };
+
+  const formatProxyState = (state) => {
+    if (!state) return '--';
+    return STATE_NAMES[state] || state;
+  };
+
+  const proxyMetricLabel = {
+    demand: 'Demand proxy',
+    supply: 'Supply proxy',
+    pay: 'Pay proxy'
+  };
+
   const renderSpecialtySignals = () => {
     if (rnSignalCards.length) {
       return rnSignalCards.map((card) => {
@@ -2698,17 +2740,21 @@ const renderStrategicReview = async () => {
 
     return Object.values(NURSE_SPECIALTIES)
       .filter((spec) => isRNOnlySpecialty(spec.name))
-      .map((spec) => `
+      .map((spec) => {
+        const proxy = getProxyStatesForSpecialty(spec.name);
+        const proxyLabel = proxyMetricLabel[proxy.metric] || 'Proxy';
+        return `
       <div class="specialty-signal-card pending">
         <div class="specialty-signal-title">${spec.name}</div>
         <div class="specialty-signal-rows">
-          <div><span class="label">Top</span><span class="value">--</span></div>
-          <div><span class="label">Least</span><span class="value">--</span></div>
+          <div><span class="label">Top</span><span class="value">${formatProxyState(proxy.topState)}</span></div>
+          <div><span class="label">Least</span><span class="value">${formatProxyState(proxy.leastState)}</span></div>
           <div><span class="label">Best outbound targets</span><span class="value">${bestTargetsText}</span></div>
         </div>
-        <div class="specialty-signal-tip">Signal pipeline warming up.</div>
+        <div class="specialty-signal-tip">${proxyLabel} from statewide RN data.</div>
       </div>
-    `).join('');
+    `;
+      }).join('');
   };
 
   // Calculate market metrics from loaded notices
