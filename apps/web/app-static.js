@@ -385,20 +385,6 @@ const NURSE_SPECIALTIES = {
   'Pain Management': { name: 'Pain Management', keywords: ['pain management', 'pain clinic', 'chronic pain', 'pain medicine'] },
   'Sleep Lab': { name: 'Sleep Lab', keywords: ['sleep lab', 'sleep study', 'sleep medicine', 'polysomnography'] },
 
-  // Advanced Practice & Leadership
-  'NP': { name: 'Nurse Practitioner', keywords: ['nurse practitioner', 'np ', 'n.p.', 'aprn', 'advanced practice'] },
-  'CNS': { name: 'Clinical Nurse Specialist', keywords: ['clinical nurse specialist', 'cns', 'c.n.s.'] },
-  'CRNA': { name: 'Nurse Anesthetist (CRNA)', keywords: ['crna', 'nurse anesthetist', 'anesthesia', 'c.r.n.a.'] },
-  'CNM': { name: 'Certified Nurse Midwife', keywords: ['midwife', 'cnm', 'nurse midwife', 'c.n.m.'] },
-  'Nurse Manager': { name: 'Nurse Manager / Director', keywords: ['nurse manager', 'nursing manager', 'nurse director', 'nursing director', 'unit manager'] },
-  'Charge Nurse': { name: 'Charge Nurse', keywords: ['charge nurse', 'charge rn', 'shift supervisor'] },
-  'Case Manager': { name: 'Case Management', keywords: ['case manager', 'case management', 'care coordinator', 'utilization review'] },
-  'Educator': { name: 'Nurse Educator', keywords: ['nurse educator', 'nursing educator', 'clinical educator', 'staff development'] },
-  'Informatics': { name: 'Nursing Informatics', keywords: ['informatics', 'nursing informatics', 'clinical informatics', 'health it'] },
-  'Quality': { name: 'Quality / Performance Improvement', keywords: ['quality', 'performance improvement', 'quality assurance', 'qi ', 'pi '] },
-  'Research': { name: 'Research Nurse', keywords: ['research', 'clinical research', 'clinical trials', 'research nurse'] },
-  'Infection Control': { name: 'Infection Control', keywords: ['infection control', 'infection prevention', 'epidemiology', 'ic nurse'] },
-
   // Other Specialties
   'Float Pool': { name: 'Float Pool / Resource', keywords: ['float pool', 'float nurse', 'resource pool', 'prn', 'per diem'] },
   'Travel': { name: 'Travel Nurse', keywords: ['travel nurse', 'travel nursing', 'traveler', 'agency'] },
@@ -1670,7 +1656,6 @@ const SPECIALTY_CATEGORIES = {
   'Long-Term Care & Geriatrics': ['LTC', 'SNF', 'Geriatrics', 'Memory Care', 'Rehab'],
   'Community & Outpatient': ['Home Health', 'Hospice', 'Public Health', 'School Nurse', 'Occupational Health', 'Outpatient', 'Infusion', 'Wound Care'],
   'Specialty Units': ['Burn', 'Transplant', 'Dialysis', 'Endoscopy', 'Cath Lab', 'Electrophysiology', 'Interventional Radiology', 'Pain Management', 'Sleep Lab'],
-  'Advanced Practice & Leadership': ['NP', 'CNS', 'CRNA', 'CNM', 'Nurse Manager', 'Charge Nurse', 'Case Manager', 'Educator', 'Informatics', 'Quality', 'Research', 'Infection Control'],
   'Other Specialties': ['Float Pool', 'Travel', 'Triage', 'Flight Nurse', 'Correctional', 'Military', 'Parish', 'Legal Nurse', 'Aesthetic', 'Bariatric', 'Diabetes', 'Allergy', 'ENT', 'Ophthalmology', 'Dermatology', 'Vascular']
 };
 
@@ -2510,10 +2495,8 @@ const NURSING_SALARY_DATA = {
 
 // Travel nurse specialty pay (weekly rates)
 const SPECIALTY_PAY = {
-  'CRNA': { weekly: 4996, annual: 259707, demand: 'very high' },
   'Cath Lab': { weekly: 4341, annual: 225732, demand: 'very high' },
   'NICU': { weekly: 2449, annual: 127391, demand: 'high' },
-  'NP': { weekly: 2506, annual: 130295, demand: 'high' },
   'ICU': { weekly: 2426, annual: 126164, demand: 'very high' },
   'Telemetry': { weekly: 2321, annual: 120690, demand: 'high' },
   'L&D': { weekly: 2400, annual: 124800, demand: 'high' },
@@ -2553,6 +2536,33 @@ const renderStrategicReview = async () => {
   const specialtySignalSources = Array.isArray(specialtySignals?.sources) ? specialtySignals.sources : [];
   const specialtySignalStatus = specialtySignals?.status || 'pending';
   const specialtySourceText = specialtySignalSources.map(source => source.name).filter(Boolean).join(' + ');
+  const homeStateForSignals = (getStateBeaconInputs()?.homeState) || STATE_BEACON_HOME_DEFAULT;
+
+  const computeBestTargets = (homeState) => {
+    return Object.entries(salaryData)
+      .filter(([state, data]) => state !== homeState && data.shortage === 'shortage')
+      .sort((a, b) => {
+        const gapA = Number(a[1].projectedGap ?? 0);
+        const gapB = Number(b[1].projectedGap ?? 0);
+        if (gapA !== gapB) return gapA - gapB;
+        return Number(b[1].travelWeekly ?? 0) - Number(a[1].travelWeekly ?? 0);
+      })
+      .slice(0, 3)
+      .map(([state]) => STATE_NAMES[state] || state);
+  };
+
+  const bestTargets = computeBestTargets(homeStateForSignals);
+  const bestTargetsText = bestTargets.length ? bestTargets.join(', ') : '--';
+  const isRNOnlySpecialty = (name) => {
+    const lowered = String(name || '').toLowerCase();
+    return !(
+      lowered.includes('nurse practitioner') ||
+      lowered.includes('clinical nurse specialist') ||
+      lowered.includes('crna') ||
+      lowered.includes('nurse anesthetist') ||
+      lowered.includes('midwife')
+    );
+  };
 
   const formatSignalValue = (entry, isProxy) => {
     if (!entry || !entry.state) return '--';
@@ -2568,7 +2578,9 @@ const renderStrategicReview = async () => {
 
   const renderSpecialtySignals = () => {
     if (specialtySignalCards.length) {
-      return specialtySignalCards.map((card) => {
+      return specialtySignalCards
+        .filter((card) => isRNOnlySpecialty(card.specialty || card.name || ''))
+        .map((card) => {
         const top = card.topState || card.most || card.highest || null;
         const low = card.bottomState || card.least || card.lowest || null;
         const tip = card.tip || card.tips || card.notes || 'Target top states for near-term outreach.';
@@ -2579,6 +2591,7 @@ const renderStrategicReview = async () => {
             <div class="specialty-signal-rows">
               <div><span class="label">Highest supply</span><span class="value">${formatSignalValue(top, isProxy)}</span></div>
               <div><span class="label">Lowest supply</span><span class="value">${formatSignalValue(low, isProxy)}</span></div>
+              <div><span class="label">Best outbound targets</span><span class="value">${bestTargetsText}</span></div>
             </div>
             <div class="specialty-signal-tip">${isProxy ? 'Based on total RN employment. Specialty-specific data coming soon.' : tip}</div>
           </div>
@@ -2586,12 +2599,15 @@ const renderStrategicReview = async () => {
       }).join('');
     }
 
-    return Object.values(NURSE_SPECIALTIES).map((spec) => `
+    return Object.values(NURSE_SPECIALTIES)
+      .filter((spec) => isRNOnlySpecialty(spec.name))
+      .map((spec) => `
       <div class="specialty-signal-card pending">
         <div class="specialty-signal-title">${spec.name}</div>
         <div class="specialty-signal-rows">
           <div><span class="label">Top</span><span class="value">--</span></div>
           <div><span class="label">Least</span><span class="value">--</span></div>
+          <div><span class="label">Best outbound targets</span><span class="value">${bestTargetsText}</span></div>
         </div>
         <div class="specialty-signal-tip">Signal pipeline warming up.</div>
       </div>
