@@ -134,6 +134,20 @@ const stateBeaconLicense = document.getElementById('state-beacon-license');
 const stateBeaconExportJson = document.getElementById('state-beacon-export-json');
 const stateBeaconExportCsv = document.getElementById('state-beacon-export-csv');
 
+const homeStateModal = document.getElementById('home-state-modal');
+const homeStateCloseBtn = document.getElementById('home-state-close');
+const homeStateCloseFooter = document.getElementById('home-state-close-footer');
+const homeStateOpenBeacon = document.getElementById('home-state-open-beacon');
+const homeStateSelected = document.getElementById('home-state-selected');
+const homeStateMeta = document.getElementById('home-state-meta');
+const homeStateHospitals = document.getElementById('home-state-hospitals');
+const homeStateNews = document.getElementById('home-state-news');
+const homeStateCompetition = document.getElementById('home-state-competition');
+const homeStatePipeline = document.getElementById('home-state-pipeline');
+const homeStatePros = document.getElementById('home-state-pros');
+const homeStateCons = document.getElementById('home-state-cons');
+const openHomeStateBtn = document.getElementById('open-home-state');
+
 // =============================================================================
 // State
 // =============================================================================
@@ -3666,6 +3680,143 @@ const buildStateBeaconExport = (state) => {
   };
 };
 
+const renderHomeState = async (homeState) => {
+  await loadStateBeaconData();
+  await ensureProgramsDataForBeacon();
+  await loadStateNewsData();
+
+  const entry = getBeaconEntry(homeState);
+  const notices = getStateNotices(homeState);
+  const majorNotices = filterNoticesByMajorSystems(notices, entry.warnMajorSystems);
+  const noticeCount = majorNotices.length;
+  const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === homeState);
+
+  if (homeStateSelected) {
+    homeStateSelected.innerHTML = `<span class="state-beacon-chip">${escapeHtml(entry.name)} (${escapeHtml(homeState)})</span>`;
+  }
+
+  const chips = [];
+  if (entry.compact !== null) chips.push(`Compact: ${entry.compact ? 'Yes' : 'No'}`);
+  if (entry.summary?.demand) chips.push(`Demand: ${entry.summary.demand}`);
+  if (entry.summary?.unionization) chips.push(`Union: ${entry.summary.unionization}`);
+  if (programsInState.length) chips.push(`Pipeline: ${programsInState.length} programs`);
+  if (noticeCount) chips.push(`WARN notices (major systems): ${noticeCount}`);
+  if (homeStateMeta) {
+    homeStateMeta.innerHTML = chips.map((chip) => `<span class="state-beacon-chip">${escapeHtml(chip)}</span>`).join('');
+  }
+
+  let hospitalItems = [];
+  if (entry.hospitalRankings?.length) {
+    const scored = entry.hospitalRankings.map((hospital) => {
+      const baseScore = Number(hospital.baseScore ?? 50);
+      const warnWeight = Number(hospital.warnWeight ?? 1);
+      const warnCount = getWarnCountForHospital(majorNotices, hospital, entry.warnMajorSystems);
+      const score = baseScore - (warnCount * warnWeight);
+      return { ...hospital, warnCount, score };
+    }).sort((a, b) => b.score - a.score);
+
+    const best = scored.slice(0, 5);
+    const worst = scored.slice(-5).reverse();
+    hospitalItems = [
+      ...best.map((item) => ({ ...item, label: 'Best (review + news score)' })),
+      ...worst.map((item) => ({ ...item, label: 'Watchlist (review + WARN)' }))
+    ];
+
+    renderBeaconList(homeStateHospitals, hospitalItems, (item) => `
+      <div class="state-beacon-item">
+        <strong>${escapeHtml(item.name)}</strong>
+        <span>${escapeHtml(item.label)} • Score ${item.score.toFixed(1)} • WARN ${item.warnCount}</span>
+      </div>
+    `);
+  } else {
+    const { best, worst } = buildHospitalRank(majorNotices, entry.warnMajorSystems);
+    hospitalItems = [
+      ...best.map((item) => ({ ...item, label: 'Best (low WARN activity)' })),
+      ...worst.map((item) => ({ ...item, label: 'Watchlist (high WARN activity)' }))
+    ];
+    renderBeaconList(homeStateHospitals, hospitalItems, (item) => `
+      <div class="state-beacon-item">
+        <strong>${escapeHtml(item.employer)}</strong>
+        <span>${escapeHtml(item.label)} • ${item.notices} notices</span>
+      </div>
+    `);
+  }
+
+  const competitionSystems = entry.competition?.systems?.length
+    ? entry.competition.systems
+    : Array.from(groupBy(majorNotices, (n) => n.parent_system || n.employer_name || n.employerName).entries())
+      .map(([name, items]) => ({ name, presence: `${items.length} notices`, notes: 'Derived from WARN activity.' }))
+      .slice(0, 6);
+
+  renderBeaconList(homeStateCompetition, competitionSystems, (system) => `
+    <div class="state-beacon-item">
+      <strong>${escapeHtml(system.name)}</strong>
+      <span>${escapeHtml(system.presence || '')} ${system.notes ? `• ${escapeHtml(system.notes)}` : ''}</span>
+    </div>
+  `);
+
+  const programsByLevel = programsInState.reduce((acc, program) => {
+    const level = normalizeProgram(program).level || 'Other';
+    acc[level] = (acc[level] || 0) + 1;
+    return acc;
+  }, {});
+  const pipelineItems = [
+    ...(entry.pipeline?.majorPrograms || []).map((name) => ({ title: name, detail: 'Major program' })),
+    ...Object.entries(programsByLevel).map(([level, count]) => ({ title: level, detail: `${count} programs` })),
+    ...(entry.pipeline?.residencies || []).map((name) => ({ title: name, detail: 'Residency pipeline' }))
+  ];
+  renderBeaconList(homeStatePipeline, pipelineItems, (item) => `
+    <div class="state-beacon-item">
+      <strong>${escapeHtml(item.title)}</strong>
+      <span>${escapeHtml(item.detail)}</span>
+    </div>
+  `);
+
+  const stateFeed = getStateNewsFeed(homeState, entry);
+  let newsMatches = [];
+  if (stateFeed.length) {
+    newsMatches = stateFeed
+      .slice()
+      .sort((a, b) => new Date(b.publishedAt || b.date || 0) - new Date(a.publishedAt || a.date || 0))
+      .slice(0, 12);
+  } else {
+    const keywords = (entry.newsKeywords || []).map((word) => word.toLowerCase());
+    newsMatches = newsArticles.filter((article) => {
+      const haystack = `${article.title} ${article.summary}`.toLowerCase();
+      return keywords.some((word) => word && haystack.includes(word));
+    }).slice(0, 6);
+  }
+  renderBeaconList(homeStateNews, newsMatches, (article) => `
+    <a href="${article.url}" target="_blank" rel="noopener noreferrer">
+      <strong>${escapeHtml(article.title)}</strong>
+      <div class="state-beacon-subtitle">${escapeHtml(article.source || '')}${article.publishedAt ? ` • ${escapeHtml(article.publishedAt)}` : ''}</div>
+    </a>
+  `);
+
+  if (homeStatePros) {
+    homeStatePros.innerHTML = entry.pros.length
+      ? entry.pros.map((item) => `<li>${escapeHtml(item)}</li>`).join('')
+      : '<li>No pros listed yet.</li>';
+  }
+  if (homeStateCons) {
+    homeStateCons.innerHTML = entry.cons.length
+      ? entry.cons.map((item) => `<li>${escapeHtml(item)}</li>`).join('')
+      : '<li>No cons listed yet.</li>';
+  }
+};
+
+const openHomeState = async () => {
+  const inputs = getStateBeaconInputs() || {};
+  const homeState = stateBeaconHomeSelect?.value || inputs.homeState || STATE_BEACON_HOME_DEFAULT;
+  if (stateBeaconHomeSelect && stateBeaconHomeSelect.value !== homeState) {
+    stateBeaconHomeSelect.value = homeState;
+  }
+  await renderHomeState(homeState);
+  homeStateModal?.classList.add('active');
+};
+
+const closeHomeState = () => homeStateModal?.classList.remove('active');
+
 const exportStateBeaconJson = () => {
   if (!stateBeaconStateSelect) return;
   const data = buildStateBeaconExport(stateBeaconStateSelect.value);
@@ -3737,6 +3888,52 @@ const initStateBeacon = () => {
   stateBeaconStateSelect.value = STATE_BEACON_DEFAULT;
   stateBeaconHomeSelect.value = STATE_BEACON_HOME_DEFAULT;
 
+  // Tab switching
+  const tabs = document.querySelectorAll('.beacon-tab');
+  const tabContents = document.querySelectorAll('.beacon-tab-content');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const targetTab = tab.dataset.tab;
+      tabs.forEach(t => t.classList.remove('active'));
+      tabContents.forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(`beacon-content-${targetTab}`)?.classList.add('active');
+    });
+  });
+
+  // Filters toggle
+  const filtersToggleBtn = document.getElementById('beacon-filters-toggle');
+  const filtersPanel = document.getElementById('beacon-filters-panel');
+  filtersToggleBtn?.addEventListener('click', () => {
+    filtersToggleBtn.classList.toggle('active');
+    filtersPanel?.classList.toggle('open');
+  });
+
+  // Update quick tags when filters change
+  const updateQuickTags = () => {
+    const tagSpecialty = document.getElementById('beacon-tag-specialty');
+    const tagExperience = document.getElementById('beacon-tag-experience');
+    const tagLicense = document.getElementById('beacon-tag-license');
+    if (tagSpecialty) tagSpecialty.textContent = stateBeaconSpecialty?.value || 'General RN';
+    if (tagExperience) tagExperience.textContent = stateBeaconExperience?.value || 'New grad';
+    if (tagLicense) tagLicense.textContent = stateBeaconLicense?.value || 'Compact';
+  };
+
+  // Copy button for script
+  document.querySelectorAll('.beacon-copy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.dataset.copy;
+      const target = document.getElementById(targetId);
+      if (target) {
+        navigator.clipboard.writeText(target.textContent || '').then(() => {
+          const originalText = btn.textContent;
+          btn.textContent = 'Copied!';
+          setTimeout(() => { btn.textContent = originalText; }, 1500);
+        });
+      }
+    });
+  });
+
   const onInputsChange = () => {
     const inputs = {
       homeState: stateBeaconHomeSelect?.value || STATE_BEACON_HOME_DEFAULT,
@@ -3748,6 +3945,7 @@ const initStateBeacon = () => {
       license: stateBeaconLicense?.value || 'Compact'
     };
     saveStateBeaconInputs(inputs);
+    updateQuickTags();
     renderStateBeacon(stateBeaconStateSelect.value);
   };
 
@@ -3778,6 +3976,23 @@ const initStateBeacon = () => {
   openStateBeaconBtn?.addEventListener('click', () => openStateBeacon(stateBeaconStateSelect.value));
   stateBeaconCloseBtn?.addEventListener('click', closeStateBeacon);
   stateBeaconCloseFooter?.addEventListener('click', closeStateBeacon);
+  openHomeStateBtn?.addEventListener('click', openHomeState);
+  homeStateCloseBtn?.addEventListener('click', closeHomeState);
+  homeStateCloseFooter?.addEventListener('click', closeHomeState);
+  homeStateOpenBeacon?.addEventListener('click', () => {
+    const homeState = stateBeaconHomeSelect?.value || STATE_BEACON_HOME_DEFAULT;
+    stateBeaconHomeSelect.value = homeState;
+    closeHomeState();
+    openStateBeacon(stateBeaconStateSelect?.value || STATE_BEACON_DEFAULT);
+  });
+  stateBeaconHomeSelect?.addEventListener('change', () => {
+    if (homeStateModal?.classList.contains('active')) {
+      renderHomeState(stateBeaconHomeSelect.value || STATE_BEACON_HOME_DEFAULT);
+    }
+  });
+
+  // Initialize quick tags
+  updateQuickTags();
 };
 
 // ==================== END STATE BEACON MODULE ====================

@@ -3692,7 +3692,7 @@ const renderHomeState = async (homeState) => {
   const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === homeState);
 
   if (homeStateSelected) {
-    homeStateSelected.innerHTML = `<span class=\"state-beacon-chip\">${escapeHtml(entry.name)} (${escapeHtml(homeState)})</span>`;
+    homeStateSelected.innerHTML = `<span class="state-beacon-chip">${escapeHtml(entry.name)} (${escapeHtml(homeState)})</span>`;
   }
 
   const chips = [];
@@ -3702,7 +3702,7 @@ const renderHomeState = async (homeState) => {
   if (programsInState.length) chips.push(`Pipeline: ${programsInState.length} programs`);
   if (noticeCount) chips.push(`WARN notices (major systems): ${noticeCount}`);
   if (homeStateMeta) {
-    homeStateMeta.innerHTML = chips.map((chip) => `<span class=\"state-beacon-chip\">${escapeHtml(chip)}</span>`).join('');
+    homeStateMeta.innerHTML = chips.map((chip) => `<span class="state-beacon-chip">${escapeHtml(chip)}</span>`).join('');
   }
 
   let hospitalItems = [];
@@ -3723,7 +3723,7 @@ const renderHomeState = async (homeState) => {
     ];
 
     renderBeaconList(homeStateHospitals, hospitalItems, (item) => `
-      <div class=\"state-beacon-item\">
+      <div class="state-beacon-item">
         <strong>${escapeHtml(item.name)}</strong>
         <span>${escapeHtml(item.label)} • Score ${item.score.toFixed(1)} • WARN ${item.warnCount}</span>
       </div>
@@ -3735,7 +3735,7 @@ const renderHomeState = async (homeState) => {
       ...worst.map((item) => ({ ...item, label: 'Watchlist (high WARN activity)' }))
     ];
     renderBeaconList(homeStateHospitals, hospitalItems, (item) => `
-      <div class=\"state-beacon-item\">
+      <div class="state-beacon-item">
         <strong>${escapeHtml(item.employer)}</strong>
         <span>${escapeHtml(item.label)} • ${item.notices} notices</span>
       </div>
@@ -3749,7 +3749,7 @@ const renderHomeState = async (homeState) => {
       .slice(0, 6);
 
   renderBeaconList(homeStateCompetition, competitionSystems, (system) => `
-    <div class=\"state-beacon-item\">
+    <div class="state-beacon-item">
       <strong>${escapeHtml(system.name)}</strong>
       <span>${escapeHtml(system.presence || '')} ${system.notes ? `• ${escapeHtml(system.notes)}` : ''}</span>
     </div>
@@ -3766,7 +3766,7 @@ const renderHomeState = async (homeState) => {
     ...(entry.pipeline?.residencies || []).map((name) => ({ title: name, detail: 'Residency pipeline' }))
   ];
   renderBeaconList(homeStatePipeline, pipelineItems, (item) => `
-    <div class=\"state-beacon-item\">
+    <div class="state-beacon-item">
       <strong>${escapeHtml(item.title)}</strong>
       <span>${escapeHtml(item.detail)}</span>
     </div>
@@ -3787,9 +3787,9 @@ const renderHomeState = async (homeState) => {
     }).slice(0, 6);
   }
   renderBeaconList(homeStateNews, newsMatches, (article) => `
-    <a href=\"${article.url}\" target=\"_blank\" rel=\"noopener noreferrer\">
+    <a href="${article.url}" target="_blank" rel="noopener noreferrer">
       <strong>${escapeHtml(article.title)}</strong>
-      <div class=\"state-beacon-subtitle\">${escapeHtml(article.source || '')}${article.publishedAt ? ` • ${escapeHtml(article.publishedAt)}` : ''}</div>
+      <div class="state-beacon-subtitle">${escapeHtml(article.source || '')}${article.publishedAt ? ` • ${escapeHtml(article.publishedAt)}` : ''}</div>
     </a>
   `);
 

@@ -976,22 +976,22 @@
     <!-- Home State Modal -->
     <div class="modal-overlay" id="home-state-modal">
       <div class="modal-card modal-large state-beacon-card">
-        <div class="modal-header beacon-header">
-          <div class="beacon-header-top">
-            <div class="beacon-title-group">
-              <h3>Home State</h3>
-              <div class="beacon-meta-row" id="home-state-meta"></div>
-            </div>
-            <button class="modal-close" id="home-state-close">&times;</button>
+        <div class="modal-header">
+          <div>
+            <h3>Home State</h3>
+            <p class="modal-subtitle">Locked to your selected home state.</p>
           </div>
-          <div class="beacon-meta-row">
-            <div id="home-state-selected"></div>
-            <button class="beacon-btn-icon" id="home-state-open-beacon" type="button" title="Change in State Beacon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
-            </button>
-          </div>
+          <button class="modal-close" id="home-state-close">&times;</button>
         </div>
         <div class="modal-body state-beacon-body">
+          <div class="state-beacon-controls">
+            <div>
+              <label>Home state</label>
+              <div id="home-state-selected"></div>
+            </div>
+            <button class="btn ghost small" id="home-state-open-beacon" type="button">Change in State Beacon</button>
+            <div class="state-beacon-meta" id="home-state-meta"></div>
+          </div>
           <div class="state-beacon-grid">
             <div class="state-beacon-panel">
               <h4>Local Hospitals (Review + WARN)</h4>
@@ -1030,6 +1030,7 @@
         </div>
       </div>
     </div>
+
     <script src="./app.js"></script>
   </body>
 </html>
