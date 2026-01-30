@@ -783,7 +783,23 @@ const initWeatherMap = async () => {
     shape.addEventListener('mouseenter', (e) => showTooltip(e, abbrev));
     shape.addEventListener('mousemove', (e) => moveTooltip(e));
     shape.addEventListener('mouseleave', hideTooltip);
+    // Right-click to set home state
+    shape.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+      setMapHomeState(abbrev);
+    });
+    // Double-click to toggle off home state
+    shape.addEventListener('dblclick', (e) => {
+      e.preventDefault();
+      const currentHome = getMapHomeState();
+      if (currentHome === abbrev) {
+        clearMapHomeState();
+      }
+    });
   });
+
+  // Apply home state highlight if one is saved
+  updateMapHomeStateHighlight();
 };
 
 const showTooltip = (e, stateAbbrev) => {
@@ -812,6 +828,65 @@ const moveTooltip = (e) => {
 
 const hideTooltip = () => {
   mapTooltip?.classList.remove('visible');
+};
+
+// =============================================================================
+// Map Home State (right-click to set, double-click to clear)
+// =============================================================================
+const MAP_HOME_STATE_KEY = 'lighthouseiq_map_home_state';
+
+const getMapHomeState = () => {
+  try {
+    return localStorage.getItem(MAP_HOME_STATE_KEY) || null;
+  } catch {
+    return null;
+  }
+};
+
+const setMapHomeState = (stateAbbrev) => {
+  try {
+    localStorage.setItem(MAP_HOME_STATE_KEY, stateAbbrev);
+    // Also sync with the State Beacon home select if it exists
+    if (stateBeaconHomeSelect) {
+      stateBeaconHomeSelect.value = stateAbbrev;
+      // Persist to State Beacon inputs
+      const inputs = getStateBeaconInputs() || {};
+      inputs.homeState = stateAbbrev;
+      saveStateBeaconInputs(inputs);
+    }
+  } catch {
+    // ignore
+  }
+  updateMapHomeStateHighlight();
+  showMapToast(`Home state set to ${STATE_NAMES[stateAbbrev] || stateAbbrev}`);
+};
+
+const clearMapHomeState = () => {
+  try {
+    localStorage.removeItem(MAP_HOME_STATE_KEY);
+  } catch {
+    // ignore
+  }
+  updateMapHomeStateHighlight();
+  showMapToast('Home state cleared');
+};
+
+const updateMapHomeStateHighlight = () => {
+  const homeState = getMapHomeState();
+  document.querySelectorAll('.us-map path[data-state], .us-map circle[data-state]').forEach(shape => {
+    shape.classList.remove('home-state-glow');
+    if (homeState && shape.dataset.state === homeState) {
+      shape.classList.add('home-state-glow');
+    }
+  });
+};
+
+const showMapToast = (message) => {
+  const toast = document.getElementById('map-toast');
+  if (!toast) return;
+  toast.textContent = message;
+  toast.classList.add('visible');
+  setTimeout(() => toast.classList.remove('visible'), 2000);
 };
 
 const setLoading = (message) => {
