@@ -828,6 +828,38 @@ body {
   letter-spacing: 0.04em;
 }
 
+.state-beacon-table {
+  margin-top: 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.state-beacon-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.state-beacon-table th,
+.state-beacon-table td {
+  padding: 0.55rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.state-beacon-table th {
+  background: rgba(15, 37, 76, 0.06);
+  color: var(--navy);
+  font-weight: 600;
+}
+
+.state-beacon-table tr:last-child td {
+  border-bottom: none;
+}
+
 .state-beacon-item {
   display: flex;
   justify-content: space-between;

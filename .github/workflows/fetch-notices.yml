@@ -95,6 +95,14 @@ jobs:
           LNI_OUTPUT_DIR: ${{ github.workspace }}/public/data
         working-directory: core
 
+      - name: Run state beacon export script
+        run: node dist/scripts/export-state-beacon.js
+        env:
+          LNI_OUTPUT_DIR: ${{ github.workspace }}/public/data
+          BLS_API_KEY: ${{ secrets.BLS_API_KEY }}
+          BLS_DATA_DIR: ${{ github.workspace }}/apps/data/bls
+        working-directory: core
+
       - name: Copy frontend to public
         run: |
           cp -r apps/web/* public/

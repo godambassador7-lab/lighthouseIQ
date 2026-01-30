@@ -2244,7 +2244,73 @@
           "flagship": true,
           "notes": "Academic specialty clinics tied to UF Health."
         }
-      ]
+      ],
+      "candidateInsights": [
+        {
+          "title": "Indiana ? Florida movers (ACS 2024)",
+          "detail": "14,906 moved from Indiana to Florida (MOE ?3,336). Use as proxy upper bound for Indiana-educated RN presence in FL; not occupation-specific."
+        },
+        {
+          "title": "Recruiter angle",
+          "detail": "Target Florida-based RNs with Indiana education or ties; emphasize Indiana compact licensure and faster onboarding."
+        }
+      ],
+      "candidateMetroTable": [
+        {
+          "metro": "Tampa-St. Petersburg",
+          "estimate": "1,250+",
+          "feederSchools": "Ball State, Purdue, IU"
+        },
+        {
+          "metro": "Orlando-Kissimmee",
+          "estimate": "1,100+",
+          "feederSchools": "IU, Ivy Tech, Purdue Global"
+        },
+        {
+          "metro": "Miami-Fort Lauderdale",
+          "estimate": "950+",
+          "feederSchools": "IUPUI, Butler, Valparaiso"
+        },
+        {
+          "metro": "Jacksonville",
+          "estimate": "600+",
+          "feederSchools": "University of Evansville, ISU"
+        },
+        {
+          "metro": "North Port-Sarasota",
+          "estimate": "450+",
+          "feederSchools": "Purdue, Ball State"
+        }
+      ],
+      "candidateModel": {
+        "gradOutput": 4100,
+        "gradOutputRange": [
+          3900,
+          4300
+        ],
+        "brainDrainRate": 0.4,
+        "relocationPreference": 0.28,
+        "healthcareRatio": 0.018,
+        "metroWeights": {
+          "Tampa-St. Petersburg": 1250,
+          "Orlando-Kissimmee": 1100,
+          "Miami-Fort Lauderdale": 950,
+          "Jacksonville": 600,
+          "North Port-Sarasota": 450
+        },
+        "metroFeederSchools": {
+          "Tampa-St. Petersburg": "Ball State, Purdue, IU",
+          "Orlando-Kissimmee": "IU, Ivy Tech, Purdue Global",
+          "Miami-Fort Lauderdale": "IUPUI, Butler, Valparaiso",
+          "Jacksonville": "University of Evansville, ISU",
+          "North Port-Sarasota": "Purdue, Ball State"
+        },
+        "sources": {
+          "gradOutput": "https://www.in.gov/pla/nursing-home/nursing-education/",
+          "migration": "https://www.census.gov/data/tables/time-series/demo/geographic-mobility/state-to-state-migration.html",
+          "relocationSurvey": "https://www.beckershospitalreview.com/quality/nursing/states-where-more-nurses-want-to-relocate/"
+        }
+      }
     }
   }
 }

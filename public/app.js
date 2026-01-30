@@ -117,6 +117,8 @@ const stateBeaconNews = document.getElementById('state-beacon-news');
 const stateBeaconCompetition = document.getElementById('state-beacon-competition');
 const stateBeaconScript = document.getElementById('state-beacon-script');
 const stateBeaconPipeline = document.getElementById('state-beacon-pipeline');
+const stateBeaconCandidates = document.getElementById('state-beacon-candidates');
+const stateBeaconCandidateTable = document.getElementById('state-beacon-candidate-table');
 const stateBeaconPros = document.getElementById('state-beacon-pros');
 const stateBeaconCons = document.getElementById('state-beacon-cons');
 const stateBeaconAttractions = document.getElementById('state-beacon-attractions');
@@ -152,7 +154,7 @@ let mapScope = 'healthcare';
 let currentPage = 1;
 let searchQuery = '';
 const NOTICE_MAX_COUNT = 100;
-const NOTICE_WINDOW_COUNT = 10;
+const NOTICE_WINDOW_COUNT = 15;
 const NOTICES_PER_PAGE = NOTICE_MAX_COUNT;
 let lastNoticeWindowCount = 0;
 let noticeWindowRaf = null;
@@ -2349,7 +2351,7 @@ const initApp = async () => {
 // Daily News Feed
 // =============================================================================
 let newsArticles = [];
-const NEWS_WINDOW_COUNT = 5;
+const NEWS_WINDOW_COUNT = 15;
 
 const getSourceBadgeClass = (source) => {
   const s = source.toLowerCase();
@@ -2395,7 +2397,7 @@ const renderNewsFeed = () => {
     </a>
   `).join('');
 
-  // Apply 5-item scroll window
+  // Apply 15-item scroll window
   requestAnimationFrame(() => {
     const cards = list.querySelectorAll('.news-card');
     if (cards.length <= NEWS_WINDOW_COUNT) {
@@ -3290,6 +3292,8 @@ const getBeaconEntry = (state) => {
     hospitalRegistry: entry.hospitalRegistry ?? [],
     clinicRegistry: entry.clinicRegistry ?? [],
     newsFeed: entry.newsFeed ?? [],
+    candidateInsights: entry.candidateInsights ?? [],
+    candidateMetroTable: entry.candidateMetroTable ?? [],
     newsKeywords: entry.newsKeywords ?? [STATE_NAMES[state], state].filter(Boolean),
     priorityMetros: entry.priorityMetros ?? []
   };
@@ -3453,6 +3457,41 @@ const renderStateBeacon = async (state) => {
     </div>
   `);
 
+  renderBeaconList(stateBeaconCandidates, entry.candidateInsights || [], (item) => `
+    <div class="state-beacon-item">
+      <strong>${escapeHtml(item.title)}</strong>
+      <span>${escapeHtml(item.detail || '')}</span>
+    </div>
+  `);
+
+  if (stateBeaconCandidateTable) {
+    if (entry.candidateMetroTable?.length) {
+      const rows = entry.candidateMetroTable
+        .map((row) => `
+          <tr>
+            <td>${escapeHtml(row.metro)}</td>
+            <td>${escapeHtml(row.estimate)}</td>
+            <td>${escapeHtml(row.feederSchools)}</td>
+          </tr>
+        `)
+        .join('');
+      stateBeaconCandidateTable.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>Florida Metro Area</th>
+              <th>Est. Indiana-Educated RNs</th>
+              <th>Top Indiana Feeder Schools</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      `;
+    } else {
+      stateBeaconCandidateTable.innerHTML = '';
+    }
+  }
+
   const stateFeed = getStateNewsFeed(state, entry);
   let newsMatches = [];
   if (stateFeed.length) {
@@ -3615,6 +3654,8 @@ const buildStateBeaconExport = (state) => {
       residencies: entry.pipeline?.residencies || [],
       clinicalPartners: entry.pipeline?.clinicalPartners || []
     },
+    candidateInsights: entry.candidateInsights || [],
+    candidateMetroTable: entry.candidateMetroTable || [],
     pros: entry.pros,
     cons: entry.cons,
     attractions: exportNotes.attractions,
