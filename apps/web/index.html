@@ -843,10 +843,19 @@
             <div class="beacon-section-grid">
               <div class="beacon-card">
                 <div class="beacon-card-header">
-                  <h4>Hospital Rankings</h4>
-                  <span class="beacon-badge">WARN + Reviews</span>
+                  <h4>Hospital Quality Rankings</h4>
+                  <span class="beacon-badge green">US News + Newsweek</span>
                 </div>
-                <div id="state-beacon-hospitals" class="beacon-card-body"></div>
+                <div class="beacon-card-body">
+                  <div class="hospital-rankings-section">
+                    <h5 class="rankings-subheader top">Top 10 Best Hospitals</h5>
+                    <div id="state-beacon-hospitals-top" class="beacon-scroll-list"></div>
+                  </div>
+                  <div class="hospital-rankings-section">
+                    <h5 class="rankings-subheader worst">Lowest 10 Ranked Hospitals</h5>
+                    <div id="state-beacon-hospitals-worst" class="beacon-scroll-list"></div>
+                  </div>
+                </div>
               </div>
               <div class="beacon-card">
                 <div class="beacon-card-header">

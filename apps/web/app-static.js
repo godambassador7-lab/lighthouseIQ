@@ -110,7 +110,8 @@ const stateBeaconHomeSelect = document.getElementById('state-beacon-home');
 const stateBeaconStateSelect = document.getElementById('state-beacon-state');
 const stateBeaconUseSelection = document.getElementById('state-beacon-use-selection');
 const stateBeaconMeta = document.getElementById('state-beacon-meta');
-const stateBeaconHospitals = document.getElementById('state-beacon-hospitals');
+const stateBeaconHospitalsTop = document.getElementById('state-beacon-hospitals-top');
+const stateBeaconHospitalsWorst = document.getElementById('state-beacon-hospitals-worst');
 const stateBeaconHospitalsAll = document.getElementById('state-beacon-hospitals-all');
 const stateBeaconClinics = document.getElementById('state-beacon-clinics');
 const stateBeaconNews = document.getElementById('state-beacon-news');
@@ -3319,7 +3320,7 @@ const renderBeaconList = (container, items, formatter) => {
     container.innerHTML = '<div class="empty-state">No data available yet.</div>';
     return;
   }
-  container.innerHTML = items.map((item) => formatter(item)).join('');
+  container.innerHTML = items.map((item, idx) => formatter(item, idx)).join('');
 };
 
 const buildHospitalRank = (notices, majorSystems = []) => {
@@ -3382,41 +3383,34 @@ const renderStateBeacon = async (state) => {
     stateBeaconMeta.innerHTML = chips.map((chip) => `<span class="state-beacon-chip">${escapeHtml(chip)}</span>`).join('');
   }
 
-  let hospitalItems = [];
+  // Hospital Quality Rankings (Top 10 and Worst 10 based on US News / Newsweek scores)
   if (entry.hospitalRankings?.length) {
-    const scored = entry.hospitalRankings.map((hospital) => {
-      const baseScore = Number(hospital.baseScore ?? 50);
-      const warnWeight = Number(hospital.warnWeight ?? 1);
-      const warnCount = getWarnCountForHospital(majorNotices, hospital, entry.warnMajorSystems);
-      const score = baseScore - (warnCount * warnWeight);
-      return { ...hospital, warnCount, score };
-    }).sort((a, b) => b.score - a.score);
+    const sorted = entry.hospitalRankings
+      .map((hospital) => ({
+        ...hospital,
+        score: Number(hospital.baseScore ?? 50)
+      }))
+      .sort((a, b) => b.score - a.score);
 
-    const best = scored.slice(0, 5);
-    const worst = scored.slice(-5).reverse();
-    hospitalItems = [
-      ...best.map((item) => ({ ...item, label: 'Best (review + news score)' })),
-      ...worst.map((item) => ({ ...item, label: 'Watchlist (review + WARN)' }))
-    ];
+    const top10 = sorted.slice(0, 10);
+    const worst10 = sorted.slice(-10).reverse();
 
-    renderBeaconList(stateBeaconHospitals, hospitalItems, (item) => `
+    renderBeaconList(stateBeaconHospitalsTop, top10, (item, idx) => `
       <div class="state-beacon-item">
-        <strong>${escapeHtml(item.name)}</strong>
-        <span>${escapeHtml(item.label)} • Score ${item.score.toFixed(1)} • WARN ${item.warnCount}</span>
+        <strong>#${idx + 1} ${escapeHtml(item.name)}</strong>
+        <span>${escapeHtml(item.metro || '')} • Quality Score: ${item.score}</span>
+      </div>
+    `);
+
+    renderBeaconList(stateBeaconHospitalsWorst, worst10, (item, idx) => `
+      <div class="state-beacon-item">
+        <strong>#${sorted.length - 9 + idx} ${escapeHtml(item.name)}</strong>
+        <span>${escapeHtml(item.metro || '')} • Quality Score: ${item.score}</span>
       </div>
     `);
   } else {
-    const { best, worst } = buildHospitalRank(majorNotices, entry.warnMajorSystems);
-    hospitalItems = [
-      ...best.map((item) => ({ ...item, label: 'Best (low WARN activity)' })),
-      ...worst.map((item) => ({ ...item, label: 'Watchlist (high WARN activity)' }))
-    ];
-    renderBeaconList(stateBeaconHospitals, hospitalItems, (item) => `
-      <div class="state-beacon-item">
-        <strong>${escapeHtml(item.employer)}</strong>
-        <span>${escapeHtml(item.label)} • ${item.notices} notices</span>
-      </div>
-    `);
+    renderBeaconList(stateBeaconHospitalsTop, [], () => '');
+    renderBeaconList(stateBeaconHospitalsWorst, [], () => '');
   }
 
   const hospitalRegistry = entry.hospitalRegistry || [];

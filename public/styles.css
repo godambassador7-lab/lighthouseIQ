@@ -1162,6 +1162,42 @@ body {
   gap: 0.35rem;
 }
 
+/* Hospital Rankings Sections */
+.hospital-rankings-section {
+  margin-bottom: 1rem;
+}
+
+.hospital-rankings-section:last-child {
+  margin-bottom: 0;
+}
+
+.rankings-subheader {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 0.5rem 0;
+  padding: 0.35rem 0.6rem;
+  border-radius: 6px;
+}
+
+.rankings-subheader.top {
+  color: #166534;
+  background: linear-gradient(90deg, rgba(22, 163, 74, 0.1), transparent);
+  border-left: 3px solid #22c55e;
+}
+
+.rankings-subheader.worst {
+  color: #991b1b;
+  background: linear-gradient(90deg, rgba(220, 38, 38, 0.1), transparent);
+  border-left: 3px solid #dc2626;
+}
+
+.beacon-badge.green {
+  background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+  color: #166534;
+}
+
 /* News list */
 .beacon-news-list {
   display: flex;
