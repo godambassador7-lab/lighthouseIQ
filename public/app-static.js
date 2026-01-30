@@ -783,18 +783,20 @@ const initWeatherMap = async () => {
     shape.addEventListener('mouseenter', (e) => showTooltip(e, abbrev));
     shape.addEventListener('mousemove', (e) => moveTooltip(e));
     shape.addEventListener('mouseleave', hideTooltip);
-    // Right-click to set home state
+    // Right-click to set/clear home state
     shape.addEventListener('contextmenu', (e) => {
-      e.preventDefault();
-      setMapHomeState(abbrev);
-    });
-    // Double-click to toggle off home state
-    shape.addEventListener('dblclick', (e) => {
       e.preventDefault();
       const currentHome = getMapHomeState();
       if (currentHome === abbrev) {
         clearMapHomeState();
+      } else {
+        setMapHomeState(abbrev);
       }
+    });
+    // Double-click to open State Beacon for that state
+    shape.addEventListener('dblclick', (e) => {
+      e.preventDefault();
+      openStateBeaconFromMap(abbrev);
     });
   });
 
@@ -887,6 +889,24 @@ const showMapToast = (message) => {
   toast.textContent = message;
   toast.classList.add('visible');
   setTimeout(() => toast.classList.remove('visible'), 2000);
+};
+
+const openStateBeaconFromMap = (targetState) => {
+  // Get saved home state from map
+  const homeState = getMapHomeState();
+
+  // Set home state in State Beacon if one is saved
+  if (homeState && stateBeaconHomeSelect) {
+    stateBeaconHomeSelect.value = homeState;
+  }
+
+  // Set target state and open State Beacon
+  if (stateBeaconStateSelect) {
+    stateBeaconStateSelect.value = targetState;
+  }
+
+  // Open the State Beacon module
+  openStateBeacon(targetState);
 };
 
 const setLoading = (message) => {
