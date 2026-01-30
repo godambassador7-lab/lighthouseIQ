@@ -139,15 +139,24 @@ const homeStateModal = document.getElementById('home-state-modal');
 const homeStateCloseBtn = document.getElementById('home-state-close');
 const homeStateCloseFooter = document.getElementById('home-state-close-footer');
 const homeStateOpenBeacon = document.getElementById('home-state-open-beacon');
-const homeStateSelected = document.getElementById('home-state-selected');
-const homeStateMeta = document.getElementById('home-state-meta');
-const homeStateHospitals = document.getElementById('home-state-hospitals');
-const homeStateNews = document.getElementById('home-state-news');
-const homeStateCompetition = document.getElementById('home-state-competition');
-const homeStatePipeline = document.getElementById('home-state-pipeline');
-const homeStatePros = document.getElementById('home-state-pros');
-const homeStateCons = document.getElementById('home-state-cons');
 const openHomeStateBtn = document.getElementById('open-home-state');
+// New Home State module elements
+const homeStateName = document.getElementById('home-state-name');
+const homeStateAbbr = document.getElementById('home-state-abbr');
+const homeStateStatHospitals = document.getElementById('home-state-stat-hospitals');
+const homeStateStatMetros = document.getElementById('home-state-stat-metros');
+const homeStateStatPrograms = document.getElementById('home-state-stat-programs');
+const homeStateStatCompact = document.getElementById('home-state-stat-compact');
+const homeStateMetroMap = document.getElementById('home-state-metro-map');
+const homeStateDetailPlaceholder = document.getElementById('home-state-detail-placeholder');
+const homeStateDetailContent = document.getElementById('home-state-detail-content');
+const homeStateMetroName = document.getElementById('home-state-metro-name');
+const homeStateMetroBadge = document.getElementById('home-state-metro-badge');
+const homeStateHospitalCount = document.getElementById('home-state-hospital-count');
+const homeStateMetroHospitals = document.getElementById('home-state-metro-hospitals');
+const homeStateMetroCompetition = document.getElementById('home-state-metro-competition');
+const homeStateMetroSalary = document.getElementById('home-state-metro-salary');
+const homeStateMetroFactors = document.getElementById('home-state-metro-factors');
 
 // =============================================================================
 // State
@@ -3846,128 +3855,304 @@ const buildStateBeaconExport = (state) => {
   };
 };
 
-const renderHomeState = async (homeState) => {
+// Metro data for states (Indiana as default, can be extended)
+const STATE_METRO_DATA = {
+  IN: {
+    metros: [
+      {
+        name: 'Indianapolis',
+        size: 'major',
+        population: '2.1M',
+        competition: 'high',
+        hospitals: [
+          { name: 'IU Health Methodist Hospital', system: 'IU Health', score: 94, beds: 802, reviews: 4.2 },
+          { name: 'St. Vincent Hospital', system: 'Ascension', score: 91, beds: 725, reviews: 4.0 },
+          { name: 'Community Hospital East', system: 'Community Health Network', score: 88, beds: 350, reviews: 3.9 },
+          { name: 'Franciscan Health Indianapolis', system: 'Franciscan Health', score: 87, beds: 485, reviews: 4.1 },
+          { name: 'Eskenazi Health', system: 'Health & Hospital Corp', score: 85, beds: 315, reviews: 3.8 }
+        ],
+        systems: [
+          { name: 'IU Health', facilities: 8, marketShare: '35%' },
+          { name: 'Ascension St. Vincent', facilities: 6, marketShare: '25%' },
+          { name: 'Community Health Network', facilities: 5, marketShare: '20%' },
+          { name: 'Franciscan Health', facilities: 3, marketShare: '12%' }
+        ],
+        salary: { staffRN: '$32-42/hr', travelRN: '$2,200-2,800/wk', signOn: '$10-20K' },
+        factors: [
+          { text: 'Major academic medical center', type: 'positive' },
+          { text: 'High demand for ICU/ED', type: 'positive' },
+          { text: 'Competitive market', type: 'neutral' },
+          { text: 'Urban cost of living', type: 'negative' }
+        ]
+      },
+      {
+        name: 'Fort Wayne',
+        size: 'medium',
+        population: '420K',
+        competition: 'medium',
+        hospitals: [
+          { name: 'Parkview Regional Medical Center', system: 'Parkview Health', score: 90, beds: 700, reviews: 4.3 },
+          { name: 'Lutheran Hospital', system: 'Lutheran Health Network', score: 86, beds: 396, reviews: 4.0 },
+          { name: 'Dupont Hospital', system: 'Lutheran Health Network', score: 84, beds: 131, reviews: 4.1 }
+        ],
+        systems: [
+          { name: 'Parkview Health', facilities: 5, marketShare: '55%' },
+          { name: 'Lutheran Health Network', facilities: 4, marketShare: '35%' }
+        ],
+        salary: { staffRN: '$28-38/hr', travelRN: '$1,900-2,400/wk', signOn: '$8-15K' },
+        factors: [
+          { text: 'Growing healthcare hub', type: 'positive' },
+          { text: 'Lower cost of living', type: 'positive' },
+          { text: 'Less travel demand', type: 'neutral' }
+        ]
+      },
+      {
+        name: 'Evansville',
+        size: 'medium',
+        population: '315K',
+        competition: 'medium',
+        hospitals: [
+          { name: 'Deaconess Midtown Hospital', system: 'Deaconess Health', score: 88, beds: 476, reviews: 4.1 },
+          { name: 'St. Vincent Evansville', system: 'Ascension', score: 85, beds: 342, reviews: 3.9 }
+        ],
+        systems: [
+          { name: 'Deaconess Health System', facilities: 4, marketShare: '60%' },
+          { name: 'Ascension St. Vincent', facilities: 2, marketShare: '30%' }
+        ],
+        salary: { staffRN: '$27-36/hr', travelRN: '$1,800-2,300/wk', signOn: '$7-12K' },
+        factors: [
+          { text: 'Tri-state regional hub', type: 'positive' },
+          { text: 'Affordable housing', type: 'positive' },
+          { text: 'Limited specialty care', type: 'negative' }
+        ]
+      },
+      {
+        name: 'South Bend',
+        size: 'medium',
+        population: '325K',
+        competition: 'medium',
+        hospitals: [
+          { name: 'Memorial Hospital', system: 'Beacon Health', score: 87, beds: 537, reviews: 4.0 },
+          { name: 'St. Joseph Regional Medical Center', system: 'Trinity Health', score: 85, beds: 254, reviews: 3.8 }
+        ],
+        systems: [
+          { name: 'Beacon Health System', facilities: 3, marketShare: '50%' },
+          { name: 'Trinity Health', facilities: 2, marketShare: '35%' }
+        ],
+        salary: { staffRN: '$28-37/hr', travelRN: '$1,850-2,400/wk', signOn: '$8-14K' },
+        factors: [
+          { text: 'Notre Dame community', type: 'positive' },
+          { text: 'Michigan border access', type: 'positive' },
+          { text: 'Seasonal weather challenges', type: 'negative' }
+        ]
+      },
+      {
+        name: 'Bloomington',
+        size: 'small',
+        population: '175K',
+        competition: 'low',
+        hospitals: [
+          { name: 'IU Health Bloomington Hospital', system: 'IU Health', score: 86, beds: 275, reviews: 4.2 }
+        ],
+        systems: [
+          { name: 'IU Health', facilities: 1, marketShare: '90%' }
+        ],
+        salary: { staffRN: '$27-35/hr', travelRN: '$1,700-2,200/wk', signOn: '$6-10K' },
+        factors: [
+          { text: 'University town culture', type: 'positive' },
+          { text: 'Single major employer', type: 'neutral' },
+          { text: 'Limited specialty positions', type: 'negative' }
+        ]
+      },
+      {
+        name: 'Lafayette',
+        size: 'small',
+        population: '230K',
+        competition: 'low',
+        hospitals: [
+          { name: 'IU Health Arnett Hospital', system: 'IU Health', score: 84, beds: 191, reviews: 4.0 },
+          { name: 'Franciscan Health Lafayette', system: 'Franciscan Health', score: 82, beds: 168, reviews: 3.9 }
+        ],
+        systems: [
+          { name: 'IU Health', facilities: 1, marketShare: '55%' },
+          { name: 'Franciscan Health', facilities: 1, marketShare: '40%' }
+        ],
+        salary: { staffRN: '$26-34/hr', travelRN: '$1,650-2,100/wk', signOn: '$5-10K' },
+        factors: [
+          { text: 'Purdue University proximity', type: 'positive' },
+          { text: 'Growing tech sector', type: 'positive' },
+          { text: 'Smaller facility sizes', type: 'neutral' }
+        ]
+      },
+      {
+        name: 'Terre Haute',
+        size: 'small',
+        population: '170K',
+        competition: 'low',
+        hospitals: [
+          { name: 'Regional Hospital', system: 'Regional Health', score: 80, beds: 208, reviews: 3.7 },
+          { name: 'Terre Haute Regional Hospital', system: 'HCA Healthcare', score: 78, beds: 175, reviews: 3.5 }
+        ],
+        systems: [
+          { name: 'Regional Health', facilities: 1, marketShare: '50%' },
+          { name: 'HCA Healthcare', facilities: 1, marketShare: '45%' }
+        ],
+        salary: { staffRN: '$25-33/hr', travelRN: '$1,600-2,000/wk', signOn: '$5-8K' },
+        factors: [
+          { text: 'Very affordable living', type: 'positive' },
+          { text: 'Rural healthcare needs', type: 'neutral' },
+          { text: 'Limited career advancement', type: 'negative' }
+        ]
+      },
+      {
+        name: 'Muncie',
+        size: 'small',
+        population: '115K',
+        competition: 'low',
+        hospitals: [
+          { name: 'IU Health Ball Memorial Hospital', system: 'IU Health', score: 83, beds: 304, reviews: 3.9 }
+        ],
+        systems: [
+          { name: 'IU Health', facilities: 1, marketShare: '95%' }
+        ],
+        salary: { staffRN: '$25-32/hr', travelRN: '$1,550-1,950/wk', signOn: '$5-8K' },
+        factors: [
+          { text: 'Ball State University', type: 'positive' },
+          { text: 'Single hospital market', type: 'neutral' },
+          { text: 'Economic challenges', type: 'negative' }
+        ]
+      }
+    ]
+  }
+};
+
+let currentHomeStateMetro = null;
+
+const renderHomeState = async (stateAbbrev) => {
   await loadStateBeaconData();
   await ensureProgramsDataForBeacon();
-  await loadStateNewsData();
 
-  const entry = getBeaconEntry(homeState);
-  const notices = getStateNotices(homeState);
-  const majorNotices = filterNoticesByMajorSystems(notices, entry.warnMajorSystems);
-  const noticeCount = majorNotices.length;
-  const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === homeState);
+  const entry = getBeaconEntry(stateAbbrev);
+  const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === stateAbbrev);
+  const metroData = STATE_METRO_DATA[stateAbbrev] || STATE_METRO_DATA.IN;
+  const metros = metroData?.metros || [];
 
-  if (homeStateSelected) {
-    homeStateSelected.innerHTML = `<span class="state-beacon-chip">${escapeHtml(entry.name)} (${escapeHtml(homeState)})</span>`;
-  }
+  // Update header
+  if (homeStateName) homeStateName.textContent = entry.name;
+  if (homeStateAbbr) homeStateAbbr.textContent = stateAbbrev;
 
-  const chips = [];
-  if (entry.compact !== null) chips.push(`Compact: ${entry.compact ? 'Yes' : 'No'}`);
-  if (entry.summary?.demand) chips.push(`Demand: ${entry.summary.demand}`);
-  if (entry.summary?.unionization) chips.push(`Union: ${entry.summary.unionization}`);
-  if (programsInState.length) chips.push(`Pipeline: ${programsInState.length} programs`);
-  if (noticeCount) chips.push(`WARN notices (major systems): ${noticeCount}`);
-  if (homeStateMeta) {
-    homeStateMeta.innerHTML = chips.map((chip) => `<span class="state-beacon-chip">${escapeHtml(chip)}</span>`).join('');
-  }
+  // Update stats
+  const totalHospitals = metros.reduce((sum, m) => sum + (m.hospitals?.length || 0), 0);
+  if (homeStateStatHospitals) homeStateStatHospitals.textContent = totalHospitals || '--';
+  if (homeStateStatMetros) homeStateStatMetros.textContent = metros.length || '--';
+  if (homeStateStatPrograms) homeStateStatPrograms.textContent = programsInState.length || '--';
+  if (homeStateStatCompact) homeStateStatCompact.textContent = entry.compact ? 'Yes' : 'No';
 
-  let hospitalItems = [];
-  if (entry.hospitalRankings?.length) {
-    const scored = entry.hospitalRankings.map((hospital) => {
-      const baseScore = Number(hospital.baseScore ?? 50);
-      const warnWeight = Number(hospital.warnWeight ?? 1);
-      const warnCount = getWarnCountForHospital(majorNotices, hospital, entry.warnMajorSystems);
-      const score = baseScore - (warnCount * warnWeight);
-      return { ...hospital, warnCount, score };
-    }).sort((a, b) => b.score - a.score);
-
-    const best = scored.slice(0, 5);
-    const worst = scored.slice(-5).reverse();
-    hospitalItems = [
-      ...best.map((item) => ({ ...item, label: 'Best (review + news score)' })),
-      ...worst.map((item) => ({ ...item, label: 'Watchlist (review + WARN)' }))
-    ];
-
-    renderBeaconList(homeStateHospitals, hospitalItems, (item) => `
-      <div class="state-beacon-item">
-        <strong>${escapeHtml(item.name)}</strong>
-        <span>${escapeHtml(item.label)} • Score ${item.score.toFixed(1)} • WARN ${item.warnCount}</span>
+  // Render metro cards
+  if (homeStateMetroMap) {
+    homeStateMetroMap.innerHTML = metros.map((metro, idx) => `
+      <div class="metro-city-card" data-metro-index="${idx}">
+        <div class="metro-city-icon ${metro.size}">
+          ${metro.size === 'major' ? '🏙️' : metro.size === 'medium' ? '🏘️' : '🏠'}
+        </div>
+        <div class="metro-city-info">
+          <div class="metro-city-name">${escapeHtml(metro.name)}</div>
+          <div class="metro-city-meta">${escapeHtml(metro.population)} • ${metro.hospitals?.length || 0} hospitals</div>
+        </div>
+        <div class="metro-city-indicator ${metro.competition}"></div>
       </div>
-    `);
-  } else {
-    const { best, worst } = buildHospitalRank(majorNotices, entry.warnMajorSystems);
-    hospitalItems = [
-      ...best.map((item) => ({ ...item, label: 'Best (low WARN activity)' })),
-      ...worst.map((item) => ({ ...item, label: 'Watchlist (high WARN activity)' }))
-    ];
-    renderBeaconList(homeStateHospitals, hospitalItems, (item) => `
-      <div class="state-beacon-item">
-        <strong>${escapeHtml(item.employer)}</strong>
-        <span>${escapeHtml(item.label)} • ${item.notices} notices</span>
+    `).join('');
+
+    // Add click handlers
+    homeStateMetroMap.querySelectorAll('.metro-city-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const idx = parseInt(card.dataset.metroIndex, 10);
+        selectHomeStateMetro(metros[idx], stateAbbrev);
+        homeStateMetroMap.querySelectorAll('.metro-city-card').forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+      });
+    });
+  }
+
+  // Reset detail panel to placeholder
+  currentHomeStateMetro = null;
+  if (homeStateDetailPlaceholder) homeStateDetailPlaceholder.style.display = 'flex';
+  if (homeStateDetailContent) homeStateDetailContent.style.display = 'none';
+};
+
+const selectHomeStateMetro = (metro, stateAbbrev) => {
+  currentHomeStateMetro = metro;
+
+  // Show detail content, hide placeholder
+  if (homeStateDetailPlaceholder) homeStateDetailPlaceholder.style.display = 'none';
+  if (homeStateDetailContent) homeStateDetailContent.style.display = 'block';
+
+  // Update header
+  if (homeStateMetroName) homeStateMetroName.textContent = metro.name;
+  if (homeStateMetroBadge) {
+    const badgeText = metro.size === 'major' ? 'Major Metro' : metro.size === 'medium' ? 'Regional Hub' : 'Small Market';
+    homeStateMetroBadge.textContent = badgeText;
+  }
+
+  // Render hospitals
+  const hospitals = metro.hospitals || [];
+  if (homeStateHospitalCount) homeStateHospitalCount.textContent = `${hospitals.length} facilities`;
+  if (homeStateMetroHospitals) {
+    homeStateMetroHospitals.innerHTML = hospitals.map((h, idx) => `
+      <div class="hospital-card">
+        <div class="hospital-rank">${idx + 1}</div>
+        <div class="hospital-info">
+          <div class="hospital-name">${escapeHtml(h.name)}</div>
+          <div class="hospital-details">
+            <span>${escapeHtml(h.system)}</span>
+            <span>${h.beds} beds</span>
+            <span>⭐ ${h.reviews}</span>
+          </div>
+        </div>
+        <div class="hospital-score">
+          <span class="score-value">${h.score}</span>
+          <span class="score-label">Score</span>
+        </div>
       </div>
-    `);
+    `).join('');
   }
 
-  const competitionSystems = entry.competition?.systems?.length
-    ? entry.competition.systems
-    : Array.from(groupBy(majorNotices, (n) => n.parent_system || n.employer_name || n.employerName).entries())
-      .map(([name, items]) => ({ name, presence: `${items.length} notices`, notes: 'Derived from WARN activity.' }))
-      .slice(0, 6);
-
-  renderBeaconList(homeStateCompetition, competitionSystems, (system) => `
-    <div class="state-beacon-item">
-      <strong>${escapeHtml(system.name)}</strong>
-      <span>${escapeHtml(system.presence || '')} ${system.notes ? `• ${escapeHtml(system.notes)}` : ''}</span>
-    </div>
-  `);
-
-  const programsByLevel = programsInState.reduce((acc, program) => {
-    const level = normalizeProgram(program).level || 'Other';
-    acc[level] = (acc[level] || 0) + 1;
-    return acc;
-  }, {});
-  const pipelineItems = [
-    ...(entry.pipeline?.majorPrograms || []).map((name) => ({ title: name, detail: 'Major program' })),
-    ...Object.entries(programsByLevel).map(([level, count]) => ({ title: level, detail: `${count} programs` })),
-    ...(entry.pipeline?.residencies || []).map((name) => ({ title: name, detail: 'Residency pipeline' }))
-  ];
-  renderBeaconList(homeStatePipeline, pipelineItems, (item) => `
-    <div class="state-beacon-item">
-      <strong>${escapeHtml(item.title)}</strong>
-      <span>${escapeHtml(item.detail)}</span>
-    </div>
-  `);
-
-  const stateFeed = getStateNewsFeed(homeState, entry);
-  let newsMatches = [];
-  if (stateFeed.length) {
-    newsMatches = stateFeed
-      .slice()
-      .sort((a, b) => new Date(b.publishedAt || b.date || 0) - new Date(a.publishedAt || a.date || 0))
-      .slice(0, 12);
-  } else {
-    const keywords = (entry.newsKeywords || []).map((word) => word.toLowerCase());
-    newsMatches = newsArticles.filter((article) => {
-      const haystack = `${article.title} ${article.summary}`.toLowerCase();
-      return keywords.some((word) => word && haystack.includes(word));
-    }).slice(0, 6);
+  // Render competition/systems
+  const systems = metro.systems || [];
+  if (homeStateMetroCompetition) {
+    homeStateMetroCompetition.innerHTML = systems.map(s => `
+      <div class="competition-card">
+        <div class="competition-name">${escapeHtml(s.name)}</div>
+        <div class="competition-details">${s.facilities} facilities • ${escapeHtml(s.marketShare)} market share</div>
+      </div>
+    `).join('');
   }
-  renderBeaconList(homeStateNews, newsMatches, (article) => `
-    <a href="${article.url}" target="_blank" rel="noopener noreferrer">
-      <strong>${escapeHtml(article.title)}</strong>
-      <div class="state-beacon-subtitle">${escapeHtml(article.source || '')}${article.publishedAt ? ` • ${escapeHtml(article.publishedAt)}` : ''}</div>
-    </a>
-  `);
 
-  if (homeStatePros) {
-    homeStatePros.innerHTML = entry.pros.length
-      ? entry.pros.map((item) => `<li>${escapeHtml(item)}</li>`).join('')
-      : '<li>No pros listed yet.</li>';
+  // Render salary data
+  const salary = metro.salary || {};
+  if (homeStateMetroSalary) {
+    homeStateMetroSalary.innerHTML = `
+      <div class="salary-card">
+        <div class="salary-value">${escapeHtml(salary.staffRN || '--')}</div>
+        <div class="salary-label">Staff RN Hourly</div>
+      </div>
+      <div class="salary-card">
+        <div class="salary-value">${escapeHtml(salary.travelRN || '--')}</div>
+        <div class="salary-label">Travel RN Weekly</div>
+      </div>
+      <div class="salary-card">
+        <div class="salary-value">${escapeHtml(salary.signOn || '--')}</div>
+        <div class="salary-label">Sign-On Bonus</div>
+      </div>
+    `;
   }
-  if (homeStateCons) {
-    homeStateCons.innerHTML = entry.cons.length
-      ? entry.cons.map((item) => `<li>${escapeHtml(item)}</li>`).join('')
-      : '<li>No cons listed yet.</li>';
+
+  // Render factors
+  const factors = metro.factors || [];
+  if (homeStateMetroFactors) {
+    homeStateMetroFactors.innerHTML = factors.map(f => `
+      <span class="factor-tag ${f.type}">${escapeHtml(f.text)}</span>
+    `).join('');
   }
 };
 

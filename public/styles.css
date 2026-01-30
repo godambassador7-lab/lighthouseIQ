@@ -1399,6 +1399,510 @@ body {
   transform: translateY(-1px);
 }
 
+/* ============================================================================
+   Home State Module - Modern Redesign
+   ============================================================================ */
+.home-state-card {
+  max-width: 1100px;
+  width: 95vw;
+  max-height: 90vh;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+}
+
+.home-state-header {
+  background: linear-gradient(135deg, #1a365d 0%, #2c5282 50%, #3182ce 100%);
+  padding: 1.5rem 2rem;
+  color: #fff;
+}
+
+.home-state-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.25rem;
+}
+
+.home-state-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.home-state-title h3 {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.home-state-abbr {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.35rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.home-state-header .modal-close {
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 10px;
+  width: 36px;
+  height: 36px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.home-state-header .modal-close:hover {
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+}
+
+.home-state-stats {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.home-state-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.home-state-stat .stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.home-state-stat .stat-label {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.home-state-content {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* Metro Map Panel */
+.home-state-map-panel {
+  background: #f8fafc;
+  padding: 1.25rem;
+  border-right: 1px solid rgba(26, 54, 93, 0.1);
+  overflow-y: auto;
+}
+
+.home-state-map-panel h4 {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+  color: var(--navy);
+}
+
+.home-state-map-panel .panel-subtitle {
+  margin: 0 0 1rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.home-state-metro-map {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.metro-city-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  background: #fff;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.metro-city-card:hover {
+  border-color: var(--sea);
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(49, 130, 206, 0.15);
+}
+
+.metro-city-card.active {
+  border-color: var(--navy);
+  background: linear-gradient(135deg, rgba(26, 54, 93, 0.04), rgba(49, 130, 206, 0.08));
+}
+
+.metro-city-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.metro-city-icon.major { background: linear-gradient(135deg, #fef3c7, #fde68a); }
+.metro-city-icon.medium { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+.metro-city-icon.small { background: linear-gradient(135deg, #d1fae5, #a7f3d0); }
+
+.metro-city-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.metro-city-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--ink);
+  margin-bottom: 0.15rem;
+}
+
+.metro-city-meta {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.metro-city-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.metro-city-indicator.high { background: #ef4444; }
+.metro-city-indicator.medium { background: #f59e0b; }
+.metro-city-indicator.low { background: #22c55e; }
+
+.home-state-map-legend {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(26, 54, 93, 0.1);
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.legend-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 4px;
+}
+
+.legend-dot.high { background: #ef4444; }
+.legend-dot.medium { background: #f59e0b; }
+.legend-dot.low { background: #22c55e; }
+
+/* Detail Panel */
+.home-state-detail-panel {
+  padding: 1.5rem;
+  overflow-y: auto;
+  background: #fff;
+}
+
+.home-state-detail-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  color: var(--muted);
+  padding: 2rem;
+}
+
+.placeholder-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.home-state-detail-placeholder h4 {
+  margin: 0 0 0.5rem;
+  color: var(--ink);
+  font-size: 1.1rem;
+}
+
+.home-state-detail-placeholder p {
+  margin: 0;
+  font-size: 0.9rem;
+  max-width: 300px;
+  line-height: 1.5;
+}
+
+.detail-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(26, 54, 93, 0.08);
+}
+
+.detail-header h4 {
+  margin: 0;
+  font-size: 1.35rem;
+  color: var(--navy);
+}
+
+.detail-badge {
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  color: #92400e;
+  padding: 0.3rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.detail-section {
+  margin-bottom: 1.5rem;
+}
+
+.detail-section:last-child {
+  margin-bottom: 0;
+}
+
+.detail-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.detail-section-header h5 {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--navy);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.section-badge {
+  background: rgba(26, 54, 93, 0.08);
+  color: var(--navy);
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+/* Hospital List */
+.detail-hospital-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.hospital-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: #f8fafc;
+  border-radius: 10px;
+  border: 1px solid rgba(26, 54, 93, 0.06);
+}
+
+.hospital-rank {
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(135deg, var(--navy), #2c5282);
+  color: #fff;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.hospital-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.hospital-name {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--ink);
+  margin-bottom: 0.2rem;
+}
+
+.hospital-details {
+  font-size: 0.75rem;
+  color: var(--muted);
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.hospital-score {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.15rem;
+}
+
+.score-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.score-label {
+  font-size: 0.65rem;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+/* Competition Grid */
+.detail-competition-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+.competition-card {
+  padding: 0.75rem;
+  background: #f8fafc;
+  border-radius: 10px;
+  border: 1px solid rgba(26, 54, 93, 0.06);
+}
+
+.competition-name {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--ink);
+  margin-bottom: 0.35rem;
+}
+
+.competition-details {
+  font-size: 0.75rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* Salary Grid */
+.detail-salary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.salary-card {
+  padding: 1rem;
+  background: linear-gradient(135deg, #f8fafc, #fff);
+  border-radius: 12px;
+  border: 1px solid rgba(26, 54, 93, 0.08);
+  text-align: center;
+}
+
+.salary-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 0.25rem;
+}
+
+.salary-label {
+  font-size: 0.7rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Factors List */
+.detail-factors-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.factor-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.75rem;
+  background: #f8fafc;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  color: var(--ink);
+  border: 1px solid rgba(26, 54, 93, 0.08);
+}
+
+.factor-tag.positive {
+  background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+  border-color: rgba(34, 197, 94, 0.2);
+  color: #166534;
+}
+
+.factor-tag.negative {
+  background: linear-gradient(135deg, #fee2e2, #fecaca);
+  border-color: rgba(239, 68, 68, 0.2);
+  color: #991b1b;
+}
+
+.factor-tag.neutral {
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  border-color: rgba(245, 158, 11, 0.2);
+  color: #92400e;
+}
+
+/* Footer */
+.home-state-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: #f8fafc;
+  border-top: 1px solid rgba(26, 54, 93, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 800px) {
+  .home-state-content {
+    grid-template-columns: 1fr;
+  }
+
+  .home-state-map-panel {
+    border-right: none;
+    border-bottom: 1px solid rgba(26, 54, 93, 0.1);
+    max-height: 250px;
+  }
+
+  .detail-salary-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .detail-competition-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Responsive */
 @media (max-width: 900px) {
   .beacon-filters-grid {

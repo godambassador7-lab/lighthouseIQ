@@ -1013,57 +1013,112 @@
 
     <!-- Home State Modal -->
     <div class="modal-overlay" id="home-state-modal">
-      <div class="modal-card modal-large state-beacon-card">
-        <div class="modal-header">
-          <div>
-            <h3>Home State</h3>
-            <p class="modal-subtitle">Locked to your selected home state.</p>
+      <div class="modal-card home-state-card">
+        <!-- Header -->
+        <div class="home-state-header">
+          <div class="home-state-title-row">
+            <div class="home-state-title">
+              <h3 id="home-state-name">Indiana</h3>
+              <span class="home-state-abbr" id="home-state-abbr">IN</span>
+            </div>
+            <button class="modal-close" id="home-state-close">&times;</button>
           </div>
-          <button class="modal-close" id="home-state-close">&times;</button>
+          <div class="home-state-stats">
+            <div class="home-state-stat">
+              <span class="stat-value" id="home-state-stat-hospitals">--</span>
+              <span class="stat-label">Hospitals</span>
+            </div>
+            <div class="home-state-stat">
+              <span class="stat-value" id="home-state-stat-metros">--</span>
+              <span class="stat-label">Metro Areas</span>
+            </div>
+            <div class="home-state-stat">
+              <span class="stat-value" id="home-state-stat-programs">--</span>
+              <span class="stat-label">Nursing Programs</span>
+            </div>
+            <div class="home-state-stat">
+              <span class="stat-value" id="home-state-stat-compact">--</span>
+              <span class="stat-label">Compact State</span>
+            </div>
+          </div>
         </div>
-        <div class="modal-body state-beacon-body">
-          <div class="state-beacon-controls">
-            <div>
-              <label>Home state</label>
-              <div id="home-state-selected"></div>
+
+        <!-- Main Content -->
+        <div class="home-state-content">
+          <!-- Left Panel: Metro Map -->
+          <div class="home-state-map-panel">
+            <h4>Select a Metro Area</h4>
+            <p class="panel-subtitle">Click a city to view healthcare market details</p>
+            <div class="home-state-metro-map" id="home-state-metro-map">
+              <!-- Metro cities will be rendered here as clickable cards -->
             </div>
-            <button class="btn ghost small" id="home-state-open-beacon" type="button">Change in State Beacon</button>
-            <div class="state-beacon-meta" id="home-state-meta"></div>
+            <div class="home-state-map-legend">
+              <span><span class="legend-dot high"></span> High Competition</span>
+              <span><span class="legend-dot medium"></span> Medium</span>
+              <span><span class="legend-dot low"></span> Low Competition</span>
+            </div>
           </div>
-          <div class="state-beacon-grid">
-            <div class="state-beacon-panel">
-              <h4>Local Hospitals (Review + WARN)</h4>
-              <p class="state-beacon-subtitle">Major systems only; review/news ranking where available.</p>
-              <div id="home-state-hospitals" class="state-beacon-list"></div>
+
+          <!-- Right Panel: Metro Details -->
+          <div class="home-state-detail-panel" id="home-state-detail-panel">
+            <div class="home-state-detail-placeholder" id="home-state-detail-placeholder">
+              <div class="placeholder-icon">🏥</div>
+              <h4>Select a Metro Area</h4>
+              <p>Click on a city from the map to view detailed healthcare market information including hospitals, competition, and salary data.</p>
             </div>
-            <div class="state-beacon-panel">
-              <h4>Local News (State Mentions)</h4>
-              <div id="home-state-news" class="state-beacon-news"></div>
-            </div>
-            <div class="state-beacon-panel">
-              <h4>Competition Breakdown</h4>
-              <div id="home-state-competition" class="state-beacon-list"></div>
-            </div>
-            <div class="state-beacon-panel">
-              <h4>Nursing Student Pipeline</h4>
-              <div id="home-state-pipeline" class="state-beacon-list"></div>
-            </div>
-            <div class="state-beacon-panel">
-              <h4>Pros &amp; Cons for Nurses</h4>
-              <div class="state-beacon-columns">
-                <div>
-                  <h5>Pros</h5>
-                  <ul id="home-state-pros"></ul>
+            <div class="home-state-detail-content" id="home-state-detail-content" style="display: none;">
+              <div class="detail-header">
+                <h4 id="home-state-metro-name">Indianapolis</h4>
+                <span class="detail-badge" id="home-state-metro-badge">Major Metro</span>
+              </div>
+
+              <!-- Hospitals Section -->
+              <div class="detail-section">
+                <div class="detail-section-header">
+                  <h5>Top Hospitals</h5>
+                  <span class="section-badge" id="home-state-hospital-count">0 facilities</span>
                 </div>
-                <div>
-                  <h5>Cons</h5>
-                  <ul id="home-state-cons"></ul>
+                <div class="detail-hospital-list" id="home-state-metro-hospitals">
+                  <!-- Hospital cards will be rendered here -->
+                </div>
+              </div>
+
+              <!-- Competition Section -->
+              <div class="detail-section">
+                <div class="detail-section-header">
+                  <h5>Healthcare Systems</h5>
+                </div>
+                <div class="detail-competition-grid" id="home-state-metro-competition">
+                  <!-- Competition cards will be rendered here -->
+                </div>
+              </div>
+
+              <!-- Salary & Market Section -->
+              <div class="detail-section">
+                <div class="detail-section-header">
+                  <h5>Salary &amp; Market Data</h5>
+                </div>
+                <div class="detail-salary-grid" id="home-state-metro-salary">
+                  <!-- Salary data will be rendered here -->
+                </div>
+              </div>
+
+              <!-- Key Factors Section -->
+              <div class="detail-section">
+                <div class="detail-section-header">
+                  <h5>Key Market Factors</h5>
+                </div>
+                <div class="detail-factors-list" id="home-state-metro-factors">
+                  <!-- Factors will be rendered here -->
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="modal-footer">
+
+        <!-- Footer -->
+        <div class="home-state-footer">
+          <button type="button" class="btn ghost" id="home-state-open-beacon">Open Full State Beacon</button>
           <button type="button" class="btn secondary" id="home-state-close-footer">Close</button>
         </div>
       </div>
