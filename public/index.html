@@ -65,6 +65,9 @@
             <button class="module-item" id="open-state-beacon" type="button">
               State Beacon
             </button>
+            <button class="module-item" id="open-home-state" type="button">
+              Home State
+            </button>
           </div>
         </div>
       </div>
@@ -720,155 +723,313 @@
     <!-- State Beacon Modal -->
     <div class="modal-overlay" id="state-beacon-modal">
       <div class="modal-card modal-large state-beacon-card">
-        <div class="modal-header">
-          <div>
-            <h3>State Beacon</h3>
-            <p class="modal-subtitle">Local intelligence snapshot for recruiter targeting.</p>
+        <div class="modal-header beacon-header">
+          <div class="beacon-header-top">
+            <div class="beacon-title-group">
+              <h3>State Beacon</h3>
+              <div class="beacon-state-selectors">
+                <div class="beacon-select-group">
+                  <span class="beacon-select-label">From</span>
+                  <select id="state-beacon-home" class="beacon-select"></select>
+                </div>
+                <span class="beacon-arrow">→</span>
+                <div class="beacon-select-group">
+                  <span class="beacon-select-label">To</span>
+                  <select id="state-beacon-state" class="beacon-select"></select>
+                </div>
+                <button class="beacon-btn-icon" id="state-beacon-use-selection" type="button" title="Use current filter">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                </button>
+              </div>
+            </div>
+            <button class="modal-close" id="state-beacon-close">&times;</button>
           </div>
-          <button class="modal-close" id="state-beacon-close">&times;</button>
+          <div class="beacon-meta-row" id="state-beacon-meta"></div>
+        </div>
+
+        <div class="modal-body state-beacon-body">
+          <!-- Filters Toggle -->
+          <div class="beacon-filters-toggle">
+            <button type="button" class="beacon-filters-btn" id="beacon-filters-toggle">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M7 12h10M10 18h4"/></svg>
+              Filters
+              <span class="beacon-filters-chevron">▼</span>
+            </button>
+            <div class="beacon-quick-tags">
+              <span class="beacon-tag" id="beacon-tag-specialty">General RN</span>
+              <span class="beacon-tag" id="beacon-tag-experience">New grad</span>
+              <span class="beacon-tag" id="beacon-tag-license">Compact</span>
+            </div>
+          </div>
+
+          <!-- Collapsible Filters -->
+          <div class="beacon-filters-panel" id="beacon-filters-panel">
+            <div class="beacon-filters-grid">
+              <label class="beacon-filter">
+                <span>Specialty</span>
+                <select id="state-beacon-specialty">
+                  <option value="General RN">General RN</option>
+                  <option value="ICU">ICU</option>
+                  <option value="ER">ER</option>
+                  <option value="OR">OR</option>
+                  <option value="Med-Surg">Med-Surg</option>
+                  <option value="Telemetry">Telemetry</option>
+                  <option value="L&amp;D">Labor &amp; Delivery</option>
+                  <option value="NICU">NICU</option>
+                  <option value="Home Health">Home Health</option>
+                  <option value="SNF">Skilled Nursing</option>
+                </select>
+              </label>
+              <label class="beacon-filter">
+                <span>Experience</span>
+                <select id="state-beacon-experience">
+                  <option value="New grad">New grad</option>
+                  <option value="1-2 years">1-2 years</option>
+                  <option value="3-5 years">3-5 years</option>
+                  <option value="5+ years">5+ years</option>
+                </select>
+              </label>
+              <label class="beacon-filter">
+                <span>Shift</span>
+                <select id="state-beacon-shift">
+                  <option value="Day">Day</option>
+                  <option value="Night">Night</option>
+                  <option value="Weekend">Weekend</option>
+                  <option value="Flexible">Flexible</option>
+                </select>
+              </label>
+              <label class="beacon-filter">
+                <span>Target $/hr</span>
+                <input type="number" id="state-beacon-target-pay" min="0" placeholder="45" />
+              </label>
+              <label class="beacon-filter">
+                <span>Timeline</span>
+                <select id="state-beacon-timeline">
+                  <option value="0-30 days">0-30 days</option>
+                  <option value="31-60 days">31-60 days</option>
+                  <option value="61-90 days">61-90 days</option>
+                  <option value="90+ days">90+ days</option>
+                </select>
+              </label>
+              <label class="beacon-filter">
+                <span>License</span>
+                <select id="state-beacon-license">
+                  <option value="Compact">Compact</option>
+                  <option value="Florida">Florida only</option>
+                  <option value="No license">No license</option>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <!-- Tab Navigation -->
+          <div class="beacon-tabs">
+            <button type="button" class="beacon-tab active" data-tab="facilities">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M9 8h1M9 12h1M9 16h1M14 8h1M14 12h1M14 16h1M5 21V5a2 2 0 012-2h10a2 2 0 012 2v16"/></svg>
+              Facilities
+            </button>
+            <button type="button" class="beacon-tab" data-tab="recruiting">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+              Recruiting
+            </button>
+            <button type="button" class="beacon-tab" data-tab="pitch">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+              Candidate Pitch
+            </button>
+          </div>
+
+          <!-- Tab Content: Facilities -->
+          <div class="beacon-tab-content active" id="beacon-content-facilities">
+            <div class="beacon-section-grid">
+              <div class="beacon-card">
+                <div class="beacon-card-header">
+                  <h4>Hospital Rankings</h4>
+                  <span class="beacon-badge">WARN + Reviews</span>
+                </div>
+                <div id="state-beacon-hospitals" class="beacon-card-body"></div>
+              </div>
+              <div class="beacon-card">
+                <div class="beacon-card-header">
+                  <h4>Local News</h4>
+                  <span class="beacon-badge blue">Live</span>
+                </div>
+                <div id="state-beacon-news" class="beacon-card-body beacon-news-list"></div>
+              </div>
+              <div class="beacon-card">
+                <div class="beacon-card-header">
+                  <h4>All Facilities</h4>
+                </div>
+                <div class="beacon-card-body">
+                  <div class="beacon-facility-section">
+                    <h5>Hospitals (AHCA)</h5>
+                    <div id="state-beacon-hospitals-all" class="beacon-scroll-list"></div>
+                  </div>
+                  <div class="beacon-facility-section">
+                    <h5>Flagship Clinics</h5>
+                    <div id="state-beacon-clinics" class="beacon-scroll-list"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="beacon-card">
+                <div class="beacon-card-header">
+                  <h4>Competition</h4>
+                </div>
+                <div id="state-beacon-competition" class="beacon-card-body"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab Content: Recruiting -->
+          <div class="beacon-tab-content" id="beacon-content-recruiting">
+            <div class="beacon-section-grid recruiting-grid">
+              <div class="beacon-card wide">
+                <div class="beacon-card-header">
+                  <h4>Recruiter Script</h4>
+                  <button type="button" class="beacon-copy-btn" data-copy="state-beacon-script">Copy</button>
+                </div>
+                <div id="state-beacon-script" class="beacon-card-body beacon-script"></div>
+              </div>
+              <div class="beacon-card">
+                <div class="beacon-card-header">
+                  <h4>Objection Handling</h4>
+                </div>
+                <div id="state-beacon-objections" class="beacon-card-body"></div>
+              </div>
+              <div class="beacon-card">
+                <div class="beacon-card-header">
+                  <h4>Student Pipeline</h4>
+                  <span class="beacon-badge green">Programs</span>
+                </div>
+                <div id="state-beacon-pipeline" class="beacon-card-body"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab Content: Candidate Pitch -->
+          <div class="beacon-tab-content" id="beacon-content-pitch">
+            <div class="beacon-section-grid pitch-grid">
+              <div class="beacon-card">
+                <div class="beacon-card-header">
+                  <h4>Why Move Here</h4>
+                </div>
+                <div class="beacon-card-body">
+                  <div class="beacon-pros-cons">
+                    <div class="beacon-pros">
+                      <h5>Pros</h5>
+                      <ul id="state-beacon-pros"></ul>
+                    </div>
+                    <div class="beacon-cons">
+                      <h5>Cons</h5>
+                      <ul id="state-beacon-cons"></ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="beacon-card">
+                <div class="beacon-card-header">
+                  <h4>Outbound Insights</h4>
+                </div>
+                <div class="beacon-card-body">
+                  <div id="state-beacon-candidates"></div>
+                  <div id="state-beacon-candidate-table" class="beacon-table"></div>
+                </div>
+              </div>
+              <div class="beacon-card wide">
+                <div class="beacon-card-header">
+                  <h4>Your Notes</h4>
+                </div>
+                <div class="beacon-card-body beacon-notes-grid">
+                  <div class="beacon-note-field">
+                    <label>Selling Points</label>
+                    <textarea id="state-beacon-attractions" rows="3" placeholder="Local attractions, lifestyle perks..."></textarea>
+                  </div>
+                  <div class="beacon-note-field">
+                    <label>Watch Outs</label>
+                    <textarea id="state-beacon-drawbacks" rows="3" placeholder="Cost of living, licensing hurdles..."></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer beacon-footer">
+          <div class="beacon-footer-left">
+            <button type="button" class="beacon-action-btn" id="state-beacon-export-json">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+              JSON
+            </button>
+            <button type="button" class="beacon-action-btn" id="state-beacon-export-csv">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+              CSV
+            </button>
+            <button type="button" class="beacon-action-btn" id="state-beacon-save">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              Save
+            </button>
+          </div>
+          <button type="button" class="beacon-close-btn" id="state-beacon-close-footer">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Home State Modal -->
+    <div class="modal-overlay" id="home-state-modal">
+      <div class="modal-card modal-large state-beacon-card">
+        <div class="modal-header beacon-header">
+          <div class="beacon-header-top">
+            <div class="beacon-title-group">
+              <h3>Home State</h3>
+              <div class="beacon-meta-row" id="home-state-meta"></div>
+            </div>
+            <button class="modal-close" id="home-state-close">&times;</button>
+          </div>
+          <div class="beacon-meta-row">
+            <div id="home-state-selected"></div>
+            <button class="beacon-btn-icon" id="home-state-open-beacon" type="button" title="Change in State Beacon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            </button>
+          </div>
         </div>
         <div class="modal-body state-beacon-body">
-          <div class="state-beacon-controls">
-            <label>
-              Home state
-              <select id="state-beacon-home"></select>
-            </label>
-            <label>
-              Beacon state
-              <select id="state-beacon-state"></select>
-            </label>
-            <button class="btn ghost small" id="state-beacon-use-selection" type="button">Use current filter</button>
-            <div class="state-beacon-meta" id="state-beacon-meta"></div>
-          </div>
-          <div class="state-beacon-filters">
-            <label>
-              Specialty focus
-              <select id="state-beacon-specialty">
-                <option value="General RN">General RN</option>
-                <option value="ICU">ICU</option>
-                <option value="ER">ER</option>
-                <option value="OR">OR</option>
-                <option value="Med-Surg">Med-Surg</option>
-                <option value="Telemetry">Telemetry</option>
-                <option value="L&amp;D">Labor &amp; Delivery</option>
-                <option value="NICU">NICU</option>
-                <option value="Home Health">Home Health</option>
-                <option value="SNF">Skilled Nursing</option>
-              </select>
-            </label>
-            <label>
-              Experience level
-              <select id="state-beacon-experience">
-                <option value="New grad">New grad</option>
-                <option value="1-2 years">1-2 years</option>
-                <option value="3-5 years">3-5 years</option>
-                <option value="5+ years">5+ years</option>
-              </select>
-            </label>
-            <label>
-              Shift preference
-              <select id="state-beacon-shift">
-                <option value="Day">Day</option>
-                <option value="Night">Night</option>
-                <option value="Weekend">Weekend</option>
-                <option value="Flexible">Flexible</option>
-              </select>
-            </label>
-            <label>
-              Target hourly ($)
-              <input type="number" id="state-beacon-target-pay" min="0" placeholder="e.g., 45" />
-            </label>
-            <label>
-              Relocation timeline
-              <select id="state-beacon-timeline">
-                <option value="0-30 days">0-30 days</option>
-                <option value="31-60 days">31-60 days</option>
-                <option value="61-90 days">61-90 days</option>
-                <option value="90+ days">90+ days</option>
-              </select>
-            </label>
-            <label>
-              License status
-              <select id="state-beacon-license">
-                <option value="Compact">Compact</option>
-                <option value="Florida">Florida only</option>
-                <option value="No license">No license</option>
-              </select>
-            </label>
-          </div>
           <div class="state-beacon-grid">
             <div class="state-beacon-panel">
-              <h4>Best → Worst Hospitals (Review + WARN)</h4>
-              <p class="state-beacon-subtitle">Review/news ranking with WARN penalty (major systems only).</p>
-              <div id="state-beacon-hospitals" class="state-beacon-list"></div>
-              <h5 class="state-beacon-subsection">All Hospitals (AHCA Inventory)</h5>
-              <div id="state-beacon-hospitals-all" class="state-beacon-list state-beacon-list-compact"></div>
-              <h5 class="state-beacon-subsection">Flagship Clinics</h5>
-              <div id="state-beacon-clinics" class="state-beacon-list state-beacon-list-compact"></div>
+              <h4>Local Hospitals (Review + WARN)</h4>
+              <p class="state-beacon-subtitle">Major systems only; review/news ranking where available.</p>
+              <div id="home-state-hospitals" class="state-beacon-list"></div>
             </div>
             <div class="state-beacon-panel">
               <h4>Local News (State Mentions)</h4>
-              <div id="state-beacon-news" class="state-beacon-news"></div>
+              <div id="home-state-news" class="state-beacon-news"></div>
             </div>
             <div class="state-beacon-panel">
               <h4>Competition Breakdown</h4>
-              <div id="state-beacon-competition" class="state-beacon-list"></div>
-            </div>
-            <div class="state-beacon-panel">
-              <h4>Recruiter Script</h4>
-              <div id="state-beacon-script" class="state-beacon-list"></div>
+              <div id="home-state-competition" class="state-beacon-list"></div>
             </div>
             <div class="state-beacon-panel">
               <h4>Nursing Student Pipeline</h4>
-              <div id="state-beacon-pipeline" class="state-beacon-list"></div>
-            </div>
-            <div class="state-beacon-panel">
-              <h4>Outbound Candidate Insights</h4>
-              <p class="state-beacon-subtitle">Home state recruiting from the selected target state.</p>
-              <div id="state-beacon-candidates" class="state-beacon-list"></div>
-              <div id="state-beacon-candidate-table" class="state-beacon-table"></div>
+              <div id="home-state-pipeline" class="state-beacon-list"></div>
             </div>
             <div class="state-beacon-panel">
               <h4>Pros &amp; Cons for Nurses</h4>
               <div class="state-beacon-columns">
                 <div>
                   <h5>Pros</h5>
-                  <ul id="state-beacon-pros"></ul>
+                  <ul id="home-state-pros"></ul>
                 </div>
                 <div>
                   <h5>Cons</h5>
-                  <ul id="state-beacon-cons"></ul>
+                  <ul id="home-state-cons"></ul>
                 </div>
               </div>
-            </div>
-            <div class="state-beacon-panel">
-              <h4>Attractions &amp; Perks vs Cons</h4>
-              <div class="state-beacon-notes">
-                <label>
-                  Attractions &amp; perks
-                  <textarea id="state-beacon-attractions" rows="4" placeholder="Add local attractions, lifestyle perks, and selling points..."></textarea>
-                </label>
-                <label>
-                  Cons to watch
-                  <textarea id="state-beacon-drawbacks" rows="4" placeholder="Add drawbacks, cost-of-living notes, licensing friction..."></textarea>
-                </label>
-              </div>
-            </div>
-            <div class="state-beacon-panel">
-              <h4>Objection Handling</h4>
-              <div id="state-beacon-objections" class="state-beacon-list"></div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn ghost" id="state-beacon-export-json">Export JSON</button>
-          <button type="button" class="btn ghost" id="state-beacon-export-csv">Export CSV</button>
-          <button type="button" class="btn ghost" id="state-beacon-save">Save Notes</button>
-          <button type="button" class="btn secondary" id="state-beacon-close-footer">Close</button>
+          <button type="button" class="btn secondary" id="home-state-close-footer">Close</button>
         </div>
       </div>
     </div>
-
     <script src="./app.js"></script>
   </body>
 </html>

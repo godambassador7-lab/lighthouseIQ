@@ -722,246 +722,714 @@ body {
   gap: 1rem;
 }
 
-/* State Beacon Module */
+/* State Beacon Module - Modern Redesign */
 .state-beacon-card {
-  max-width: 1100px;
+  max-width: 1000px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.beacon-header {
+  background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+  padding: 1.25rem 1.5rem 1rem;
+  border-bottom: none;
+}
+
+.beacon-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.beacon-header h3 {
+  color: #fff;
+  margin: 0 0 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.beacon-header .modal-close {
+  color: rgba(255,255,255,0.8);
+  background: rgba(255,255,255,0.1);
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+}
+
+.beacon-header .modal-close:hover {
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+}
+
+.beacon-title-group {
+  flex: 1;
+}
+
+.beacon-state-selectors {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.beacon-select-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.beacon-select-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.6);
+  font-weight: 600;
+}
+
+.beacon-select {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  min-width: 140px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.beacon-select:hover {
+  background: rgba(255,255,255,0.2);
+  border-color: rgba(255,255,255,0.3);
+}
+
+.beacon-select option {
+  background: #1a365d;
+  color: #fff;
+}
+
+.beacon-arrow {
+  color: rgba(255,255,255,0.5);
+  font-size: 1.1rem;
+  margin: 0.75rem 0.25rem 0;
+}
+
+.beacon-btn-icon {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 0.75rem;
+}
+
+.beacon-btn-icon:hover {
+  background: rgba(255,255,255,0.25);
+  transform: scale(1.05);
+}
+
+.beacon-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+
+.beacon-meta-row .state-beacon-chip {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  font-size: 0.7rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
 }
 
 .state-beacon-body {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0;
+  padding: 0;
+  background: #f8fafc;
 }
 
-.state-beacon-controls {
+/* Filters Toggle */
+.beacon-filters-toggle {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   gap: 1rem;
-  flex-wrap: wrap;
+  padding: 0.75rem 1.25rem;
+  background: #fff;
+  border-bottom: 1px solid rgba(26, 54, 93, 0.08);
 }
 
-.state-beacon-controls label {
-  margin: 0;
+.beacon-filters-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: 1px solid rgba(26, 54, 93, 0.15);
+  color: var(--navy);
+  padding: 0.5rem 0.85rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.state-beacon-controls select {
-  min-width: 200px;
+.beacon-filters-btn:hover {
+  background: rgba(26, 54, 93, 0.05);
+  border-color: rgba(26, 54, 93, 0.25);
 }
 
-.state-beacon-filters {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.6rem 0.75rem;
-  padding: 0.5rem 0.75rem;
-  background: rgba(26, 54, 93, 0.04);
-  border-radius: var(--radius-md);
-  border: 1px solid rgba(26, 54, 93, 0.08);
+.beacon-filters-btn.active {
+  background: var(--navy);
+  color: #fff;
+  border-color: var(--navy);
 }
 
-.state-beacon-filters label {
-  margin: 0;
+.beacon-filters-chevron {
+  font-size: 0.6rem;
+  transition: transform 0.2s ease;
 }
 
-.state-beacon-filters input,
-.state-beacon-filters select {
-  margin-top: 0.35rem;
+.beacon-filters-btn.active .beacon-filters-chevron {
+  transform: rotate(180deg);
 }
 
-.state-beacon-meta {
+.beacon-quick-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-left: auto;
+  gap: 0.4rem;
 }
 
-.state-beacon-chip {
-  background: rgba(26, 54, 93, 0.08);
-  color: var(--navy);
-  padding: 0.35rem 0.7rem;
-  border-radius: 999px;
-  font-size: 0.75rem;
+.beacon-tag {
+  background: rgba(246, 166, 35, 0.12);
+  color: #b45309;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.7rem;
   font-weight: 600;
 }
 
-.state-beacon-grid {
+/* Filters Panel */
+.beacon-filters-panel {
+  display: none;
+  padding: 1rem 1.25rem;
+  background: #fff;
+  border-bottom: 1px solid rgba(26, 54, 93, 0.08);
+}
+
+.beacon-filters-panel.open {
+  display: block;
+}
+
+.beacon-filters-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.6rem;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.75rem;
 }
 
-.state-beacon-panel {
-  background: #fafbfc;
-  border: 1px solid rgba(26, 54, 93, 0.1);
-  border-radius: var(--radius-md);
-  padding: 0.65rem 0.75rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-}
-
-.state-beacon-panel h4 {
-  margin: 0;
-  font-size: 0.9rem;
-  color: var(--navy);
-}
-
-.state-beacon-panel h5 {
-  margin: 0 0 0.25rem;
-  font-size: 0.8rem;
-  color: var(--navy);
-}
-
-.state-beacon-subtitle {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.75rem;
-}
-
-.state-beacon-list {
+.beacon-filter {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
+  margin: 0;
 }
 
-.state-beacon-list-compact {
-  max-height: 180px;
-  overflow: auto;
-  padding-right: 0.25rem;
+.beacon-filter span {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
-.state-beacon-subsection {
-  margin: 0.6rem 0 0.25rem;
+.beacon-filter select,
+.beacon-filter input {
+  padding: 0.5rem 0.6rem;
+  border: 1px solid rgba(26, 54, 93, 0.15);
+  border-radius: 6px;
   font-size: 0.8rem;
+  background: #fff;
+  transition: border-color 0.2s ease;
+}
+
+.beacon-filter select:focus,
+.beacon-filter input:focus {
+  outline: none;
+  border-color: var(--sea);
+}
+
+/* Tabs */
+.beacon-tabs {
+  display: flex;
+  gap: 0;
+  background: #fff;
+  padding: 0 1.25rem;
+  border-bottom: 1px solid rgba(26, 54, 93, 0.1);
+}
+
+.beacon-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.9rem 1.25rem;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.beacon-tab:hover {
   color: var(--navy);
 }
 
-.state-beacon-badge {
-  display: inline-flex;
+.beacon-tab.active {
+  color: var(--navy);
+}
+
+.beacon-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #f6a623, #fbd38d);
+  border-radius: 3px 3px 0 0;
+}
+
+.beacon-tab svg {
+  opacity: 0.7;
+}
+
+.beacon-tab.active svg {
+  opacity: 1;
+}
+
+/* Tab Content */
+.beacon-tab-content {
+  display: none;
+  padding: 1.25rem;
+}
+
+.beacon-tab-content.active {
+  display: block;
+}
+
+/* Section Grid */
+.beacon-section-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.beacon-section-grid.recruiting-grid {
+  grid-template-columns: 1fr;
+}
+
+.beacon-section-grid.recruiting-grid .beacon-card:not(.wide) {
+  display: inline-block;
+}
+
+.beacon-section-grid.recruiting-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.beacon-section-grid.recruiting-grid .beacon-card.wide {
+  grid-column: 1 / -1;
+}
+
+.beacon-section-grid.pitch-grid {
+  grid-template-columns: 1fr 1fr;
+}
+
+.beacon-section-grid.pitch-grid .beacon-card.wide {
+  grid-column: 1 / -1;
+}
+
+/* Cards */
+.beacon-card {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid rgba(26, 54, 93, 0.08);
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(26, 54, 93, 0.04);
+}
+
+.beacon-card.wide {
+  grid-column: 1 / -1;
+}
+
+.beacon-card-header {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 0.25rem;
-  padding: 0.1rem 0.4rem;
-  border-radius: 999px;
-  font-size: 0.7rem;
-  background: rgba(56, 118, 255, 0.12);
+  padding: 0.75rem 1rem;
+  background: linear-gradient(to bottom, #fafbfc, #fff);
+  border-bottom: 1px solid rgba(26, 54, 93, 0.06);
+}
+
+.beacon-card-header h4 {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.beacon-badge {
+  padding: 0.2rem 0.55rem;
+  border-radius: 5px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: rgba(246, 166, 35, 0.15);
+  color: #b45309;
+}
+
+.beacon-badge.blue {
+  background: rgba(49, 130, 206, 0.12);
+  color: #2b6cb0;
+}
+
+.beacon-badge.green {
+  background: rgba(72, 187, 120, 0.15);
+  color: #276749;
+}
+
+.beacon-card-body {
+  padding: 0.85rem 1rem;
+  font-size: 0.8rem;
+  color: var(--ink);
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.beacon-card-body::-webkit-scrollbar {
+  width: 4px;
+}
+
+.beacon-card-body::-webkit-scrollbar-thumb {
+  background: rgba(26, 54, 93, 0.15);
+  border-radius: 4px;
+}
+
+/* Facility sections */
+.beacon-facility-section {
+  margin-bottom: 1rem;
+}
+
+.beacon-facility-section:last-child {
+  margin-bottom: 0;
+}
+
+.beacon-facility-section h5 {
+  margin: 0 0 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
   color: var(--navy);
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 
-.state-beacon-table {
-  margin-top: 0.4rem;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  overflow: hidden;
-  background: #fff;
+.beacon-scroll-list {
+  max-height: 120px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
 }
 
-.state-beacon-table table {
+/* News list */
+.beacon-news-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.beacon-news-list a {
+  display: block;
+  padding: 0.6rem 0.75rem;
+  background: #fafbfc;
+  border-radius: 8px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.15s ease;
+  border: 1px solid transparent;
+}
+
+.beacon-news-list a:hover {
+  background: #fff;
+  border-color: rgba(26, 54, 93, 0.12);
+  transform: translateX(2px);
+}
+
+/* Script area */
+.beacon-script {
+  background: #fafbfc;
+  border-radius: 8px;
+  padding: 1rem !important;
+  font-family: inherit;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.beacon-copy-btn {
+  background: rgba(26, 54, 93, 0.08);
+  border: none;
+  color: var(--navy);
+  padding: 0.35rem 0.7rem;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.beacon-copy-btn:hover {
+  background: var(--navy);
+  color: #fff;
+}
+
+/* Pros/Cons */
+.beacon-pros-cons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.beacon-pros h5,
+.beacon-cons h5 {
+  margin: 0 0 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.beacon-pros h5 { color: #276749; }
+.beacon-cons h5 { color: #c53030; }
+
+.beacon-pros ul,
+.beacon-cons ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.beacon-pros li { color: #2f855a; }
+.beacon-cons li { color: #c53030; }
+
+/* Notes grid */
+.beacon-notes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.beacon-note-field label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--navy);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.4rem;
+}
+
+.beacon-note-field textarea {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid rgba(26, 54, 93, 0.12);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  resize: vertical;
+  transition: border-color 0.2s ease;
+}
+
+.beacon-note-field textarea:focus {
+  outline: none;
+  border-color: var(--sea);
+}
+
+/* Table */
+.beacon-table {
+  margin-top: 0.75rem;
+  border: 1px solid rgba(26, 54, 93, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.beacon-table table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.75rem;
 }
 
-.state-beacon-table th,
-.state-beacon-table td {
-  padding: 0.4rem 0.5rem;
-  border-bottom: 1px solid var(--border);
+.beacon-table th,
+.beacon-table td {
+  padding: 0.5rem 0.65rem;
   text-align: left;
-  vertical-align: top;
+  border-bottom: 1px solid rgba(26, 54, 93, 0.06);
 }
 
-.state-beacon-table th {
-  background: rgba(15, 37, 76, 0.06);
+.beacon-table th {
+  background: #fafbfc;
+  font-weight: 700;
   color: var(--navy);
-  font-weight: 600;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 
-.state-beacon-table tr:last-child td {
+.beacon-table tr:last-child td {
   border-bottom: none;
 }
 
-.state-beacon-item {
+/* Footer */
+.beacon-footer {
   display: flex;
   justify-content: space-between;
-  gap: 0.5rem;
-  font-size: 0.8rem;
-  color: var(--ink);
-}
-
-.state-beacon-item strong {
-  color: var(--navy);
-}
-
-.state-beacon-news {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  max-height: 220px;
-  overflow: auto;
-  padding-right: 0.25rem;
-}
-
-.state-beacon-news a {
-  text-decoration: none;
-  color: inherit;
-  padding: 0.45rem 0.6rem;
-  border-radius: var(--radius-sm);
-  border: 1px solid rgba(26, 54, 93, 0.08);
+  align-items: center;
+  padding: 0.85rem 1.25rem;
   background: #fff;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-top: 1px solid rgba(26, 54, 93, 0.08);
 }
 
-.state-beacon-news a:hover {
+.beacon-footer-left {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.beacon-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #fafbfc;
+  border: 1px solid rgba(26, 54, 93, 0.12);
+  color: var(--navy);
+  padding: 0.5rem 0.85rem;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.beacon-action-btn:hover {
+  background: #fff;
+  border-color: var(--navy);
+}
+
+.beacon-close-btn {
+  background: var(--navy);
+  border: none;
+  color: #fff;
+  padding: 0.6rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.beacon-close-btn:hover {
+  background: #2c5282;
   transform: translateY(-1px);
-  box-shadow: 0 8px 18px rgba(26, 54, 93, 0.12);
 }
 
-.state-beacon-columns {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.6rem;
-}
-
-.state-beacon-columns ul {
-  margin: 0;
-  padding-left: 1.1rem;
-  color: var(--muted);
-  font-size: 0.8rem;
-}
-
-.state-beacon-notes {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.6rem;
-}
-
-.state-beacon-notes textarea {
-  resize: vertical;
-  min-height: 110px;
-}
-
+/* Responsive */
 @media (max-width: 900px) {
-  .state-beacon-filters {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .beacon-filters-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 
-  .state-beacon-grid {
+  .beacon-section-grid,
+  .beacon-section-grid.recruiting-grid,
+  .beacon-section-grid.pitch-grid {
     grid-template-columns: 1fr;
   }
 
-  .state-beacon-columns,
-  .state-beacon-notes {
-    grid-template-columns: 1fr;
+  .beacon-card.wide {
+    grid-column: 1;
   }
 
-  .state-beacon-meta {
-    margin-left: 0;
+  .beacon-pros-cons,
+  .beacon-notes-grid {
+    grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 600px) {
-  .state-beacon-filters {
-    grid-template-columns: 1fr;
+  .beacon-header {
+    padding: 1rem;
+  }
+
+  .beacon-state-selectors {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .beacon-select-group {
+    width: 100%;
+  }
+
+  .beacon-select {
+    width: 100%;
+  }
+
+  .beacon-arrow {
+    display: none;
+  }
+
+  .beacon-btn-icon {
+    margin-top: 0.5rem;
+    width: 100%;
+  }
+
+  .beacon-filters-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .beacon-tabs {
+    overflow-x: auto;
+    padding: 0 0.75rem;
+  }
+
+  .beacon-tab {
+    padding: 0.75rem 0.85rem;
+    font-size: 0.8rem;
+  }
+
+  .beacon-footer {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .beacon-footer-left {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .beacon-close-btn {
+    width: 100%;
   }
 }
 
