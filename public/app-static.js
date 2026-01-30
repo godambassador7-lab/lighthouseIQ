@@ -2578,9 +2578,10 @@ const renderStrategicReview = async () => {
 
   const renderSpecialtySignals = () => {
     if (specialtySignalCards.length) {
-      return specialtySignalCards
-        .filter((card) => isRNOnlySpecialty(card.specialty || card.name || ''))
-        .map((card) => {
+      const filteredCards = specialtySignalCards
+        .filter((card) => isRNOnlySpecialty(card.specialty || card.name || ''));
+      if (filteredCards.length) {
+        return filteredCards.map((card) => {
         const top = card.topState || card.most || card.highest || null;
         const low = card.bottomState || card.least || card.lowest || null;
         const tip = card.tip || card.tips || card.notes || 'Target top states for near-term outreach.';
@@ -2596,7 +2597,8 @@ const renderStrategicReview = async () => {
             <div class="specialty-signal-tip">${isProxy ? 'Based on total RN employment. Specialty-specific data coming soon.' : tip}</div>
           </div>
         `;
-      }).join('');
+        }).join('');
+      }
     }
 
     return Object.values(NURSE_SPECIALTIES)
