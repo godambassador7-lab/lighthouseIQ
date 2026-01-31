@@ -178,7 +178,7 @@ let mapScope = 'healthcare';
 let currentPage = 1;
 let searchQuery = '';
 const NOTICE_MAX_COUNT = 100;
-const NOTICE_WINDOW_COUNT = 15;
+const NOTICE_WINDOW_COUNT = 5;
 const NOTICES_PER_PAGE = NOTICE_MAX_COUNT;
 let lastNoticeWindowCount = 0;
 let noticeWindowRaf = null;
@@ -780,23 +780,28 @@ const initWeatherMap = async () => {
     svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
   }
 
-  // Inject golden gradient definition for home state (rich metallic gold with luminous highlight)
+  // Inject warm orange gradient for home state (ocean wave style like Strategic Review)
   const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
   defs.innerHTML = `
-    <linearGradient id="home-state-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#f0e68c;stop-opacity:1" />
-      <stop offset="15%" style="stop-color:#e6c84a;stop-opacity:1" />
-      <stop offset="35%" style="stop-color:#d4a017;stop-opacity:1" />
-      <stop offset="55%" style="stop-color:#c9a227;stop-opacity:1" />
-      <stop offset="75%" style="stop-color:#b8960b;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#a67c00;stop-opacity:1" />
+    <!-- Base warm orange gradient (matches Strategic Review blue-to-orange conversion) -->
+    <linearGradient id="home-state-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#5c2a0a;stop-opacity:1" />
+      <stop offset="40%" style="stop-color:#804515;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#9a5a1a;stop-opacity:1" />
     </linearGradient>
-    <radialGradient id="home-state-shine" cx="30%" cy="25%" r="60%" fx="25%" fy="20%">
-      <stop offset="0%" style="stop-color:#fffde7;stop-opacity:0.9" />
-      <stop offset="30%" style="stop-color:#f5e6a3;stop-opacity:0.5" />
-      <stop offset="70%" style="stop-color:#d4a017;stop-opacity:0.2" />
-      <stop offset="100%" style="stop-color:#c9a227;stop-opacity:0" />
-    </radialGradient>
+    <!-- Animated wave pattern overlay -->
+    <pattern id="home-wave-pattern" patternUnits="objectBoundingBox" width="1" height="1">
+      <rect width="100%" height="100%" fill="url(#home-state-gradient)"/>
+      <rect width="100%" height="40%" y="60%" fill="rgba(255,140,50,0.45)">
+        <animate attributeName="y" values="60%;65%;60%" dur="3s" repeatCount="indefinite"/>
+      </rect>
+      <rect width="100%" height="30%" y="70%" fill="rgba(255,180,100,0.35)">
+        <animate attributeName="y" values="70%;65%;70%" dur="4s" repeatCount="indefinite"/>
+      </rect>
+      <rect width="100%" height="20%" y="80%" fill="rgba(255,200,130,0.25)">
+        <animate attributeName="y" values="80%;75%;80%" dur="2.5s" repeatCount="indefinite"/>
+      </rect>
+    </pattern>
   `;
   svg.insertBefore(defs, svg.firstChild);
 
