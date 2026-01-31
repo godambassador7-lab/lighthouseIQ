@@ -139,7 +139,7 @@ let currentMapView = 'map'; // 'map' or 'chart'
 let selectedStates = []; // Multi-select states
 let mapScope = 'healthcare'; // 'healthcare' or 'all'
 const NOTICE_MAX_COUNT = 100;
-const NOTICE_WINDOW_COUNT = 15;
+const NOTICE_WINDOW_COUNT = 5;
 let calibrationStats = { minCount: 0, maxCount: 0 };
 let nursingPrograms = [];
 let programsMeta = { lastUpdated: null, sources: [] };
@@ -2097,6 +2097,24 @@ const initHelpSection = () => {
   }
 };
 
+// ==================== COLLAPSIBLE SECTIONS ====================
+const initCollapsibleSections = () => {
+  document.querySelectorAll('section[data-collapsible="true"]').forEach(section => {
+    const toggle = section.querySelector('.section-toggle');
+    if (!toggle) return;
+    const label = toggle.querySelector('.section-toggle-label');
+    const icon = toggle.querySelector('.section-toggle-icon');
+
+    toggle.addEventListener('click', () => {
+      section.classList.toggle('collapsed');
+      const isCollapsed = section.classList.contains('collapsed');
+      toggle.setAttribute('aria-expanded', String(!isCollapsed));
+      if (label) label.textContent = isCollapsed ? 'Expand' : 'Collapse';
+      if (icon) icon.textContent = isCollapsed ? '+' : '–';
+    });
+  });
+};
+
 // ==================== END HELP SECTION ====================
 
 // ==================== ACCREDITED PROGRAMS MODULE ====================
@@ -3318,6 +3336,7 @@ const initNewsFeed = () => {};
 const initApp = () => {
   initWeatherMap();
   initHelpSection();
+  initCollapsibleSections();
   initMapToggle();
   initMapScopeToggle();
     initStateMultiSelect();

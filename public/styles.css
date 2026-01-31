@@ -3666,6 +3666,19 @@ input[type="range"] {
   gap: 16px;
 }
 
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.section-header-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .section-header h3 {
   margin: 0;
   font-size: 22px;
@@ -3674,6 +3687,36 @@ input[type="range"] {
 .section-header p {
   margin: 4px 0 0;
   color: var(--muted);
+}
+
+.section-toggle {
+  border: 1px solid rgba(21, 52, 92, 0.15);
+  background: #fff;
+  color: var(--navy);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.section-toggle:hover {
+  background: rgba(21, 52, 92, 0.04);
+  border-color: rgba(21, 52, 92, 0.25);
+  transform: translateY(-1px);
+}
+
+.section-toggle-icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.collapsible-section.collapsed > :not(.section-header) {
+  display: none;
 }
 
 .notice-list {

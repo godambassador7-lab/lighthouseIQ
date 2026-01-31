@@ -2271,6 +2271,26 @@ const initHelpSection = () => {
 };
 
 // =============================================================================
+// Collapsible Sections
+// =============================================================================
+const initCollapsibleSections = () => {
+  document.querySelectorAll('section[data-collapsible="true"]').forEach(section => {
+    const toggle = section.querySelector('.section-toggle');
+    if (!toggle) return;
+    const label = toggle.querySelector('.section-toggle-label');
+    const icon = toggle.querySelector('.section-toggle-icon');
+
+    toggle.addEventListener('click', () => {
+      section.classList.toggle('collapsed');
+      const isCollapsed = section.classList.contains('collapsed');
+      toggle.setAttribute('aria-expanded', String(!isCollapsed));
+      if (label) label.textContent = isCollapsed ? 'Expand' : 'Collapse';
+      if (icon) icon.textContent = isCollapsed ? '+' : '–';
+    });
+  });
+};
+
+// =============================================================================
 // Export Functions
 // =============================================================================
 const exportProjectCSV = () => {
@@ -2453,6 +2473,7 @@ const initApp = async () => {
   initStateCalibration();
   initCustomNotices();
   initHelpSection();
+  initCollapsibleSections();
   initViewToggle();
     initMapScopeToggle();
     initForecast();
