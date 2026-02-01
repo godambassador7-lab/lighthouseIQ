@@ -16,6 +16,7 @@
   --radius-lg: 28px;
   --radius-md: 18px;
   --radius-sm: 12px;
+  --cursor-gold: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><circle cx='6' cy='6' r='4' fill='%23f6a623' stroke='%23b45309' stroke-width='1'/></svg>");
 }
 
 /* Login Overlay */
@@ -135,6 +136,22 @@ body {
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
+  cursor: var(--cursor-gold) 6 6, auto;
+}
+
+a,
+button,
+.btn,
+.module-item,
+.section-toggle,
+.view-toggle-btn,
+.scope-toggle button,
+input[type="button"],
+input[type="submit"],
+input[type="checkbox"],
+input[type="radio"],
+select {
+  cursor: var(--cursor-gold) 6 6, pointer;
 }
 
 .bg-grid {
