@@ -3468,28 +3468,28 @@ input[type="range"] {
   filter: grayscale(0.5);
 }
 
-/* Home State Warm Orange Wave Gradient (matches Strategic Review ocean style) */
+/* Home State Vibrant Flame Gradient (yellow-orange to red-orange) */
 .us-map svg path.home-state-glow,
 .us-map svg circle.home-state-glow {
   fill: url(#home-state-gradient) !important;
-  stroke: #3d1a05;
+  stroke: #ff4500;
   stroke-width: 2;
-  filter: drop-shadow(0 0 12px rgba(255, 140, 50, 0.9))
-          drop-shadow(0 0 25px rgba(232, 152, 80, 0.7))
-          drop-shadow(0 0 40px rgba(200, 120, 64, 0.5));
-  animation: home-state-glow-pulse 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 12px rgba(255, 165, 0, 0.95))
+          drop-shadow(0 0 25px rgba(255, 102, 0, 0.8))
+          drop-shadow(0 0 40px rgba(255, 69, 0, 0.6));
+  animation: home-state-glow-pulse 2.5s ease-in-out infinite;
 }
 
 @keyframes home-state-glow-pulse {
   0%, 100% {
-    filter: drop-shadow(0 0 12px rgba(255, 140, 50, 0.9))
-            drop-shadow(0 0 25px rgba(232, 152, 80, 0.7))
-            drop-shadow(0 0 40px rgba(200, 120, 64, 0.5));
+    filter: drop-shadow(0 0 12px rgba(255, 165, 0, 0.95))
+            drop-shadow(0 0 25px rgba(255, 102, 0, 0.8))
+            drop-shadow(0 0 40px rgba(255, 69, 0, 0.6));
   }
   50% {
-    filter: drop-shadow(0 0 18px rgba(255, 184, 112, 1))
-            drop-shadow(0 0 35px rgba(255, 140, 50, 0.9))
-            drop-shadow(0 0 55px rgba(232, 152, 80, 0.7));
+    filter: drop-shadow(0 0 20px rgba(255, 204, 0, 1))
+            drop-shadow(0 0 38px rgba(255, 140, 0, 0.95))
+            drop-shadow(0 0 60px rgba(255, 69, 0, 0.75));
   }
 }
 
