@@ -780,25 +780,25 @@ const initWeatherMap = async () => {
     svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
   }
 
-  // Inject warm orange gradient for home state (ocean wave style like Strategic Review)
+  // Inject vibrant flame gradient for home state (yellow-orange to red-orange)
   const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
   defs.innerHTML = `
-    <!-- Warm orange gradient with animated color stops -->
+    <!-- Vibrant flame gradient with animated color stops -->
     <linearGradient id="home-state-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#5c2a0a">
-        <animate attributeName="stop-color" values="#5c2a0a;#6d3510;#5c2a0a" dur="3s" repeatCount="indefinite"/>
+      <stop offset="0%" stop-color="#ffe135">
+        <animate attributeName="stop-color" values="#ffe135;#ffcc00;#ffe135" dur="2.5s" repeatCount="indefinite"/>
       </stop>
-      <stop offset="35%" stop-color="#804515">
-        <animate attributeName="stop-color" values="#804515;#995520;#804515" dur="4s" repeatCount="indefinite"/>
+      <stop offset="25%" stop-color="#ffb300">
+        <animate attributeName="stop-color" values="#ffb300;#ffc400;#ffb300" dur="3s" repeatCount="indefinite"/>
       </stop>
-      <stop offset="60%" stop-color="#a65d2a">
-        <animate attributeName="stop-color" values="#a65d2a;#c97840;#a65d2a" dur="2.5s" repeatCount="indefinite"/>
+      <stop offset="50%" stop-color="#ff8c00">
+        <animate attributeName="stop-color" values="#ff8c00;#ffa500;#ff8c00" dur="2s" repeatCount="indefinite"/>
       </stop>
-      <stop offset="80%" stop-color="#c97840">
-        <animate attributeName="stop-color" values="#c97840;#e89850;#c97840" dur="3.5s" repeatCount="indefinite"/>
+      <stop offset="75%" stop-color="#ff6600">
+        <animate attributeName="stop-color" values="#ff6600;#ff7700;#ff6600" dur="3.5s" repeatCount="indefinite"/>
       </stop>
-      <stop offset="100%" stop-color="#e89850">
-        <animate attributeName="stop-color" values="#e89850;#ffb870;#e89850" dur="3s" repeatCount="indefinite"/>
+      <stop offset="100%" stop-color="#ff4500">
+        <animate attributeName="stop-color" values="#ff4500;#ff5722;#ff4500" dur="2.8s" repeatCount="indefinite"/>
       </stop>
     </linearGradient>
   `;
