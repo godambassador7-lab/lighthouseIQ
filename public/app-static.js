@@ -254,6 +254,18 @@ const isHealthcareNotice = (notice) => {
 let strategicData = null; // Will be loaded from strategic.json
 let strategicDataLoaded = false;
 
+const computeSignalConfidence = (noticeCount = 0, newsCount = 0, majorSystemsCount = 0) => {
+  let score = 0;
+  if (noticeCount >= 5) score += 2;
+  else if (noticeCount >= 1) score += 1;
+  if (newsCount >= 4) score += 2;
+  else if (newsCount >= 1) score += 1;
+  if (majorSystemsCount >= 4) score += 1;
+  if (score >= 4) return { label: 'High', score };
+  if (score >= 2) return { label: 'Medium', score };
+  return { label: 'Low', score };
+};
+
 // =============================================================================
 // Authentication (Simple client-side - data is public)
 // =============================================================================
@@ -864,18 +876,20 @@ const initWeatherMap = async () => {
   updateMapHomeStateHighlight();
 };
 
-const showTooltip = (e, stateAbbrev) => {
-  if (!mapTooltip) return;
-  const stateName = STATE_NAMES[stateAbbrev] || stateAbbrev;
-  const count = mapStateData[stateAbbrev]?.count || 0;
-  const scopeLabel = mapScope === 'all' ? 'total notices' : 'healthcare notices';
-  mapTooltip.innerHTML = `
-    <div class="tooltip-state">${stateName}</div>
-    <div class="tooltip-count">${count} ${scopeLabel}</div>
-  `;
-  mapTooltip.classList.add('visible');
-  moveTooltip(e);
-};
+  const showTooltip = (e, stateAbbrev) => {
+    if (!mapTooltip) return;
+    const stateName = STATE_NAMES[stateAbbrev] || stateAbbrev;
+    const count = mapStateData[stateAbbrev]?.count || 0;
+    const scopeLabel = mapScope === 'all' ? 'total notices' : 'healthcare notices';
+    const confidence = count >= 8 ? 'High' : count >= 3 ? 'Medium' : 'Low';
+    mapTooltip.innerHTML = `
+      <div class="tooltip-state">${stateName}</div>
+      <div class="tooltip-count">${count} ${scopeLabel}</div>
+      <div class="tooltip-confidence">Signal confidence: ${confidence}</div>
+    `;
+    mapTooltip.classList.add('visible');
+    moveTooltip(e);
+  };
 
 const moveTooltip = (e) => {
   if (!mapTooltip) return;
@@ -2785,12 +2799,15 @@ const WORKFORCE_PROJECTIONS = {
   medianTenure: 8.5
 };
 
-const renderStrategicReview = async () => {
-  const container = document.getElementById('strategic-review-content');
-  if (!container) return;
+  const renderStrategicReview = async () => {
+    const container = document.getElementById('strategic-review-content');
+    if (!container) return;
 
-  // Load strategic data from JSON (with fallback to hardcoded)
-  await loadStrategicData();
+    // Load strategic data from JSON (with fallback to hardcoded)
+    await loadStrategicData();
+    await loadStateBeaconData();
+    await loadStateNewsData();
+    await ensureProgramsDataForBeacon();
   const salaryData = strategicData?.salaryData || NURSING_SALARY_DATA;
   const specialtyPay = strategicData?.specialtyPay || SPECIALTY_PAY;
   const projections = strategicData?.workforceProjections || WORKFORCE_PROJECTIONS;
@@ -2939,6 +2956,16 @@ const renderStrategicReview = async () => {
     stateLayoffs[n.state].affected += n.employees_affected || 0;
   });
 
+  const homeStateName = STATE_NAMES[homeStateForSignals] || homeStateForSignals;
+  const homeStateEntry = getBeaconEntry(homeStateForSignals);
+  const homeStateNews = getStateNewsFeed(homeStateForSignals, homeStateEntry);
+  const homeStateNoticeCount = stateLayoffs[homeStateForSignals]?.count ?? 0;
+  const homeConfidence = computeSignalConfidence(
+    homeStateNoticeCount,
+    Array.isArray(homeStateNews) ? homeStateNews.length : 0,
+    homeStateEntry.warnMajorSystems?.length || 0
+  );
+
   // Calculate strategic opportunities
   const opportunities = [];
   const risks = [];
@@ -2980,15 +3007,84 @@ const renderStrategicReview = async () => {
   const shortageStatesList = Object.entries(salaryData).filter(([_, d]) => d.shortage === 'shortage').map(([s]) => s).sort();
   const surplusStatesList = Object.entries(salaryData).filter(([_, d]) => d.shortage === 'surplus').map(([s]) => s).sort();
   const totalProjectedGap = Object.values(salaryData).reduce((sum, d) => sum + d.projectedGap, 0);
+  const avgStaffSalary = Math.round(Object.values(salaryData).reduce((sum, d) => sum + d.staffRN, 0) /
+    Math.max(Object.keys(salaryData).length, 1));
+  const homeStaffSalary = salaryData[homeStateForSignals]?.staffRN ?? null;
+  const payPositionLabel = homeStaffSalary
+    ? (homeStaffSalary >= avgStaffSalary * 1.05 ? 'Above market'
+      : homeStaffSalary <= avgStaffSalary * 0.95 ? 'Below market'
+        : 'At market')
+    : 'Market data pending';
+  const payPositionDelta = homeStaffSalary !== null ? homeStaffSalary - avgStaffSalary : null;
 
-  container.innerHTML = `
-    <div class="strategic-grid">
-      <!-- Executive Summary Card -->
-      <div class="strategic-card executive-summary full-width">
-        <div class="strategic-card-header">
-          <h4><span class="card-icon">📊</span> Executive Summary</h4>
-          <span class="strategic-badge critical">Q1 2026</span>
+  const programsByState = nursingPrograms.reduce((acc, program) => {
+    const state = normalizeProgram(program).state;
+    if (!state) return acc;
+    acc[state] = (acc[state] || 0) + 1;
+    return acc;
+  }, {});
+  const programCounts = Object.values(programsByState);
+  const homePrograms = programsByState[homeStateForSignals] || 0;
+  const homeProgramPercentile = programCounts.length
+    ? Math.round((programCounts.filter((count) => count <= homePrograms).length / programCounts.length) * 100)
+    : null;
+  const supplyLabel = homeProgramPercentile === null
+    ? 'Pipeline data pending'
+    : homeProgramPercentile >= 67 ? 'High supply' : homeProgramPercentile >= 34 ? 'Moderate supply' : 'Low supply';
+
+  const demandScoreMap = { 'very high': 3, 'high': 2, 'moderate': 1, 'low': 0.5 };
+  const specialtyHeat = Object.entries(specialtyPay)
+    .map(([specialty, data]) => {
+      const demandScore = demandScoreMap[String(data.demand || '').toLowerCase()] || 1;
+      const heatScore = (data.weekly / 1000) + demandScore;
+      return { specialty, weekly: data.weekly, demand: data.demand, heatScore };
+    })
+    .sort((a, b) => b.heatScore - a.heatScore)
+    .slice(0, 5);
+  const topRisks = risks.slice(0, 3);
+
+    container.innerHTML = `
+      <div class="strategic-grid">
+        <!-- Executive Dashboard Card -->
+        <div class="strategic-card exec-dashboard full-width">
+          <div class="strategic-card-header">
+            <h4><span class="card-icon">🧭</span> Executive Dashboard</h4>
+            <span class="strategic-badge">Live snapshot</span>
+          </div>
+          <div class="exec-dashboard-grid">
+            <div class="exec-dashboard-item">
+              <div class="exec-dashboard-label">Home state focus</div>
+              <div class="exec-dashboard-value">${escapeHtml(homeStateName)} (${escapeHtml(homeStateForSignals)})</div>
+              <div class="exec-dashboard-sub">Signal confidence: ${homeConfidence.label}</div>
+            </div>
+            <div class="exec-dashboard-item">
+              <div class="exec-dashboard-label">Best outbound targets</div>
+              <div class="exec-dashboard-value">${bestTargetsText}</div>
+              <div class="exec-dashboard-sub">Based on shortages + projected gaps</div>
+            </div>
+            <div class="exec-dashboard-item">
+              <div class="exec-dashboard-label">Top inbound risk states</div>
+              <div class="exec-dashboard-value">
+                ${topRisks.length ? topRisks.map((risk) => `${risk.state} (${risk.noticeCount})`).join(', ') : '--'}
+              </div>
+              <div class="exec-dashboard-sub">WARN volume in shortage markets</div>
+            </div>
+            <div class="exec-dashboard-item">
+              <div class="exec-dashboard-label">Pay positioning</div>
+              <div class="exec-dashboard-value">${payPositionLabel}</div>
+              <div class="exec-dashboard-sub">
+                ${homeStaffSalary ? `$${homeStaffSalary.toLocaleString()} vs avg $${avgStaffSalary.toLocaleString()}` : 'Awaiting state benchmarks'}
+              </div>
+            </div>
+          </div>
         </div>
+
+        <!-- Executive Summary Card -->
+        <div class="strategic-card executive-summary full-width">
+          <div class="strategic-card-header">
+            <h4><span class="card-icon">📊</span> Executive Summary</h4>
+            <span class="strategic-badge critical">Q1 2026</span>
+          </div>
 
         <div class="exec-metrics-row">
           <div class="exec-metric-card">
@@ -3040,10 +3136,92 @@ const renderStrategicReview = async () => {
             strategic recruitment opportunities.
           </div>
         </div>
-      </div>
+        </div>
 
-      <!-- Salary Comparison Card -->
-      <div class="strategic-card salary-comparison">
+        <!-- Signal Confidence Card -->
+        <div class="strategic-card signal-confidence">
+          <div class="strategic-card-header">
+            <h4><span class="card-icon">🛰️</span> Signal Confidence</h4>
+            <span class="strategic-badge ${homeConfidence.label.toLowerCase()}">${homeConfidence.label}</span>
+          </div>
+          <div class="confidence-grid">
+            <div>
+              <div class="confidence-value">${homeStateNoticeCount}</div>
+              <div class="confidence-label">WARN notices</div>
+            </div>
+            <div>
+              <div class="confidence-value">${Array.isArray(homeStateNews) ? homeStateNews.length : 0}</div>
+              <div class="confidence-label">News hits</div>
+            </div>
+            <div>
+              <div class="confidence-value">${homeStateEntry.warnMajorSystems?.length || 0}</div>
+              <div class="confidence-label">Major systems tracked</div>
+            </div>
+          </div>
+          <p class="card-description">Confidence blends WARN activity, news volume, and major system coverage.</p>
+        </div>
+
+        <!-- Competitive Pay Position Card -->
+        <div class="strategic-card pay-positioning">
+          <div class="strategic-card-header">
+            <h4><span class="card-icon">💵</span> Competitive Pay Position</h4>
+            <span class="strategic-badge">${payPositionLabel}</span>
+          </div>
+          <div class="pay-position-grid">
+            <div>
+              <div class="pay-position-value">${homeStaffSalary ? `$${homeStaffSalary.toLocaleString()}` : '--'}</div>
+              <div class="pay-position-label">${homeStateName} avg staff RN</div>
+            </div>
+            <div>
+              <div class="pay-position-value">${avgStaffSalary ? `$${avgStaffSalary.toLocaleString()}` : '--'}</div>
+              <div class="pay-position-label">National avg staff RN</div>
+            </div>
+            <div>
+              <div class="pay-position-value ${payPositionDelta >= 0 ? 'positive' : 'negative'}">
+                ${payPositionDelta === null ? '--' : `${payPositionDelta >= 0 ? '+' : '-'}$${Math.abs(payPositionDelta).toLocaleString()}`}
+              </div>
+              <div class="pay-position-label">Gap vs national avg</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Talent Supply Proxy Card -->
+        <div class="strategic-card supply-proxy">
+          <div class="strategic-card-header">
+            <h4><span class="card-icon">🎓</span> Talent Supply Proxy</h4>
+            <span class="strategic-badge">${supplyLabel}</span>
+          </div>
+          <div class="supply-grid">
+            <div>
+              <div class="supply-value">${homePrograms}</div>
+              <div class="supply-label">Programs in ${homeStateName}</div>
+            </div>
+            <div>
+              <div class="supply-value">${homeProgramPercentile !== null ? `${homeProgramPercentile}th` : '--'}</div>
+              <div class="supply-label">Program density percentile</div>
+            </div>
+          </div>
+          <p class="card-description">Uses accredited program counts as a proxy for long-term RN supply.</p>
+        </div>
+
+        <!-- Specialty Heat Score Card -->
+        <div class="strategic-card specialty-heat">
+          <div class="strategic-card-header">
+            <h4><span class="card-icon">🔥</span> Specialty Heat Scores</h4>
+            <span class="strategic-badge">Demand x Pay</span>
+          </div>
+          <ul class="heat-score-list">
+            ${specialtyHeat.map((entry) => `
+              <li>
+                <span class="heat-score-name">${entry.specialty}</span>
+                <span class="heat-score-meta">$${entry.weekly.toLocaleString()}/wk • ${entry.demand}</span>
+              </li>
+            `).join('')}
+          </ul>
+        </div>
+
+        <!-- Salary Comparison Card -->
+        <div class="strategic-card salary-comparison">
         <div class="strategic-card-header">
           <h4><span class="card-icon">💰</span> Compensation Comparison</h4>
           <span class="strategic-badge">Top 15 States</span>
@@ -3699,6 +3877,22 @@ const renderStateBeacon = async (state) => {
   const majorNotices = filterNoticesByMajorSystems(notices, entry.warnMajorSystems);
   const noticeCount = majorNotices.length;
   const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === state);
+  const stateFeed = getStateNewsFeed(state, entry);
+  const confidence = computeSignalConfidence(
+    noticeCount,
+    Array.isArray(stateFeed) ? stateFeed.length : 0,
+    entry.warnMajorSystems?.length || 0
+  );
+  const payPosition = (() => {
+    const salaryData = strategicData?.salaryData || NURSING_SALARY_DATA;
+    const avgStaffSalary = Math.round(Object.values(salaryData).reduce((sum, d) => sum + d.staffRN, 0) /
+      Math.max(Object.keys(salaryData).length, 1));
+    const stateSalary = salaryData[state]?.staffRN ?? null;
+    if (!stateSalary) return null;
+    if (stateSalary >= avgStaffSalary * 1.05) return 'Above market';
+    if (stateSalary <= avgStaffSalary * 0.95) return 'Below market';
+    return 'At market';
+  })();
 
   const chips = [];
   if (entry.compact !== null) chips.push(`Compact: ${entry.compact ? 'Yes' : 'No'}`);
@@ -3706,6 +3900,8 @@ const renderStateBeacon = async (state) => {
   if (entry.summary?.unionization) chips.push(`Union: ${entry.summary.unionization}`);
   if (programsInState.length) chips.push(`Pipeline: ${programsInState.length} programs`);
   if (noticeCount) chips.push(`WARN notices (major systems): ${noticeCount}`);
+  if (confidence?.label) chips.push(`Signal confidence: ${confidence.label}`);
+  if (payPosition) chips.push(`Pay position: ${payPosition}`);
 
   if (stateBeaconMeta) {
     stateBeaconMeta.innerHTML = chips.map((chip) => `<span class="state-beacon-chip">${escapeHtml(chip)}</span>`).join('');
@@ -3828,7 +4024,6 @@ const renderStateBeacon = async (state) => {
     }
   }
 
-  const stateFeed = getStateNewsFeed(state, entry);
   let newsMatches = [];
   if (stateFeed.length) {
     newsMatches = stateFeed
