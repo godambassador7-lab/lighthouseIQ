@@ -197,6 +197,10 @@ const STATE_BEACON_DEFAULT = 'FL';
 const STATE_BEACON_HOME_DEFAULT = 'IN';
 const STATE_BEACON_INPUTS_KEY = 'lni_state_beacon_inputs';
 const STATE_BEACON_NOTES_KEY = 'lni_state_beacon_notes';
+const MAP_LONG_PRESS_MS = 2000;
+const MAP_RECRUIT_TARGET_COUNT = 5;
+let mapLongPressTimer = null;
+let mapLongPressSuppressUntil = 0;
 
 const REQUIRED_PROGRAM_ACCREDITORS = ['CCNE', 'ACEN', 'CNEA'];
 
@@ -805,23 +809,45 @@ const initWeatherMap = async () => {
   svg.insertBefore(defs, svg.firstChild);
 
   const shapes = svg.querySelectorAll('path, circle');
-  shapes.forEach((shape) => {
-    const classList = Array.from(shape.classList || []);
-    const stateClass = classList.find((c) => c.length === 2 && /^[a-z]{2}$/i.test(c));
-    const rawId = shape.getAttribute('data-state') || shape.getAttribute('id') || '';
-    const abbrev = (stateClass || rawId).toUpperCase();
-    if (!/^[A-Z]{2}$/.test(abbrev)) return;
-    shape.setAttribute('data-state', abbrev);
-    shape.addEventListener('click', () => toggleStateSelection(abbrev));
-    shape.addEventListener('mouseenter', (e) => showTooltip(e, abbrev));
-    shape.addEventListener('mousemove', (e) => moveTooltip(e));
-    shape.addEventListener('mouseleave', hideTooltip);
-    // Right-click to set/clear home state
-    shape.addEventListener('contextmenu', (e) => {
-      e.preventDefault();
-      const currentHome = getMapHomeState();
-      if (currentHome === abbrev) {
-        clearMapHomeState();
+    shapes.forEach((shape) => {
+      const classList = Array.from(shape.classList || []);
+      const stateClass = classList.find((c) => c.length === 2 && /^[a-z]{2}$/i.test(c));
+      const rawId = shape.getAttribute('data-state') || shape.getAttribute('id') || '';
+      const abbrev = (stateClass || rawId).toUpperCase();
+      if (!/^[A-Z]{2}$/.test(abbrev)) return;
+      shape.setAttribute('data-state', abbrev);
+      shape.addEventListener('click', () => {
+        if (Date.now() < mapLongPressSuppressUntil) return;
+        toggleStateSelection(abbrev);
+      });
+      shape.addEventListener('mouseenter', (e) => showTooltip(e, abbrev));
+      shape.addEventListener('mousemove', (e) => moveTooltip(e));
+      shape.addEventListener('mouseleave', hideTooltip);
+      shape.addEventListener('pointerdown', (e) => {
+        if (e.button !== 0) return;
+        const homeState = getMapHomeState();
+        if (!homeState || homeState !== abbrev) return;
+        mapLongPressTimer = window.setTimeout(() => {
+          mapLongPressSuppressUntil = Date.now() + 500;
+          applyMapRecruitTargets(homeState);
+          showMapToast(`Top recruiting targets highlighted for ${STATE_NAMES[homeState] || homeState}`);
+        }, MAP_LONG_PRESS_MS);
+      });
+      const clearLongPress = () => {
+        if (mapLongPressTimer) {
+          clearTimeout(mapLongPressTimer);
+          mapLongPressTimer = null;
+        }
+      };
+      shape.addEventListener('pointerup', clearLongPress);
+      shape.addEventListener('pointerleave', clearLongPress);
+      shape.addEventListener('pointercancel', clearLongPress);
+      // Right-click to set/clear home state
+      shape.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        const currentHome = getMapHomeState();
+        if (currentHome === abbrev) {
+          clearMapHomeState();
       } else {
         setMapHomeState(abbrev);
       }
@@ -892,6 +918,7 @@ const setMapHomeState = (stateAbbrev) => {
   } catch {
     // ignore
   }
+  clearMapRecruitTargets();
   updateMapHomeStateHighlight();
   showMapToast(`Home state set to ${STATE_NAMES[stateAbbrev] || stateAbbrev}`);
 };
@@ -902,6 +929,7 @@ const clearMapHomeState = () => {
   } catch {
     // ignore
   }
+  clearMapRecruitTargets();
   updateMapHomeStateHighlight();
   showMapToast('Home state cleared');
 };
@@ -913,6 +941,70 @@ const updateMapHomeStateHighlight = () => {
     if (homeState && shape.dataset.state === homeState) {
       shape.classList.add('home-state-glow');
     }
+  });
+};
+
+const getRecruitingTargets = (homeState, count = MAP_RECRUIT_TARGET_COUNT) => {
+  const salaryData = strategicData?.salaryData || NURSING_SALARY_DATA;
+  return Object.entries(salaryData)
+    .filter(([state, data]) => state !== homeState && data.shortage === 'shortage')
+    .sort((a, b) => {
+      const gapA = Number(a[1].projectedGap ?? 0);
+      const gapB = Number(b[1].projectedGap ?? 0);
+      if (gapA !== gapB) return gapA - gapB;
+      return Number(b[1].travelWeekly ?? 0) - Number(a[1].travelWeekly ?? 0);
+    })
+    .slice(0, count)
+    .map(([state]) => state);
+};
+
+const clearMapRecruitTargets = () => {
+  const svg = usMapContainer?.querySelector('svg');
+  if (!svg) return;
+  svg.querySelectorAll('.state-rank-label').forEach((node) => node.remove());
+  svg.querySelectorAll('[data-state].recruit-target').forEach((shape) => {
+    shape.classList.remove('recruit-target');
+  });
+};
+
+const applyMapRecruitTargets = (homeState) => {
+  if (!homeState) return;
+  const svg = usMapContainer?.querySelector('svg');
+  if (!svg) return;
+  clearMapRecruitTargets();
+  const targets = getRecruitingTargets(homeState);
+  if (!targets.length) return;
+  let layer = svg.querySelector('.state-rank-layer');
+  if (!layer) {
+    layer = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    layer.setAttribute('class', 'state-rank-layer');
+    svg.appendChild(layer);
+  }
+  targets.forEach((state, index) => {
+    const rank = index + 1;
+    const shapes = svg.querySelectorAll(`[data-state="${state}"]`);
+    shapes.forEach((shape) => shape.classList.add('recruit-target'));
+    const primary = shapes[0];
+    if (!primary) return;
+    const bbox = primary.getBBox();
+    const x = bbox.x + bbox.width / 2;
+    const y = bbox.y + bbox.height / 2;
+    const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    group.setAttribute('class', 'state-rank-label');
+    group.setAttribute('data-state', state);
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('cx', x);
+    circle.setAttribute('cy', y);
+    circle.setAttribute('r', 8);
+    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    text.setAttribute('x', x);
+    text.setAttribute('y', y + 3);
+    text.setAttribute('text-anchor', 'middle');
+    text.setAttribute('class', 'state-rank-text');
+    text.textContent = `${rank}`;
+    group.appendChild(circle);
+    group.appendChild(text);
+    layer.appendChild(group);
   });
 };
 
