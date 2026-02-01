@@ -89,6 +89,14 @@ jobs:
           LNI_OUTPUT_DIR: ${{ github.workspace }}/public/data
         working-directory: core
 
+      - name: Install relocation data dependencies
+        run: python -m pip install --upgrade pip openpyxl
+
+      - name: Update relocation data
+        run: python scripts/update-relocation-data.py
+        env:
+          LNI_OUTPUT_DIR: ${{ github.workspace }}/public/data
+
       - name: Run news feed export script
         run: node dist/scripts/export-news.js
         env:

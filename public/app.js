@@ -259,6 +259,8 @@ const isHealthcareNotice = (notice) => {
 };
 let strategicData = null; // Will be loaded from strategic.json
 let strategicDataLoaded = false;
+let relocationData = null; // Will be loaded from relocation.json
+let relocationDataLoaded = false;
 
 const computeSignalConfidence = (noticeCount = 0, newsCount = 0, majorSystemsCount = 0) => {
   let score = 0;
@@ -982,6 +984,9 @@ const scoreOutOfStateTarget = (homeState, targetState) => {
   const projectedGap = Number(salaryData[targetState]?.projectedGap ?? 0);
   const travelWeekly = Number(salaryData[targetState]?.travelWeekly ?? 0);
   const noticeCount = mapStateData?.[targetState]?.count ?? 0;
+  const relocationScale = relocationData?.relocationScale?.[targetState];
+  const relocationSource = relocationData?.relocationSource?.[targetState] ?? null;
+  const relocationUpdated = relocationData?.lastUpdated ?? null;
 
   const homeRegion = getRegionForState(homeState);
   const targetRegion = getRegionForState(targetState);
@@ -992,8 +997,11 @@ const scoreOutOfStateTarget = (homeState, targetState) => {
   const payAdvantageScore = salaryDelta ? Math.max(Math.min(salaryDelta / 6000, 2.5), -3) : 0;
   const layoffFactor = Math.min(noticeCount / 4, 2);
   const travelFactor = Math.min(travelWeekly / 2000, 1.25);
+  const relocationFactor = typeof relocationScale === 'number'
+    ? Math.max(Math.min((relocationScale - 50) / 25, 2), -2)
+    : 0;
 
-  const score = regionFactor + shortageFactor + gapFactor + payAdvantageScore + layoffFactor + travelFactor;
+  const score = regionFactor + shortageFactor + gapFactor + payAdvantageScore + layoffFactor + travelFactor + relocationFactor;
 
   return {
     score,
@@ -1005,7 +1013,10 @@ const scoreOutOfStateTarget = (homeState, targetState) => {
       travelWeekly,
       salaryDelta,
       targetSalary,
-      homeSalary
+      homeSalary,
+      relocationScale,
+      relocationSource,
+      relocationUpdated
     }
   };
 };
@@ -1092,7 +1103,10 @@ const renderMapFactors = () => {
     return;
   }
   const homeName = STATE_NAMES[homeState] || homeState;
-  mapFactorsSubtitle.textContent = `Ranked for recruiting into ${homeName}. Assumptions: cost-of-living proxy (pay delta vs ${homeState}), relocation friction (regional proximity + travel pay), benefits pressure (shortage status), and WARN activity (supply).`;
+  const relocationRefresh = relocationData?.lastUpdated
+    ? ` Relocation data refresh: ${formatRelativeTime(relocationData.lastUpdated)}.`
+    : '';
+  mapFactorsSubtitle.textContent = `Ranked for recruiting into ${homeName}. Assumptions: cost-of-living proxy (pay delta vs ${homeState}), relocation friction (regional proximity + travel pay), benefits pressure (shortage status), WARN activity (supply), and RN relocation scale.${relocationRefresh}`;
   mapFactorsList.innerHTML = mapRecruitTargetsInfo.map((entry, idx) => {
     const targetName = STATE_NAMES[entry.state] || entry.state;
     const salaryDelta = entry.factors.salaryDelta;
@@ -1105,11 +1119,19 @@ const renderMapFactors = () => {
     const travelNote = entry.factors.travelWeekly
       ? `Travel weekly: ${Number(entry.factors.travelWeekly).toLocaleString()}`
       : 'Travel weekly: n/a';
+    const relocationScale = typeof entry.factors.relocationScale === 'number'
+      ? Math.round(entry.factors.relocationScale)
+      : null;
+    const relocationSourceMap = { rn: 'RN', clinical: 'Clinical', general: 'General' };
+    const relocationSource = relocationSourceMap[entry.factors.relocationSource] || 'n/a';
+    const relocationNote = relocationScale !== null
+      ? `Relocation scale: ${relocationScale} (${relocationSource})`
+      : 'Relocation scale: n/a';
     return `
         <div class="map-factor-card">
           <div class="map-factor-title">#${idx + 1} ${targetName} (${entry.state})</div>
           <div class="map-factor-meta">
-            Assumptions: Shortage: ${entry.factors.shortage} | WARN notices: ${entry.factors.noticeCount} | Region: ${entry.factors.region || 'n/a'} | ${salaryNote} | ${gapNote} | ${travelNote}
+            Assumptions: Shortage: ${entry.factors.shortage} | WARN notices: ${entry.factors.noticeCount} | Region: ${entry.factors.region || 'n/a'} | ${salaryNote} | ${gapNote} | ${travelNote} | ${relocationNote}
           </div>
         </div>
       `;
@@ -1389,6 +1411,21 @@ const loadStrategicData = async () => {
   } catch (err) {
     console.warn('Strategic data not available, using fallback:', err);
     strategicDataLoaded = true;
+    return null;
+  }
+};
+
+const loadRelocationData = async () => {
+  if (relocationDataLoaded) return relocationData;
+  try {
+    relocationData = await fetchJson(`${DATA_BASE_URL}/relocation.json`);
+    relocationDataLoaded = true;
+    console.log('Relocation data loaded:', relocationData?.lastUpdated);
+    return relocationData;
+  } catch (err) {
+    console.warn('Relocation data not available:', err);
+    relocationDataLoaded = true;
+    relocationData = null;
     return null;
   }
 };
@@ -2713,7 +2750,8 @@ const initApp = async () => {
   // Load data
   await Promise.all([
     loadMetadata(),
-    loadStates()
+    loadStates(),
+    loadRelocationData()
   ]);
 
   await loadAllNotices();
