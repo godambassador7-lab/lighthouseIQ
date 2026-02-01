@@ -3887,6 +3887,12 @@ input[type="range"] {
   color: rgba(255, 255, 255, 0.7);
 }
 
+.map-tooltip .tooltip-confidence {
+  margin-top: 4px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
 .content-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.9fr);
@@ -4547,6 +4553,125 @@ input[type="range"] {
   color: var(--muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+
+.strategic-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(26, 54, 93, 0.12);
+  color: var(--navy);
+}
+
+.strategic-badge.high {
+  background: rgba(56, 161, 105, 0.15);
+  color: #2f855a;
+}
+
+.strategic-badge.medium {
+  background: rgba(214, 158, 46, 0.18);
+  color: #b7791f;
+}
+
+.strategic-badge.low {
+  background: rgba(229, 62, 62, 0.15);
+  color: #c53030;
+}
+
+.exec-dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.exec-dashboard-item {
+  background: rgba(26, 54, 93, 0.04);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  border: 1px solid rgba(26, 54, 93, 0.08);
+}
+
+.exec-dashboard-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.exec-dashboard-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 6px;
+}
+
+.exec-dashboard-sub {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.confidence-grid,
+.pay-position-grid,
+.supply-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.confidence-value,
+.pay-position-value,
+.supply-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.pay-position-value.positive {
+  color: #2f855a;
+}
+
+.pay-position-value.negative {
+  color: #c53030;
+}
+
+.confidence-label,
+.pay-position-label,
+.supply-label {
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.heat-score-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.heat-score-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  background: rgba(26, 54, 93, 0.05);
+  border-radius: var(--radius-sm);
+}
+
+.heat-score-name {
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.heat-score-meta {
+  font-size: 12px;
+  color: var(--muted);
 }
 
 /* State Lists in Executive Summary */
