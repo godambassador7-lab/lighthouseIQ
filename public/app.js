@@ -205,9 +205,9 @@ const STATE_BEACON_INPUTS_KEY = 'lni_state_beacon_inputs';
 const STATE_BEACON_NOTES_KEY = 'lni_state_beacon_notes';
 const MAP_LONG_PRESS_MS = 2000;
 const MAP_RECRUIT_TARGET_COUNT = 5;
-let mapRecruitTargetsInfo = [];
 let mapLongPressTimer = null;
 let mapLongPressSuppressUntil = 0;
+let mapRecruitTargetsInfo = [];
 
 const REQUIRED_PROGRAM_ACCREDITORS = ['CCNE', 'ACEN', 'CNEA'];
 
@@ -1016,7 +1016,7 @@ const getRecruitingTargets = (homeState, count = MAP_RECRUIT_TARGET_COUNT) => {
     .filter((state) => state !== homeState)
     .map((state) => ({ state, ...scoreOutOfStateTarget(homeState, state) }))
     .sort((a, b) => b.score - a.score)
-    .slice(0, count)
+    .slice(0, count);
 };
 
 const clearMapRecruitTargets = () => {
@@ -5454,6 +5454,9 @@ if (checkAuth()) {
     initStrategicReview();
   });
 }
+
+
+
 
 
 
