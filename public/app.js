@@ -783,25 +783,24 @@ const initWeatherMap = async () => {
   // Inject warm orange gradient for home state (ocean wave style like Strategic Review)
   const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
   defs.innerHTML = `
-    <!-- Base warm orange gradient (matches Strategic Review blue-to-orange conversion) -->
+    <!-- Warm orange gradient with animated color stops -->
     <linearGradient id="home-state-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#5c2a0a;stop-opacity:1" />
-      <stop offset="40%" style="stop-color:#804515;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#9a5a1a;stop-opacity:1" />
+      <stop offset="0%" stop-color="#5c2a0a">
+        <animate attributeName="stop-color" values="#5c2a0a;#6d3510;#5c2a0a" dur="3s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="35%" stop-color="#804515">
+        <animate attributeName="stop-color" values="#804515;#995520;#804515" dur="4s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="60%" stop-color="#a65d2a">
+        <animate attributeName="stop-color" values="#a65d2a;#c97840;#a65d2a" dur="2.5s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="80%" stop-color="#c97840">
+        <animate attributeName="stop-color" values="#c97840;#e89850;#c97840" dur="3.5s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" stop-color="#e89850">
+        <animate attributeName="stop-color" values="#e89850;#ffb870;#e89850" dur="3s" repeatCount="indefinite"/>
+      </stop>
     </linearGradient>
-    <!-- Animated wave pattern overlay -->
-    <pattern id="home-wave-pattern" patternUnits="objectBoundingBox" width="1" height="1">
-      <rect width="100%" height="100%" fill="url(#home-state-gradient)"/>
-      <rect width="100%" height="40%" y="60%" fill="rgba(255,140,50,0.45)">
-        <animate attributeName="y" values="60%;65%;60%" dur="3s" repeatCount="indefinite"/>
-      </rect>
-      <rect width="100%" height="30%" y="70%" fill="rgba(255,180,100,0.35)">
-        <animate attributeName="y" values="70%;65%;70%" dur="4s" repeatCount="indefinite"/>
-      </rect>
-      <rect width="100%" height="20%" y="80%" fill="rgba(255,200,130,0.25)">
-        <animate attributeName="y" values="80%;75%;80%" dur="2.5s" repeatCount="indefinite"/>
-      </rect>
-    </pattern>
   `;
   svg.insertBefore(defs, svg.firstChild);
 
