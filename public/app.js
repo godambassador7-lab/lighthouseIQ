@@ -847,7 +847,7 @@ const initWeatherMap = async () => {
         e.preventDefault();
         const currentHome = getMapHomeState();
         if (currentHome === abbrev) {
-        clearMapHomeState();
+          clearMapHomeState();
       } else {
         setMapHomeState(abbrev);
       }
