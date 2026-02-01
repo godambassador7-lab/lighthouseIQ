@@ -59,6 +59,11 @@ const mapScopeHealthcareBtn = document.getElementById('map-scope-healthcare');
 const mapScopeAllBtn = document.getElementById('map-scope-all');
 const mapScopeLabel = document.getElementById('map-scope-label');
 const mapHomeStateBtn = document.getElementById('map-home-state-btn');
+const mapFactorsBtn = document.getElementById('map-factors-btn');
+const mapFactorsPanel = document.getElementById('map-factors-panel');
+const mapFactorsClose = document.getElementById('map-factors-close');
+const mapFactorsList = document.getElementById('map-factors-list');
+const mapFactorsSubtitle = document.getElementById('map-factors-subtitle');
 const alertsList = document.getElementById('alerts-list');
 const heatmapList = document.getElementById('heatmap-list');
 const talentList = document.getElementById('talent-list');
@@ -200,6 +205,7 @@ const STATE_BEACON_INPUTS_KEY = 'lni_state_beacon_inputs';
 const STATE_BEACON_NOTES_KEY = 'lni_state_beacon_notes';
 const MAP_LONG_PRESS_MS = 2000;
 const MAP_RECRUIT_TARGET_COUNT = 5;
+let mapRecruitTargetsInfo = [];
 let mapLongPressTimer = null;
 let mapLongPressSuppressUntil = 0;
 
@@ -962,18 +968,55 @@ const updateMapHomeStateHighlight = () => {
   }
 };
 
+const getRegionForState = (state) => {
+  const entry = Object.entries(REGION_STATES).find(([, states]) => states.includes(state));
+  return entry ? entry[0] : null;
+};
+
+const scoreOutOfStateTarget = (homeState, targetState) => {
+  const salaryData = strategicData?.salaryData || NURSING_SALARY_DATA;
+  const shortage = salaryData[targetState]?.shortage ?? 'balanced';
+  const homeSalary = Number(salaryData[homeState]?.staffRN ?? 0);
+  const targetSalary = Number(salaryData[targetState]?.staffRN ?? 0);
+  const salaryDelta = homeSalary && targetSalary ? homeSalary - targetSalary : 0;
+  const projectedGap = Number(salaryData[targetState]?.projectedGap ?? 0);
+  const travelWeekly = Number(salaryData[targetState]?.travelWeekly ?? 0);
+  const noticeCount = mapStateData?.[targetState]?.count ?? 0;
+
+  const homeRegion = getRegionForState(homeState);
+  const targetRegion = getRegionForState(targetState);
+  const regionFactor = homeRegion && targetRegion && homeRegion === targetRegion ? 1 : -0.75;
+
+  const shortageFactor = shortage === 'surplus' ? 2 : shortage === 'balanced' ? 0.75 : -1.75;
+  const gapFactor = projectedGap < 0 ? Math.min(Math.abs(projectedGap) / 12000, 1.5) : -0.75;
+  const payAdvantageScore = salaryDelta ? Math.max(Math.min(salaryDelta / 6000, 2.5), -3) : 0;
+  const layoffFactor = Math.min(noticeCount / 4, 2);
+  const travelFactor = Math.min(travelWeekly / 2000, 1.25);
+
+  const score = regionFactor + shortageFactor + gapFactor + payAdvantageScore + layoffFactor + travelFactor;
+
+  return {
+    score,
+    factors: {
+      shortage,
+      projectedGap,
+      noticeCount,
+      region: targetRegion,
+      travelWeekly,
+      salaryDelta,
+      targetSalary,
+      homeSalary
+    }
+  };
+};
+
 const getRecruitingTargets = (homeState, count = MAP_RECRUIT_TARGET_COUNT) => {
   const salaryData = strategicData?.salaryData || NURSING_SALARY_DATA;
-  return Object.entries(salaryData)
-    .filter(([state, data]) => state !== homeState && data.shortage === 'shortage')
-    .sort((a, b) => {
-      const gapA = Number(a[1].projectedGap ?? 0);
-      const gapB = Number(b[1].projectedGap ?? 0);
-      if (gapA !== gapB) return gapA - gapB;
-      return Number(b[1].travelWeekly ?? 0) - Number(a[1].travelWeekly ?? 0);
-    })
+  return Object.keys(salaryData)
+    .filter((state) => state !== homeState)
+    .map((state) => ({ state, ...scoreOutOfStateTarget(homeState, state) }))
+    .sort((a, b) => b.score - a.score)
     .slice(0, count)
-    .map(([state]) => state);
 };
 
 const clearMapRecruitTargets = () => {
@@ -983,6 +1026,10 @@ const clearMapRecruitTargets = () => {
   svg.querySelectorAll('[data-state].recruit-target').forEach((shape) => {
     shape.classList.remove('recruit-target');
   });
+  mapRecruitTargetsInfo = [];
+  if (mapFactorsPanel && mapFactorsPanel.style.display !== 'none') {
+    renderMapFactors();
+  }
 };
 
 const applyMapRecruitTargets = (homeState) => {
@@ -991,6 +1038,7 @@ const applyMapRecruitTargets = (homeState) => {
   if (!svg) return;
   clearMapRecruitTargets();
   const targets = getRecruitingTargets(homeState);
+  mapRecruitTargetsInfo = targets;
   if (!targets.length) return;
   let layer = svg.querySelector('.state-rank-layer');
   if (!layer) {
@@ -998,7 +1046,8 @@ const applyMapRecruitTargets = (homeState) => {
     layer.setAttribute('class', 'state-rank-layer');
     svg.appendChild(layer);
   }
-  targets.forEach((state, index) => {
+  targets.forEach((entry, index) => {
+    const state = entry.state;
     const rank = index + 1;
     const shapes = svg.querySelectorAll(`[data-state="${state}"]`);
     shapes.forEach((shape) => shape.classList.add('recruit-target'));
@@ -1024,6 +1073,47 @@ const applyMapRecruitTargets = (homeState) => {
     group.appendChild(text);
     layer.appendChild(group);
   });
+  if (mapFactorsPanel && mapFactorsPanel.style.display !== 'none') {
+    renderMapFactors();
+  }
+};
+
+const renderMapFactors = () => {
+  if (!mapFactorsList || !mapFactorsSubtitle) return;
+  const homeState = getMapHomeState();
+  if (!homeState) {
+    mapFactorsSubtitle.textContent = 'Set a Home State and long-press it to rank targets.';
+    mapFactorsList.innerHTML = '';
+    return;
+  }
+  if (!mapRecruitTargetsInfo.length) {
+    mapFactorsSubtitle.textContent = 'Long-press your Home State to generate top out-of-state targets.';
+    mapFactorsList.innerHTML = '';
+    return;
+  }
+  const homeName = STATE_NAMES[homeState] || homeState;
+  mapFactorsSubtitle.textContent = `Ranked for recruiting into ${homeName}. Assumptions: cost-of-living proxy (pay delta vs ${homeState}), relocation friction (regional proximity + travel pay), benefits pressure (shortage status), and WARN activity (supply).`;
+  mapFactorsList.innerHTML = mapRecruitTargetsInfo.map((entry, idx) => {
+    const targetName = STATE_NAMES[entry.state] || entry.state;
+    const salaryDelta = entry.factors.salaryDelta;
+    const salaryNote = salaryDelta
+      ? `${salaryDelta >= 0 ? 'Lower' : 'Higher'} pay vs ${homeState}: ${Math.abs(salaryDelta).toLocaleString()}`
+      : `Pay delta vs ${homeState}: n/a`;
+    const gapNote = Number.isFinite(entry.factors.projectedGap)
+      ? `Projected gap: ${entry.factors.projectedGap.toLocaleString()}`
+      : 'Projected gap: n/a';
+    const travelNote = entry.factors.travelWeekly
+      ? `Travel weekly: ${Number(entry.factors.travelWeekly).toLocaleString()}`
+      : 'Travel weekly: n/a';
+    return `
+        <div class="map-factor-card">
+          <div class="map-factor-title">#${idx + 1} ${targetName} (${entry.state})</div>
+          <div class="map-factor-meta">
+            Assumptions: Shortage: ${entry.factors.shortage} | WARN notices: ${entry.factors.noticeCount} | Region: ${entry.factors.region || 'n/a'} | ${salaryNote} | ${gapNote} | ${travelNote}
+          </div>
+        </div>
+      `;
+  }).join('');
 };
 
 const showMapToast = (message) => {
@@ -2492,6 +2582,17 @@ const initViewToggle = () => {
     const homeState = getMapHomeState();
     if (!homeState) return;
     openHomeState();
+  });
+
+  mapFactorsBtn?.addEventListener('click', () => {
+    if (!mapFactorsPanel) return;
+    const isVisible = mapFactorsPanel.style.display !== 'none';
+    mapFactorsPanel.style.display = isVisible ? 'none' : 'block';
+    if (!isVisible) renderMapFactors();
+  });
+
+  mapFactorsClose?.addEventListener('click', () => {
+    if (mapFactorsPanel) mapFactorsPanel.style.display = 'none';
   });
 };
 

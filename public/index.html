@@ -504,25 +504,34 @@
               <button class="scope-btn" id="map-scope-all" title="All notices">All</button>
             </div>
             <button class="map-home-state-btn" id="map-home-state-btn" type="button" title="Open Home State" style="display: none;">Home State</button>
+            <button class="map-factors-btn" id="map-factors-btn" type="button" title="Out of State Factors">Out of State Factors</button>
             <button class="map-clear-btn" id="map-clear-btn" type="button" title="Clear selected states">Clear Map</button>
           </div>
         </div>
-      <div class="weather-map-container">
+        <div class="weather-map-container">
         <div class="map-toast" id="map-toast"></div>
         <div class="map-legend" id="map-legend">
           <span class="legend-label">Low activity</span>
           <div class="legend-gradient"></div>
           <span class="legend-label">High activity</span>
         </div>
-        <div class="us-map" id="us-map">
-          <!-- SVG map will be inserted here by JS -->
+          <div class="us-map" id="us-map">
+            <!-- SVG map will be inserted here by JS -->
+          </div>
+          <div class="bar-chart-container" id="bar-chart" style="display: none;">
+            <!-- Bar chart will be rendered here by JS -->
+          </div>
+          <div class="map-factors-panel" id="map-factors-panel" style="display: none;">
+            <div class="map-factors-header">
+              <h4>Out of State Factors</h4>
+              <button type="button" class="map-factors-close" id="map-factors-close">&times;</button>
+            </div>
+            <div class="map-factors-subtitle" id="map-factors-subtitle">Set a Home State and long-press it to rank targets.</div>
+            <div class="map-factors-list" id="map-factors-list"></div>
+          </div>
+          <div class="map-tooltip" id="map-tooltip"></div>
         </div>
-        <div class="bar-chart-container" id="bar-chart" style="display: none;">
-          <!-- Bar chart will be rendered here by JS -->
-        </div>
-        <div class="map-tooltip" id="map-tooltip"></div>
-      </div>
-    </section>
+      </section>
 
     <!-- Notice Feed and Detail Panel - moved after weather map -->
     <main class="content-grid">
