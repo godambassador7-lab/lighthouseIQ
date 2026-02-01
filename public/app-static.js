@@ -3897,6 +3897,38 @@ const STATE_METRO_DATA = {
       totalGraduatesAnnual: 4100,
       retentionRate: 62
     },
+    salaryMeta: {
+      updatedAt: '2026-02-01',
+      updateEveryDays: 7,
+      breakdown: [
+        { label: 'BLS Indiana RN mean (May 2023)', value: '$39.76/hr • $82,700/yr', note: 'Statewide OEWS data' },
+        { label: 'BLS Indianapolis-Carmel-Anderson RN mean (May 2023)', value: '$41.14/hr • $85,580/yr', note: 'Metro OEWS data' },
+        { label: 'Indeed company averages (IN/metro)', value: '$34-$42/hr typical', note: 'Company salary pages by system' },
+        { label: 'Reddit: r/indianapolis nurses', value: '$25-$31/hr base reported', note: 'Community discussion (2025)' },
+        { label: 'Reddit: r/Indiana + r/nursing', value: '$26/hr start • $41/hr @ 13 yrs', note: 'Community-reported (2024-2025)' }
+      ],
+      sources: [
+        { name: 'BLS OEWS Indiana RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_in.htm' },
+        { name: 'BLS OEWS Indianapolis MSA RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_26900.htm' },
+        { name: 'Indeed: IU Health RN (IN)', url: 'https://www.indeed.com/cmp/Indiana-University-Health/salaries/Registered-Nurse/Indiana' },
+        { name: 'Indeed: Ascension RN (Indianapolis)', url: 'https://www.indeed.com/cmp/Ascension/salaries/Registered-Nurse/Indianapolis-IN' },
+        { name: 'Indeed: Community Health Network RN (Indianapolis)', url: 'https://www.indeed.com/cmp/Community-Health-Network/salaries/Registered-Nurse/Indianapolis-IN' },
+        { name: 'Indeed: Franciscan Health RN (IN)', url: 'https://www.indeed.com/cmp/Franciscan-Health-21c7906f/salaries/Registered-Nurse/Indiana' },
+        { name: 'Indeed: Eskenazi Health RN (Indianapolis)', url: 'https://www.indeed.com/cmp/Eskenazi-Health/salaries/Registered-Nurse/Indianapolis-IN' },
+        { name: 'Indeed: Parkview Health RN (Fort Wayne)', url: 'https://www.indeed.com/cmp/Parkview-Health-3/salaries/Registered-Nurse/Fort-Wayne-IN' },
+        { name: 'Indeed: Lutheran Health Network RN (IN)', url: 'https://www.indeed.com/cmp/Lutheran-Health-Network-of-Indiana/salaries/Registered-Nurse/Indiana' },
+        { name: 'Indeed: Deaconess Health System RN (Evansville)', url: 'https://www.indeed.com/cmp/Deaconess-Health-System/salaries/Registered-Nurse/Evansville-IN' },
+        { name: 'Indeed: Beacon Health System RN (IN)', url: 'https://www.indeed.com/cmp/Beacon-Health-System/salaries/Registered-Nurse/Indiana' },
+        { name: 'Indeed: Trinity Health RN (IN)', url: 'https://www.indeed.com/cmp/Trinity-Health/salaries/Registered-Nurse/Indiana' },
+        { name: 'Indeed: Methodist Hospitals RN (IN)', url: 'https://www.indeed.com/cmp/Methodist-Hospitals-1/salaries/Registered-Nurse/Indiana' },
+        { name: 'Indeed: Community Healthcare System RN (IN)', url: 'https://www.indeed.com/cmp/Community-Healthcare-System-4/salaries/Registered-Nurse/Indiana' },
+        { name: 'Indeed: Northwest Health Porter RN (IN)', url: 'https://www.indeed.com/cmp/Northwest-Health-Porter/salaries/Registered-Nurse/Indiana' },
+        { name: 'Indeed: Baptist Health System KY & IN RN (IN)', url: 'https://www.indeed.com/cmp/Baptist-Health-System-Ky-%26-in/salaries/Registered-Nurse/Indiana' },
+        { name: 'Reddit: r/indianapolis nurses thread (Sep 2025)', url: 'https://www.reddit.com/r/indianapolis/comments/1lgedw3/nurses_of_indianapolis_where_do_you_work_and_do/' },
+        { name: 'Reddit: r/Indiana RN salary thread (Aug 2025)', url: 'https://www.reddit.com/r/Indiana/comments/1msxn09' },
+        { name: 'Reddit: r/nursing Indiana pay transparency (Jan 2024)', url: 'https://www.reddit.com/r/nursing/comments/19e4o5y' }
+      ]
+    },
     metros: [
       {
         name: 'Indianapolis',
@@ -3936,7 +3968,49 @@ const STATE_METRO_DATA = {
           { name: 'Franciscan Health', facilities: 3, marketShare: '10%' },
           { name: 'Independent Hospitals', facilities: 8, marketShare: '15%' }
         ],
-        salary: { staffRN: '$32-45/hr', travelRN: '$2,200-2,800/wk', signOn: '$10-25K' },
+          salary: {
+            staffRN: '$32-45/hr',
+            travelRN: '$2,200-2,800/wk',
+            signOn: '$10-25K',
+            systems: [
+              {
+                name: 'IU Health',
+                value: '$37.42/hr avg',
+                source: 'Indeed (IN)',
+                url: 'https://www.indeed.com/cmp/Indiana-University-Health/salaries/Registered-Nurse/Indiana'
+              },
+              {
+                name: 'Ascension St. Vincent',
+                value: '$37.70/hr avg',
+                source: 'Indeed (Indianapolis)',
+                url: 'https://www.indeed.com/cmp/Ascension/salaries/Registered-Nurse/Indianapolis-IN'
+              },
+              {
+                name: 'Community Health Network',
+                value: '$41.60/hr avg',
+                source: 'Indeed (Indianapolis)',
+                url: 'https://www.indeed.com/cmp/Community-Health-Network/salaries/Registered-Nurse/Indianapolis-IN'
+              },
+              {
+                name: 'Franciscan Health',
+                value: '$34.94/hr avg',
+                source: 'Indeed (IN)',
+                url: 'https://www.indeed.com/cmp/Franciscan-Health-21c7906f/salaries/Registered-Nurse/Indiana'
+              },
+              {
+                name: 'Eskenazi Health',
+                value: '$41.62/hr avg',
+                source: 'Indeed (Indianapolis)',
+                url: 'https://www.indeed.com/cmp/Eskenazi-Health/salaries/Registered-Nurse/Indianapolis-IN'
+              },
+              {
+                name: 'Independent Hospitals',
+                value: 'Market est. $34-44/hr',
+                source: 'BLS + Reddit',
+                note: 'Estimate when system-level data is unavailable'
+              }
+            ]
+          },
         factors: [
           { text: 'Major academic medical center (IU Health)', type: 'positive' },
           { text: 'High demand for ICU/ED/OR specialties', type: 'positive' },
@@ -3971,7 +4045,31 @@ const STATE_METRO_DATA = {
           { name: 'Lutheran Health Network', facilities: 5, marketShare: '35%' },
           { name: 'Independent', facilities: 2, marketShare: '10%' }
         ],
-        salary: { staffRN: '$28-40/hr', travelRN: '$1,900-2,500/wk', signOn: '$8-18K' },
+          salary: {
+            staffRN: '$28-40/hr',
+            travelRN: '$1,900-2,500/wk',
+            signOn: '$8-18K',
+            systems: [
+              {
+                name: 'Parkview Health',
+                value: '$34.42/hr avg',
+                source: 'Indeed (Fort Wayne)',
+                url: 'https://www.indeed.com/cmp/Parkview-Health-3/salaries/Registered-Nurse/Fort-Wayne-IN'
+              },
+              {
+                name: 'Lutheran Health Network',
+                value: '$38.40/hr avg',
+                source: 'Indeed (IN)',
+                url: 'https://www.indeed.com/cmp/Lutheran-Health-Network-of-Indiana/salaries/Registered-Nurse/Indiana'
+              },
+              {
+                name: 'Independent',
+                value: 'Market est. $30-38/hr',
+                source: 'BLS + Reddit',
+                note: 'Estimate for non-system facilities'
+              }
+            ]
+          },
         factors: [
           { text: 'Parkview dominates market with excellent benefits', type: 'positive' },
           { text: 'Growing regional healthcare hub', type: 'positive' },
@@ -4001,7 +4099,31 @@ const STATE_METRO_DATA = {
           { name: 'Ascension St. Vincent', facilities: 1, marketShare: '25%' },
           { name: 'Independent Regional', facilities: 4, marketShare: '15%' }
         ],
-        salary: { staffRN: '$27-38/hr', travelRN: '$1,800-2,400/wk', signOn: '$7-15K' },
+          salary: {
+            staffRN: '$27-38/hr',
+            travelRN: '$1,800-2,400/wk',
+            signOn: '$7-15K',
+            systems: [
+              {
+                name: 'Deaconess Health System',
+                value: '$39.76/hr avg',
+                source: 'Indeed (Evansville)',
+                url: 'https://www.indeed.com/cmp/Deaconess-Health-System/salaries/Registered-Nurse/Evansville-IN'
+              },
+              {
+                name: 'Ascension St. Vincent',
+                value: '$39.96/hr avg',
+                source: 'Indeed (IN)',
+                url: 'https://www.indeed.com/cmp/Ascension/salaries/Registered-Nurse/Indiana'
+              },
+              {
+                name: 'Independent Regional',
+                value: 'Market est. $29-36/hr',
+                source: 'BLS + Reddit',
+                note: 'Estimate for independent facilities'
+              }
+            ]
+          },
         factors: [
           { text: 'Tri-state regional healthcare hub (IN/KY/IL)', type: 'positive' },
           { text: 'Very affordable housing market', type: 'positive' },
@@ -4026,7 +4148,31 @@ const STATE_METRO_DATA = {
           { name: 'Trinity Health', facilities: 1, marketShare: '30%' },
           { name: 'Goshen Health', facilities: 1, marketShare: '15%' }
         ],
-        salary: { staffRN: '$28-39/hr', travelRN: '$1,850-2,500/wk', signOn: '$8-16K' },
+          salary: {
+            staffRN: '$28-39/hr',
+            travelRN: '$1,850-2,500/wk',
+            signOn: '$8-16K',
+            systems: [
+              {
+                name: 'Beacon Health System',
+                value: '$38.50/hr avg',
+                source: 'Indeed (South Bend)',
+                url: 'https://www.indeed.com/cmp/Beacon-Health-System/salaries/Registered-Nurse/South-Bend-IN'
+              },
+              {
+                name: 'Trinity Health',
+                value: '$37.68/hr avg',
+                source: 'Indeed (IN)',
+                url: 'https://www.indeed.com/cmp/Trinity-Health/salaries/Registered-Nurse/Indiana'
+              },
+              {
+                name: 'Goshen Health',
+                value: 'Market est. $30-38/hr',
+                source: 'BLS + Reddit',
+                note: 'Estimate where job-board ranges are limited'
+              }
+            ]
+          },
         factors: [
           { text: 'Notre Dame University community', type: 'positive' },
           { text: 'Access to Michigan job market', type: 'positive' },
@@ -4058,7 +4204,37 @@ const STATE_METRO_DATA = {
           { name: 'Methodist Hospitals', facilities: 2, marketShare: '15%' },
           { name: 'Northwest Health', facilities: 2, marketShare: '15%' }
         ],
-        salary: { staffRN: '$30-42/hr', travelRN: '$2,000-2,600/wk', signOn: '$8-18K' },
+          salary: {
+            staffRN: '$30-42/hr',
+            travelRN: '$2,000-2,600/wk',
+            signOn: '$8-18K',
+            systems: [
+              {
+                name: 'Franciscan Health',
+                value: '$35.81/hr avg',
+                source: 'Indeed (Munster)',
+                url: 'https://www.indeed.com/cmp/Franciscan-Health-21c7906f/salaries/Registered-Nurse/Munster-IN'
+              },
+              {
+                name: 'Community Healthcare System',
+                value: '$41.51/hr avg',
+                source: 'Indeed (IN)',
+                url: 'https://www.indeed.com/cmp/Community-Healthcare-System-4/salaries/Registered-Nurse/Indiana'
+              },
+              {
+                name: 'Methodist Hospitals',
+                value: '$37.03/hr avg',
+                source: 'Indeed (IN)',
+                url: 'https://www.indeed.com/cmp/Methodist-Hospitals-1/salaries/Registered-Nurse/Indiana'
+              },
+              {
+                name: 'Northwest Health',
+                value: '$38.80/hr avg',
+                source: 'Indeed (IN)',
+                url: 'https://www.indeed.com/cmp/Northwest-Health-Porter/salaries/Registered-Nurse/Indiana'
+              }
+            ]
+          },
         factors: [
           { text: 'Chicago metro spillover demand', type: 'positive' },
           { text: 'Higher wages due to Illinois competition', type: 'positive' },
@@ -4080,7 +4256,19 @@ const STATE_METRO_DATA = {
         systems: [
           { name: 'IU Health', facilities: 3, marketShare: '95%' }
         ],
-        salary: { staffRN: '$27-37/hr', travelRN: '$1,700-2,300/wk', signOn: '$6-12K' },
+          salary: {
+            staffRN: '$27-37/hr',
+            travelRN: '$1,700-2,300/wk',
+            signOn: '$6-12K',
+            systems: [
+              {
+                name: 'IU Health',
+                value: '$37.42/hr avg',
+                source: 'Indeed (IN)',
+                url: 'https://www.indeed.com/cmp/Indiana-University-Health/salaries/Registered-Nurse/Indiana'
+              }
+            ]
+          },
         factors: [
           { text: 'Indiana University campus culture', type: 'positive' },
           { text: 'Close connection to IU School of Nursing', type: 'positive' },
@@ -4104,7 +4292,25 @@ const STATE_METRO_DATA = {
           { name: 'IU Health', facilities: 2, marketShare: '50%' },
           { name: 'Franciscan Health', facilities: 3, marketShare: '45%' }
         ],
-        salary: { staffRN: '$26-36/hr', travelRN: '$1,650-2,200/wk', signOn: '$5-12K' },
+          salary: {
+            staffRN: '$26-36/hr',
+            travelRN: '$1,650-2,200/wk',
+            signOn: '$5-12K',
+            systems: [
+              {
+                name: 'IU Health',
+                value: '$37.42/hr avg',
+                source: 'Indeed (IN)',
+                url: 'https://www.indeed.com/cmp/Indiana-University-Health/salaries/Registered-Nurse/Indiana'
+              },
+              {
+                name: 'Franciscan Health',
+                value: '$34.94/hr avg',
+                source: 'Indeed (IN)',
+                url: 'https://www.indeed.com/cmp/Franciscan-Health-21c7906f/salaries/Registered-Nurse/Indiana'
+              }
+            ]
+          },
         factors: [
           { text: 'Purdue University community', type: 'positive' },
           { text: 'Growing tech sector jobs', type: 'positive' },
@@ -4129,7 +4335,31 @@ const STATE_METRO_DATA = {
           { name: 'HCA Healthcare', facilities: 1, marketShare: '40%' },
           { name: 'Independent', facilities: 2, marketShare: '10%' }
         ],
-        salary: { staffRN: '$25-34/hr', travelRN: '$1,600-2,100/wk', signOn: '$5-10K' },
+          salary: {
+            staffRN: '$25-34/hr',
+            travelRN: '$1,600-2,100/wk',
+            signOn: '$5-10K',
+            systems: [
+              {
+                name: 'Union Health',
+                value: 'Market est. $28-35/hr',
+                source: 'BLS + Reddit',
+                note: 'Estimate where job-board ranges are limited'
+              },
+              {
+                name: 'HCA Healthcare',
+                value: 'Market est. $28-36/hr',
+                source: 'BLS + Reddit',
+                note: 'Estimate where job-board ranges are limited'
+              },
+              {
+                name: 'Independent',
+                value: 'Market est. $26-33/hr',
+                source: 'BLS + Reddit',
+                note: 'Estimate for non-system facilities'
+              }
+            ]
+          },
         factors: [
           { text: 'Very affordable cost of living', type: 'positive' },
           { text: 'Indiana State University', type: 'positive' },
@@ -4155,7 +4385,31 @@ const STATE_METRO_DATA = {
           { name: 'Ascension St. Vincent', facilities: 1, marketShare: '25%' },
           { name: 'Community Health Network', facilities: 1, marketShare: '25%' }
         ],
-        salary: { staffRN: '$25-34/hr', travelRN: '$1,550-2,050/wk', signOn: '$5-10K' },
+          salary: {
+            staffRN: '$25-34/hr',
+            travelRN: '$1,550-2,050/wk',
+            signOn: '$5-10K',
+            systems: [
+              {
+                name: 'IU Health',
+                value: '$37.42/hr avg',
+                source: 'Indeed (IN)',
+                url: 'https://www.indeed.com/cmp/Indiana-University-Health/salaries/Registered-Nurse/Indiana'
+              },
+              {
+                name: 'Ascension St. Vincent',
+                value: '$39.96/hr avg',
+                source: 'Indeed (IN)',
+                url: 'https://www.indeed.com/cmp/Ascension/salaries/Registered-Nurse/Indiana'
+              },
+              {
+                name: 'Community Health Network',
+                value: '$38.16/hr avg',
+                source: 'Indeed (Anderson)',
+                url: 'https://www.indeed.com/cmp/Community-Health-Network/salaries/Registered-Nurse/Anderson-IN'
+              }
+            ]
+          },
         factors: [
           { text: 'Ball State University nursing program', type: 'positive' },
           { text: 'Lower cost of living', type: 'positive' },
@@ -4180,7 +4434,31 @@ const STATE_METRO_DATA = {
           { name: 'Community Health Network', facilities: 1, marketShare: '30%' },
           { name: 'Independent', facilities: 3, marketShare: '35%' }
         ],
-        salary: { staffRN: '$24-33/hr', travelRN: '$1,500-1,950/wk', signOn: '$4-8K' },
+          salary: {
+            staffRN: '$24-33/hr',
+            travelRN: '$1,500-1,950/wk',
+            signOn: '$4-8K',
+            systems: [
+              {
+                name: 'Ascension St. Vincent',
+                value: '$39.96/hr avg',
+                source: 'Indeed (IN)',
+                url: 'https://www.indeed.com/cmp/Ascension/salaries/Registered-Nurse/Indiana'
+              },
+              {
+                name: 'Community Health Network',
+                value: '$41.63/hr avg',
+                source: 'Indeed (IN)',
+                url: 'https://www.indeed.com/cmp/Community-Health-Network/salaries/Registered-Nurse/Indiana'
+              },
+              {
+                name: 'Independent',
+                value: 'Market est. $26-32/hr',
+                source: 'BLS + Reddit',
+                note: 'Estimate for independent facilities'
+              }
+            ]
+          },
         factors: [
           { text: 'Strong community hospital culture', type: 'positive' },
           { text: 'Very affordable living', type: 'positive' },
@@ -4204,7 +4482,31 @@ const STATE_METRO_DATA = {
           { name: 'Schneck Medical Center', facilities: 1, marketShare: '25%' },
           { name: 'Independent', facilities: 1, marketShare: '15%' }
         ],
-        salary: { staffRN: '$26-35/hr', travelRN: '$1,600-2,100/wk', signOn: '$5-10K' },
+          salary: {
+            staffRN: '$26-35/hr',
+            travelRN: '$1,600-2,100/wk',
+            signOn: '$5-10K',
+            systems: [
+              {
+                name: 'Columbus Regional Health',
+                value: 'Market est. $29-36/hr',
+                source: 'BLS + Reddit',
+                note: 'Estimate where job-board ranges are limited'
+              },
+              {
+                name: 'Schneck Medical Center',
+                value: 'Market est. $28-35/hr',
+                source: 'BLS + Reddit',
+                note: 'Estimate where job-board ranges are limited'
+              },
+              {
+                name: 'Independent',
+                value: 'Market est. $27-34/hr',
+                source: 'BLS + Reddit',
+                note: 'Estimate for non-system facilities'
+              }
+            ]
+          },
         factors: [
           { text: 'Cummins Inc. corporate headquarters', type: 'positive' },
           { text: 'Strong local economy', type: 'positive' },
@@ -4225,7 +4527,25 @@ const STATE_METRO_DATA = {
           { name: 'Reid Health', facilities: 1, marketShare: '85%' },
           { name: 'Margaret Mary Health', facilities: 1, marketShare: '15%' }
         ],
-        salary: { staffRN: '$25-33/hr', travelRN: '$1,550-2,000/wk', signOn: '$5-8K' },
+          salary: {
+            staffRN: '$25-33/hr',
+            travelRN: '$1,550-2,000/wk',
+            signOn: '$5-8K',
+            systems: [
+              {
+                name: 'Reid Health',
+                value: 'Market est. $28-34/hr',
+                source: 'BLS + Reddit',
+                note: 'Estimate where job-board ranges are limited'
+              },
+              {
+                name: 'Margaret Mary Health',
+                value: 'Market est. $27-33/hr',
+                source: 'BLS + Reddit',
+                note: 'Estimate where job-board ranges are limited'
+              }
+            ]
+          },
         factors: [
           { text: 'Strong community hospital reputation', type: 'positive' },
           { text: 'Ohio border access', type: 'positive' },
@@ -4250,7 +4570,31 @@ const STATE_METRO_DATA = {
           { name: 'Clark Memorial', facilities: 1, marketShare: '30%' },
           { name: 'Independent', facilities: 2, marketShare: '25%' }
         ],
-        salary: { staffRN: '$28-38/hr', travelRN: '$1,800-2,400/wk', signOn: '$7-14K' },
+          salary: {
+            staffRN: '$28-38/hr',
+            travelRN: '$1,800-2,400/wk',
+            signOn: '$7-14K',
+            systems: [
+              {
+                name: 'Baptist Health (Louisville)',
+                value: '$34.44/hr avg',
+                source: 'Indeed (IN)',
+                url: 'https://www.indeed.com/cmp/Baptist-Health-System-Ky-%26-in/salaries/Registered-Nurse/Indiana'
+              },
+              {
+                name: 'Clark Memorial',
+                value: 'Market est. $30-38/hr',
+                source: 'BLS + Reddit',
+                note: 'Estimate where job-board ranges are limited'
+              },
+              {
+                name: 'Independent',
+                value: 'Market est. $29-36/hr',
+                source: 'BLS + Reddit',
+                note: 'Estimate for non-system facilities'
+              }
+            ]
+          },
         factors: [
           { text: 'Louisville metro spillover demand', type: 'positive' },
           { text: 'Access to Kentucky job market', type: 'positive' },
@@ -4365,8 +4709,103 @@ const selectHomeStateMetro = (metro, stateAbbrev) => {
   }
 
   // Render salary data
+  const metroData = STATE_METRO_DATA[stateAbbrev] || STATE_METRO_DATA.IN;
+  const salaryMeta = metroData?.salaryMeta || {};
   const salary = metro.salary || {};
+  const breakdown = Array.isArray(salary.breakdown)
+    ? salary.breakdown
+    : Array.isArray(salaryMeta.breakdown)
+      ? salaryMeta.breakdown
+      : [];
+  const sources = Array.isArray(salary.sources)
+    ? salary.sources.filter((src) => src && src.name && src.url)
+    : Array.isArray(salaryMeta.sources)
+      ? salaryMeta.sources.filter((src) => src && src.name && src.url)
+      : [];
+  const systems = Array.isArray(salary.systems) ? salary.systems : [];
+  const updatedAtRaw = salary.updatedAt || salaryMeta.updatedAt || null;
+  const updateEveryDays = Number(salary.updateEveryDays || salaryMeta.updateEveryDays || 7);
+  const updatedAt = updatedAtRaw ? new Date(updatedAtRaw) : null;
+  const updatedAtValid = updatedAt && !Number.isNaN(updatedAt.getTime());
+  const daysMs = 24 * 60 * 60 * 1000;
+  const isStale = updatedAtValid && (Date.now() - updatedAt.getTime() > updateEveryDays * daysMs);
+  const updatedLabel = updatedAtValid
+    ? updatedAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+    : null;
+  const nextUpdateLabel = updatedAtValid
+    ? new Date(updatedAt.getTime() + updateEveryDays * daysMs)
+      .toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+    : null;
+
   if (homeStateMetroSalary) {
+    const breakdownSectionHtml = breakdown.length
+      ? `
+        <div class="salary-breakdown-section">
+          <div class="salary-breakdown-subtitle">Market benchmarks</div>
+          <div class="salary-breakdown-grid">
+            ${breakdown.map((item) => `
+              <div class="salary-breakdown-item">
+                <div class="salary-breakdown-label">${escapeHtml(item.label || '--')}</div>
+                <div class="salary-breakdown-value">${escapeHtml(item.value || '--')}</div>
+                ${item.note ? `<div class="salary-breakdown-note">${escapeHtml(item.note)}</div>` : ''}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `
+      : '';
+    const systemsSectionHtml = systems.length
+      ? `
+        <div class="salary-breakdown-section">
+          <div class="salary-breakdown-subtitle">Major systems (est.)</div>
+          <div class="salary-system-grid">
+            ${systems.map((item) => `
+              <div class="salary-system-item">
+                <div class="salary-system-name">${escapeHtml(item.name || '--')}</div>
+                <div class="salary-system-value">${escapeHtml(item.value || '--')}</div>
+                ${item.source && item.url ? `
+                  <a class="salary-system-source" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">
+                    ${escapeHtml(item.source)}
+                  </a>
+                ` : item.source ? `<div class="salary-system-source">${escapeHtml(item.source)}</div>` : ''}
+                ${item.note ? `<div class="salary-system-note">${escapeHtml(item.note)}</div>` : ''}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `
+      : '';
+    const refreshHtml = updatedAtValid
+      ? `
+        <div class="salary-breakdown-refresh ${isStale ? 'stale' : ''}">
+          <span>Updated ${escapeHtml(updatedLabel)}</span>
+          ${nextUpdateLabel ? `<span>Next refresh: ${escapeHtml(nextUpdateLabel)}</span>` : ''}
+          ${isStale ? '<span class="refresh-flag">Update due</span>' : ''}
+        </div>
+      `
+      : '';
+    const sourcesHtml = sources.length
+      ? `
+        <div class="salary-breakdown-sources">
+          <span class="salary-breakdown-sources-label">Sources:</span>
+          ${sources.map((src, idx) => `
+            <a href="${escapeHtml(src.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(src.name)}</a>${idx < sources.length - 1 ? '<span class="source-sep">•</span>' : ''}
+          `).join('')}
+        </div>
+      `
+      : '';
+    const breakdownHtml = (breakdownSectionHtml || systemsSectionHtml || refreshHtml || sourcesHtml)
+      ? `
+        <div class="salary-breakdown">
+          <div class="salary-breakdown-title">Estimated salary breakdown</div>
+          ${breakdownSectionHtml}
+          ${systemsSectionHtml}
+          ${refreshHtml}
+          ${sourcesHtml}
+        </div>
+      `
+      : '';
+
     homeStateMetroSalary.innerHTML = `
       <div class="salary-card">
         <div class="salary-value">${escapeHtml(salary.staffRN || '--')}</div>
@@ -4380,6 +4819,7 @@ const selectHomeStateMetro = (metro, stateAbbrev) => {
         <div class="salary-value">${escapeHtml(salary.signOn || '--')}</div>
         <div class="salary-label">Sign-On Bonus</div>
       </div>
+      ${breakdownHtml}
     `;
   }
 

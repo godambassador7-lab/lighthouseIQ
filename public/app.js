@@ -3968,49 +3968,49 @@ const STATE_METRO_DATA = {
           { name: 'Franciscan Health', facilities: 3, marketShare: '10%' },
           { name: 'Independent Hospitals', facilities: 8, marketShare: '15%' }
         ],
-        salary: {
-          staffRN: '$32-45/hr',
-          travelRN: '$2,200-2,800/wk',
-          signOn: '$10-25K',
-          systems: [
-            {
-              name: 'IU Health',
-              value: '$37.42/hr avg',
-              source: 'Indeed (IN)',
-              url: 'https://www.indeed.com/cmp/Indiana-University-Health/salaries/Registered-Nurse/Indiana'
-            },
-            {
-              name: 'Ascension St. Vincent',
-              value: '$37.70/hr avg',
-              source: 'Indeed (Indianapolis)',
-              url: 'https://www.indeed.com/cmp/Ascension/salaries/Registered-Nurse/Indianapolis-IN'
-            },
-            {
-              name: 'Community Health Network',
-              value: '$41.60/hr avg',
-              source: 'Indeed (Indianapolis)',
-              url: 'https://www.indeed.com/cmp/Community-Health-Network/salaries/Registered-Nurse/Indianapolis-IN'
-            },
-            {
-              name: 'Franciscan Health',
-              value: '$34.94/hr avg',
-              source: 'Indeed (IN)',
-              url: 'https://www.indeed.com/cmp/Franciscan-Health-21c7906f/salaries/Registered-Nurse/Indiana'
-            },
-            {
-              name: 'Eskenazi Health',
-              value: '$41.62/hr avg',
-              source: 'Indeed (Indianapolis)',
-              url: 'https://www.indeed.com/cmp/Eskenazi-Health/salaries/Registered-Nurse/Indianapolis-IN'
-            },
-            {
-              name: 'Independent Hospitals',
-              value: 'Market est. $34-44/hr',
-              source: 'BLS + Reddit',
-              note: 'Estimate when system-level data is unavailable'
-            }
-          ]
-        },
+          salary: {
+            staffRN: '$32-45/hr',
+            travelRN: '$2,200-2,800/wk',
+            signOn: '$10-25K',
+            systems: [
+              {
+                name: 'IU Health',
+                value: '$37.42/hr avg',
+                source: 'Indeed (IN)',
+                url: 'https://www.indeed.com/cmp/Indiana-University-Health/salaries/Registered-Nurse/Indiana'
+              },
+              {
+                name: 'Ascension St. Vincent',
+                value: '$37.70/hr avg',
+                source: 'Indeed (Indianapolis)',
+                url: 'https://www.indeed.com/cmp/Ascension/salaries/Registered-Nurse/Indianapolis-IN'
+              },
+              {
+                name: 'Community Health Network',
+                value: '$41.60/hr avg',
+                source: 'Indeed (Indianapolis)',
+                url: 'https://www.indeed.com/cmp/Community-Health-Network/salaries/Registered-Nurse/Indianapolis-IN'
+              },
+              {
+                name: 'Franciscan Health',
+                value: '$34.94/hr avg',
+                source: 'Indeed (IN)',
+                url: 'https://www.indeed.com/cmp/Franciscan-Health-21c7906f/salaries/Registered-Nurse/Indiana'
+              },
+              {
+                name: 'Eskenazi Health',
+                value: '$41.62/hr avg',
+                source: 'Indeed (Indianapolis)',
+                url: 'https://www.indeed.com/cmp/Eskenazi-Health/salaries/Registered-Nurse/Indianapolis-IN'
+              },
+              {
+                name: 'Independent Hospitals',
+                value: 'Market est. $34-44/hr',
+                source: 'BLS + Reddit',
+                note: 'Estimate when system-level data is unavailable'
+              }
+            ]
+          },
         factors: [
           { text: 'Major academic medical center (IU Health)', type: 'positive' },
           { text: 'High demand for ICU/ED/OR specialties', type: 'positive' },
@@ -4045,31 +4045,31 @@ const STATE_METRO_DATA = {
           { name: 'Lutheran Health Network', facilities: 5, marketShare: '35%' },
           { name: 'Independent', facilities: 2, marketShare: '10%' }
         ],
-        salary: {
-          staffRN: '$28-40/hr',
-          travelRN: '$1,900-2,500/wk',
-          signOn: '$8-18K',
-          systems: [
-            {
-              name: 'Parkview Health',
-              value: '$34.42/hr avg',
-              source: 'Indeed (Fort Wayne)',
-              url: 'https://www.indeed.com/cmp/Parkview-Health-3/salaries/Registered-Nurse/Fort-Wayne-IN'
-            },
-            {
-              name: 'Lutheran Health Network',
-              value: '$38.40/hr avg',
-              source: 'Indeed (IN)',
-              url: 'https://www.indeed.com/cmp/Lutheran-Health-Network-of-Indiana/salaries/Registered-Nurse/Indiana'
-            },
-            {
-              name: 'Independent',
-              value: 'Market est. $30-38/hr',
-              source: 'BLS + Reddit',
-              note: 'Estimate for non-system facilities'
-            }
-          ]
-        },
+          salary: {
+            staffRN: '$28-40/hr',
+            travelRN: '$1,900-2,500/wk',
+            signOn: '$8-18K',
+            systems: [
+              {
+                name: 'Parkview Health',
+                value: '$34.42/hr avg',
+                source: 'Indeed (Fort Wayne)',
+                url: 'https://www.indeed.com/cmp/Parkview-Health-3/salaries/Registered-Nurse/Fort-Wayne-IN'
+              },
+              {
+                name: 'Lutheran Health Network',
+                value: '$38.40/hr avg',
+                source: 'Indeed (IN)',
+                url: 'https://www.indeed.com/cmp/Lutheran-Health-Network-of-Indiana/salaries/Registered-Nurse/Indiana'
+              },
+              {
+                name: 'Independent',
+                value: 'Market est. $30-38/hr',
+                source: 'BLS + Reddit',
+                note: 'Estimate for non-system facilities'
+              }
+            ]
+          },
         factors: [
           { text: 'Parkview dominates market with excellent benefits', type: 'positive' },
           { text: 'Growing regional healthcare hub', type: 'positive' },
@@ -4099,31 +4099,31 @@ const STATE_METRO_DATA = {
           { name: 'Ascension St. Vincent', facilities: 1, marketShare: '25%' },
           { name: 'Independent Regional', facilities: 4, marketShare: '15%' }
         ],
-        salary: {
-          staffRN: '$27-38/hr',
-          travelRN: '$1,800-2,400/wk',
-          signOn: '$7-15K',
-          systems: [
-            {
-              name: 'Deaconess Health System',
-              value: '$39.76/hr avg',
-              source: 'Indeed (Evansville)',
-              url: 'https://www.indeed.com/cmp/Deaconess-Health-System/salaries/Registered-Nurse/Evansville-IN'
-            },
-            {
-              name: 'Ascension St. Vincent',
-              value: '$39.96/hr avg',
-              source: 'Indeed (IN)',
-              url: 'https://www.indeed.com/cmp/Ascension/salaries/Registered-Nurse/Indiana'
-            },
-            {
-              name: 'Independent Regional',
-              value: 'Market est. $29-36/hr',
-              source: 'BLS + Reddit',
-              note: 'Estimate for independent facilities'
-            }
-          ]
-        },
+          salary: {
+            staffRN: '$27-38/hr',
+            travelRN: '$1,800-2,400/wk',
+            signOn: '$7-15K',
+            systems: [
+              {
+                name: 'Deaconess Health System',
+                value: '$39.76/hr avg',
+                source: 'Indeed (Evansville)',
+                url: 'https://www.indeed.com/cmp/Deaconess-Health-System/salaries/Registered-Nurse/Evansville-IN'
+              },
+              {
+                name: 'Ascension St. Vincent',
+                value: '$39.96/hr avg',
+                source: 'Indeed (IN)',
+                url: 'https://www.indeed.com/cmp/Ascension/salaries/Registered-Nurse/Indiana'
+              },
+              {
+                name: 'Independent Regional',
+                value: 'Market est. $29-36/hr',
+                source: 'BLS + Reddit',
+                note: 'Estimate for independent facilities'
+              }
+            ]
+          },
         factors: [
           { text: 'Tri-state regional healthcare hub (IN/KY/IL)', type: 'positive' },
           { text: 'Very affordable housing market', type: 'positive' },
@@ -4148,31 +4148,31 @@ const STATE_METRO_DATA = {
           { name: 'Trinity Health', facilities: 1, marketShare: '30%' },
           { name: 'Goshen Health', facilities: 1, marketShare: '15%' }
         ],
-        salary: {
-          staffRN: '$28-39/hr',
-          travelRN: '$1,850-2,500/wk',
-          signOn: '$8-16K',
-          systems: [
-            {
-              name: 'Beacon Health System',
-              value: '$38.50/hr avg',
-              source: 'Indeed (South Bend)',
-              url: 'https://www.indeed.com/cmp/Beacon-Health-System/salaries/Registered-Nurse/South-Bend-IN'
-            },
-            {
-              name: 'Trinity Health',
-              value: '$37.68/hr avg',
-              source: 'Indeed (IN)',
-              url: 'https://www.indeed.com/cmp/Trinity-Health/salaries/Registered-Nurse/Indiana'
-            },
-            {
-              name: 'Goshen Health',
-              value: 'Market est. $30-38/hr',
-              source: 'BLS + Reddit',
-              note: 'Estimate where job-board ranges are limited'
-            }
-          ]
-        },
+          salary: {
+            staffRN: '$28-39/hr',
+            travelRN: '$1,850-2,500/wk',
+            signOn: '$8-16K',
+            systems: [
+              {
+                name: 'Beacon Health System',
+                value: '$38.50/hr avg',
+                source: 'Indeed (South Bend)',
+                url: 'https://www.indeed.com/cmp/Beacon-Health-System/salaries/Registered-Nurse/South-Bend-IN'
+              },
+              {
+                name: 'Trinity Health',
+                value: '$37.68/hr avg',
+                source: 'Indeed (IN)',
+                url: 'https://www.indeed.com/cmp/Trinity-Health/salaries/Registered-Nurse/Indiana'
+              },
+              {
+                name: 'Goshen Health',
+                value: 'Market est. $30-38/hr',
+                source: 'BLS + Reddit',
+                note: 'Estimate where job-board ranges are limited'
+              }
+            ]
+          },
         factors: [
           { text: 'Notre Dame University community', type: 'positive' },
           { text: 'Access to Michigan job market', type: 'positive' },
@@ -4204,37 +4204,37 @@ const STATE_METRO_DATA = {
           { name: 'Methodist Hospitals', facilities: 2, marketShare: '15%' },
           { name: 'Northwest Health', facilities: 2, marketShare: '15%' }
         ],
-        salary: {
-          staffRN: '$30-42/hr',
-          travelRN: '$2,000-2,600/wk',
-          signOn: '$8-18K',
-          systems: [
-            {
-              name: 'Franciscan Health',
-              value: '$35.81/hr avg',
-              source: 'Indeed (Munster)',
-              url: 'https://www.indeed.com/cmp/Franciscan-Health-21c7906f/salaries/Registered-Nurse/Munster-IN'
-            },
-            {
-              name: 'Community Healthcare System',
-              value: '$41.51/hr avg',
-              source: 'Indeed (IN)',
-              url: 'https://www.indeed.com/cmp/Community-Healthcare-System-4/salaries/Registered-Nurse/Indiana'
-            },
-            {
-              name: 'Methodist Hospitals',
-              value: '$37.03/hr avg',
-              source: 'Indeed (IN)',
-              url: 'https://www.indeed.com/cmp/Methodist-Hospitals-1/salaries/Registered-Nurse/Indiana'
-            },
-            {
-              name: 'Northwest Health',
-              value: '$38.80/hr avg',
-              source: 'Indeed (IN)',
-              url: 'https://www.indeed.com/cmp/Northwest-Health-Porter/salaries/Registered-Nurse/Indiana'
-            }
-          ]
-        },
+          salary: {
+            staffRN: '$30-42/hr',
+            travelRN: '$2,000-2,600/wk',
+            signOn: '$8-18K',
+            systems: [
+              {
+                name: 'Franciscan Health',
+                value: '$35.81/hr avg',
+                source: 'Indeed (Munster)',
+                url: 'https://www.indeed.com/cmp/Franciscan-Health-21c7906f/salaries/Registered-Nurse/Munster-IN'
+              },
+              {
+                name: 'Community Healthcare System',
+                value: '$41.51/hr avg',
+                source: 'Indeed (IN)',
+                url: 'https://www.indeed.com/cmp/Community-Healthcare-System-4/salaries/Registered-Nurse/Indiana'
+              },
+              {
+                name: 'Methodist Hospitals',
+                value: '$37.03/hr avg',
+                source: 'Indeed (IN)',
+                url: 'https://www.indeed.com/cmp/Methodist-Hospitals-1/salaries/Registered-Nurse/Indiana'
+              },
+              {
+                name: 'Northwest Health',
+                value: '$38.80/hr avg',
+                source: 'Indeed (IN)',
+                url: 'https://www.indeed.com/cmp/Northwest-Health-Porter/salaries/Registered-Nurse/Indiana'
+              }
+            ]
+          },
         factors: [
           { text: 'Chicago metro spillover demand', type: 'positive' },
           { text: 'Higher wages due to Illinois competition', type: 'positive' },
@@ -4256,19 +4256,19 @@ const STATE_METRO_DATA = {
         systems: [
           { name: 'IU Health', facilities: 3, marketShare: '95%' }
         ],
-        salary: {
-          staffRN: '$27-37/hr',
-          travelRN: '$1,700-2,300/wk',
-          signOn: '$6-12K',
-          systems: [
-            {
-              name: 'IU Health',
-              value: '$37.42/hr avg',
-              source: 'Indeed (IN)',
-              url: 'https://www.indeed.com/cmp/Indiana-University-Health/salaries/Registered-Nurse/Indiana'
-            }
-          ]
-        },
+          salary: {
+            staffRN: '$27-37/hr',
+            travelRN: '$1,700-2,300/wk',
+            signOn: '$6-12K',
+            systems: [
+              {
+                name: 'IU Health',
+                value: '$37.42/hr avg',
+                source: 'Indeed (IN)',
+                url: 'https://www.indeed.com/cmp/Indiana-University-Health/salaries/Registered-Nurse/Indiana'
+              }
+            ]
+          },
         factors: [
           { text: 'Indiana University campus culture', type: 'positive' },
           { text: 'Close connection to IU School of Nursing', type: 'positive' },
@@ -4292,25 +4292,25 @@ const STATE_METRO_DATA = {
           { name: 'IU Health', facilities: 2, marketShare: '50%' },
           { name: 'Franciscan Health', facilities: 3, marketShare: '45%' }
         ],
-        salary: {
-          staffRN: '$26-36/hr',
-          travelRN: '$1,650-2,200/wk',
-          signOn: '$5-12K',
-          systems: [
-            {
-              name: 'IU Health',
-              value: '$37.42/hr avg',
-              source: 'Indeed (IN)',
-              url: 'https://www.indeed.com/cmp/Indiana-University-Health/salaries/Registered-Nurse/Indiana'
-            },
-            {
-              name: 'Franciscan Health',
-              value: '$34.94/hr avg',
-              source: 'Indeed (IN)',
-              url: 'https://www.indeed.com/cmp/Franciscan-Health-21c7906f/salaries/Registered-Nurse/Indiana'
-            }
-          ]
-        },
+          salary: {
+            staffRN: '$26-36/hr',
+            travelRN: '$1,650-2,200/wk',
+            signOn: '$5-12K',
+            systems: [
+              {
+                name: 'IU Health',
+                value: '$37.42/hr avg',
+                source: 'Indeed (IN)',
+                url: 'https://www.indeed.com/cmp/Indiana-University-Health/salaries/Registered-Nurse/Indiana'
+              },
+              {
+                name: 'Franciscan Health',
+                value: '$34.94/hr avg',
+                source: 'Indeed (IN)',
+                url: 'https://www.indeed.com/cmp/Franciscan-Health-21c7906f/salaries/Registered-Nurse/Indiana'
+              }
+            ]
+          },
         factors: [
           { text: 'Purdue University community', type: 'positive' },
           { text: 'Growing tech sector jobs', type: 'positive' },
@@ -4335,31 +4335,31 @@ const STATE_METRO_DATA = {
           { name: 'HCA Healthcare', facilities: 1, marketShare: '40%' },
           { name: 'Independent', facilities: 2, marketShare: '10%' }
         ],
-        salary: {
-          staffRN: '$25-34/hr',
-          travelRN: '$1,600-2,100/wk',
-          signOn: '$5-10K',
-          systems: [
-            {
-              name: 'Union Health',
-              value: 'Market est. $28-35/hr',
-              source: 'BLS + Reddit',
-              note: 'Estimate where job-board ranges are limited'
-            },
-            {
-              name: 'HCA Healthcare',
-              value: 'Market est. $28-36/hr',
-              source: 'BLS + Reddit',
-              note: 'Estimate where job-board ranges are limited'
-            },
-            {
-              name: 'Independent',
-              value: 'Market est. $26-33/hr',
-              source: 'BLS + Reddit',
-              note: 'Estimate for non-system facilities'
-            }
-          ]
-        },
+          salary: {
+            staffRN: '$25-34/hr',
+            travelRN: '$1,600-2,100/wk',
+            signOn: '$5-10K',
+            systems: [
+              {
+                name: 'Union Health',
+                value: 'Market est. $28-35/hr',
+                source: 'BLS + Reddit',
+                note: 'Estimate where job-board ranges are limited'
+              },
+              {
+                name: 'HCA Healthcare',
+                value: 'Market est. $28-36/hr',
+                source: 'BLS + Reddit',
+                note: 'Estimate where job-board ranges are limited'
+              },
+              {
+                name: 'Independent',
+                value: 'Market est. $26-33/hr',
+                source: 'BLS + Reddit',
+                note: 'Estimate for non-system facilities'
+              }
+            ]
+          },
         factors: [
           { text: 'Very affordable cost of living', type: 'positive' },
           { text: 'Indiana State University', type: 'positive' },
@@ -4385,31 +4385,31 @@ const STATE_METRO_DATA = {
           { name: 'Ascension St. Vincent', facilities: 1, marketShare: '25%' },
           { name: 'Community Health Network', facilities: 1, marketShare: '25%' }
         ],
-        salary: {
-          staffRN: '$25-34/hr',
-          travelRN: '$1,550-2,050/wk',
-          signOn: '$5-10K',
-          systems: [
-            {
-              name: 'IU Health',
-              value: '$37.42/hr avg',
-              source: 'Indeed (IN)',
-              url: 'https://www.indeed.com/cmp/Indiana-University-Health/salaries/Registered-Nurse/Indiana'
-            },
-            {
-              name: 'Ascension St. Vincent',
-              value: '$39.96/hr avg',
-              source: 'Indeed (IN)',
-              url: 'https://www.indeed.com/cmp/Ascension/salaries/Registered-Nurse/Indiana'
-            },
-            {
-              name: 'Community Health Network',
-              value: '$38.16/hr avg',
-              source: 'Indeed (Anderson)',
-              url: 'https://www.indeed.com/cmp/Community-Health-Network/salaries/Registered-Nurse/Anderson-IN'
-            }
-          ]
-        },
+          salary: {
+            staffRN: '$25-34/hr',
+            travelRN: '$1,550-2,050/wk',
+            signOn: '$5-10K',
+            systems: [
+              {
+                name: 'IU Health',
+                value: '$37.42/hr avg',
+                source: 'Indeed (IN)',
+                url: 'https://www.indeed.com/cmp/Indiana-University-Health/salaries/Registered-Nurse/Indiana'
+              },
+              {
+                name: 'Ascension St. Vincent',
+                value: '$39.96/hr avg',
+                source: 'Indeed (IN)',
+                url: 'https://www.indeed.com/cmp/Ascension/salaries/Registered-Nurse/Indiana'
+              },
+              {
+                name: 'Community Health Network',
+                value: '$38.16/hr avg',
+                source: 'Indeed (Anderson)',
+                url: 'https://www.indeed.com/cmp/Community-Health-Network/salaries/Registered-Nurse/Anderson-IN'
+              }
+            ]
+          },
         factors: [
           { text: 'Ball State University nursing program', type: 'positive' },
           { text: 'Lower cost of living', type: 'positive' },
@@ -4434,31 +4434,31 @@ const STATE_METRO_DATA = {
           { name: 'Community Health Network', facilities: 1, marketShare: '30%' },
           { name: 'Independent', facilities: 3, marketShare: '35%' }
         ],
-        salary: {
-          staffRN: '$24-33/hr',
-          travelRN: '$1,500-1,950/wk',
-          signOn: '$4-8K',
-          systems: [
-            {
-              name: 'Ascension St. Vincent',
-              value: '$39.96/hr avg',
-              source: 'Indeed (IN)',
-              url: 'https://www.indeed.com/cmp/Ascension/salaries/Registered-Nurse/Indiana'
-            },
-            {
-              name: 'Community Health Network',
-              value: '$41.63/hr avg',
-              source: 'Indeed (IN)',
-              url: 'https://www.indeed.com/cmp/Community-Health-Network/salaries/Registered-Nurse/Indiana'
-            },
-            {
-              name: 'Independent',
-              value: 'Market est. $26-32/hr',
-              source: 'BLS + Reddit',
-              note: 'Estimate for independent facilities'
-            }
-          ]
-        },
+          salary: {
+            staffRN: '$24-33/hr',
+            travelRN: '$1,500-1,950/wk',
+            signOn: '$4-8K',
+            systems: [
+              {
+                name: 'Ascension St. Vincent',
+                value: '$39.96/hr avg',
+                source: 'Indeed (IN)',
+                url: 'https://www.indeed.com/cmp/Ascension/salaries/Registered-Nurse/Indiana'
+              },
+              {
+                name: 'Community Health Network',
+                value: '$41.63/hr avg',
+                source: 'Indeed (IN)',
+                url: 'https://www.indeed.com/cmp/Community-Health-Network/salaries/Registered-Nurse/Indiana'
+              },
+              {
+                name: 'Independent',
+                value: 'Market est. $26-32/hr',
+                source: 'BLS + Reddit',
+                note: 'Estimate for independent facilities'
+              }
+            ]
+          },
         factors: [
           { text: 'Strong community hospital culture', type: 'positive' },
           { text: 'Very affordable living', type: 'positive' },
@@ -4482,31 +4482,31 @@ const STATE_METRO_DATA = {
           { name: 'Schneck Medical Center', facilities: 1, marketShare: '25%' },
           { name: 'Independent', facilities: 1, marketShare: '15%' }
         ],
-        salary: {
-          staffRN: '$26-35/hr',
-          travelRN: '$1,600-2,100/wk',
-          signOn: '$5-10K',
-          systems: [
-            {
-              name: 'Columbus Regional Health',
-              value: 'Market est. $29-36/hr',
-              source: 'BLS + Reddit',
-              note: 'Estimate where job-board ranges are limited'
-            },
-            {
-              name: 'Schneck Medical Center',
-              value: 'Market est. $28-35/hr',
-              source: 'BLS + Reddit',
-              note: 'Estimate where job-board ranges are limited'
-            },
-            {
-              name: 'Independent',
-              value: 'Market est. $27-34/hr',
-              source: 'BLS + Reddit',
-              note: 'Estimate for non-system facilities'
-            }
-          ]
-        },
+          salary: {
+            staffRN: '$26-35/hr',
+            travelRN: '$1,600-2,100/wk',
+            signOn: '$5-10K',
+            systems: [
+              {
+                name: 'Columbus Regional Health',
+                value: 'Market est. $29-36/hr',
+                source: 'BLS + Reddit',
+                note: 'Estimate where job-board ranges are limited'
+              },
+              {
+                name: 'Schneck Medical Center',
+                value: 'Market est. $28-35/hr',
+                source: 'BLS + Reddit',
+                note: 'Estimate where job-board ranges are limited'
+              },
+              {
+                name: 'Independent',
+                value: 'Market est. $27-34/hr',
+                source: 'BLS + Reddit',
+                note: 'Estimate for non-system facilities'
+              }
+            ]
+          },
         factors: [
           { text: 'Cummins Inc. corporate headquarters', type: 'positive' },
           { text: 'Strong local economy', type: 'positive' },
@@ -4527,25 +4527,25 @@ const STATE_METRO_DATA = {
           { name: 'Reid Health', facilities: 1, marketShare: '85%' },
           { name: 'Margaret Mary Health', facilities: 1, marketShare: '15%' }
         ],
-        salary: {
-          staffRN: '$25-33/hr',
-          travelRN: '$1,550-2,000/wk',
-          signOn: '$5-8K',
-          systems: [
-            {
-              name: 'Reid Health',
-              value: 'Market est. $28-34/hr',
-              source: 'BLS + Reddit',
-              note: 'Estimate where job-board ranges are limited'
-            },
-            {
-              name: 'Margaret Mary Health',
-              value: 'Market est. $27-33/hr',
-              source: 'BLS + Reddit',
-              note: 'Estimate where job-board ranges are limited'
-            }
-          ]
-        },
+          salary: {
+            staffRN: '$25-33/hr',
+            travelRN: '$1,550-2,000/wk',
+            signOn: '$5-8K',
+            systems: [
+              {
+                name: 'Reid Health',
+                value: 'Market est. $28-34/hr',
+                source: 'BLS + Reddit',
+                note: 'Estimate where job-board ranges are limited'
+              },
+              {
+                name: 'Margaret Mary Health',
+                value: 'Market est. $27-33/hr',
+                source: 'BLS + Reddit',
+                note: 'Estimate where job-board ranges are limited'
+              }
+            ]
+          },
         factors: [
           { text: 'Strong community hospital reputation', type: 'positive' },
           { text: 'Ohio border access', type: 'positive' },
@@ -4570,31 +4570,31 @@ const STATE_METRO_DATA = {
           { name: 'Clark Memorial', facilities: 1, marketShare: '30%' },
           { name: 'Independent', facilities: 2, marketShare: '25%' }
         ],
-        salary: {
-          staffRN: '$28-38/hr',
-          travelRN: '$1,800-2,400/wk',
-          signOn: '$7-14K',
-          systems: [
-            {
-              name: 'Baptist Health (Louisville)',
-              value: '$34.44/hr avg',
-              source: 'Indeed (IN)',
-              url: 'https://www.indeed.com/cmp/Baptist-Health-System-Ky-%26-in/salaries/Registered-Nurse/Indiana'
-            },
-            {
-              name: 'Clark Memorial',
-              value: 'Market est. $30-38/hr',
-              source: 'BLS + Reddit',
-              note: 'Estimate where job-board ranges are limited'
-            },
-            {
-              name: 'Independent',
-              value: 'Market est. $29-36/hr',
-              source: 'BLS + Reddit',
-              note: 'Estimate for non-system facilities'
-            }
-          ]
-        },
+          salary: {
+            staffRN: '$28-38/hr',
+            travelRN: '$1,800-2,400/wk',
+            signOn: '$7-14K',
+            systems: [
+              {
+                name: 'Baptist Health (Louisville)',
+                value: '$34.44/hr avg',
+                source: 'Indeed (IN)',
+                url: 'https://www.indeed.com/cmp/Baptist-Health-System-Ky-%26-in/salaries/Registered-Nurse/Indiana'
+              },
+              {
+                name: 'Clark Memorial',
+                value: 'Market est. $30-38/hr',
+                source: 'BLS + Reddit',
+                note: 'Estimate where job-board ranges are limited'
+              },
+              {
+                name: 'Independent',
+                value: 'Market est. $29-36/hr',
+                source: 'BLS + Reddit',
+                note: 'Estimate for non-system facilities'
+              }
+            ]
+          },
         factors: [
           { text: 'Louisville metro spillover demand', type: 'positive' },
           { text: 'Access to Kentucky job market', type: 'positive' },
