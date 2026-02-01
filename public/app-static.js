@@ -4722,7 +4722,7 @@ const selectHomeStateMetro = (metro, stateAbbrev) => {
     : Array.isArray(salaryMeta.sources)
       ? salaryMeta.sources.filter((src) => src && src.name && src.url)
       : [];
-  const systems = Array.isArray(salary.systems) ? salary.systems : [];
+  const salarySystems = Array.isArray(salary.systems) ? salary.systems : [];
   const updatedAtRaw = salary.updatedAt || salaryMeta.updatedAt || null;
   const updateEveryDays = Number(salary.updateEveryDays || salaryMeta.updateEveryDays || 7);
   const updatedAt = updatedAtRaw ? new Date(updatedAtRaw) : null;
@@ -4754,12 +4754,12 @@ const selectHomeStateMetro = (metro, stateAbbrev) => {
         </div>
       `
       : '';
-    const systemsSectionHtml = systems.length
+    const systemsSectionHtml = salarySystems.length
       ? `
         <div class="salary-breakdown-section">
           <div class="salary-breakdown-subtitle">Major systems (est.)</div>
           <div class="salary-system-grid">
-            ${systems.map((item) => `
+            ${salarySystems.map((item) => `
               <div class="salary-system-item">
                 <div class="salary-system-name">${escapeHtml(item.name || '--')}</div>
                 <div class="salary-system-value">${escapeHtml(item.value || '--')}</div>
