@@ -3541,6 +3541,42 @@ input[type="range"] {
   border-radius: var(--radius-md);
 }
 
+.map-clear-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 0.55rem 0.9rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--navy);
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 10px 20px rgba(12, 38, 72, 0.12);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.map-clear-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 24px rgba(12, 38, 72, 0.18);
+  background: #ffffff;
+}
+
+.map-home-state-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 0.55rem 0.9rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #7a4b00;
+  background: linear-gradient(135deg, #ffe4a6, #ffd27a);
+  box-shadow: 0 10px 20px rgba(122, 75, 0, 0.18);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.map-home-state-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 24px rgba(122, 75, 0, 0.24);
+  filter: brightness(1.02);
+}
+
 .scope-btn {
   border: none;
   background: transparent;

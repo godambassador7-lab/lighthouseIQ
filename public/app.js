@@ -58,6 +58,7 @@ const mapToast = document.getElementById('map-toast');
 const mapScopeHealthcareBtn = document.getElementById('map-scope-healthcare');
 const mapScopeAllBtn = document.getElementById('map-scope-all');
 const mapScopeLabel = document.getElementById('map-scope-label');
+const mapHomeStateBtn = document.getElementById('map-home-state-btn');
 const alertsList = document.getElementById('alerts-list');
 const heatmapList = document.getElementById('heatmap-list');
 const talentList = document.getElementById('talent-list');
@@ -942,6 +943,9 @@ const updateMapHomeStateHighlight = () => {
       shape.classList.add('home-state-glow');
     }
   });
+  if (mapHomeStateBtn) {
+    mapHomeStateBtn.style.display = homeState ? 'inline-flex' : 'none';
+  }
 };
 
 const getRecruitingTargets = (homeState, count = MAP_RECRUIT_TARGET_COUNT) => {
@@ -2436,6 +2440,7 @@ document.getElementById('export-project-json')?.addEventListener('click', export
 const initViewToggle = () => {
   const mapViewBtn = document.getElementById('map-view-btn');
   const chartViewBtn = document.getElementById('chart-view-btn');
+  const mapClearBtn = document.getElementById('map-clear-btn');
   const usMap = document.getElementById('us-map');
   const barChart = document.getElementById('bar-chart');
 
@@ -2456,6 +2461,23 @@ const initViewToggle = () => {
       barChart.style.display = '';
       renderBarChart();
     }
+  });
+
+  mapClearBtn?.addEventListener('click', () => {
+    selectedStates = [];
+    populateStateDropdown(regionSelect.value);
+    updateStateDisplay();
+    updateMapHighlights();
+    applyFilters();
+    if (currentMapView === 'chart') {
+      renderBarChart();
+    }
+  });
+
+  mapHomeStateBtn?.addEventListener('click', () => {
+    const homeState = getMapHomeState();
+    if (!homeState) return;
+    openHomeState();
   });
 };
 
@@ -3608,8 +3630,9 @@ const getBeaconEntry = (state) => {
     drawbacks: entry.drawbacks ?? [],
     talkingPoints: entry.talkingPoints ?? [],
     objections: entry.objections ?? [],
-    warnMajorSystems: entry.warnMajorSystems ?? [],
-    hospitalRegistry: entry.hospitalRegistry ?? [],
+      warnMajorSystems: entry.warnMajorSystems ?? [],
+      hospitalRankings: entry.hospitalRankings ?? [],
+      hospitalRegistry: entry.hospitalRegistry ?? [],
     clinicRegistry: entry.clinicRegistry ?? [],
     newsFeed: entry.newsFeed ?? [],
     candidateInsights: entry.candidateInsights ?? [],
