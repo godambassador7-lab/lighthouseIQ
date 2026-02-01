@@ -3204,6 +3204,11 @@ const WORKFORCE_PROJECTIONS = {
           <p class="card-description">Uses accredited program counts as a proxy for long-term RN supply.</p>
         </div>
 
+        <div class="strategic-footnote">
+          <span>Signal confidence = WARN notices + local news volume + major system coverage.</span>
+          <span>Supply proxy = accredited nursing program count percentile for the selected home state.</span>
+        </div>
+
         <!-- Specialty Heat Score Card -->
         <div class="strategic-card specialty-heat">
           <div class="strategic-card-header">
