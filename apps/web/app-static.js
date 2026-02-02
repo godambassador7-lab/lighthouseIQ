@@ -3051,16 +3051,27 @@ const WORKFORCE_PROJECTIONS = {
   const getProxyStatesForSpecialty = (name) => {
     const metric = pickProxyMetric(name);
     const entries = Object.entries(salaryData);
+
+    // Create specialty-specific offset using simple hash
+    const hash = String(name || '').split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const topOffset = hash % 5; // Pick from top 5 states
+    const bottomOffset = (hash * 7) % 5; // Pick from bottom 5 states
+
     const metricValue = (data) => {
       if (metric === 'supply') return Number(data.staffRN ?? 0);
       if (metric === 'pay') return Number(data.travelWeekly ?? 0);
       return -Number(data.projectedGap ?? 0);
     };
+
     const sorted = entries
       .slice()
       .sort((a, b) => metricValue(b[1]) - metricValue(a[1]));
-    const topState = sorted[0]?.[0] || null;
-    const leastState = sorted[sorted.length - 1]?.[0] || null;
+
+    // Pick from top and bottom ranges with specialty-specific offsets
+    const topState = sorted[topOffset]?.[0] || sorted[0]?.[0] || null;
+    const bottomIdx = Math.max(0, sorted.length - 1 - bottomOffset);
+    const leastState = sorted[bottomIdx]?.[0] || sorted[sorted.length - 1]?.[0] || null;
+
     return { topState, leastState, metric };
   };
 
