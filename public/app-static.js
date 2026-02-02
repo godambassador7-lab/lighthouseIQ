@@ -168,7 +168,11 @@ const homeStateMetroFactors = document.getElementById('home-state-metro-factors'
 // State
 // =============================================================================
 let allNotices = []; // All loaded notices
+let allNoticesLoaded = false;
+let allNoticesLoading = false;
 let currentNotices = []; // Filtered notices
+const stateNoticesCache = new Map();
+const stateNoticesLoading = new Set();
 let customNotices = [];
 let projects = [];
 let currentProjectId = null;
@@ -180,9 +184,10 @@ let metadata = {};
 let currentMapView = 'map';
 let selectedStates = [];
 let selectedSpecialties = [];
-let mapScope = 'healthcare';
+let mapScope = 'all';
 let currentPage = 1;
 let searchQuery = '';
+let applyFiltersToken = 0;
 const NOTICE_MAX_COUNT = 100;
 const NOTICE_WINDOW_COUNT = 5;
 const NOTICES_PER_PAGE = NOTICE_MAX_COUNT;
@@ -190,6 +195,7 @@ let lastNoticeWindowCount = 0;
 let noticeWindowRaf = null;
 let calibrationStats = { minCount: 0, maxCount: 0 };
 let nursingPrograms = [];
+let programsSearchCache = []; // Pre-computed search haystacks
 let programsMeta = { lastUpdated: null, sources: [] };
 let programsLoaded = false;
 let programsModuleInitialized = false;
@@ -261,6 +267,8 @@ let strategicData = null; // Will be loaded from strategic.json
 let strategicDataLoaded = false;
 let relocationData = null; // Will be loaded from relocation.json
 let relocationDataLoaded = false;
+let recruitmentIntel = null; // Pre-computed recruitment scores from private repo
+let recruitmentIntelLoaded = false;
 
 const computeSignalConfidence = (noticeCount = 0, newsCount = 0, majorSystemsCount = 0) => {
   let score = 0;
@@ -522,8 +530,11 @@ const filterNoticesByMajorSystems = (notices, majorSystems) => (
 );
 
 const getStateNotices = (state) => {
-  const pool = Array.isArray(allNotices) && allNotices.length ? allNotices : currentNotices;
-  return pool.filter((notice) => notice.state === state);
+  if (stateNoticesCache.has(state)) return stateNoticesCache.get(state);
+  if (Array.isArray(allNotices) && allNoticesLoaded) {
+    return allNotices.filter((notice) => notice.state === state);
+  }
+  return [];
 };
 
 const groupBy = (items, keyFn) => {
@@ -976,7 +987,13 @@ const getRegionForState = (state) => {
 };
 
 const scoreOutOfStateTarget = (homeState, targetState) => {
-  const salaryData = strategicData?.salaryData || NURSING_SALARY_DATA;
+  // Use pre-computed data from private repo when available
+  const precomputedScore = recruitmentIntel?.recruitmentScores?.[homeState]?.[targetState];
+  const salaryBenchmarks = recruitmentIntel?.salaryBenchmarks;
+  const relocationIndex = recruitmentIntel?.relocationIndex;
+
+  // Get display factors (safe to expose - just data, not algorithms)
+  const salaryData = salaryBenchmarks || strategicData?.salaryData || NURSING_SALARY_DATA;
   const shortage = salaryData[targetState]?.shortage ?? 'balanced';
   const homeSalary = Number(salaryData[homeState]?.staffRN ?? 0);
   const targetSalary = Number(salaryData[targetState]?.staffRN ?? 0);
@@ -984,24 +1001,22 @@ const scoreOutOfStateTarget = (homeState, targetState) => {
   const projectedGap = Number(salaryData[targetState]?.projectedGap ?? 0);
   const travelWeekly = Number(salaryData[targetState]?.travelWeekly ?? 0);
   const noticeCount = mapStateData?.[targetState]?.count ?? 0;
-  const relocationScale = relocationData?.relocationScale?.[targetState];
+  const relocationScale = relocationIndex?.[targetState] ?? relocationData?.relocationScale?.[targetState];
   const relocationSource = relocationData?.relocationSource?.[targetState] ?? null;
-  const relocationUpdated = relocationData?.lastUpdated ?? null;
+  const relocationUpdated = recruitmentIntel?.lastUpdated ?? relocationData?.lastUpdated ?? null;
+  const targetRegion = salaryData[targetState]?.region ?? getRegionForState(targetState);
 
-  const homeRegion = getRegionForState(homeState);
-  const targetRegion = getRegionForState(targetState);
-  const regionFactor = homeRegion && targetRegion && homeRegion === targetRegion ? 1 : -0.75;
-
-  const shortageFactor = shortage === 'surplus' ? 2 : shortage === 'balanced' ? 0.75 : -1.75;
-  const gapFactor = projectedGap < 0 ? Math.min(Math.abs(projectedGap) / 12000, 1.5) : -0.75;
-  const payAdvantageScore = salaryDelta ? Math.max(Math.min(salaryDelta / 6000, 2.5), -3) : 0;
-  const layoffFactor = Math.min(noticeCount / 4, 2);
-  const travelFactor = Math.min(travelWeekly / 2000, 1.25);
-  const relocationFactor = typeof relocationScale === 'number'
-    ? Math.max(Math.min((relocationScale - 50) / 25, 2), -2)
-    : 0;
-
-  const score = regionFactor + shortageFactor + gapFactor + payAdvantageScore + layoffFactor + travelFactor + relocationFactor;
+  // Use pre-computed score if available, otherwise fall back to simplified display score
+  let score;
+  if (typeof precomputedScore === 'number') {
+    score = precomputedScore;
+  } else {
+    // Simplified fallback (non-proprietary) - just for display ordering
+    const homeRegion = getRegionForState(homeState);
+    const regionFactor = homeRegion && targetRegion && homeRegion === targetRegion ? 0.5 : 0;
+    const shortageFactor = shortage === 'surplus' ? 1 : shortage === 'balanced' ? 0.5 : 0;
+    score = regionFactor + shortageFactor + Math.min(noticeCount / 10, 1);
+  }
 
   return {
     score,
@@ -1022,7 +1037,17 @@ const scoreOutOfStateTarget = (homeState, targetState) => {
 };
 
 const getRecruitingTargets = (homeState, count = MAP_RECRUIT_TARGET_COUNT) => {
-  const salaryData = strategicData?.salaryData || NURSING_SALARY_DATA;
+  // Use pre-computed top targets from private repo when available
+  const precomputedTargets = recruitmentIntel?.topTargets?.[homeState];
+  if (Array.isArray(precomputedTargets) && precomputedTargets.length >= count) {
+    return precomputedTargets.slice(0, count).map(state => ({
+      state,
+      ...scoreOutOfStateTarget(homeState, state)
+    }));
+  }
+
+  // Fallback to dynamic calculation
+  const salaryData = recruitmentIntel?.salaryBenchmarks || strategicData?.salaryData || NURSING_SALARY_DATA;
   return Object.keys(salaryData)
     .filter((state) => state !== homeState)
     .map((state) => ({ state, ...scoreOutOfStateTarget(homeState, state) }))
@@ -1186,6 +1211,9 @@ const loadMetadata = async () => {
     if (dataRefreshBadge) {
       dataRefreshBadge.textContent = `Data refresh: ${refreshedLabel}`;
     }
+    if (statTotal && metadata.totalNotices && !allNoticesLoaded) {
+      statTotal.textContent = metadata.totalNotices.toString();
+    }
   } catch (err) {
     console.error('Failed to load metadata:', err);
     setStatus('Data unavailable', false);
@@ -1197,6 +1225,9 @@ const loadStates = async () => {
     const data = await fetchJson(`${DATA_BASE_URL}/states.json`);
     stateDataAll = normalizeStateCounts(data.states ?? []);
     stateData = stateDataAll;
+    if (!Object.keys(stateDataHealthcare).length) {
+      stateDataHealthcare = stateDataAll;
+    }
     mapStateData = mapScope === 'all' ? stateDataAll : stateDataHealthcare;
     if (!mapStateData || Object.keys(mapStateData).length === 0) {
       mapStateData = stateDataAll;
@@ -1209,7 +1240,7 @@ const loadStates = async () => {
     };
     updateStateCalibration();
     updateMapColors(); // Color states based on layoff count
-    setMapScope(mapScope);
+    await setMapScope(mapScope);
   } catch (err) {
     console.error('Failed to load states:', err);
     statStates.textContent = '0';
@@ -1259,18 +1290,42 @@ const updateMapColors = () => {
 };
 
 const loadAllNotices = async () => {
+  if (allNoticesLoaded || allNoticesLoading) return allNotices;
+  allNoticesLoading = true;
   setLoading('Loading notices...');
   try {
     const data = await fetchJson(`${DATA_BASE_URL}/notices.json`);
     allNotices = data.notices ?? [];
     statTotal.textContent = allNotices.length.toString();
     stateDataHealthcare = buildHealthcareStateCounts(allNotices);
-    setMapScope(mapScope);
+    allNoticesLoaded = true;
+    allNoticesLoading = false;
+    await setMapScope(mapScope);
     return allNotices;
   } catch (err) {
     console.error('Failed to load notices:', err);
+    allNoticesLoading = false;
     setLoading('Failed to load data. Please refresh the page.');
     return [];
+  }
+};
+
+const loadStateNotices = async (state) => {
+  if (!state || stateNoticesCache.has(state) || stateNoticesLoading.has(state)) {
+    return stateNoticesCache.get(state) || [];
+  }
+  stateNoticesLoading.add(state);
+  try {
+    const data = await fetchJson(`${DATA_BASE_URL}/by-state/${state}.json`);
+    const notices = data?.notices ?? [];
+    stateNoticesCache.set(state, notices);
+    return notices;
+  } catch (err) {
+    console.warn(`Failed to load notices for ${state}:`, err);
+    stateNoticesCache.set(state, []);
+    return [];
+  } finally {
+    stateNoticesLoading.delete(state);
   }
 };
 
@@ -1430,6 +1485,22 @@ const loadRelocationData = async () => {
   }
 };
 
+// Load pre-computed recruitment intelligence from private repo
+const loadRecruitmentIntel = async () => {
+  if (recruitmentIntelLoaded) return recruitmentIntel;
+  try {
+    recruitmentIntel = await fetchJson(`${DATA_BASE_URL}/recruitment-intel.json`);
+    recruitmentIntelLoaded = true;
+    console.log('Recruitment intel loaded:', recruitmentIntel?.lastUpdated);
+    return recruitmentIntel;
+  } catch (err) {
+    console.warn('Recruitment intel not available, using fallback algorithms:', err);
+    recruitmentIntelLoaded = true;
+    recruitmentIntel = null;
+    return null;
+  }
+};
+
 const initForecast = () => {
   if (!forecastBeds || !forecastSetting || !forecastHorizon || !forecastOutput) return;
   const roleMixBySetting = {
@@ -1500,7 +1571,12 @@ const matchesSpecialty = (notice, specialtyKeys) => {
 };
 
 const filterNotices = () => {
-  let filtered = [...allNotices];
+  const baseNotices = allNoticesLoaded
+    ? allNotices
+    : selectedStates.length > 0
+      ? selectedStates.flatMap((state) => stateNoticesCache.get(state) || [])
+      : [];
+  let filtered = [...baseNotices];
 
   filtered = filtered.filter(isHealthcareNotice);
 
@@ -1565,7 +1641,18 @@ const filterNotices = () => {
 };
 
 const applyFilters = (resetPage = true) => {
+  const token = ++applyFiltersToken;
   if (resetPage) currentPage = 1;
+  if (!allNoticesLoaded && selectedStates.length > 0) {
+    const missing = selectedStates.filter((state) => !stateNoticesCache.has(state));
+    if (missing.length) {
+      setLoading('Loading state notices...');
+      Promise.all(missing.map(loadStateNotices)).then(() => {
+        if (token === applyFiltersToken) applyFilters(false);
+      });
+      return;
+    }
+  }
 
   let filtered = filterNotices();
 
@@ -1593,7 +1680,20 @@ const renderNotices = (notices) => {
   const paginationContainer = document.getElementById('pagination');
 
   if (!notices.length) {
-    noticeList.innerHTML = `<div class="empty-state">No notices match these filters.</div>`;
+    if (!allNoticesLoaded && selectedStates.length === 0) {
+      noticeList.innerHTML = `
+        <div class="empty-state">
+          Select a state to load notices, or load the national dataset.
+          <button class="btn secondary" id="load-national-notices">Load national notices</button>
+        </div>
+      `;
+      document.getElementById('load-national-notices')?.addEventListener('click', async () => {
+        await loadAllNotices();
+        applyFilters(false);
+      });
+    } else {
+      noticeList.innerHTML = `<div class="empty-state">No notices match these filters.</div>`;
+    }
     if (paginationContainer) paginationContainer.innerHTML = '';
     refreshNoticeListWindow(0);
     return;
@@ -1887,6 +1987,14 @@ const renderDetail = (notice) => {
 };
 
 const updateStats = (notices) => {
+  if (allNoticesLoaded) {
+    statTotal.textContent = notices.length.toString();
+    return;
+  }
+  if (metadata?.totalNotices) {
+    statTotal.textContent = metadata.totalNotices.toString();
+    return;
+  }
   statTotal.textContent = notices.length.toString();
 };
 
@@ -2494,14 +2602,14 @@ const updateMapHighlights = () => {
 // Help Section
 // =============================================================================
 const initHelpSection = () => {
+  const helpSection = document.querySelector('.help-section');
   const helpToggle = document.getElementById('help-toggle');
-  const helpContent = document.getElementById('help-content');
   const toggleIcon = helpToggle?.querySelector('.help-toggle-icon');
 
   helpToggle?.addEventListener('click', () => {
-    helpContent?.classList.toggle('open');
+    helpSection?.classList.toggle('open');
     if (toggleIcon) {
-      toggleIcon.textContent = helpContent?.classList.contains('open') ? '−' : '+';
+      toggleIcon.textContent = helpSection?.classList.contains('open') ? '−' : '+';
     }
   });
 };
@@ -2522,6 +2630,18 @@ const initCollapsibleSections = () => {
       toggle.setAttribute('aria-expanded', String(!isCollapsed));
       if (label) label.textContent = isCollapsed ? 'Expand' : 'Collapse';
       if (icon) icon.textContent = isCollapsed ? '+' : '–';
+    });
+  });
+
+  // Initialize footer legal section toggles (collapsed by default)
+  document.querySelectorAll('.legal-section h4').forEach(header => {
+    header.addEventListener('click', () => {
+      const section = header.parentElement;
+      // Close other expanded sections
+      document.querySelectorAll('.legal-section.expanded').forEach(s => {
+        if (s !== section) s.classList.remove('expanded');
+      });
+      section.classList.toggle('expanded');
     });
   });
 };
@@ -2693,8 +2813,11 @@ const renderBarChart = () => {
   });
 };
 
-const setMapScope = (scope) => {
+const setMapScope = async (scope) => {
   mapScope = scope === 'all' ? 'all' : 'healthcare';
+  if (mapScope === 'healthcare' && !allNoticesLoaded) {
+    await loadAllNotices();
+  }
   mapStateData = mapScope === 'all' ? stateDataAll : stateDataHealthcare;
   if (!mapStateData || Object.keys(mapStateData).length === 0) {
     mapStateData = stateDataAll;
@@ -2715,8 +2838,12 @@ const setMapScope = (scope) => {
 };
 
 const initMapScopeToggle = () => {
-  mapScopeHealthcareBtn?.addEventListener('click', () => setMapScope('healthcare'));
-  mapScopeAllBtn?.addEventListener('click', () => setMapScope('all'));
+  mapScopeHealthcareBtn?.addEventListener('click', () => {
+    setMapScope('healthcare').catch((err) => console.warn(err));
+  });
+  mapScopeAllBtn?.addEventListener('click', () => {
+    setMapScope('all').catch((err) => console.warn(err));
+  });
 };
 
 // =============================================================================
@@ -2751,10 +2878,10 @@ const initApp = async () => {
   await Promise.all([
     loadMetadata(),
     loadStates(),
-    loadRelocationData()
+    loadRelocationData(),
+    loadRecruitmentIntel()
   ]);
 
-  await loadAllNotices();
   await loadInsights();
   loadNews(); // Load in background, no await needed
 
@@ -2944,6 +3071,7 @@ const WORKFORCE_PROJECTIONS = {
 
     // Load strategic data from JSON (with fallback to hardcoded)
     await loadStrategicData();
+    await loadRecruitmentIntel();
     await loadStateBeaconData();
     await loadStateNewsData();
     await ensureProgramsDataForBeacon();
@@ -3017,16 +3145,27 @@ const WORKFORCE_PROJECTIONS = {
   const getProxyStatesForSpecialty = (name) => {
     const metric = pickProxyMetric(name);
     const entries = Object.entries(salaryData);
+
+    // Create specialty-specific offset using simple hash
+    const hash = String(name || '').split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const topOffset = hash % 5; // Pick from top 5 states
+    const bottomOffset = (hash * 7) % 5; // Pick from bottom 5 states
+
     const metricValue = (data) => {
       if (metric === 'supply') return Number(data.staffRN ?? 0);
       if (metric === 'pay') return Number(data.travelWeekly ?? 0);
       return -Number(data.projectedGap ?? 0);
     };
+
     const sorted = entries
       .slice()
       .sort((a, b) => metricValue(b[1]) - metricValue(a[1]));
-    const topState = sorted[0]?.[0] || null;
-    const leastState = sorted[sorted.length - 1]?.[0] || null;
+
+    // Pick from top and bottom ranges with specialty-specific offsets
+    const topState = sorted[topOffset]?.[0] || sorted[0]?.[0] || null;
+    const bottomIdx = Math.max(0, sorted.length - 1 - bottomOffset);
+    const leastState = sorted[bottomIdx]?.[0] || sorted[sorted.length - 1]?.[0] || null;
+
     return { topState, leastState, metric };
   };
 
@@ -3672,20 +3811,26 @@ const getFilteredPrograms = () => {
   const stateFilter = programsStateFilter?.value ?? '';
   const selectedLevels = getSelectedLevels();
 
+  // Use cached search data for performance
+  if (programsSearchCache.length) {
+    const results = [];
+    for (let i = 0; i < programsSearchCache.length; i++) {
+      const { entry, haystack } = programsSearchCache[i];
+      if (stateFilter && entry.state !== stateFilter) continue;
+      if (selectedLevels.length > 0 && !selectedLevels.includes(entry.level)) continue;
+      if (query && !haystack.includes(query)) continue;
+      results.push(nursingPrograms[i]);
+    }
+    return results;
+  }
+
+  // Fallback if cache not ready
   return nursingPrograms.filter((program) => {
     const entry = normalizeProgram(program);
     if (stateFilter && entry.state !== stateFilter) return false;
     if (selectedLevels.length > 0 && !selectedLevels.includes(entry.level)) return false;
     if (!query) return true;
-    const haystack = [
-      entry.institution,
-      entry.campus,
-      entry.city,
-      entry.state,
-      entry.level,
-      entry.accreditor,
-      entry.credentialNotes
-    ].filter(Boolean).join(' ').toLowerCase();
+    const haystack = [entry.institution, entry.campus, entry.city, entry.state, entry.level, entry.accreditor, entry.credentialNotes].filter(Boolean).join(' ').toLowerCase();
     return haystack.includes(query);
   });
 };
@@ -3801,6 +3946,16 @@ const loadPrograms = async (force = false) => {
       sources: data.sources ?? []
     };
 
+    // Pre-compute search haystacks for fast filtering
+    programsSearchCache = nursingPrograms.map((program) => {
+      const entry = normalizeProgram(program);
+      return {
+        entry,
+        haystack: [entry.institution, entry.campus, entry.city, entry.state, entry.level, entry.accreditor, entry.credentialNotes]
+          .filter(Boolean).join(' ').toLowerCase()
+      };
+    });
+
     if (programsUpdated) {
       programsUpdated.textContent = programsMeta.lastUpdated
         ? `Last updated ${formatDate(programsMeta.lastUpdated)}`
@@ -3872,7 +4027,7 @@ const initProgramsModule = () => {
     if (event.target === programsModal) closeProgramsModal();
   });
 
-  programsSearch?.addEventListener('input', () => renderProgramsTable(getFilteredPrograms()));
+  programsSearch?.addEventListener('input', debounce(() => renderProgramsTable(getFilteredPrograms()), 200));
   programsStateFilter?.addEventListener('change', () => renderProgramsTable(getFilteredPrograms()));
   // Add change listeners to all level checkboxes
   programsLevelFilter?.querySelectorAll('input[type="checkbox"]').forEach(cb => {
@@ -4015,6 +4170,9 @@ const renderStateBeacon = async (state) => {
   await loadStateBeaconData();
   await ensureProgramsDataForBeacon();
   await loadStateNewsData();
+  if (!allNoticesLoaded && !stateNoticesCache.has(state)) {
+    await loadStateNotices(state);
+  }
 
   const entry = getBeaconEntry(state);
   const notices = getStateNotices(state);

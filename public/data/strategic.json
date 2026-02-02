@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-02-02T14:19:47.149Z",
+  "lastUpdated": "2026-02-02T18:47:20.842Z",
   "version": "2026-Q1",
   "sources": [
     {
@@ -574,7 +574,7 @@
     }
   },
   "specialtySignals": {
-    "lastUpdated": "2026-02-02T14:19:47.149Z",
+    "lastUpdated": "2026-02-02T18:47:20.842Z",
     "status": "ready",
     "sources": [
       {
@@ -628,124 +628,64 @@
     ],
     "cards": [
       {
-        "specialty": "Intensive Care Unit (ICU)",
-        "specialtyKey": "ICU",
-        "source": "BLS/HRSA demand proxy",
-        "metric": "demand",
+        "specialty": "Nurse Practitioner",
+        "specialtyKey": "NP",
+        "source": "BLS Public API (RN proxy)",
+        "metric": "supply",
         "topState": {
           "state": "CA",
-          "value": 44500
+          "value": 326720
         },
         "bottomState": {
-          "state": "VT",
-          "value": 300
+          "state": "AK",
+          "value": 7040
         },
-        "tip": "High-acuity critical care demand. Target states with largest projected RN gaps."
+        "tip": "Proxy based on BLS RN employment distribution. Nurse Practitioner counts are not specialty-specific yet."
       },
       {
-        "specialty": "Emergency Room / ED",
-        "specialtyKey": "ER",
-        "source": "BLS/HRSA demand proxy",
-        "metric": "demand",
-        "topState": {
-          "state": "TX",
-          "value": 28500
-        },
-        "bottomState": {
-          "state": "WY",
-          "value": 700
-        },
-        "tip": "ER demand correlates with population density and trauma center distribution."
-      },
-      {
-        "specialty": "Operating Room",
-        "specialtyKey": "OR",
-        "source": "BLS travel pay data",
-        "metric": "pay",
-        "topState": {
-          "state": "NY",
-          "value": 2380
-        },
-        "bottomState": {
-          "state": "MS",
-          "value": 1900
-        },
-        "tip": "Perioperative nursing commands premium travel rates in urban surgical centers."
-      },
-      {
-        "specialty": "Labor & Delivery",
-        "specialtyKey": "LD",
-        "source": "BLS/HRSA demand proxy",
-        "metric": "demand",
-        "topState": {
-          "state": "FL",
-          "value": 18900
-        },
-        "bottomState": {
-          "state": "ND",
-          "value": 800
-        },
-        "tip": "Birth rates and maternal care needs drive L&D demand in growing states."
-      },
-      {
-        "specialty": "Medical-Surgical",
-        "specialtyKey": "MEDSURG",
-        "source": "BLS supply data",
+        "specialty": "Clinical Nurse Specialist",
+        "specialtyKey": "CNS",
+        "source": "BLS Public API (RN proxy)",
         "metric": "supply",
         "topState": {
-          "state": "PA",
-          "value": 11200
+          "state": "CA",
+          "value": 326720
         },
         "bottomState": {
-          "state": "SD",
-          "value": 900
+          "state": "AK",
+          "value": 7040
         },
-        "tip": "Med-Surg forms the backbone of acute care. High supply in nursing school hubs."
+        "tip": "Proxy based on BLS RN employment distribution. Clinical Nurse Specialist counts are not specialty-specific yet."
       },
       {
-        "specialty": "Telemetry / Step-Down",
-        "specialtyKey": "TELE",
-        "source": "BLS demand proxy",
-        "metric": "demand",
-        "topState": {
-          "state": "NC",
-          "value": 12500
-        },
-        "bottomState": {
-          "state": "NH",
-          "value": 400
-        },
-        "tip": "Cardiac monitoring demand grows with aging population demographics."
-      },
-      {
-        "specialty": "Oncology",
-        "specialtyKey": "ONC",
-        "source": "BLS/NCI data proxy",
-        "metric": "demand",
-        "topState": {
-          "state": "OH",
-          "value": 9400
-        },
-        "bottomState": {
-          "state": "MT",
-          "value": 1200
-        },
-        "tip": "Cancer center concentration drives oncology nursing demand."
-      },
-      {
-        "specialty": "Home Health",
-        "specialtyKey": "HH",
-        "source": "BLS supply data",
+        "specialty": "Nurse Anesthetist (CRNA)",
+        "specialtyKey": "CRNA",
+        "source": "BLS Public API (RN proxy)",
         "metric": "supply",
         "topState": {
-          "state": "GA",
-          "value": 9800
+          "state": "CA",
+          "value": 326720
         },
         "bottomState": {
-          "state": "NE",
-          "value": 600
+          "state": "AK",
+          "value": 7040
         },
-        "tip": "Home health expands as hospital-at-home models grow."
+        "tip": "Proxy based on BLS RN employment distribution. Nurse Anesthetist (CRNA) counts are not specialty-specific yet."
+      },
+      {
+        "specialty": "Certified Nurse Midwife",
+        "specialtyKey": "CNM",
+        "source": "BLS Public API (RN proxy)",
+        "metric": "supply",
+        "topState": {
+          "state": "CA",
+          "value": 326720
+        },
+        "bottomState": {
+          "state": "AK",
+          "value": 7040
+        },
+        "tip": "Proxy based on BLS RN employment distribution. Certified Nurse Midwife counts are not specialty-specific yet."
       }
     ]
   },
