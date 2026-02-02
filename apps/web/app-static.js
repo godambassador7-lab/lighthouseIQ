@@ -3753,10 +3753,14 @@ const initStrategicReview = () => {
 
 // ==================== ACCREDITED PROGRAMS MODULE ====================
 
-const updateProgramsCount = (count) => {
+const updateProgramsCount = (count, showing = count) => {
   if (!programsCount) return;
   const label = count === 1 ? 'program' : 'programs';
-  programsCount.textContent = `${count} ${label}`;
+  if (showing < count) {
+    programsCount.textContent = `Showing ${showing} of ${count} ${label}`;
+  } else {
+    programsCount.textContent = `${count} ${label}`;
+  }
 };
 
 const updateProgramsLoading = (loaded, total) => {
@@ -3835,6 +3839,8 @@ const getFilteredPrograms = () => {
   });
 };
 
+const MAX_PROGRAMS_RENDER = 300;
+
 const renderProgramsTable = (programs) => {
   if (!programsList) return;
 
@@ -3844,8 +3850,9 @@ const renderProgramsTable = (programs) => {
     return;
   }
 
-  programsList.innerHTML = programs.map(buildProgramRow).join('');
-  updateProgramsCount(programs.length);
+  const displayPrograms = programs.slice(0, MAX_PROGRAMS_RENDER);
+  programsList.innerHTML = displayPrograms.map(buildProgramRow).join('');
+  updateProgramsCount(programs.length, displayPrograms.length);
 };
 
 const renderProgramsWithProgress = (programs) => {
@@ -3864,13 +3871,13 @@ const renderProgramsWithProgress = (programs) => {
   const batchSize = 50;
   programsLoading?.classList.add('active');
   updateProgramsLoading(0, total);
-  updateProgramsCount(total);
+  updateProgramsCount(total, Math.min(total, MAX_PROGRAMS_RENDER));
 
   const appendBatch = () => {
-    const batch = programs.slice(rendered, rendered + batchSize);
+    const batch = programs.slice(rendered, Math.min(rendered + batchSize, MAX_PROGRAMS_RENDER));
     if (!batch.length) {
       programsLoading?.classList.remove('active');
-      updateProgramsLoading(total, total);
+      updateProgramsLoading(Math.min(total, MAX_PROGRAMS_RENDER), total);
       return;
     }
 
@@ -3878,7 +3885,7 @@ const renderProgramsWithProgress = (programs) => {
     rendered += batch.length;
     updateProgramsLoading(rendered, total);
 
-    if (rendered < total) {
+    if (rendered < Math.min(total, MAX_PROGRAMS_RENDER)) {
       requestAnimationFrame(appendBatch);
     } else {
       programsLoading?.classList.remove('active');
@@ -4027,11 +4034,12 @@ const initProgramsModule = () => {
     if (event.target === programsModal) closeProgramsModal();
   });
 
-  programsSearch?.addEventListener('input', debounce(() => renderProgramsTable(getFilteredPrograms()), 200));
-  programsStateFilter?.addEventListener('change', () => renderProgramsTable(getFilteredPrograms()));
+  const renderProgramsFiltered = () => renderProgramsWithProgress(getFilteredPrograms());
+  programsSearch?.addEventListener('input', debounce(renderProgramsFiltered, 300));
+  programsStateFilter?.addEventListener('change', renderProgramsFiltered);
   // Add change listeners to all level checkboxes
   programsLevelFilter?.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-    cb.addEventListener('change', () => renderProgramsTable(getFilteredPrograms()));
+    cb.addEventListener('change', renderProgramsFiltered);
   });
   programsDownload?.addEventListener('click', downloadProgramsCsv);
   loadPrograms(true);
