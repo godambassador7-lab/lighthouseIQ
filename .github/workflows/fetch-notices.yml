@@ -24,9 +24,9 @@ permissions:
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment
+# Allow only one concurrent run of this workflow per branch
 concurrency:
-  group: "pages"
+  group: fetch-warn-notices-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
