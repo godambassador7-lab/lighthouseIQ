@@ -62,7 +62,9 @@ jobs:
         working-directory: core
 
       - name: Build core packages
-        run: npm run build --workspace=@lni/core && npm run build --workspace=@lni/adapters
+        run: |
+          npm run build --workspace=@lni/core
+          npm run build --workspace=@lni/adapters
         working-directory: core
 
       - name: Build export scripts
