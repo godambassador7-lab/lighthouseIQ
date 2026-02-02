@@ -190,6 +190,7 @@ let lastNoticeWindowCount = 0;
 let noticeWindowRaf = null;
 let calibrationStats = { minCount: 0, maxCount: 0 };
 let nursingPrograms = [];
+let programsSearchCache = []; // Pre-computed search haystacks
 let programsMeta = { lastUpdated: null, sources: [] };
 let programsLoaded = false;
 let programsModuleInitialized = false;
@@ -2526,14 +2527,14 @@ const updateMapHighlights = () => {
 // Help Section
 // =============================================================================
 const initHelpSection = () => {
+  const helpSection = document.querySelector('.help-section');
   const helpToggle = document.getElementById('help-toggle');
-  const helpContent = document.getElementById('help-content');
   const toggleIcon = helpToggle?.querySelector('.help-toggle-icon');
 
   helpToggle?.addEventListener('click', () => {
-    helpContent?.classList.toggle('open');
+    helpSection?.classList.toggle('open');
     if (toggleIcon) {
-      toggleIcon.textContent = helpContent?.classList.contains('open') ? '−' : '+';
+      toggleIcon.textContent = helpSection?.classList.contains('open') ? '−' : '+';
     }
   });
 };
@@ -2554,6 +2555,18 @@ const initCollapsibleSections = () => {
       toggle.setAttribute('aria-expanded', String(!isCollapsed));
       if (label) label.textContent = isCollapsed ? 'Expand' : 'Collapse';
       if (icon) icon.textContent = isCollapsed ? '+' : '–';
+    });
+  });
+
+  // Initialize footer legal section toggles (collapsed by default)
+  document.querySelectorAll('.legal-section h4').forEach(header => {
+    header.addEventListener('click', () => {
+      const section = header.parentElement;
+      // Close other expanded sections
+      document.querySelectorAll('.legal-section.expanded').forEach(s => {
+        if (s !== section) s.classList.remove('expanded');
+      });
+      section.classList.toggle('expanded');
     });
   });
 };
@@ -3717,20 +3730,26 @@ const getFilteredPrograms = () => {
   const stateFilter = programsStateFilter?.value ?? '';
   const selectedLevels = getSelectedLevels();
 
+  // Use cached search data for performance
+  if (programsSearchCache.length) {
+    const results = [];
+    for (let i = 0; i < programsSearchCache.length; i++) {
+      const { entry, haystack } = programsSearchCache[i];
+      if (stateFilter && entry.state !== stateFilter) continue;
+      if (selectedLevels.length > 0 && !selectedLevels.includes(entry.level)) continue;
+      if (query && !haystack.includes(query)) continue;
+      results.push(nursingPrograms[i]);
+    }
+    return results;
+  }
+
+  // Fallback if cache not ready
   return nursingPrograms.filter((program) => {
     const entry = normalizeProgram(program);
     if (stateFilter && entry.state !== stateFilter) return false;
     if (selectedLevels.length > 0 && !selectedLevels.includes(entry.level)) return false;
     if (!query) return true;
-    const haystack = [
-      entry.institution,
-      entry.campus,
-      entry.city,
-      entry.state,
-      entry.level,
-      entry.accreditor,
-      entry.credentialNotes
-    ].filter(Boolean).join(' ').toLowerCase();
+    const haystack = [entry.institution, entry.campus, entry.city, entry.state, entry.level, entry.accreditor, entry.credentialNotes].filter(Boolean).join(' ').toLowerCase();
     return haystack.includes(query);
   });
 };
@@ -3846,6 +3865,16 @@ const loadPrograms = async (force = false) => {
       sources: data.sources ?? []
     };
 
+    // Pre-compute search haystacks for fast filtering
+    programsSearchCache = nursingPrograms.map((program) => {
+      const entry = normalizeProgram(program);
+      return {
+        entry,
+        haystack: [entry.institution, entry.campus, entry.city, entry.state, entry.level, entry.accreditor, entry.credentialNotes]
+          .filter(Boolean).join(' ').toLowerCase()
+      };
+    });
+
     if (programsUpdated) {
       programsUpdated.textContent = programsMeta.lastUpdated
         ? `Last updated ${formatDate(programsMeta.lastUpdated)}`
@@ -3917,7 +3946,7 @@ const initProgramsModule = () => {
     if (event.target === programsModal) closeProgramsModal();
   });
 
-  programsSearch?.addEventListener('input', () => renderProgramsTable(getFilteredPrograms()));
+  programsSearch?.addEventListener('input', debounce(() => renderProgramsTable(getFilteredPrograms()), 200));
   programsStateFilter?.addEventListener('change', () => renderProgramsTable(getFilteredPrograms()));
   // Add change listeners to all level checkboxes
   programsLevelFilter?.querySelectorAll('input[type="checkbox"]').forEach(cb => {

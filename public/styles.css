@@ -4337,25 +4337,64 @@ input[type="range"] {
 
 .footer-legal {
   margin-top: 24px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
   width: 100%;
+  justify-content: center;
+}
+
+.legal-section {
+  display: inline-block;
 }
 
 .legal-section h4 {
-  margin: 0 0 6px;
-  font-size: 12px;
+  margin: 0;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--navy);
+  cursor: pointer;
+  padding: 4px 10px;
+  background: rgba(26, 54, 93, 0.05);
+  border-radius: 4px;
+  transition: background 0.15s ease;
+  user-select: none;
+}
+
+.legal-section h4:hover {
+  background: rgba(26, 54, 93, 0.1);
+}
+
+.legal-section h4::after {
+  content: ' +';
+  font-size: 10px;
+  opacity: 0.6;
+}
+
+.legal-section.expanded h4::after {
+  content: ' −';
 }
 
 .legal-section p {
-  margin: 0;
+  display: none;
+  margin: 8px 0 0;
   font-size: 12px;
   line-height: 1.5;
   color: rgba(26, 54, 93, 0.7);
+  max-width: 600px;
+  text-align: left;
+}
+
+.legal-section.expanded {
+  flex-basis: 100%;
+}
+
+.legal-section.expanded p {
+  display: block;
+  padding: 12px;
+  background: rgba(26, 54, 93, 0.03);
+  border-radius: 6px;
 }
 
 .footer a {
