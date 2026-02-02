@@ -111,6 +111,13 @@ jobs:
           BLS_DATA_DIR: ${{ github.workspace }}/apps/data/bls
         working-directory: core
 
+      - name: Run recruitment intel export script
+        run: node dist/scripts/export-recruitment-intel.js
+        env:
+          NODE_OPTIONS: '--max-old-space-size=4096'
+          LNI_OUTPUT_DIR: ${{ github.workspace }}/public/data
+        working-directory: core
+
       - name: Copy frontend to public
         run: |
           cp -r apps/web/* public/

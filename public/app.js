@@ -261,6 +261,8 @@ let strategicData = null; // Will be loaded from strategic.json
 let strategicDataLoaded = false;
 let relocationData = null; // Will be loaded from relocation.json
 let relocationDataLoaded = false;
+let recruitmentIntel = null; // Pre-computed recruitment scores from private repo
+let recruitmentIntelLoaded = false;
 
 const computeSignalConfidence = (noticeCount = 0, newsCount = 0, majorSystemsCount = 0) => {
   let score = 0;
@@ -976,7 +978,13 @@ const getRegionForState = (state) => {
 };
 
 const scoreOutOfStateTarget = (homeState, targetState) => {
-  const salaryData = strategicData?.salaryData || NURSING_SALARY_DATA;
+  // Use pre-computed data from private repo when available
+  const precomputedScore = recruitmentIntel?.recruitmentScores?.[homeState]?.[targetState];
+  const salaryBenchmarks = recruitmentIntel?.salaryBenchmarks;
+  const relocationIndex = recruitmentIntel?.relocationIndex;
+
+  // Get display factors (safe to expose - just data, not algorithms)
+  const salaryData = salaryBenchmarks || strategicData?.salaryData || NURSING_SALARY_DATA;
   const shortage = salaryData[targetState]?.shortage ?? 'balanced';
   const homeSalary = Number(salaryData[homeState]?.staffRN ?? 0);
   const targetSalary = Number(salaryData[targetState]?.staffRN ?? 0);
@@ -984,24 +992,22 @@ const scoreOutOfStateTarget = (homeState, targetState) => {
   const projectedGap = Number(salaryData[targetState]?.projectedGap ?? 0);
   const travelWeekly = Number(salaryData[targetState]?.travelWeekly ?? 0);
   const noticeCount = mapStateData?.[targetState]?.count ?? 0;
-  const relocationScale = relocationData?.relocationScale?.[targetState];
+  const relocationScale = relocationIndex?.[targetState] ?? relocationData?.relocationScale?.[targetState];
   const relocationSource = relocationData?.relocationSource?.[targetState] ?? null;
-  const relocationUpdated = relocationData?.lastUpdated ?? null;
+  const relocationUpdated = recruitmentIntel?.lastUpdated ?? relocationData?.lastUpdated ?? null;
+  const targetRegion = salaryData[targetState]?.region ?? getRegionForState(targetState);
 
-  const homeRegion = getRegionForState(homeState);
-  const targetRegion = getRegionForState(targetState);
-  const regionFactor = homeRegion && targetRegion && homeRegion === targetRegion ? 1 : -0.75;
-
-  const shortageFactor = shortage === 'surplus' ? 2 : shortage === 'balanced' ? 0.75 : -1.75;
-  const gapFactor = projectedGap < 0 ? Math.min(Math.abs(projectedGap) / 12000, 1.5) : -0.75;
-  const payAdvantageScore = salaryDelta ? Math.max(Math.min(salaryDelta / 6000, 2.5), -3) : 0;
-  const layoffFactor = Math.min(noticeCount / 4, 2);
-  const travelFactor = Math.min(travelWeekly / 2000, 1.25);
-  const relocationFactor = typeof relocationScale === 'number'
-    ? Math.max(Math.min((relocationScale - 50) / 25, 2), -2)
-    : 0;
-
-  const score = regionFactor + shortageFactor + gapFactor + payAdvantageScore + layoffFactor + travelFactor + relocationFactor;
+  // Use pre-computed score if available, otherwise fall back to simplified display score
+  let score;
+  if (typeof precomputedScore === 'number') {
+    score = precomputedScore;
+  } else {
+    // Simplified fallback (non-proprietary) - just for display ordering
+    const homeRegion = getRegionForState(homeState);
+    const regionFactor = homeRegion && targetRegion && homeRegion === targetRegion ? 0.5 : 0;
+    const shortageFactor = shortage === 'surplus' ? 1 : shortage === 'balanced' ? 0.5 : 0;
+    score = regionFactor + shortageFactor + Math.min(noticeCount / 10, 1);
+  }
 
   return {
     score,
@@ -1022,7 +1028,17 @@ const scoreOutOfStateTarget = (homeState, targetState) => {
 };
 
 const getRecruitingTargets = (homeState, count = MAP_RECRUIT_TARGET_COUNT) => {
-  const salaryData = strategicData?.salaryData || NURSING_SALARY_DATA;
+  // Use pre-computed top targets from private repo when available
+  const precomputedTargets = recruitmentIntel?.topTargets?.[homeState];
+  if (Array.isArray(precomputedTargets) && precomputedTargets.length >= count) {
+    return precomputedTargets.slice(0, count).map(state => ({
+      state,
+      ...scoreOutOfStateTarget(homeState, state)
+    }));
+  }
+
+  // Fallback to dynamic calculation
+  const salaryData = recruitmentIntel?.salaryBenchmarks || strategicData?.salaryData || NURSING_SALARY_DATA;
   return Object.keys(salaryData)
     .filter((state) => state !== homeState)
     .map((state) => ({ state, ...scoreOutOfStateTarget(homeState, state) }))
@@ -1426,6 +1442,22 @@ const loadRelocationData = async () => {
     console.warn('Relocation data not available:', err);
     relocationDataLoaded = true;
     relocationData = null;
+    return null;
+  }
+};
+
+// Load pre-computed recruitment intelligence from private repo
+const loadRecruitmentIntel = async () => {
+  if (recruitmentIntelLoaded) return recruitmentIntel;
+  try {
+    recruitmentIntel = await fetchJson(`${DATA_BASE_URL}/recruitment-intel.json`);
+    recruitmentIntelLoaded = true;
+    console.log('Recruitment intel loaded:', recruitmentIntel?.lastUpdated);
+    return recruitmentIntel;
+  } catch (err) {
+    console.warn('Recruitment intel not available, using fallback algorithms:', err);
+    recruitmentIntelLoaded = true;
+    recruitmentIntel = null;
     return null;
   }
 };
@@ -2751,7 +2783,8 @@ const initApp = async () => {
   await Promise.all([
     loadMetadata(),
     loadStates(),
-    loadRelocationData()
+    loadRelocationData(),
+    loadRecruitmentIntel()
   ]);
 
   await loadAllNotices();
@@ -2944,6 +2977,7 @@ const WORKFORCE_PROJECTIONS = {
 
     // Load strategic data from JSON (with fallback to hardcoded)
     await loadStrategicData();
+    await loadRecruitmentIntel();
     await loadStateBeaconData();
     await loadStateNewsData();
     await ensureProgramsDataForBeacon();
