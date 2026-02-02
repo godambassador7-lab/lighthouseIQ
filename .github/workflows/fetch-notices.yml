@@ -7,6 +7,11 @@ on:
     - cron: '0 */6 * * *'
   # Allow manual trigger
   workflow_dispatch:
+    inputs:
+      use_self_hosted:
+        description: "Run on a self-hosted runner (trusted runs only)"
+        required: false
+        default: "false"
   # Also run on push to main (for testing)
   push:
     branches:
@@ -31,7 +36,7 @@ concurrency:
 
 jobs:
   fetch-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on: ${{ (github.event_name == 'workflow_dispatch' && inputs.use_self_hosted == 'true') && 'self-hosted' || 'ubuntu-latest' }}
     timeout-minutes: 30
 
     steps:
