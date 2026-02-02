@@ -112,7 +112,9 @@ jobs:
         working-directory: core
 
       - name: Run recruitment intel export script
-        run: node dist/scripts/export-recruitment-intel.js
+        run: node scripts/export-recruitment-intel.js
+        env:
+          LNI_OUTPUT_DIR: ${{ github.workspace }}/public/data
         env:
           NODE_OPTIONS: '--max-old-space-size=4096'
           LNI_OUTPUT_DIR: ${{ github.workspace }}/public/data
