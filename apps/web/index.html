@@ -311,20 +311,36 @@
               <dd>Switch between Healthcare-only notices and All notices using the scope buttons.</dd>
               </dl>
             </div>
-            <div class="help-card">
-              <h4>Update Cadence</h4>
-              <p>How often key modules refresh so you know what is live vs. historical.</p>
-              <dl class="help-list">
+          <div class="help-card">
+            <h4>Update Cadence</h4>
+            <p>How often key modules refresh so you know what is live vs. historical.</p>
+            <dl class="help-list">
                 <dt>Layoff Notices</dt>
                 <dd>Refreshed every 6 hours from state WARN sources.</dd>
                 <dt>Daily News Feed</dt>
                 <dd>Headlines refresh every 6 hours.</dd>
                 <dt>Strategic Salary Benchmarks</dt>
                 <dd>Home State salary benchmarks refresh every 7 days.</dd>
-                <dt>Nursing Programs</dt>
-                <dd>Updated when source catalogs publish changes.</dd>
-              </dl>
-            </div>
+              <dt>Nursing Programs</dt>
+              <dd>Updated when source catalogs publish changes.</dd>
+            </dl>
+          </div>
+          <div class="help-card">
+            <h4>Relocation Scale</h4>
+            <p>Used in the Out-of-State Factors panel and target-state ranking.</p>
+            <dl class="help-list">
+              <dt>What it measures</dt>
+              <dd>Likelihood a state supplies relocating nurses (0–100 scale). Higher scores = stronger inbound RN migration signal.</dd>
+              <dt>Primary source</dt>
+              <dd>HRSA nurse migration destination shares (RN-focused).</dd>
+              <dt>Fallbacks</dt>
+              <dd>If RN data is missing, it falls back to clinical migration (LPN proxy) and then general population migration.</dd>
+              <dt>Blended score</dt>
+              <dd>When available, RN migration is blended with general migration (70/30) and then min-max scaled across states.</dd>
+              <dt>Refresh</dt>
+              <dd>Updated every 7 days.</dd>
+            </dl>
+          </div>
           <div class="help-card">
             <h4>Notice Cards</h4>
             <p>Each card in the Recruiter Signal Feed represents a WARN notice.</p>
@@ -783,7 +799,7 @@
                 <input type="checkbox" value="LPN" /> LPN
               </label>
               <label class="level-checkbox">
-                <input type="checkbox" value="ASN" checked /> ASN
+                <input type="checkbox" value="ASN" checked /> ADN/ASN
               </label>
               <label class="level-checkbox">
                 <input type="checkbox" value="BSN" checked /> BSN
