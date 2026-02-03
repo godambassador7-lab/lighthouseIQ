@@ -3771,15 +3771,54 @@ const updateProgramsLoading = (loaded, total) => {
 };
 
 const normalizeProgram = (program) => {
+  const rawLevel = (program.level ?? program.program_level ?? '').trim();
+  let level = rawLevel;
+  if (/^adn$/i.test(level) || /associate degree/i.test(level)) {
+    level = 'ASN';
+  }
+
   return {
     institution: program.institution ?? program.institution_name ?? program.school ?? 'Unknown',
     campus: program.campus ?? program.campus_name ?? '-',
     city: program.city ?? '',
     state: program.state ?? '',
-    level: program.level ?? program.program_level ?? '',
+    level,
     accreditor: program.accreditor ?? program.accreditation ?? '',
     credentialNotes: program.credential_notes ?? program.credentialNotes ?? ''
   };
+};
+
+const deriveAssociatePrograms = (programs) => {
+  const extras = [];
+  const existing = new Set(
+    programs.map((program) => {
+      const inst = (program.institution ?? program.institution_name ?? '').toLowerCase();
+      const state = (program.state ?? '').toLowerCase();
+      const level = (program.program_level ?? program.level ?? '').toUpperCase();
+      return `${inst}|${state}|${level}`;
+    })
+  );
+
+  programs.forEach((program) => {
+    const accreditationText = `${program.accreditation_status ?? ''} ${program.credential_notes ?? ''}`.toLowerCase();
+    if (!accreditationText.includes('associate degree in nursing')) return;
+    const inst = (program.institution ?? program.institution_name ?? '').toLowerCase();
+    const state = (program.state ?? '').toLowerCase();
+    const baseLevel = (program.program_level ?? program.level ?? '').toUpperCase();
+    if (baseLevel === 'ASN' || baseLevel === 'ADN') return;
+    const key = `${inst}|${state}|ASN`;
+    if (existing.has(key)) return;
+    existing.add(key);
+    const note = (program.credential_notes ?? '').trim();
+    extras.push({
+      ...program,
+      program_level: 'ASN',
+      level: 'ASN',
+      credential_notes: note ? `${note} | Associate Degree in Nursing (derived)` : 'Associate Degree in Nursing (derived)'
+    });
+  });
+
+  return extras.length ? programs.concat(extras) : programs;
 };
 
 const buildProgramRow = (program) => {
@@ -3800,7 +3839,7 @@ const buildProgramRow = (program) => {
   `;
 };
 
-const DEFAULT_PROGRAM_LEVELS = ['ASN', 'BSN', 'MSN'];
+const DEFAULT_PROGRAM_LEVELS = ['LPN', 'ASN', 'BSN', 'MSN'];
 
 const getSelectedLevels = () => {
   if (!programsLevelFilter) return DEFAULT_PROGRAM_LEVELS;
@@ -3948,6 +3987,7 @@ const loadPrograms = async (force = false) => {
     const data = await response.json();
 
     nursingPrograms = Array.isArray(data) ? data : (data.programs ?? []);
+    nursingPrograms = deriveAssociatePrograms(nursingPrograms);
     programsMeta = {
       lastUpdated: data.lastUpdated ?? null,
       sources: data.sources ?? []
