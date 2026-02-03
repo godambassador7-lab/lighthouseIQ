@@ -306,6 +306,48 @@ const parseMaybeJson = (value) => {
   return [String(value)];
 };
 
+const HEALTHCARE_KEYWORDS = [
+  'hospital',
+  'healthcare',
+  'health care',
+  'medical',
+  'clinic',
+  'nursing',
+  'rehab',
+  'rehabilitation',
+  'hospice',
+  'dialysis',
+  'behavioral health',
+  'mental health',
+  'urgent care',
+  'surgery',
+  'surgical',
+  'home health',
+  'assisted living',
+  'skilled nursing',
+  'long term care'
+];
+
+const isHealthcareNotice = (notice) => {
+  if (notice.isCustom) return true;
+  const naicsRaw = notice.naics ?? notice.naics_code ?? '';
+  const naics = String(naicsRaw).trim();
+  if (naics.startsWith('62')) return true;
+  const haystack = [
+    notice.employer_name,
+    notice.employerName,
+    notice.facility_name,
+    notice.parent_system,
+    notice.industry,
+    notice.business_name
+  ].filter(Boolean).join(' ').toLowerCase();
+  return HEALTHCARE_KEYWORDS.some(keyword => haystack.includes(keyword));
+};
+
+const filterNoticesByScope = (notices) => (
+  mapScope === 'healthcare' ? notices.filter(isHealthcareNotice) : notices
+);
+
 const getNoticeDateValue = (notice) => {
   const raw = notice.notice_date || notice.noticeDate || notice.retrieved_at || notice.createdAt || notice.retrievedAt;
   if (!raw) return 0;
@@ -445,7 +487,7 @@ const setLoading = (message) => {
 
 const buildQuery = () => {
   const params = new URLSearchParams();
-  params.set('recruiterFocus', '1');
+  if (mapScope === 'healthcare') params.set('recruiterFocus', '1');
   if (orgInput.value.trim()) params.set('org', orgInput.value.trim());
   if (regionSelect.value) params.set('region', regionSelect.value);
   // Handle multiple selected states
@@ -985,6 +1027,7 @@ const loadNotices = async () => {
     if (customNotices.length > 0) {
       notices = [...customNotices, ...notices];
     }
+    notices = filterNoticesByScope(notices);
     notices = sortNoticesByNewest(notices);
 
     currentNotices = notices;
@@ -3214,7 +3257,7 @@ const updateMapHighlights = () => {
   });
 };
 
-const setMapScope = (scope) => {
+const setMapScope = (scope, { reloadNotices = false } = {}) => {
   mapScope = scope === 'all' ? 'all' : 'healthcare';
   mapStateData = mapScope === 'all' ? stateDataAll : stateDataHealthcare;
   if (!mapStateData || Object.keys(mapStateData).length === 0) {
@@ -3233,11 +3276,14 @@ const setMapScope = (scope) => {
   if (currentMapView === 'chart') {
     renderBarChart();
   }
+  if (reloadNotices) {
+    loadNotices();
+  }
 };
 
 const initMapScopeToggle = () => {
-  mapScopeHealthcareBtn?.addEventListener('click', () => setMapScope('healthcare'));
-  mapScopeAllBtn?.addEventListener('click', () => setMapScope('all'));
+  mapScopeHealthcareBtn?.addEventListener('click', () => setMapScope('healthcare', { reloadNotices: true }));
+  mapScopeAllBtn?.addEventListener('click', () => setMapScope('all', { reloadNotices: true }));
 };
 
 // Initialize map/chart toggle
@@ -3334,6 +3380,7 @@ const initNewsFeed = () => {};
 
 // Initialize app (called after login)
 const initApp = () => {
+  mapScope = 'healthcare';
   initWeatherMap();
   initHelpSection();
   initCollapsibleSections();
