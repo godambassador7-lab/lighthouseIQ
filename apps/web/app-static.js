@@ -316,9 +316,9 @@ const handleLogin = (e) => {
   }
 };
 
-loginOverlay.classList.add('hidden');
+loginOverlay?.classList.add('hidden');
 
-loginForm.addEventListener('submit', handleLogin);
+loginForm?.addEventListener('submit', handleLogin);
 
 // =============================================================================
 // Constants
