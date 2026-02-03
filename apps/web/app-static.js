@@ -4030,12 +4030,17 @@ const WORKFORCE_PROJECTIONS = {
 
 const initStrategicReview = () => {
   const toggleBtn = document.getElementById('strategic-toggle');
-  const toggleIcon = toggleBtn?.querySelector('.strategic-toggle-icon');
-  const section = toggleBtn?.closest('.strategic-review-section');
+  const section = document.querySelector('.strategic-review-section');
+  const toggleIcon = section?.querySelector('.strategic-toggle-icon');
 
-  toggleBtn?.addEventListener('click', () => {
-    section?.classList.toggle('open');
-    const isOpen = section?.classList.contains('open');
+  if (!toggleBtn || !section) {
+    console.warn('Strategic review elements not found');
+    return;
+  }
+
+  toggleBtn.addEventListener('click', () => {
+    section.classList.toggle('open');
+    const isOpen = section.classList.contains('open');
     if (toggleIcon) {
       toggleIcon.textContent = isOpen ? '-' : '+';
     }
