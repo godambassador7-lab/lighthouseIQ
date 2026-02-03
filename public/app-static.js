@@ -19,7 +19,7 @@ const DATA_BASE_URL = (() => {
   const basePath = path.endsWith('/') ? path : path.replace(/\/[^/]*$/, '/');
   return `${basePath}data`;
 })();
-const PASSCODE = ''; // Static site: no secret passcode on the client
+const PASSCODE = 'IUH126';
 
 // =============================================================================
 // DOM Elements
@@ -316,9 +316,7 @@ const handleLogin = (e) => {
   }
 };
 
-loginOverlay.classList.add('hidden');
-
-loginForm.addEventListener('submit', handleLogin);
+loginForm?.addEventListener('submit', handleLogin);
 
 // =============================================================================
 // Constants
