@@ -60,10 +60,12 @@ const mapScopeAllBtn = document.getElementById('map-scope-all');
 const mapScopeLabel = document.getElementById('map-scope-label');
 const mapHomeStateBtn = document.getElementById('map-home-state-btn');
 const mapFactorsBtn = document.getElementById('map-factors-btn');
+const mapMagnifyBtn = document.getElementById('map-magnify-btn');
 const mapFactorsPanel = document.getElementById('map-factors-panel');
 const mapFactorsClose = document.getElementById('map-factors-close');
 const mapFactorsList = document.getElementById('map-factors-list');
 const mapFactorsSubtitle = document.getElementById('map-factors-subtitle');
+const mapMagnifyLabel = document.getElementById('map-magnify-label');
 const alertsList = document.getElementById('alerts-list');
 const heatmapList = document.getElementById('heatmap-list');
 const talentList = document.getElementById('talent-list');
@@ -214,6 +216,9 @@ const MAP_RECRUIT_TARGET_COUNT = 5;
 let mapLongPressTimer = null;
 let mapLongPressSuppressUntil = 0;
 let mapRecruitTargetsInfo = [];
+let mapMagnifyActive = false;
+let magnifyOpened = false;
+const MAP_MAGNIFY_PILOT_STATE = 'KY';
 
 const REQUIRED_PROGRAM_ACCREDITORS = ['CCNE', 'ACEN', 'CNEA'];
 
@@ -850,11 +855,35 @@ const initWeatherMap = async () => {
       shape.setAttribute('data-state', abbrev);
       shape.addEventListener('click', () => {
         if (Date.now() < mapLongPressSuppressUntil) return;
+        if (mapMagnifyActive) {
+          handleMagnifyClick(abbrev);
+          return;
+        }
         toggleStateSelection(abbrev);
       });
-      shape.addEventListener('mouseenter', (e) => showTooltip(e, abbrev));
-      shape.addEventListener('mousemove', (e) => moveTooltip(e));
-      shape.addEventListener('mouseleave', hideTooltip);
+      shape.addEventListener('mouseenter', (e) => {
+        if (mapMagnifyActive) {
+          shape.classList.add('magnify-hover');
+          updateMagnifyLabel(e, abbrev);
+          return;
+        }
+        showTooltip(e, abbrev);
+      });
+      shape.addEventListener('mousemove', (e) => {
+        if (mapMagnifyActive) {
+          updateMagnifyLabel(e, abbrev);
+          return;
+        }
+        moveTooltip(e);
+      });
+      shape.addEventListener('mouseleave', () => {
+        if (mapMagnifyActive) {
+          shape.classList.remove('magnify-hover');
+          hideMagnifyLabel();
+          return;
+        }
+        hideTooltip();
+      });
       shape.addEventListener('pointerdown', (e) => {
         if (e.button !== 0) return;
         const homeState = getMapHomeState();
@@ -896,6 +925,7 @@ const initWeatherMap = async () => {
 };
 
   const showTooltip = (e, stateAbbrev) => {
+    if (mapMagnifyActive) return;
     if (!mapTooltip) return;
     const stateName = STATE_NAMES[stateAbbrev] || stateAbbrev;
     const count = mapStateData[stateAbbrev]?.count || 0;
@@ -911,6 +941,7 @@ const initWeatherMap = async () => {
   };
 
 const moveTooltip = (e) => {
+  if (mapMagnifyActive) return;
   if (!mapTooltip) return;
   const container = usMapContainer?.closest('.weather-map-container');
   if (!container) return;
@@ -923,6 +954,257 @@ const moveTooltip = (e) => {
 
 const hideTooltip = () => {
   mapTooltip?.classList.remove('visible');
+};
+
+const setMapMagnify = (active) => {
+  mapMagnifyActive = Boolean(active);
+  if (mapMagnifyBtn) mapMagnifyBtn.classList.toggle('active', mapMagnifyActive);
+  const container = usMapContainer?.closest('.weather-map-container');
+  if (container) {
+    container.classList.toggle('magnify-active', mapMagnifyActive);
+  }
+  if (mapMagnifyActive) {
+    mapTooltip?.classList.remove('visible');
+  }
+  if (!mapMagnifyActive) {
+    mapMagnifyLabel?.classList.remove('active');
+    document.querySelectorAll('.us-map [data-state].magnify-hover').forEach((shape) => {
+      shape.classList.remove('magnify-hover');
+    });
+  },
+  KY: {
+    nursingEducation: {
+      ukSystemPercentage: 32,
+      kctcsPercentage: 26,
+      otherSchoolsPercentage: 42,
+      totalGraduatesAnnual: 3800,
+      retentionRate: 58
+    },
+    salaryMeta: {
+      updatedAt: '2026-02-01',
+      updateEveryDays: 7,
+      breakdown: [
+        { label: 'BLS Kentucky RN mean (May 2023)', value: '$38-40/hr range', note: 'Statewide OEWS data' },
+        { label: 'BLS Louisville/Jefferson County RN mean (May 2023)', value: '$40-43/hr range', note: 'Metro OEWS data' },
+        { label: 'BLS Lexington-Fayette RN mean (May 2023)', value: '$37-40/hr range', note: 'Metro OEWS data' },
+        { label: 'Job board ranges (KY/metro)', value: '$30-43/hr typical', note: 'Company salary pages by system' },
+        { label: 'Travel RN weekly ranges (KY)', value: '$1,800-2,700/wk', note: 'Regional travel assignments' }
+      ],
+      sources: [
+        { name: 'BLS OEWS Kentucky RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_ky.htm' },
+        { name: 'BLS OEWS Louisville MSA RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_31140.htm' },
+        { name: 'BLS OEWS Lexington MSA RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_30460.htm' }
+      ]
+    },
+    metros: [
+      {
+        name: 'Louisville',
+        size: 'major',
+        population: '1.3M',
+        competition: 'high',
+        hospitals: [
+          { name: 'Norton Hospital', system: 'Norton Healthcare', score: 93, beds: 600, reviews: 4.2 },
+          { name: 'Norton Womens and Childrens Hospital', system: 'Norton Healthcare', score: 92, beds: 300, reviews: 4.3 },
+          { name: 'Norton Audubon Hospital', system: 'Norton Healthcare', score: 88, beds: 287, reviews: 4.0 },
+          { name: 'Norton Brownsboro Hospital', system: 'Norton Healthcare', score: 86, beds: 190, reviews: 4.1 },
+          { name: 'UofL Health - Jewish Hospital', system: 'UofL Health', score: 90, beds: 462, reviews: 4.0 },
+          { name: 'UofL Health - University Hospital', system: 'UofL Health', score: 89, beds: 404, reviews: 4.0 },
+          { name: 'Baptist Health Louisville', system: 'Baptist Health', score: 87, beds: 519, reviews: 3.9 },
+          { name: 'UofL Health - Frazier Rehab', system: 'UofL Health', score: 84, beds: 157, reviews: 4.1 }
+        ],
+        systems: [
+          { name: 'Norton Healthcare', facilities: 6, marketShare: '45%' },
+          { name: 'UofL Health', facilities: 3, marketShare: '20%' },
+          { name: 'Baptist Health', facilities: 2, marketShare: '15%' },
+          { name: 'Independent', facilities: 3, marketShare: '20%' }
+        ],
+        salary: {
+          staffRN: '$30-43/hr',
+          travelRN: '$2,100-2,700/wk',
+          signOn: '$8-22K',
+          systems: [
+            { name: 'Norton Healthcare', value: '$38-42/hr est', source: 'Job boards' },
+            { name: 'UofL Health', value: '$37-41/hr est', source: 'Job boards' },
+            { name: 'Baptist Health', value: '$35-40/hr est', source: 'Job boards' }
+          ]
+        },
+        factors: [
+          { text: 'Large tertiary referral market', type: 'positive' },
+          { text: 'Multiple competing systems', type: 'positive' },
+          { text: 'High ICU and OR demand', type: 'positive' },
+          { text: 'Above-average competition for experienced RNs', type: 'neutral' },
+          { text: 'Traffic and commute variability', type: 'neutral' }
+        ]
+      },
+      {
+        name: 'Lexington',
+        size: 'medium',
+        population: '530K',
+        competition: 'medium',
+        hospitals: [
+          { name: 'UK Albert B. Chandler Hospital', system: 'UK HealthCare', score: 92, beds: 945, reviews: 4.3 },
+          { name: 'UK Good Samaritan Hospital', system: 'UK HealthCare', score: 85, beds: 208, reviews: 4.0 },
+          { name: 'Baptist Health Lexington', system: 'Baptist Health', score: 87, beds: 434, reviews: 3.9 },
+          { name: 'Saint Joseph Hospital', system: 'CHI Saint Joseph', score: 84, beds: 433, reviews: 3.8 },
+          { name: 'Saint Joseph East', system: 'CHI Saint Joseph', score: 82, beds: 217, reviews: 3.8 }
+        ],
+        systems: [
+          { name: 'UK HealthCare', facilities: 2, marketShare: '45%' },
+          { name: 'CHI Saint Joseph', facilities: 2, marketShare: '30%' },
+          { name: 'Baptist Health', facilities: 1, marketShare: '20%' },
+          { name: 'Independent', facilities: 1, marketShare: '5%' }
+        ],
+        salary: {
+          staffRN: '$29-41/hr',
+          travelRN: '$1,950-2,500/wk',
+          signOn: '$7-18K',
+          systems: [
+            { name: 'UK HealthCare', value: '$36-41/hr est', source: 'Job boards' },
+            { name: 'CHI Saint Joseph', value: '$34-39/hr est', source: 'Job boards' },
+            { name: 'Baptist Health', value: '$33-38/hr est', source: 'Job boards' }
+          ]
+        },
+        factors: [
+          { text: 'Academic medical center pipeline', type: 'positive' },
+          { text: 'Strong residency programs', type: 'positive' },
+          { text: 'Growing outpatient demand', type: 'neutral' },
+          { text: 'Moderate competition for specialty roles', type: 'neutral' }
+        ]
+      },
+      {
+        name: 'Northern Kentucky',
+        size: 'medium',
+        population: '450K',
+        competition: 'medium',
+        hospitals: [
+          { name: 'St Elizabeth Edgewood', system: 'St Elizabeth Healthcare', score: 88, beds: 491, reviews: 4.0 },
+          { name: 'St Elizabeth Florence', system: 'St Elizabeth Healthcare', score: 84, beds: 401, reviews: 3.9 },
+          { name: 'St Elizabeth Ft Thomas', system: 'St Elizabeth Healthcare', score: 82, beds: 236, reviews: 3.8 },
+          { name: 'St Elizabeth Grant', system: 'St Elizabeth Healthcare', score: 80, beds: 109, reviews: 3.7 }
+        ],
+        systems: [
+          { name: 'St Elizabeth Healthcare', facilities: 4, marketShare: '65%' },
+          { name: 'Cincinnati systems (OH)', facilities: 2, marketShare: '25%' },
+          { name: 'Independent', facilities: 1, marketShare: '10%' }
+        ],
+        salary: {
+          staffRN: '$30-42/hr',
+          travelRN: '$2,000-2,600/wk',
+          signOn: '$7-16K',
+          systems: [
+            { name: 'St Elizabeth Healthcare', value: '$34-40/hr est', source: 'Job boards' },
+            { name: 'Cincinnati systems (OH)', value: '$36-42/hr est', source: 'Job boards' }
+          ]
+        },
+        factors: [
+          { text: 'Cincinnati metro spillover demand', type: 'positive' },
+          { text: 'Commuter-friendly market', type: 'positive' },
+          { text: 'Cross-border competition for nurses', type: 'neutral' }
+        ]
+      },
+      {
+        name: 'Bowling Green',
+        size: 'small',
+        population: '180K',
+        competition: 'low',
+        hospitals: [
+          { name: 'The Medical Center at Bowling Green', system: 'Med Center Health', score: 84, beds: 477, reviews: 3.9 },
+          { name: 'TriStar Greenview Regional', system: 'HCA TriStar', score: 80, beds: 211, reviews: 3.7 }
+        ],
+        systems: [
+          { name: 'Med Center Health', facilities: 1, marketShare: '60%' },
+          { name: 'HCA TriStar', facilities: 1, marketShare: '40%' }
+        ],
+        salary: {
+          staffRN: '$27-36/hr',
+          travelRN: '$1,700-2,200/wk',
+          signOn: '$5-12K',
+          systems: [
+            { name: 'Med Center Health', value: '$30-36/hr est', source: 'Job boards' },
+            { name: 'HCA TriStar', value: '$29-35/hr est', source: 'Job boards' }
+          ]
+        },
+        factors: [
+          { text: 'Regional hub for south-central KY', type: 'positive' },
+          { text: 'Lower cost of living', type: 'positive' },
+          { text: 'Limited specialty roles', type: 'neutral' }
+        ]
+      },
+      {
+        name: 'Owensboro',
+        size: 'small',
+        population: '120K',
+        competition: 'low',
+        hospitals: [
+          { name: 'Owensboro Health Regional', system: 'Owensboro Health', score: 83, beds: 477, reviews: 3.9 },
+          { name: 'Owensboro Health Twin Lakes', system: 'Owensboro Health', score: 78, beds: 74, reviews: 3.7 }
+        ],
+        systems: [
+          { name: 'Owensboro Health', facilities: 2, marketShare: '80%' },
+          { name: 'Independent', facilities: 1, marketShare: '20%' }
+        ],
+        salary: {
+          staffRN: '$26-35/hr',
+          travelRN: '$1,650-2,150/wk',
+          signOn: '$5-10K',
+          systems: [
+            { name: 'Owensboro Health', value: '$29-35/hr est', source: 'Job boards' }
+          ]
+        },
+        factors: [
+          { text: 'Strong community hospital reputation', type: 'positive' },
+          { text: 'Affordable housing market', type: 'positive' },
+          { text: 'Smaller specialty mix', type: 'neutral' }
+        ]
+      },
+      {
+        name: 'Paducah',
+        size: 'small',
+        population: '100K',
+        competition: 'low',
+        hospitals: [
+          { name: 'Baptist Health Paducah', system: 'Baptist Health', score: 82, beds: 344, reviews: 3.8 },
+          { name: 'Mercy Health Lourdes', system: 'Mercy Health', score: 80, beds: 197, reviews: 3.7 }
+        ],
+        systems: [
+          { name: 'Baptist Health', facilities: 1, marketShare: '55%' },
+          { name: 'Mercy Health', facilities: 1, marketShare: '40%' },
+          { name: 'Independent', facilities: 1, marketShare: '5%' }
+        ],
+        salary: {
+          staffRN: '$26-34/hr',
+          travelRN: '$1,600-2,050/wk',
+          signOn: '$5-10K',
+          systems: [
+            { name: 'Baptist Health', value: '$29-34/hr est', source: 'Job boards' },
+            { name: 'Mercy Health', value: '$28-33/hr est', source: 'Job boards' }
+          ]
+        },
+        factors: [
+          { text: 'Regional draw for western KY', type: 'positive' },
+          { text: 'Lower cost of living', type: 'positive' },
+          { text: 'Limited critical care volume', type: 'neutral' }
+        ]
+      }
+    ]
+  }
+};
+
+const updateMagnifyLabel = (e, stateAbbrev) => {
+  if (!mapMagnifyLabel) return;
+  const container = usMapContainer?.closest('.weather-map-container');
+  if (!container) return;
+  const rect = container.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  mapMagnifyLabel.textContent = STATE_NAMES[stateAbbrev] || stateAbbrev;
+  mapMagnifyLabel.style.left = `${x}px`;
+  mapMagnifyLabel.style.top = `${y}px`;
+  mapMagnifyLabel.classList.add('active');
+};
+
+const hideMagnifyLabel = () => {
+  mapMagnifyLabel?.classList.remove('active');
 };
 
 // =============================================================================
@@ -1169,6 +1451,25 @@ const showMapToast = (message) => {
   toast.textContent = message;
   toast.classList.add('visible');
   setTimeout(() => toast.classList.remove('visible'), 2000);
+};
+
+const openMagnifyState = async (stateAbbrev) => {
+  magnifyOpened = true;
+  await renderHomeState(stateAbbrev);
+  homeStateModal?.classList.add('active');
+};
+
+const handleMagnifyClick = (stateAbbrev) => {
+  const homeState = getMapHomeState();
+  if (homeState && homeState === stateAbbrev) {
+    showMapToast('Magnify only works on non-home states.');
+    return;
+  }
+  if (stateAbbrev !== MAP_MAGNIFY_PILOT_STATE) {
+    showMapToast('Magnify pilot is limited to Kentucky for now.');
+    return;
+  }
+  openMagnifyState(stateAbbrev);
 };
 
 const openStateBeaconFromMap = (targetState) => {
@@ -2746,6 +3047,10 @@ const initViewToggle = () => {
     const isVisible = mapFactorsPanel.style.display !== 'none';
     mapFactorsPanel.style.display = isVisible ? 'none' : 'block';
     if (!isVisible) renderMapFactors();
+  });
+
+  mapMagnifyBtn?.addEventListener('click', () => {
+    setMapMagnify(!mapMagnifyActive);
   });
 
   mapFactorsClose?.addEventListener('click', () => {
@@ -5550,6 +5855,7 @@ const selectHomeStateMetro = (metro, stateAbbrev) => {
 };
 
 const openHomeState = async () => {
+  magnifyOpened = false;
   const inputs = getStateBeaconInputs() || {};
   const homeState = stateBeaconHomeSelect?.value || inputs.homeState || STATE_BEACON_HOME_DEFAULT;
   if (stateBeaconHomeSelect && stateBeaconHomeSelect.value !== homeState) {
@@ -5559,7 +5865,13 @@ const openHomeState = async () => {
   homeStateModal?.classList.add('active');
 };
 
-const closeHomeState = () => homeStateModal?.classList.remove('active');
+const closeHomeState = () => {
+  homeStateModal?.classList.remove('active');
+  if (magnifyOpened) {
+    setMapMagnify(false);
+    magnifyOpened = false;
+  }
+};
 
 const exportStateBeaconJson = () => {
   if (!stateBeaconStateSelect) return;
