@@ -4546,7 +4546,12 @@ const buildStateBeaconExport = (state) => {
     license: inputs.license || (entry.compact ? 'Compact' : 'No license'),
     metro
   };
-  const talkingPoints = entry.talkingPoints.map((point) => replaceTokens(point, tokens));
+  const homeEntry = inputs.homeState ? getBeaconEntry(inputs.homeState) : entry;
+  const homePrograms = nursingPrograms.filter(
+    (program) => normalizeProgram(program).state === (inputs.homeState || state)
+  );
+  const talkingPoints = buildHomeStateTalkingPoints(homeEntry, inputs, homePrograms.length)
+    .map((point) => replaceTokens(point, tokens));
   const objections = entry.objections.map((item) => ({
     concern: replaceTokens(item.concern, tokens),
     response: replaceTokens(item.response, tokens)
