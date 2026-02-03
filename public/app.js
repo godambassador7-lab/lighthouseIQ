@@ -4167,6 +4167,51 @@ const getBeaconEntry = (state) => {
   };
 };
 
+const buildHomeStateTalkingPoints = (homeEntry, inputs, programsCount = 0) => {
+  const points = [];
+  const name = homeEntry.name || inputs.homeState || 'your destination';
+  const compact = homeEntry.compact ?? homeEntry.licensing?.compact;
+  const hourly = homeEntry.compensation?.staffHourlyRange;
+  const travel = homeEntry.compensation?.travelWeeklyRange;
+  const shiftDiffs = homeEntry.compensation?.shiftDiffs;
+  const signOn = homeEntry.compensation?.signOn;
+  const benefits = homeEntry.compensation?.benefitsNotes;
+  const drivers = homeEntry.market?.drivers ?? [];
+  const systems = homeEntry.competition?.systems ?? [];
+  const residencies = homeEntry.pipeline?.residencies ?? [];
+  const attractions = homeEntry.attractions ?? [];
+  const pros = homeEntry.pros ?? [];
+
+  if (pros.length) {
+    points.push(`Why ${name}: ${pros[0]}`);
+  }
+  if (compact !== null) {
+    points.push(`${name} is ${compact ? 'a Nurse Licensure Compact state' : 'a non-compact state'} with ${homeEntry.licensing?.endorsementTime || 'clear endorsement timelines'}.`);
+  }
+  if (hourly || shiftDiffs) {
+    const diffNote = shiftDiffs ? ` with ${shiftDiffs}` : '';
+    points.push(`Staff RN compensation in ${name} runs ${hourly || 'competitive hourly ranges'}${diffNote}.`);
+  }
+  if (signOn || benefits) {
+    points.push(`Incentives in ${name}: ${signOn || 'sign-on support'}${benefits ? ` plus ${benefits}` : ''}.`);
+  }
+  if (programsCount || residencies.length) {
+    const residencyNote = residencies.length ? ` Residency options include ${residencies.slice(0, 2).join(', ')}.` : '';
+    points.push(`Pipeline strength: ${programsCount ? `${programsCount} accredited programs` : 'robust local programs'}.${residencyNote}`);
+  }
+  if (systems.length) {
+    points.push(`Major systems hiring in ${name}: ${systems.slice(0, 3).map((s) => s.name || s).join(', ')}.`);
+  }
+  if (drivers.length) {
+    points.push(`Market drivers in ${name}: ${drivers.slice(0, 2).join(' · ')}.`);
+  }
+  if (attractions.length) {
+    points.push(`Lifestyle highlights: ${attractions.slice(0, 2).join(', ')}.`);
+  }
+
+  return points.filter(Boolean).slice(0, 7);
+};
+
 const renderBeaconList = (container, items, formatter) => {
   if (!container) return;
   if (!items.length) {
@@ -4447,7 +4492,13 @@ const renderStateBeacon = async (state) => {
     metro
   };
 
-  renderBeaconList(stateBeaconScript, entry.talkingPoints, (point) => `
+  const homeEntry = inputs.homeState ? getBeaconEntry(inputs.homeState) : entry;
+  const homePrograms = nursingPrograms.filter(
+    (program) => normalizeProgram(program).state === (inputs.homeState || state)
+  );
+  const talkingPoints = buildHomeStateTalkingPoints(homeEntry, inputs, homePrograms.length);
+
+  renderBeaconList(stateBeaconScript, talkingPoints, (point) => `
     <div class="state-beacon-item">
       <strong>•</strong>
       <span>${escapeHtml(replaceTokens(point, tokens))}</span>
