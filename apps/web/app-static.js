@@ -969,7 +969,10 @@ const setMapMagnify = (active) => {
     document.querySelectorAll('.us-map [data-state].magnify-hover').forEach((shape) => {
       shape.classList.remove('magnify-hover');
     });
-  },
+  }
+};
+
+const KY_DETAILS = {
   KY: {
     nursingEducation: {
       ukSystemPercentage: 32,
