@@ -2882,6 +2882,7 @@ const initApp = async () => {
     loadRecruitmentIntel()
   ]);
 
+  await loadAllNotices();
   await loadInsights();
   loadNews(); // Load in background, no await needed
 
