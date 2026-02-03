@@ -292,7 +292,10 @@ const computeSignalConfidence = (noticeCount = 0, newsCount = 0, majorSystemsCou
 // =============================================================================
 const SESSION_KEY = 'lni_authenticated';
 
-const checkAuth = () => true;
+const checkAuth = () => {
+  if (!PASSCODE) return true;
+  return sessionStorage.getItem(SESSION_KEY) === 'true';
+};
 
 const handleLogin = (e) => {
   e.preventDefault();
