@@ -5987,6 +5987,45 @@ if (checkAuth()) {
   });
 }
 
+// Ensure critical event listeners are attached directly
+document.addEventListener('DOMContentLoaded', () => {
+  // Collapsible sections
+  document.querySelectorAll('section[data-collapsible="true"]').forEach(section => {
+    const toggle = section.querySelector('.section-toggle');
+    if (!toggle) return;
+    const label = toggle.querySelector('.section-toggle-label');
+    const icon = toggle.querySelector('.section-toggle-icon');
+    toggle.addEventListener('click', () => {
+      section.classList.toggle('collapsed');
+      const isCollapsed = section.classList.contains('collapsed');
+      toggle.setAttribute('aria-expanded', String(!isCollapsed));
+      if (label) label.textContent = isCollapsed ? 'Expand' : 'Collapse';
+      if (icon) icon.textContent = isCollapsed ? '+' : '–';
+    });
+  });
+
+  // Out of State Factors button
+  const factorsBtn = document.getElementById('map-factors-btn');
+  const factorsPanel = document.getElementById('map-factors-panel');
+  if (factorsBtn && factorsPanel) {
+    factorsBtn.addEventListener('click', () => {
+      const isVisible = factorsPanel.style.display !== 'none';
+      factorsPanel.style.display = isVisible ? 'none' : 'block';
+      if (!isVisible && typeof renderMapFactors === 'function') {
+        renderMapFactors();
+      }
+    });
+  }
+
+  // Factors close button
+  const factorsClose = document.getElementById('map-factors-close');
+  if (factorsClose && factorsPanel) {
+    factorsClose.addEventListener('click', () => {
+      factorsPanel.style.display = 'none';
+    });
+  }
+});
+
 
 
 
