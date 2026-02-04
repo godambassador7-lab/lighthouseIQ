@@ -3143,28 +3143,6 @@ const formatNewsDate = (dateStr) => {
   }
 };
 
-const refreshNewsFeedWindow = () => {
-  const list = document.getElementById('news-feed-list');
-  if (!list) return;
-  const cards = list.querySelectorAll('.news-card');
-  if (cards.length <= NEWS_WINDOW_COUNT) {
-    list.style.maxHeight = '';
-    list.classList.remove('news-feed-windowed');
-    return;
-  }
-  let height = 0;
-  for (let i = 0; i < Math.min(NEWS_WINDOW_COUNT, cards.length); i++) {
-    height += cards[i].getBoundingClientRect().height;
-  }
-  if (height <= 0) {
-    requestAnimationFrame(refreshNewsFeedWindow);
-    return;
-  }
-  height += NEWS_WINDOW_COUNT - 1;
-  list.style.maxHeight = `${Math.ceil(height)}px`;
-  list.classList.add('news-feed-windowed');
-};
-
 const getNewsDateFilter = () => {
   const filter = document.getElementById('news-date-filter');
   return filter ? parseInt(filter.value, 10) || 7 : 7;
