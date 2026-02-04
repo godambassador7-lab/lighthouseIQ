@@ -1339,12 +1339,15 @@ const renderMapFactors = () => {
   if (!mapFactorsList || !mapFactorsSubtitle) return;
   const homeState = getMapHomeState();
   if (!homeState) {
-    mapFactorsSubtitle.textContent = 'Set a Home State and long-press it to rank targets.';
+    mapFactorsSubtitle.textContent = 'Set a Home State to rank top out-of-state targets.';
     mapFactorsList.innerHTML = '';
     return;
   }
   if (!mapRecruitTargetsInfo.length) {
-    mapFactorsSubtitle.textContent = 'Long-press your Home State to generate top out-of-state targets.';
+    applyMapRecruitTargets(homeState);
+  }
+  if (!mapRecruitTargetsInfo.length) {
+    mapFactorsSubtitle.textContent = 'No out-of-state targets available yet.';
     mapFactorsList.innerHTML = '';
     return;
   }

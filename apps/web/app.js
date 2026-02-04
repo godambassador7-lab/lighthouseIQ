@@ -160,6 +160,7 @@ const STATE_BEACON_DEFAULT = 'FL';
 const STATE_BEACON_HOME_DEFAULT = 'IN';
 const STATE_BEACON_INPUTS_KEY = 'lni_state_beacon_inputs';
 const STATE_BEACON_NOTES_KEY = 'lni_state_beacon_notes';
+const MAP_HOME_STATE_KEY = 'lighthouseiq_map_home_state';
 let lastNoticeWindowCount = 0;
 let noticeWindowRaf = null;
 
@@ -3308,8 +3309,17 @@ const initMapScopeToggle = () => {
   mapScopeAllBtn?.addEventListener('click', () => setMapScope('all', { reloadNotices: true }));
 };
 
+const getMapHomeState = () => {
+  try {
+    return localStorage.getItem(MAP_HOME_STATE_KEY) || '';
+  } catch {
+    return '';
+  }
+};
+
 const getHomeStateForFactors = () => (
-  stateBeaconHomeSelect?.value
+  getMapHomeState()
+  || stateBeaconHomeSelect?.value
   || getStateBeaconInputs()?.homeState
   || STATE_BEACON_HOME_DEFAULT
 );
