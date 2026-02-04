@@ -5579,6 +5579,765 @@ const STATE_METRO_DATA = {
       }
     ]
   },
+  FL: {
+    nursingEducation: {
+      stateUniversityPercentage: 30,
+      communityCollegePercentage: 34,
+      otherSchoolsPercentage: 36,
+      totalGraduatesAnnual: 9800,
+      retentionRate: 56
+    },
+    salaryMeta: {
+      updatedAt: '2026-02-01',
+      updateEveryDays: 7,
+      breakdown: [
+        { label: 'BLS Florida RN mean (May 2023)', value: '$41-44/hr range', note: 'Statewide OEWS data' },
+        { label: 'Miami-Fort Lauderdale RN mean (May 2023)', value: '$42-45/hr range', note: 'Metro OEWS data' },
+        { label: 'Tampa-St. Pete RN mean (May 2023)', value: '$40-43/hr range', note: 'Metro OEWS data' }
+      ],
+      sources: [
+        { name: 'BLS OEWS Florida RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_fl.htm' },
+        { name: 'BLS OEWS Miami MSA RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_33100.htm' },
+        { name: 'BLS OEWS Tampa MSA RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_45300.htm' }
+      ]
+    },
+    metros: [
+      {
+        name: 'Miami-Fort Lauderdale',
+        size: 'major',
+        population: '6.1M',
+        competition: 'high',
+        hospitals: [
+          { name: 'Jackson Memorial Hospital', system: 'Jackson Health', score: 95, beds: 1550, reviews: 4.1 },
+          { name: 'Baptist Hospital of Miami', system: 'Baptist Health', score: 92, beds: 680, reviews: 4.2 },
+          { name: 'Memorial Regional Hospital', system: 'Memorial Healthcare', score: 90, beds: 720, reviews: 4.0 },
+          { name: 'Mount Sinai Medical Center', system: 'Mount Sinai', score: 88, beds: 320, reviews: 4.0 },
+          { name: 'HCA Florida Aventura Hospital', system: 'HCA Florida', score: 86, beds: 467, reviews: 3.8 },
+          { name: 'Cleveland Clinic Florida - Weston', system: 'Cleveland Clinic', score: 89, beds: 204, reviews: 4.1 }
+        ],
+        systems: [
+          { name: 'Jackson Health', facilities: 4, marketShare: '24%' },
+          { name: 'Baptist Health South Florida', facilities: 5, marketShare: '22%' },
+          { name: 'Memorial Healthcare', facilities: 3, marketShare: '18%' },
+          { name: 'HCA Florida', facilities: 5, marketShare: '16%' },
+          { name: 'Independent', facilities: 6, marketShare: '20%' }
+        ],
+        salary: {
+          staffRN: '$34-48/hr',
+          travelRN: '$2,200-3,100/wk',
+          signOn: '$10-30K',
+          systems: [
+            { name: 'Jackson Health', value: '$38-45/hr est', source: 'Job boards' },
+            { name: 'Baptist Health', value: '$36-44/hr est', source: 'Job boards' },
+            { name: 'Memorial Healthcare', value: '$35-43/hr est', source: 'Job boards' }
+          ]
+        },
+        factors: [
+          { text: 'Largest RN labor market in Florida', type: 'positive' },
+          { text: 'High competition among major systems', type: 'positive' },
+          { text: 'Strong specialty demand (ICU/ER/OR)', type: 'positive' },
+          { text: 'High cost of living in core metro', type: 'negative' }
+        ]
+      },
+      {
+        name: 'Tampa Bay',
+        size: 'major',
+        population: '3.2M',
+        competition: 'high',
+        hospitals: [
+          { name: 'Tampa General Hospital', system: 'Tampa General', score: 93, beds: 1040, reviews: 4.3 },
+          { name: 'AdventHealth Tampa', system: 'AdventHealth', score: 88, beds: 536, reviews: 4.1 },
+          { name: 'St. Joseph\'s Hospital', system: 'BayCare', score: 89, beds: 615, reviews: 4.0 },
+          { name: 'St. Joseph\'s Women\'s Hospital', system: 'BayCare', score: 86, beds: 347, reviews: 4.0 },
+          { name: 'HCA Florida Brandon Hospital', system: 'HCA Florida', score: 85, beds: 436, reviews: 3.8 }
+        ],
+        systems: [
+          { name: 'BayCare', facilities: 6, marketShare: '30%' },
+          { name: 'Tampa General', facilities: 2, marketShare: '18%' },
+          { name: 'AdventHealth', facilities: 3, marketShare: '17%' },
+          { name: 'HCA Florida', facilities: 4, marketShare: '15%' },
+          { name: 'Independent', facilities: 4, marketShare: '20%' }
+        ],
+        salary: {
+          staffRN: '$33-46/hr',
+          travelRN: '$2,050-2,900/wk',
+          signOn: '$8-22K',
+          systems: [
+            { name: 'BayCare', value: '$35-42/hr est', source: 'Job boards' },
+            { name: 'Tampa General', value: '$36-44/hr est', source: 'Job boards' },
+            { name: 'AdventHealth', value: '$34-41/hr est', source: 'Job boards' }
+          ]
+        },
+        factors: [
+          { text: 'Strong academic and trauma footprint', type: 'positive' },
+          { text: 'High system competition', type: 'positive' },
+          { text: 'Seasonal demand spikes', type: 'neutral' }
+        ]
+      },
+      {
+        name: 'Orlando',
+        size: 'major',
+        population: '2.6M',
+        competition: 'high',
+        hospitals: [
+          { name: 'AdventHealth Orlando', system: 'AdventHealth', score: 92, beds: 1400, reviews: 4.2 },
+          { name: 'Orlando Regional Medical Center', system: 'Orlando Health', score: 90, beds: 808, reviews: 4.1 },
+          { name: 'Arnold Palmer Hospital', system: 'Orlando Health', score: 91, beds: 156, reviews: 4.4 },
+          { name: 'Nemours Children\'s Hospital', system: 'Nemours', score: 89, beds: 130, reviews: 4.3 },
+          { name: 'HCA Florida Osceola Hospital', system: 'HCA Florida', score: 84, beds: 404, reviews: 3.8 }
+        ],
+        systems: [
+          { name: 'AdventHealth', facilities: 4, marketShare: '35%' },
+          { name: 'Orlando Health', facilities: 3, marketShare: '30%' },
+          { name: 'HCA Florida', facilities: 2, marketShare: '15%' },
+          { name: 'Independent', facilities: 3, marketShare: '20%' }
+        ],
+        salary: {
+          staffRN: '$32-45/hr',
+          travelRN: '$2,000-2,800/wk',
+          signOn: '$7-20K',
+          systems: [
+            { name: 'AdventHealth', value: '$33-41/hr est', source: 'Job boards' },
+            { name: 'Orlando Health', value: '$34-42/hr est', source: 'Job boards' }
+          ]
+        },
+        factors: [
+          { text: 'Large academic residency footprint', type: 'positive' },
+          { text: 'High pediatric specialty demand', type: 'positive' },
+          { text: 'Strong competition for experienced RNs', type: 'neutral' }
+        ]
+      },
+      {
+        name: 'Jacksonville',
+        size: 'medium',
+        population: '1.7M',
+        competition: 'medium',
+        hospitals: [
+          { name: 'Mayo Clinic Florida', system: 'Mayo Clinic', score: 94, beds: 304, reviews: 4.5 },
+          { name: 'UF Health Jacksonville', system: 'UF Health', score: 88, beds: 695, reviews: 4.0 },
+          { name: 'Baptist Medical Center Jacksonville', system: 'Baptist Health', score: 87, beds: 679, reviews: 4.0 },
+          { name: 'Ascension St. Vincent\'s Riverside', system: 'Ascension', score: 85, beds: 528, reviews: 3.9 },
+          { name: 'HCA Florida Memorial Hospital', system: 'HCA Florida', score: 83, beds: 454, reviews: 3.7 }
+        ],
+        systems: [
+          { name: 'Baptist Health', facilities: 4, marketShare: '30%' },
+          { name: 'UF Health', facilities: 2, marketShare: '18%' },
+          { name: 'Ascension', facilities: 2, marketShare: '18%' },
+          { name: 'HCA Florida', facilities: 2, marketShare: '14%' },
+          { name: 'Independent', facilities: 3, marketShare: '20%' }
+        ],
+        salary: {
+          staffRN: '$31-43/hr',
+          travelRN: '$1,900-2,700/wk',
+          signOn: '$6-18K',
+          systems: [
+            { name: 'Baptist Health', value: '$32-40/hr est', source: 'Job boards' },
+            { name: 'UF Health', value: '$33-41/hr est', source: 'Job boards' }
+          ]
+        },
+        factors: [
+          { text: 'Mayo Clinic anchor draws high-acuity talent', type: 'positive' },
+          { text: 'Moderate cost of living vs south Florida', type: 'positive' },
+          { text: 'Steady demand across med-surg and ICU', type: 'neutral' }
+        ]
+      }
+    ]
+  },
+  IL: {
+    nursingEducation: {
+      stateUniversityPercentage: 28,
+      communityCollegePercentage: 38,
+      otherSchoolsPercentage: 34,
+      totalGraduatesAnnual: 8600,
+      retentionRate: 59
+    },
+    salaryMeta: {
+      updatedAt: '2026-02-01',
+      updateEveryDays: 7,
+      breakdown: [
+        { label: 'BLS Illinois RN mean (May 2023)', value: '$43-46/hr range', note: 'Statewide OEWS data' },
+        { label: 'Chicago metro RN mean (May 2023)', value: '$45-48/hr range', note: 'Metro OEWS data' },
+        { label: 'Downstate IL RN mean (May 2023)', value: '$39-42/hr range', note: 'Regional averages' }
+      ],
+      sources: [
+        { name: 'BLS OEWS Illinois RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_il.htm' },
+        { name: 'BLS OEWS Chicago MSA RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_16980.htm' }
+      ]
+    },
+    metros: [
+      {
+        name: 'Chicago',
+        size: 'major',
+        population: '9.5M',
+        competition: 'high',
+        hospitals: [
+          { name: 'Northwestern Memorial Hospital', system: 'Northwestern Medicine', score: 96, beds: 894, reviews: 4.5 },
+          { name: 'Rush University Medical Center', system: 'Rush', score: 94, beds: 664, reviews: 4.3 },
+          { name: 'University of Chicago Medical Center', system: 'UChicago Medicine', score: 93, beds: 811, reviews: 4.2 },
+          { name: 'UI Health', system: 'UI Health', score: 90, beds: 438, reviews: 4.0 },
+          { name: 'Advocate Illinois Masonic', system: 'Advocate Health', score: 89, beds: 397, reviews: 4.0 },
+          { name: 'Evanston Hospital', system: 'NorthShore', score: 88, beds: 354, reviews: 4.1 }
+        ],
+        systems: [
+          { name: 'Advocate Health', facilities: 6, marketShare: '26%' },
+          { name: 'Northwestern Medicine', facilities: 3, marketShare: '18%' },
+          { name: 'NorthShore', facilities: 2, marketShare: '14%' },
+          { name: 'UChicago Medicine', facilities: 2, marketShare: '12%' },
+          { name: 'Independent', facilities: 6, marketShare: '30%' }
+        ],
+        salary: {
+          staffRN: '$36-52/hr',
+          travelRN: '$2,300-3,200/wk',
+          signOn: '$10-28K',
+          systems: [
+            { name: 'Northwestern Medicine', value: '$40-50/hr est', source: 'Job boards' },
+            { name: 'Rush', value: '$39-49/hr est', source: 'Job boards' },
+            { name: 'Advocate Health', value: '$38-47/hr est', source: 'Job boards' }
+          ]
+        },
+        factors: [
+          { text: 'Dense academic medical center cluster', type: 'positive' },
+          { text: 'Strong union presence in some systems', type: 'neutral' },
+          { text: 'High competition for specialty roles', type: 'neutral' },
+          { text: 'Higher cost of living', type: 'negative' }
+        ]
+      },
+      {
+        name: 'St. Louis Metro East',
+        size: 'medium',
+        population: '2.1M',
+        competition: 'medium',
+        hospitals: [
+          { name: 'Memorial Hospital Belleville', system: 'BJC HealthCare', score: 86, beds: 222, reviews: 3.9 },
+          { name: 'Anderson Hospital', system: 'Anderson Healthcare', score: 84, beds: 144, reviews: 3.8 },
+          { name: 'HSHS St. Elizabeth\'s', system: 'HSHS', score: 83, beds: 144, reviews: 3.8 },
+          { name: 'HSHS St. Joseph\'s Hospital', system: 'HSHS', score: 82, beds: 144, reviews: 3.7 }
+        ],
+        systems: [
+          { name: 'BJC HealthCare (IL)', facilities: 2, marketShare: '30%' },
+          { name: 'HSHS', facilities: 2, marketShare: '25%' },
+          { name: 'Independent', facilities: 3, marketShare: '45%' }
+        ],
+        salary: {
+          staffRN: '$32-44/hr',
+          travelRN: '$2,000-2,700/wk',
+          signOn: '$7-18K',
+          systems: [
+            { name: 'BJC HealthCare', value: '$33-41/hr est', source: 'Job boards' },
+            { name: 'HSHS', value: '$32-40/hr est', source: 'Job boards' }
+          ]
+        },
+        factors: [
+          { text: 'Cross-border competition with Missouri systems', type: 'neutral' },
+          { text: 'Moderate cost of living', type: 'positive' }
+        ]
+      },
+      {
+        name: 'Peoria',
+        size: 'medium',
+        population: '405K',
+        competition: 'medium',
+        hospitals: [
+          { name: 'OSF St. Francis Medical Center', system: 'OSF HealthCare', score: 89, beds: 616, reviews: 4.0 },
+          { name: 'Carle Health Methodist', system: 'Carle Health', score: 86, beds: 324, reviews: 3.9 },
+          { name: 'OSF Children\'s Hospital of Illinois', system: 'OSF HealthCare', score: 88, beds: 136, reviews: 4.1 }
+        ],
+        systems: [
+          { name: 'OSF HealthCare', facilities: 2, marketShare: '55%' },
+          { name: 'Carle Health', facilities: 1, marketShare: '30%' },
+          { name: 'Independent', facilities: 1, marketShare: '15%' }
+        ],
+        salary: {
+          staffRN: '$30-41/hr',
+          travelRN: '$1,900-2,600/wk',
+          signOn: '$6-16K',
+          systems: [
+            { name: 'OSF HealthCare', value: '$31-39/hr est', source: 'Job boards' },
+            { name: 'Carle Health', value: '$31-40/hr est', source: 'Job boards' }
+          ]
+        },
+        factors: [
+          { text: 'Strong academic pipeline in central IL', type: 'positive' },
+          { text: 'Limited specialty competition', type: 'neutral' }
+        ]
+      },
+      {
+        name: 'Rockford',
+        size: 'small',
+        population: '345K',
+        competition: 'low',
+        hospitals: [
+          { name: 'OSF Saint Anthony Medical Center', system: 'OSF HealthCare', score: 84, beds: 260, reviews: 3.8 },
+          { name: 'SwedishAmerican Hospital', system: 'UW Health', score: 83, beds: 350, reviews: 3.8 },
+          { name: 'Mercyhealth Rockford', system: 'Mercyhealth', score: 82, beds: 272, reviews: 3.7 }
+        ],
+        systems: [
+          { name: 'OSF HealthCare', facilities: 1, marketShare: '35%' },
+          { name: 'UW Health', facilities: 1, marketShare: '35%' },
+          { name: 'Mercyhealth', facilities: 1, marketShare: '30%' }
+        ],
+        salary: {
+          staffRN: '$29-39/hr',
+          travelRN: '$1,800-2,400/wk',
+          signOn: '$5-14K',
+          systems: [
+            { name: 'OSF HealthCare', value: '$30-38/hr est', source: 'Job boards' },
+            { name: 'UW Health', value: '$30-39/hr est', source: 'Job boards' }
+          ]
+        },
+        factors: [
+          { text: 'Lower cost of living than Chicago', type: 'positive' },
+          { text: 'Smaller specialty mix', type: 'neutral' }
+        ]
+      }
+    ]
+  },
+  MI: {
+    nursingEducation: {
+      stateUniversityPercentage: 31,
+      communityCollegePercentage: 36,
+      otherSchoolsPercentage: 33,
+      totalGraduatesAnnual: 7400,
+      retentionRate: 60
+    },
+    salaryMeta: {
+      updatedAt: '2026-02-01',
+      updateEveryDays: 7,
+      breakdown: [
+        { label: 'BLS Michigan RN mean (May 2023)', value: '$40-43/hr range', note: 'Statewide OEWS data' },
+        { label: 'Detroit metro RN mean (May 2023)', value: '$41-44/hr range', note: 'Metro OEWS data' },
+        { label: 'West MI RN mean (May 2023)', value: '$38-41/hr range', note: 'Regional averages' }
+      ],
+      sources: [
+        { name: 'BLS OEWS Michigan RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_mi.htm' }
+      ]
+    },
+    metros: [
+      {
+        name: 'Detroit',
+        size: 'major',
+        population: '4.3M',
+        competition: 'high',
+        hospitals: [
+          { name: 'Henry Ford Hospital', system: 'Henry Ford Health', score: 93, beds: 877, reviews: 4.2 },
+          { name: 'Beaumont Hospital Royal Oak', system: 'Corewell Health', score: 92, beds: 1101, reviews: 4.1 },
+          { name: 'DMC Harper University', system: 'Tenet DMC', score: 90, beds: 517, reviews: 4.0 },
+          { name: 'Ascension Providence Hospital', system: 'Ascension', score: 87, beds: 774, reviews: 3.9 },
+          { name: 'DMC Sinai-Grace', system: 'Tenet DMC', score: 85, beds: 285, reviews: 3.7 }
+        ],
+        systems: [
+          { name: 'Corewell Health', facilities: 4, marketShare: '28%' },
+          { name: 'Henry Ford Health', facilities: 3, marketShare: '22%' },
+          { name: 'Tenet DMC', facilities: 2, marketShare: '18%' },
+          { name: 'Ascension', facilities: 2, marketShare: '15%' },
+          { name: 'Independent', facilities: 4, marketShare: '17%' }
+        ],
+        salary: {
+          staffRN: '$34-46/hr',
+          travelRN: '$2,100-2,900/wk',
+          signOn: '$8-24K',
+          systems: [
+            { name: 'Corewell Health', value: '$36-44/hr est', source: 'Job boards' },
+            { name: 'Henry Ford Health', value: '$36-45/hr est', source: 'Job boards' }
+          ]
+        },
+        factors: [
+          { text: 'Large academic and Level I trauma footprint', type: 'positive' },
+          { text: 'Strong union presence in select systems', type: 'neutral' },
+          { text: 'High specialty demand', type: 'positive' }
+        ]
+      },
+      {
+        name: 'Grand Rapids',
+        size: 'medium',
+        population: '1.1M',
+        competition: 'medium',
+        hospitals: [
+          { name: 'Corewell Health Butterworth', system: 'Corewell Health', score: 90, beds: 660, reviews: 4.1 },
+          { name: 'Corewell Health Blodgett', system: 'Corewell Health', score: 86, beds: 190, reviews: 4.0 },
+          { name: 'Trinity Health St. Mary\'s', system: 'Trinity Health', score: 88, beds: 416, reviews: 4.0 }
+        ],
+        systems: [
+          { name: 'Corewell Health', facilities: 2, marketShare: '55%' },
+          { name: 'Trinity Health', facilities: 1, marketShare: '30%' },
+          { name: 'Independent', facilities: 2, marketShare: '15%' }
+        ],
+        salary: {
+          staffRN: '$32-43/hr',
+          travelRN: '$2,000-2,700/wk',
+          signOn: '$7-18K',
+          systems: [
+            { name: 'Corewell Health', value: '$33-41/hr est', source: 'Job boards' },
+            { name: 'Trinity Health', value: '$33-41/hr est', source: 'Job boards' }
+          ]
+        },
+        factors: [
+          { text: 'Stable demand in regional hub', type: 'positive' },
+          { text: 'Lower cost of living than Detroit', type: 'positive' }
+        ]
+      },
+      {
+        name: 'Ann Arbor',
+        size: 'medium',
+        population: '380K',
+        competition: 'medium',
+        hospitals: [
+          { name: 'Michigan Medicine', system: 'University of Michigan', score: 95, beds: 1000, reviews: 4.5 },
+          { name: 'Trinity Health Ann Arbor', system: 'Trinity Health', score: 86, beds: 537, reviews: 4.0 },
+          { name: 'VA Ann Arbor Healthcare', system: 'VA', score: 84, beds: 150, reviews: 4.0 }
+        ],
+        systems: [
+          { name: 'University of Michigan', facilities: 2, marketShare: '55%' },
+          { name: 'Trinity Health', facilities: 1, marketShare: '30%' },
+          { name: 'Independent', facilities: 1, marketShare: '15%' }
+        ],
+        salary: {
+          staffRN: '$34-47/hr',
+          travelRN: '$2,100-2,900/wk',
+          signOn: '$8-22K',
+          systems: [
+            { name: 'Michigan Medicine', value: '$38-47/hr est', source: 'Job boards' },
+            { name: 'Trinity Health', value: '$34-42/hr est', source: 'Job boards' }
+          ]
+        },
+        factors: [
+          { text: 'Top-tier academic medical center', type: 'positive' },
+          { text: 'High competition for specialty roles', type: 'neutral' }
+        ]
+      },
+      {
+        name: 'Lansing',
+        size: 'small',
+        population: '475K',
+        competition: 'low',
+        hospitals: [
+          { name: 'Sparrow Hospital', system: 'University of Michigan Health', score: 88, beds: 733, reviews: 4.0 },
+          { name: 'McLaren Greater Lansing', system: 'McLaren', score: 84, beds: 240, reviews: 3.8 },
+          { name: 'Sparrow Clinton Hospital', system: 'University of Michigan Health', score: 80, beds: 40, reviews: 3.7 }
+        ],
+        systems: [
+          { name: 'UM Health Sparrow', facilities: 2, marketShare: '55%' },
+          { name: 'McLaren', facilities: 1, marketShare: '30%' },
+          { name: 'Independent', facilities: 1, marketShare: '15%' }
+        ],
+        salary: {
+          staffRN: '$31-41/hr',
+          travelRN: '$1,900-2,600/wk',
+          signOn: '$6-15K',
+          systems: [
+            { name: 'UM Health Sparrow', value: '$32-40/hr est', source: 'Job boards' },
+            { name: 'McLaren', value: '$31-39/hr est', source: 'Job boards' }
+          ]
+        },
+        factors: [
+          { text: 'Stable demand with university presence', type: 'positive' },
+          { text: 'Limited specialty options vs Detroit', type: 'neutral' }
+        ]
+      }
+    ]
+  },
+  NY: {
+    nursingEducation: {
+      stateUniversityPercentage: 29,
+      communityCollegePercentage: 33,
+      otherSchoolsPercentage: 38,
+      totalGraduatesAnnual: 10200,
+      retentionRate: 57
+    },
+    salaryMeta: {
+      updatedAt: '2026-02-01',
+      updateEveryDays: 7,
+      breakdown: [
+        { label: 'BLS New York RN mean (May 2023)', value: '$53-58/hr range', note: 'Statewide OEWS data' },
+        { label: 'NYC metro RN mean (May 2023)', value: '$56-62/hr range', note: 'Metro OEWS data' },
+        { label: 'Upstate NY RN mean (May 2023)', value: '$42-47/hr range', note: 'Regional averages' }
+      ],
+      sources: [
+        { name: 'BLS OEWS New York RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_ny.htm' }
+      ]
+    },
+    metros: [
+      {
+        name: 'New York City',
+        size: 'major',
+        population: '19.5M',
+        competition: 'high',
+        hospitals: [
+          { name: 'NewYork-Presbyterian/Weill Cornell', system: 'NYP', score: 97, beds: 2600, reviews: 4.4 },
+          { name: 'Mount Sinai Hospital', system: 'Mount Sinai', score: 95, beds: 1171, reviews: 4.2 },
+          { name: 'NYU Langone Tisch', system: 'NYU Langone', score: 96, beds: 725, reviews: 4.3 },
+          { name: 'Northwell Lenox Hill', system: 'Northwell', score: 92, beds: 652, reviews: 4.1 },
+          { name: 'Montefiore Moses', system: 'Montefiore', score: 90, beds: 1065, reviews: 4.0 }
+        ],
+        systems: [
+          { name: 'NYP', facilities: 3, marketShare: '18%' },
+          { name: 'NYU Langone', facilities: 2, marketShare: '14%' },
+          { name: 'Mount Sinai', facilities: 3, marketShare: '14%' },
+          { name: 'Northwell', facilities: 4, marketShare: '20%' },
+          { name: 'Independent', facilities: 6, marketShare: '34%' }
+        ],
+        salary: {
+          staffRN: '$48-68/hr',
+          travelRN: '$2,600-3,600/wk',
+          signOn: '$12-35K',
+          systems: [
+            { name: 'NYP', value: '$52-65/hr est', source: 'Job boards' },
+            { name: 'NYU Langone', value: '$50-64/hr est', source: 'Job boards' },
+            { name: 'Mount Sinai', value: '$49-63/hr est', source: 'Job boards' }
+          ]
+        },
+        factors: [
+          { text: 'Highest RN wages in the region', type: 'positive' },
+          { text: 'Intense competition across systems', type: 'neutral' },
+          { text: 'High cost of living', type: 'negative' }
+        ]
+      },
+      {
+        name: 'Long Island',
+        size: 'medium',
+        population: '2.9M',
+        competition: 'medium',
+        hospitals: [
+          { name: 'North Shore University Hospital', system: 'Northwell', score: 92, beds: 806, reviews: 4.1 },
+          { name: 'Stony Brook University Hospital', system: 'Stony Brook', score: 90, beds: 624, reviews: 4.0 },
+          { name: 'South Shore University Hospital', system: 'Northwell', score: 88, beds: 341, reviews: 3.9 },
+          { name: 'Good Samaritan Hospital', system: 'Catholic Health', score: 86, beds: 537, reviews: 3.8 }
+        ],
+        systems: [
+          { name: 'Northwell', facilities: 4, marketShare: '45%' },
+          { name: 'Catholic Health', facilities: 2, marketShare: '25%' },
+          { name: 'Stony Brook', facilities: 1, marketShare: '15%' },
+          { name: 'Independent', facilities: 2, marketShare: '15%' }
+        ],
+        salary: {
+          staffRN: '$44-62/hr',
+          travelRN: '$2,400-3,300/wk',
+          signOn: '$10-28K',
+          systems: [
+            { name: 'Northwell', value: '$47-60/hr est', source: 'Job boards' },
+            { name: 'Catholic Health', value: '$45-58/hr est', source: 'Job boards' }
+          ]
+        },
+        factors: [
+          { text: 'Strong commuter access to NYC', type: 'positive' },
+          { text: 'High housing costs', type: 'negative' }
+        ]
+      },
+      {
+        name: 'Buffalo',
+        size: 'medium',
+        population: '1.1M',
+        competition: 'medium',
+        hospitals: [
+          { name: 'Buffalo General Medical Center', system: 'Kaleida Health', score: 89, beds: 484, reviews: 4.0 },
+          { name: 'John R. Oishei Children\'s', system: 'Kaleida Health', score: 88, beds: 185, reviews: 4.1 },
+          { name: 'ECMC', system: 'ECMC', score: 87, beds: 628, reviews: 3.9 },
+          { name: 'Mercy Hospital of Buffalo', system: 'Catholic Health', score: 84, beds: 439, reviews: 3.8 }
+        ],
+        systems: [
+          { name: 'Kaleida Health', facilities: 3, marketShare: '45%' },
+          { name: 'ECMC', facilities: 1, marketShare: '25%' },
+          { name: 'Catholic Health', facilities: 2, marketShare: '25%' },
+          { name: 'Independent', facilities: 1, marketShare: '5%' }
+        ],
+        salary: {
+          staffRN: '$38-52/hr',
+          travelRN: '$2,100-2,900/wk',
+          signOn: '$8-20K',
+          systems: [
+            { name: 'Kaleida Health', value: '$40-50/hr est', source: 'Job boards' },
+            { name: 'ECMC', value: '$39-49/hr est', source: 'Job boards' }
+          ]
+        },
+        factors: [
+          { text: 'Stable demand in western NY hub', type: 'positive' },
+          { text: 'Lower cost of living vs downstate', type: 'positive' }
+        ]
+      },
+      {
+        name: 'Rochester',
+        size: 'medium',
+        population: '1.1M',
+        competition: 'medium',
+        hospitals: [
+          { name: 'Strong Memorial Hospital', system: 'UR Medicine', score: 90, beds: 886, reviews: 4.1 },
+          { name: 'Rochester General Hospital', system: 'RRH', score: 87, beds: 528, reviews: 3.9 },
+          { name: 'Unity Hospital', system: 'RRH', score: 84, beds: 322, reviews: 3.8 },
+          { name: 'Highland Hospital', system: 'UR Medicine', score: 85, beds: 261, reviews: 3.9 }
+        ],
+        systems: [
+          { name: 'UR Medicine', facilities: 2, marketShare: '45%' },
+          { name: 'Rochester Regional', facilities: 2, marketShare: '40%' },
+          { name: 'Independent', facilities: 2, marketShare: '15%' }
+        ],
+        salary: {
+          staffRN: '$38-52/hr',
+          travelRN: '$2,050-2,850/wk',
+          signOn: '$7-18K',
+          systems: [
+            { name: 'UR Medicine', value: '$40-50/hr est', source: 'Job boards' },
+            { name: 'Rochester Regional', value: '$39-49/hr est', source: 'Job boards' }
+          ]
+        },
+        factors: [
+          { text: 'Academic medical center demand', type: 'positive' },
+          { text: 'Balanced competition', type: 'neutral' }
+        ]
+      }
+    ]
+  },
+  TX: {
+    nursingEducation: {
+      stateUniversityPercentage: 27,
+      communityCollegePercentage: 40,
+      otherSchoolsPercentage: 33,
+      totalGraduatesAnnual: 12000,
+      retentionRate: 55
+    },
+    salaryMeta: {
+      updatedAt: '2026-02-01',
+      updateEveryDays: 7,
+      breakdown: [
+        { label: 'BLS Texas RN mean (May 2023)', value: '$41-45/hr range', note: 'Statewide OEWS data' },
+        { label: 'Houston RN mean (May 2023)', value: '$42-46/hr range', note: 'Metro OEWS data' },
+        { label: 'Dallas-Fort Worth RN mean (May 2023)', value: '$41-45/hr range', note: 'Metro OEWS data' }
+      ],
+      sources: [
+        { name: 'BLS OEWS Texas RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_tx.htm' }
+      ]
+    },
+    metros: [
+      {
+        name: 'Houston',
+        size: 'major',
+        population: '7.3M',
+        competition: 'high',
+        hospitals: [
+          { name: 'Houston Methodist', system: 'Houston Methodist', score: 96, beds: 1000, reviews: 4.4 },
+          { name: 'Memorial Hermann - TMC', system: 'Memorial Hermann', score: 94, beds: 907, reviews: 4.2 },
+          { name: 'Texas Children\'s Hospital', system: 'Texas Children\'s', score: 95, beds: 973, reviews: 4.5 },
+          { name: 'MD Anderson Cancer Center', system: 'UT MD Anderson', score: 97, beds: 1000, reviews: 4.6 },
+          { name: 'Baylor St. Luke\'s', system: 'Baylor St. Luke\'s', score: 90, beds: 850, reviews: 4.1 }
+        ],
+        systems: [
+          { name: 'Memorial Hermann', facilities: 4, marketShare: '22%' },
+          { name: 'Houston Methodist', facilities: 3, marketShare: '20%' },
+          { name: 'HCA Houston', facilities: 3, marketShare: '16%' },
+          { name: 'Baylor St. Luke\'s', facilities: 2, marketShare: '14%' },
+          { name: 'Independent', facilities: 6, marketShare: '28%' }
+        ],
+        salary: {
+          staffRN: '$35-50/hr',
+          travelRN: '$2,200-3,200/wk',
+          signOn: '$10-30K',
+          systems: [
+            { name: 'Memorial Hermann', value: '$38-47/hr est', source: 'Job boards' },
+            { name: 'Houston Methodist', value: '$39-48/hr est', source: 'Job boards' }
+          ]
+        },
+        factors: [
+          { text: 'Largest medical center in the US', type: 'positive' },
+          { text: 'High specialty demand across TMC', type: 'positive' },
+          { text: 'Strong competition among systems', type: 'neutral' }
+        ]
+      },
+      {
+        name: 'Dallas-Fort Worth',
+        size: 'major',
+        population: '7.9M',
+        competition: 'high',
+        hospitals: [
+          { name: 'UT Southwestern/Parkland', system: 'Parkland/UTSW', score: 95, beds: 882, reviews: 4.3 },
+          { name: 'Baylor University Medical Center', system: 'Baylor Scott & White', score: 92, beds: 1000, reviews: 4.2 },
+          { name: 'Texas Health Presbyterian Dallas', system: 'Texas Health', score: 90, beds: 888, reviews: 4.1 },
+          { name: 'Methodist Dallas', system: 'Methodist Health', score: 89, beds: 880, reviews: 4.0 },
+          { name: 'Medical City Dallas', system: 'HCA', score: 88, beds: 560, reviews: 3.9 }
+        ],
+        systems: [
+          { name: 'Baylor Scott & White', facilities: 4, marketShare: '22%' },
+          { name: 'Texas Health', facilities: 4, marketShare: '22%' },
+          { name: 'Methodist Health', facilities: 2, marketShare: '14%' },
+          { name: 'HCA', facilities: 3, marketShare: '16%' },
+          { name: 'Independent', facilities: 5, marketShare: '26%' }
+        ],
+        salary: {
+          staffRN: '$34-48/hr',
+          travelRN: '$2,150-3,050/wk',
+          signOn: '$9-26K',
+          systems: [
+            { name: 'Baylor Scott & White', value: '$36-46/hr est', source: 'Job boards' },
+            { name: 'Texas Health', value: '$35-45/hr est', source: 'Job boards' }
+          ]
+        },
+        factors: [
+          { text: 'Large multi-system competition', type: 'positive' },
+          { text: 'Strong academic pipeline', type: 'positive' }
+        ]
+      },
+      {
+        name: 'San Antonio',
+        size: 'medium',
+        population: '2.6M',
+        competition: 'medium',
+        hospitals: [
+          { name: 'Methodist Hospital', system: 'Methodist Health', score: 90, beds: 1048, reviews: 4.1 },
+          { name: 'Baptist Medical Center', system: 'Baptist Health System', score: 88, beds: 450, reviews: 3.9 },
+          { name: 'University Hospital', system: 'University Health', score: 89, beds: 716, reviews: 4.0 },
+          { name: 'CHRISTUS Santa Rosa', system: 'CHRISTUS', score: 84, beds: 215, reviews: 3.8 }
+        ],
+        systems: [
+          { name: 'Methodist Health', facilities: 2, marketShare: '30%' },
+          { name: 'Baptist Health System', facilities: 2, marketShare: '25%' },
+          { name: 'University Health', facilities: 1, marketShare: '20%' },
+          { name: 'Independent', facilities: 3, marketShare: '25%' }
+        ],
+        salary: {
+          staffRN: '$32-45/hr',
+          travelRN: '$2,000-2,800/wk',
+          signOn: '$7-20K',
+          systems: [
+            { name: 'Methodist Health', value: '$34-43/hr est', source: 'Job boards' },
+            { name: 'University Health', value: '$34-42/hr est', source: 'Job boards' }
+          ]
+        },
+        factors: [
+          { text: 'Strong Level I trauma demand', type: 'positive' },
+          { text: 'Moderate cost of living', type: 'positive' }
+        ]
+      },
+      {
+        name: 'Austin',
+        size: 'medium',
+        population: '2.4M',
+        competition: 'medium',
+        hospitals: [
+          { name: 'Ascension Seton Medical Center', system: 'Ascension Seton', score: 88, beds: 620, reviews: 4.0 },
+          { name: 'St. David\'s Medical Center', system: 'HCA/St. David\'s', score: 87, beds: 371, reviews: 3.9 },
+          { name: 'Dell Seton Medical Center', system: 'UT Health', score: 89, beds: 211, reviews: 4.1 },
+          { name: 'Baylor Scott & White - Round Rock', system: 'Baylor Scott & White', score: 85, beds: 160, reviews: 3.8 }
+        ],
+        systems: [
+          { name: 'Ascension Seton', facilities: 4, marketShare: '35%' },
+          { name: 'St. David\'s', facilities: 3, marketShare: '28%' },
+          { name: 'Baylor Scott & White', facilities: 2, marketShare: '18%' },
+          { name: 'Independent', facilities: 2, marketShare: '19%' }
+        ],
+        salary: {
+          staffRN: '$33-47/hr',
+          travelRN: '$2,050-2,900/wk',
+          signOn: '$8-22K',
+          systems: [
+            { name: 'Ascension Seton', value: '$34-44/hr est', source: 'Job boards' },
+            { name: 'St. David\'s', value: '$34-45/hr est', source: 'Job boards' }
+          ]
+        },
+        factors: [
+          { text: 'Rapid population growth driving demand', type: 'positive' },
+          { text: 'Rising cost of living', type: 'negative' }
+        ]
+      }
+    ]
+  },
   // Kentucky data from KY_DETAILS
   KY: KY_DETAILS.KY
 };
@@ -5830,6 +6589,7 @@ const targetStateCloseBtn = document.getElementById('target-state-close');
 const targetStateCloseFooter = document.getElementById('target-state-close-footer');
 const targetStateOpenBeacon = document.getElementById('target-state-open-beacon');
 const openTargetStateBtn = document.getElementById('open-target-state');
+const targetStateSelect = document.getElementById('target-state-select');
 
 // Target State module elements
 const targetStateName = document.getElementById('target-state-name');
@@ -5840,6 +6600,7 @@ const targetStateStatPrograms = document.getElementById('target-state-stat-progr
 const targetStateStatCompact = document.getElementById('target-state-stat-compact');
 const targetStateMetroMap = document.getElementById('target-state-metro-map');
 const targetStateDetailPlaceholder = document.getElementById('target-state-detail-placeholder');
+const targetStatePlaceholderText = document.getElementById('target-state-placeholder-text');
 const targetStateDetailContent = document.getElementById('target-state-detail-content');
 const targetStateMetroName = document.getElementById('target-state-metro-name');
 const targetStateMetroBadge = document.getElementById('target-state-metro-badge');
@@ -5851,8 +6612,21 @@ const targetStateMetroFactors = document.getElementById('target-state-metro-fact
 
 let currentTargetStateMetro = null;
 const TARGET_STATE_DEFAULT = 'KY'; // Kentucky as pilot
+const TARGET_STATE_OPTIONS = ['KY', 'IN', 'FL', 'IL', 'MI', 'NY', 'TX'];
+
+const getTargetStateSelection = () => {
+  const preferred = targetStateSelect?.value
+    || stateBeaconStateSelect?.value
+    || TARGET_STATE_DEFAULT;
+  return TARGET_STATE_OPTIONS.includes(preferred) ? preferred : TARGET_STATE_DEFAULT;
+};
 
 const renderTargetState = async (stateAbbrev = TARGET_STATE_DEFAULT) => {
+  const resolvedState = TARGET_STATE_OPTIONS.includes(stateAbbrev) ? stateAbbrev : TARGET_STATE_DEFAULT;
+  stateAbbrev = resolvedState;
+  if (targetStateSelect && targetStateSelect.value !== resolvedState) {
+    targetStateSelect.value = resolvedState;
+  }
   await loadStateBeaconData();
   await ensureProgramsDataForBeacon();
 
@@ -5864,6 +6638,9 @@ const renderTargetState = async (stateAbbrev = TARGET_STATE_DEFAULT) => {
   // Update header
   if (targetStateName) targetStateName.textContent = entry.name;
   if (targetStateAbbr) targetStateAbbr.textContent = stateAbbrev;
+  if (targetStatePlaceholderText) {
+    targetStatePlaceholderText.textContent = `Click on a city from the map to view detailed healthcare market information including hospitals, competition, and salary data for ${entry.name}.`;
+  }
 
   // Update stats
   const totalHospitals = metros.reduce((sum, m) => sum + (m.hospitals?.length || 0), 0);
@@ -6077,7 +6854,8 @@ const selectTargetStateMetro = (metro, stateAbbrev) => {
 };
 
 const openTargetState = async () => {
-  await renderTargetState(TARGET_STATE_DEFAULT);
+  const selectedState = getTargetStateSelection();
+  await renderTargetState(selectedState);
   targetStateModal?.classList.add('active');
 };
 
@@ -6265,9 +7043,17 @@ const initStateBeacon = () => {
   openTargetStateBtn?.addEventListener('click', openTargetState);
   targetStateCloseBtn?.addEventListener('click', closeTargetState);
   targetStateCloseFooter?.addEventListener('click', closeTargetState);
+  targetStateSelect?.addEventListener('change', (event) => {
+    const nextState = event.target?.value || TARGET_STATE_DEFAULT;
+    renderTargetState(nextState);
+  });
   targetStateOpenBeacon?.addEventListener('click', () => {
+    const selectedState = getTargetStateSelection();
+    if (stateBeaconStateSelect) {
+      stateBeaconStateSelect.value = selectedState;
+    }
     closeTargetState();
-    openStateBeacon(TARGET_STATE_DEFAULT);
+    openStateBeacon(selectedState);
   });
 
   // Initialize quick tags

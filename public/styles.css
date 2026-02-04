@@ -2133,6 +2133,32 @@ select {
   margin-bottom: 1.25rem;
 }
 
+.target-state-selector {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.target-state-selector label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.target-state-selector select {
+  min-width: 200px;
+  padding: 0.55rem 0.85rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.95);
+  color: #0b2f3a;
+  font-size: 0.9rem;
+}
+
 .target-state-title {
   display: flex;
   align-items: center;
@@ -2345,6 +2371,11 @@ select {
     border-right: none;
     border-bottom: 1px solid rgba(26, 54, 93, 0.1);
     max-height: 250px;
+  }
+
+  .target-state-selector {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 

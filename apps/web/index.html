@@ -71,7 +71,7 @@
               Home State
             </button>
             <button class="module-item target-state-pulse" id="open-target-state" type="button">
-              Target State (KY)
+              Target State
             </button>
           </div>
         </div>
@@ -1193,7 +1193,7 @@
       </div>
     </div>
 
-    <!-- Target State Modal (Kentucky Pilot) -->
+    <!-- Target State Modal -->
     <div class="modal-overlay" id="target-state-modal">
       <div class="modal-card target-state-card">
         <!-- Header -->
@@ -1205,6 +1205,18 @@
               <span class="target-state-badge">Target State</span>
             </div>
             <button class="modal-close" id="target-state-close">&times;</button>
+          </div>
+          <div class="target-state-selector">
+            <label for="target-state-select">Select Target State</label>
+            <select id="target-state-select">
+              <option value="KY">Kentucky (KY)</option>
+              <option value="IN">Indiana (IN)</option>
+              <option value="FL">Florida (FL)</option>
+              <option value="IL">Illinois (IL)</option>
+              <option value="MI">Michigan (MI)</option>
+              <option value="NY">New York (NY)</option>
+              <option value="TX">Texas (TX)</option>
+            </select>
           </div>
           <div class="target-state-stats">
             <div class="target-state-stat">
@@ -1247,7 +1259,7 @@
             <div class="target-state-detail-placeholder" id="target-state-detail-placeholder">
               <div class="placeholder-icon">🎯</div>
               <h4>Select a Metro Area</h4>
-              <p>Click on a city from the map to view detailed healthcare market information including hospitals, competition, and salary data for Kentucky.</p>
+              <p id="target-state-placeholder-text">Click on a city from the map to view detailed healthcare market information including hospitals, competition, and salary data for Kentucky.</p>
             </div>
             <div class="target-state-detail-content" id="target-state-detail-content" style="display: none;">
               <div class="detail-header">
