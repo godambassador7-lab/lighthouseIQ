@@ -3143,18 +3143,62 @@ const formatNewsDate = (dateStr) => {
   }
 };
 
+const refreshNewsFeedWindow = () => {
+  const list = document.getElementById('news-feed-list');
+  if (!list) return;
+  const cards = list.querySelectorAll('.news-card');
+  if (cards.length <= NEWS_WINDOW_COUNT) {
+    list.style.maxHeight = '';
+    list.classList.remove('news-feed-windowed');
+    return;
+  }
+  let height = 0;
+  for (let i = 0; i < Math.min(NEWS_WINDOW_COUNT, cards.length); i++) {
+    height += cards[i].getBoundingClientRect().height;
+  }
+  if (height <= 0) {
+    requestAnimationFrame(refreshNewsFeedWindow);
+    return;
+  }
+  height += NEWS_WINDOW_COUNT - 1;
+  list.style.maxHeight = `${Math.ceil(height)}px`;
+  list.classList.add('news-feed-windowed');
+};
+
+const getNewsDateFilter = () => {
+  const filter = document.getElementById('news-date-filter');
+  return filter ? parseInt(filter.value, 10) || 7 : 7;
+};
+
+const filterNewsByDate = (articles, days) => {
+  const now = new Date();
+  const cutoff = new Date(now.getTime() - days * 24 * 60 * 60 * 1000);
+  return articles.filter(article => {
+    if (!article.publishedAt) return true;
+    try {
+      const articleDate = new Date(article.publishedAt + 'T00:00:00');
+      return articleDate >= cutoff;
+    } catch {
+      return true;
+    }
+  });
+};
+
 const renderNewsFeed = () => {
   const list = document.getElementById('news-feed-list');
   if (!list) return;
 
-  if (!newsArticles.length) {
-    list.innerHTML = '<div class="empty-state">No news articles available.</div>';
+  const days = getNewsDateFilter();
+  const filtered = filterNewsByDate(newsArticles, days);
+
+  if (!filtered.length) {
+    list.innerHTML = `<div class="empty-state">No news articles in the last ${days} days.</div>`;
     list.style.maxHeight = '';
     list.classList.remove('news-feed-windowed');
     return;
   }
 
-  list.innerHTML = newsArticles.map(article => `
+  list.innerHTML = filtered.map(article => `
     <a class="news-card" href="${article.url}" target="_blank" rel="noopener noreferrer">
       <div class="news-card-body">
         <h4 class="news-card-title">${article.title}</h4>
@@ -3200,7 +3244,12 @@ const loadNews = async () => {
   }
 };
 
-const initNewsFeed = () => {};
+const initNewsFeed = () => {
+  const filter = document.getElementById('news-date-filter');
+  if (filter) {
+    filter.addEventListener('change', renderNewsFeed);
+  }
+};
 
 // =============================================================================
 // Strategic Review Module - Nursing Market Intelligence

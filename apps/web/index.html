@@ -485,6 +485,16 @@
         </button>
       </div>
       <div class="news-feed-container">
+        <div class="news-feed-toolbar">
+          <label for="news-date-filter">Show:</label>
+          <select id="news-date-filter" class="news-date-filter">
+            <option value="3">Last 3 days</option>
+            <option value="7" selected>Last 7 days</option>
+            <option value="14">Last 14 days</option>
+            <option value="30">Last month</option>
+            <option value="90">Last 3 months</option>
+          </select>
+        </div>
         <div class="news-feed-list" id="news-feed-list">
           <div class="empty-state">Loading news...</div>
         </div>
