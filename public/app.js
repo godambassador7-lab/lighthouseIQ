@@ -5830,6 +5830,7 @@ const targetStateCloseBtn = document.getElementById('target-state-close');
 const targetStateCloseFooter = document.getElementById('target-state-close-footer');
 const targetStateOpenBeacon = document.getElementById('target-state-open-beacon');
 const openTargetStateBtn = document.getElementById('open-target-state');
+const targetStateSelect = document.getElementById('target-state-select');
 
 // Target State module elements
 const targetStateName = document.getElementById('target-state-name');
@@ -5840,6 +5841,7 @@ const targetStateStatPrograms = document.getElementById('target-state-stat-progr
 const targetStateStatCompact = document.getElementById('target-state-stat-compact');
 const targetStateMetroMap = document.getElementById('target-state-metro-map');
 const targetStateDetailPlaceholder = document.getElementById('target-state-detail-placeholder');
+const targetStatePlaceholderText = document.getElementById('target-state-placeholder-text');
 const targetStateDetailContent = document.getElementById('target-state-detail-content');
 const targetStateMetroName = document.getElementById('target-state-metro-name');
 const targetStateMetroBadge = document.getElementById('target-state-metro-badge');
@@ -5851,8 +5853,21 @@ const targetStateMetroFactors = document.getElementById('target-state-metro-fact
 
 let currentTargetStateMetro = null;
 const TARGET_STATE_DEFAULT = 'KY'; // Kentucky as pilot
+const TARGET_STATE_OPTIONS = ['KY', 'IN', 'FL', 'IL', 'MI', 'NY', 'TX'];
+
+const getTargetStateSelection = () => {
+  const preferred = stateBeaconStateSelect?.value
+    || targetStateSelect?.value
+    || TARGET_STATE_DEFAULT;
+  return TARGET_STATE_OPTIONS.includes(preferred) ? preferred : TARGET_STATE_DEFAULT;
+};
 
 const renderTargetState = async (stateAbbrev = TARGET_STATE_DEFAULT) => {
+  const resolvedState = TARGET_STATE_OPTIONS.includes(stateAbbrev) ? stateAbbrev : TARGET_STATE_DEFAULT;
+  stateAbbrev = resolvedState;
+  if (targetStateSelect && targetStateSelect.value !== resolvedState) {
+    targetStateSelect.value = resolvedState;
+  }
   await loadStateBeaconData();
   await ensureProgramsDataForBeacon();
 
@@ -5864,6 +5879,9 @@ const renderTargetState = async (stateAbbrev = TARGET_STATE_DEFAULT) => {
   // Update header
   if (targetStateName) targetStateName.textContent = entry.name;
   if (targetStateAbbr) targetStateAbbr.textContent = stateAbbrev;
+  if (targetStatePlaceholderText) {
+    targetStatePlaceholderText.textContent = `Click on a city from the map to view detailed healthcare market information including hospitals, competition, and salary data for ${entry.name}.`;
+  }
 
   // Update stats
   const totalHospitals = metros.reduce((sum, m) => sum + (m.hospitals?.length || 0), 0);
@@ -6077,7 +6095,11 @@ const selectTargetStateMetro = (metro, stateAbbrev) => {
 };
 
 const openTargetState = async () => {
-  await renderTargetState(TARGET_STATE_DEFAULT);
+  const selectedState = getTargetStateSelection();
+  if (targetStateSelect && targetStateSelect.value !== selectedState) {
+    targetStateSelect.value = selectedState;
+  }
+  await renderTargetState(selectedState);
   targetStateModal?.classList.add('active');
 };
 
@@ -6265,9 +6287,20 @@ const initStateBeacon = () => {
   openTargetStateBtn?.addEventListener('click', openTargetState);
   targetStateCloseBtn?.addEventListener('click', closeTargetState);
   targetStateCloseFooter?.addEventListener('click', closeTargetState);
+  targetStateSelect?.addEventListener('change', (event) => {
+    const nextState = event.target?.value || TARGET_STATE_DEFAULT;
+    if (stateBeaconStateSelect) {
+      stateBeaconStateSelect.value = nextState;
+    }
+    renderTargetState(nextState);
+  });
   targetStateOpenBeacon?.addEventListener('click', () => {
+    const selectedState = getTargetStateSelection();
+    if (stateBeaconStateSelect) {
+      stateBeaconStateSelect.value = selectedState;
+    }
     closeTargetState();
-    openStateBeacon(TARGET_STATE_DEFAULT);
+    openStateBeacon(selectedState);
   });
 
   // Initialize quick tags

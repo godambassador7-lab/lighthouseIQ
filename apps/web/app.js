@@ -153,6 +153,17 @@ const targetStateMetroCompetition = document.getElementById('target-state-metro-
 const targetStateMetroSalary = document.getElementById('target-state-metro-salary');
 const targetStateMetroFactors = document.getElementById('target-state-metro-factors');
 
+let currentTargetStateMetro = null;
+const TARGET_STATE_DEFAULT = 'KY';
+const TARGET_STATE_OPTIONS = ['KY', 'IN', 'FL', 'IL', 'MI', 'NY', 'TX'];
+
+const getTargetStateSelection = () => {
+  const preferred = stateBeaconStateSelect?.value
+    || targetStateSelect?.value
+    || TARGET_STATE_DEFAULT;
+  return TARGET_STATE_OPTIONS.includes(preferred) ? preferred : TARGET_STATE_DEFAULT;
+};
+
 let currentNotices = [];
 let customNotices = []; // User-added notices
 let projects = []; // User projects
