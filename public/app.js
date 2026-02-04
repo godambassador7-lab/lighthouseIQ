@@ -3053,8 +3053,10 @@ const initViewToggle = () => {
     if (!isVisible) renderMapFactors();
   });
 
-  mapMagnifyBtn?.addEventListener('click', () => {
-    setMapMagnify(!mapMagnifyActive);
+  mapMagnifyBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const newState = !mapMagnifyActive;
+    setMapMagnify(newState);
   });
 
   mapFactorsClose?.addEventListener('click', () => {
