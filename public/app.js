@@ -2851,9 +2851,6 @@ const initCollapsibleSections = () => {
       toggle.setAttribute('aria-expanded', String(!isCollapsed));
       if (label) label.textContent = isCollapsed ? 'Expand' : 'Collapse';
       if (icon) icon.textContent = isCollapsed ? '+' : '–';
-      if (!isCollapsed && section.classList.contains('news-feed-section')) {
-        requestAnimationFrame(refreshNewsFeedWindow);
-      }
     });
   });
 
@@ -3146,28 +3143,6 @@ const formatNewsDate = (dateStr) => {
   }
 };
 
-const refreshNewsFeedWindow = () => {
-  const list = document.getElementById('news-feed-list');
-  if (!list) return;
-  const cards = list.querySelectorAll('.news-card');
-  if (cards.length <= NEWS_WINDOW_COUNT) {
-    list.style.maxHeight = '';
-    list.classList.remove('news-feed-windowed');
-    return;
-  }
-  let height = 0;
-  for (let i = 0; i < Math.min(NEWS_WINDOW_COUNT, cards.length); i++) {
-    height += cards[i].getBoundingClientRect().height;
-  }
-  if (height <= 0) {
-    requestAnimationFrame(refreshNewsFeedWindow);
-    return;
-  }
-  height += NEWS_WINDOW_COUNT - 1;
-  list.style.maxHeight = `${Math.ceil(height)}px`;
-  list.classList.add('news-feed-windowed');
-};
-
 const renderNewsFeed = () => {
   const list = document.getElementById('news-feed-list');
   if (!list) return;
@@ -3192,7 +3167,23 @@ const renderNewsFeed = () => {
     </a>
   `).join('');
 
-  requestAnimationFrame(refreshNewsFeedWindow);
+  // Apply 15-item scroll window
+  requestAnimationFrame(() => {
+    const cards = list.querySelectorAll('.news-card');
+    if (cards.length <= NEWS_WINDOW_COUNT) {
+      list.style.maxHeight = '';
+      list.classList.remove('news-feed-windowed');
+      return;
+    }
+    let height = 0;
+    for (let i = 0; i < Math.min(NEWS_WINDOW_COUNT, cards.length); i++) {
+      height += cards[i].getBoundingClientRect().height;
+    }
+    // Add 1px per card for the border-bottom
+    height += NEWS_WINDOW_COUNT - 1;
+    list.style.maxHeight = `${Math.ceil(height)}px`;
+    list.classList.add('news-feed-windowed');
+  });
 };
 
 const loadNews = async () => {
