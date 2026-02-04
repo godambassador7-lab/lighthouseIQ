@@ -59,6 +59,7 @@ const mapScopeHealthcareBtn = document.getElementById('map-scope-healthcare');
 const mapScopeAllBtn = document.getElementById('map-scope-all');
 const mapScopeLabel = document.getElementById('map-scope-label');
 const mapHomeStateBtn = document.getElementById('map-home-state-btn');
+const mapTargetStateBtn = document.getElementById('map-target-state-btn');
 const mapFactorsBtn = document.getElementById('map-factors-btn');
 const mapFactorsPanel = document.getElementById('map-factors-panel');
 const mapFactorsClose = document.getElementById('map-factors-close');
@@ -210,9 +211,12 @@ const STATE_BEACON_HOME_DEFAULT = 'IN';
 const STATE_BEACON_INPUTS_KEY = 'lni_state_beacon_inputs';
 const STATE_BEACON_NOTES_KEY = 'lni_state_beacon_notes';
 const MAP_LONG_PRESS_MS = 2000;
+const MAP_TARGET_LONG_PRESS_MS = 3000;
 const MAP_RECRUIT_TARGET_COUNT = 5;
 let mapLongPressTimer = null;
 let mapLongPressSuppressUntil = 0;
+let mapRightLongPressTimer = null;
+let mapRightLongPressSuppressUntil = 0;
 let mapRecruitTargetsInfo = [];
 
 const REQUIRED_PROGRAM_ACCREDITORS = ['CCNE', 'ACEN', 'CNEA'];
@@ -866,18 +870,40 @@ const initWeatherMap = async () => {
           showMapToast(`Top recruiting targets highlighted for ${STATE_NAMES[homeState] || homeState}`);
         }, MAP_LONG_PRESS_MS);
       });
+      shape.addEventListener('pointerdown', (e) => {
+        if (e.button !== 2) return;
+        mapRightLongPressTimer = window.setTimeout(() => {
+          mapRightLongPressSuppressUntil = Date.now() + 500;
+          const currentTarget = getMapTargetState();
+          if (currentTarget === abbrev) {
+            clearMapTargetState();
+          } else {
+            setMapTargetState(abbrev);
+          }
+        }, MAP_TARGET_LONG_PRESS_MS);
+      });
       const clearLongPress = () => {
         if (mapLongPressTimer) {
           clearTimeout(mapLongPressTimer);
           mapLongPressTimer = null;
         }
       };
+      const clearRightLongPress = () => {
+        if (mapRightLongPressTimer) {
+          clearTimeout(mapRightLongPressTimer);
+          mapRightLongPressTimer = null;
+        }
+      };
       shape.addEventListener('pointerup', clearLongPress);
       shape.addEventListener('pointerleave', clearLongPress);
       shape.addEventListener('pointercancel', clearLongPress);
+      shape.addEventListener('pointerup', clearRightLongPress);
+      shape.addEventListener('pointerleave', clearRightLongPress);
+      shape.addEventListener('pointercancel', clearRightLongPress);
       // Right-click to set/clear home state
       shape.addEventListener('contextmenu', (e) => {
         e.preventDefault();
+        if (Date.now() < mapRightLongPressSuppressUntil) return;
         const currentHome = getMapHomeState();
         if (currentHome === abbrev) {
           clearMapHomeState();
@@ -894,6 +920,7 @@ const initWeatherMap = async () => {
 
   // Apply home state highlight if one is saved
   updateMapHomeStateHighlight();
+  updateMapTargetStateHighlight();
 };
 
   const showTooltip = (e, stateAbbrev) => {
@@ -1150,6 +1177,7 @@ const KY_DETAILS = {
 // Map Home State (right-click to set, double-click to clear)
 // =============================================================================
 const MAP_HOME_STATE_KEY = 'lighthouseiq_map_home_state';
+const MAP_TARGET_STATE_KEY = 'lighthouseiq_map_target_state';
 
 const getMapHomeState = () => {
   try {
@@ -1199,6 +1227,53 @@ const updateMapHomeStateHighlight = () => {
   });
   if (mapHomeStateBtn) {
     mapHomeStateBtn.style.display = homeState ? 'inline-flex' : 'none';
+  }
+};
+
+const getMapTargetState = () => {
+  try {
+    return localStorage.getItem(MAP_TARGET_STATE_KEY) || null;
+  } catch {
+    return null;
+  }
+};
+
+const setMapTargetState = (stateAbbrev) => {
+  try {
+    localStorage.setItem(MAP_TARGET_STATE_KEY, stateAbbrev);
+    if (stateBeaconStateSelect) {
+      stateBeaconStateSelect.value = stateAbbrev;
+    }
+    if (targetStateSelect) {
+      targetStateSelect.value = stateAbbrev;
+    }
+  } catch {
+    // ignore
+  }
+  updateMapTargetStateHighlight();
+  showMapToast(`Target state set to ${STATE_NAMES[stateAbbrev] || stateAbbrev}`);
+};
+
+const clearMapTargetState = () => {
+  try {
+    localStorage.removeItem(MAP_TARGET_STATE_KEY);
+  } catch {
+    // ignore
+  }
+  updateMapTargetStateHighlight();
+  showMapToast('Target state cleared');
+};
+
+const updateMapTargetStateHighlight = () => {
+  const targetState = getMapTargetState();
+  document.querySelectorAll('.us-map path[data-state], .us-map circle[data-state]').forEach(shape => {
+    shape.classList.remove('target-state-glow');
+    if (targetState && shape.dataset.state === targetState) {
+      shape.classList.add('target-state-glow');
+    }
+  });
+  if (mapTargetStateBtn) {
+    mapTargetStateBtn.style.display = targetState ? 'inline-flex' : 'none';
   }
 };
 
@@ -2960,6 +3035,15 @@ const initViewToggle = () => {
     const homeState = getMapHomeState();
     if (!homeState) return;
     openHomeState();
+  });
+
+  mapTargetStateBtn?.addEventListener('click', () => {
+    const targetState = getMapTargetState();
+    if (!targetState) return;
+    if (targetStateSelect) {
+      targetStateSelect.value = targetState;
+    }
+    openTargetState();
   });
 
   mapFactorsBtn?.addEventListener('click', () => {
