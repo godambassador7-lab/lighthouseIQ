@@ -3077,24 +3077,28 @@ const initApp = async () => {
   setLoading('Loading data...');
 
   // Initialize UI components
-  initRegionSelect();
-  initStateMultiSelect();
-  initSpecialtyMultiSelect();
-  initCustomStateSelect();
-  initFilters();
-  initQuickNav();
-  initProjects();
-  initStateCalibration();
-  initCustomNotices();
-  initHelpSection();
-  initCollapsibleSections();
-  initViewToggle();
+  try {
+    initRegionSelect();
+    initStateMultiSelect();
+    initSpecialtyMultiSelect();
+    initCustomStateSelect();
+    initFilters();
+    initQuickNav();
+    initProjects();
+    initStateCalibration();
+    initCustomNotices();
+    initHelpSection();
+    initCollapsibleSections();
+    initViewToggle();
     initMapScopeToggle();
     initForecast();
     initProgramsModule();
     initStateBeacon();
     initNewsFeed();
     await initWeatherMap();
+  } catch (err) {
+    console.error('Error initializing UI:', err);
+  }
 
   // Load data
   await Promise.all([
