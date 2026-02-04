@@ -3145,7 +3145,7 @@ const formatNewsDate = (dateStr) => {
 
 const getNewsDateFilter = () => {
   const filter = document.getElementById('news-date-filter');
-  return filter ? parseInt(filter.value, 10) || 7 : 7;
+  return filter ? parseInt(filter.value, 10) || 3 : 3;
 };
 
 const filterNewsByDate = (articles, days) => {
@@ -5578,7 +5578,9 @@ const STATE_METRO_DATA = {
         ]
       }
     ]
-  }
+  },
+  // Kentucky data from KY_DETAILS
+  KY: KY_DETAILS.KY
 };
 
 let currentHomeStateMetro = null;
@@ -5819,6 +5821,272 @@ const openHomeState = async () => {
 
 const closeHomeState = () => homeStateModal?.classList.remove('active');
 
+// =============================================================================
+// TARGET STATE MODULE (Kentucky Pilot)
+// =============================================================================
+
+const targetStateModal = document.getElementById('target-state-modal');
+const targetStateCloseBtn = document.getElementById('target-state-close');
+const targetStateCloseFooter = document.getElementById('target-state-close-footer');
+const targetStateOpenBeacon = document.getElementById('target-state-open-beacon');
+const openTargetStateBtn = document.getElementById('open-target-state');
+
+// Target State module elements
+const targetStateName = document.getElementById('target-state-name');
+const targetStateAbbr = document.getElementById('target-state-abbr');
+const targetStateStatHospitals = document.getElementById('target-state-stat-hospitals');
+const targetStateStatMetros = document.getElementById('target-state-stat-metros');
+const targetStateStatPrograms = document.getElementById('target-state-stat-programs');
+const targetStateStatCompact = document.getElementById('target-state-stat-compact');
+const targetStateMetroMap = document.getElementById('target-state-metro-map');
+const targetStateDetailPlaceholder = document.getElementById('target-state-detail-placeholder');
+const targetStateDetailContent = document.getElementById('target-state-detail-content');
+const targetStateMetroName = document.getElementById('target-state-metro-name');
+const targetStateMetroBadge = document.getElementById('target-state-metro-badge');
+const targetStateHospitalCount = document.getElementById('target-state-hospital-count');
+const targetStateMetroHospitals = document.getElementById('target-state-metro-hospitals');
+const targetStateMetroCompetition = document.getElementById('target-state-metro-competition');
+const targetStateMetroSalary = document.getElementById('target-state-metro-salary');
+const targetStateMetroFactors = document.getElementById('target-state-metro-factors');
+
+let currentTargetStateMetro = null;
+const TARGET_STATE_DEFAULT = 'KY'; // Kentucky as pilot
+
+const renderTargetState = async (stateAbbrev = TARGET_STATE_DEFAULT) => {
+  await loadStateBeaconData();
+  await ensureProgramsDataForBeacon();
+
+  const entry = getBeaconEntry(stateAbbrev);
+  const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === stateAbbrev);
+  const metroData = STATE_METRO_DATA[stateAbbrev] || STATE_METRO_DATA.KY;
+  const metros = metroData?.metros || [];
+
+  // Update header
+  if (targetStateName) targetStateName.textContent = entry.name;
+  if (targetStateAbbr) targetStateAbbr.textContent = stateAbbrev;
+
+  // Update stats
+  const totalHospitals = metros.reduce((sum, m) => sum + (m.hospitals?.length || 0), 0);
+  if (targetStateStatHospitals) targetStateStatHospitals.textContent = totalHospitals || '--';
+  if (targetStateStatMetros) targetStateStatMetros.textContent = metros.length || '--';
+  if (targetStateStatPrograms) targetStateStatPrograms.textContent = programsInState.length || '--';
+  if (targetStateStatCompact) targetStateStatCompact.textContent = entry.compact ? 'Yes' : 'No';
+
+  // Render metro cards
+  if (targetStateMetroMap) {
+    targetStateMetroMap.innerHTML = metros.map((metro, idx) => `
+      <div class="metro-city-card" data-metro-index="${idx}">
+        <div class="metro-city-icon ${metro.size}">
+          ${metro.size === 'major' ? '🏙️' : metro.size === 'medium' ? '🏘️' : '🏠'}
+        </div>
+        <div class="metro-city-info">
+          <div class="metro-city-name">${escapeHtml(metro.name)}</div>
+          <div class="metro-city-meta">${escapeHtml(metro.population)} • ${metro.hospitals?.length || 0} hospitals</div>
+        </div>
+        <div class="metro-city-indicator ${metro.competition}"></div>
+      </div>
+    `).join('');
+
+    // Add click handlers
+    targetStateMetroMap.querySelectorAll('.metro-city-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const idx = parseInt(card.dataset.metroIndex, 10);
+        selectTargetStateMetro(metros[idx], stateAbbrev);
+        targetStateMetroMap.querySelectorAll('.metro-city-card').forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+      });
+    });
+  }
+
+  // Reset detail panel to placeholder
+  currentTargetStateMetro = null;
+  if (targetStateDetailPlaceholder) targetStateDetailPlaceholder.style.display = 'flex';
+  if (targetStateDetailContent) targetStateDetailContent.style.display = 'none';
+};
+
+const selectTargetStateMetro = (metro, stateAbbrev) => {
+  currentTargetStateMetro = metro;
+
+  // Show detail content, hide placeholder
+  if (targetStateDetailPlaceholder) targetStateDetailPlaceholder.style.display = 'none';
+  if (targetStateDetailContent) targetStateDetailContent.style.display = 'block';
+
+  // Update header
+  if (targetStateMetroName) targetStateMetroName.textContent = metro.name;
+  if (targetStateMetroBadge) {
+    const badgeText = metro.size === 'major' ? 'Major Metro' : metro.size === 'medium' ? 'Regional Hub' : 'Small Market';
+    targetStateMetroBadge.textContent = badgeText;
+  }
+
+  // Render hospitals
+  const hospitals = metro.hospitals || [];
+  if (targetStateHospitalCount) targetStateHospitalCount.textContent = `${hospitals.length} facilities`;
+  if (targetStateMetroHospitals) {
+    targetStateMetroHospitals.innerHTML = hospitals.map((h, idx) => `
+      <div class="hospital-card">
+        <div class="hospital-rank">${idx + 1}</div>
+        <div class="hospital-info">
+          <div class="hospital-name">${escapeHtml(h.name)}</div>
+          <div class="hospital-details">
+            <span>${escapeHtml(h.system)}</span>
+            <span>${h.beds} beds</span>
+            <span>⭐ ${h.reviews}</span>
+          </div>
+        </div>
+        <div class="hospital-score">
+          <span class="score-value">${h.score}</span>
+          <span class="score-label">Score</span>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Render competition/systems
+  const systems = metro.systems || [];
+  if (targetStateMetroCompetition) {
+    targetStateMetroCompetition.innerHTML = systems.map(s => `
+      <div class="competition-card">
+        <div class="competition-name">${escapeHtml(s.name)}</div>
+        <div class="competition-details">${s.facilities} facilities • ${escapeHtml(s.marketShare)} market share</div>
+      </div>
+    `).join('');
+  }
+
+  // Render salary data
+  const metroData = STATE_METRO_DATA[stateAbbrev] || STATE_METRO_DATA.KY;
+  const salaryMeta = metroData?.salaryMeta || {};
+  const salary = metro.salary || {};
+  const breakdown = Array.isArray(salary.breakdown)
+    ? salary.breakdown
+    : Array.isArray(salaryMeta.breakdown)
+      ? salaryMeta.breakdown
+      : [];
+  const sources = Array.isArray(salary.sources)
+    ? salary.sources.filter((src) => src && src.name && src.url)
+    : Array.isArray(salaryMeta.sources)
+      ? salaryMeta.sources.filter((src) => src && src.name && src.url)
+      : [];
+  const salarySystems = Array.isArray(salary.systems) ? salary.systems : [];
+  const updatedAtRaw = salary.updatedAt || salaryMeta.updatedAt || null;
+  const updateEveryDays = Number(salary.updateEveryDays || salaryMeta.updateEveryDays || 7);
+  const updatedAt = updatedAtRaw ? new Date(updatedAtRaw) : null;
+  const updatedAtValid = updatedAt && !Number.isNaN(updatedAt.getTime());
+  const daysMs = 24 * 60 * 60 * 1000;
+  const isStale = updatedAtValid && (Date.now() - updatedAt.getTime() > updateEveryDays * daysMs);
+  const updatedLabel = updatedAtValid
+    ? updatedAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+    : null;
+  const nextUpdateLabel = updatedAtValid
+    ? new Date(updatedAt.getTime() + updateEveryDays * daysMs)
+      .toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+    : null;
+
+  if (targetStateMetroSalary) {
+    const breakdownSectionHtml = breakdown.length
+      ? `
+        <div class="salary-breakdown-section">
+          <div class="salary-breakdown-subtitle">Market benchmarks</div>
+          <div class="salary-breakdown-grid">
+            ${breakdown.map((item) => `
+              <div class="salary-breakdown-item">
+                <div class="salary-breakdown-label">${escapeHtml(item.label || '--')}</div>
+                <div class="salary-breakdown-value">${escapeHtml(item.value || '--')}</div>
+                ${item.note ? `<div class="salary-breakdown-note">${escapeHtml(item.note)}</div>` : ''}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `
+      : '';
+    const systemsSectionHtml = salarySystems.length
+      ? `
+        <div class="salary-breakdown-section">
+          <div class="salary-breakdown-subtitle">Major systems (est.)</div>
+          <div class="salary-system-grid">
+            ${salarySystems.map((item) => `
+              <div class="salary-system-item">
+                <div class="salary-system-name">${escapeHtml(item.name || '--')}</div>
+                <div class="salary-system-value">${escapeHtml(item.value || '--')}</div>
+                ${item.source && item.url ? `
+                  <a class="salary-system-source" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">
+                    ${escapeHtml(item.source)}
+                  </a>
+                ` : item.source ? `<div class="salary-system-source">${escapeHtml(item.source)}</div>` : ''}
+                ${item.note ? `<div class="salary-system-note">${escapeHtml(item.note)}</div>` : ''}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `
+      : '';
+    const refreshHtml = updatedAtValid
+      ? `
+        <div class="salary-breakdown-refresh ${isStale ? 'stale' : ''}">
+          <span>Updated ${escapeHtml(updatedLabel)}</span>
+          ${nextUpdateLabel ? `<span>Next refresh: ${escapeHtml(nextUpdateLabel)}</span>` : ''}
+          ${isStale ? '<span class="refresh-flag">Update due</span>' : ''}
+        </div>
+      `
+      : '';
+    const sourcesHtml = sources.length
+      ? `
+        <div class="salary-breakdown-sources">
+          <span class="salary-breakdown-sources-label">Sources:</span>
+          ${sources.map((src, idx) => `
+            <a href="${escapeHtml(src.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(src.name)}</a>${idx < sources.length - 1 ? '<span class="source-sep">•</span>' : ''}
+          `).join('')}
+        </div>
+      `
+      : '';
+    const breakdownHtml = (breakdownSectionHtml || systemsSectionHtml || refreshHtml || sourcesHtml)
+      ? `
+        <div class="salary-breakdown">
+          <div class="salary-breakdown-title">Estimated salary breakdown</div>
+          ${breakdownSectionHtml}
+          ${systemsSectionHtml}
+          ${refreshHtml}
+          ${sourcesHtml}
+        </div>
+      `
+      : '';
+
+    targetStateMetroSalary.innerHTML = `
+      <div class="salary-card">
+        <div class="salary-value">${escapeHtml(salary.staffRN || '--')}</div>
+        <div class="salary-label">Staff RN Hourly</div>
+      </div>
+      <div class="salary-card">
+        <div class="salary-value">${escapeHtml(salary.travelRN || '--')}</div>
+        <div class="salary-label">Travel RN Weekly</div>
+      </div>
+      <div class="salary-card">
+        <div class="salary-value">${escapeHtml(salary.signOn || '--')}</div>
+        <div class="salary-label">Sign-On Bonus</div>
+      </div>
+      ${breakdownHtml}
+    `;
+  }
+
+  // Render factors
+  const factors = metro.factors || [];
+  if (targetStateMetroFactors) {
+    targetStateMetroFactors.innerHTML = factors.map(f => `
+      <span class="factor-tag ${f.type}">${escapeHtml(f.text)}</span>
+    `).join('');
+  }
+};
+
+const openTargetState = async () => {
+  await renderTargetState(TARGET_STATE_DEFAULT);
+  targetStateModal?.classList.add('active');
+};
+
+const closeTargetState = () => targetStateModal?.classList.remove('active');
+
+// =============================================================================
+// END TARGET STATE MODULE
+// =============================================================================
+
 const exportStateBeaconJson = () => {
   if (!stateBeaconStateSelect) return;
   const data = buildStateBeaconExport(stateBeaconStateSelect.value);
@@ -5991,6 +6259,15 @@ const initStateBeacon = () => {
     if (homeStateModal?.classList.contains('active')) {
       renderHomeState(stateBeaconHomeSelect.value || STATE_BEACON_HOME_DEFAULT);
     }
+  });
+
+  // Target State event listeners
+  openTargetStateBtn?.addEventListener('click', openTargetState);
+  targetStateCloseBtn?.addEventListener('click', closeTargetState);
+  targetStateCloseFooter?.addEventListener('click', closeTargetState);
+  targetStateOpenBeacon?.addEventListener('click', () => {
+    closeTargetState();
+    openStateBeacon(TARGET_STATE_DEFAULT);
   });
 
   // Initialize quick tags

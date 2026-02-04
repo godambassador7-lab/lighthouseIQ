@@ -70,6 +70,9 @@
             <button class="module-item home-state-pulse" id="open-home-state" type="button">
               Home State
             </button>
+            <button class="module-item target-state-pulse" id="open-target-state" type="button">
+              Target State (KY)
+            </button>
           </div>
         </div>
       </div>
@@ -488,8 +491,8 @@
         <div class="news-feed-toolbar">
           <label for="news-date-filter">Show:</label>
           <select id="news-date-filter" class="news-date-filter">
-            <option value="3">Last 3 days</option>
-            <option value="7" selected>Last 7 days</option>
+            <option value="3" selected>Last 3 days</option>
+            <option value="7">Last 7 days</option>
             <option value="14">Last 14 days</option>
             <option value="30">Last month</option>
             <option value="90">Last 3 months</option>
@@ -1186,6 +1189,120 @@
         <div class="home-state-footer">
           <button type="button" class="btn ghost" id="home-state-open-beacon">Open Full State Beacon</button>
           <button type="button" class="btn secondary" id="home-state-close-footer">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Target State Modal (Kentucky Pilot) -->
+    <div class="modal-overlay" id="target-state-modal">
+      <div class="modal-card target-state-card">
+        <!-- Header -->
+        <div class="target-state-header">
+          <div class="target-state-title-row">
+            <div class="target-state-title">
+              <h3 id="target-state-name">Kentucky</h3>
+              <span class="target-state-abbr" id="target-state-abbr">KY</span>
+              <span class="target-state-badge">Target State</span>
+            </div>
+            <button class="modal-close" id="target-state-close">&times;</button>
+          </div>
+          <div class="target-state-stats">
+            <div class="target-state-stat">
+              <span class="stat-value" id="target-state-stat-hospitals">--</span>
+              <span class="stat-label">Hospitals</span>
+            </div>
+            <div class="target-state-stat">
+              <span class="stat-value" id="target-state-stat-metros">--</span>
+              <span class="stat-label">Metro Areas</span>
+            </div>
+            <div class="target-state-stat">
+              <span class="stat-value" id="target-state-stat-programs">--</span>
+              <span class="stat-label">Nursing Programs</span>
+            </div>
+            <div class="target-state-stat">
+              <span class="stat-value" id="target-state-stat-compact">--</span>
+              <span class="stat-label">Compact State</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="target-state-content">
+          <!-- Left Panel: Metro Map -->
+          <div class="target-state-map-panel">
+            <h4>Select a Metro Area</h4>
+            <p class="panel-subtitle">Click a city to view healthcare market details</p>
+            <div class="target-state-metro-map" id="target-state-metro-map">
+              <!-- Metro cities will be rendered here as clickable cards -->
+            </div>
+            <div class="target-state-map-legend">
+              <span><span class="legend-dot high"></span> High Competition</span>
+              <span><span class="legend-dot medium"></span> Medium</span>
+              <span><span class="legend-dot low"></span> Low Competition</span>
+            </div>
+          </div>
+
+          <!-- Right Panel: Metro Details -->
+          <div class="target-state-detail-panel" id="target-state-detail-panel">
+            <div class="target-state-detail-placeholder" id="target-state-detail-placeholder">
+              <div class="placeholder-icon">🎯</div>
+              <h4>Select a Metro Area</h4>
+              <p>Click on a city from the map to view detailed healthcare market information including hospitals, competition, and salary data for Kentucky.</p>
+            </div>
+            <div class="target-state-detail-content" id="target-state-detail-content" style="display: none;">
+              <div class="detail-header">
+                <h4 id="target-state-metro-name">Louisville</h4>
+                <span class="detail-badge" id="target-state-metro-badge">Major Metro</span>
+              </div>
+
+              <!-- Hospitals Section -->
+              <div class="detail-section">
+                <div class="detail-section-header">
+                  <h5>Top Hospitals</h5>
+                  <span class="section-badge" id="target-state-hospital-count">0 facilities</span>
+                </div>
+                <div class="detail-hospital-list" id="target-state-metro-hospitals">
+                  <!-- Hospital cards will be rendered here -->
+                </div>
+              </div>
+
+              <!-- Competition Section -->
+              <div class="detail-section">
+                <div class="detail-section-header">
+                  <h5>Healthcare Systems</h5>
+                </div>
+                <div class="detail-competition-grid" id="target-state-metro-competition">
+                  <!-- Competition cards will be rendered here -->
+                </div>
+              </div>
+
+              <!-- Salary & Market Section -->
+              <div class="detail-section">
+                <div class="detail-section-header">
+                  <h5>Salary &amp; Market Data</h5>
+                </div>
+                <div class="detail-salary-grid" id="target-state-metro-salary">
+                  <!-- Salary data will be rendered here -->
+                </div>
+              </div>
+
+              <!-- Key Factors Section -->
+              <div class="detail-section">
+                <div class="detail-section-header">
+                  <h5>Key Market Factors</h5>
+                </div>
+                <div class="detail-factors-list" id="target-state-metro-factors">
+                  <!-- Factors will be rendered here -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="target-state-footer">
+          <button type="button" class="btn ghost" id="target-state-open-beacon">Open Full State Beacon</button>
+          <button type="button" class="btn secondary" id="target-state-close-footer">Close</button>
         </div>
       </div>
     </div>

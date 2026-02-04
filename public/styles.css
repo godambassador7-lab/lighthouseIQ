@@ -2106,6 +2106,248 @@ select {
   border-top: 1px solid rgba(26, 54, 93, 0.1);
 }
 
+/* ============================================================================
+   Target State Module - Kentucky Pilot (Similar to Home State with teal theme)
+   ============================================================================ */
+.target-state-card {
+  max-width: 1100px;
+  width: 95vw;
+  max-height: 90vh;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+}
+
+.target-state-header {
+  background: linear-gradient(135deg, #134e4a 0%, #0f766e 50%, #14b8a6 100%);
+  padding: 1.5rem 2rem;
+  color: #fff;
+}
+
+.target-state-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.25rem;
+}
+
+.target-state-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.target-state-title h3 {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.target-state-abbr {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.35rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.target-state-badge {
+  background: rgba(255, 255, 255, 0.25);
+  padding: 0.3rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.target-state-header .modal-close {
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 10px;
+  width: 36px;
+  height: 36px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.target-state-header .modal-close:hover {
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+}
+
+.target-state-stats {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.target-state-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.target-state-stat .stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.target-state-stat .stat-label {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.target-state-content {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* Metro Map Panel */
+.target-state-map-panel {
+  background: #f8fafc;
+  padding: 1.25rem;
+  border-right: 1px solid rgba(26, 54, 93, 0.1);
+  overflow-y: auto;
+}
+
+.target-state-map-panel h4 {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+  color: #134e4a;
+}
+
+.target-state-map-panel .panel-subtitle {
+  margin: 0 0 1rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.target-state-metro-map {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.target-state-metro-map .metro-city-card:hover {
+  border-color: #14b8a6;
+  box-shadow: 0 4px 12px rgba(20, 184, 166, 0.15);
+}
+
+.target-state-metro-map .metro-city-card.active {
+  border-color: #134e4a;
+  background: linear-gradient(135deg, rgba(19, 78, 74, 0.04), rgba(20, 184, 166, 0.08));
+}
+
+.target-state-map-legend {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(26, 54, 93, 0.1);
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+/* Detail Panel */
+.target-state-detail-panel {
+  padding: 1.5rem;
+  overflow-y: auto;
+  background: #fff;
+}
+
+.target-state-detail-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  color: var(--muted);
+  padding: 2rem;
+}
+
+.target-state-detail-placeholder h4 {
+  margin: 0 0 0.5rem;
+  color: #134e4a;
+  font-size: 1.1rem;
+}
+
+.target-state-detail-placeholder p {
+  margin: 0;
+  font-size: 0.9rem;
+  max-width: 300px;
+  line-height: 1.5;
+}
+
+.target-state-detail-content .detail-header h4 {
+  color: #134e4a;
+}
+
+.target-state-detail-content .hospital-rank {
+  background: linear-gradient(135deg, #134e4a, #0f766e);
+}
+
+.target-state-detail-content .score-value {
+  color: #134e4a;
+}
+
+/* Footer */
+.target-state-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: #f8fafc;
+  border-top: 1px solid rgba(26, 54, 93, 0.1);
+}
+
+/* Menu item pulse effect for Target State */
+.target-state-pulse {
+  position: relative;
+}
+
+.target-state-pulse::before {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  background: #14b8a6;
+  border-radius: 50%;
+  animation: targetPulse 2s ease-in-out infinite;
+}
+
+@keyframes targetPulse {
+  0%, 100% { opacity: 0.4; transform: translateY(-50%) scale(0.8); }
+  50% { opacity: 1; transform: translateY(-50%) scale(1.2); }
+}
+
+/* Responsive for Target State */
+@media (max-width: 800px) {
+  .target-state-content {
+    grid-template-columns: 1fr;
+  }
+
+  .target-state-map-panel {
+    border-right: none;
+    border-bottom: 1px solid rgba(26, 54, 93, 0.1);
+    max-height: 250px;
+  }
+}
+
 /* Responsive */
 @media (max-width: 800px) {
   .home-state-content {
