@@ -878,6 +878,15 @@ const initWeatherMap = async () => {
       // Right-click to set/clear home state
       shape.addEventListener('contextmenu', (e) => {
         e.preventDefault();
+        if (e.shiftKey) {
+          const currentTarget = getMapTargetState();
+          if (currentTarget === abbrev) {
+            clearMapTargetState();
+          } else {
+            setMapTargetState(abbrev);
+          }
+          return;
+        }
         const currentHome = getMapHomeState();
         if (currentHome === abbrev) {
           clearMapHomeState();
