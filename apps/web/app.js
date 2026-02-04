@@ -30,6 +30,11 @@ const statUpdated = document.getElementById('stat-updated');
 const usMapContainer = document.getElementById('us-map');
 const mapTooltip = document.getElementById('map-tooltip');
 const mapToast = document.getElementById('map-toast');
+const mapFactorsBtn = document.getElementById('map-factors-btn');
+const mapFactorsPanel = document.getElementById('map-factors-panel');
+const mapFactorsClose = document.getElementById('map-factors-close');
+const mapFactorsList = document.getElementById('map-factors-list');
+const mapFactorsSubtitle = document.getElementById('map-factors-subtitle');
 const mapScopeHealthcareBtn = document.getElementById('map-scope-healthcare');
 const mapScopeAllBtn = document.getElementById('map-scope-all');
 const mapScopeLabel = document.getElementById('map-scope-label');
@@ -1505,6 +1510,9 @@ const loadStatesWithMap = async () => {
 
     // Update the weather map colors
     updateWeatherMap();
+    if (mapFactorsPanel && mapFactorsPanel.style.display !== 'none') {
+      renderMapFactors();
+    }
     const counts = Object.values(stateData).map(entry => entry.count ?? 0);
     calibrationStats = {
       minCount: counts.length ? Math.min(...counts) : 0,
@@ -2155,6 +2163,20 @@ const initCollapsibleSections = () => {
       if (label) label.textContent = isCollapsed ? 'Expand' : 'Collapse';
       if (icon) icon.textContent = isCollapsed ? '+' : '–';
     });
+  });
+};
+
+const initStrategicReview = () => {
+  const toggleBtn = document.getElementById('strategic-toggle');
+  const section = document.querySelector('.strategic-review-section');
+  const toggleIcon = section?.querySelector('.strategic-toggle-icon');
+
+  if (!toggleBtn || !section) return;
+
+  toggleBtn.addEventListener('click', () => {
+    section.classList.toggle('open');
+    const isOpen = section.classList.contains('open');
+    if (toggleIcon) toggleIcon.textContent = isOpen ? '-' : '+';
   });
 };
 
@@ -3286,6 +3308,48 @@ const initMapScopeToggle = () => {
   mapScopeAllBtn?.addEventListener('click', () => setMapScope('all', { reloadNotices: true }));
 };
 
+const renderMapFactors = () => {
+  if (!mapFactorsList) return;
+  const entries = Object.entries(mapStateData || {})
+    .map(([state, entry]) => {
+      const count = typeof entry === 'number' ? entry : (entry?.count ?? 0);
+      return { state, count };
+    })
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 5);
+
+  if (mapFactorsSubtitle) {
+    mapFactorsSubtitle.textContent = mapScope === 'all'
+      ? 'Top states by total notices (current scope).'
+      : 'Top states by healthcare notices (current scope).';
+  }
+
+  if (!entries.length) {
+    mapFactorsList.innerHTML = '<div class="empty-state">No state data available.</div>';
+    return;
+  }
+
+  mapFactorsList.innerHTML = entries.map((entry, idx) => `
+    <div class="map-factor-card">
+      <div class="map-factor-title">#${idx + 1} ${STATE_NAMES[entry.state] || entry.state}</div>
+      <div class="map-factor-meta">${entry.count} notices</div>
+    </div>
+  `).join('');
+};
+
+const initMapFactors = () => {
+  mapFactorsBtn?.addEventListener('click', () => {
+    if (!mapFactorsPanel) return;
+    const isVisible = mapFactorsPanel.style.display !== 'none';
+    mapFactorsPanel.style.display = isVisible ? 'none' : 'block';
+    if (!isVisible) renderMapFactors();
+  });
+
+  mapFactorsClose?.addEventListener('click', () => {
+    if (mapFactorsPanel) mapFactorsPanel.style.display = 'none';
+  });
+};
+
 // Initialize map/chart toggle
 const initMapToggle = () => {
   const mapViewBtn = document.getElementById('map-view-btn');
@@ -3384,8 +3448,10 @@ const initApp = () => {
   initWeatherMap();
   initHelpSection();
   initCollapsibleSections();
+  initStrategicReview();
   initMapToggle();
   initMapScopeToggle();
+  initMapFactors();
     initStateMultiSelect();
     initForecast();
     initProgramsModule();

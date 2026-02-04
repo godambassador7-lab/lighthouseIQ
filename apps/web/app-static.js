@@ -60,12 +60,10 @@ const mapScopeAllBtn = document.getElementById('map-scope-all');
 const mapScopeLabel = document.getElementById('map-scope-label');
 const mapHomeStateBtn = document.getElementById('map-home-state-btn');
 const mapFactorsBtn = document.getElementById('map-factors-btn');
-const mapMagnifyBtn = document.getElementById('map-magnify-btn');
 const mapFactorsPanel = document.getElementById('map-factors-panel');
 const mapFactorsClose = document.getElementById('map-factors-close');
 const mapFactorsList = document.getElementById('map-factors-list');
 const mapFactorsSubtitle = document.getElementById('map-factors-subtitle');
-const mapMagnifyLabel = document.getElementById('map-magnify-label');
 const alertsList = document.getElementById('alerts-list');
 const heatmapList = document.getElementById('heatmap-list');
 const talentList = document.getElementById('talent-list');
@@ -216,9 +214,6 @@ const MAP_RECRUIT_TARGET_COUNT = 5;
 let mapLongPressTimer = null;
 let mapLongPressSuppressUntil = 0;
 let mapRecruitTargetsInfo = [];
-let mapMagnifyActive = false;
-let magnifyOpened = false;
-const MAP_MAGNIFY_PILOT_STATE = 'KY';
 
 const REQUIRED_PROGRAM_ACCREDITORS = ['CCNE', 'ACEN', 'CNEA'];
 
@@ -856,35 +851,11 @@ const initWeatherMap = async () => {
       shape.setAttribute('data-state', abbrev);
       shape.addEventListener('click', () => {
         if (Date.now() < mapLongPressSuppressUntil) return;
-        if (mapMagnifyActive) {
-          handleMagnifyClick(abbrev);
-          return;
-        }
         toggleStateSelection(abbrev);
       });
-      shape.addEventListener('mouseenter', (e) => {
-        if (mapMagnifyActive) {
-          shape.classList.add('magnify-hover');
-          updateMagnifyLabel(e, abbrev);
-          return;
-        }
-        showTooltip(e, abbrev);
-      });
-      shape.addEventListener('mousemove', (e) => {
-        if (mapMagnifyActive) {
-          updateMagnifyLabel(e, abbrev);
-          return;
-        }
-        moveTooltip(e);
-      });
-      shape.addEventListener('mouseleave', () => {
-        if (mapMagnifyActive) {
-          shape.classList.remove('magnify-hover');
-          hideMagnifyLabel();
-          return;
-        }
-        hideTooltip();
-      });
+      shape.addEventListener('mouseenter', (e) => showTooltip(e, abbrev));
+      shape.addEventListener('mousemove', (e) => moveTooltip(e));
+      shape.addEventListener('mouseleave', hideTooltip);
       shape.addEventListener('pointerdown', (e) => {
         if (e.button !== 0) return;
         const homeState = getMapHomeState();
@@ -926,7 +897,6 @@ const initWeatherMap = async () => {
 };
 
   const showTooltip = (e, stateAbbrev) => {
-    if (mapMagnifyActive) return;
     if (!mapTooltip) return;
     const stateName = STATE_NAMES[stateAbbrev] || stateAbbrev;
     const count = mapStateData[stateAbbrev]?.count || 0;
@@ -942,7 +912,6 @@ const initWeatherMap = async () => {
   };
 
 const moveTooltip = (e) => {
-  if (mapMagnifyActive) return;
   if (!mapTooltip) return;
   const container = usMapContainer?.closest('.weather-map-container');
   if (!container) return;
@@ -955,24 +924,6 @@ const moveTooltip = (e) => {
 
 const hideTooltip = () => {
   mapTooltip?.classList.remove('visible');
-};
-
-const setMapMagnify = (active) => {
-  mapMagnifyActive = Boolean(active);
-  if (mapMagnifyBtn) mapMagnifyBtn.classList.toggle('active', mapMagnifyActive);
-  const container = usMapContainer?.closest('.weather-map-container');
-  if (container) {
-    container.classList.toggle('magnify-active', mapMagnifyActive);
-  }
-  if (mapMagnifyActive) {
-    mapTooltip?.classList.remove('visible');
-  }
-  if (!mapMagnifyActive) {
-    mapMagnifyLabel?.classList.remove('active');
-    document.querySelectorAll('.us-map [data-state].magnify-hover').forEach((shape) => {
-      shape.classList.remove('magnify-hover');
-    });
-  }
 };
 
 const KY_DETAILS = {
@@ -1194,22 +1145,6 @@ const KY_DETAILS = {
   }
 };
 
-const updateMagnifyLabel = (e, stateAbbrev) => {
-  if (!mapMagnifyLabel) return;
-  const container = usMapContainer?.closest('.weather-map-container');
-  if (!container) return;
-  const rect = container.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
-  mapMagnifyLabel.textContent = STATE_NAMES[stateAbbrev] || stateAbbrev;
-  mapMagnifyLabel.style.left = `${x}px`;
-  mapMagnifyLabel.style.top = `${y}px`;
-  mapMagnifyLabel.classList.add('active');
-};
-
-const hideMagnifyLabel = () => {
-  mapMagnifyLabel?.classList.remove('active');
-};
 
 // =============================================================================
 // Map Home State (right-click to set, double-click to clear)
@@ -1455,25 +1390,6 @@ const showMapToast = (message) => {
   toast.textContent = message;
   toast.classList.add('visible');
   setTimeout(() => toast.classList.remove('visible'), 2000);
-};
-
-const openMagnifyState = async (stateAbbrev) => {
-  magnifyOpened = true;
-  await renderHomeState(stateAbbrev);
-  homeStateModal?.classList.add('active');
-};
-
-const handleMagnifyClick = (stateAbbrev) => {
-  const homeState = getMapHomeState();
-  if (homeState && homeState === stateAbbrev) {
-    showMapToast('Magnify only works on non-home states.');
-    return;
-  }
-  if (stateAbbrev !== MAP_MAGNIFY_PILOT_STATE) {
-    showMapToast('Magnify pilot is limited to Kentucky for now.');
-    return;
-  }
-  openMagnifyState(stateAbbrev);
 };
 
 const openStateBeaconFromMap = (targetState) => {
@@ -5866,7 +5782,6 @@ const selectHomeStateMetro = (metro, stateAbbrev) => {
 };
 
 const openHomeState = async () => {
-  magnifyOpened = false;
   const inputs = getStateBeaconInputs() || {};
   const homeState = stateBeaconHomeSelect?.value || inputs.homeState || STATE_BEACON_HOME_DEFAULT;
   if (stateBeaconHomeSelect && stateBeaconHomeSelect.value !== homeState) {
@@ -5876,13 +5791,7 @@ const openHomeState = async () => {
   homeStateModal?.classList.add('active');
 };
 
-const closeHomeState = () => {
-  homeStateModal?.classList.remove('active');
-  if (magnifyOpened) {
-    setMapMagnify(false);
-    magnifyOpened = false;
-  }
-};
+const closeHomeState = () => homeStateModal?.classList.remove('active');
 
 const exportStateBeaconJson = () => {
   if (!stateBeaconStateSelect) return;
