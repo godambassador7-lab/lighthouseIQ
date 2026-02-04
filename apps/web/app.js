@@ -3308,20 +3308,43 @@ const initMapScopeToggle = () => {
   mapScopeAllBtn?.addEventListener('click', () => setMapScope('all', { reloadNotices: true }));
 };
 
+const getHomeStateForFactors = () => (
+  stateBeaconHomeSelect?.value
+  || getStateBeaconInputs()?.homeState
+  || STATE_BEACON_HOME_DEFAULT
+);
+
+const getRegionForState = (state) => {
+  const entry = Object.entries(REGION_STATES).find(([, states]) => states.includes(state));
+  return entry ? entry[0] : null;
+};
+
+const scoreOutOfStateTarget = (homeState, targetState) => {
+  const noticeCount = mapStateData?.[targetState]?.count ?? 0;
+  const homeRegion = getRegionForState(homeState);
+  const targetRegion = getRegionForState(targetState);
+  const regionBonus = homeRegion && targetRegion && homeRegion === targetRegion ? 2 : 0;
+  const score = noticeCount + regionBonus;
+  return { score, noticeCount, targetRegion };
+};
+
+const getRecruitingTargets = (homeState, count = 5) => (
+  Object.keys(mapStateData || {})
+    .filter((state) => state !== homeState)
+    .map((state) => ({ state, ...scoreOutOfStateTarget(homeState, state) }))
+    .sort((a, b) => b.score - a.score)
+    .slice(0, count)
+);
+
 const renderMapFactors = () => {
   if (!mapFactorsList) return;
-  const entries = Object.entries(mapStateData || {})
-    .map(([state, entry]) => {
-      const count = typeof entry === 'number' ? entry : (entry?.count ?? 0);
-      return { state, count };
-    })
-    .sort((a, b) => b.count - a.count)
-    .slice(0, 5);
+  const homeState = getHomeStateForFactors();
+  const entries = getRecruitingTargets(homeState, 5);
 
   if (mapFactorsSubtitle) {
-    mapFactorsSubtitle.textContent = mapScope === 'all'
-      ? 'Top states by total notices (current scope).'
-      : 'Top states by healthcare notices (current scope).';
+    mapFactorsSubtitle.textContent = homeState
+      ? `Top 5 recruiting targets from ${STATE_NAMES[homeState] || homeState}.`
+      : 'Select a Home State to rank recruiting targets.';
   }
 
   if (!entries.length) {
@@ -3332,7 +3355,9 @@ const renderMapFactors = () => {
   mapFactorsList.innerHTML = entries.map((entry, idx) => `
     <div class="map-factor-card">
       <div class="map-factor-title">#${idx + 1} ${STATE_NAMES[entry.state] || entry.state}</div>
-      <div class="map-factor-meta">${entry.count} notices</div>
+      <div class="map-factor-meta">
+        Notices: ${entry.noticeCount} | Region: ${entry.targetRegion || 'n/a'}
+      </div>
     </div>
   `).join('');
 };
