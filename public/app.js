@@ -2972,6 +2972,7 @@ const initViewToggle = () => {
   mapFactorsClose?.addEventListener('click', () => {
     if (mapFactorsPanel) mapFactorsPanel.style.display = 'none';
   });
+
 };
 
 const renderBarChart = () => {
