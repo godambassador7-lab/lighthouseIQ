@@ -213,6 +213,7 @@ const MAP_LONG_PRESS_MS = 2000;
 const MAP_RECRUIT_TARGET_COUNT = 5;
 let mapLongPressTimer = null;
 let mapLongPressSuppressUntil = 0;
+let lastMapClickState = null;
 let mapRecruitTargetsInfo = [];
 
 const REQUIRED_PROGRAM_ACCREDITORS = ['CCNE', 'ACEN', 'CNEA'];
@@ -852,6 +853,7 @@ const initWeatherMap = async () => {
       shape.addEventListener('click', () => {
         if (Date.now() < mapLongPressSuppressUntil) return;
         toggleStateSelection(abbrev);
+        lastMapClickState = abbrev;
       });
       shape.addEventListener('mouseenter', (e) => showTooltip(e, abbrev));
       shape.addEventListener('mousemove', (e) => moveTooltip(e));
@@ -878,13 +880,22 @@ const initWeatherMap = async () => {
       // Right-click to set/clear home state
       shape.addEventListener('contextmenu', (e) => {
         e.preventDefault();
+        if (lastMapClickState === abbrev && selectedStates.includes(abbrev)) {
+          const currentTarget = getMapTargetState();
+          if (currentTarget === abbrev) {
+            clearMapTargetState();
+          } else {
+            setMapTargetState(abbrev);
+          }
+          return;
+        }
         const currentHome = getMapHomeState();
         if (currentHome === abbrev) {
           clearMapHomeState();
-      } else {
-        setMapHomeState(abbrev);
-      }
-    });
+        } else {
+          setMapHomeState(abbrev);
+        }
+      });
     // Double-click to open State Beacon for that state
     shape.addEventListener('dblclick', (e) => {
       e.preventDefault();
