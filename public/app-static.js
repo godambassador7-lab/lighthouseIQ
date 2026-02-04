@@ -2969,12 +2969,6 @@ const initViewToggle = () => {
     if (!isVisible) renderMapFactors();
   });
 
-  mapMagnifyBtn?.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const newState = !mapMagnifyActive;
-    setMapMagnify(newState);
-  });
-
   mapFactorsClose?.addEventListener('click', () => {
     if (mapFactorsPanel) mapFactorsPanel.style.display = 'none';
   });
