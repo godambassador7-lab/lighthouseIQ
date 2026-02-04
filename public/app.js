@@ -3121,7 +3121,7 @@ const initApp = async () => {
 // Daily News Feed
 // =============================================================================
 let newsArticles = [];
-const NEWS_WINDOW_COUNT = 15;
+const NEWS_WINDOW_COUNT = 5;
 
 const getSourceBadgeClass = (source) => {
   const s = source.toLowerCase();
