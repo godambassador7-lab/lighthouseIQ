@@ -4042,12 +4042,30 @@ input[type="range"] {
   border-color: rgba(14, 116, 144, 0.35);
   background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 100%);
   color: #0b4a6a;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .map-target-mode-btn.active {
   border-color: rgba(7, 89, 133, 0.7);
   background: linear-gradient(180deg, #c8ecff 0%, #9bdcff 100%);
   box-shadow: 0 4px 12px rgba(14, 116, 144, 0.35);
+}
+
+.map-target-mode-status {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.08);
+  color: #334155;
+}
+
+.map-target-mode-btn.active .map-target-mode-status {
+  background: rgba(14, 116, 144, 0.2);
+  color: #0b4a6a;
 }
 
 .map-target-state-btn {
