@@ -3232,8 +3232,10 @@ const getNewsDateFilter = () => {
 };
 
 const filterNewsByDate = (articles, days) => {
+  // Use date-only comparison to avoid timezone issues
   const now = new Date();
-  const cutoff = new Date(now.getTime() - days * 24 * 60 * 60 * 1000);
+  now.setHours(0, 0, 0, 0); // Start of today
+  const cutoff = new Date(now.getTime() - (days - 1) * 24 * 60 * 60 * 1000);
   return articles.filter(article => {
     if (!article.publishedAt) return true;
     try {
