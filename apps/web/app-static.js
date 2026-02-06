@@ -59,6 +59,8 @@ const mapScopeHealthcareBtn = document.getElementById('map-scope-healthcare');
 const mapScopeAllBtn = document.getElementById('map-scope-all');
 const mapScopeLabel = document.getElementById('map-scope-label');
 const mapHomeStateBtn = document.getElementById('map-home-state-btn');
+const mapTargetModeBtn = document.getElementById('map-target-mode-btn');
+const mapTargetStateBtn = document.getElementById('map-target-state-btn');
 const mapFactorsBtn = document.getElementById('map-factors-btn');
 const mapFactorsPanel = document.getElementById('map-factors-panel');
 const mapFactorsClose = document.getElementById('map-factors-close');
@@ -185,6 +187,7 @@ let currentMapView = 'map';
 let selectedStates = [];
 let selectedSpecialties = [];
 let mapScope = 'healthcare';
+let isMapTargetMode = false;
 let currentPage = 1;
 let searchQuery = '';
 let applyFiltersToken = 0;
@@ -851,6 +854,16 @@ const initWeatherMap = async () => {
       shape.setAttribute('data-state', abbrev);
       shape.addEventListener('click', () => {
         if (Date.now() < mapLongPressSuppressUntil) return;
+        // If target mode is active, set/clear target state instead of toggling selection
+        if (isMapTargetMode) {
+          const currentTarget = getMapTargetState();
+          if (currentTarget === abbrev) {
+            clearMapTargetState();
+          } else {
+            setMapTargetState(abbrev);
+          }
+          return;
+        }
         toggleStateSelection(abbrev);
       });
       shape.addEventListener('mouseenter', (e) => showTooltip(e, abbrev));
@@ -894,6 +907,8 @@ const initWeatherMap = async () => {
 
   // Apply home state highlight if one is saved
   updateMapHomeStateHighlight();
+  // Apply target state highlight if one is saved
+  updateMapTargetStateHighlight();
 };
 
   const showTooltip = (e, stateAbbrev) => {
@@ -2960,6 +2975,18 @@ const initViewToggle = () => {
     const homeState = getMapHomeState();
     if (!homeState) return;
     openHomeState();
+  });
+
+  // Target mode button - toggles target selection mode
+  mapTargetModeBtn?.addEventListener('click', () => {
+    setMapTargetMode(!isMapTargetMode);
+  });
+
+  // Target state button - opens target state module
+  mapTargetStateBtn?.addEventListener('click', () => {
+    const targetState = getMapTargetState();
+    if (!targetState) return;
+    openTargetState();
   });
 
   mapFactorsBtn?.addEventListener('click', () => {
