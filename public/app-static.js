@@ -66,6 +66,10 @@ const mapFactorsPanel = document.getElementById('map-factors-panel');
 const mapFactorsClose = document.getElementById('map-factors-close');
 const mapFactorsList = document.getElementById('map-factors-list');
 const mapFactorsSubtitle = document.getElementById('map-factors-subtitle');
+const mapTabLayoffs = document.getElementById('map-tab-layoffs');
+const mapTabRural = document.getElementById('map-tab-rural');
+const mapSectionTitle = document.getElementById('map-section-title');
+const mapSectionDesc = document.getElementById('map-section-desc');
 const alertsList = document.getElementById('alerts-list');
 const heatmapList = document.getElementById('heatmap-list');
 const talentList = document.getElementById('talent-list');
@@ -188,6 +192,7 @@ let selectedStates = [];
 let selectedSpecialties = [];
 let mapScope = 'healthcare';
 let isMapTargetMode = false;
+let activeMapTab = 'layoffs'; // 'layoffs' or 'rural'
 let currentPage = 1;
 let searchQuery = '';
 let applyFiltersToken = 0;
@@ -914,14 +919,27 @@ const initWeatherMap = async () => {
   const showTooltip = (e, stateAbbrev) => {
     if (!mapTooltip) return;
     const stateName = STATE_NAMES[stateAbbrev] || stateAbbrev;
-    const count = mapStateData[stateAbbrev]?.count || 0;
-    const scopeLabel = mapScope === 'all' ? 'total notices' : 'healthcare notices';
-    const confidence = count >= 8 ? 'High' : count >= 3 ? 'Medium' : 'Low';
-    mapTooltip.innerHTML = `
-      <div class="tooltip-state">${stateName}</div>
-      <div class="tooltip-count">${count} ${scopeLabel}</div>
-      <div class="tooltip-confidence">Signal confidence: ${confidence}</div>
-    `;
+
+    // Show different tooltip based on active tab
+    if (activeMapTab === 'rural') {
+      const data = RURAL_HOSPITAL_CLOSURES[stateAbbrev] || { count: 0, recent: 0, atRisk: 0 };
+      const riskLevel = data.atRisk > 5 ? 'High' : data.atRisk > 2 ? 'Medium' : 'Low';
+      mapTooltip.innerHTML = `
+        <div class="tooltip-state">${stateName}</div>
+        <div class="tooltip-count">${data.count} closures since 2010 (${data.recent} recent)</div>
+        <div class="tooltip-confidence">Hospitals at risk: ${data.atRisk}</div>
+        <div class="tooltip-confidence">Risk level: ${riskLevel}</div>
+      `;
+    } else {
+      const count = mapStateData[stateAbbrev]?.count || 0;
+      const scopeLabel = mapScope === 'all' ? 'total notices' : 'healthcare notices';
+      const confidence = count >= 8 ? 'High' : count >= 3 ? 'Medium' : 'Low';
+      mapTooltip.innerHTML = `
+        <div class="tooltip-state">${stateName}</div>
+        <div class="tooltip-count">${count} ${scopeLabel}</div>
+        <div class="tooltip-confidence">Signal confidence: ${confidence}</div>
+      `;
+    }
     mapTooltip.classList.add('visible');
     moveTooltip(e);
   };
@@ -1298,6 +1316,16 @@ const scoreOutOfStateTarget = (homeState, targetState) => {
   const relocationUpdated = recruitmentIntel?.lastUpdated ?? relocationData?.lastUpdated ?? null;
   const targetRegion = salaryData[targetState]?.region ?? getRegionForState(targetState);
 
+  // Cost of living data
+  const homeCOL = COST_OF_LIVING_INDEX[homeState] ?? 100;
+  const targetCOL = COST_OF_LIVING_INDEX[targetState] ?? 100;
+  const colDelta = homeCOL - targetCOL; // Positive means target is cheaper
+  const colAdjustedSalary = targetSalary * (100 / targetCOL); // Purchasing power adjusted
+
+  // Rural hospital closure data
+  const ruralClosures = RURAL_HOSPITAL_CLOSURES[targetState] ?? { count: 0, recent: 0, atRisk: 0 };
+  const closureRisk = ruralClosures.atRisk > 5 ? 'high' : ruralClosures.atRisk > 2 ? 'medium' : 'low';
+
   // Use pre-computed score if available, otherwise fall back to simplified display score
   let score;
   if (typeof precomputedScore === 'number') {
@@ -1307,7 +1335,11 @@ const scoreOutOfStateTarget = (homeState, targetState) => {
     const homeRegion = getRegionForState(homeState);
     const regionFactor = homeRegion && targetRegion && homeRegion === targetRegion ? 0.5 : 0;
     const shortageFactor = shortage === 'surplus' ? 1 : shortage === 'balanced' ? 0.5 : 0;
-    score = regionFactor + shortageFactor + Math.min(noticeCount / 10, 1);
+    // Add cost of living factor (lower COL = better for recruiting)
+    const colFactor = colDelta > 10 ? 0.3 : colDelta > 0 ? 0.15 : 0;
+    // Add rural closure factor (more closures = more available nurses)
+    const closureFactor = ruralClosures.recent > 0 ? 0.2 : 0;
+    score = regionFactor + shortageFactor + colFactor + closureFactor + Math.min(noticeCount / 10, 1);
   }
 
   return {
@@ -1323,7 +1355,17 @@ const scoreOutOfStateTarget = (homeState, targetState) => {
       homeSalary,
       relocationScale,
       relocationSource,
-      relocationUpdated
+      relocationUpdated,
+      // Cost of living factors
+      homeCOL,
+      targetCOL,
+      colDelta,
+      colAdjustedSalary,
+      // Rural hospital factors
+      ruralClosures: ruralClosures.count,
+      recentClosures: ruralClosures.recent,
+      hospitalsAtRisk: ruralClosures.atRisk,
+      closureRisk
     }
   };
 };
@@ -1423,32 +1465,60 @@ const renderMapFactors = () => {
   const relocationRefresh = relocationData?.lastUpdated
     ? ` Relocation data refresh: ${formatRelativeTime(relocationData.lastUpdated)}.`
     : '';
-  mapFactorsSubtitle.textContent = `Ranked for recruiting into ${homeName}. Assumptions: cost-of-living proxy (pay delta vs ${homeState}), relocation friction (regional proximity + travel pay), benefits pressure (shortage status), WARN activity (supply), and RN relocation scale.${relocationRefresh}`;
+  mapFactorsSubtitle.textContent = `Ranked for recruiting into ${homeName}. Factors: cost-of-living index, salary purchasing power, relocation friction, shortage status, WARN activity, rural hospital closures, and RN relocation scale.${relocationRefresh}`;
   mapFactorsList.innerHTML = mapRecruitTargetsInfo.map((entry, idx) => {
     const targetName = STATE_NAMES[entry.state] || entry.state;
-    const salaryDelta = entry.factors.salaryDelta;
-    const salaryNote = salaryDelta
-      ? `${salaryDelta >= 0 ? 'Lower' : 'Higher'} pay vs ${homeState}: ${Math.abs(salaryDelta).toLocaleString()}`
+    const f = entry.factors;
+
+    // Salary and pay delta
+    const salaryNote = f.salaryDelta
+      ? `${f.salaryDelta >= 0 ? 'Lower' : 'Higher'} pay vs ${homeState}: $${Math.abs(f.salaryDelta).toLocaleString()}`
       : `Pay delta vs ${homeState}: n/a`;
-    const gapNote = Number.isFinite(entry.factors.projectedGap)
-      ? `Projected gap: ${entry.factors.projectedGap.toLocaleString()}`
+
+    // Cost of living
+    const colNote = f.colDelta !== undefined
+      ? `COL Index: ${f.targetCOL} (${f.colDelta > 0 ? f.colDelta.toFixed(1) + ' cheaper' : Math.abs(f.colDelta).toFixed(1) + ' more expensive'} than ${homeState})`
+      : 'COL: n/a';
+    const adjustedSalaryNote = f.colAdjustedSalary
+      ? `Adjusted salary (PPP): $${Math.round(f.colAdjustedSalary).toLocaleString()}`
+      : '';
+
+    // Gap and travel
+    const gapNote = Number.isFinite(f.projectedGap)
+      ? `Projected gap: ${f.projectedGap.toLocaleString()}`
       : 'Projected gap: n/a';
-    const travelNote = entry.factors.travelWeekly
-      ? `Travel weekly: ${Number(entry.factors.travelWeekly).toLocaleString()}`
+    const travelNote = f.travelWeekly
+      ? `Travel weekly: ${Number(f.travelWeekly).toLocaleString()}`
       : 'Travel weekly: n/a';
-    const relocationScale = typeof entry.factors.relocationScale === 'number'
-      ? Math.round(entry.factors.relocationScale)
+
+    // Relocation
+    const relocationScale = typeof f.relocationScale === 'number'
+      ? Math.round(f.relocationScale)
       : null;
     const relocationSourceMap = { rn: 'RN', clinical: 'Clinical', general: 'General' };
-    const relocationSource = relocationSourceMap[entry.factors.relocationSource] || 'n/a';
+    const relocationSource = relocationSourceMap[f.relocationSource] || 'n/a';
     const relocationNote = relocationScale !== null
       ? `Relocation scale: ${relocationScale} (${relocationSource})`
       : 'Relocation scale: n/a';
+
+    // Rural hospital closures
+    const closureNote = f.ruralClosures !== undefined
+      ? `Rural closures: ${f.ruralClosures} total (${f.recentClosures} recent)`
+      : 'Rural closures: n/a';
+    const riskClass = f.closureRisk === 'high' ? 'risk-high' : f.closureRisk === 'medium' ? 'risk-medium' : 'risk-low';
+    const atRiskNote = f.hospitalsAtRisk !== undefined
+      ? `<span class="${riskClass}">Hospitals at risk: ${f.hospitalsAtRisk}</span>`
+      : '';
+
     return `
         <div class="map-factor-card">
           <div class="map-factor-title">#${idx + 1} ${targetName} (${entry.state})</div>
           <div class="map-factor-meta">
-            Assumptions: Shortage: ${entry.factors.shortage} | WARN notices: ${entry.factors.noticeCount} | Region: ${entry.factors.region || 'n/a'} | ${salaryNote} | ${gapNote} | ${travelNote} | ${relocationNote}
+            <div class="factor-row"><strong>Market:</strong> Shortage: ${f.shortage} | WARN notices: ${f.noticeCount} | Region: ${f.region || 'n/a'}</div>
+            <div class="factor-row"><strong>Salary:</strong> ${salaryNote} | ${adjustedSalaryNote}</div>
+            <div class="factor-row"><strong>Cost of Living:</strong> ${colNote}</div>
+            <div class="factor-row"><strong>Rural Hospitals:</strong> ${closureNote} | ${atRiskNote}</div>
+            <div class="factor-row"><strong>Mobility:</strong> ${gapNote} | ${travelNote} | ${relocationNote}</div>
           </div>
         </div>
       `;
@@ -1579,6 +1649,80 @@ const updateMapColors = () => {
 
     shape.classList.add(`layoff-${level}`);
   });
+};
+
+// Color each state based on rural hospital closures/at-risk status
+const updateRuralMapColors = () => {
+  const maxAtRisk = Math.max(...Object.values(RURAL_HOSPITAL_CLOSURES).map(d => d.atRisk), 1);
+  const maxClosures = Math.max(...Object.values(RURAL_HOSPITAL_CLOSURES).map(d => d.count), 1);
+
+  document.querySelectorAll('.us-map path[data-state], .us-map circle[data-state]').forEach(shape => {
+    const state = shape.dataset.state;
+    const data = RURAL_HOSPITAL_CLOSURES[state] || { count: 0, recent: 0, atRisk: 0 };
+
+    // Remove all existing layoff classes
+    for (let i = 0; i <= 9; i++) {
+      shape.classList.remove(`layoff-${i}`);
+    }
+    shape.classList.remove('rural-critical', 'rural-warning', 'rural-stable');
+
+    // Color based on closures + at-risk (combined risk score)
+    const riskScore = data.count + data.atRisk * 1.5;
+    const maxRisk = maxClosures + maxAtRisk * 1.5;
+
+    if (riskScore === 0) {
+      shape.classList.add('rural-stable');
+    } else if (riskScore >= maxRisk * 0.6 || data.atRisk >= 8) {
+      shape.classList.add('rural-critical');
+    } else if (riskScore >= maxRisk * 0.3 || data.atRisk >= 4) {
+      shape.classList.add('rural-warning');
+    } else {
+      shape.classList.add('rural-stable');
+    }
+  });
+};
+
+// Switch between layoffs and rural hospital tabs
+const switchMapTab = (tab) => {
+  if (tab === activeMapTab) return;
+  activeMapTab = tab;
+
+  // Update tab button states
+  mapTabLayoffs?.classList.toggle('active', tab === 'layoffs');
+  mapTabRural?.classList.toggle('active', tab === 'rural');
+
+  // Update section title and description
+  if (tab === 'layoffs') {
+    if (mapSectionTitle) mapSectionTitle.textContent = 'Interactive Layoff Weather Map';
+    if (mapSectionDesc) {
+      mapSectionDesc.innerHTML = `Fog intensity shows layoff activity by state. Darker = more layoffs in the current scope. <span class="map-scope-note">Scope: <strong id="map-scope-label">${mapScope === 'all' ? 'All' : 'Healthcare'}</strong></span>`;
+    }
+    // Show layoff-specific controls
+    document.querySelector('.scope-toggle')?.style.setProperty('display', '');
+    document.getElementById('map-legend')?.style.setProperty('display', '');
+    // Update map colors for layoffs
+    updateMapColors();
+  } else if (tab === 'rural') {
+    if (mapSectionTitle) mapSectionTitle.textContent = 'Rural Hospital Vulnerability Map';
+    if (mapSectionDesc) {
+      mapSectionDesc.innerHTML = `Shows rural hospital closures since 2010 and hospitals currently at financial risk. Data from CHQPR/Sheps Center.`;
+    }
+    // Hide layoff-specific controls, show rural legend
+    document.querySelector('.scope-toggle')?.style.setProperty('display', 'none');
+    const legend = document.getElementById('map-legend');
+    if (legend) {
+      legend.innerHTML = `
+        <div class="rural-map-legend">
+          <div class="rural-legend-item"><span class="rural-legend-dot closures"></span> High closure risk</div>
+          <div class="rural-legend-item"><span class="rural-legend-dot at-risk"></span> Moderate risk</div>
+          <div class="rural-legend-item"><span class="rural-legend-dot stable"></span> Low/No risk</div>
+        </div>
+      `;
+      legend.style.display = '';
+    }
+    // Update map colors for rural hospitals
+    updateRuralMapColors();
+  }
 };
 
 const loadAllNotices = async () => {
@@ -3151,6 +3295,11 @@ const initMapScopeToggle = () => {
   });
 };
 
+const initMapTabSwitcher = () => {
+  mapTabLayoffs?.addEventListener('click', () => switchMapTab('layoffs'));
+  mapTabRural?.addEventListener('click', () => switchMapTab('rural'));
+};
+
 // =============================================================================
 // App Initialization
 // =============================================================================
@@ -3174,6 +3323,7 @@ const initApp = async () => {
     initCollapsibleSections();
     initViewToggle();
     initMapScopeToggle();
+    initMapTabSwitcher();
     initForecast();
     initProgramsModule();
     initStateBeacon();
@@ -3232,8 +3382,10 @@ const getNewsDateFilter = () => {
 };
 
 const filterNewsByDate = (articles, days) => {
+  // Use date-only comparison to avoid timezone issues
   const now = new Date();
-  const cutoff = new Date(now.getTime() - days * 24 * 60 * 60 * 1000);
+  now.setHours(0, 0, 0, 0); // Start of today
+  const cutoff = new Date(now.getTime() - (days - 1) * 24 * 60 * 60 * 1000);
   return articles.filter(article => {
     if (!article.publishedAt) return true;
     try {
@@ -3371,6 +3523,78 @@ const NURSING_SALARY_DATA = {
   WV: { staffRN: 78340, staffHourly: 38, travelWeekly: 1950, travelAnnual: 101400, shortage: 'shortage', projectedGap: -2200 },
   WI: { staffRN: 87650, staffHourly: 42, travelWeekly: 2100, travelAnnual: 109200, shortage: 'balanced', projectedGap: 600 },
   WY: { staffRN: 84760, staffHourly: 41, travelWeekly: 2080, travelAnnual: 108160, shortage: 'shortage', projectedGap: -700 }
+};
+
+// Cost of Living Index by state (100 = national average, data from Missouri Economic Research 2024-2026)
+const COST_OF_LIVING_INDEX = {
+  AL: 89.3, AK: 127.1, AZ: 102.2, AR: 89.8, CA: 142.2,
+  CO: 105.4, CT: 112.8, DE: 102.4, DC: 148.7, FL: 102.8,
+  GA: 93.4, HI: 192.9, ID: 98.2, IL: 93.4, IN: 90.6,
+  IA: 90.1, KS: 86.5, KY: 92.8, LA: 91.0, ME: 113.5,
+  MD: 118.2, MA: 131.6, MI: 89.6, MN: 98.8, MS: 84.8,
+  MO: 89.8, MT: 104.2, NE: 92.8, NV: 104.0, NH: 112.4,
+  NJ: 115.2, NM: 93.4, NY: 123.1, NC: 95.8, ND: 94.5,
+  OH: 90.8, OK: 86.2, OR: 113.1, PA: 97.3, PR: 98.0,
+  RI: 105.2, SC: 94.2, SD: 96.5, TN: 90.5, TX: 92.1,
+  UT: 101.2, VT: 115.9, VA: 103.7, WA: 118.8, WV: 88.6,
+  WI: 95.2, WY: 96.8
+};
+
+// Rural Hospital Closures by State (data from CHQPR/Sheps Center, updated regularly)
+// Structure: { count: number of closures since 2010, recent: closures in last 2 years, atRisk: hospitals at financial risk }
+const RURAL_HOSPITAL_CLOSURES = {
+  AL: { count: 6, recent: 1, atRisk: 8 },
+  AK: { count: 0, recent: 0, atRisk: 2 },
+  AZ: { count: 3, recent: 0, atRisk: 4 },
+  AR: { count: 3, recent: 0, atRisk: 5 },
+  CA: { count: 5, recent: 1, atRisk: 6 },
+  CO: { count: 2, recent: 0, atRisk: 3 },
+  CT: { count: 1, recent: 0, atRisk: 1 },
+  DE: { count: 0, recent: 0, atRisk: 0 },
+  DC: { count: 0, recent: 0, atRisk: 0 },
+  FL: { count: 4, recent: 1, atRisk: 5 },
+  GA: { count: 9, recent: 2, atRisk: 12 },
+  HI: { count: 0, recent: 0, atRisk: 1 },
+  ID: { count: 1, recent: 0, atRisk: 2 },
+  IL: { count: 5, recent: 1, atRisk: 7 },
+  IN: { count: 2, recent: 0, atRisk: 4 },
+  IA: { count: 1, recent: 0, atRisk: 3 },
+  KS: { count: 5, recent: 1, atRisk: 6 },
+  KY: { count: 3, recent: 1, atRisk: 5 },
+  LA: { count: 4, recent: 0, atRisk: 6 },
+  ME: { count: 1, recent: 0, atRisk: 2 },
+  MD: { count: 1, recent: 0, atRisk: 1 },
+  MA: { count: 1, recent: 0, atRisk: 1 },
+  MI: { count: 3, recent: 0, atRisk: 5 },
+  MN: { count: 2, recent: 0, atRisk: 3 },
+  MS: { count: 6, recent: 1, atRisk: 9 },
+  MO: { count: 4, recent: 1, atRisk: 6 },
+  MT: { count: 1, recent: 0, atRisk: 2 },
+  NE: { count: 2, recent: 0, atRisk: 3 },
+  NV: { count: 1, recent: 0, atRisk: 2 },
+  NH: { count: 0, recent: 0, atRisk: 1 },
+  NJ: { count: 2, recent: 0, atRisk: 2 },
+  NM: { count: 2, recent: 0, atRisk: 3 },
+  NY: { count: 4, recent: 1, atRisk: 6 },
+  NC: { count: 5, recent: 1, atRisk: 7 },
+  ND: { count: 0, recent: 0, atRisk: 1 },
+  OH: { count: 4, recent: 0, atRisk: 6 },
+  OK: { count: 7, recent: 2, atRisk: 9 },
+  OR: { count: 1, recent: 0, atRisk: 2 },
+  PA: { count: 3, recent: 0, atRisk: 5 },
+  PR: { count: 2, recent: 0, atRisk: 3 },
+  RI: { count: 0, recent: 0, atRisk: 0 },
+  SC: { count: 3, recent: 0, atRisk: 4 },
+  SD: { count: 1, recent: 0, atRisk: 2 },
+  TN: { count: 8, recent: 2, atRisk: 10 },
+  TX: { count: 26, recent: 4, atRisk: 22 },
+  UT: { count: 1, recent: 0, atRisk: 2 },
+  VT: { count: 0, recent: 0, atRisk: 1 },
+  VA: { count: 3, recent: 0, atRisk: 4 },
+  WA: { count: 2, recent: 0, atRisk: 3 },
+  WV: { count: 3, recent: 1, atRisk: 5 },
+  WI: { count: 2, recent: 0, atRisk: 3 },
+  WY: { count: 1, recent: 0, atRisk: 2 }
 };
 
 // Travel nurse specialty pay (weekly rates)

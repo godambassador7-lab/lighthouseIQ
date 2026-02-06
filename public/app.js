@@ -1725,22 +1725,6 @@ const switchMapTab = (tab) => {
   }
 };
 
-// Update tooltip for rural hospital data
-const showRuralTooltip = (e, stateAbbrev) => {
-  if (!mapTooltip) return;
-  const stateName = STATE_NAMES[stateAbbrev] || stateAbbrev;
-  const data = RURAL_HOSPITAL_CLOSURES[stateAbbrev] || { count: 0, recent: 0, atRisk: 0 };
-  const riskLevel = data.atRisk > 5 ? 'High' : data.atRisk > 2 ? 'Medium' : 'Low';
-  mapTooltip.innerHTML = `
-    <div class="tooltip-state">${stateName}</div>
-    <div class="tooltip-count">${data.count} closures since 2010 (${data.recent} recent)</div>
-    <div class="tooltip-confidence">Hospitals at risk: ${data.atRisk}</div>
-    <div class="tooltip-confidence">Risk level: ${riskLevel}</div>
-  `;
-  mapTooltip.classList.add('visible');
-  moveTooltip(e);
-};
-
 const loadAllNotices = async () => {
   if (allNoticesLoaded || allNoticesLoading) return allNotices;
   allNoticesLoading = true;
