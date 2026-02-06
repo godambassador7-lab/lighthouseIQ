@@ -4012,53 +4012,60 @@ input[type="range"] {
   color: var(--muted);
   line-height: 1.4;
 }
-.map-home-state-btn {
-  border: 1px solid rgba(255, 140, 0, 0.3);
-  border-radius: 8px;
-  padding: 7px 14px;
-  font-size: 11px;
+.map-control-btn {
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  border-radius: 10px;
+  padding: 8px 14px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.3px;
-  color: #b35a00;
-  background: linear-gradient(180deg, #fff4e6 0%, #ffe8cc 100%);
-  box-shadow: 0 2px 8px rgba(255, 140, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  color: #1f2a44;
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
   transition: all 0.2s ease;
   cursor: pointer;
 }
 
-.map-home-state-btn:hover {
+.map-control-btn:hover {
   transform: translateY(-1px);
-  border-color: rgba(255, 140, 0, 0.5);
-  box-shadow: 0 4px 12px rgba(255, 140, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  background: linear-gradient(180deg, #fff8f0 0%, #ffedd9 100%);
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
+}
+
+.map-home-state-btn {
+  border-color: rgba(245, 158, 11, 0.35);
+  background: linear-gradient(180deg, #fff3d6 0%, #ffe6b4 100%);
+  color: #9a5200;
+}
+
+.map-target-mode-btn {
+  border-color: rgba(14, 116, 144, 0.35);
+  background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 100%);
+  color: #0b4a6a;
+}
+
+.map-target-mode-btn.active {
+  border-color: rgba(7, 89, 133, 0.7);
+  background: linear-gradient(180deg, #c8ecff 0%, #9bdcff 100%);
+  box-shadow: 0 4px 12px rgba(14, 116, 144, 0.35);
 }
 
 .map-target-state-btn {
-  border: 1px solid rgba(255, 200, 90, 0.45);
-  border-radius: 8px;
-  padding: 7px 14px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.3px;
+  border-color: rgba(234, 179, 8, 0.45);
+  background: linear-gradient(180deg, #fff6cc 0%, #ffe59a 100%);
   color: #8a5a00;
-  background: linear-gradient(180deg, #fff7da 0%, #ffe6a3 100%);
-  box-shadow: 0 2px 8px rgba(255, 200, 90, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.85);
-  transition: all 0.2s ease;
-  cursor: pointer;
 }
 
-.map-target-state-btn:hover {
-  transform: translateY(-1px);
-  border-color: rgba(255, 200, 90, 0.7);
-  box-shadow: 0 4px 12px rgba(255, 200, 90, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.95);
-  background: linear-gradient(180deg, #fffbe8 0%, #ffefbf 100%);
+.map-factors-btn {
+  border-color: rgba(99, 102, 241, 0.35);
+  background: linear-gradient(180deg, #e0e7ff 0%, #c7d2fe 100%);
+  color: #3730a3;
 }
 
-.map-target-hint {
-  font-size: 11px;
-  color: rgba(15, 23, 42, 0.6);
-  font-weight: 600;
-  letter-spacing: 0.3px;
+.map-clear-btn {
+  border-color: rgba(148, 163, 184, 0.45);
+  background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+  color: #1f2937;
 }
 
 
