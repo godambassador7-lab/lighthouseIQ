@@ -3204,7 +3204,7 @@ const initApp = async () => {
 // Daily News Feed
 // =============================================================================
 let newsArticles = [];
-const NEWS_WINDOW_COUNT = 15;
+const NEWS_WINDOW_COUNT = 5;
 
 const getSourceBadgeClass = (source) => {
   const s = source.toLowerCase();
@@ -6433,6 +6433,23 @@ document.addEventListener('DOMContentLoaded', () => {
         if (targetState && typeof openTargetState === 'function') {
           openTargetState();
         }
+      }
+    });
+  }
+
+  // Strategic Market Review toggle
+  const strategicToggle = document.getElementById('strategic-toggle');
+  const strategicSection = document.querySelector('.strategic-review-section');
+  if (strategicToggle && strategicSection) {
+    strategicToggle.addEventListener('click', () => {
+      strategicSection.classList.toggle('open');
+      const isOpen = strategicSection.classList.contains('open');
+      const toggleIcon = strategicSection.querySelector('.strategic-toggle-icon');
+      if (toggleIcon) {
+        toggleIcon.textContent = isOpen ? '-' : '+';
+      }
+      if (isOpen && typeof renderStrategicReview === 'function') {
+        renderStrategicReview();
       }
     });
   }
