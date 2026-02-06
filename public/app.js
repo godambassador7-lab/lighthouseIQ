@@ -1202,67 +1202,6 @@ const updateMapHomeStateHighlight = () => {
   }
 };
 
-// =============================================================================
-// Map Target State (target mode + highlight)
-// =============================================================================
-const MAP_TARGET_STATE_KEY = 'lighthouseiq_map_target_state';
-
-const getMapTargetState = () => {
-  try {
-    return localStorage.getItem(MAP_TARGET_STATE_KEY) || null;
-  } catch {
-    return null;
-  }
-};
-
-const setMapTargetState = (stateAbbrev) => {
-  try {
-    localStorage.setItem(MAP_TARGET_STATE_KEY, stateAbbrev);
-    if (stateBeaconStateSelect) {
-      stateBeaconStateSelect.value = stateAbbrev;
-    }
-    if (targetStateSelect) {
-      targetStateSelect.value = stateAbbrev;
-    }
-  } catch {
-    // ignore
-  }
-  updateMapTargetStateHighlight();
-  showMapToast(`Target state set to ${STATE_NAMES[stateAbbrev] || stateAbbrev}`);
-};
-
-const clearMapTargetState = () => {
-  try {
-    localStorage.removeItem(MAP_TARGET_STATE_KEY);
-  } catch {
-    // ignore
-  }
-  updateMapTargetStateHighlight();
-  showMapToast('Target state cleared');
-};
-
-const updateMapTargetStateHighlight = () => {
-  const targetState = getMapTargetState();
-  document.querySelectorAll('.us-map path[data-state], .us-map circle[data-state]').forEach(shape => {
-    shape.classList.remove('target-state-glow');
-    if (targetState && shape.dataset.state === targetState) {
-      shape.classList.add('target-state-glow');
-    }
-  });
-  if (mapTargetStateBtn) {
-    mapTargetStateBtn.style.display = targetState ? 'inline-flex' : 'none';
-  }
-};
-
-const setMapTargetMode = (nextValue) => {
-  isMapTargetMode = nextValue;
-  if (mapTargetModeBtn) {
-    mapTargetModeBtn.classList.toggle('active', isMapTargetMode);
-    mapTargetModeBtn.setAttribute('aria-pressed', String(isMapTargetMode));
-    const status = mapTargetModeBtn.querySelector('.map-target-mode-status');
-    if (status) status.textContent = isMapTargetMode ? 'On' : 'Off';
-  }
-};
 const getRegionForState = (state) => {
   const entry = Object.entries(REGION_STATES).find(([, states]) => states.includes(state));
   return entry ? entry[0] : null;
