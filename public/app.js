@@ -59,8 +59,6 @@ const mapScopeHealthcareBtn = document.getElementById('map-scope-healthcare');
 const mapScopeAllBtn = document.getElementById('map-scope-all');
 const mapScopeLabel = document.getElementById('map-scope-label');
 const mapHomeStateBtn = document.getElementById('map-home-state-btn');
-const mapTargetModeBtn = document.getElementById('map-target-mode-btn');
-const mapTargetStateBtn = document.getElementById('map-target-state-btn');
 const mapFactorsBtn = document.getElementById('map-factors-btn');
 const mapFactorsPanel = document.getElementById('map-factors-panel');
 const mapFactorsClose = document.getElementById('map-factors-close');
@@ -216,7 +214,6 @@ const MAP_RECRUIT_TARGET_COUNT = 5;
 let mapLongPressTimer = null;
 let mapLongPressSuppressUntil = 0;
 let mapRecruitTargetsInfo = [];
-let isMapTargetMode = false;
 
 const REQUIRED_PROGRAM_ACCREDITORS = ['CCNE', 'ACEN', 'CNEA'];
 
@@ -854,15 +851,6 @@ const initWeatherMap = async () => {
       shape.setAttribute('data-state', abbrev);
       shape.addEventListener('click', () => {
         if (Date.now() < mapLongPressSuppressUntil) return;
-        if (isMapTargetMode) {
-          const currentTarget = getMapTargetState();
-          if (currentTarget === abbrev) {
-            clearMapTargetState();
-          } else {
-            setMapTargetState(abbrev);
-          }
-          return;
-        }
         toggleStateSelection(abbrev);
       });
       shape.addEventListener('mouseenter', (e) => showTooltip(e, abbrev));
@@ -906,7 +894,6 @@ const initWeatherMap = async () => {
 
   // Apply home state highlight if one is saved
   updateMapHomeStateHighlight();
-  updateMapTargetStateHighlight();
 };
 
   const showTooltip = (e, stateAbbrev) => {
@@ -1212,66 +1199,6 @@ const updateMapHomeStateHighlight = () => {
   });
   if (mapHomeStateBtn) {
     mapHomeStateBtn.style.display = homeState ? 'inline-flex' : 'none';
-  }
-};
-
-// =============================================================================
-// Map Target State (target mode + highlight)
-// =============================================================================
-const MAP_TARGET_STATE_KEY = 'lighthouseiq_map_target_state';
-
-const getMapTargetState = () => {
-  try {
-    return localStorage.getItem(MAP_TARGET_STATE_KEY) || null;
-  } catch {
-    return null;
-  }
-};
-
-const setMapTargetState = (stateAbbrev) => {
-  try {
-    localStorage.setItem(MAP_TARGET_STATE_KEY, stateAbbrev);
-    if (stateBeaconStateSelect) {
-      stateBeaconStateSelect.value = stateAbbrev;
-    }
-    if (targetStateSelect) {
-      targetStateSelect.value = stateAbbrev;
-    }
-  } catch {
-    // ignore
-  }
-  updateMapTargetStateHighlight();
-  showMapToast(`Target state set to ${STATE_NAMES[stateAbbrev] || stateAbbrev}`);
-};
-
-const clearMapTargetState = () => {
-  try {
-    localStorage.removeItem(MAP_TARGET_STATE_KEY);
-  } catch {
-    // ignore
-  }
-  updateMapTargetStateHighlight();
-  showMapToast('Target state cleared');
-};
-
-const updateMapTargetStateHighlight = () => {
-  const targetState = getMapTargetState();
-  document.querySelectorAll('.us-map path[data-state], .us-map circle[data-state]').forEach(shape => {
-    shape.classList.remove('target-state-glow');
-    if (targetState && shape.dataset.state === targetState) {
-      shape.classList.add('target-state-glow');
-    }
-  });
-  if (mapTargetStateBtn) {
-    mapTargetStateBtn.style.display = targetState ? 'inline-flex' : 'none';
-  }
-};
-
-const setMapTargetMode = (nextValue) => {
-  isMapTargetMode = nextValue;
-  if (mapTargetModeBtn) {
-    mapTargetModeBtn.classList.toggle('active', isMapTargetMode);
-    mapTargetModeBtn.textContent = isMapTargetMode ? 'Target Mode: On' : 'Target Mode';
   }
 };
 
@@ -3033,19 +2960,6 @@ const initViewToggle = () => {
     const homeState = getMapHomeState();
     if (!homeState) return;
     openHomeState();
-  });
-
-  mapTargetModeBtn?.addEventListener('click', () => {
-    setMapTargetMode(!isMapTargetMode);
-  });
-
-  mapTargetStateBtn?.addEventListener('click', () => {
-    const targetState = getMapTargetState();
-    if (!targetState) return;
-    if (targetStateSelect) {
-      targetStateSelect.value = targetState;
-    }
-    openTargetState();
   });
 
   mapFactorsBtn?.addEventListener('click', () => {
