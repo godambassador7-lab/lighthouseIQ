@@ -70,6 +70,11 @@ const mapTabLayoffs = document.getElementById('map-tab-layoffs');
 const mapTabRural = document.getElementById('map-tab-rural');
 const mapSectionTitle = document.getElementById('map-section-title');
 const mapSectionDesc = document.getElementById('map-section-desc');
+const ruralClosuresPanel = document.getElementById('rural-closures-panel');
+const ruralClosuresTitle = document.getElementById('rural-closures-title');
+const ruralClosuresSubtitle = document.getElementById('rural-closures-subtitle');
+const ruralClosuresList = document.getElementById('rural-closures-list');
+const ruralClosuresClose = document.getElementById('rural-closures-close');
 const alertsList = document.getElementById('alerts-list');
 const heatmapList = document.getElementById('heatmap-list');
 const talentList = document.getElementById('talent-list');
@@ -1618,10 +1623,11 @@ const updateMapColors = () => {
     const state = shape.dataset.state;
     const count = mapStateData[state]?.count ?? 0;
 
-    // Remove all existing layoff classes
+    // Remove all existing layoff and rural classes
     for (let i = 0; i <= 9; i++) {
       shape.classList.remove(`layoff-${i}`);
     }
+    shape.classList.remove('rural-critical', 'rural-warning', 'rural-stable');
 
     // Calculate intensity level (0-9) based on count relative to max
     let level = 0;
@@ -6636,30 +6642,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Target Mode button - toggle target selection mode
-  const targetModeBtn = document.getElementById('map-target-mode-btn');
-  if (targetModeBtn) {
-    targetModeBtn.addEventListener('click', () => {
-      isMapTargetMode = !isMapTargetMode;
-      targetModeBtn.classList.toggle('active', isMapTargetMode);
-      targetModeBtn.setAttribute('aria-pressed', String(isMapTargetMode));
-      const status = targetModeBtn.querySelector('.map-target-mode-status');
-      if (status) status.textContent = isMapTargetMode ? 'On' : 'Off';
-    });
-  }
-
-  // Target State button - open target state module
-  const targetStateBtn = document.getElementById('map-target-state-btn');
-  if (targetStateBtn) {
-    targetStateBtn.addEventListener('click', () => {
-      if (typeof getMapTargetState === 'function') {
-        const targetState = getMapTargetState();
-        if (targetState && typeof openTargetState === 'function') {
-          openTargetState();
-        }
-      }
-    });
-  }
+  // Target mode handlers live in initApp to avoid double toggles
 
   // Strategic Market Review toggle
   const strategicToggle = document.getElementById('strategic-toggle');

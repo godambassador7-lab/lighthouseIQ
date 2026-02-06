@@ -197,11 +197,6 @@ let selectedStates = [];
 let selectedSpecialties = [];
 let mapScope = 'healthcare';
 let isMapTargetMode = false;
-const DEFAULT_MAP_LEGEND_HTML = `
-  <span class="legend-label">Low activity</span>
-  <div class="legend-gradient"></div>
-  <span class="legend-label">High activity</span>
-`;
 let activeMapTab = 'layoffs'; // 'layoffs' or 'rural'
 let currentPage = 1;
 let searchQuery = '';
@@ -869,11 +864,6 @@ const initWeatherMap = async () => {
       shape.setAttribute('data-state', abbrev);
       shape.addEventListener('click', () => {
         if (Date.now() < mapLongPressSuppressUntil) return;
-        // If rural tab is active, show closures list
-        if (activeMapTab === 'rural') {
-          showRuralClosuresList(abbrev);
-          return;
-        }
         // If target mode is active, set/clear target state instead of toggling selection
         if (isMapTargetMode) {
           const currentTarget = getMapTargetState();
@@ -1707,9 +1697,6 @@ const switchMapTab = (tab) => {
   mapTabLayoffs?.classList.toggle('active', tab === 'layoffs');
   mapTabRural?.classList.toggle('active', tab === 'rural');
 
-  // Close any open panels when switching tabs
-  if (ruralClosuresPanel) ruralClosuresPanel.style.display = 'none';
-
   // Update section title and description
   if (tab === 'layoffs') {
     if (mapSectionTitle) mapSectionTitle.textContent = 'Interactive Layoff Weather Map';
@@ -1718,12 +1705,7 @@ const switchMapTab = (tab) => {
     }
     // Show layoff-specific controls
     document.querySelector('.scope-toggle')?.style.setProperty('display', '');
-    const legend = document.getElementById('map-legend');
-    if (legend) {
-      legend.innerHTML = DEFAULT_MAP_LEGEND_HTML;
-      legend.style.display = '';
-    }
-    if (ruralClosuresPanel) ruralClosuresPanel.style.display = 'none';
+    document.getElementById('map-legend')?.style.setProperty('display', '');
     // Update map colors for layoffs
     updateMapColors();
   } else if (tab === 'rural') {
@@ -1746,130 +1728,9 @@ const switchMapTab = (tab) => {
     }
     // Update map colors for rural hospitals
     updateRuralMapColors();
-    renderRuralClosuresSummary();
   }
 };
 
-// Show rural hospital closures list for a state
-const showRuralClosuresList = (stateAbbrev) => {
-  if (!ruralClosuresPanel || !ruralClosuresList) return;
-
-  const stateName = STATE_NAMES[stateAbbrev] || stateAbbrev;
-  const stats = RURAL_HOSPITAL_CLOSURES[stateAbbrev] || { count: 0, recent: 0, atRisk: 0 };
-  const closures = RURAL_HOSPITAL_CLOSURE_DETAILS[stateAbbrev] || [];
-
-  if (ruralClosuresTitle) {
-    ruralClosuresTitle.textContent = `${stateName} Rural Hospital Closures`;
-  }
-
-  if (ruralClosuresSubtitle) {
-    ruralClosuresSubtitle.textContent = closures.length > 0
-      ? `${stats.count} closures since 2010, ${stats.atRisk} hospitals currently at risk`
-      : 'No recorded rural hospital closures in this state.';
-  }
-
-  if (closures.length === 0) {
-    ruralClosuresList.innerHTML = `
-      <div class="rural-summary-stats">
-        <div class="rural-summary-stat">
-          <div class="value">0</div>
-          <div class="label">Closures</div>
-        </div>
-        <div class="rural-summary-stat warning">
-          <div class="value">${stats.atRisk}</div>
-          <div class="label">At Risk</div>
-        </div>
-      </div>
-      <div style="text-align: center; color: var(--muted); padding: 20px;">
-        No rural hospital closures recorded for ${stateName}.
-      </div>
-    `;
-  } else {
-    const closedCount = closures.filter(c => c.type === 'closed').length;
-    const convertedCount = closures.filter(c => c.type === 'converted').length;
-
-    ruralClosuresList.innerHTML = `
-      <div class="rural-summary-stats">
-        <div class="rural-summary-stat critical">
-          <div class="value">${closedCount}</div>
-          <div class="label">Closed</div>
-        </div>
-        <div class="rural-summary-stat warning">
-          <div class="value">${convertedCount}</div>
-          <div class="label">Converted</div>
-        </div>
-        <div class="rural-summary-stat">
-          <div class="value">${stats.atRisk}</div>
-          <div class="label">At Risk</div>
-        </div>
-      </div>
-      ${closures.sort((a, b) => b.year - a.year).map(closure => `
-        <div class="rural-closure-card ${closure.type}">
-          <div class="rural-closure-name">
-            ${closure.name}
-            <span class="rural-closure-badge ${closure.type}">${closure.type}</span>
-          </div>
-          <div class="rural-closure-meta">
-            <span>${closure.city}</span>
-            <span>${closure.year}</span>
-          </div>
-        </div>
-      `).join('')}
-    `;
-  }
-
-  ruralClosuresPanel.style.display = 'block';
-};
-
-const renderRuralClosuresSummary = () => {
-  if (!ruralClosuresPanel || !ruralClosuresList) return;
-  if (ruralClosuresTitle) ruralClosuresTitle.textContent = 'Rural Hospital Closures by State';
-  if (ruralClosuresSubtitle) {
-    ruralClosuresSubtitle.textContent = 'Click a state to see closure details.';
-  }
-
-  const entries = Object.entries(RURAL_HOSPITAL_CLOSURE_DETAILS || {})
-    .filter(([, closures]) => Array.isArray(closures) && closures.length > 0)
-    .sort((a, b) => b[1].length - a[1].length);
-
-  if (entries.length === 0) {
-    ruralClosuresList.innerHTML = '<div class="rural-empty">No rural hospital closure details available.</div>';
-    ruralClosuresPanel.style.display = 'block';
-    return;
-  }
-
-  ruralClosuresList.innerHTML = entries.map(([state, closures]) => {
-    const preview = closures.slice(0, 3).map((c) => c.name).join(', ');
-    const moreCount = closures.length - 3;
-    return `
-      <div class="rural-summary-state" data-state="${state}">
-        <div class="rural-summary-header">
-          <strong>${escapeHtml(STATE_NAMES[state] || state)}</strong>
-          <span class="rural-summary-count">${closures.length} closures</span>
-        </div>
-        <div class="rural-summary-preview">
-          ${escapeHtml(preview)}${moreCount > 0 ? ` +${moreCount} more` : ''}
-        </div>
-      </div>
-    `;
-  }).join('');
-
-  ruralClosuresList.querySelectorAll('.rural-summary-state').forEach((card) => {
-    card.addEventListener('click', () => {
-      const state = card.getAttribute('data-state');
-      if (state) showRuralClosuresList(state);
-    });
-  });
-
-  ruralClosuresPanel.style.display = 'block';
-};
-
-// Close rural closures panel
-const closeRuralClosuresPanel = () => {
-  if (ruralClosuresPanel) {
-    ruralClosuresPanel.style.display = 'none';
-  }
-};
 const loadAllNotices = async () => {
   if (allNoticesLoaded || allNoticesLoading) return allNotices;
   allNoticesLoading = true;
@@ -3345,10 +3206,6 @@ const initViewToggle = () => {
     if (mapFactorsPanel) mapFactorsPanel.style.display = 'none';
   });
 
-  ruralClosuresClose?.addEventListener('click', () => {
-    closeRuralClosuresPanel();
-  });
-
 };
 
 const renderBarChart = () => {
@@ -3744,255 +3601,6 @@ const RURAL_HOSPITAL_CLOSURES = {
   WV: { count: 3, recent: 1, atRisk: 5 },
   WI: { count: 2, recent: 0, atRisk: 3 },
   WY: { count: 1, recent: 0, atRisk: 2 }
-};
-
-// Detailed Rural Hospital Closures List (data from CHQPR/Sheps Center)
-// Structure: Array of { name, city, year, type: 'closed' | 'converted' }
-const RURAL_HOSPITAL_CLOSURE_DETAILS = {
-  AL: [
-    { name: 'Pickens County Medical Center', city: 'Carrollton', year: 2020, type: 'closed' },
-    { name: 'Wedowee Hospital', city: 'Wedowee', year: 2019, type: 'closed' },
-    { name: 'Randolph Medical Center', city: 'Roanoke', year: 2018, type: 'closed' },
-    { name: 'Greene County Hospital', city: 'Eutaw', year: 2017, type: 'closed' },
-    { name: 'St. Vincent\'s Blount', city: 'Oneonta', year: 2017, type: 'converted' },
-    { name: 'Medical Center Barbour', city: 'Eufaula', year: 2025, type: 'closed' }
-  ],
-  AZ: [
-    { name: 'Copper Queen Community Hospital', city: 'Bisbee', year: 2021, type: 'converted' },
-    { name: 'Payson Regional Medical Center', city: 'Payson', year: 2015, type: 'closed' },
-    { name: 'University Physicians Hospital', city: 'Tucson', year: 2013, type: 'closed' }
-  ],
-  AR: [
-    { name: 'Stone County Medical Center', city: 'Mountain View', year: 2019, type: 'closed' },
-    { name: 'Izard County Medical Center', city: 'Calico Rock', year: 2018, type: 'closed' },
-    { name: 'Chambers Memorial Hospital', city: 'Danville', year: 2016, type: 'closed' }
-  ],
-  CA: [
-    { name: 'Madera Community Hospital', city: 'Madera', year: 2024, type: 'closed' },
-    { name: 'Tulare Regional Medical Center', city: 'Tulare', year: 2017, type: 'closed' },
-    { name: 'Victor Valley Global Medical Center', city: 'Victorville', year: 2019, type: 'closed' },
-    { name: 'Pacifica Hospital of the Valley', city: 'Sun Valley', year: 2018, type: 'closed' },
-    { name: 'College Hospital Costa Mesa', city: 'Costa Mesa', year: 2025, type: 'closed' }
-  ],
-  CO: [
-    { name: 'Prowers Medical Center', city: 'Lamar', year: 2020, type: 'converted' },
-    { name: 'Conejos County Hospital', city: 'La Jara', year: 2018, type: 'converted' }
-  ],
-  CT: [
-    { name: 'Sharon Hospital', city: 'Sharon', year: 2021, type: 'converted' }
-  ],
-  FL: [
-    { name: 'Calhoun Liberty Hospital', city: 'Blountstown', year: 2021, type: 'closed' },
-    { name: 'Madison County Memorial Hospital', city: 'Madison', year: 2019, type: 'closed' },
-    { name: 'Hendry Regional Medical Center', city: 'Clewiston', year: 2018, type: 'closed' },
-    { name: 'Physicians Regional - Collier Blvd', city: 'Naples', year: 2025, type: 'closed' }
-  ],
-  GA: [
-    { name: 'Fairview Park Hospital', city: 'Dublin', year: 2024, type: 'closed' },
-    { name: 'Southwest Georgia Regional Medical Center', city: 'Cuthbert', year: 2020, type: 'closed' },
-    { name: 'Optim Medical Center - Tattnall', city: 'Reidsville', year: 2019, type: 'closed' },
-    { name: 'Irwin County Hospital', city: 'Ocilla', year: 2018, type: 'closed' },
-    { name: 'Doctors Hospital Augusta', city: 'Augusta', year: 2018, type: 'closed' },
-    { name: 'Stewart-Webster Hospital', city: 'Richland', year: 2017, type: 'closed' },
-    { name: 'Charlton Memorial Hospital', city: 'Folkston', year: 2016, type: 'closed' },
-    { name: 'Clinch Memorial Hospital', city: 'Homerville', year: 2025, type: 'closed' },
-    { name: 'Lower Oconee Community Hospital', city: 'Glenwood', year: 2014, type: 'closed' }
-  ],
-  ID: [
-    { name: 'Weiser Memorial Hospital', city: 'Weiser', year: 2019, type: 'converted' }
-  ],
-  IL: [
-    { name: 'St. Margaret\'s Hospital', city: 'Spring Valley', year: 2024, type: 'closed' },
-    { name: 'Westlake Hospital', city: 'Melrose Park', year: 2019, type: 'closed' },
-    { name: 'KSB Hospital', city: 'Dixon', year: 2018, type: 'converted' },
-    { name: 'Hamilton Memorial Hospital District', city: 'McLeansboro', year: 2018, type: 'closed' },
-    { name: 'Hoopeston Community Memorial Hospital', city: 'Hoopeston', year: 2025, type: 'closed' }
-  ],
-  IN: [
-    { name: 'Union Hospital Clinton', city: 'Clinton', year: 2019, type: 'closed' },
-    { name: 'St. Vincent Randolph Hospital', city: 'Winchester', year: 2018, type: 'converted' }
-  ],
-  IA: [
-    { name: 'Greater Regional Medical Center', city: 'Creston', year: 2022, type: 'converted' }
-  ],
-  KS: [
-    { name: 'Mercy Hospital Fort Scott', city: 'Fort Scott', year: 2020, type: 'closed' },
-    { name: 'Sumner Regional Medical Center', city: 'Wellington', year: 2019, type: 'converted' },
-    { name: 'Mercy Hospital Independence', city: 'Independence', year: 2018, type: 'closed' },
-    { name: 'Republic County Hospital', city: 'Belleville', year: 2017, type: 'closed' },
-    { name: 'Herington Municipal Hospital', city: 'Herington', year: 2025, type: 'closed' }
-  ],
-  KY: [
-    { name: 'Williamson ARH Hospital', city: 'South Williamson', year: 2024, type: 'closed' },
-    { name: 'Mercy Health - Marcum and Wallace Hospital', city: 'Irvine', year: 2020, type: 'closed' },
-    { name: 'Ohio County Hospital', city: 'Hartford', year: 2019, type: 'closed' }
-  ],
-  LA: [
-    { name: 'Savoy Medical Center', city: 'Mamou', year: 2019, type: 'closed' },
-    { name: 'Bunkie General Hospital', city: 'Bunkie', year: 2018, type: 'closed' },
-    { name: 'Bogalusa Medical Center', city: 'Bogalusa', year: 2017, type: 'closed' },
-    { name: 'Central Louisiana Surgical Hospital', city: 'Alexandria', year: 2017, type: 'closed' }
-  ],
-  ME: [
-    { name: 'Calais Regional Hospital', city: 'Calais', year: 2020, type: 'converted' }
-  ],
-  MD: [
-    { name: 'Sacred Heart Hospital', city: 'Cumberland', year: 2019, type: 'closed' }
-  ],
-  MA: [
-    { name: 'Quincy Medical Center', city: 'Quincy', year: 2014, type: 'closed' }
-  ],
-  MI: [
-    { name: 'Sturgis Hospital', city: 'Sturgis', year: 2020, type: 'converted' },
-    { name: 'Eaton Rapids Medical Center', city: 'Eaton Rapids', year: 2019, type: 'converted' },
-    { name: 'West Branch Regional Medical Center', city: 'West Branch', year: 2018, type: 'closed' }
-  ],
-  MN: [
-    { name: 'Fairview Range Medical Center', city: 'Hibbing', year: 2022, type: 'converted' },
-    { name: 'Clearwater Health Services', city: 'Bagley', year: 2019, type: 'closed' }
-  ],
-  MS: [
-    { name: 'Greenwood Leflore Hospital', city: 'Greenwood', year: 2024, type: 'closed' },
-    { name: 'Pioneer Community Hospital', city: 'Aberdeen', year: 2020, type: 'closed' },
-    { name: 'Highland Community Hospital', city: 'Picayune', year: 2019, type: 'closed' },
-    { name: 'Kilmichael Hospital', city: 'Kilmichael', year: 2018, type: 'closed' },
-    { name: 'Neshoba County General Hospital', city: 'Philadelphia', year: 2017, type: 'closed' },
-    { name: 'Ruleville Hospital', city: 'Ruleville', year: 2025, type: 'closed' }
-  ],
-  MO: [
-    { name: 'Mineral Area Regional Medical Center', city: 'Farmington', year: 2024, type: 'closed' },
-    { name: 'Audrain Medical Center', city: 'Mexico', year: 2020, type: 'closed' },
-    { name: 'Scotland County Hospital', city: 'Memphis', year: 2019, type: 'converted' },
-    { name: 'I-70 Community Hospital', city: 'Sweet Springs', year: 2018, type: 'closed' }
-  ],
-  MT: [
-    { name: 'Mountainview Medical Center', city: 'White Sulphur Springs', year: 2019, type: 'converted' }
-  ],
-  NE: [
-    { name: 'Tilden Community Hospital', city: 'Tilden', year: 2019, type: 'closed' },
-    { name: 'Faith Regional Health Services', city: 'Norfolk', year: 2018, type: 'converted' }
-  ],
-  NV: [
-    { name: 'Humboldt General Hospital', city: 'Winnemucca', year: 2020, type: 'converted' }
-  ],
-  NJ: [
-    { name: 'Prospect Medical Holdings Hospital', city: 'Newark', year: 2020, type: 'closed' },
-    { name: 'Hahnemann University Hospital', city: 'Philadelphia', year: 2019, type: 'closed' }
-  ],
-  NM: [
-    { name: 'De Baca General Hospital', city: 'Fort Sumner', year: 2019, type: 'closed' },
-    { name: 'Roosevelt General Hospital', city: 'Portales', year: 2018, type: 'converted' }
-  ],
-  NY: [
-    { name: 'Massena Memorial Hospital', city: 'Massena', year: 2024, type: 'closed' },
-    { name: 'Olean General Hospital', city: 'Olean', year: 2020, type: 'converted' },
-    { name: 'St. Clare\'s Hospital', city: 'Denville', year: 2018, type: 'closed' },
-    { name: 'Westchester Medical Center', city: 'Valhalla', year: 2017, type: 'converted' }
-  ],
-  NC: [
-    { name: 'Washington County Hospital', city: 'Plymouth', year: 2024, type: 'closed' },
-    { name: 'Randolph Hospital', city: 'Asheboro', year: 2020, type: 'converted' },
-    { name: 'Pungo District Hospital', city: 'Belhaven', year: 2017, type: 'closed' },
-    { name: 'Morehead Memorial Hospital', city: 'Eden', year: 2017, type: 'closed' },
-    { name: 'Vidant Pungo Hospital', city: 'Belhaven', year: 2025, type: 'closed' }
-  ],
-  OH: [
-    { name: 'Affinity Medical Center', city: 'Massillon', year: 2018, type: 'closed' },
-    { name: 'East Ohio Regional Hospital', city: 'Martins Ferry', year: 2019, type: 'closed' },
-    { name: 'Twin City Hospital', city: 'Dennison', year: 2018, type: 'closed' },
-    { name: 'Northside Medical Center', city: 'Youngstown', year: 2018, type: 'closed' }
-  ],
-  OK: [
-    { name: 'Drumright Regional Hospital', city: 'Drumright', year: 2024, type: 'closed' },
-    { name: 'Wagoner Community Hospital', city: 'Wagoner', year: 2023, type: 'closed' },
-    { name: 'Pawhuska Hospital', city: 'Pawhuska', year: 2019, type: 'closed' },
-    { name: 'Sayre Memorial Hospital', city: 'Sayre', year: 2018, type: 'closed' },
-    { name: 'Seiling Municipal Hospital', city: 'Seiling', year: 2018, type: 'closed' },
-    { name: 'Prague Municipal Hospital', city: 'Prague', year: 2017, type: 'closed' },
-    { name: 'Bristow Medical Center', city: 'Bristow', year: 2016, type: 'closed' }
-  ],
-  OR: [
-    { name: 'Blue Mountain Hospital', city: 'John Day', year: 2019, type: 'converted' }
-  ],
-  PA: [
-    { name: 'Sharon Regional Medical Center', city: 'Sharon', year: 2024, type: 'closed' },
-    { name: 'Sunbury Community Hospital', city: 'Sunbury', year: 2019, type: 'closed' },
-    { name: 'Ellwood City Hospital', city: 'Ellwood City', year: 2018, type: 'closed' }
-  ],
-  PR: [
-    { name: 'Hospital Dr. Cayetano Coll y Toste', city: 'Arecibo', year: 2019, type: 'closed' },
-    { name: 'Hospital Episcopal San Lucas', city: 'Ponce', year: 2018, type: 'closed' }
-  ],
-  SC: [
-    { name: 'Williamsburg Regional Hospital', city: 'Kingstree', year: 2020, type: 'closed' },
-    { name: 'Fairfield Memorial Hospital', city: 'Winnsboro', year: 2018, type: 'closed' },
-    { name: 'Marlboro Park Hospital', city: 'Bennettsville', year: 2017, type: 'closed' }
-  ],
-  SD: [
-    { name: 'Platte Health Center', city: 'Platte', year: 2019, type: 'converted' }
-  ],
-  TN: [
-    { name: 'Jellico Community Hospital', city: 'Jellico', year: 2024, type: 'closed' },
-    { name: 'McKenzie Regional Hospital', city: 'McKenzie', year: 2023, type: 'closed' },
-    { name: 'Decatur County General Hospital', city: 'Parsons', year: 2020, type: 'closed' },
-    { name: 'Starr Regional Medical Center - Athens', city: 'Athens', year: 2019, type: 'converted' },
-    { name: 'Haywood Park Community Hospital', city: 'Brownsville', year: 2019, type: 'closed' },
-    { name: 'Humboldt General Hospital', city: 'Humboldt', year: 2018, type: 'closed' },
-    { name: 'McNairy Regional Hospital', city: 'Selmer', year: 2018, type: 'closed' },
-    { name: 'Gibson General Hospital', city: 'Trenton', year: 2025, type: 'closed' }
-  ],
-  TX: [
-    { name: 'Cozby-Germany Hospital', city: 'Grand Saline', year: 2024, type: 'closed' },
-    { name: 'De Leon Hospital', city: 'De Leon', year: 2023, type: 'closed' },
-    { name: 'Electra Memorial Hospital', city: 'Electra', year: 2022, type: 'closed' },
-    { name: 'Floydada\'s Cogdell Hospital', city: 'Floydada', year: 2021, type: 'closed' },
-    { name: 'Hamilton General Hospital', city: 'Hamilton', year: 2020, type: 'closed' },
-    { name: 'Faith Community Hospital', city: 'Jacksboro', year: 2020, type: 'closed' },
-    { name: 'Colorado Fayette Medical Center', city: 'Weimar', year: 2019, type: 'closed' },
-    { name: 'Frio Regional Hospital', city: 'Pearsall', year: 2019, type: 'closed' },
-    { name: 'Coleman County Medical Center', city: 'Coleman', year: 2019, type: 'closed' },
-    { name: 'Little River Healthcare', city: 'Cameron', year: 2018, type: 'closed' },
-    { name: 'Fisher County Hospital District', city: 'Rotan', year: 2018, type: 'closed' },
-    { name: 'Coryell Memorial Hospital', city: 'Gatesville', year: 2018, type: 'closed' },
-    { name: 'Trinity Medical Center', city: 'Brenham', year: 2017, type: 'closed' },
-    { name: 'El Campo Memorial Hospital', city: 'El Campo', year: 2017, type: 'closed' },
-    { name: 'Childress Regional Medical Center', city: 'Childress', year: 2017, type: 'closed' },
-    { name: 'Cleveland Regional Medical Center', city: 'Cleveland', year: 2016, type: 'closed' },
-    { name: 'Stamford Memorial Hospital', city: 'Stamford', year: 2016, type: 'closed' },
-    { name: 'Renaissance Hospital - Terrell', city: 'Terrell', year: 2016, type: 'closed' },
-    { name: 'Nix Hospital', city: 'San Antonio', year: 2015, type: 'converted' },
-    { name: 'Parkview Hospital', city: 'Wheeler', year: 2015, type: 'closed' },
-    { name: 'Schleicher County Medical Center', city: 'Eldorado', year: 2025, type: 'closed' },
-    { name: 'Goodall-Witcher Hospital', city: 'Clifton', year: 2025, type: 'closed' },
-    { name: 'Knox County Hospital', city: 'Knox City', year: 2025, type: 'closed' },
-    { name: 'Mitchell County Hospital', city: 'Colorado City', year: 2025, type: 'closed' },
-    { name: 'Olney Hamilton Hospital', city: 'Olney', year: 2014, type: 'closed' },
-    { name: 'Shelby Regional Medical Center', city: 'Center', year: 2013, type: 'closed' }
-  ],
-  UT: [
-    { name: 'Castleview Hospital', city: 'Price', year: 2019, type: 'converted' }
-  ],
-  VA: [
-    { name: 'Lee County Community Hospital', city: 'Pennington Gap', year: 2019, type: 'closed' },
-    { name: 'Buchanan General Hospital', city: 'Grundy', year: 2018, type: 'closed' },
-    { name: 'Bedford Memorial Hospital', city: 'Bedford', year: 2017, type: 'closed' }
-  ],
-  WA: [
-    { name: 'Klickitat Valley Health', city: 'Goldendale', year: 2020, type: 'converted' },
-    { name: 'Yakima Valley Farm Workers Clinic', city: 'Toppenish', year: 2019, type: 'converted' }
-  ],
-  WV: [
-    { name: 'Fairmont Regional Medical Center', city: 'Fairmont', year: 2024, type: 'closed' },
-    { name: 'Ohio Valley Medical Center', city: 'Wheeling', year: 2019, type: 'closed' },
-    { name: 'Williamson Memorial Hospital', city: 'Williamson', year: 2018, type: 'closed' }
-  ],
-  WI: [
-    { name: 'Reedsburg Area Medical Center', city: 'Reedsburg', year: 2020, type: 'converted' },
-    { name: 'Flambeau Hospital', city: 'Park Falls', year: 2019, type: 'converted' }
-  ],
-  WY: [
-    { name: 'South Lincoln Medical Center', city: 'Kemmerer', year: 2019, type: 'converted' }
-  ]
 };
 
 // Travel nurse specialty pay (weekly rates)
