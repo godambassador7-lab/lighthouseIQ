@@ -849,17 +849,8 @@ const initWeatherMap = async () => {
       const abbrev = (stateClass || rawId).toUpperCase();
       if (!/^[A-Z]{2}$/.test(abbrev)) return;
       shape.setAttribute('data-state', abbrev);
-      shape.addEventListener('click', (e) => {
+      shape.addEventListener('click', () => {
         if (Date.now() < mapLongPressSuppressUntil) return;
-        if (e.shiftKey) {
-          const currentTarget = getMapTargetState();
-          if (currentTarget === abbrev) {
-            clearMapTargetState();
-          } else {
-            setMapTargetState(abbrev);
-          }
-          return;
-        }
         toggleStateSelection(abbrev);
       });
       shape.addEventListener('mouseenter', (e) => showTooltip(e, abbrev));
