@@ -213,7 +213,6 @@ const MAP_LONG_PRESS_MS = 2000;
 const MAP_RECRUIT_TARGET_COUNT = 5;
 let mapLongPressTimer = null;
 let mapLongPressSuppressUntil = 0;
-let mapShiftTargetSuppressUntil = 0;
 let mapRecruitTargetsInfo = [];
 
 const REQUIRED_PROGRAM_ACCREDITORS = ['CCNE', 'ACEN', 'CNEA'];
@@ -850,18 +849,8 @@ const initWeatherMap = async () => {
       const abbrev = (stateClass || rawId).toUpperCase();
       if (!/^[A-Z]{2}$/.test(abbrev)) return;
       shape.setAttribute('data-state', abbrev);
-      shape.addEventListener('click', (e) => {
+      shape.addEventListener('click', () => {
         if (Date.now() < mapLongPressSuppressUntil) return;
-        if (Date.now() < mapShiftTargetSuppressUntil) return;
-        if (e.shiftKey) {
-          const currentTarget = getMapTargetState();
-          if (currentTarget === abbrev) {
-            clearMapTargetState();
-          } else {
-            setMapTargetState(abbrev);
-          }
-          return;
-        }
         toggleStateSelection(abbrev);
       });
       shape.addEventListener('mouseenter', (e) => showTooltip(e, abbrev));
@@ -876,17 +865,6 @@ const initWeatherMap = async () => {
           applyMapRecruitTargets(homeState);
           showMapToast(`Top recruiting targets highlighted for ${STATE_NAMES[homeState] || homeState}`);
         }, MAP_LONG_PRESS_MS);
-      });
-      shape.addEventListener('pointerdown', (e) => {
-        if (e.button !== 0) return;
-        if (!e.shiftKey) return;
-        const currentTarget = getMapTargetState();
-        if (currentTarget === abbrev) {
-          clearMapTargetState();
-        } else {
-          setMapTargetState(abbrev);
-        }
-        mapShiftTargetSuppressUntil = Date.now() + 500;
       });
       const clearLongPress = () => {
         if (mapLongPressTimer) {
