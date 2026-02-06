@@ -510,8 +510,12 @@
     <section class="weather-map-section">
       <div class="section-header">
         <div class="section-header-text">
-          <h3>Interactive Layoff Weather Map</h3>
-          <p>Fog intensity shows layoff activity by state. Darker = more layoffs in the current scope. <span class="map-scope-note">Scope: <strong id="map-scope-label">Healthcare</strong></span></p>
+          <div class="map-tab-switcher">
+            <button class="map-tab-btn active" id="map-tab-layoffs" data-tab="layoffs">Layoff Map</button>
+            <button class="map-tab-btn" id="map-tab-rural" data-tab="rural">Rural Hospitals</button>
+          </div>
+          <h3 id="map-section-title">Interactive Layoff Weather Map</h3>
+          <p id="map-section-desc">Fog intensity shows layoff activity by state. Darker = more layoffs in the current scope. <span class="map-scope-note">Scope: <strong id="map-scope-label">Healthcare</strong></span></p>
         </div>
           <div class="map-controls">
             <div class="view-toggle">

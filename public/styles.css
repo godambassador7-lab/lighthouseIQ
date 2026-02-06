@@ -3841,6 +3841,82 @@ input[type="range"] {
   color: var(--muted);
 }
 
+.map-tab-switcher {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 12px;
+  background: rgba(226, 232, 240, 0.5);
+  padding: 4px;
+  border-radius: 10px;
+  width: fit-content;
+}
+
+.map-tab-btn {
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: transparent;
+  color: var(--muted);
+  transition: all 0.2s ease;
+}
+
+.map-tab-btn:hover {
+  color: var(--navy);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.map-tab-btn.active {
+  background: #ffffff;
+  color: var(--navy);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.1);
+}
+
+.map-tab-btn[data-tab="rural"].active {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  color: #ffffff;
+}
+
+.rural-map-legend {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 16px;
+  background: rgba(248, 250, 252, 0.95);
+  border-radius: 10px;
+  margin-bottom: 12px;
+  font-size: 12px;
+  color: var(--muted);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.rural-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.rural-legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.rural-legend-dot.closures {
+  background: #dc2626;
+}
+
+.rural-legend-dot.at-risk {
+  background: #f59e0b;
+  border: 2px dashed #d97706;
+}
+
+.rural-legend-dot.stable {
+  background: #22c55e;
+}
+
 .map-controls {
   display: flex;
   align-items: center;
@@ -4012,6 +4088,36 @@ input[type="range"] {
   color: var(--muted);
   line-height: 1.4;
 }
+
+.map-factor-meta .factor-row {
+  margin-bottom: 4px;
+  padding: 2px 0;
+}
+
+.map-factor-meta .factor-row:last-child {
+  margin-bottom: 0;
+}
+
+.map-factor-meta .factor-row strong {
+  color: var(--navy);
+  font-weight: 600;
+}
+
+.map-factor-meta .risk-high {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.map-factor-meta .risk-medium {
+  color: #d97706;
+  font-weight: 600;
+}
+
+.map-factor-meta .risk-low {
+  color: #16a34a;
+  font-weight: 600;
+}
+
 .map-control-btn {
   border: 1px solid rgba(148, 163, 184, 0.35);
   border-radius: 10px;
@@ -4359,6 +4465,26 @@ input[type="range"] {
 .us-map svg circle.layoff-8 { fill: #e57373; } /* Dark red - severe */
 .us-map svg path.layoff-9,
 .us-map svg circle.layoff-9 { fill: #c62828; } /* Deep red - critical */
+
+/* Rural hospital vulnerability colors */
+.us-map svg path.rural-critical,
+.us-map svg circle.rural-critical {
+  fill: #dc2626;
+  stroke: #991b1b;
+  stroke-width: 1.5px;
+} /* Deep red - high closures/at-risk */
+
+.us-map svg path.rural-warning,
+.us-map svg circle.rural-warning {
+  fill: #f59e0b;
+  stroke: #d97706;
+  stroke-width: 1px;
+} /* Amber - moderate risk */
+
+.us-map svg path.rural-stable,
+.us-map svg circle.rural-stable {
+  fill: #22c55e;
+} /* Green - low/no risk */
 
 .us-map svg .state-labels text {
   font-size: 11px;
