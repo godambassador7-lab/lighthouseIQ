@@ -6411,6 +6411,31 @@ document.addEventListener('DOMContentLoaded', () => {
       factorsPanel.style.display = 'none';
     });
   }
+
+  // Target Mode button - toggle target selection mode
+  const targetModeBtn = document.getElementById('map-target-mode-btn');
+  if (targetModeBtn) {
+    targetModeBtn.addEventListener('click', () => {
+      isMapTargetMode = !isMapTargetMode;
+      targetModeBtn.classList.toggle('active', isMapTargetMode);
+      targetModeBtn.setAttribute('aria-pressed', String(isMapTargetMode));
+      const status = targetModeBtn.querySelector('.map-target-mode-status');
+      if (status) status.textContent = isMapTargetMode ? 'On' : 'Off';
+    });
+  }
+
+  // Target State button - open target state module
+  const targetStateBtn = document.getElementById('map-target-state-btn');
+  if (targetStateBtn) {
+    targetStateBtn.addEventListener('click', () => {
+      if (typeof getMapTargetState === 'function') {
+        const targetState = getMapTargetState();
+        if (targetState && typeof openTargetState === 'function') {
+          openTargetState();
+        }
+      }
+    });
+  }
 });
 
 
