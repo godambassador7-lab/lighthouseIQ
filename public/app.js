@@ -70,6 +70,7 @@ const mapTabLayoffs = document.getElementById('map-tab-layoffs');
 const mapTabRural = document.getElementById('map-tab-rural');
 const mapSectionTitle = document.getElementById('map-section-title');
 const mapSectionDesc = document.getElementById('map-section-desc');
+const ruralClosuresOverlay = document.getElementById('rural-closures-overlay');
 const ruralClosuresPanel = document.getElementById('rural-closures-panel');
 const ruralClosuresTitle = document.getElementById('rural-closures-title');
 const ruralClosuresSubtitle = document.getElementById('rural-closures-subtitle');
@@ -1697,6 +1698,8 @@ const switchMapTab = (tab) => {
   mapTabLayoffs?.classList.toggle('active', tab === 'layoffs');
   mapTabRural?.classList.toggle('active', tab === 'rural');
 
+  // Close any open panels when switching tabs
+  if (ruralClosuresOverlay) ruralClosuresOverlay.style.display = 'none';
   // Update section title and description
   if (tab === 'layoffs') {
     if (mapSectionTitle) mapSectionTitle.textContent = 'Interactive Layoff Weather Map';
@@ -1705,7 +1708,12 @@ const switchMapTab = (tab) => {
     }
     // Show layoff-specific controls
     document.querySelector('.scope-toggle')?.style.setProperty('display', '');
-    document.getElementById('map-legend')?.style.setProperty('display', '');
+    const legend = document.getElementById('map-legend');
+    if (legend) {
+      legend.innerHTML = DEFAULT_MAP_LEGEND_HTML;
+      legend.style.display = '';
+    }
+    if (ruralClosuresOverlay) ruralClosuresOverlay.style.display = 'none';
     // Update map colors for layoffs
     updateMapColors();
   } else if (tab === 'rural') {
@@ -1731,6 +1739,128 @@ const switchMapTab = (tab) => {
   }
 };
 
+// Show rural hospital closures list for a state
+const showRuralClosuresList = (stateAbbrev) => {
+  if (!ruralClosuresPanel || !ruralClosuresList) return;
+
+  const stateName = STATE_NAMES[stateAbbrev] || stateAbbrev;
+  const stats = RURAL_HOSPITAL_CLOSURES[stateAbbrev] || { count: 0, recent: 0, atRisk: 0 };
+  const closures = RURAL_HOSPITAL_CLOSURE_DETAILS[stateAbbrev] || [];
+
+  if (ruralClosuresTitle) {
+    ruralClosuresTitle.textContent = `${stateName} Rural Hospital Closures`;
+  }
+
+  if (ruralClosuresSubtitle) {
+    ruralClosuresSubtitle.textContent = closures.length > 0
+      ? `${stats.count} closures since 2010, ${stats.atRisk} hospitals currently at risk`
+      : 'No recorded rural hospital closures in this state.';
+  }
+
+  if (closures.length === 0) {
+    ruralClosuresList.innerHTML = `
+      <div class="rural-summary-stats">
+        <div class="rural-summary-stat">
+          <div class="value">0</div>
+          <div class="label">Closures</div>
+        </div>
+        <div class="rural-summary-stat warning">
+          <div class="value">${stats.atRisk}</div>
+          <div class="label">At Risk</div>
+        </div>
+      </div>
+      <div style="text-align: center; color: var(--muted); padding: 20px;">
+        No rural hospital closures recorded for ${stateName}.
+      </div>
+    `;
+  } else {
+    const closedCount = closures.filter(c => c.type === 'closed').length;
+    const convertedCount = closures.filter(c => c.type === 'converted').length;
+
+    ruralClosuresList.innerHTML = `
+      <div class="rural-summary-stats">
+        <div class="rural-summary-stat critical">
+          <div class="value">${closedCount}</div>
+          <div class="label">Closed</div>
+        </div>
+        <div class="rural-summary-stat warning">
+          <div class="value">${convertedCount}</div>
+          <div class="label">Converted</div>
+        </div>
+        <div class="rural-summary-stat">
+          <div class="value">${stats.atRisk}</div>
+          <div class="label">At Risk</div>
+        </div>
+      </div>
+      ${closures.sort((a, b) => (b.year ?? 0) - (a.year ?? 0)).map(closure => {
+        const yearLabel = closure.year ? closure.year : '--';
+        const location = [closure.city, closure.county].filter(Boolean).join(', ');
+        return `
+        <div class="rural-closure-card ${closure.type}">
+          <div class="rural-closure-name">
+            ${closure.name}
+            <span class="rural-closure-badge ${closure.type}">${closure.type}</span>
+          </div>
+          <div class="rural-closure-meta">
+            <span>${location || 'Location n/a'}</span>
+            <span>${yearLabel}</span>
+          </div>
+        </div>
+      `;
+      }).join('')}
+    `;
+  }
+
+  if (ruralClosuresOverlay) ruralClosuresOverlay.style.display = 'flex';
+};
+
+const renderRuralClosuresSummary = () => {
+  if (!ruralClosuresPanel || !ruralClosuresList) return;
+  if (ruralClosuresTitle) ruralClosuresTitle.textContent = 'Rural Hospital Closures by State';
+  if (ruralClosuresSubtitle) {
+    ruralClosuresSubtitle.textContent = 'Click a state to see closure details.';
+  }
+
+  const entries = Object.entries(RURAL_HOSPITAL_CLOSURE_DETAILS || {})
+    .filter(([, closures]) => Array.isArray(closures) && closures.length > 0)
+    .sort((a, b) => b[1].length - a[1].length);
+
+  if (entries.length === 0) {
+    ruralClosuresList.innerHTML = '<div class="rural-empty">No rural hospital closure details available.</div>';
+    if (ruralClosuresOverlay) ruralClosuresOverlay.style.display = 'flex';
+    return;
+  }
+
+  ruralClosuresList.innerHTML = entries.map(([state, closures]) => {
+    const preview = closures.slice(0, 3).map((c) => c.name).join(', ');
+    const moreCount = closures.length - 3;
+    return `
+      <div class="rural-summary-state" data-state="${state}">
+        <div class="rural-summary-header">
+          <strong>${escapeHtml(STATE_NAMES[state] || state)}</strong>
+          <span class="rural-summary-count">${closures.length} closures</span>
+        </div>
+        <div class="rural-summary-preview">
+          ${escapeHtml(preview)}${moreCount > 0 ? ` +${moreCount} more` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  ruralClosuresList.querySelectorAll('.rural-summary-state').forEach((card) => {
+    card.addEventListener('click', () => {
+      const state = card.getAttribute('data-state');
+      if (state) showRuralClosuresList(state);
+    });
+  });
+
+  if (ruralClosuresOverlay) ruralClosuresOverlay.style.display = 'flex';
+};
+
+// Close rural closures panel
+const closeRuralClosuresPanel = () => {
+  if (ruralClosuresOverlay) ruralClosuresOverlay.style.display = 'none';
+};
 const loadAllNotices = async () => {
   if (allNoticesLoaded || allNoticesLoading) return allNotices;
   allNoticesLoading = true;
@@ -3206,6 +3336,15 @@ const initViewToggle = () => {
     if (mapFactorsPanel) mapFactorsPanel.style.display = 'none';
   });
 
+  ruralClosuresClose?.addEventListener('click', () => {
+    closeRuralClosuresPanel();
+  });
+  ruralClosuresOverlay?.addEventListener('click', (event) => {
+    if (event.target === ruralClosuresOverlay) {
+      closeRuralClosuresPanel();
+    }
+  });
+
 };
 
 const renderBarChart = () => {
@@ -3335,6 +3474,7 @@ const initApp = async () => {
     initStateBeacon();
     initNewsFeed();
     await initWeatherMap();
+    setMapTargetMode(false);
   } catch (err) {
     console.error('Error initializing UI:', err);
   }
@@ -3601,6 +3741,38 @@ const RURAL_HOSPITAL_CLOSURES = {
   WV: { count: 3, recent: 1, atRisk: 5 },
   WI: { count: 2, recent: 0, atRisk: 3 },
   WY: { count: 1, recent: 0, atRisk: 2 }
+};
+
+// Rural hospital closure details (2010+ for now; source: TORCH list of Texas rural hospital closures, updated 1.18.20)
+const RURAL_HOSPITAL_CLOSURE_DETAILS = {
+  TX: [
+    { name: 'Bastrop Hospital', city: 'Bastrop', county: 'Bastrop County', year: 2010, type: 'closed' },
+    { name: 'Weimer Hospital', city: 'Weimer', county: 'Colorado County', year: 2012, type: 'closed' },
+    { name: 'Renaissance Hospital', city: 'Terrell', county: 'Kaufman County', year: 2013, type: 'closed' },
+    { name: 'Shelby Regional Center', city: 'Center', county: 'Shelby County', year: 2013, type: 'closed' },
+    { name: 'Cozby-Germany', city: 'Grand Saline', county: 'Van Zandt County', year: 2013, type: 'closed' },
+    { name: 'Central Texas Hospital', city: 'Cameron', county: 'Milam County', year: 2013, type: 'closed' },
+    { name: 'Lake Whitney Medical', city: 'Whitney', county: 'Hill County', year: 2014, type: 'closed' },
+    { name: 'Good Shepard', city: 'Linden', county: 'Cass County', year: 2014, type: 'closed' },
+    { name: 'ETMC Gilmer', city: 'Gilmer', county: 'Upshur County', year: 2014, type: 'closed' },
+    { name: 'ETMC Mount Vernon', city: 'Mount Vernon', county: 'Franklin County', year: 2014, type: 'closed' },
+    { name: 'ETMC Clarksville', city: 'Clarksville', county: 'Red River County', year: 2014, type: 'closed' },
+    { name: 'North Texas Regional', city: 'Bridgeport', county: 'Wise County', year: 2015, type: 'closed' },
+    { name: 'Hunt Regional', city: 'Commerce', county: 'Hunt County', year: 2015, type: 'closed' },
+    { name: 'Bowie Memorial Hospital', city: 'Bowie', county: 'Montague County', year: 2015, type: 'closed' },
+    { name: 'Gulf Coast Regional Medical Center', city: 'Wharton', county: 'Wharton County', year: 2016, type: 'closed' },
+    { name: 'Nix Community', city: 'Dilley', county: 'Frio County', year: 2016, type: 'closed' },
+    { name: 'Weimar Medical Center', city: 'Weimar', county: 'Colorado County', year: 2016, type: 'closed' },
+    { name: 'Timberlands Hospital', city: 'Crockett', county: 'Houston County', year: 2017, type: 'closed' },
+    { name: 'ETMC Trinity', city: 'Trinity', county: 'Trinity County', year: 2017, type: 'closed' },
+    { name: 'Weimar Hospital', city: 'Weimar', county: 'Colorado County', year: 2017, type: 'closed' },
+    { name: 'Stamford Memorial Hospital', city: 'Stamford', county: 'Jones County', year: 2018, type: 'closed' },
+    { name: 'Little River', city: 'Rockdale', county: 'Milam County', year: 2018, type: 'closed' },
+    { name: 'Little River', city: 'Cameron', county: 'Milam County', year: 2018, type: 'closed' },
+    { name: 'Chillicothe Hospital', city: 'Chillicothe', county: 'Hardeman County', year: 2019, type: 'closed' },
+    { name: 'Hamlin Memorial Hospital', city: 'Hamlin', county: 'Jones County', year: 2019, type: 'closed' },
+    { name: 'Texas General Hospital', city: 'Grand Saline', county: 'Van Zandt County', year: 2019, type: 'closed' }
+  ]
 };
 
 // Travel nurse specialty pay (weekly rates)
