@@ -1315,6 +1315,17 @@ const setMapTargetMode = (nextValue) => {
   }
 };
 
+const ensureMapTargetModeListener = () => {
+  if (!mapTargetModeBtn || mapTargetModeBtn.dataset.listenerAttached === 'true') return;
+  mapTargetModeBtn.dataset.listenerAttached = 'true';
+  const toggle = (event) => {
+    event.preventDefault();
+    setMapTargetMode(!isMapTargetMode);
+  };
+  mapTargetModeBtn.addEventListener('click', toggle);
+  mapTargetModeBtn.addEventListener('pointerdown', toggle);
+};
+
 const getRegionForState = (state) => {
   const entry = Object.entries(REGION_STATES).find(([, states]) => states.includes(state));
   return entry ? entry[0] : null;
@@ -3406,12 +3417,7 @@ const initViewToggle = () => {
   });
 
   // Target mode button - toggles target selection mode
-  if (mapTargetModeBtn) {
-    mapTargetModeBtn.dataset.listenerAttached = 'true';
-    mapTargetModeBtn.addEventListener('click', () => {
-      setMapTargetMode(!isMapTargetMode);
-    });
-  }
+  ensureMapTargetModeListener();
 
   // Target state button - opens target state module
   mapTargetStateBtn?.addEventListener('click', () => {
@@ -7283,14 +7289,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Target mode fallback — only attach if initViewToggle didn't already
-  const targetBtn = document.getElementById('map-target-mode-btn');
-  if (targetBtn && !targetBtn.dataset.listenerAttached) {
-    targetBtn.dataset.listenerAttached = 'true';
-    targetBtn.addEventListener('click', () => {
-      if (typeof setMapTargetMode === 'function') {
-        setMapTargetMode(!isMapTargetMode);
-      }
-    });
+  if (typeof ensureMapTargetModeListener === 'function') {
+    ensureMapTargetModeListener();
   }
 
   // Strategic Market Review toggle

@@ -1569,6 +1569,17 @@ const setMapTargetMode = (nextValue) => {
   }
 };
 
+const ensureMapTargetModeListener = () => {
+  if (!mapTargetModeBtn || mapTargetModeBtn.dataset.listenerAttached === 'true') return;
+  mapTargetModeBtn.dataset.listenerAttached = 'true';
+  const toggle = (event) => {
+    event.preventDefault();
+    setMapTargetMode(!isMapTargetMode);
+  };
+  mapTargetModeBtn.addEventListener('click', toggle);
+  mapTargetModeBtn.addEventListener('pointerdown', toggle);
+};
+
 const refetchStateNotices = async (stateAbbrev) => {
   try {
     // Fetch fresh notices for this specific state
@@ -3882,9 +3893,7 @@ const initMapToggle = () => {
   mapViewBtn?.addEventListener('click', () => toggleMapView('map'));
   chartViewBtn?.addEventListener('click', () => toggleMapView('chart'));
 
-  mapTargetModeBtn?.addEventListener('click', () => {
-    setMapTargetMode(!isMapTargetMode);
-  });
+  ensureMapTargetModeListener();
 };
 
 // ==================== END MAP/CHART VIEW TOGGLE ====================
