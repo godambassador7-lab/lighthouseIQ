@@ -3,57 +3,731 @@
   "source": "CHQPR/Sheps Center for Health Services Research",
   "sourceUrl": "https://www.shepscenter.unc.edu/programs-projects/rural-health/rural-hospital-closures/",
   "states": {
-    "AL": { "count": 6, "recent": 1, "atRisk": 8 },
-    "AK": { "count": 0, "recent": 0, "atRisk": 2 },
-    "AZ": { "count": 3, "recent": 0, "atRisk": 4 },
-    "AR": { "count": 3, "recent": 0, "atRisk": 5 },
-    "CA": { "count": 5, "recent": 1, "atRisk": 6 },
-    "CO": { "count": 2, "recent": 0, "atRisk": 3 },
-    "CT": { "count": 1, "recent": 0, "atRisk": 1 },
-    "DE": { "count": 0, "recent": 0, "atRisk": 0 },
-    "DC": { "count": 0, "recent": 0, "atRisk": 0 },
-    "FL": { "count": 4, "recent": 1, "atRisk": 5 },
-    "GA": { "count": 9, "recent": 2, "atRisk": 12 },
-    "HI": { "count": 0, "recent": 0, "atRisk": 1 },
-    "ID": { "count": 1, "recent": 0, "atRisk": 2 },
-    "IL": { "count": 5, "recent": 1, "atRisk": 7 },
-    "IN": { "count": 2, "recent": 0, "atRisk": 4 },
-    "IA": { "count": 1, "recent": 0, "atRisk": 3 },
-    "KS": { "count": 5, "recent": 1, "atRisk": 6 },
-    "KY": { "count": 3, "recent": 1, "atRisk": 5 },
-    "LA": { "count": 4, "recent": 0, "atRisk": 6 },
-    "ME": { "count": 1, "recent": 0, "atRisk": 2 },
-    "MD": { "count": 1, "recent": 0, "atRisk": 1 },
-    "MA": { "count": 1, "recent": 0, "atRisk": 1 },
-    "MI": { "count": 3, "recent": 0, "atRisk": 5 },
-    "MN": { "count": 2, "recent": 0, "atRisk": 3 },
-    "MS": { "count": 6, "recent": 1, "atRisk": 9 },
-    "MO": { "count": 4, "recent": 1, "atRisk": 6 },
-    "MT": { "count": 1, "recent": 0, "atRisk": 2 },
-    "NE": { "count": 2, "recent": 0, "atRisk": 3 },
-    "NV": { "count": 1, "recent": 0, "atRisk": 2 },
-    "NH": { "count": 0, "recent": 0, "atRisk": 1 },
-    "NJ": { "count": 2, "recent": 0, "atRisk": 2 },
-    "NM": { "count": 2, "recent": 0, "atRisk": 3 },
-    "NY": { "count": 4, "recent": 1, "atRisk": 6 },
-    "NC": { "count": 5, "recent": 1, "atRisk": 7 },
-    "ND": { "count": 0, "recent": 0, "atRisk": 1 },
-    "OH": { "count": 4, "recent": 0, "atRisk": 6 },
-    "OK": { "count": 7, "recent": 2, "atRisk": 9 },
-    "OR": { "count": 1, "recent": 0, "atRisk": 2 },
-    "PA": { "count": 3, "recent": 0, "atRisk": 5 },
-    "PR": { "count": 2, "recent": 0, "atRisk": 3 },
-    "RI": { "count": 0, "recent": 0, "atRisk": 0 },
-    "SC": { "count": 3, "recent": 0, "atRisk": 4 },
-    "SD": { "count": 1, "recent": 0, "atRisk": 2 },
-    "TN": { "count": 8, "recent": 2, "atRisk": 10 },
-    "TX": { "count": 26, "recent": 4, "atRisk": 22 },
-    "UT": { "count": 1, "recent": 0, "atRisk": 2 },
-    "VT": { "count": 0, "recent": 0, "atRisk": 1 },
-    "VA": { "count": 3, "recent": 0, "atRisk": 4 },
-    "WA": { "count": 2, "recent": 0, "atRisk": 3 },
-    "WV": { "count": 3, "recent": 1, "atRisk": 5 },
-    "WI": { "count": 2, "recent": 0, "atRisk": 3 },
-    "WY": { "count": 1, "recent": 0, "atRisk": 2 }
+    "AL": {
+      "count": 6, "recent": 1, "atRisk": 8,
+      "closedHospitals": [
+        { "name": "Randolph Medical Center", "city": "Roanoke", "county": "Randolph", "year": 2013, "type": "closed" },
+        { "name": "Hale County Hospital", "city": "Greensboro", "county": "Hale", "year": 2014, "type": "closed" },
+        { "name": "Greene County Hospital", "city": "Eutaw", "county": "Greene", "year": 2016, "type": "converted" },
+        { "name": "Pickens County Medical Center", "city": "Carrollton", "county": "Pickens", "year": 2019, "type": "closed" },
+        { "name": "Bullock County Hospital", "city": "Union Springs", "county": "Bullock", "year": 2021, "type": "closed" },
+        { "name": "Bibb Medical Center", "city": "Centreville", "county": "Bibb", "year": 2025, "type": "closed" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Community Hospital of Tallassee", "city": "Tallassee", "county": "Elmore", "beds": 25, "risk": "high" },
+        { "name": "Choctaw General Hospital", "city": "Butler", "county": "Choctaw", "beds": 25, "risk": "high" },
+        { "name": "Lakeland Community Hospital", "city": "Haleyville", "county": "Winston", "beds": 56, "risk": "high" },
+        { "name": "Monroe County Hospital", "city": "Monroeville", "county": "Monroe", "beds": 46, "risk": "moderate" },
+        { "name": "Wiregrass Medical Center", "city": "Geneva", "county": "Geneva", "beds": 25, "risk": "moderate" },
+        { "name": "Sumter County Hospital", "city": "York", "county": "Sumter", "beds": 20, "risk": "moderate" },
+        { "name": "Coosa Valley Medical Center", "city": "Sylacauga", "county": "Talladega", "beds": 38, "risk": "moderate" },
+        { "name": "Cherokee Medical Center", "city": "Centre", "county": "Cherokee", "beds": 45, "risk": "moderate" }
+      ]
+    },
+    "AK": {
+      "count": 0, "recent": 0, "atRisk": 2,
+      "closedHospitals": [],
+      "atRiskHospitals": [
+        { "name": "Norton Sound Regional Hospital", "city": "Nome", "county": "Nome Census Area", "beds": 18, "risk": "moderate" },
+        { "name": "Kanakanak Hospital", "city": "Dillingham", "county": "Dillingham Census Area", "beds": 16, "risk": "moderate" }
+      ]
+    },
+    "AZ": {
+      "count": 3, "recent": 0, "atRisk": 4,
+      "closedHospitals": [
+        { "name": "Copper Queen Community Hospital Annex", "city": "Bisbee", "county": "Cochise", "year": 2015, "type": "converted" },
+        { "name": "Page Hospital (original)", "city": "Page", "county": "Coconino", "year": 2017, "type": "converted" },
+        { "name": "Arizona General Hospital - Laveen", "city": "Laveen", "county": "Maricopa", "year": 2019, "type": "closed" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Cobre Valley Regional Medical Center", "city": "Globe", "county": "Gila", "beds": 25, "risk": "high" },
+        { "name": "Holy Cross Hospital", "city": "Nogales", "county": "Santa Cruz", "beds": 25, "risk": "moderate" },
+        { "name": "Summit Healthcare Regional", "city": "Show Low", "county": "Navajo", "beds": 20, "risk": "moderate" },
+        { "name": "La Paz Regional Hospital", "city": "Parker", "county": "La Paz", "beds": 25, "risk": "moderate" }
+      ]
+    },
+    "AR": {
+      "count": 3, "recent": 0, "atRisk": 5,
+      "closedHospitals": [
+        { "name": "Crittenden Regional Hospital", "city": "West Memphis", "county": "Crittenden", "year": 2014, "type": "closed" },
+        { "name": "Howard Memorial Hospital", "city": "Nashville", "county": "Howard", "year": 2017, "type": "converted" },
+        { "name": "Izard County Medical Center", "city": "Calico Rock", "county": "Izard", "year": 2019, "type": "closed" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Dallas County Medical Center", "city": "Fordyce", "county": "Dallas", "beds": 25, "risk": "high" },
+        { "name": "Drew Memorial Hospital", "city": "Monticello", "county": "Drew", "beds": 49, "risk": "moderate" },
+        { "name": "South Mississippi County Regional Medical Center", "city": "Osceola", "county": "Mississippi", "beds": 25, "risk": "high" },
+        { "name": "Eureka Springs Hospital", "city": "Eureka Springs", "county": "Carroll", "beds": 15, "risk": "moderate" },
+        { "name": "Stone County Medical Center", "city": "Mountain View", "county": "Stone", "beds": 25, "risk": "moderate" }
+      ]
+    },
+    "CA": {
+      "count": 5, "recent": 1, "atRisk": 6,
+      "closedHospitals": [
+        { "name": "Coalinga Regional Medical Center", "city": "Coalinga", "county": "Fresno", "year": 2015, "type": "closed" },
+        { "name": "Tulare Regional Medical Center", "city": "Tulare", "county": "Tulare", "year": 2017, "type": "closed" },
+        { "name": "Madera Community Hospital", "city": "Madera", "county": "Madera", "year": 2019, "type": "closed" },
+        { "name": "Sutter Lakeside Hospital", "city": "Lakeport", "county": "Lake", "year": 2022, "type": "converted" },
+        { "name": "Adventist Health Tehachapi Valley", "city": "Tehachapi", "county": "Kern", "year": 2025, "type": "closed" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Jerold Phelps Community Hospital", "city": "Garberville", "county": "Humboldt", "beds": 18, "risk": "high" },
+        { "name": "Southern Inyo Healthcare District", "city": "Lone Pine", "county": "Inyo", "beds": 4, "risk": "high" },
+        { "name": "Plumas District Hospital", "city": "Quincy", "county": "Plumas", "beds": 25, "risk": "moderate" },
+        { "name": "Seneca Healthcare District", "city": "Chester", "county": "Plumas", "beds": 15, "risk": "moderate" },
+        { "name": "Mark Twain Medical Center", "city": "San Andreas", "county": "Calaveras", "beds": 25, "risk": "moderate" },
+        { "name": "Mayers Memorial Hospital", "city": "Fall River Mills", "county": "Shasta", "beds": 18, "risk": "moderate" }
+      ]
+    },
+    "CO": {
+      "count": 2, "recent": 0, "atRisk": 3,
+      "closedHospitals": [
+        { "name": "Mt. San Rafael Hospital", "city": "Trinidad", "county": "Las Animas", "year": 2018, "type": "closed" },
+        { "name": "Conejos County Hospital", "city": "La Jara", "county": "Conejos", "year": 2020, "type": "converted" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Southeast Colorado Hospital", "city": "Springfield", "county": "Baca", "beds": 15, "risk": "high" },
+        { "name": "Prowers Medical Center", "city": "Lamar", "county": "Prowers", "beds": 25, "risk": "moderate" },
+        { "name": "Weisbrod Memorial County Hospital", "city": "Eads", "county": "Kiowa", "beds": 15, "risk": "moderate" }
+      ]
+    },
+    "CT": {
+      "count": 1, "recent": 0, "atRisk": 1,
+      "closedHospitals": [
+        { "name": "Sharon Hospital Maternity Unit", "city": "Sharon", "county": "Litchfield", "year": 2022, "type": "converted" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Windham Hospital", "city": "Willimantic", "county": "Windham", "beds": 79, "risk": "moderate" }
+      ]
+    },
+    "DE": {
+      "count": 0, "recent": 0, "atRisk": 0,
+      "closedHospitals": [],
+      "atRiskHospitals": []
+    },
+    "DC": {
+      "count": 0, "recent": 0, "atRisk": 0,
+      "closedHospitals": [],
+      "atRiskHospitals": []
+    },
+    "FL": {
+      "count": 4, "recent": 1, "atRisk": 5,
+      "closedHospitals": [
+        { "name": "Calhoun-Liberty Hospital", "city": "Blountstown", "county": "Calhoun", "year": 2016, "type": "closed" },
+        { "name": "Campbellton-Graceville Hospital", "city": "Graceville", "county": "Jackson", "year": 2018, "type": "closed" },
+        { "name": "Hendry Regional Medical Center", "city": "Clewiston", "county": "Hendry", "year": 2021, "type": "converted" },
+        { "name": "Putnam Community Medical Center", "city": "Palatka", "county": "Putnam", "year": 2025, "type": "closed" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Hamilton County Hospital", "city": "Jasper", "county": "Hamilton", "beds": 25, "risk": "high" },
+        { "name": "North Okaloosa Medical Center", "city": "Crestview", "county": "Okaloosa", "beds": 60, "risk": "moderate" },
+        { "name": "Madison County Memorial Hospital", "city": "Madison", "county": "Madison", "beds": 25, "risk": "high" },
+        { "name": "Doctor's Memorial Hospital", "city": "Perry", "county": "Taylor", "beds": 20, "risk": "moderate" },
+        { "name": "Desoto Memorial Hospital", "city": "Arcadia", "county": "DeSoto", "beds": 49, "risk": "moderate" }
+      ]
+    },
+    "GA": {
+      "count": 9, "recent": 2, "atRisk": 12,
+      "closedHospitals": [
+        { "name": "Lower Oconee Community Hospital", "city": "Glenwood", "county": "Wheeler", "year": 2013, "type": "closed" },
+        { "name": "Stewart-Webster Hospital", "city": "Richland", "county": "Stewart", "year": 2013, "type": "closed" },
+        { "name": "Charlton Memorial Hospital", "city": "Folkston", "county": "Charlton", "year": 2014, "type": "closed" },
+        { "name": "Hart County Hospital", "city": "Hartwell", "county": "Hart", "year": 2015, "type": "closed" },
+        { "name": "Berrien County Hospital", "city": "Nashville", "county": "Berrien", "year": 2016, "type": "closed" },
+        { "name": "Calhoun Memorial Hospital", "city": "Arlington", "county": "Calhoun", "year": 2018, "type": "closed" },
+        { "name": "Optim Medical Center-Screven", "city": "Sylvania", "county": "Screven", "year": 2020, "type": "closed" },
+        { "name": "Irwin County Hospital", "city": "Ocilla", "county": "Irwin", "year": 2025, "type": "closed" },
+        { "name": "Clinch Memorial Hospital", "city": "Homerville", "county": "Clinch", "year": 2025, "type": "closed" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Emanuel Medical Center", "city": "Swainsboro", "county": "Emanuel", "beds": 55, "risk": "high" },
+        { "name": "Jeff Davis Hospital", "city": "Hazlehurst", "county": "Jeff Davis", "beds": 25, "risk": "high" },
+        { "name": "Macon County Hospital", "city": "Oglethorpe", "county": "Macon", "beds": 20, "risk": "high" },
+        { "name": "Candler County Hospital", "city": "Metter", "county": "Candler", "beds": 25, "risk": "high" },
+        { "name": "Burke Medical Center", "city": "Waynesboro", "county": "Burke", "beds": 40, "risk": "moderate" },
+        { "name": "Washington County Regional Medical Center", "city": "Sandersville", "county": "Washington", "beds": 50, "risk": "moderate" },
+        { "name": "Evans Memorial Hospital", "city": "Claxton", "county": "Evans", "beds": 30, "risk": "moderate" },
+        { "name": "Appling Healthcare System", "city": "Baxley", "county": "Appling", "beds": 40, "risk": "moderate" },
+        { "name": "Jenkins County Medical Center", "city": "Millen", "county": "Jenkins", "beds": 25, "risk": "high" },
+        { "name": "Telfair Regional Hospital", "city": "McRae-Helena", "county": "Telfair", "beds": 25, "risk": "moderate" },
+        { "name": "Bleckley Memorial Hospital", "city": "Cochran", "county": "Bleckley", "beds": 25, "risk": "moderate" },
+        { "name": "Taylor Regional Hospital", "city": "Hawkinsville", "county": "Pulaski", "beds": 25, "risk": "moderate" }
+      ]
+    },
+    "HI": {
+      "count": 0, "recent": 0, "atRisk": 1,
+      "closedHospitals": [],
+      "atRiskHospitals": [
+        { "name": "Kohala Hospital", "city": "Kapaau", "county": "Hawaii", "beds": 14, "risk": "moderate" }
+      ]
+    },
+    "ID": {
+      "count": 1, "recent": 0, "atRisk": 2,
+      "closedHospitals": [
+        { "name": "Caribou Memorial Hospital (original)", "city": "Soda Springs", "county": "Caribou", "year": 2017, "type": "converted" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Lost Rivers Medical Center", "city": "Arco", "county": "Butte", "beds": 10, "risk": "high" },
+        { "name": "Syringa General Hospital", "city": "Grangeville", "county": "Idaho", "beds": 16, "risk": "moderate" }
+      ]
+    },
+    "IL": {
+      "count": 5, "recent": 1, "atRisk": 7,
+      "closedHospitals": [
+        { "name": "Westlake Community Hospital", "city": "Melrose Park", "county": "Cook", "year": 2014, "type": "closed" },
+        { "name": "Fairfield Memorial Hospital (original)", "city": "Fairfield", "county": "Wayne", "year": 2016, "type": "converted" },
+        { "name": "Hoopeston Community Memorial Hospital", "city": "Hoopeston", "county": "Vermilion", "year": 2019, "type": "closed" },
+        { "name": "Crossroads Community Hospital", "city": "Mt. Vernon", "county": "Jefferson", "year": 2022, "type": "closed" },
+        { "name": "Union County Hospital", "city": "Anna", "county": "Union", "year": 2025, "type": "closed" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Marshall Browning Hospital", "city": "Du Quoin", "county": "Perry", "beds": 25, "risk": "high" },
+        { "name": "Hamilton Memorial Hospital District", "city": "McLeansboro", "county": "Hamilton", "beds": 25, "risk": "high" },
+        { "name": "Thomas H. Boyd Memorial Hospital", "city": "Carrollton", "county": "Greene", "beds": 25, "risk": "moderate" },
+        { "name": "Hardin County General Hospital", "city": "Rosiclare", "county": "Hardin", "beds": 25, "risk": "high" },
+        { "name": "Pinckneyville Community Hospital", "city": "Pinckneyville", "county": "Perry", "beds": 18, "risk": "moderate" },
+        { "name": "Lawrence County Memorial Hospital", "city": "Lawrenceville", "county": "Lawrence", "beds": 25, "risk": "moderate" },
+        { "name": "Clay County Hospital", "city": "Flora", "county": "Clay", "beds": 18, "risk": "moderate" }
+      ]
+    },
+    "IN": {
+      "count": 2, "recent": 0, "atRisk": 4,
+      "closedHospitals": [
+        { "name": "Fayette Regional Health System", "city": "Connersville", "county": "Fayette", "year": 2019, "type": "closed" },
+        { "name": "Union Hospital Clinton", "city": "Clinton", "county": "Vermillion", "year": 2020, "type": "converted" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Sullivan County Community Hospital", "city": "Sullivan", "county": "Sullivan", "beds": 25, "risk": "moderate" },
+        { "name": "Gibson General Hospital", "city": "Princeton", "county": "Gibson", "beds": 25, "risk": "moderate" },
+        { "name": "Starke Hospital", "city": "Knox", "county": "Starke", "beds": 15, "risk": "high" },
+        { "name": "Daviess Community Hospital", "city": "Washington", "county": "Daviess", "beds": 42, "risk": "moderate" }
+      ]
+    },
+    "IA": {
+      "count": 1, "recent": 0, "atRisk": 3,
+      "closedHospitals": [
+        { "name": "Mercy Medical Center-New Hampton", "city": "New Hampton", "county": "Chickasaw", "year": 2019, "type": "converted" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Davis County Hospital", "city": "Bloomfield", "county": "Davis", "beds": 13, "risk": "moderate" },
+        { "name": "Clarke County Hospital", "city": "Osceola", "county": "Clarke", "beds": 25, "risk": "moderate" },
+        { "name": "Ringgold County Hospital", "city": "Mount Ayr", "county": "Ringgold", "beds": 15, "risk": "moderate" }
+      ]
+    },
+    "KS": {
+      "count": 5, "recent": 1, "atRisk": 6,
+      "closedHospitals": [
+        { "name": "Mercy Hospital Independence", "city": "Independence", "county": "Montgomery", "year": 2015, "type": "closed" },
+        { "name": "Horton Community Hospital", "city": "Horton", "county": "Brown", "year": 2016, "type": "closed" },
+        { "name": "Sumner Regional Medical Center", "city": "Wellington", "county": "Sumner", "year": 2018, "type": "closed" },
+        { "name": "Cloud County Health Center", "city": "Concordia", "county": "Cloud", "year": 2021, "type": "converted" },
+        { "name": "Greenwood County Hospital", "city": "Eureka", "county": "Greenwood", "year": 2025, "type": "closed" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Kiowa County Memorial Hospital", "city": "Greensburg", "county": "Kiowa", "beds": 15, "risk": "high" },
+        { "name": "Trego County-Lemke Memorial Hospital", "city": "WaKeeney", "county": "Trego", "beds": 25, "risk": "moderate" },
+        { "name": "Wilson Medical Center", "city": "Neodesha", "county": "Wilson", "beds": 15, "risk": "high" },
+        { "name": "Mitchell County Hospital Health Systems", "city": "Beloit", "county": "Mitchell", "beds": 25, "risk": "moderate" },
+        { "name": "Cheyenne County Hospital", "city": "St. Francis", "county": "Cheyenne", "beds": 16, "risk": "moderate" },
+        { "name": "Rawlins County Health Center", "city": "Atwood", "county": "Rawlins", "beds": 12, "risk": "moderate" }
+      ]
+    },
+    "KY": {
+      "count": 3, "recent": 1, "atRisk": 5,
+      "closedHospitals": [
+        { "name": "Nicholas County Hospital", "city": "Carlisle", "county": "Nicholas", "year": 2014, "type": "closed" },
+        { "name": "Parkway Regional Hospital", "city": "Fulton", "county": "Fulton", "year": 2019, "type": "closed" },
+        { "name": "Pineville Community Hospital", "city": "Pineville", "county": "Bell", "year": 2025, "type": "closed" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Morgan County ARH Hospital", "city": "West Liberty", "county": "Morgan", "beds": 25, "risk": "high" },
+        { "name": "McDowell ARH Hospital", "city": "McDowell", "county": "Floyd", "beds": 25, "risk": "high" },
+        { "name": "Fleming County Hospital", "city": "Flemingsburg", "county": "Fleming", "beds": 25, "risk": "moderate" },
+        { "name": "Clinton County Hospital", "city": "Albany", "county": "Clinton", "beds": 22, "risk": "moderate" },
+        { "name": "Casey County Hospital", "city": "Liberty", "county": "Casey", "beds": 24, "risk": "moderate" }
+      ]
+    },
+    "LA": {
+      "count": 4, "recent": 0, "atRisk": 6,
+      "closedHospitals": [
+        { "name": "Pioneer Health Center", "city": "Shreveport", "county": "Caddo", "year": 2013, "type": "closed" },
+        { "name": "Oakdale Community Hospital", "city": "Oakdale", "county": "Allen", "year": 2016, "type": "closed" },
+        { "name": "Winn Parish Medical Center", "city": "Winnfield", "county": "Winn", "year": 2018, "type": "converted" },
+        { "name": "Jackson Parish Hospital", "city": "Jonesboro", "county": "Jackson", "year": 2020, "type": "closed" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Tensas Community Hospital", "city": "Waterproof", "county": "Tensas", "beds": 10, "risk": "high" },
+        { "name": "Catahoula Parish Hospital", "city": "Harrisonburg", "county": "Catahoula", "beds": 10, "risk": "high" },
+        { "name": "Richland Parish Hospital", "city": "Delhi", "county": "Richland", "beds": 25, "risk": "moderate" },
+        { "name": "Franklin Medical Center", "city": "Winnsboro", "county": "Franklin", "beds": 37, "risk": "moderate" },
+        { "name": "Caldwell Memorial Hospital", "city": "Columbia", "county": "Caldwell", "beds": 25, "risk": "moderate" },
+        { "name": "Sabine Medical Center", "city": "Many", "county": "Sabine", "beds": 25, "risk": "moderate" }
+      ]
+    },
+    "ME": {
+      "count": 1, "recent": 0, "atRisk": 2,
+      "closedHospitals": [
+        { "name": "Calais Regional Hospital", "city": "Calais", "county": "Washington", "year": 2020, "type": "converted" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Down East Community Hospital", "city": "Machias", "county": "Washington", "beds": 25, "risk": "moderate" },
+        { "name": "Millinocket Regional Hospital", "city": "Millinocket", "county": "Penobscot", "beds": 25, "risk": "moderate" }
+      ]
+    },
+    "MD": {
+      "count": 1, "recent": 0, "atRisk": 1,
+      "closedHospitals": [
+        { "name": "Memorial Hospital at Easton (old campus)", "city": "Easton", "county": "Talbot", "year": 2017, "type": "converted" }
+      ],
+      "atRiskHospitals": [
+        { "name": "McCready Health", "city": "Crisfield", "county": "Somerset", "beds": 12, "risk": "moderate" }
+      ]
+    },
+    "MA": {
+      "count": 1, "recent": 0, "atRisk": 1,
+      "closedHospitals": [
+        { "name": "Quincy Medical Center", "city": "Quincy", "county": "Norfolk", "year": 2014, "type": "closed" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Athol Hospital", "city": "Athol", "county": "Worcester", "beds": 20, "risk": "moderate" }
+      ]
+    },
+    "MI": {
+      "count": 3, "recent": 0, "atRisk": 5,
+      "closedHospitals": [
+        { "name": "Luce County Memorial Hospital (old)", "city": "Newberry", "county": "Luce", "year": 2015, "type": "converted" },
+        { "name": "West Branch Regional Medical Center", "city": "West Branch", "county": "Ogemaw", "year": 2019, "type": "closed" },
+        { "name": "Eaton Rapids Medical Center", "city": "Eaton Rapids", "county": "Eaton", "year": 2020, "type": "converted" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Schoolcraft Memorial Hospital", "city": "Manistique", "county": "Schoolcraft", "beds": 12, "risk": "high" },
+        { "name": "Baraga County Memorial Hospital", "city": "L'Anse", "county": "Baraga", "beds": 18, "risk": "moderate" },
+        { "name": "Deckerville Community Hospital", "city": "Deckerville", "county": "Sanilac", "beds": 15, "risk": "moderate" },
+        { "name": "Allegan General Hospital", "city": "Allegan", "county": "Allegan", "beds": 25, "risk": "moderate" },
+        { "name": "Mackinac Straits Health System", "city": "St. Ignace", "county": "Mackinac", "beds": 12, "risk": "moderate" }
+      ]
+    },
+    "MN": {
+      "count": 2, "recent": 0, "atRisk": 3,
+      "closedHospitals": [
+        { "name": "Johnson Memorial Health Services", "city": "Dawson", "county": "Lac qui Parle", "year": 2016, "type": "converted" },
+        { "name": "Renville County Hospital", "city": "Olivia", "county": "Renville", "year": 2019, "type": "converted" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Cook County North Shore Hospital", "city": "Grand Marais", "county": "Cook", "beds": 16, "risk": "moderate" },
+        { "name": "Kittson Memorial Healthcare Center", "city": "Hallock", "county": "Kittson", "beds": 15, "risk": "moderate" },
+        { "name": "Mahnomen Health Center", "city": "Mahnomen", "county": "Mahnomen", "beds": 12, "risk": "moderate" }
+      ]
+    },
+    "MS": {
+      "count": 6, "recent": 1, "atRisk": 9,
+      "closedHospitals": [
+        { "name": "Pioneer Community Hospital of Patrick", "city": "Marks", "county": "Quitman", "year": 2013, "type": "closed" },
+        { "name": "Tri-Lakes Medical Center", "city": "Batesville", "county": "Panola", "year": 2015, "type": "closed" },
+        { "name": "Neshoba County General Hospital", "city": "Philadelphia", "county": "Neshoba", "year": 2017, "type": "converted" },
+        { "name": "Trace Regional Hospital", "city": "Houston", "county": "Chickasaw", "year": 2019, "type": "closed" },
+        { "name": "Humphreys County Memorial Hospital", "city": "Belzoni", "county": "Humphreys", "year": 2021, "type": "closed" },
+        { "name": "South Sunflower County Hospital", "city": "Indianola", "county": "Sunflower", "year": 2025, "type": "closed" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Sharkey-Issaquena Community Hospital", "city": "Rolling Fork", "county": "Sharkey", "beds": 15, "risk": "high" },
+        { "name": "Quitman County Hospital", "city": "Marks", "county": "Quitman", "beds": 10, "risk": "high" },
+        { "name": "Tallahatchie General Hospital", "city": "Charleston", "county": "Tallahatchie", "beds": 20, "risk": "high" },
+        { "name": "Leake County Hospital", "city": "Carthage", "county": "Leake", "beds": 25, "risk": "moderate" },
+        { "name": "Franklin County Memorial Hospital", "city": "Meadville", "county": "Franklin", "beds": 18, "risk": "moderate" },
+        { "name": "Wayne General Hospital", "city": "Waynesboro", "county": "Wayne", "beds": 50, "risk": "moderate" },
+        { "name": "Tyler Holmes Memorial Hospital", "city": "Winona", "county": "Montgomery", "beds": 25, "risk": "moderate" },
+        { "name": "Walthall County General Hospital", "city": "Tylertown", "county": "Walthall", "beds": 25, "risk": "moderate" },
+        { "name": "Covington County Hospital", "city": "Collins", "county": "Covington", "beds": 25, "risk": "moderate" }
+      ]
+    },
+    "MO": {
+      "count": 4, "recent": 1, "atRisk": 6,
+      "closedHospitals": [
+        { "name": "Sac-Osage Hospital", "city": "Osceola", "county": "St. Clair", "year": 2015, "type": "closed" },
+        { "name": "Scotland County Memorial Hospital", "city": "Memphis", "county": "Scotland", "year": 2018, "type": "closed" },
+        { "name": "I-70 Community Hospital", "city": "Sweet Springs", "county": "Saline", "year": 2021, "type": "closed" },
+        { "name": "Audrain Community Hospital", "city": "Mexico", "county": "Audrain", "year": 2025, "type": "closed" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Pemiscot Memorial Health System", "city": "Hayti", "county": "Pemiscot", "beds": 25, "risk": "high" },
+        { "name": "Northwest Medical Center", "city": "Albany", "county": "Gentry", "beds": 25, "risk": "high" },
+        { "name": "Harrison County Community Hospital", "city": "Bethany", "county": "Harrison", "beds": 25, "risk": "moderate" },
+        { "name": "Putnam County Memorial Hospital", "city": "Unionville", "county": "Putnam", "beds": 15, "risk": "moderate" },
+        { "name": "Ste. Genevieve County Memorial Hospital", "city": "Ste. Genevieve", "county": "Ste. Genevieve", "beds": 25, "risk": "moderate" },
+        { "name": "Cooper County Memorial Hospital", "city": "Boonville", "county": "Cooper", "beds": 25, "risk": "moderate" }
+      ]
+    },
+    "MT": {
+      "count": 1, "recent": 0, "atRisk": 2,
+      "closedHospitals": [
+        { "name": "Dahl Memorial Healthcare", "city": "Ekalaka", "county": "Carter", "year": 2016, "type": "converted" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Rosebud Health Care Center", "city": "Forsyth", "county": "Rosebud", "beds": 25, "risk": "moderate" },
+        { "name": "Garfield County Health Center", "city": "Jordan", "county": "Garfield", "beds": 10, "risk": "moderate" }
+      ]
+    },
+    "NE": {
+      "count": 2, "recent": 0, "atRisk": 3,
+      "closedHospitals": [
+        { "name": "Tilden Community Hospital", "city": "Tilden", "county": "Madison", "year": 2017, "type": "closed" },
+        { "name": "Genoa Community Hospital", "city": "Genoa", "county": "Nance", "year": 2020, "type": "converted" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Dundy County Hospital", "city": "Benkelman", "county": "Dundy", "beds": 14, "risk": "moderate" },
+        { "name": "Cherry County Hospital", "city": "Valentine", "county": "Cherry", "beds": 25, "risk": "moderate" },
+        { "name": "Harlan County Health System", "city": "Alma", "county": "Harlan", "beds": 19, "risk": "moderate" }
+      ]
+    },
+    "NV": {
+      "count": 1, "recent": 0, "atRisk": 2,
+      "closedHospitals": [
+        { "name": "Humboldt General Hospital (old campus)", "city": "Winnemucca", "county": "Humboldt", "year": 2018, "type": "converted" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Nye Regional Medical Center", "city": "Tonopah", "county": "Nye", "beds": 8, "risk": "high" },
+        { "name": "Pershing General Hospital", "city": "Lovelock", "county": "Pershing", "beds": 12, "risk": "moderate" }
+      ]
+    },
+    "NH": {
+      "count": 0, "recent": 0, "atRisk": 1,
+      "closedHospitals": [],
+      "atRiskHospitals": [
+        { "name": "Upper Connecticut Valley Hospital", "city": "Colebrook", "county": "Coos", "beds": 12, "risk": "moderate" }
+      ]
+    },
+    "NJ": {
+      "count": 2, "recent": 0, "atRisk": 2,
+      "closedHospitals": [
+        { "name": "Kimball Medical Center", "city": "Lakewood", "county": "Ocean", "year": 2015, "type": "closed" },
+        { "name": "Underwood Memorial Hospital", "city": "Woodbury", "county": "Gloucester", "year": 2019, "type": "converted" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Salem Medical Center", "city": "Salem", "county": "Salem", "beds": 110, "risk": "moderate" },
+        { "name": "Cape Regional Medical Center", "city": "Cape May Court House", "county": "Cape May", "beds": 190, "risk": "moderate" }
+      ]
+    },
+    "NM": {
+      "count": 2, "recent": 0, "atRisk": 3,
+      "closedHospitals": [
+        { "name": "Guadalupe County Hospital", "city": "Santa Rosa", "county": "Guadalupe", "year": 2015, "type": "closed" },
+        { "name": "De Baca General Hospital", "city": "Fort Sumner", "county": "De Baca", "year": 2018, "type": "closed" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Nor-Lea Hospital District", "city": "Lovington", "county": "Lea", "beds": 25, "risk": "moderate" },
+        { "name": "Sierra Vista Hospital", "city": "Truth or Consequences", "county": "Sierra", "beds": 15, "risk": "high" },
+        { "name": "Cibola General Hospital", "city": "Grants", "county": "Cibola", "beds": 25, "risk": "moderate" }
+      ]
+    },
+    "NY": {
+      "count": 4, "recent": 1, "atRisk": 6,
+      "closedHospitals": [
+        { "name": "Interfaith Medical Center (inpatient)", "city": "Brooklyn", "county": "Kings", "year": 2013, "type": "converted" },
+        { "name": "Westchester Medical Center-Good Samaritan", "city": "Suffern", "county": "Rockland", "year": 2018, "type": "closed" },
+        { "name": "Tri-Town Regional Hospital", "city": "Sidney", "county": "Delaware", "year": 2021, "type": "converted" },
+        { "name": "Eastern Niagara Hospital", "city": "Lockport", "county": "Niagara", "year": 2025, "type": "closed" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Brooks Memorial Hospital", "city": "Dunkirk", "county": "Chautauqua", "beds": 65, "risk": "high" },
+        { "name": "Olean General Hospital", "city": "Olean", "county": "Cattaraugus", "beds": 186, "risk": "moderate" },
+        { "name": "Bertrand Chaffee Hospital", "city": "Springville", "county": "Erie", "beds": 24, "risk": "moderate" },
+        { "name": "Lewis County General Hospital", "city": "Lowville", "county": "Lewis", "beds": 25, "risk": "moderate" },
+        { "name": "Claxton-Hepburn Medical Center", "city": "Ogdensburg", "county": "St. Lawrence", "beds": 115, "risk": "moderate" },
+        { "name": "Schuyler Hospital", "city": "Montour Falls", "county": "Schuyler", "beds": 12, "risk": "moderate" }
+      ]
+    },
+    "NC": {
+      "count": 5, "recent": 1, "atRisk": 7,
+      "closedHospitals": [
+        { "name": "Vidant Pungo Hospital", "city": "Belhaven", "county": "Beaufort", "year": 2014, "type": "closed" },
+        { "name": "Heritage Hospital", "city": "Tarboro", "county": "Edgecombe", "year": 2017, "type": "closed" },
+        { "name": "Sandhills Regional Medical Center", "city": "Hamlet", "county": "Richmond", "year": 2019, "type": "closed" },
+        { "name": "Columbus Regional Healthcare System", "city": "Whiteville", "county": "Columbus", "year": 2022, "type": "converted" },
+        { "name": "Angel Medical Center", "city": "Franklin", "county": "Macon", "year": 2025, "type": "converted" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Vidant Roanoke-Chowan Hospital", "city": "Ahoskie", "county": "Hertford", "beds": 70, "risk": "high" },
+        { "name": "Blowing Rock Hospital", "city": "Blowing Rock", "county": "Watauga", "beds": 15, "risk": "moderate" },
+        { "name": "Betsy Johnson Hospital", "city": "Dunn", "county": "Harnett", "beds": 80, "risk": "moderate" },
+        { "name": "Martin General Hospital", "city": "Williamston", "county": "Martin", "beds": 49, "risk": "high" },
+        { "name": "Washington County Hospital", "city": "Plymouth", "county": "Washington", "beds": 25, "risk": "high" },
+        { "name": "Swain Community Hospital", "city": "Bryson City", "county": "Swain", "beds": 25, "risk": "moderate" },
+        { "name": "Alleghany Memorial Hospital", "city": "Sparta", "county": "Alleghany", "beds": 25, "risk": "moderate" }
+      ]
+    },
+    "ND": {
+      "count": 0, "recent": 0, "atRisk": 1,
+      "closedHospitals": [],
+      "atRiskHospitals": [
+        { "name": "Cavalier County Memorial Hospital", "city": "Langdon", "county": "Cavalier", "beds": 20, "risk": "moderate" }
+      ]
+    },
+    "OH": {
+      "count": 4, "recent": 0, "atRisk": 6,
+      "closedHospitals": [
+        { "name": "Affinity Medical Center", "city": "Massillon", "county": "Stark", "year": 2018, "type": "closed" },
+        { "name": "East Ohio Regional Hospital", "city": "Martins Ferry", "county": "Belmont", "year": 2019, "type": "closed" },
+        { "name": "Ohio Valley Medical Center", "city": "Steubenville", "county": "Jefferson", "year": 2019, "type": "closed" },
+        { "name": "Northside Medical Center", "city": "Youngstown", "county": "Mahoning", "year": 2018, "type": "closed" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Coshocton Regional Medical Center", "city": "Coshocton", "county": "Coshocton", "beds": 56, "risk": "moderate" },
+        { "name": "Fayette County Memorial Hospital", "city": "Washington Court House", "county": "Fayette", "beds": 25, "risk": "moderate" },
+        { "name": "Highland District Hospital", "city": "Hillsboro", "county": "Highland", "beds": 25, "risk": "moderate" },
+        { "name": "Adams County Regional Medical Center", "city": "Seaman", "county": "Adams", "beds": 25, "risk": "high" },
+        { "name": "Pike Community Hospital", "city": "Waverly", "county": "Pike", "beds": 25, "risk": "moderate" },
+        { "name": "Noble County Hospital", "city": "Caldwell", "county": "Noble", "beds": 15, "risk": "moderate" }
+      ]
+    },
+    "OK": {
+      "count": 7, "recent": 2, "atRisk": 9,
+      "closedHospitals": [
+        { "name": "Drumright Regional Hospital", "city": "Drumright", "county": "Creek", "year": 2013, "type": "closed" },
+        { "name": "Haskell County Community Hospital", "city": "Stigler", "county": "Haskell", "year": 2015, "type": "closed" },
+        { "name": "Sayre Memorial Hospital", "city": "Sayre", "county": "Beckham", "year": 2016, "type": "closed" },
+        { "name": "Quartz Mountain Medical Center", "city": "Mangum", "county": "Greer", "year": 2017, "type": "closed" },
+        { "name": "Eufaula Community Hospital", "city": "Eufaula", "county": "McIntosh", "year": 2019, "type": "closed" },
+        { "name": "Fairfax Community Hospital", "city": "Fairfax", "county": "Osage", "year": 2025, "type": "closed" },
+        { "name": "Prague Community Hospital", "city": "Prague", "county": "Lincoln", "year": 2025, "type": "closed" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Pushmataha Hospital", "city": "Antlers", "county": "Pushmataha", "beds": 25, "risk": "high" },
+        { "name": "Latimer County General Hospital", "city": "Wilburton", "county": "Latimer", "beds": 25, "risk": "high" },
+        { "name": "Stroud Regional Medical Center", "city": "Stroud", "county": "Lincoln", "beds": 25, "risk": "high" },
+        { "name": "Okeene Municipal Hospital", "city": "Okeene", "county": "Blaine", "beds": 16, "risk": "moderate" },
+        { "name": "Carnegie Tri-County Municipal Hospital", "city": "Carnegie", "county": "Caddo", "beds": 18, "risk": "moderate" },
+        { "name": "Sequoyah Memorial Hospital", "city": "Sallisaw", "county": "Sequoyah", "beds": 25, "risk": "moderate" },
+        { "name": "Pawhuska Hospital", "city": "Pawhuska", "county": "Osage", "beds": 16, "risk": "moderate" },
+        { "name": "Atoka County Medical Center", "city": "Atoka", "county": "Atoka", "beds": 25, "risk": "moderate" },
+        { "name": "Johnston Memorial Hospital", "city": "Tishomingo", "county": "Johnston", "beds": 18, "risk": "moderate" }
+      ]
+    },
+    "OR": {
+      "count": 1, "recent": 0, "atRisk": 2,
+      "closedHospitals": [
+        { "name": "Pioneer Memorial Hospital", "city": "Heppner", "county": "Morrow", "year": 2017, "type": "converted" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Harney District Hospital", "city": "Burns", "county": "Harney", "beds": 25, "risk": "moderate" },
+        { "name": "Lake District Hospital", "city": "Lakeview", "county": "Lake", "beds": 24, "risk": "moderate" }
+      ]
+    },
+    "PA": {
+      "count": 3, "recent": 0, "atRisk": 5,
+      "closedHospitals": [
+        { "name": "Westmoreland Hospital", "city": "Greensburg", "county": "Westmoreland", "year": 2015, "type": "converted" },
+        { "name": "Lock Haven Hospital", "city": "Lock Haven", "county": "Clinton", "year": 2017, "type": "converted" },
+        { "name": "Jennersville Hospital", "city": "West Grove", "county": "Chester", "year": 2021, "type": "closed" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Ellwood City Medical Center", "city": "Ellwood City", "county": "Lawrence", "beds": 68, "risk": "high" },
+        { "name": "Bucktail Medical Center", "city": "Renovo", "county": "Clinton", "beds": 15, "risk": "high" },
+        { "name": "Soldiers and Sailors Memorial Hospital", "city": "Wellsboro", "county": "Tioga", "beds": 48, "risk": "moderate" },
+        { "name": "Kane Community Hospital", "city": "Kane", "county": "McKean", "beds": 31, "risk": "moderate" },
+        { "name": "Charles Cole Memorial Hospital", "city": "Coudersport", "county": "Potter", "beds": 25, "risk": "moderate" }
+      ]
+    },
+    "PR": {
+      "count": 2, "recent": 0, "atRisk": 3,
+      "closedHospitals": [
+        { "name": "Hospital de la Concepcion", "city": "San German", "county": "San German", "year": 2019, "type": "converted" },
+        { "name": "Ryder Memorial Hospital", "city": "Humacao", "county": "Humacao", "year": 2020, "type": "closed" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Hospital San Carlos Borromeo", "city": "Moca", "county": "Moca", "beds": 106, "risk": "moderate" },
+        { "name": "Hospital Oriente", "city": "Humacao", "county": "Humacao", "beds": 46, "risk": "moderate" },
+        { "name": "Hospital Metropolitano Dr. Susoni", "city": "Arecibo", "county": "Arecibo", "beds": 125, "risk": "moderate" }
+      ]
+    },
+    "RI": {
+      "count": 0, "recent": 0, "atRisk": 0,
+      "closedHospitals": [],
+      "atRiskHospitals": []
+    },
+    "SC": {
+      "count": 3, "recent": 0, "atRisk": 4,
+      "closedHospitals": [
+        { "name": "Marlboro Park Hospital", "city": "Bennettsville", "county": "Marlboro", "year": 2015, "type": "closed" },
+        { "name": "Williamsburg Regional Hospital", "city": "Kingstree", "county": "Williamsburg", "year": 2018, "type": "closed" },
+        { "name": "Fairfield Memorial Hospital", "city": "Winnsboro", "county": "Fairfield", "year": 2020, "type": "closed" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Allendale County Hospital", "city": "Fairfax", "county": "Allendale", "beds": 25, "risk": "high" },
+        { "name": "Hampton Regional Medical Center", "city": "Varnville", "county": "Hampton", "beds": 32, "risk": "moderate" },
+        { "name": "Edgefield County Hospital", "city": "Edgefield", "county": "Edgefield", "beds": 25, "risk": "moderate" },
+        { "name": "Barnwell County Hospital", "city": "Barnwell", "county": "Barnwell", "beds": 20, "risk": "moderate" }
+      ]
+    },
+    "SD": {
+      "count": 1, "recent": 0, "atRisk": 2,
+      "closedHospitals": [
+        { "name": "Bennett County Hospital", "city": "Martin", "county": "Bennett", "year": 2018, "type": "converted" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Fall River Hospital", "city": "Hot Springs", "county": "Fall River", "beds": 12, "risk": "moderate" },
+        { "name": "Douglas County Memorial Hospital", "city": "Armour", "county": "Douglas", "beds": 11, "risk": "moderate" }
+      ]
+    },
+    "TN": {
+      "count": 8, "recent": 2, "atRisk": 10,
+      "closedHospitals": [
+        { "name": "Gibson General Hospital", "city": "Trenton", "county": "Gibson", "year": 2013, "type": "closed" },
+        { "name": "Haywood Park Community Hospital", "city": "Brownsville", "county": "Haywood", "year": 2014, "type": "closed" },
+        { "name": "Humboldt General Hospital", "city": "Humboldt", "county": "Gibson", "year": 2016, "type": "closed" },
+        { "name": "McNairy Regional Hospital", "city": "Selmer", "county": "McNairy", "year": 2016, "type": "closed" },
+        { "name": "Decatur County General Hospital", "city": "Parsons", "county": "Decatur", "year": 2018, "type": "closed" },
+        { "name": "Jellico Community Hospital", "city": "Jellico", "county": "Campbell", "year": 2020, "type": "closed" },
+        { "name": "Celina Regional Medical Center", "city": "Celina", "county": "Clay", "year": 2025, "type": "closed" },
+        { "name": "Henderson County Community Hospital", "city": "Lexington", "county": "Henderson", "year": 2025, "type": "closed" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Wayne Medical Center", "city": "Waynesboro", "county": "Wayne", "beds": 52, "risk": "high" },
+        { "name": "Harton Regional Medical Center", "city": "Tullahoma", "county": "Coffee", "beds": 104, "risk": "moderate" },
+        { "name": "Macon County General Hospital", "city": "Lafayette", "county": "Macon", "beds": 25, "risk": "high" },
+        { "name": "Jamestown Regional Medical Center", "city": "Jamestown", "county": "Fentress", "beds": 25, "risk": "moderate" },
+        { "name": "Crockett Community Hospital", "city": "Alamo", "county": "Crockett", "beds": 20, "risk": "high" },
+        { "name": "Perry Community Hospital", "city": "Linden", "county": "Perry", "beds": 25, "risk": "moderate" },
+        { "name": "Lewis County Medical Center", "city": "Hohenwald", "county": "Lewis", "beds": 25, "risk": "moderate" },
+        { "name": "Lauderdale Community Hospital", "city": "Ripley", "county": "Lauderdale", "beds": 25, "risk": "moderate" },
+        { "name": "Hardeman County Community Hospital", "city": "Bolivar", "county": "Hardeman", "beds": 25, "risk": "moderate" },
+        { "name": "Hawkins County Memorial Hospital", "city": "Rogersville", "county": "Hawkins", "beds": 50, "risk": "moderate" }
+      ]
+    },
+    "TX": {
+      "count": 26, "recent": 4, "atRisk": 22,
+      "closedHospitals": [
+        { "name": "Renaissance Hospital Terrell", "city": "Terrell", "county": "Kaufman", "year": 2013, "type": "closed" },
+        { "name": "Shelby Regional Medical Center", "city": "Center", "county": "Shelby", "year": 2013, "type": "closed" },
+        { "name": "Lake Whitney Medical Center", "city": "Whitney", "county": "Hill", "year": 2014, "type": "closed" },
+        { "name": "Cozby-Germany Hospital", "city": "Grand Saline", "county": "Van Zandt", "year": 2014, "type": "closed" },
+        { "name": "Bowie Memorial Hospital", "city": "Bowie", "county": "Montague", "year": 2015, "type": "closed" },
+        { "name": "East Texas Medical Center Clarksville", "city": "Clarksville", "county": "Red River", "year": 2016, "type": "closed" },
+        { "name": "East Texas Medical Center Gilmer", "city": "Gilmer", "county": "Upshur", "year": 2017, "type": "closed" },
+        { "name": "East Texas Medical Center Mount Vernon", "city": "Mount Vernon", "county": "Franklin", "year": 2017, "type": "closed" },
+        { "name": "Little River Healthcare", "city": "Cameron", "county": "Milam", "year": 2018, "type": "closed" },
+        { "name": "Breckenridge Medical Center", "city": "Breckenridge", "county": "Stephens", "year": 2018, "type": "closed" },
+        { "name": "East Texas Medical Center Trinity", "city": "Trinity", "county": "Trinity", "year": 2018, "type": "closed" },
+        { "name": "Alegiance Specialty Hospital of Kilgore", "city": "Kilgore", "county": "Gregg", "year": 2018, "type": "closed" },
+        { "name": "Memorial Hospital Gonzales", "city": "Gonzales", "county": "Gonzales", "year": 2019, "type": "closed" },
+        { "name": "Frio Regional Hospital", "city": "Pearsall", "county": "Frio", "year": 2019, "type": "closed" },
+        { "name": "Big Bend Regional Medical Center", "city": "Alpine", "county": "Brewster", "year": 2019, "type": "closed" },
+        { "name": "Childress Regional Medical Center", "city": "Childress", "county": "Childress", "year": 2019, "type": "closed" },
+        { "name": "Stamford Memorial Hospital", "city": "Stamford", "county": "Jones", "year": 2019, "type": "closed" },
+        { "name": "McCamey County Hospital", "city": "McCamey", "county": "Upton", "year": 2020, "type": "closed" },
+        { "name": "Hamilton General Hospital", "city": "Hamilton", "county": "Hamilton", "year": 2020, "type": "closed" },
+        { "name": "Iraan General Hospital", "city": "Iraan", "county": "Pecos", "year": 2020, "type": "closed" },
+        { "name": "Electra Memorial Hospital", "city": "Electra", "county": "Wichita", "year": 2021, "type": "closed" },
+        { "name": "Coleman County Medical Center", "city": "Coleman", "county": "Coleman", "year": 2022, "type": "closed" },
+        { "name": "Anson General Hospital", "city": "Anson", "county": "Jones", "year": 2024, "type": "closed" },
+        { "name": "Lamb Healthcare Center", "city": "Littlefield", "county": "Lamb", "year": 2024, "type": "closed" },
+        { "name": "Archer City Hospital", "city": "Archer City", "county": "Archer", "year": 2025, "type": "closed" },
+        { "name": "Knox County Hospital", "city": "Knox City", "county": "Knox", "year": 2025, "type": "closed" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Muenster Memorial Hospital", "city": "Muenster", "county": "Cooke", "beds": 18, "risk": "high" },
+        { "name": "Mitchell County Hospital", "city": "Colorado City", "county": "Mitchell", "beds": 25, "risk": "high" },
+        { "name": "Fisher County Hospital District", "city": "Rotan", "county": "Fisher", "beds": 14, "risk": "high" },
+        { "name": "Throckmorton County Memorial Hospital", "city": "Throckmorton", "county": "Throckmorton", "beds": 14, "risk": "high" },
+        { "name": "Schleicher County Medical Center", "city": "Eldorado", "county": "Schleicher", "beds": 14, "risk": "high" },
+        { "name": "Culberson Hospital", "city": "Van Horn", "county": "Culberson", "beds": 14, "risk": "high" },
+        { "name": "Kimble Hospital", "city": "Junction", "county": "Kimble", "beds": 15, "risk": "high" },
+        { "name": "Crockett County Hospital", "city": "Ozona", "county": "Crockett", "beds": 12, "risk": "high" },
+        { "name": "Presidio County Hospital", "city": "Presidio", "county": "Presidio", "beds": 10, "risk": "high" },
+        { "name": "Reagan Memorial Hospital", "city": "Big Lake", "county": "Reagan", "beds": 12, "risk": "high" },
+        { "name": "Dimmit Regional Hospital", "city": "Carrizo Springs", "county": "Dimmit", "beds": 25, "risk": "moderate" },
+        { "name": "Sweeny Community Hospital", "city": "Sweeny", "county": "Brazoria", "beds": 20, "risk": "moderate" },
+        { "name": "Falls Community Hospital", "city": "Marlin", "county": "Falls", "beds": 36, "risk": "high" },
+        { "name": "South Texas Regional Medical Center", "city": "Jourdanton", "county": "Atascosa", "beds": 25, "risk": "moderate" },
+        { "name": "Medina Regional Hospital", "city": "Hondo", "county": "Medina", "beds": 25, "risk": "moderate" },
+        { "name": "Crane Memorial Hospital", "city": "Crane", "county": "Crane", "beds": 10, "risk": "moderate" },
+        { "name": "Colorado-Fayette Medical Center", "city": "Weimar", "county": "Colorado", "beds": 25, "risk": "moderate" },
+        { "name": "Permian Regional Medical Center", "city": "Andrews", "county": "Andrews", "beds": 44, "risk": "moderate" },
+        { "name": "Coryell Memorial Hospital", "city": "Gatesville", "county": "Coryell", "beds": 25, "risk": "moderate" },
+        { "name": "Trinity Medical Center", "city": "Brenham", "county": "Washington", "beds": 58, "risk": "moderate" },
+        { "name": "Pecos County Memorial Hospital", "city": "Fort Stockton", "county": "Pecos", "beds": 25, "risk": "moderate" },
+        { "name": "Val Verde Regional Medical Center", "city": "Del Rio", "county": "Val Verde", "beds": 66, "risk": "moderate" }
+      ]
+    },
+    "UT": {
+      "count": 1, "recent": 0, "atRisk": 2,
+      "closedHospitals": [
+        { "name": "Kane County Hospital (old)", "city": "Kanab", "county": "Kane", "year": 2017, "type": "converted" }
+      ],
+      "atRiskHospitals": [
+        { "name": "San Juan Health Service District", "city": "Monticello", "county": "San Juan", "beds": 13, "risk": "moderate" },
+        { "name": "Garfield Memorial Hospital", "city": "Panguitch", "county": "Garfield", "beds": 12, "risk": "moderate" }
+      ]
+    },
+    "VT": {
+      "count": 0, "recent": 0, "atRisk": 1,
+      "closedHospitals": [],
+      "atRiskHospitals": [
+        { "name": "North Country Hospital", "city": "Newport", "county": "Orleans", "beds": 25, "risk": "moderate" }
+      ]
+    },
+    "VA": {
+      "count": 3, "recent": 0, "atRisk": 4,
+      "closedHospitals": [
+        { "name": "Lee Regional Medical Center", "city": "Pennington Gap", "county": "Lee", "year": 2013, "type": "closed" },
+        { "name": "Patrick County Hospital", "city": "Stuart", "county": "Patrick", "year": 2017, "type": "closed" },
+        { "name": "Wise Regional Hospital", "city": "Wise", "county": "Wise", "year": 2021, "type": "converted" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Buchanan General Hospital", "city": "Grundy", "county": "Buchanan", "beds": 25, "risk": "high" },
+        { "name": "Dickenson Community Hospital", "city": "Clintwood", "county": "Dickenson", "beds": 25, "risk": "high" },
+        { "name": "Page Memorial Hospital", "city": "Luray", "county": "Page", "beds": 25, "risk": "moderate" },
+        { "name": "Bath County Community Hospital", "city": "Hot Springs", "county": "Bath", "beds": 25, "risk": "moderate" }
+      ]
+    },
+    "WA": {
+      "count": 2, "recent": 0, "atRisk": 3,
+      "closedHospitals": [
+        { "name": "Snoqualmie Valley Hospital (old)", "city": "Snoqualmie", "county": "King", "year": 2016, "type": "converted" },
+        { "name": "Columbia Basin Hospital", "city": "Ephrata", "county": "Grant", "year": 2020, "type": "converted" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Garfield County Hospital", "city": "Pomeroy", "county": "Garfield", "beds": 10, "risk": "moderate" },
+        { "name": "Willapa Harbor Hospital", "city": "South Bend", "county": "Pacific", "beds": 15, "risk": "moderate" },
+        { "name": "Dayton General Hospital", "city": "Dayton", "county": "Columbia", "beds": 25, "risk": "moderate" }
+      ]
+    },
+    "WV": {
+      "count": 3, "recent": 1, "atRisk": 5,
+      "closedHospitals": [
+        { "name": "Williamson Memorial Hospital", "city": "Williamson", "county": "Mingo", "year": 2018, "type": "closed" },
+        { "name": "Ohio Valley Medical Center", "city": "Wheeling", "county": "Ohio", "year": 2019, "type": "closed" },
+        { "name": "Fairmont Regional Medical Center", "city": "Fairmont", "county": "Marion", "year": 2025, "type": "closed" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Minnie Hamilton Health System", "city": "Grantsville", "county": "Calhoun", "beds": 18, "risk": "high" },
+        { "name": "Webster County Memorial Hospital", "city": "Webster Springs", "county": "Webster", "beds": 15, "risk": "high" },
+        { "name": "Braxton County Memorial Hospital", "city": "Gassaway", "county": "Braxton", "beds": 25, "risk": "moderate" },
+        { "name": "Grant Memorial Hospital", "city": "Petersburg", "county": "Grant", "beds": 25, "risk": "moderate" },
+        { "name": "Pocahontas Memorial Hospital", "city": "Buckeye", "county": "Pocahontas", "beds": 25, "risk": "moderate" }
+      ]
+    },
+    "WI": {
+      "count": 2, "recent": 0, "atRisk": 3,
+      "closedHospitals": [
+        { "name": "Theda Clark Medical Center-Shawano", "city": "Shawano", "county": "Shawano", "year": 2017, "type": "converted" },
+        { "name": "Flambeau Hospital", "city": "Park Falls", "county": "Price", "year": 2020, "type": "converted" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Burnett Medical Center", "city": "Grantsburg", "county": "Burnett", "beds": 25, "risk": "moderate" },
+        { "name": "Mellen Medical Center", "city": "Mellen", "county": "Ashland", "beds": 5, "risk": "moderate" },
+        { "name": "Langlade Hospital", "city": "Antigo", "county": "Langlade", "beds": 25, "risk": "moderate" }
+      ]
+    },
+    "WY": {
+      "count": 1, "recent": 0, "atRisk": 2,
+      "closedHospitals": [
+        { "name": "South Lincoln Medical Center (old)", "city": "Kemmerer", "county": "Lincoln", "year": 2018, "type": "converted" }
+      ],
+      "atRiskHospitals": [
+        { "name": "Niobrara Health and Life Center", "city": "Lusk", "county": "Niobrara", "beds": 12, "risk": "moderate" },
+        { "name": "Hot Springs County Memorial Hospital", "city": "Thermopolis", "county": "Hot Springs", "beds": 25, "risk": "moderate" }
+      ]
+    }
   }
 }
