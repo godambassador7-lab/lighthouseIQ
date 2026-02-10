@@ -1756,7 +1756,7 @@ const showRuralClosuresPanel = (stateAbbrev) => {
                 <span class="rural-financial-value ${marginClass}">${h.operatingMargin > 0 ? '+' : ''}${h.operatingMargin}%</span>
               </div>
               <div class="rural-financial-item">
-                <span class="rural-financial-label" title="Average daily inpatient census (occupied beds).">Daily Census</span>
+                <span class="rural-financial-label">Daily Census</span>
                 <span class="rural-financial-value">${h.dailyCensus} patients</span>
               </div>
             </div>
