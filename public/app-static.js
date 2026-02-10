@@ -7289,8 +7289,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Target mode fallback — only attach if initViewToggle didn't already
-  if (typeof ensureMapTargetModeListener === 'function') {
-    ensureMapTargetModeListener();
+  const targetBtn = document.getElementById('map-target-mode-btn');
+  if (targetBtn && !targetBtn.dataset.listenerAttached) {
+    targetBtn.dataset.listenerAttached = 'true';
+    targetBtn.addEventListener('click', () => {
+      if (typeof setMapTargetMode === 'function') {
+        setMapTargetMode(!isMapTargetMode);
+      }
+    });
   }
 
   // Strategic Market Review toggle
