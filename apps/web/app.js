@@ -3981,18 +3981,21 @@ const initNewsFeed = () => {};
 // Initialize app (called after login)
 const initApp = () => {
   mapScope = 'healthcare';
-  initWeatherMap();
-  initHelpSection();
-  initCollapsibleSections();
-  initStrategicReview();
-  initMapToggle();
-  initMapScopeToggle();
-  initMapFactors();
-    initStateMultiSelect();
-    initForecast();
-    initProgramsModule();
-    initStateBeacon();
-    initNewsFeed();
+  const safeInit = (fn, label) => {
+    try { fn(); } catch (err) { console.warn(`Init error [${label}]:`, err); }
+  };
+  safeInit(initWeatherMap, 'weatherMap');
+  safeInit(initHelpSection, 'helpSection');
+  safeInit(initCollapsibleSections, 'collapsibleSections');
+  safeInit(initStrategicReview, 'strategicReview');
+  safeInit(initMapToggle, 'mapToggle');
+  safeInit(initMapScopeToggle, 'mapScopeToggle');
+  safeInit(initMapFactors, 'mapFactors');
+  safeInit(initStateMultiSelect, 'stateMultiSelect');
+  safeInit(initForecast, 'forecast');
+  safeInit(initProgramsModule, 'programsModule');
+  safeInit(initStateBeacon, 'stateBeacon');
+  safeInit(initNewsFeed, 'newsFeed');
   loadHealth();
   loadStatesWithMap();
   loadInsights();

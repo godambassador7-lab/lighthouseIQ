@@ -3406,9 +3406,12 @@ const initViewToggle = () => {
   });
 
   // Target mode button - toggles target selection mode
-  mapTargetModeBtn?.addEventListener('click', () => {
-    setMapTargetMode(!isMapTargetMode);
-  });
+  if (mapTargetModeBtn) {
+    mapTargetModeBtn.dataset.listenerAttached = 'true';
+    mapTargetModeBtn.addEventListener('click', () => {
+      setMapTargetMode(!isMapTargetMode);
+    });
+  }
 
   // Target state button - opens target state module
   mapTargetStateBtn?.addEventListener('click', () => {
@@ -3540,30 +3543,29 @@ const initApp = async () => {
 
   setLoading('Loading data...');
 
-  // Initialize UI components
-  try {
-    initRegionSelect();
-    initStateMultiSelect();
-    initSpecialtyMultiSelect();
-    initCustomStateSelect();
-    initFilters();
-    initQuickNav();
-    initProjects();
-    initStateCalibration();
-    initCustomNotices();
-    initHelpSection();
-    initCollapsibleSections();
-    initViewToggle();
-    initMapScopeToggle();
-    initMapTabSwitcher();
-    initForecast();
-    initProgramsModule();
-    initStateBeacon();
-    initNewsFeed();
-    await initWeatherMap();
-  } catch (err) {
-    console.error('Error initializing UI:', err);
-  }
+  // Initialize UI components (each wrapped individually so one failure doesn't block others)
+  const safeInit = (fn, label) => {
+    try { fn(); } catch (err) { console.warn(`Init error [${label}]:`, err); }
+  };
+  safeInit(initRegionSelect, 'regionSelect');
+  safeInit(initStateMultiSelect, 'stateMultiSelect');
+  safeInit(initSpecialtyMultiSelect, 'specialtyMultiSelect');
+  safeInit(initCustomStateSelect, 'customStateSelect');
+  safeInit(initFilters, 'filters');
+  safeInit(initQuickNav, 'quickNav');
+  safeInit(initProjects, 'projects');
+  safeInit(initStateCalibration, 'stateCalibration');
+  safeInit(initCustomNotices, 'customNotices');
+  safeInit(initHelpSection, 'helpSection');
+  safeInit(initCollapsibleSections, 'collapsibleSections');
+  safeInit(initViewToggle, 'viewToggle');
+  safeInit(initMapScopeToggle, 'mapScopeToggle');
+  safeInit(initMapTabSwitcher, 'mapTabSwitcher');
+  safeInit(initForecast, 'forecast');
+  safeInit(initProgramsModule, 'programsModule');
+  safeInit(initStateBeacon, 'stateBeacon');
+  safeInit(initNewsFeed, 'newsFeed');
+  try { await initWeatherMap(); } catch (err) { console.warn('Init error [weatherMap]:', err); }
 
   // Load data
   await Promise.all([
@@ -7280,7 +7282,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Target mode handlers live in initApp to avoid double toggles
+  // Target mode fallback — only attach if initViewToggle didn't already
+  const targetBtn = document.getElementById('map-target-mode-btn');
+  if (targetBtn && !targetBtn.dataset.listenerAttached) {
+    targetBtn.dataset.listenerAttached = 'true';
+    targetBtn.addEventListener('click', () => {
+      if (typeof setMapTargetMode === 'function') {
+        setMapTargetMode(!isMapTargetMode);
+      }
+    });
+  }
 
   // Strategic Market Review toggle
   const strategicToggle = document.getElementById('strategic-toggle');
