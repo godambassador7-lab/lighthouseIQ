@@ -1708,15 +1708,58 @@ const showRuralClosuresPanel = (stateAbbrev) => {
   const riskLevel = data.atRisk > 5 ? 'High' : data.atRisk > 2 ? 'Medium' : 'Low';
   const riskClass = data.atRisk > 5 ? 'risk-high' : data.atRisk > 2 ? 'risk-medium' : 'risk-low';
 
+  const closedHospitals = Array.isArray(data.closedHospitals) ? data.closedHospitals : [];
+  const atRiskHospitals = Array.isArray(data.atRiskHospitals) ? data.atRiskHospitals : [];
+  // Sort at-risk: high risk first, then by beds descending
+  const sortedAtRisk = [...atRiskHospitals].sort((a, b) => {
+    if (a.risk === 'high' && b.risk !== 'high') return -1;
+    if (a.risk !== 'high' && b.risk === 'high') return 1;
+    return (b.beds || 0) - (a.beds || 0);
+  });
+  // Sort closed: most recent first
+  const sortedClosed = [...closedHospitals].sort((a, b) => (b.year || 0) - (a.year || 0));
+
   if (ruralClosuresTitle) ruralClosuresTitle.textContent = `${stateName} Rural Hospitals`;
   if (ruralClosuresSubtitle) {
-    ruralClosuresSubtitle.textContent = 'Rural hospital closure data from CHQPR/Sheps Center';
+    ruralClosuresSubtitle.textContent = 'Source: CHQPR / Sheps Center for Health Services Research';
   }
 
   if (ruralClosuresList) {
     const freshness = ruralClosuresLastUpdated
       ? `Data updated ${formatRelativeTime(ruralClosuresLastUpdated)}`
       : 'Using cached data';
+
+    // Build at-risk hospital rows
+    const atRiskHtml = sortedAtRisk.length > 0
+      ? sortedAtRisk.map(h => {
+        const rc = h.risk === 'high' ? 'risk-high' : 'risk-moderate';
+        const riskLabel = h.risk === 'high' ? 'High Risk' : 'At Risk';
+        return `
+          <div class="rural-hospital-row">
+            <div class="rural-hospital-info">
+              <div class="rural-hospital-name">${escapeHtml(h.name)}</div>
+              <div class="rural-hospital-location">${escapeHtml(h.city)}${h.county ? ', ' + escapeHtml(h.county) + ' Co.' : ''}${h.beds ? ' &middot; ' + h.beds + ' beds' : ''}</div>
+            </div>
+            <span class="rural-hospital-badge ${rc}">${riskLabel}</span>
+          </div>`;
+      }).join('')
+      : '<div class="rural-empty">No hospitals currently flagged at risk.</div>';
+
+    // Build closed hospital rows
+    const closedHtml = sortedClosed.length > 0
+      ? sortedClosed.map(h => {
+        const typeLabel = h.type === 'converted' ? 'Converted' : 'Closed';
+        const typeClass = h.type === 'converted' ? 'type-converted' : 'type-closed';
+        return `
+          <div class="rural-hospital-row">
+            <div class="rural-hospital-info">
+              <div class="rural-hospital-name">${escapeHtml(h.name)}</div>
+              <div class="rural-hospital-location">${escapeHtml(h.city)}${h.county ? ', ' + escapeHtml(h.county) + ' Co.' : ''}${h.year ? ' &middot; ' + h.year : ''}</div>
+            </div>
+            <span class="rural-hospital-badge ${typeClass}">${typeLabel}</span>
+          </div>`;
+      }).join('')
+      : '<div class="rural-empty">No recorded closures since 2010.</div>';
 
     ruralClosuresList.innerHTML = `
       <div class="rural-closures-stat">
@@ -1735,6 +1778,17 @@ const showRuralClosuresPanel = (stateAbbrev) => {
         <span class="rural-closures-stat-label">Overall risk level</span>
         <span class="rural-closures-stat-value ${riskClass}">${riskLevel}</span>
       </div>
+
+      <div class="rural-section-header">
+        <span class="rural-section-icon">&#9888;</span> At-Risk Hospitals (${sortedAtRisk.length})
+      </div>
+      <div class="rural-hospital-list">${atRiskHtml}</div>
+
+      <div class="rural-section-header">
+        <span class="rural-section-icon">&#10006;</span> Closed Since 2010 (${sortedClosed.length})
+      </div>
+      <div class="rural-hospital-list">${closedHtml}</div>
+
       <div class="rural-closures-beacon-link">
         <button type="button" id="rural-open-beacon" data-state="${stateAbbrev}">Open ${stateName} State Beacon</button>
       </div>
