@@ -215,9 +215,16 @@ let programsModuleInitialized = false;
 let programsRefreshPrompted = false;
 let stateBeaconData = null;
 let stateBeaconLoaded = false;
+let stateBeaconLoadedAt = 0;
+const STATE_BEACON_REFRESH_MS = 30 * 60 * 1000; // refresh beacon data every 30 minutes
 let stateBeaconInputs = null;
 let stateNewsData = null;
 let stateNewsLoaded = false;
+let stateNewsLoadedAt = 0;
+let ruralClosuresData = null;
+let ruralClosuresLoaded = false;
+let ruralClosuresLoadedAt = 0;
+const RURAL_CLOSURES_REFRESH_MS = 30 * 60 * 1000;
 const STATE_BEACON_DEFAULT = 'FL';
 const STATE_BEACON_HOME_DEFAULT = 'IN';
 const STATE_BEACON_INPUTS_KEY = 'lni_state_beacon_inputs';
@@ -864,6 +871,11 @@ const initWeatherMap = async () => {
       shape.setAttribute('data-state', abbrev);
       shape.addEventListener('click', () => {
         if (Date.now() < mapLongPressSuppressUntil) return;
+        // In rural mode, open the rural closures detail panel
+        if (activeMapTab === 'rural') {
+          showRuralClosuresPanel(abbrev);
+          return;
+        }
         // If target mode is active, set/clear target state instead of toggling selection
         if (isMapTargetMode) {
           const currentTarget = getMapTargetState();
@@ -1688,8 +1700,66 @@ const updateRuralMapColors = () => {
   });
 };
 
+// Show rural closures detail panel for a selected state
+const showRuralClosuresPanel = (stateAbbrev) => {
+  if (!ruralClosuresPanel) return;
+  const stateName = STATE_NAMES[stateAbbrev] || stateAbbrev;
+  const data = RURAL_HOSPITAL_CLOSURES[stateAbbrev] || { count: 0, recent: 0, atRisk: 0 };
+  const riskLevel = data.atRisk > 5 ? 'High' : data.atRisk > 2 ? 'Medium' : 'Low';
+  const riskClass = data.atRisk > 5 ? 'risk-high' : data.atRisk > 2 ? 'risk-medium' : 'risk-low';
+
+  if (ruralClosuresTitle) ruralClosuresTitle.textContent = `${stateName} Rural Hospitals`;
+  if (ruralClosuresSubtitle) {
+    ruralClosuresSubtitle.textContent = 'Rural hospital closure data from CHQPR/Sheps Center';
+  }
+
+  if (ruralClosuresList) {
+    const freshness = ruralClosuresLastUpdated
+      ? `Data updated ${formatRelativeTime(ruralClosuresLastUpdated)}`
+      : 'Using cached data';
+
+    ruralClosuresList.innerHTML = `
+      <div class="rural-closures-stat">
+        <span class="rural-closures-stat-label">Total closures since 2010</span>
+        <span class="rural-closures-stat-value">${data.count}</span>
+      </div>
+      <div class="rural-closures-stat">
+        <span class="rural-closures-stat-label">Recent closures (last 2 years)</span>
+        <span class="rural-closures-stat-value ${data.recent > 0 ? 'risk-high' : ''}">${data.recent}</span>
+      </div>
+      <div class="rural-closures-stat">
+        <span class="rural-closures-stat-label">Hospitals currently at risk</span>
+        <span class="rural-closures-stat-value ${riskClass}">${data.atRisk}</span>
+      </div>
+      <div class="rural-closures-stat">
+        <span class="rural-closures-stat-label">Overall risk level</span>
+        <span class="rural-closures-stat-value ${riskClass}">${riskLevel}</span>
+      </div>
+      <div class="rural-closures-beacon-link">
+        <button type="button" id="rural-open-beacon" data-state="${stateAbbrev}">Open ${stateName} State Beacon</button>
+      </div>
+      <div class="rural-data-freshness">${freshness}</div>
+    `;
+
+    // Attach beacon link handler
+    const beaconBtn = document.getElementById('rural-open-beacon');
+    if (beaconBtn) {
+      beaconBtn.addEventListener('click', () => {
+        hideRuralClosuresPanel();
+        openStateBeaconFromMap(stateAbbrev);
+      });
+    }
+  }
+
+  ruralClosuresPanel.style.display = '';
+};
+
+const hideRuralClosuresPanel = () => {
+  if (ruralClosuresPanel) ruralClosuresPanel.style.display = 'none';
+};
+
 // Switch between layoffs and rural hospital tabs
-const switchMapTab = (tab) => {
+const switchMapTab = async (tab) => {
   if (tab === activeMapTab) return;
   activeMapTab = tab;
 
@@ -1699,6 +1769,7 @@ const switchMapTab = (tab) => {
 
   // Update section title and description
   if (tab === 'layoffs') {
+    hideRuralClosuresPanel();
     if (mapSectionTitle) mapSectionTitle.textContent = 'Interactive Layoff Weather Map';
     if (mapSectionDesc) {
       mapSectionDesc.innerHTML = `Fog intensity shows layoff activity by state. Darker = more layoffs in the current scope. <span class="map-scope-note">Scope: <strong id="map-scope-label">${mapScope === 'all' ? 'All' : 'Healthcare'}</strong></span>`;
@@ -1711,7 +1782,13 @@ const switchMapTab = (tab) => {
   } else if (tab === 'rural') {
     if (mapSectionTitle) mapSectionTitle.textContent = 'Rural Hospital Vulnerability Map';
     if (mapSectionDesc) {
-      mapSectionDesc.innerHTML = `Shows rural hospital closures since 2010 and hospitals currently at financial risk. Data from CHQPR/Sheps Center.`;
+      mapSectionDesc.innerHTML = `Loading rural hospital data...`;
+    }
+    // Fetch fresh rural closures data
+    await loadRuralClosuresData();
+    if (mapSectionDesc) {
+      const freshness = ruralClosuresLastUpdated ? ` Updated ${formatRelativeTime(ruralClosuresLastUpdated)}.` : '';
+      mapSectionDesc.innerHTML = `Shows rural hospital closures since 2010 and hospitals currently at financial risk. Data from CHQPR/Sheps Center.${freshness}`;
     }
     // Hide layoff-specific controls, show rural legend
     document.querySelector('.scope-toggle')?.style.setProperty('display', 'none');
@@ -3206,6 +3283,10 @@ const initViewToggle = () => {
     if (mapFactorsPanel) mapFactorsPanel.style.display = 'none';
   });
 
+  ruralClosuresClose?.addEventListener('click', () => {
+    hideRuralClosuresPanel();
+  });
+
 };
 
 const renderBarChart = () => {
@@ -3344,7 +3425,8 @@ const initApp = async () => {
     loadMetadata(),
     loadStates(),
     loadRelocationData(),
-    loadRecruitmentIntel()
+    loadRecruitmentIntel(),
+    loadRuralClosuresData()
   ]);
 
   await loadAllNotices();
@@ -3546,9 +3628,10 @@ const COST_OF_LIVING_INDEX = {
   WI: 95.2, WY: 96.8
 };
 
-// Rural Hospital Closures by State (data from CHQPR/Sheps Center, updated regularly)
+// Rural Hospital Closures by State (fallback data from CHQPR/Sheps Center)
+// Live data fetched from rural-closures.json; this object is the offline fallback.
 // Structure: { count: number of closures since 2010, recent: closures in last 2 years, atRisk: hospitals at financial risk }
-const RURAL_HOSPITAL_CLOSURES = {
+let RURAL_HOSPITAL_CLOSURES = {
   AL: { count: 6, recent: 1, atRisk: 8 },
   AK: { count: 0, recent: 0, atRisk: 2 },
   AZ: { count: 3, recent: 0, atRisk: 4 },
@@ -3601,6 +3684,32 @@ const RURAL_HOSPITAL_CLOSURES = {
   WV: { count: 3, recent: 1, atRisk: 5 },
   WI: { count: 2, recent: 0, atRisk: 3 },
   WY: { count: 1, recent: 0, atRisk: 2 }
+};
+
+let ruralClosuresLastUpdated = null;
+
+const loadRuralClosuresData = async (forceRefresh = false) => {
+  const now = Date.now();
+  if (ruralClosuresLoaded && !forceRefresh && (now - ruralClosuresLoadedAt) < RURAL_CLOSURES_REFRESH_MS) {
+    return ruralClosuresData;
+  }
+  try {
+    const response = await fetch(`${DATA_BASE_URL}/rural-closures.json?ts=${now}`);
+    if (!response.ok) throw new Error(`Failed to load rural closures: ${response.status}`);
+    ruralClosuresData = await response.json();
+    if (ruralClosuresData?.states) {
+      RURAL_HOSPITAL_CLOSURES = ruralClosuresData.states;
+      ruralClosuresLastUpdated = ruralClosuresData.lastUpdated || null;
+    }
+    ruralClosuresLoaded = true;
+    ruralClosuresLoadedAt = now;
+    return ruralClosuresData;
+  } catch (err) {
+    console.warn('Rural closures data unavailable, using fallback:', err.message);
+    ruralClosuresLoaded = true;
+    ruralClosuresLoadedAt = now;
+    return null;
+  }
 };
 
 // Travel nurse specialty pay (weekly rates)
@@ -4660,28 +4769,36 @@ const initProgramsModule = () => {
 // ==================== END ACCREDITED PROGRAMS MODULE ====================
 
 // ==================== STATE BEACON MODULE ====================
-const loadStateBeaconData = async () => {
-  if (stateBeaconLoaded) return stateBeaconData;
+const loadStateBeaconData = async (forceRefresh = false) => {
+  const now = Date.now();
+  if (stateBeaconLoaded && !forceRefresh && (now - stateBeaconLoadedAt) < STATE_BEACON_REFRESH_MS) {
+    return stateBeaconData;
+  }
   try {
-    const response = await fetch(`${DATA_BASE_URL}/state-beacon.json?ts=${Date.now()}`);
+    const response = await fetch(`${DATA_BASE_URL}/state-beacon.json?ts=${now}`);
     if (!response.ok) throw new Error(`Failed to load state beacon: ${response.status}`);
     stateBeaconData = await response.json();
   } catch (err) {
     console.warn('State Beacon unavailable:', err.message);
-    stateBeaconData = { lastUpdated: null, states: {} };
+    if (!stateBeaconData) stateBeaconData = { lastUpdated: null, states: {} };
   }
   stateBeaconLoaded = true;
+  stateBeaconLoadedAt = now;
   return stateBeaconData;
 };
 
-const loadStateNewsData = async () => {
-  if (stateNewsLoaded) return stateNewsData;
+const loadStateNewsData = async (forceRefresh = false) => {
+  const now = Date.now();
+  if (stateNewsLoaded && !forceRefresh && (now - stateNewsLoadedAt) < STATE_BEACON_REFRESH_MS) {
+    return stateNewsData;
+  }
   try {
-    stateNewsData = await fetchJson(`${DATA_BASE_URL}/state-news.json?ts=${Date.now()}`);
+    stateNewsData = await fetchJson(`${DATA_BASE_URL}/state-news.json?ts=${now}`);
   } catch (err) {
-    stateNewsData = null;
+    if (!stateNewsData) stateNewsData = null;
   }
   stateNewsLoaded = true;
+  stateNewsLoadedAt = now;
   return stateNewsData;
 };
 

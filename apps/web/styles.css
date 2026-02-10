@@ -4118,6 +4118,124 @@ input[type="range"] {
   font-weight: 600;
 }
 
+/* Rural Closures Panel (overlay inside map container) */
+.rural-closures-panel {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  width: min(380px, 90vw);
+  max-height: calc(100% - 36px);
+  overflow-y: auto;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.2);
+  border: 1px solid rgba(26, 54, 93, 0.1);
+  padding: 16px;
+  z-index: 12;
+}
+
+.rural-closures-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.rural-closures-header h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--navy);
+}
+
+.rural-closures-close {
+  border: none;
+  background: rgba(26, 54, 93, 0.08);
+  color: var(--navy);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.rural-closures-close:hover {
+  background: rgba(26, 54, 93, 0.15);
+}
+
+.rural-closures-subtitle {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.rural-closures-list {
+  display: grid;
+  gap: 10px;
+}
+
+.rural-closures-stat {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(248, 250, 252, 0.9);
+  border: 1px solid rgba(26, 54, 93, 0.06);
+}
+
+.rural-closures-stat-label {
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.rural-closures-stat-value {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.rural-closures-stat-value.risk-high {
+  color: #dc2626;
+}
+
+.rural-closures-stat-value.risk-medium {
+  color: #d97706;
+}
+
+.rural-closures-stat-value.risk-low {
+  color: #16a34a;
+}
+
+.rural-closures-beacon-link {
+  margin-top: 8px;
+  text-align: center;
+}
+
+.rural-closures-beacon-link button {
+  background: linear-gradient(135deg, #1e3a5f, #2563eb);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 18px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  transition: opacity 0.2s;
+}
+
+.rural-closures-beacon-link button:hover {
+  opacity: 0.9;
+}
+
+.rural-data-freshness {
+  font-size: 0.68rem;
+  color: var(--muted);
+  text-align: center;
+  margin-top: 8px;
+}
+
 .map-control-btn {
   border: 1px solid rgba(148, 163, 184, 0.35);
   border-radius: 10px;
