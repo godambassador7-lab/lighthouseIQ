@@ -1736,41 +1736,50 @@ const showRuralClosuresPanel = (stateAbbrev) => {
       ? `Data updated ${formatRelativeTime(ruralClosuresLastUpdated)}`
       : 'Using cached data';
 
-    const atRiskCards = sortedAtRisk.map(h => {
-      const marginClass = h.operatingMargin <= -10 ? 'risk-high' : h.operatingMargin < 0 ? 'risk-medium' : 'risk-low';
-      const riskBadgeClass = h.risk === 'high' ? 'risk-high' : 'risk-medium';
-      const factors = (h.riskFactors || []).map(f => `<li>${f}</li>`).join('');
-      return `
-        <div class="rural-hospital-card">
-          <div class="rural-hospital-header">
-            <span class="rural-hospital-name">${escapeHtml(h.name)}</span>
-            <span class="rural-risk-badge ${riskBadgeClass}">${escapeHtml(h.risk || 'risk')}</span>
-          </div>
-          <div class="rural-hospital-location">${escapeHtml(h.city || '')}${h.county ? `, ${escapeHtml(h.county)} Co.` : ''}${h.beds ? ` &middot; ${h.beds} beds` : ''}</div>
-          <div class="rural-hospital-financials">
-            <div class="rural-financial-item">
-              <span class="rural-financial-label">Operating Margin</span>
-              <span class="rural-financial-value ${marginClass}">${h.operatingMargin > 0 ? '+' : ''}${h.operatingMargin ?? '--'}%</span>
+    // Build at-risk hospital rows
+    const atRiskHtml = sortedAtRisk.length > 0
+      ? sortedAtRisk.map(h => {
+        const rc = h.risk === 'high' ? 'risk-high' : 'risk-moderate';
+        const riskLabel = h.risk === 'high' ? 'High Risk' : 'At Risk';
+        const marginClass = h.operatingMargin <= -10 ? 'risk-high' : h.operatingMargin < 0 ? 'risk-medium' : 'risk-low';
+        const factors = (h.riskFactors || []).map(f => `<li>${escapeHtml(f)}</li>`).join('');
+        return `
+          <div class="rural-hospital-card">
+            <div class="rural-hospital-header">
+              <span class="rural-hospital-name">${escapeHtml(h.name)}</span>
+              <span class="rural-risk-badge ${rc}">${riskLabel}</span>
             </div>
-            <div class="rural-financial-item">
-              <span class="rural-financial-label">Daily Census</span>
-              <span class="rural-financial-value">${h.dailyCensus ?? '--'} patients</span>
+            <div class="rural-hospital-location">${escapeHtml(h.city)}${h.county ? ', ' + escapeHtml(h.county) + ' Co.' : ''}${h.beds ? ' &middot; ' + h.beds + ' beds' : ''}</div>
+            <div class="rural-hospital-financials">
+              <div class="rural-financial-item">
+                <span class="rural-financial-label">Operating Margin</span>
+                <span class="rural-financial-value ${marginClass}">${h.operatingMargin > 0 ? '+' : ''}${h.operatingMargin}%</span>
+              </div>
+              <div class="rural-financial-item">
+                <span class="rural-financial-label">Daily Census</span>
+                <span class="rural-financial-value">${h.dailyCensus} patients</span>
+              </div>
             </div>
-          </div>
-          ${factors ? `<ul class="rural-risk-factors">${factors}</ul>` : ''}
-        </div>`;
-    }).join('');
+            ${factors ? `<ul class="rural-risk-factors">${factors}</ul>` : ''}
+          </div>`;
+      }).join('')
+      : '<div class="rural-empty">No hospitals currently flagged at risk.</div>';
 
-    const closedList = sortedClosed.length > 0
-      ? `<div class="rural-closed-section">
-          <div class="rural-section-label">Closed / Converted (${sortedClosed.length})</div>
-          ${sortedClosed.map(h => `
-            <div class="rural-closed-item">
-              <span class="rural-closed-name">${escapeHtml(h.name)}</span>
-              <span class="rural-closed-meta">${escapeHtml(h.city || '')}${h.year ? ` &middot; ${h.year}` : ''}${h.type ? ` &middot; ${escapeHtml(h.type)}` : ''}</span>
-            </div>`).join('')}
-        </div>`
-      : '';
+    // Build closed hospital rows
+    const closedHtml = sortedClosed.length > 0
+      ? sortedClosed.map(h => {
+        const typeLabel = h.type === 'converted' ? 'Converted' : 'Closed';
+        const typeClass = h.type === 'converted' ? 'type-converted' : 'type-closed';
+        return `
+          <div class="rural-hospital-row">
+            <div class="rural-hospital-info">
+              <div class="rural-hospital-name">${escapeHtml(h.name)}</div>
+              <div class="rural-hospital-location">${escapeHtml(h.city)}${h.county ? ', ' + escapeHtml(h.county) + ' Co.' : ''}${h.year ? ' &middot; ' + h.year : ''}</div>
+            </div>
+            <span class="rural-hospital-badge ${typeClass}">${typeLabel}</span>
+          </div>`;
+      }).join('')
+      : '<div class="rural-empty">No recorded closures since 2010.</div>';
 
     ruralClosuresList.innerHTML = `
       <div class="rural-closures-stat">
@@ -1789,11 +1798,17 @@ const showRuralClosuresPanel = (stateAbbrev) => {
         <span class="rural-closures-stat-label">Overall risk level</span>
         <span class="rural-closures-stat-value ${riskClass}">${riskLevel}</span>
       </div>
-      ${sortedAtRisk.length > 0 ? `
-        <div class="rural-section-label" style="margin-top:12px">At-Risk Hospitals (${sortedAtRisk.length})</div>
-        ${atRiskCards}
-      ` : ''}
-      ${closedList}
+
+      <div class="rural-section-header">
+        <span class="rural-section-icon">&#9888;</span> At-Risk Hospitals (${sortedAtRisk.length})
+      </div>
+      <div class="rural-hospital-list">${atRiskHtml}</div>
+
+      <div class="rural-section-header">
+        <span class="rural-section-icon">&#10006;</span> Closed Since 2010 (${sortedClosed.length})
+      </div>
+      <div class="rural-hospital-list">${closedHtml}</div>
+
       <div class="rural-closures-beacon-link">
         <button type="button" id="rural-open-beacon" data-state="${stateAbbrev}">Open ${stateName} State Beacon</button>
       </div>
