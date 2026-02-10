@@ -832,8 +832,14 @@
           <p class="programs-source-note" id="programs-source-note"></p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn ghost" id="programs-download">Download CSV</button>
-          <button type="button" class="btn secondary" id="programs-close">Close</button>
+          <div class="modal-footer-left">
+            <button type="button" class="beacon-action-btn" id="programs-export-csv">CSV</button>
+            <button type="button" class="beacon-action-btn" id="programs-export-excel">Excel</button>
+            <button type="button" class="beacon-action-btn" id="programs-export-pdf">PDF</button>
+          </div>
+          <div class="modal-footer-right">
+            <button type="button" class="btn secondary" id="programs-close">Close</button>
+          </div>
         </div>
       </div>
     </div>
@@ -1087,6 +1093,14 @@
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
               CSV
             </button>
+            <button type="button" class="beacon-action-btn" id="state-beacon-export-excel">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+              Excel
+            </button>
+            <button type="button" class="beacon-action-btn" id="state-beacon-export-pdf">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+              PDF
+            </button>
             <button type="button" class="beacon-action-btn" id="state-beacon-save">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
               Save
@@ -1204,8 +1218,15 @@
 
         <!-- Footer -->
         <div class="home-state-footer">
-          <button type="button" class="btn ghost" id="home-state-open-beacon">Open Full State Beacon</button>
-          <button type="button" class="btn secondary" id="home-state-close-footer">Close</button>
+          <div class="home-state-footer-left">
+            <button type="button" class="beacon-action-btn" id="home-state-export-csv">CSV</button>
+            <button type="button" class="beacon-action-btn" id="home-state-export-excel">Excel</button>
+            <button type="button" class="beacon-action-btn" id="home-state-export-pdf">PDF</button>
+          </div>
+          <div class="home-state-footer-right">
+            <button type="button" class="btn ghost" id="home-state-open-beacon">Open Full State Beacon</button>
+            <button type="button" class="btn secondary" id="home-state-close-footer">Close</button>
+          </div>
         </div>
       </div>
     </div>
@@ -1330,8 +1351,15 @@
 
         <!-- Footer -->
         <div class="target-state-footer">
-          <button type="button" class="btn ghost" id="target-state-open-beacon">Open Full State Beacon</button>
-          <button type="button" class="btn secondary" id="target-state-close-footer">Close</button>
+          <div class="target-state-footer-left">
+            <button type="button" class="beacon-action-btn" id="target-state-export-csv">CSV</button>
+            <button type="button" class="beacon-action-btn" id="target-state-export-excel">Excel</button>
+            <button type="button" class="beacon-action-btn" id="target-state-export-pdf">PDF</button>
+          </div>
+          <div class="target-state-footer-right">
+            <button type="button" class="btn ghost" id="target-state-open-beacon">Open Full State Beacon</button>
+            <button type="button" class="btn secondary" id="target-state-close-footer">Close</button>
+          </div>
         </div>
       </div>
     </div>

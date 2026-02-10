@@ -115,7 +115,9 @@ const programsSearch = document.getElementById('programs-search');
 const programsStateFilter = document.getElementById('programs-state-filter');
 const programsLevelFilter = document.getElementById('programs-level-filter');
 const programsSourceNote = document.getElementById('programs-source-note');
-const programsDownload = document.getElementById('programs-download');
+const programsExportCsv = document.getElementById('programs-export-csv');
+const programsExportExcel = document.getElementById('programs-export-excel');
+const programsExportPdf = document.getElementById('programs-export-pdf');
 const programsLoading = document.getElementById('programs-loading');
 const programsProgressBar = document.getElementById('programs-progress-bar');
 const programsProgressText = document.getElementById('programs-progress-text');
@@ -151,11 +153,16 @@ const stateBeaconTimeline = document.getElementById('state-beacon-timeline');
 const stateBeaconLicense = document.getElementById('state-beacon-license');
 const stateBeaconExportJson = document.getElementById('state-beacon-export-json');
 const stateBeaconExportCsv = document.getElementById('state-beacon-export-csv');
+const stateBeaconExportExcel = document.getElementById('state-beacon-export-excel');
+const stateBeaconExportPdf = document.getElementById('state-beacon-export-pdf');
 
 const homeStateModal = document.getElementById('home-state-modal');
 const homeStateCloseBtn = document.getElementById('home-state-close');
 const homeStateCloseFooter = document.getElementById('home-state-close-footer');
 const homeStateOpenBeacon = document.getElementById('home-state-open-beacon');
+const homeStateExportCsv = document.getElementById('home-state-export-csv');
+const homeStateExportExcel = document.getElementById('home-state-export-excel');
+const homeStateExportPdf = document.getElementById('home-state-export-pdf');
 const openHomeStateBtn = document.getElementById('open-home-state');
 // New Home State module elements
 const homeStateName = document.getElementById('home-state-name');
@@ -1729,37 +1736,41 @@ const showRuralClosuresPanel = (stateAbbrev) => {
       ? `Data updated ${formatRelativeTime(ruralClosuresLastUpdated)}`
       : 'Using cached data';
 
-    // Build at-risk hospital rows
-    const atRiskHtml = sortedAtRisk.length > 0
-      ? sortedAtRisk.map(h => {
-        const rc = h.risk === 'high' ? 'risk-high' : 'risk-moderate';
-        const riskLabel = h.risk === 'high' ? 'High Risk' : 'At Risk';
-        return `
-          <div class="rural-hospital-row">
-            <div class="rural-hospital-info">
-              <div class="rural-hospital-name">${escapeHtml(h.name)}</div>
-              <div class="rural-hospital-location">${escapeHtml(h.city)}${h.county ? ', ' + escapeHtml(h.county) + ' Co.' : ''}${h.beds ? ' &middot; ' + h.beds + ' beds' : ''}</div>
+    const atRiskCards = sortedAtRisk.map(h => {
+      const marginClass = h.operatingMargin <= -10 ? 'risk-high' : h.operatingMargin < 0 ? 'risk-medium' : 'risk-low';
+      const riskBadgeClass = h.risk === 'high' ? 'risk-high' : 'risk-medium';
+      const factors = (h.riskFactors || []).map(f => `<li>${f}</li>`).join('');
+      return `
+        <div class="rural-hospital-card">
+          <div class="rural-hospital-header">
+            <span class="rural-hospital-name">${escapeHtml(h.name)}</span>
+            <span class="rural-risk-badge ${riskBadgeClass}">${escapeHtml(h.risk || 'risk')}</span>
+          </div>
+          <div class="rural-hospital-location">${escapeHtml(h.city || '')}${h.county ? `, ${escapeHtml(h.county)} Co.` : ''}${h.beds ? ` &middot; ${h.beds} beds` : ''}</div>
+          <div class="rural-hospital-financials">
+            <div class="rural-financial-item">
+              <span class="rural-financial-label">Operating Margin</span>
+              <span class="rural-financial-value ${marginClass}">${h.operatingMargin > 0 ? '+' : ''}${h.operatingMargin ?? '--'}%</span>
             </div>
-            <span class="rural-hospital-badge ${rc}">${riskLabel}</span>
-          </div>`;
-      }).join('')
-      : '<div class="rural-empty">No hospitals currently flagged at risk.</div>';
+            <div class="rural-financial-item">
+              <span class="rural-financial-label">Daily Census</span>
+              <span class="rural-financial-value">${h.dailyCensus ?? '--'} patients</span>
+            </div>
+          </div>
+          ${factors ? `<ul class="rural-risk-factors">${factors}</ul>` : ''}
+        </div>`;
+    }).join('');
 
-    // Build closed hospital rows
-    const closedHtml = sortedClosed.length > 0
-      ? sortedClosed.map(h => {
-        const typeLabel = h.type === 'converted' ? 'Converted' : 'Closed';
-        const typeClass = h.type === 'converted' ? 'type-converted' : 'type-closed';
-        return `
-          <div class="rural-hospital-row">
-            <div class="rural-hospital-info">
-              <div class="rural-hospital-name">${escapeHtml(h.name)}</div>
-              <div class="rural-hospital-location">${escapeHtml(h.city)}${h.county ? ', ' + escapeHtml(h.county) + ' Co.' : ''}${h.year ? ' &middot; ' + h.year : ''}</div>
-            </div>
-            <span class="rural-hospital-badge ${typeClass}">${typeLabel}</span>
-          </div>`;
-      }).join('')
-      : '<div class="rural-empty">No recorded closures since 2010.</div>';
+    const closedList = sortedClosed.length > 0
+      ? `<div class="rural-closed-section">
+          <div class="rural-section-label">Closed / Converted (${sortedClosed.length})</div>
+          ${sortedClosed.map(h => `
+            <div class="rural-closed-item">
+              <span class="rural-closed-name">${escapeHtml(h.name)}</span>
+              <span class="rural-closed-meta">${escapeHtml(h.city || '')}${h.year ? ` &middot; ${h.year}` : ''}${h.type ? ` &middot; ${escapeHtml(h.type)}` : ''}</span>
+            </div>`).join('')}
+        </div>`
+      : '';
 
     ruralClosuresList.innerHTML = `
       <div class="rural-closures-stat">
@@ -1778,17 +1789,11 @@ const showRuralClosuresPanel = (stateAbbrev) => {
         <span class="rural-closures-stat-label">Overall risk level</span>
         <span class="rural-closures-stat-value ${riskClass}">${riskLevel}</span>
       </div>
-
-      <div class="rural-section-header">
-        <span class="rural-section-icon">&#9888;</span> At-Risk Hospitals (${sortedAtRisk.length})
-      </div>
-      <div class="rural-hospital-list">${atRiskHtml}</div>
-
-      <div class="rural-section-header">
-        <span class="rural-section-icon">&#10006;</span> Closed Since 2010 (${sortedClosed.length})
-      </div>
-      <div class="rural-hospital-list">${closedHtml}</div>
-
+      ${sortedAtRisk.length > 0 ? `
+        <div class="rural-section-label" style="margin-top:12px">At-Risk Hospitals (${sortedAtRisk.length})</div>
+        ${atRiskCards}
+      ` : ''}
+      ${closedList}
       <div class="rural-closures-beacon-link">
         <button type="button" id="rural-open-beacon" data-state="${stateAbbrev}">Open ${stateName} State Beacon</button>
       </div>
@@ -3265,6 +3270,77 @@ const downloadFile = (content, filename, type) => {
   URL.revokeObjectURL(url);
 };
 
+const csvEscape = (value) => `"${String(value ?? '').replace(/"/g, '""')}"`;
+
+const buildCsv = (headers, rows) => (
+  [headers.map(csvEscape).join(','), ...rows.map(row => row.map(csvEscape).join(','))].join('\n')
+);
+
+const buildExportTableHtml = (headers, rows) => `
+  <table>
+    <thead>
+      <tr>${headers.map(header => `<th>${escapeHtml(header)}</th>`).join('')}</tr>
+    </thead>
+    <tbody>
+      ${rows.map(row => `<tr>${row.map(cell => `<td>${escapeHtml(cell ?? '')}</td>`).join('')}</tr>`).join('')}
+    </tbody>
+  </table>
+`;
+
+const buildExportHtml = ({ title, meta = [], headers = [], rows = [] } = {}) => `
+  <html>
+    <head>
+      <meta charset="utf-8" />
+      <title>${escapeHtml(title || 'Export')}</title>
+      <style>
+        body { font-family: "Segoe UI", Arial, sans-serif; padding: 24px; color: #0f172a; }
+        h1 { margin: 0 0 8px; font-size: 22px; }
+        .meta { margin: 0 0 16px; font-size: 12px; color: #475569; }
+        .meta p { margin: 2px 0; }
+        table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        th, td { border: 1px solid #cbd5f5; padding: 6px 8px; text-align: left; vertical-align: top; }
+        th { background: #eff6ff; text-transform: uppercase; letter-spacing: 0.04em; font-size: 11px; }
+      </style>
+    </head>
+    <body>
+      <h1>${escapeHtml(title || 'Export')}</h1>
+      ${meta.length ? `<div class="meta">${meta.map(item => `<p>${escapeHtml(item)}</p>`).join('')}</div>` : ''}
+      ${headers.length ? buildExportTableHtml(headers, rows) : ''}
+    </body>
+  </html>
+`;
+
+const downloadExcel = ({ title, meta, headers, rows, filename }) => {
+  const html = buildExportHtml({ title, meta, headers, rows });
+  downloadFile(html, filename, 'application/vnd.ms-excel');
+};
+
+const openPdfExport = ({ title, meta, headers, rows }) => {
+  const pdfWindow = window.open('', '_blank');
+  if (!pdfWindow) {
+    alert('Pop-up blocked. Please allow pop-ups to export PDF.');
+    return;
+  }
+  pdfWindow.document.write(buildExportHtml({ title, meta, headers, rows }));
+  pdfWindow.document.close();
+  pdfWindow.focus();
+  setTimeout(() => {
+    pdfWindow.print();
+  }, 250);
+};
+
+const showExportToast = (message) => {
+  if (typeof showMapToast === 'function') {
+    showMapToast(message);
+    return;
+  }
+  const toast = document.getElementById('map-toast');
+  if (!toast) return;
+  toast.textContent = message;
+  toast.classList.add('visible');
+  setTimeout(() => toast.classList.remove('visible'), 2000);
+};
+
 document.getElementById('export-project-csv')?.addEventListener('click', exportProjectCSV);
 document.getElementById('export-project-json')?.addEventListener('click', exportProjectJSON);
 
@@ -4679,35 +4755,77 @@ const populateProgramFilters = (programs) => {
   // Level checkboxes are now static in HTML with ASN, BSN, MSN checked by default
 };
 
-const downloadProgramsCsv = () => {
+const buildProgramsExportData = () => {
   const programs = getFilteredPrograms();
   if (!programs.length) {
     alert('No programs available to export.');
-    return;
+    return null;
   }
 
   const headers = ['Institution', 'Campus', 'City', 'State', 'Level', 'Accreditor', 'Credential Notes'];
   const rows = programs.map((program) => {
     const entry = normalizeProgram(program);
     return [
-      `"${entry.institution.replace(/"/g, '""')}"`,
-      `"${entry.campus.replace(/"/g, '""')}"`,
-      `"${entry.city.replace(/"/g, '""')}"`,
-      `"${entry.state.replace(/"/g, '""')}"`,
-      `"${entry.level.replace(/"/g, '""')}"`,
-      `"${entry.accreditor.replace(/"/g, '""')}"`,
-      `"${entry.credentialNotes.replace(/"/g, '""')}"`
-    ].join(',');
+      entry.institution,
+      entry.campus,
+      entry.city,
+      entry.state,
+      entry.level,
+      entry.accreditor,
+      entry.credentialNotes
+    ];
   });
 
-  const csvContent = [headers.join(','), ...rows].join('\n');
-  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = 'accredited_nursing_programs.csv';
-  link.click();
-  URL.revokeObjectURL(url);
+  const stateFilter = programsStateFilter?.value || 'All';
+  const query = programsSearch?.value.trim() || 'All';
+  const levels = getSelectedLevels().join(', ') || 'All';
+  const updated = programsMeta.lastUpdated ? formatDate(programsMeta.lastUpdated) : 'Unknown';
+
+  return {
+    headers,
+    rows,
+    meta: [
+      `Exported: ${new Date().toLocaleString()}`,
+      `Last updated: ${updated}`,
+      `State filter: ${stateFilter}`,
+      `Levels: ${levels}`,
+      `Search: ${query}`,
+      `Programs: ${programs.length}`
+    ]
+  };
+};
+
+const exportProgramsCsv = () => {
+  const data = buildProgramsExportData();
+  if (!data) return;
+  const csv = buildCsv(data.headers, data.rows);
+  downloadFile(csv, 'accredited_nursing_programs.csv', 'text/csv');
+  showExportToast('Programs CSV exported.');
+};
+
+const exportProgramsExcel = () => {
+  const data = buildProgramsExportData();
+  if (!data) return;
+  downloadExcel({
+    title: 'Accredited Nursing Programs',
+    meta: data.meta,
+    headers: data.headers,
+    rows: data.rows,
+    filename: 'accredited_nursing_programs.xls'
+  });
+  showExportToast('Programs Excel exported.');
+};
+
+const exportProgramsPdf = () => {
+  const data = buildProgramsExportData();
+  if (!data) return;
+  openPdfExport({
+    title: 'Accredited Nursing Programs',
+    meta: data.meta,
+    headers: data.headers,
+    rows: data.rows
+  });
+  showExportToast('Programs PDF opened.');
 };
 
 const loadPrograms = async (force = false) => {
@@ -4816,7 +4934,9 @@ const initProgramsModule = () => {
   programsLevelFilter?.querySelectorAll('input[type="checkbox"]').forEach(cb => {
     cb.addEventListener('change', renderProgramsFiltered);
   });
-  programsDownload?.addEventListener('click', downloadProgramsCsv);
+  programsExportCsv?.addEventListener('click', exportProgramsCsv);
+  programsExportExcel?.addEventListener('click', exportProgramsExcel);
+  programsExportPdf?.addEventListener('click', exportProgramsPdf);
   loadPrograms(true);
 };
 
@@ -6314,6 +6434,9 @@ const targetStateCloseBtn = document.getElementById('target-state-close');
 const targetStateCloseFooter = document.getElementById('target-state-close-footer');
 const targetStateOpenBeacon = document.getElementById('target-state-open-beacon');
 const openTargetStateBtn = document.getElementById('open-target-state');
+const targetStateExportCsv = document.getElementById('target-state-export-csv');
+const targetStateExportExcel = document.getElementById('target-state-export-excel');
+const targetStateExportPdf = document.getElementById('target-state-export-pdf');
 
 // Target State module elements
 const targetStateName = document.getElementById('target-state-name');
@@ -6571,11 +6694,304 @@ const closeTargetState = () => targetStateModal?.classList.remove('active');
 // END TARGET STATE MODULE
 // =============================================================================
 
+const buildHomeStateExport = (state) => {
+  const entry = getBeaconEntry(state);
+  const notices = getStateNotices(state);
+  const majorNotices = filterNoticesByMajorSystems(notices, entry.warnMajorSystems);
+  const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === state);
+  const programsByLevel = programsInState.reduce((acc, program) => {
+    const level = normalizeProgram(program).level || 'Other';
+    acc[level] = (acc[level] || 0) + 1;
+    return acc;
+  }, {});
+  const { best, worst } = buildHospitalRank(majorNotices, entry.warnMajorSystems);
+  const competitionSystems = entry.competition?.systems?.length
+    ? entry.competition.systems
+    : Array.from(groupBy(majorNotices, (n) => n.parent_system || n.employer_name || n.employerName).entries())
+      .map(([name, items]) => ({ name, presence: `${items.length} notices`, notes: 'Derived from WARN activity.' }))
+      .slice(0, 6);
+  const stateFeed = getStateNewsFeed(state, entry);
+  let newsMatches = [];
+  if (stateFeed.length) {
+    newsMatches = stateFeed
+      .slice()
+      .sort((a, b) => new Date(b.publishedAt || b.date || 0) - new Date(a.publishedAt || a.date || 0))
+      .slice(0, 12);
+  } else {
+    const keywords = (entry.newsKeywords || []).map((word) => word.toLowerCase());
+    newsMatches = newsArticles.filter((article) => {
+      const haystack = `${article.title} ${article.summary}`.toLowerCase();
+      return keywords.some((word) => word && haystack.includes(word));
+    }).slice(0, 6);
+  }
+
+  return {
+    generatedAt: new Date().toISOString(),
+    state,
+    name: entry.name,
+    compact: entry.compact,
+    summary: entry.summary,
+    noticeCount: majorNotices.length,
+    programsCount: programsInState.length,
+    programsByLevel,
+    hospitals: { best, watchlist: worst },
+    competitionSystems,
+    pipeline: entry.pipeline || {},
+    pros: entry.pros || [],
+    cons: entry.cons || [],
+    newsFeed: newsMatches
+  };
+};
+
+const buildHomeStateExportRows = (data) => {
+  const rows = [];
+  const pushRow = (section, item, detail = '') => rows.push([section, item, detail]);
+
+  pushRow('Overview', 'State', data.name);
+  pushRow('Overview', 'Generated At', data.generatedAt);
+  if (data.compact !== null && data.compact !== undefined) {
+    pushRow('Overview', 'Compact', data.compact ? 'Yes' : 'No');
+  }
+  pushRow('Overview', 'Programs', data.programsCount);
+  pushRow('Overview', 'WARN notices', data.noticeCount);
+  Object.entries(data.summary || {}).forEach(([key, value]) => pushRow('Summary', key, value));
+
+  data.hospitals?.best?.forEach((item) => pushRow('Hospitals Best', item.employer, `${item.notices} notices`));
+  data.hospitals?.watchlist?.forEach((item) => pushRow('Hospitals Watchlist', item.employer, `${item.notices} notices`));
+
+  data.competitionSystems?.forEach((system) => {
+    pushRow('Competition', system.name, [system.presence, system.notes].filter(Boolean).join(' • '));
+  });
+
+  pushRow('Pipeline', 'Programs count', data.programsCount);
+  Object.entries(data.programsByLevel || {}).forEach(([level, count]) => pushRow('Pipeline', level, count));
+  (data.pipeline?.majorPrograms || []).forEach((program) => pushRow('Pipeline Major Programs', program, ''));
+  (data.pipeline?.residencies || []).forEach((entry) => pushRow('Pipeline Residencies', entry, ''));
+
+  data.newsFeed?.forEach((article) => {
+    const meta = [article.source, article.publishedAt || article.date].filter(Boolean).join(' • ');
+    pushRow('News', article.title || 'Untitled', meta);
+  });
+
+  data.pros?.forEach((item) => pushRow('Pros', item, ''));
+  data.cons?.forEach((item) => pushRow('Cons', item, ''));
+
+  return rows;
+};
+
+const exportHomeStateCsv = async () => {
+  const inputs = getStateBeaconInputs() || {};
+  const homeState = stateBeaconHomeSelect?.value || inputs.homeState || STATE_BEACON_HOME_DEFAULT;
+  await loadStateBeaconData();
+  await ensureProgramsDataForBeacon();
+  await loadStateNewsData();
+  const data = buildHomeStateExport(homeState);
+  const rows = buildHomeStateExportRows(data);
+  const csv = buildCsv(['Section', 'Item', 'Detail'], rows);
+  downloadFile(csv, `home-state-${homeState}.csv`, 'text/csv');
+  showExportToast('Home State CSV exported.');
+};
+
+const exportHomeStateExcel = async () => {
+  const inputs = getStateBeaconInputs() || {};
+  const homeState = stateBeaconHomeSelect?.value || inputs.homeState || STATE_BEACON_HOME_DEFAULT;
+  await loadStateBeaconData();
+  await ensureProgramsDataForBeacon();
+  await loadStateNewsData();
+  const data = buildHomeStateExport(homeState);
+  const rows = buildHomeStateExportRows(data);
+  downloadExcel({
+    title: `Home State - ${data.name}`,
+    meta: [`Exported: ${new Date().toLocaleString()}`],
+    headers: ['Section', 'Item', 'Detail'],
+    rows,
+    filename: `home-state-${homeState}.xls`
+  });
+  showExportToast('Home State Excel exported.');
+};
+
+const exportHomeStatePdf = async () => {
+  const inputs = getStateBeaconInputs() || {};
+  const homeState = stateBeaconHomeSelect?.value || inputs.homeState || STATE_BEACON_HOME_DEFAULT;
+  await loadStateBeaconData();
+  await ensureProgramsDataForBeacon();
+  await loadStateNewsData();
+  const data = buildHomeStateExport(homeState);
+  const rows = buildHomeStateExportRows(data);
+  openPdfExport({
+    title: `Home State - ${data.name}`,
+    meta: [`Exported: ${new Date().toLocaleString()}`],
+    headers: ['Section', 'Item', 'Detail'],
+    rows
+  });
+  showExportToast('Home State PDF opened.');
+};
+
+const buildTargetStateExport = (stateAbbrev) => {
+  const entry = getBeaconEntry(stateAbbrev);
+  const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === stateAbbrev);
+  const metroData = STATE_METRO_DATA[stateAbbrev] || STATE_METRO_DATA.KY;
+  const metros = metroData?.metros || [];
+  const totalHospitals = metros.reduce((sum, metro) => sum + (metro.hospitals?.length || 0), 0);
+
+  return {
+    generatedAt: new Date().toISOString(),
+    state: stateAbbrev,
+    name: entry.name,
+    compact: entry.compact,
+    programsCount: programsInState.length,
+    metrosCount: metros.length,
+    totalHospitals,
+    metros,
+    selectedMetro: currentTargetStateMetro
+  };
+};
+
+const buildTargetStateExportRows = (data) => {
+  const rows = [];
+  const pushRow = (section, item, detail = '') => rows.push([section, item, detail]);
+
+  pushRow('Overview', 'State', data.name);
+  pushRow('Overview', 'Generated At', data.generatedAt);
+  if (data.compact !== null && data.compact !== undefined) {
+    pushRow('Overview', 'Compact', data.compact ? 'Yes' : 'No');
+  }
+  pushRow('Overview', 'Programs', data.programsCount);
+  pushRow('Overview', 'Metros', data.metrosCount);
+  pushRow('Overview', 'Hospitals', data.totalHospitals);
+
+  data.metros.forEach((metro) => {
+    const detail = [metro.population, `${metro.hospitals?.length || 0} hospitals`, metro.competition].filter(Boolean).join(' • ');
+    pushRow('Metro Summary', metro.name, detail);
+  });
+
+  if (!data.selectedMetro) {
+    pushRow('Selected Metro', 'Selection', 'None selected');
+    return rows;
+  }
+
+  const metro = data.selectedMetro;
+  pushRow('Selected Metro', 'Name', metro.name);
+  pushRow('Selected Metro', 'Size', metro.size || '');
+  if (metro.population) pushRow('Selected Metro', 'Population', metro.population);
+  if (metro.competition) pushRow('Selected Metro', 'Competition', metro.competition);
+
+  (metro.hospitals || []).forEach((hospital) => {
+    const detail = [hospital.system, `${hospital.beds} beds`, `Rating ${hospital.reviews}`, `Score ${hospital.score}`]
+      .filter(Boolean)
+      .join(' • ');
+    pushRow('Selected Metro Hospitals', hospital.name, detail);
+  });
+
+  (metro.systems || []).forEach((system) => {
+    const detail = [system.marketShare, `${system.facilities} facilities`].filter(Boolean).join(' • ');
+    pushRow('Selected Metro Systems', system.name, detail);
+  });
+
+  if (metro.salary) {
+    pushRow('Selected Metro Salary', 'Staff RN Hourly', metro.salary.staffRN || '--');
+    pushRow('Selected Metro Salary', 'Travel RN Weekly', metro.salary.travelRN || '--');
+    pushRow('Selected Metro Salary', 'Sign-On Bonus', metro.salary.signOn || '--');
+    (metro.salary.breakdown || []).forEach((item) => {
+      const detail = [item.value, item.note].filter(Boolean).join(' • ');
+      pushRow('Selected Metro Salary Breakdown', item.label || 'Benchmark', detail);
+    });
+  }
+
+  (metro.factors || []).forEach((factor) => {
+    pushRow('Selected Metro Factors', factor.text, factor.type || '');
+  });
+
+  return rows;
+};
+
+const exportTargetStateCsv = async () => {
+  const state = targetStateSelect?.value || TARGET_STATE_DEFAULT;
+  await loadStateBeaconData();
+  await ensureProgramsDataForBeacon();
+  const data = buildTargetStateExport(state);
+  const rows = buildTargetStateExportRows(data);
+  const csv = buildCsv(['Section', 'Item', 'Detail'], rows);
+  downloadFile(csv, `target-state-${state}.csv`, 'text/csv');
+  showExportToast('Target State CSV exported.');
+};
+
+const exportTargetStateExcel = async () => {
+  const state = targetStateSelect?.value || TARGET_STATE_DEFAULT;
+  await loadStateBeaconData();
+  await ensureProgramsDataForBeacon();
+  const data = buildTargetStateExport(state);
+  const rows = buildTargetStateExportRows(data);
+  downloadExcel({
+    title: `Target State - ${data.name}`,
+    meta: [`Exported: ${new Date().toLocaleString()}`],
+    headers: ['Section', 'Item', 'Detail'],
+    rows,
+    filename: `target-state-${state}.xls`
+  });
+  showExportToast('Target State Excel exported.');
+};
+
+const exportTargetStatePdf = async () => {
+  const state = targetStateSelect?.value || TARGET_STATE_DEFAULT;
+  await loadStateBeaconData();
+  await ensureProgramsDataForBeacon();
+  const data = buildTargetStateExport(state);
+  const rows = buildTargetStateExportRows(data);
+  openPdfExport({
+    title: `Target State - ${data.name}`,
+    meta: [`Exported: ${new Date().toLocaleString()}`],
+    headers: ['Section', 'Item', 'Detail'],
+    rows
+  });
+  showExportToast('Target State PDF opened.');
+};
+
 const exportStateBeaconJson = () => {
   if (!stateBeaconStateSelect) return;
   const data = buildStateBeaconExport(stateBeaconStateSelect.value);
   const content = JSON.stringify(data, null, 2);
   downloadFile(content, `state-beacon-${data.state}.json`, 'application/json');
+  showExportToast('State Beacon JSON exported.');
+};
+
+const buildStateBeaconExportRows = (data) => {
+  const rows = [];
+  const pushRow = (section, item, detail = '') => {
+    rows.push([section, item, detail]);
+  };
+
+  pushRow('Overview', 'State', data.name);
+  pushRow('Overview', 'Generated At', data.generatedAt);
+  Object.entries(data.inputs || {}).forEach(([key, value]) => pushRow('Recruiter Inputs', key, value));
+
+  Object.entries(data.summary || {}).forEach(([key, value]) => pushRow('Summary', key, value));
+  Object.entries(data.compensation || {}).forEach(([key, value]) => pushRow('Compensation', key, Array.isArray(value) ? value.join('; ') : value));
+  Object.entries(data.licensing || {}).forEach(([key, value]) => pushRow('Licensing', key, Array.isArray(value) ? value.join('; ') : value));
+  Object.entries(data.market || {}).forEach(([key, value]) => pushRow('Market', key, Array.isArray(value) ? value.join('; ') : value));
+
+  data.competition?.systems?.forEach((system) => {
+    pushRow('Competition', system.name, [system.presence, system.notes].filter(Boolean).join(' • '));
+  });
+
+  data.hospitals?.best?.forEach((item) => pushRow('Hospitals Best', item.employer, `${item.notices} notices`));
+  data.hospitals?.watchlist?.forEach((item) => pushRow('Hospitals Watchlist', item.employer, `${item.notices} notices`));
+
+  pushRow('Pipeline', 'Programs count', data.pipeline.programsCount);
+  Object.entries(data.pipeline.programsByLevel || {}).forEach(([level, count]) => pushRow('Pipeline', level, count));
+  data.pipeline.majorPrograms?.forEach((program) => pushRow('Pipeline Major Programs', program, ''));
+  data.pipeline.residencies?.forEach((entry) => pushRow('Pipeline Residencies', entry, ''));
+  data.pipeline.clinicalPartners?.forEach((entry) => pushRow('Pipeline Clinical Partners', entry, ''));
+
+  data.pros?.forEach((item) => pushRow('Pros', item, ''));
+  data.cons?.forEach((item) => pushRow('Cons', item, ''));
+  if (data.attractions) pushRow('Attractions', data.attractions, '');
+  if (data.drawbacks) pushRow('Drawbacks', data.drawbacks, '');
+
+  data.talkingPoints?.forEach((point) => pushRow('Recruiter Script', point, ''));
+  data.objections?.forEach((item) => pushRow('Objections', item.concern, item.response));
+
+  return rows;
 };
 
 const exportStateBeaconCsv = () => {
@@ -6618,6 +7034,34 @@ const exportStateBeaconCsv = () => {
 
   const csv = rows.map((row) => row.join(',')).join('\n');
   downloadFile(csv, `state-beacon-${data.state}.csv`, 'text/csv');
+  showExportToast('State Beacon CSV exported.');
+};
+
+const exportStateBeaconExcel = () => {
+  if (!stateBeaconStateSelect) return;
+  const data = buildStateBeaconExport(stateBeaconStateSelect.value);
+  const rows = buildStateBeaconExportRows(data);
+  downloadExcel({
+    title: `State Beacon - ${data.name}`,
+    meta: [`Exported: ${new Date().toLocaleString()}`],
+    headers: ['Section', 'Item', 'Detail'],
+    rows,
+    filename: `state-beacon-${data.state}.xls`
+  });
+  showExportToast('State Beacon Excel exported.');
+};
+
+const exportStateBeaconPdf = () => {
+  if (!stateBeaconStateSelect) return;
+  const data = buildStateBeaconExport(stateBeaconStateSelect.value);
+  const rows = buildStateBeaconExportRows(data);
+  openPdfExport({
+    title: `State Beacon - ${data.name}`,
+    meta: [`Exported: ${new Date().toLocaleString()}`],
+    headers: ['Section', 'Item', 'Detail'],
+    rows
+  });
+  showExportToast('State Beacon PDF opened.');
 };
 
 const openStateBeacon = async (state) => {
@@ -6727,10 +7171,15 @@ const initStateBeacon = () => {
 
   stateBeaconExportJson?.addEventListener('click', exportStateBeaconJson);
   stateBeaconExportCsv?.addEventListener('click', exportStateBeaconCsv);
+  stateBeaconExportExcel?.addEventListener('click', exportStateBeaconExcel);
+  stateBeaconExportPdf?.addEventListener('click', exportStateBeaconPdf);
   openStateBeaconBtn?.addEventListener('click', () => openStateBeacon(stateBeaconStateSelect.value));
   stateBeaconCloseBtn?.addEventListener('click', closeStateBeacon);
   stateBeaconCloseFooter?.addEventListener('click', closeStateBeacon);
   openHomeStateBtn?.addEventListener('click', openHomeState);
+  homeStateExportCsv?.addEventListener('click', exportHomeStateCsv);
+  homeStateExportExcel?.addEventListener('click', exportHomeStateExcel);
+  homeStateExportPdf?.addEventListener('click', exportHomeStatePdf);
   homeStateCloseBtn?.addEventListener('click', closeHomeState);
   homeStateCloseFooter?.addEventListener('click', closeHomeState);
   homeStateOpenBeacon?.addEventListener('click', () => {
@@ -6749,6 +7198,9 @@ const initStateBeacon = () => {
   openTargetStateBtn?.addEventListener('click', openTargetState);
   targetStateCloseBtn?.addEventListener('click', closeTargetState);
   targetStateCloseFooter?.addEventListener('click', closeTargetState);
+  targetStateExportCsv?.addEventListener('click', exportTargetStateCsv);
+  targetStateExportExcel?.addEventListener('click', exportTargetStateExcel);
+  targetStateExportPdf?.addEventListener('click', exportTargetStatePdf);
   targetStateOpenBeacon?.addEventListener('click', () => {
     closeTargetState();
     openStateBeacon(TARGET_STATE_DEFAULT);

@@ -2101,9 +2101,19 @@ select {
 .home-state-footer {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
   padding: 1rem 1.5rem;
   background: #f8fafc;
   border-top: 1px solid rgba(26, 54, 93, 0.1);
+}
+
+.home-state-footer-left,
+.home-state-footer-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 /* ============================================================================
@@ -2333,9 +2343,19 @@ select {
 .target-state-footer {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
   padding: 1rem 1.5rem;
   background: #f8fafc;
   border-top: 1px solid rgba(26, 54, 93, 0.1);
+}
+
+.target-state-footer-left,
+.target-state-footer-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 /* Menu item pulse effect for Target State */
@@ -4236,100 +4256,139 @@ input[type="range"] {
   margin-top: 8px;
 }
 
-.rural-section-header {
-  font-size: 0.82rem;
+.rural-section-label {
+  font-size: 0.72rem;
   font-weight: 700;
   color: var(--navy);
-  margin-top: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
   margin-bottom: 6px;
-  padding-bottom: 4px;
-  border-bottom: 1px solid rgba(26, 54, 93, 0.1);
-  display: flex;
-  align-items: center;
-  gap: 5px;
 }
 
-.rural-section-icon {
-  font-size: 0.9rem;
+.rural-hospital-card {
+  padding: 10px;
+  border-radius: 10px;
+  background: rgba(248, 250, 252, 0.9);
+  border: 1px solid rgba(26, 54, 93, 0.08);
 }
 
-.rural-hospital-list {
-  display: grid;
-  gap: 4px;
-}
-
-.rural-hospital-row {
+.rural-hospital-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  padding: 6px 8px;
-  border-radius: 8px;
-  background: rgba(248, 250, 252, 0.9);
-  border: 1px solid rgba(26, 54, 93, 0.05);
-}
-
-.rural-hospital-row:hover {
-  background: rgba(241, 245, 249, 1);
-}
-
-.rural-hospital-info {
-  flex: 1;
-  min-width: 0;
+  margin-bottom: 2px;
 }
 
 .rural-hospital-name {
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   font-weight: 600;
   color: var(--navy);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1.2;
 }
 
-.rural-hospital-location {
-  font-size: 0.68rem;
-  color: var(--muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.rural-hospital-badge {
-  flex-shrink: 0;
+.rural-risk-badge {
   font-size: 0.62rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.4px;
   padding: 2px 7px;
   border-radius: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
-.rural-hospital-badge.risk-high {
+.rural-risk-badge.risk-high {
   background: rgba(220, 38, 38, 0.1);
   color: #dc2626;
 }
 
-.rural-hospital-badge.risk-moderate {
+.rural-risk-badge.risk-medium {
   background: rgba(217, 119, 6, 0.1);
   color: #d97706;
 }
 
-.rural-hospital-badge.type-closed {
-  background: rgba(107, 114, 128, 0.1);
-  color: #6b7280;
-}
-
-.rural-hospital-badge.type-converted {
-  background: rgba(59, 130, 246, 0.1);
-  color: #3b82f6;
-}
-
-.rural-empty {
-  font-size: 0.75rem;
+.rural-hospital-location {
+  font-size: 0.7rem;
   color: var(--muted);
-  text-align: center;
-  padding: 8px 0;
+  margin-bottom: 6px;
+}
+
+.rural-hospital-financials {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.rural-financial-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(26, 54, 93, 0.06);
+}
+
+.rural-financial-label {
+  font-size: 0.6rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.rural-financial-value {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.rural-financial-value.risk-high {
+  color: #dc2626;
+}
+
+.rural-financial-value.risk-medium {
+  color: #d97706;
+}
+
+.rural-financial-value.risk-low {
+  color: #16a34a;
+}
+
+.rural-risk-factors {
+  margin: 4px 0 0;
+  padding-left: 16px;
+  list-style: disc;
+}
+
+.rural-risk-factors li {
+  font-size: 0.66rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.rural-closed-section {
+  margin-top: 8px;
+}
+
+.rural-closed-item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 3px 0;
+  border-bottom: 1px solid rgba(26, 54, 93, 0.04);
+}
+
+.rural-closed-name {
+  font-size: 0.72rem;
+  color: var(--navy);
+  font-weight: 500;
+}
+
+.rural-closed-meta {
+  font-size: 0.64rem;
+  color: var(--muted);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .map-control-btn {

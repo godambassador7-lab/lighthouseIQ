@@ -14,22 +14,22 @@
         { "name": "Bibb Medical Center", "city": "Centreville", "county": "Bibb", "year": 2025, "type": "closed" }
       ],
       "atRiskHospitals": [
-        { "name": "Community Hospital of Tallassee", "city": "Tallassee", "county": "Elmore", "beds": 25, "risk": "high" },
-        { "name": "Choctaw General Hospital", "city": "Butler", "county": "Choctaw", "beds": 25, "risk": "high" },
-        { "name": "Lakeland Community Hospital", "city": "Haleyville", "county": "Winston", "beds": 56, "risk": "high" },
-        { "name": "Monroe County Hospital", "city": "Monroeville", "county": "Monroe", "beds": 46, "risk": "moderate" },
-        { "name": "Wiregrass Medical Center", "city": "Geneva", "county": "Geneva", "beds": 25, "risk": "moderate" },
-        { "name": "Sumter County Hospital", "city": "York", "county": "Sumter", "beds": 20, "risk": "moderate" },
-        { "name": "Coosa Valley Medical Center", "city": "Sylacauga", "county": "Talladega", "beds": 38, "risk": "moderate" },
-        { "name": "Cherokee Medical Center", "city": "Centre", "county": "Cherokee", "beds": 45, "risk": "moderate" }
+        { "name": "Community Hospital of Tallassee", "city": "Tallassee", "county": "Elmore", "beds": 25, "risk": "high", "operatingMargin": -12.4, "dailyCensus": 4, "riskFactors": ["Severe negative margin", "Very low patient volume", "No surgical services"] },
+        { "name": "Choctaw General Hospital", "city": "Butler", "county": "Choctaw", "beds": 25, "risk": "high", "operatingMargin": -9.8, "dailyCensus": 5, "riskFactors": ["Persistent losses", "County population decline 18%", "High Medicare dependency 78%"] },
+        { "name": "Lakeland Community Hospital", "city": "Haleyville", "county": "Winston", "beds": 56, "risk": "high", "operatingMargin": -7.1, "dailyCensus": 12, "riskFactors": ["Negative margin 3+ years", "Deferred capital maintenance", "Physician recruitment difficulty"] },
+        { "name": "Monroe County Hospital", "city": "Monroeville", "county": "Monroe", "beds": 46, "risk": "moderate", "operatingMargin": -3.2, "dailyCensus": 14, "riskFactors": ["Thin margin trending negative", "Medicaid expansion gap state", "Limited specialty coverage"] },
+        { "name": "Wiregrass Medical Center", "city": "Geneva", "county": "Geneva", "beds": 25, "risk": "moderate", "operatingMargin": -2.5, "dailyCensus": 8, "riskFactors": ["Below breakeven", "Rural workforce shortage", "High uncompensated care"] },
+        { "name": "Sumter County Hospital", "city": "York", "county": "Sumter", "beds": 20, "risk": "moderate", "operatingMargin": -4.1, "dailyCensus": 3, "riskFactors": ["Critically low census", "High poverty service area", "No Medicaid expansion"] },
+        { "name": "Coosa Valley Medical Center", "city": "Sylacauga", "county": "Talladega", "beds": 38, "risk": "moderate", "operatingMargin": -1.8, "dailyCensus": 11, "riskFactors": ["Margin erosion trend", "Competition from larger system", "Aging facility"] },
+        { "name": "Cherokee Medical Center", "city": "Centre", "county": "Cherokee", "beds": 45, "risk": "moderate", "operatingMargin": -2.0, "dailyCensus": 13, "riskFactors": ["Slightly negative margin", "Nurse staffing challenges", "Payer mix deteriorating"] }
       ]
     },
     "AK": {
       "count": 0, "recent": 0, "atRisk": 2,
       "closedHospitals": [],
       "atRiskHospitals": [
-        { "name": "Norton Sound Regional Hospital", "city": "Nome", "county": "Nome Census Area", "beds": 18, "risk": "moderate" },
-        { "name": "Kanakanak Hospital", "city": "Dillingham", "county": "Dillingham Census Area", "beds": 16, "risk": "moderate" }
+        { "name": "Norton Sound Regional Hospital", "city": "Nome", "county": "Nome Census Area", "beds": 18, "risk": "moderate", "operatingMargin": -3.5, "dailyCensus": 6, "riskFactors": ["Extreme isolation increases costs", "Supply chain dependent on air transport", "Seasonal census volatility"] },
+        { "name": "Kanakanak Hospital", "city": "Dillingham", "county": "Dillingham Census Area", "beds": 16, "risk": "moderate", "operatingMargin": -2.8, "dailyCensus": 5, "riskFactors": ["IHS-funded but budget constrained", "Provider recruitment very difficult", "Remote location 350+ miles from Anchorage"] }
       ]
     },
     "AZ": {
@@ -40,10 +40,10 @@
         { "name": "Arizona General Hospital - Laveen", "city": "Laveen", "county": "Maricopa", "year": 2019, "type": "closed" }
       ],
       "atRiskHospitals": [
-        { "name": "Cobre Valley Regional Medical Center", "city": "Globe", "county": "Gila", "beds": 25, "risk": "high" },
-        { "name": "Holy Cross Hospital", "city": "Nogales", "county": "Santa Cruz", "beds": 25, "risk": "moderate" },
-        { "name": "Summit Healthcare Regional", "city": "Show Low", "county": "Navajo", "beds": 20, "risk": "moderate" },
-        { "name": "La Paz Regional Hospital", "city": "Parker", "county": "La Paz", "beds": 25, "risk": "moderate" }
+        { "name": "Cobre Valley Regional Medical Center", "city": "Globe", "county": "Gila", "beds": 25, "risk": "high", "operatingMargin": -11.3, "dailyCensus": 5, "riskFactors": ["Deep negative margin", "Mining town population decline", "High uncompensated care from uninsured"] },
+        { "name": "Holy Cross Hospital", "city": "Nogales", "county": "Santa Cruz", "beds": 25, "risk": "moderate", "operatingMargin": -4.2, "dailyCensus": 9, "riskFactors": ["Border community high uninsured rate", "Medicaid reimbursement shortfalls", "Provider retention challenge"] },
+        { "name": "Summit Healthcare Regional", "city": "Show Low", "county": "Navajo", "beds": 20, "risk": "moderate", "operatingMargin": -1.9, "dailyCensus": 7, "riskFactors": ["Seasonal population swings", "Tribal health service overlap", "Capital needs for facility upgrades"] },
+        { "name": "La Paz Regional Hospital", "city": "Parker", "county": "La Paz", "beds": 25, "risk": "moderate", "operatingMargin": -3.0, "dailyCensus": 6, "riskFactors": ["Smallest county population in AZ", "High snowbird seasonal variance", "Limited outpatient revenue base"] }
       ]
     },
     "AR": {
@@ -54,11 +54,11 @@
         { "name": "Izard County Medical Center", "city": "Calico Rock", "county": "Izard", "year": 2019, "type": "closed" }
       ],
       "atRiskHospitals": [
-        { "name": "Dallas County Medical Center", "city": "Fordyce", "county": "Dallas", "beds": 25, "risk": "high" },
-        { "name": "Drew Memorial Hospital", "city": "Monticello", "county": "Drew", "beds": 49, "risk": "moderate" },
-        { "name": "South Mississippi County Regional Medical Center", "city": "Osceola", "county": "Mississippi", "beds": 25, "risk": "high" },
-        { "name": "Eureka Springs Hospital", "city": "Eureka Springs", "county": "Carroll", "beds": 15, "risk": "moderate" },
-        { "name": "Stone County Medical Center", "city": "Mountain View", "county": "Stone", "beds": 25, "risk": "moderate" }
+        { "name": "Dallas County Medical Center", "city": "Fordyce", "county": "Dallas", "beds": 25, "risk": "high", "operatingMargin": -10.6, "dailyCensus": 3, "riskFactors": ["Census below viability threshold", "County lost 22% population since 2010", "Medicare 82% of payer mix"] },
+        { "name": "South Mississippi County Regional Medical Center", "city": "Osceola", "county": "Mississippi", "beds": 25, "risk": "high", "operatingMargin": -8.9, "dailyCensus": 5, "riskFactors": ["Delta region population exodus", "High poverty rate 31%", "Persistent operating losses"] },
+        { "name": "Drew Memorial Hospital", "city": "Monticello", "county": "Drew", "beds": 49, "risk": "moderate", "operatingMargin": -3.4, "dailyCensus": 15, "riskFactors": ["Negative margin trending worse", "Nursing staff vacancy rate 24%", "Deferred facility maintenance"] },
+        { "name": "Eureka Springs Hospital", "city": "Eureka Springs", "county": "Carroll", "beds": 15, "risk": "moderate", "operatingMargin": -4.0, "dailyCensus": 3, "riskFactors": ["Very low daily census", "Tourism-dependent economy volatile", "Limited service line revenue"] },
+        { "name": "Stone County Medical Center", "city": "Mountain View", "county": "Stone", "beds": 25, "risk": "moderate", "operatingMargin": -2.3, "dailyCensus": 7, "riskFactors": ["Below breakeven operations", "Ozark region recruitment difficulty", "Aging population increasing acuity"] }
       ]
     },
     "CA": {
@@ -71,12 +71,12 @@
         { "name": "Adventist Health Tehachapi Valley", "city": "Tehachapi", "county": "Kern", "year": 2025, "type": "closed" }
       ],
       "atRiskHospitals": [
-        { "name": "Jerold Phelps Community Hospital", "city": "Garberville", "county": "Humboldt", "beds": 18, "risk": "high" },
-        { "name": "Southern Inyo Healthcare District", "city": "Lone Pine", "county": "Inyo", "beds": 4, "risk": "high" },
-        { "name": "Plumas District Hospital", "city": "Quincy", "county": "Plumas", "beds": 25, "risk": "moderate" },
-        { "name": "Seneca Healthcare District", "city": "Chester", "county": "Plumas", "beds": 15, "risk": "moderate" },
-        { "name": "Mark Twain Medical Center", "city": "San Andreas", "county": "Calaveras", "beds": 25, "risk": "moderate" },
-        { "name": "Mayers Memorial Hospital", "city": "Fall River Mills", "county": "Shasta", "beds": 18, "risk": "moderate" }
+        { "name": "Jerold Phelps Community Hospital", "city": "Garberville", "county": "Humboldt", "beds": 18, "risk": "high", "operatingMargin": -14.2, "dailyCensus": 2, "riskFactors": ["Critically low census", "CA seismic mandate compliance costs", "Cannabis economy volatility affecting tax base"] },
+        { "name": "Southern Inyo Healthcare District", "city": "Lone Pine", "county": "Inyo", "beds": 4, "risk": "high", "operatingMargin": -18.5, "dailyCensus": 1, "riskFactors": ["Only 4 beds, sub-scale operations", "Extreme isolation, 2+ hours to next hospital", "County population under 2,000"] },
+        { "name": "Plumas District Hospital", "city": "Quincy", "county": "Plumas", "beds": 25, "risk": "moderate", "operatingMargin": -5.1, "dailyCensus": 6, "riskFactors": ["Wildfire risk zone increases insurance costs", "Sierra Nevada isolation", "Seasonal population fluctuation"] },
+        { "name": "Seneca Healthcare District", "city": "Chester", "county": "Plumas", "beds": 15, "risk": "moderate", "operatingMargin": -6.3, "dailyCensus": 3, "riskFactors": ["Post-Dixie Fire population displacement", "Extremely low volume", "High CA regulatory compliance costs"] },
+        { "name": "Mark Twain Medical Center", "city": "San Andreas", "county": "Calaveras", "beds": 25, "risk": "moderate", "operatingMargin": -2.8, "dailyCensus": 8, "riskFactors": ["Gold Country population aging rapidly", "Seismic retrofit requirements", "Competition from Stockton facilities"] },
+        { "name": "Mayers Memorial Hospital", "city": "Fall River Mills", "county": "Shasta", "beds": 18, "risk": "moderate", "operatingMargin": -3.6, "dailyCensus": 4, "riskFactors": ["Very remote northeastern CA", "Physician recruitment extremely difficult", "Low volume limits service expansion"] }
       ]
     },
     "CO": {
@@ -86,9 +86,9 @@
         { "name": "Conejos County Hospital", "city": "La Jara", "county": "Conejos", "year": 2020, "type": "converted" }
       ],
       "atRiskHospitals": [
-        { "name": "Southeast Colorado Hospital", "city": "Springfield", "county": "Baca", "beds": 15, "risk": "high" },
-        { "name": "Prowers Medical Center", "city": "Lamar", "county": "Prowers", "beds": 25, "risk": "moderate" },
-        { "name": "Weisbrod Memorial County Hospital", "city": "Eads", "county": "Kiowa", "beds": 15, "risk": "moderate" }
+        { "name": "Southeast Colorado Hospital", "city": "Springfield", "county": "Baca", "beds": 15, "risk": "high", "operatingMargin": -11.8, "dailyCensus": 2, "riskFactors": ["Lowest population density county in CO", "Agricultural economy downturn", "180 miles to nearest tertiary hospital"] },
+        { "name": "Prowers Medical Center", "city": "Lamar", "county": "Prowers", "beds": 25, "risk": "moderate", "operatingMargin": -4.5, "dailyCensus": 7, "riskFactors": ["Southeast CO population declining", "High Medicaid/uninsured payer mix", "Facility aging requires capital investment"] },
+        { "name": "Weisbrod Memorial County Hospital", "city": "Eads", "county": "Kiowa", "beds": 15, "risk": "moderate", "operatingMargin": -5.2, "dailyCensus": 2, "riskFactors": ["County population under 1,400", "Critical access hospital at minimum scale", "Only provider within 45-mile radius"] }
       ]
     },
     "CT": {
@@ -97,19 +97,11 @@
         { "name": "Sharon Hospital Maternity Unit", "city": "Sharon", "county": "Litchfield", "year": 2022, "type": "converted" }
       ],
       "atRiskHospitals": [
-        { "name": "Windham Hospital", "city": "Willimantic", "county": "Windham", "beds": 79, "risk": "moderate" }
+        { "name": "Windham Hospital", "city": "Willimantic", "county": "Windham", "beds": 79, "risk": "moderate", "operatingMargin": -2.1, "dailyCensus": 28, "riskFactors": ["Part of Hartford HealthCare system under review", "High cost state with thin margins", "Service area socioeconomic challenges"] }
       ]
     },
-    "DE": {
-      "count": 0, "recent": 0, "atRisk": 0,
-      "closedHospitals": [],
-      "atRiskHospitals": []
-    },
-    "DC": {
-      "count": 0, "recent": 0, "atRisk": 0,
-      "closedHospitals": [],
-      "atRiskHospitals": []
-    },
+    "DE": { "count": 0, "recent": 0, "atRisk": 0, "closedHospitals": [], "atRiskHospitals": [] },
+    "DC": { "count": 0, "recent": 0, "atRisk": 0, "closedHospitals": [], "atRiskHospitals": [] },
     "FL": {
       "count": 4, "recent": 1, "atRisk": 5,
       "closedHospitals": [
@@ -119,11 +111,11 @@
         { "name": "Putnam Community Medical Center", "city": "Palatka", "county": "Putnam", "year": 2025, "type": "closed" }
       ],
       "atRiskHospitals": [
-        { "name": "Hamilton County Hospital", "city": "Jasper", "county": "Hamilton", "beds": 25, "risk": "high" },
-        { "name": "North Okaloosa Medical Center", "city": "Crestview", "county": "Okaloosa", "beds": 60, "risk": "moderate" },
-        { "name": "Madison County Memorial Hospital", "city": "Madison", "county": "Madison", "beds": 25, "risk": "high" },
-        { "name": "Doctor's Memorial Hospital", "city": "Perry", "county": "Taylor", "beds": 20, "risk": "moderate" },
-        { "name": "Desoto Memorial Hospital", "city": "Arcadia", "county": "DeSoto", "beds": 49, "risk": "moderate" }
+        { "name": "Hamilton County Hospital", "city": "Jasper", "county": "Hamilton", "beds": 25, "risk": "high", "operatingMargin": -13.1, "dailyCensus": 3, "riskFactors": ["Smallest county hospital in FL", "No Medicaid expansion", "County poverty rate 28%"] },
+        { "name": "Madison County Memorial Hospital", "city": "Madison", "county": "Madison", "beds": 25, "risk": "high", "operatingMargin": -9.7, "dailyCensus": 4, "riskFactors": ["Persistent negative margins", "Rural panhandle population loss", "High uninsured rate 19%"] },
+        { "name": "North Okaloosa Medical Center", "city": "Crestview", "county": "Okaloosa", "beds": 60, "risk": "moderate", "operatingMargin": -2.3, "dailyCensus": 18, "riskFactors": ["Margin declining year over year", "Military base realignment risk", "Competition from Pensacola systems"] },
+        { "name": "Doctor's Memorial Hospital", "city": "Perry", "county": "Taylor", "beds": 20, "risk": "moderate", "operatingMargin": -5.8, "dailyCensus": 4, "riskFactors": ["Timber industry decline reduced tax base", "Low patient volume", "Hurricane vulnerability increases costs"] },
+        { "name": "Desoto Memorial Hospital", "city": "Arcadia", "county": "DeSoto", "beds": 49, "risk": "moderate", "operatingMargin": -3.4, "dailyCensus": 12, "riskFactors": ["Agricultural community with seasonal workers", "High uncompensated care burden", "Aging facility needs renovation"] }
       ]
     },
     "GA": {
@@ -140,25 +132,25 @@
         { "name": "Clinch Memorial Hospital", "city": "Homerville", "county": "Clinch", "year": 2025, "type": "closed" }
       ],
       "atRiskHospitals": [
-        { "name": "Emanuel Medical Center", "city": "Swainsboro", "county": "Emanuel", "beds": 55, "risk": "high" },
-        { "name": "Jeff Davis Hospital", "city": "Hazlehurst", "county": "Jeff Davis", "beds": 25, "risk": "high" },
-        { "name": "Macon County Hospital", "city": "Oglethorpe", "county": "Macon", "beds": 20, "risk": "high" },
-        { "name": "Candler County Hospital", "city": "Metter", "county": "Candler", "beds": 25, "risk": "high" },
-        { "name": "Burke Medical Center", "city": "Waynesboro", "county": "Burke", "beds": 40, "risk": "moderate" },
-        { "name": "Washington County Regional Medical Center", "city": "Sandersville", "county": "Washington", "beds": 50, "risk": "moderate" },
-        { "name": "Evans Memorial Hospital", "city": "Claxton", "county": "Evans", "beds": 30, "risk": "moderate" },
-        { "name": "Appling Healthcare System", "city": "Baxley", "county": "Appling", "beds": 40, "risk": "moderate" },
-        { "name": "Jenkins County Medical Center", "city": "Millen", "county": "Jenkins", "beds": 25, "risk": "high" },
-        { "name": "Telfair Regional Hospital", "city": "McRae-Helena", "county": "Telfair", "beds": 25, "risk": "moderate" },
-        { "name": "Bleckley Memorial Hospital", "city": "Cochran", "county": "Bleckley", "beds": 25, "risk": "moderate" },
-        { "name": "Taylor Regional Hospital", "city": "Hawkinsville", "county": "Pulaski", "beds": 25, "risk": "moderate" }
+        { "name": "Emanuel Medical Center", "city": "Swainsboro", "county": "Emanuel", "beds": 55, "risk": "high", "operatingMargin": -8.4, "dailyCensus": 14, "riskFactors": ["Negative margin worsening annually", "No Medicaid expansion in GA", "Physician vacancy rate 35%"] },
+        { "name": "Jeff Davis Hospital", "city": "Hazlehurst", "county": "Jeff Davis", "beds": 25, "risk": "high", "operatingMargin": -11.2, "dailyCensus": 4, "riskFactors": ["Deep losses, cash reserves depleted", "County poverty rate 26%", "Nearest alternative 40 miles away"] },
+        { "name": "Macon County Hospital", "city": "Oglethorpe", "county": "Macon", "beds": 20, "risk": "high", "operatingMargin": -15.3, "dailyCensus": 2, "riskFactors": ["Worst margin in GA rural hospitals", "Population declined 30% since 2000", "Medicare 81% of revenue"] },
+        { "name": "Candler County Hospital", "city": "Metter", "county": "Candler", "beds": 25, "risk": "high", "operatingMargin": -9.0, "dailyCensus": 5, "riskFactors": ["Consistent operating losses", "High uncompensated care", "Limited outpatient service revenue"] },
+        { "name": "Jenkins County Medical Center", "city": "Millen", "county": "Jenkins", "beds": 25, "risk": "high", "operatingMargin": -10.1, "dailyCensus": 3, "riskFactors": ["Below-scale patient volume", "County population under 9,000", "No Medicaid expansion coverage gap"] },
+        { "name": "Burke Medical Center", "city": "Waynesboro", "county": "Burke", "beds": 40, "risk": "moderate", "operatingMargin": -3.8, "dailyCensus": 11, "riskFactors": ["Margin trending negative", "Augusta system competition nearby", "Staff retention challenges"] },
+        { "name": "Washington County Regional Medical Center", "city": "Sandersville", "county": "Washington", "beds": 50, "risk": "moderate", "operatingMargin": -2.6, "dailyCensus": 16, "riskFactors": ["Kaolin mining economy declining", "Facility needs capital upgrades", "Payer mix shifting to Medicare/Medicaid"] },
+        { "name": "Evans Memorial Hospital", "city": "Claxton", "county": "Evans", "beds": 30, "risk": "moderate", "operatingMargin": -3.1, "dailyCensus": 8, "riskFactors": ["Small county low tax base", "Agricultural economy seasonal", "Nurse staffing gaps"] },
+        { "name": "Appling Healthcare System", "city": "Baxley", "county": "Appling", "beds": 40, "risk": "moderate", "operatingMargin": -2.4, "dailyCensus": 12, "riskFactors": ["Margin below breakeven", "Timber economy contraction", "Distance from urban referral centers"] },
+        { "name": "Telfair Regional Hospital", "city": "McRae-Helena", "county": "Telfair", "beds": 25, "risk": "moderate", "operatingMargin": -4.5, "dailyCensus": 5, "riskFactors": ["Low census for bed capacity", "High Medicaid dependency", "County population declining"] },
+        { "name": "Bleckley Memorial Hospital", "city": "Cochran", "county": "Bleckley", "beds": 25, "risk": "moderate", "operatingMargin": -2.9, "dailyCensus": 7, "riskFactors": ["Operating below breakeven", "Limited specialty services", "Workforce recruitment difficult"] },
+        { "name": "Taylor Regional Hospital", "city": "Hawkinsville", "county": "Pulaski", "beds": 25, "risk": "moderate", "operatingMargin": -3.3, "dailyCensus": 6, "riskFactors": ["Negative margin 2+ years", "Small service area population", "High bad debt write-offs"] }
       ]
     },
     "HI": {
       "count": 0, "recent": 0, "atRisk": 1,
       "closedHospitals": [],
       "atRiskHospitals": [
-        { "name": "Kohala Hospital", "city": "Kapaau", "county": "Hawaii", "beds": 14, "risk": "moderate" }
+        { "name": "Kohala Hospital", "city": "Kapaau", "county": "Hawaii", "beds": 14, "risk": "moderate", "operatingMargin": -3.8, "dailyCensus": 4, "riskFactors": ["Island isolation increases supply costs", "Small rural North Kohala community", "State Medicaid reimbursement below cost"] }
       ]
     },
     "ID": {
@@ -167,8 +159,8 @@
         { "name": "Caribou Memorial Hospital (original)", "city": "Soda Springs", "county": "Caribou", "year": 2017, "type": "converted" }
       ],
       "atRiskHospitals": [
-        { "name": "Lost Rivers Medical Center", "city": "Arco", "county": "Butte", "beds": 10, "risk": "high" },
-        { "name": "Syringa General Hospital", "city": "Grangeville", "county": "Idaho", "beds": 16, "risk": "moderate" }
+        { "name": "Lost Rivers Medical Center", "city": "Arco", "county": "Butte", "beds": 10, "risk": "high", "operatingMargin": -13.7, "dailyCensus": 1, "riskFactors": ["Near-zero daily census", "County population under 2,600", "INL workforce commutes, does not use local hospital"] },
+        { "name": "Syringa General Hospital", "city": "Grangeville", "county": "Idaho", "beds": 16, "risk": "moderate", "operatingMargin": -4.2, "dailyCensus": 4, "riskFactors": ["Remote canyon region of Idaho", "Seasonal wildfire smoke impacts access", "Limited payer mix diversity"] }
       ]
     },
     "IL": {
@@ -181,13 +173,13 @@
         { "name": "Union County Hospital", "city": "Anna", "county": "Union", "year": 2025, "type": "closed" }
       ],
       "atRiskHospitals": [
-        { "name": "Marshall Browning Hospital", "city": "Du Quoin", "county": "Perry", "beds": 25, "risk": "high" },
-        { "name": "Hamilton Memorial Hospital District", "city": "McLeansboro", "county": "Hamilton", "beds": 25, "risk": "high" },
-        { "name": "Thomas H. Boyd Memorial Hospital", "city": "Carrollton", "county": "Greene", "beds": 25, "risk": "moderate" },
-        { "name": "Hardin County General Hospital", "city": "Rosiclare", "county": "Hardin", "beds": 25, "risk": "high" },
-        { "name": "Pinckneyville Community Hospital", "city": "Pinckneyville", "county": "Perry", "beds": 18, "risk": "moderate" },
-        { "name": "Lawrence County Memorial Hospital", "city": "Lawrenceville", "county": "Lawrence", "beds": 25, "risk": "moderate" },
-        { "name": "Clay County Hospital", "city": "Flora", "county": "Clay", "beds": 18, "risk": "moderate" }
+        { "name": "Marshall Browning Hospital", "city": "Du Quoin", "county": "Perry", "beds": 25, "risk": "high", "operatingMargin": -10.3, "dailyCensus": 4, "riskFactors": ["Southern IL coal economy collapse", "Persistent operating losses", "Population declined 15% since 2010"] },
+        { "name": "Hamilton Memorial Hospital District", "city": "McLeansboro", "county": "Hamilton", "beds": 25, "risk": "high", "operatingMargin": -8.7, "dailyCensus": 5, "riskFactors": ["Tax district revenue insufficient", "High Medicare payer dependency 76%", "Oil field economy contraction"] },
+        { "name": "Hardin County General Hospital", "city": "Rosiclare", "county": "Hardin", "beds": 25, "risk": "high", "operatingMargin": -12.1, "dailyCensus": 2, "riskFactors": ["Smallest county population in IL", "Deep negative margin", "Fluorspar mining town with no economic diversification"] },
+        { "name": "Thomas H. Boyd Memorial Hospital", "city": "Carrollton", "county": "Greene", "beds": 25, "risk": "moderate", "operatingMargin": -3.5, "dailyCensus": 6, "riskFactors": ["Below breakeven", "Western IL population decline", "Limited surgical capability"] },
+        { "name": "Pinckneyville Community Hospital", "city": "Pinckneyville", "county": "Perry", "beds": 18, "risk": "moderate", "operatingMargin": -4.0, "dailyCensus": 4, "riskFactors": ["Low volume for bed count", "Correctional facility dependency for some volume", "Staff recruitment difficulty"] },
+        { "name": "Lawrence County Memorial Hospital", "city": "Lawrenceville", "county": "Lawrence", "beds": 25, "risk": "moderate", "operatingMargin": -2.6, "dailyCensus": 7, "riskFactors": ["Eastern IL economic stagnation", "Margin narrowing each year", "Aging medical equipment"] },
+        { "name": "Clay County Hospital", "city": "Flora", "county": "Clay", "beds": 18, "risk": "moderate", "operatingMargin": -3.0, "dailyCensus": 5, "riskFactors": ["Oil patch economy volatile", "Below breakeven operations", "Nurse vacancy rate 20%"] }
       ]
     },
     "IN": {
@@ -197,10 +189,10 @@
         { "name": "Union Hospital Clinton", "city": "Clinton", "county": "Vermillion", "year": 2020, "type": "converted" }
       ],
       "atRiskHospitals": [
-        { "name": "Sullivan County Community Hospital", "city": "Sullivan", "county": "Sullivan", "beds": 25, "risk": "moderate" },
-        { "name": "Gibson General Hospital", "city": "Princeton", "county": "Gibson", "beds": 25, "risk": "moderate" },
-        { "name": "Starke Hospital", "city": "Knox", "county": "Starke", "beds": 15, "risk": "high" },
-        { "name": "Daviess Community Hospital", "city": "Washington", "county": "Daviess", "beds": 42, "risk": "moderate" }
+        { "name": "Starke Hospital", "city": "Knox", "county": "Starke", "beds": 15, "risk": "high", "operatingMargin": -9.4, "dailyCensus": 3, "riskFactors": ["Very low volume below viability", "County population decline 12%", "High uncompensated care"] },
+        { "name": "Sullivan County Community Hospital", "city": "Sullivan", "county": "Sullivan", "beds": 25, "risk": "moderate", "operatingMargin": -3.1, "dailyCensus": 7, "riskFactors": ["Coal industry decline reduced insured population", "Margin below breakeven", "Limited specialty services"] },
+        { "name": "Gibson General Hospital", "city": "Princeton", "county": "Gibson", "beds": 25, "risk": "moderate", "operatingMargin": -2.2, "dailyCensus": 8, "riskFactors": ["Narrow negative margin", "Power plant closures affecting local economy", "Evansville system competition"] },
+        { "name": "Daviess Community Hospital", "city": "Washington", "county": "Daviess", "beds": 42, "risk": "moderate", "operatingMargin": -1.5, "dailyCensus": 14, "riskFactors": ["Thin margin at near breakeven", "Capital reinvestment needs", "Rural workforce recruitment challenges"] }
       ]
     },
     "IA": {
@@ -209,9 +201,9 @@
         { "name": "Mercy Medical Center-New Hampton", "city": "New Hampton", "county": "Chickasaw", "year": 2019, "type": "converted" }
       ],
       "atRiskHospitals": [
-        { "name": "Davis County Hospital", "city": "Bloomfield", "county": "Davis", "beds": 13, "risk": "moderate" },
-        { "name": "Clarke County Hospital", "city": "Osceola", "county": "Clarke", "beds": 25, "risk": "moderate" },
-        { "name": "Ringgold County Hospital", "city": "Mount Ayr", "county": "Ringgold", "beds": 15, "risk": "moderate" }
+        { "name": "Davis County Hospital", "city": "Bloomfield", "county": "Davis", "beds": 13, "risk": "moderate", "operatingMargin": -3.8, "dailyCensus": 3, "riskFactors": ["Very low census", "Southern Iowa population decline", "High percentage elderly patients"] },
+        { "name": "Clarke County Hospital", "city": "Osceola", "county": "Clarke", "beds": 25, "risk": "moderate", "operatingMargin": -2.5, "dailyCensus": 6, "riskFactors": ["Below breakeven margin", "I-35 corridor competition from Des Moines", "Limited outpatient revenue growth"] },
+        { "name": "Ringgold County Hospital", "city": "Mount Ayr", "county": "Ringgold", "beds": 15, "risk": "moderate", "operatingMargin": -4.1, "dailyCensus": 2, "riskFactors": ["County population under 5,000", "Critically low daily census", "Missouri border patient leakage"] }
       ]
     },
     "KS": {
@@ -224,12 +216,12 @@
         { "name": "Greenwood County Hospital", "city": "Eureka", "county": "Greenwood", "year": 2025, "type": "closed" }
       ],
       "atRiskHospitals": [
-        { "name": "Kiowa County Memorial Hospital", "city": "Greensburg", "county": "Kiowa", "beds": 15, "risk": "high" },
-        { "name": "Trego County-Lemke Memorial Hospital", "city": "WaKeeney", "county": "Trego", "beds": 25, "risk": "moderate" },
-        { "name": "Wilson Medical Center", "city": "Neodesha", "county": "Wilson", "beds": 15, "risk": "high" },
-        { "name": "Mitchell County Hospital Health Systems", "city": "Beloit", "county": "Mitchell", "beds": 25, "risk": "moderate" },
-        { "name": "Cheyenne County Hospital", "city": "St. Francis", "county": "Cheyenne", "beds": 16, "risk": "moderate" },
-        { "name": "Rawlins County Health Center", "city": "Atwood", "county": "Rawlins", "beds": 12, "risk": "moderate" }
+        { "name": "Kiowa County Memorial Hospital", "city": "Greensburg", "county": "Kiowa", "beds": 15, "risk": "high", "operatingMargin": -14.6, "dailyCensus": 1, "riskFactors": ["Post-tornado population never recovered", "Near-zero census most days", "County population under 2,500"] },
+        { "name": "Wilson Medical Center", "city": "Neodesha", "county": "Wilson", "beds": 15, "risk": "high", "operatingMargin": -9.8, "dailyCensus": 3, "riskFactors": ["SE Kansas population exodus", "Oil refinery closures hurt local economy", "High fixed costs on very low volume"] },
+        { "name": "Trego County-Lemke Memorial Hospital", "city": "WaKeeney", "county": "Trego", "beds": 25, "risk": "moderate", "operatingMargin": -4.2, "dailyCensus": 4, "riskFactors": ["Western KS population declining", "Agriculture-dependent economy", "I-70 corridor with pass-through patients only"] },
+        { "name": "Mitchell County Hospital Health Systems", "city": "Beloit", "county": "Mitchell", "beds": 25, "risk": "moderate", "operatingMargin": -2.8, "dailyCensus": 6, "riskFactors": ["Below breakeven", "North-central KS depopulation trend", "Salina system drawing patients away"] },
+        { "name": "Cheyenne County Hospital", "city": "St. Francis", "county": "Cheyenne", "beds": 16, "risk": "moderate", "operatingMargin": -5.5, "dailyCensus": 2, "riskFactors": ["NW corner of KS extremely remote", "County population under 2,600", "CO border patient leakage"] },
+        { "name": "Rawlins County Health Center", "city": "Atwood", "county": "Rawlins", "beds": 12, "risk": "moderate", "operatingMargin": -4.8, "dailyCensus": 2, "riskFactors": ["Among smallest counties in KS", "Great Plains depopulation zone", "Provider recruitment very difficult"] }
       ]
     },
     "KY": {
@@ -240,11 +232,11 @@
         { "name": "Pineville Community Hospital", "city": "Pineville", "county": "Bell", "year": 2025, "type": "closed" }
       ],
       "atRiskHospitals": [
-        { "name": "Morgan County ARH Hospital", "city": "West Liberty", "county": "Morgan", "beds": 25, "risk": "high" },
-        { "name": "McDowell ARH Hospital", "city": "McDowell", "county": "Floyd", "beds": 25, "risk": "high" },
-        { "name": "Fleming County Hospital", "city": "Flemingsburg", "county": "Fleming", "beds": 25, "risk": "moderate" },
-        { "name": "Clinton County Hospital", "city": "Albany", "county": "Clinton", "beds": 22, "risk": "moderate" },
-        { "name": "Casey County Hospital", "city": "Liberty", "county": "Casey", "beds": 24, "risk": "moderate" }
+        { "name": "Morgan County ARH Hospital", "city": "West Liberty", "county": "Morgan", "beds": 25, "risk": "high", "operatingMargin": -11.5, "dailyCensus": 4, "riskFactors": ["Appalachian region high poverty 32%", "ARH system financial distress", "Coal economy collapse"] },
+        { "name": "McDowell ARH Hospital", "city": "McDowell", "county": "Floyd", "beds": 25, "risk": "high", "operatingMargin": -10.2, "dailyCensus": 3, "riskFactors": ["Eastern KY coalfield depopulation", "Parent ARH system under financial strain", "High opioid crisis healthcare burden"] },
+        { "name": "Fleming County Hospital", "city": "Flemingsburg", "county": "Fleming", "beds": 25, "risk": "moderate", "operatingMargin": -3.7, "dailyCensus": 7, "riskFactors": ["Negative margin trending worse", "Tobacco economy decline", "Nurse recruitment in competition with Lexington"] },
+        { "name": "Clinton County Hospital", "city": "Albany", "county": "Clinton", "beds": 22, "risk": "moderate", "operatingMargin": -4.3, "dailyCensus": 5, "riskFactors": ["South-central KY isolated location", "Low volume operations", "High uninsured rate despite Medicaid expansion"] },
+        { "name": "Casey County Hospital", "city": "Liberty", "county": "Casey", "beds": 24, "risk": "moderate", "operatingMargin": -2.8, "dailyCensus": 6, "riskFactors": ["Below breakeven operations", "County population stagnant", "Limited service lines generate insufficient revenue"] }
       ]
     },
     "LA": {
@@ -256,12 +248,12 @@
         { "name": "Jackson Parish Hospital", "city": "Jonesboro", "county": "Jackson", "year": 2020, "type": "closed" }
       ],
       "atRiskHospitals": [
-        { "name": "Tensas Community Hospital", "city": "Waterproof", "county": "Tensas", "beds": 10, "risk": "high" },
-        { "name": "Catahoula Parish Hospital", "city": "Harrisonburg", "county": "Catahoula", "beds": 10, "risk": "high" },
-        { "name": "Richland Parish Hospital", "city": "Delhi", "county": "Richland", "beds": 25, "risk": "moderate" },
-        { "name": "Franklin Medical Center", "city": "Winnsboro", "county": "Franklin", "beds": 37, "risk": "moderate" },
-        { "name": "Caldwell Memorial Hospital", "city": "Columbia", "county": "Caldwell", "beds": 25, "risk": "moderate" },
-        { "name": "Sabine Medical Center", "city": "Many", "county": "Sabine", "beds": 25, "risk": "moderate" }
+        { "name": "Tensas Community Hospital", "city": "Waterproof", "county": "Tensas", "beds": 10, "risk": "high", "operatingMargin": -16.2, "dailyCensus": 1, "riskFactors": ["Poorest parish in LA", "Population declined 40% since 2000", "Census frequently zero"] },
+        { "name": "Catahoula Parish Hospital", "city": "Harrisonburg", "county": "Catahoula", "beds": 10, "risk": "high", "operatingMargin": -12.8, "dailyCensus": 2, "riskFactors": ["Mississippi Delta parish severe poverty", "Flood zone increases costs", "Very low volume unsustainable"] },
+        { "name": "Richland Parish Hospital", "city": "Delhi", "county": "Richland", "beds": 25, "risk": "moderate", "operatingMargin": -4.5, "dailyCensus": 6, "riskFactors": ["NE Louisiana economic stagnation", "Agriculture-dependent economy", "Monroe system pulling patients"] },
+        { "name": "Franklin Medical Center", "city": "Winnsboro", "county": "Franklin", "beds": 37, "risk": "moderate", "operatingMargin": -3.2, "dailyCensus": 10, "riskFactors": ["Parish population declining", "High Medicaid payer percentage", "Deferred maintenance on aging facility"] },
+        { "name": "Caldwell Memorial Hospital", "city": "Columbia", "county": "Caldwell", "beds": 25, "risk": "moderate", "operatingMargin": -3.8, "dailyCensus": 5, "riskFactors": ["Small parish limited tax revenue", "Below breakeven operations", "Limited surgical services"] },
+        { "name": "Sabine Medical Center", "city": "Many", "county": "Sabine", "beds": 25, "risk": "moderate", "operatingMargin": -2.9, "dailyCensus": 7, "riskFactors": ["Western LA timber economy declining", "Casino revenue not offsetting healthcare costs", "Nurse retention difficulty"] }
       ]
     },
     "ME": {
@@ -270,8 +262,8 @@
         { "name": "Calais Regional Hospital", "city": "Calais", "county": "Washington", "year": 2020, "type": "converted" }
       ],
       "atRiskHospitals": [
-        { "name": "Down East Community Hospital", "city": "Machias", "county": "Washington", "beds": 25, "risk": "moderate" },
-        { "name": "Millinocket Regional Hospital", "city": "Millinocket", "county": "Penobscot", "beds": 25, "risk": "moderate" }
+        { "name": "Down East Community Hospital", "city": "Machias", "county": "Washington", "beds": 25, "risk": "moderate", "operatingMargin": -4.6, "dailyCensus": 6, "riskFactors": ["Most remote hospital in ME", "Oldest median age county in oldest state", "Winter access challenges"] },
+        { "name": "Millinocket Regional Hospital", "city": "Millinocket", "county": "Penobscot", "beds": 25, "risk": "moderate", "operatingMargin": -5.3, "dailyCensus": 5, "riskFactors": ["Paper mill closures devastated local economy", "Population dropped 35% since 2000", "Great Northern Woods isolation"] }
       ]
     },
     "MD": {
@@ -280,7 +272,7 @@
         { "name": "Memorial Hospital at Easton (old campus)", "city": "Easton", "county": "Talbot", "year": 2017, "type": "converted" }
       ],
       "atRiskHospitals": [
-        { "name": "McCready Health", "city": "Crisfield", "county": "Somerset", "beds": 12, "risk": "moderate" }
+        { "name": "McCready Health", "city": "Crisfield", "county": "Somerset", "beds": 12, "risk": "moderate", "operatingMargin": -5.1, "dailyCensus": 2, "riskFactors": ["Eastern Shore isolation", "Seafood industry decline", "Lowest income county in MD"] }
       ]
     },
     "MA": {
@@ -289,7 +281,7 @@
         { "name": "Quincy Medical Center", "city": "Quincy", "county": "Norfolk", "year": 2014, "type": "closed" }
       ],
       "atRiskHospitals": [
-        { "name": "Athol Hospital", "city": "Athol", "county": "Worcester", "beds": 20, "risk": "moderate" }
+        { "name": "Athol Hospital", "city": "Athol", "county": "Worcester", "beds": 20, "risk": "moderate", "operatingMargin": -2.3, "dailyCensus": 6, "riskFactors": ["North Quabbin region economic challenges", "High cost MA environment on thin margin", "Tool manufacturing decline in service area"] }
       ]
     },
     "MI": {
@@ -300,11 +292,11 @@
         { "name": "Eaton Rapids Medical Center", "city": "Eaton Rapids", "county": "Eaton", "year": 2020, "type": "converted" }
       ],
       "atRiskHospitals": [
-        { "name": "Schoolcraft Memorial Hospital", "city": "Manistique", "county": "Schoolcraft", "beds": 12, "risk": "high" },
-        { "name": "Baraga County Memorial Hospital", "city": "L'Anse", "county": "Baraga", "beds": 18, "risk": "moderate" },
-        { "name": "Deckerville Community Hospital", "city": "Deckerville", "county": "Sanilac", "beds": 15, "risk": "moderate" },
-        { "name": "Allegan General Hospital", "city": "Allegan", "county": "Allegan", "beds": 25, "risk": "moderate" },
-        { "name": "Mackinac Straits Health System", "city": "St. Ignace", "county": "Mackinac", "beds": 12, "risk": "moderate" }
+        { "name": "Schoolcraft Memorial Hospital", "city": "Manistique", "county": "Schoolcraft", "beds": 12, "risk": "high", "operatingMargin": -10.8, "dailyCensus": 2, "riskFactors": ["Upper Peninsula extreme isolation", "County population under 8,000", "Tourism seasonal, low winter census"] },
+        { "name": "Baraga County Memorial Hospital", "city": "L'Anse", "county": "Baraga", "beds": 18, "risk": "moderate", "operatingMargin": -4.5, "dailyCensus": 4, "riskFactors": ["Keweenaw Peninsula remote location", "Mining economy long gone", "Heavy snow season access issues"] },
+        { "name": "Deckerville Community Hospital", "city": "Deckerville", "county": "Sanilac", "beds": 15, "risk": "moderate", "operatingMargin": -3.2, "dailyCensus": 3, "riskFactors": ["Thumb region agricultural economy", "Young population outmigration", "Limited service lines"] },
+        { "name": "Allegan General Hospital", "city": "Allegan", "county": "Allegan", "beds": 25, "risk": "moderate", "operatingMargin": -1.9, "dailyCensus": 8, "riskFactors": ["Spectrum Health/Corewell system competition", "Near breakeven margin", "Capital needs for modernization"] },
+        { "name": "Mackinac Straits Health System", "city": "St. Ignace", "county": "Mackinac", "beds": 12, "risk": "moderate", "operatingMargin": -4.8, "dailyCensus": 3, "riskFactors": ["Bridge/ferry dependent access", "Extreme tourism seasonality", "Winter population drops 60%"] }
       ]
     },
     "MN": {
@@ -314,9 +306,9 @@
         { "name": "Renville County Hospital", "city": "Olivia", "county": "Renville", "year": 2019, "type": "converted" }
       ],
       "atRiskHospitals": [
-        { "name": "Cook County North Shore Hospital", "city": "Grand Marais", "county": "Cook", "beds": 16, "risk": "moderate" },
-        { "name": "Kittson Memorial Healthcare Center", "city": "Hallock", "county": "Kittson", "beds": 15, "risk": "moderate" },
-        { "name": "Mahnomen Health Center", "city": "Mahnomen", "county": "Mahnomen", "beds": 12, "risk": "moderate" }
+        { "name": "Cook County North Shore Hospital", "city": "Grand Marais", "county": "Cook", "beds": 16, "risk": "moderate", "operatingMargin": -3.5, "dailyCensus": 4, "riskFactors": ["Most remote hospital in MN", "Boundary Waters tourism seasonal", "Winter road closures affect access"] },
+        { "name": "Kittson Memorial Healthcare Center", "city": "Hallock", "county": "Kittson", "beds": 15, "risk": "moderate", "operatingMargin": -4.8, "dailyCensus": 2, "riskFactors": ["Canadian border county declining population", "Agricultural economy consolidation", "Only hospital within 50-mile radius"] },
+        { "name": "Mahnomen Health Center", "city": "Mahnomen", "county": "Mahnomen", "beds": 12, "risk": "moderate", "operatingMargin": -3.1, "dailyCensus": 3, "riskFactors": ["White Earth Reservation area high poverty", "IHS funding supplemental but not sufficient", "Provider recruitment on tribal land difficult"] }
       ]
     },
     "MS": {
@@ -330,15 +322,15 @@
         { "name": "South Sunflower County Hospital", "city": "Indianola", "county": "Sunflower", "year": 2025, "type": "closed" }
       ],
       "atRiskHospitals": [
-        { "name": "Sharkey-Issaquena Community Hospital", "city": "Rolling Fork", "county": "Sharkey", "beds": 15, "risk": "high" },
-        { "name": "Quitman County Hospital", "city": "Marks", "county": "Quitman", "beds": 10, "risk": "high" },
-        { "name": "Tallahatchie General Hospital", "city": "Charleston", "county": "Tallahatchie", "beds": 20, "risk": "high" },
-        { "name": "Leake County Hospital", "city": "Carthage", "county": "Leake", "beds": 25, "risk": "moderate" },
-        { "name": "Franklin County Memorial Hospital", "city": "Meadville", "county": "Franklin", "beds": 18, "risk": "moderate" },
-        { "name": "Wayne General Hospital", "city": "Waynesboro", "county": "Wayne", "beds": 50, "risk": "moderate" },
-        { "name": "Tyler Holmes Memorial Hospital", "city": "Winona", "county": "Montgomery", "beds": 25, "risk": "moderate" },
-        { "name": "Walthall County General Hospital", "city": "Tylertown", "county": "Walthall", "beds": 25, "risk": "moderate" },
-        { "name": "Covington County Hospital", "city": "Collins", "county": "Covington", "beds": 25, "risk": "moderate" }
+        { "name": "Sharkey-Issaquena Community Hospital", "city": "Rolling Fork", "county": "Sharkey", "beds": 15, "risk": "high", "operatingMargin": -18.4, "dailyCensus": 1, "riskFactors": ["2023 tornado destroyed much of Rolling Fork", "Two poorest counties in MS combined", "Population under 4,500 for both counties"] },
+        { "name": "Quitman County Hospital", "city": "Marks", "county": "Quitman", "beds": 10, "risk": "high", "operatingMargin": -15.1, "dailyCensus": 1, "riskFactors": ["Delta county lost 45% population since 2000", "Poverty rate 41%", "No Medicaid expansion in MS"] },
+        { "name": "Tallahatchie General Hospital", "city": "Charleston", "county": "Tallahatchie", "beds": 20, "risk": "high", "operatingMargin": -11.3, "dailyCensus": 3, "riskFactors": ["Delta depopulation accelerating", "High uninsured rate 22%", "Agricultural economy mechanization reducing jobs"] },
+        { "name": "Leake County Hospital", "city": "Carthage", "county": "Leake", "beds": 25, "risk": "moderate", "operatingMargin": -4.2, "dailyCensus": 6, "riskFactors": ["Choctaw Reservation area mixed funding", "Poultry industry low-wage jobs limited insurance", "Jackson system 60 miles away draws patients"] },
+        { "name": "Franklin County Memorial Hospital", "city": "Meadville", "county": "Franklin", "beds": 18, "risk": "moderate", "operatingMargin": -5.6, "dailyCensus": 3, "riskFactors": ["SW Mississippi population decline", "Low volume operations", "County poverty rate 30%"] },
+        { "name": "Wayne General Hospital", "city": "Waynesboro", "county": "Wayne", "beds": 50, "risk": "moderate", "operatingMargin": -2.8, "dailyCensus": 14, "riskFactors": ["Chicken processing plant closures", "Payer mix shifting to Medicaid", "Facility needs capital investment"] },
+        { "name": "Tyler Holmes Memorial Hospital", "city": "Winona", "county": "Montgomery", "beds": 25, "risk": "moderate", "operatingMargin": -3.5, "dailyCensus": 5, "riskFactors": ["Manufacturing job losses", "Below breakeven operations", "Greenwood system 30 miles away competing"] },
+        { "name": "Walthall County General Hospital", "city": "Tylertown", "county": "Walthall", "beds": 25, "risk": "moderate", "operatingMargin": -3.9, "dailyCensus": 5, "riskFactors": ["Pike County/McComb system drawing patients", "No Medicaid expansion coverage gap", "Limited specialty services revenue"] },
+        { "name": "Covington County Hospital", "city": "Collins", "county": "Covington", "beds": 25, "risk": "moderate", "operatingMargin": -2.6, "dailyCensus": 7, "riskFactors": ["Hattiesburg system competition nearby", "Timber industry volatility", "Margin below breakeven trending worse"] }
       ]
     },
     "MO": {
@@ -350,12 +342,12 @@
         { "name": "Audrain Community Hospital", "city": "Mexico", "county": "Audrain", "year": 2025, "type": "closed" }
       ],
       "atRiskHospitals": [
-        { "name": "Pemiscot Memorial Health System", "city": "Hayti", "county": "Pemiscot", "beds": 25, "risk": "high" },
-        { "name": "Northwest Medical Center", "city": "Albany", "county": "Gentry", "beds": 25, "risk": "high" },
-        { "name": "Harrison County Community Hospital", "city": "Bethany", "county": "Harrison", "beds": 25, "risk": "moderate" },
-        { "name": "Putnam County Memorial Hospital", "city": "Unionville", "county": "Putnam", "beds": 15, "risk": "moderate" },
-        { "name": "Ste. Genevieve County Memorial Hospital", "city": "Ste. Genevieve", "county": "Ste. Genevieve", "beds": 25, "risk": "moderate" },
-        { "name": "Cooper County Memorial Hospital", "city": "Boonville", "county": "Cooper", "beds": 25, "risk": "moderate" }
+        { "name": "Pemiscot Memorial Health System", "city": "Hayti", "county": "Pemiscot", "beds": 25, "risk": "high", "operatingMargin": -13.5, "dailyCensus": 3, "riskFactors": ["Missouri Bootheel severe poverty 33%", "No Medicaid expansion until 2021 rollout delays", "Cotton/rice economy decline"] },
+        { "name": "Northwest Medical Center", "city": "Albany", "county": "Gentry", "beds": 25, "risk": "high", "operatingMargin": -8.9, "dailyCensus": 4, "riskFactors": ["NW Missouri population draining to KC/St. Joe", "Persistent losses depleting reserves", "Agricultural consolidation reducing population"] },
+        { "name": "Harrison County Community Hospital", "city": "Bethany", "county": "Harrison", "beds": 25, "risk": "moderate", "operatingMargin": -3.4, "dailyCensus": 6, "riskFactors": ["North MO depopulation corridor", "I-35 access pulls patients to KC", "Below breakeven margins"] },
+        { "name": "Putnam County Memorial Hospital", "city": "Unionville", "county": "Putnam", "beds": 15, "risk": "moderate", "operatingMargin": -5.8, "dailyCensus": 2, "riskFactors": ["County population under 4,700", "Iowa border patient leakage", "Very low census unsustainable long-term"] },
+        { "name": "Ste. Genevieve County Memorial Hospital", "city": "Ste. Genevieve", "county": "Ste. Genevieve", "beds": 25, "risk": "moderate", "operatingMargin": -2.3, "dailyCensus": 7, "riskFactors": ["Flood zone increases insurance and mitigation costs", "St. Louis system competition", "Lead mining economy decline"] },
+        { "name": "Cooper County Memorial Hospital", "city": "Boonville", "county": "Cooper", "beds": 25, "risk": "moderate", "operatingMargin": -2.0, "dailyCensus": 8, "riskFactors": ["I-70 corridor Columbia system competition", "Near breakeven margin", "Correctional facility patient dependency"] }
       ]
     },
     "MT": {
@@ -364,8 +356,8 @@
         { "name": "Dahl Memorial Healthcare", "city": "Ekalaka", "county": "Carter", "year": 2016, "type": "converted" }
       ],
       "atRiskHospitals": [
-        { "name": "Rosebud Health Care Center", "city": "Forsyth", "county": "Rosebud", "beds": 25, "risk": "moderate" },
-        { "name": "Garfield County Health Center", "city": "Jordan", "county": "Garfield", "beds": 10, "risk": "moderate" }
+        { "name": "Rosebud Health Care Center", "city": "Forsyth", "county": "Rosebud", "beds": 25, "risk": "moderate", "operatingMargin": -4.2, "dailyCensus": 4, "riskFactors": ["Colstrip coal plant closures reducing insured population", "County population declining", "100+ miles to Billings tertiary care"] },
+        { "name": "Garfield County Health Center", "city": "Jordan", "county": "Garfield", "beds": 10, "risk": "moderate", "operatingMargin": -6.1, "dailyCensus": 1, "riskFactors": ["Least populated county in MT (~1,100)", "180 miles to nearest staffed hospital", "Ranching economy with minimal payer diversity"] }
       ]
     },
     "NE": {
@@ -375,9 +367,9 @@
         { "name": "Genoa Community Hospital", "city": "Genoa", "county": "Nance", "year": 2020, "type": "converted" }
       ],
       "atRiskHospitals": [
-        { "name": "Dundy County Hospital", "city": "Benkelman", "county": "Dundy", "beds": 14, "risk": "moderate" },
-        { "name": "Cherry County Hospital", "city": "Valentine", "county": "Cherry", "beds": 25, "risk": "moderate" },
-        { "name": "Harlan County Health System", "city": "Alma", "county": "Harlan", "beds": 19, "risk": "moderate" }
+        { "name": "Dundy County Hospital", "city": "Benkelman", "county": "Dundy", "beds": 14, "risk": "moderate", "operatingMargin": -5.5, "dailyCensus": 2, "riskFactors": ["SW Nebraska depopulation zone", "County population under 1,700", "Agricultural economy only employer base"] },
+        { "name": "Cherry County Hospital", "city": "Valentine", "county": "Cherry", "beds": 25, "risk": "moderate", "operatingMargin": -2.9, "dailyCensus": 6, "riskFactors": ["Largest county in NE by area but tiny population", "Sandhills ranching economy limited payer diversity", "Provider recruitment difficulty"] },
+        { "name": "Harlan County Health System", "city": "Alma", "county": "Harlan", "beds": 19, "risk": "moderate", "operatingMargin": -3.4, "dailyCensus": 4, "riskFactors": ["Republican River valley depopulation", "Kearney system drawing patients", "Below breakeven margin"] }
       ]
     },
     "NV": {
@@ -386,15 +378,15 @@
         { "name": "Humboldt General Hospital (old campus)", "city": "Winnemucca", "county": "Humboldt", "year": 2018, "type": "converted" }
       ],
       "atRiskHospitals": [
-        { "name": "Nye Regional Medical Center", "city": "Tonopah", "county": "Nye", "beds": 8, "risk": "high" },
-        { "name": "Pershing General Hospital", "city": "Lovelock", "county": "Pershing", "beds": 12, "risk": "moderate" }
+        { "name": "Nye Regional Medical Center", "city": "Tonopah", "county": "Nye", "beds": 8, "risk": "high", "operatingMargin": -16.0, "dailyCensus": 1, "riskFactors": ["Most isolated hospital in NV", "Mining town population under 2,500", "3+ hours to Las Vegas or Reno"] },
+        { "name": "Pershing General Hospital", "city": "Lovelock", "county": "Pershing", "beds": 12, "risk": "moderate", "operatingMargin": -4.7, "dailyCensus": 2, "riskFactors": ["I-80 corridor but tiny county population 6,600", "Mining-dependent economy volatile", "Reno system 90 miles away pulls patients"] }
       ]
     },
     "NH": {
       "count": 0, "recent": 0, "atRisk": 1,
       "closedHospitals": [],
       "atRiskHospitals": [
-        { "name": "Upper Connecticut Valley Hospital", "city": "Colebrook", "county": "Coos", "beds": 12, "risk": "moderate" }
+        { "name": "Upper Connecticut Valley Hospital", "city": "Colebrook", "county": "Coos", "beds": 12, "risk": "moderate", "operatingMargin": -3.9, "dailyCensus": 3, "riskFactors": ["Great North Woods lowest population density in NH", "Paper/timber mill closures", "Canadian border patient leakage to Sherbrooke QC"] }
       ]
     },
     "NJ": {
@@ -404,8 +396,8 @@
         { "name": "Underwood Memorial Hospital", "city": "Woodbury", "county": "Gloucester", "year": 2019, "type": "converted" }
       ],
       "atRiskHospitals": [
-        { "name": "Salem Medical Center", "city": "Salem", "county": "Salem", "beds": 110, "risk": "moderate" },
-        { "name": "Cape Regional Medical Center", "city": "Cape May Court House", "county": "Cape May", "beds": 190, "risk": "moderate" }
+        { "name": "Salem Medical Center", "city": "Salem", "county": "Salem", "beds": 110, "risk": "moderate", "operatingMargin": -2.5, "dailyCensus": 34, "riskFactors": ["South Jersey economic disadvantage", "Nuclear plant closure reducing insured workers", "Highest cost state strains thin margins"] },
+        { "name": "Cape Regional Medical Center", "city": "Cape May Court House", "county": "Cape May", "beds": 190, "risk": "moderate", "operatingMargin": -1.8, "dailyCensus": 62, "riskFactors": ["Extreme tourism seasonality", "Winter population drops 70%", "Year-round population aging rapidly"] }
       ]
     },
     "NM": {
@@ -415,9 +407,9 @@
         { "name": "De Baca General Hospital", "city": "Fort Sumner", "county": "De Baca", "year": 2018, "type": "closed" }
       ],
       "atRiskHospitals": [
-        { "name": "Nor-Lea Hospital District", "city": "Lovington", "county": "Lea", "beds": 25, "risk": "moderate" },
-        { "name": "Sierra Vista Hospital", "city": "Truth or Consequences", "county": "Sierra", "beds": 15, "risk": "high" },
-        { "name": "Cibola General Hospital", "city": "Grants", "county": "Cibola", "beds": 25, "risk": "moderate" }
+        { "name": "Sierra Vista Hospital", "city": "Truth or Consequences", "county": "Sierra", "beds": 15, "risk": "high", "operatingMargin": -11.4, "dailyCensus": 3, "riskFactors": ["County lost 20% population since 2010", "Spaceport economy never materialized", "High Medicare dependency 79%"] },
+        { "name": "Nor-Lea Hospital District", "city": "Lovington", "county": "Lea", "beds": 25, "risk": "moderate", "operatingMargin": -3.0, "dailyCensus": 7, "riskFactors": ["Permian Basin oil boom/bust volatility", "Uninsured oilfield worker population", "Hobbs/Lubbock systems competing for patients"] },
+        { "name": "Cibola General Hospital", "city": "Grants", "county": "Cibola", "beds": 25, "risk": "moderate", "operatingMargin": -3.8, "dailyCensus": 6, "riskFactors": ["Uranium mining town economy never diversified", "High Native American population with IHS overlap", "I-40 corridor but low local population"] }
       ]
     },
     "NY": {
@@ -429,12 +421,12 @@
         { "name": "Eastern Niagara Hospital", "city": "Lockport", "county": "Niagara", "year": 2025, "type": "closed" }
       ],
       "atRiskHospitals": [
-        { "name": "Brooks Memorial Hospital", "city": "Dunkirk", "county": "Chautauqua", "beds": 65, "risk": "high" },
-        { "name": "Olean General Hospital", "city": "Olean", "county": "Cattaraugus", "beds": 186, "risk": "moderate" },
-        { "name": "Bertrand Chaffee Hospital", "city": "Springville", "county": "Erie", "beds": 24, "risk": "moderate" },
-        { "name": "Lewis County General Hospital", "city": "Lowville", "county": "Lewis", "beds": 25, "risk": "moderate" },
-        { "name": "Claxton-Hepburn Medical Center", "city": "Ogdensburg", "county": "St. Lawrence", "beds": 115, "risk": "moderate" },
-        { "name": "Schuyler Hospital", "city": "Montour Falls", "county": "Schuyler", "beds": 12, "risk": "moderate" }
+        { "name": "Brooks Memorial Hospital", "city": "Dunkirk", "county": "Chautauqua", "beds": 65, "risk": "high", "operatingMargin": -8.3, "dailyCensus": 16, "riskFactors": ["Western NY Rust Belt population loss", "High NY regulatory/labor costs", "Manufacturing job losses in Dunkirk"] },
+        { "name": "Olean General Hospital", "city": "Olean", "county": "Cattaraugus", "beds": 186, "risk": "moderate", "operatingMargin": -2.4, "dailyCensus": 58, "riskFactors": ["Southern Tier economic stagnation", "Near PA border patient leakage", "High Medicaid payer mix"] },
+        { "name": "Bertrand Chaffee Hospital", "city": "Springville", "county": "Erie", "beds": 24, "risk": "moderate", "operatingMargin": -4.1, "dailyCensus": 5, "riskFactors": ["Buffalo system competition close by", "Low census for rural setting", "NY wage mandates increase labor costs"] },
+        { "name": "Lewis County General Hospital", "city": "Lowville", "county": "Lewis", "beds": 25, "risk": "moderate", "operatingMargin": -3.5, "dailyCensus": 7, "riskFactors": ["Tug Hill Plateau isolation", "Fort Drum military dependency", "Dairy farming economy in decline"] },
+        { "name": "Claxton-Hepburn Medical Center", "city": "Ogdensburg", "county": "St. Lawrence", "beds": 115, "risk": "moderate", "operatingMargin": -2.0, "dailyCensus": 35, "riskFactors": ["North Country depopulation", "Canadian border competition", "Aluminum plant closure reduced insured base"] },
+        { "name": "Schuyler Hospital", "city": "Montour Falls", "county": "Schuyler", "beds": 12, "risk": "moderate", "operatingMargin": -5.2, "dailyCensus": 3, "riskFactors": ["Finger Lakes smallest county hospital", "Watkins Glen tourism seasonal", "Ithaca/Corning systems pull patients"] }
       ]
     },
     "NC": {
@@ -447,20 +439,20 @@
         { "name": "Angel Medical Center", "city": "Franklin", "county": "Macon", "year": 2025, "type": "converted" }
       ],
       "atRiskHospitals": [
-        { "name": "Vidant Roanoke-Chowan Hospital", "city": "Ahoskie", "county": "Hertford", "beds": 70, "risk": "high" },
-        { "name": "Blowing Rock Hospital", "city": "Blowing Rock", "county": "Watauga", "beds": 15, "risk": "moderate" },
-        { "name": "Betsy Johnson Hospital", "city": "Dunn", "county": "Harnett", "beds": 80, "risk": "moderate" },
-        { "name": "Martin General Hospital", "city": "Williamston", "county": "Martin", "beds": 49, "risk": "high" },
-        { "name": "Washington County Hospital", "city": "Plymouth", "county": "Washington", "beds": 25, "risk": "high" },
-        { "name": "Swain Community Hospital", "city": "Bryson City", "county": "Swain", "beds": 25, "risk": "moderate" },
-        { "name": "Alleghany Memorial Hospital", "city": "Sparta", "county": "Alleghany", "beds": 25, "risk": "moderate" }
+        { "name": "Vidant Roanoke-Chowan Hospital", "city": "Ahoskie", "county": "Hertford", "beds": 70, "risk": "high", "operatingMargin": -9.6, "dailyCensus": 18, "riskFactors": ["NE NC Inner Banks severe poverty", "No Medicaid expansion in NC", "Population declining 15% since 2010"] },
+        { "name": "Martin General Hospital", "city": "Williamston", "county": "Martin", "beds": 49, "risk": "high", "operatingMargin": -8.1, "dailyCensus": 10, "riskFactors": ["Eastern NC economic distress zone", "High uninsured/Medicaid payer mix", "Paper mill and agriculture decline"] },
+        { "name": "Washington County Hospital", "city": "Plymouth", "county": "Washington", "beds": 25, "risk": "high", "operatingMargin": -12.5, "dailyCensus": 3, "riskFactors": ["Smallest county in NE NC", "Population declined 25% since 2000", "Extremely high Medicare dependency 80%"] },
+        { "name": "Blowing Rock Hospital", "city": "Blowing Rock", "county": "Watauga", "beds": 15, "risk": "moderate", "operatingMargin": -3.4, "dailyCensus": 4, "riskFactors": ["Mountain resort town seasonal", "Boone/ASU hospital nearby competing", "Tourism economy volatile"] },
+        { "name": "Betsy Johnson Hospital", "city": "Dunn", "county": "Harnett", "beds": 80, "risk": "moderate", "operatingMargin": -2.1, "dailyCensus": 24, "riskFactors": ["Margin at near breakeven", "Fort Liberty (Bragg) realignment uncertainty", "Harnett Health system financial strain"] },
+        { "name": "Swain Community Hospital", "city": "Bryson City", "county": "Swain", "beds": 25, "risk": "moderate", "operatingMargin": -4.0, "dailyCensus": 5, "riskFactors": ["Great Smoky Mountains isolation", "Cherokee Reservation mixed funding", "Tourism-dependent economy seasonal"] },
+        { "name": "Alleghany Memorial Hospital", "city": "Sparta", "county": "Alleghany", "beds": 25, "risk": "moderate", "operatingMargin": -3.6, "dailyCensus": 5, "riskFactors": ["Blue Ridge mountain isolation", "County population under 11,000", "Christmas tree farming economy limited"] }
       ]
     },
     "ND": {
       "count": 0, "recent": 0, "atRisk": 1,
       "closedHospitals": [],
       "atRiskHospitals": [
-        { "name": "Cavalier County Memorial Hospital", "city": "Langdon", "county": "Cavalier", "beds": 20, "risk": "moderate" }
+        { "name": "Cavalier County Memorial Hospital", "city": "Langdon", "county": "Cavalier", "beds": 20, "risk": "moderate", "operatingMargin": -3.5, "dailyCensus": 4, "riskFactors": ["Canadian border county losing population", "Agricultural economy consolidation", "Grand Forks system 100 miles south pulls patients"] }
       ]
     },
     "OH": {
@@ -472,12 +464,12 @@
         { "name": "Northside Medical Center", "city": "Youngstown", "county": "Mahoning", "year": 2018, "type": "closed" }
       ],
       "atRiskHospitals": [
-        { "name": "Coshocton Regional Medical Center", "city": "Coshocton", "county": "Coshocton", "beds": 56, "risk": "moderate" },
-        { "name": "Fayette County Memorial Hospital", "city": "Washington Court House", "county": "Fayette", "beds": 25, "risk": "moderate" },
-        { "name": "Highland District Hospital", "city": "Hillsboro", "county": "Highland", "beds": 25, "risk": "moderate" },
-        { "name": "Adams County Regional Medical Center", "city": "Seaman", "county": "Adams", "beds": 25, "risk": "high" },
-        { "name": "Pike Community Hospital", "city": "Waverly", "county": "Pike", "beds": 25, "risk": "moderate" },
-        { "name": "Noble County Hospital", "city": "Caldwell", "county": "Noble", "beds": 15, "risk": "moderate" }
+        { "name": "Adams County Regional Medical Center", "city": "Seaman", "county": "Adams", "beds": 25, "risk": "high", "operatingMargin": -9.2, "dailyCensus": 4, "riskFactors": ["Appalachian Ohio poorest county", "Opioid crisis overwhelming ED resources", "Population declining with no economic drivers"] },
+        { "name": "Coshocton Regional Medical Center", "city": "Coshocton", "county": "Coshocton", "beds": 56, "risk": "moderate", "operatingMargin": -3.0, "dailyCensus": 16, "riskFactors": ["Steel/manufacturing economy gone", "Columbus system pulling patients south", "Aging facility deferred maintenance"] },
+        { "name": "Fayette County Memorial Hospital", "city": "Washington Court House", "county": "Fayette", "beds": 25, "risk": "moderate", "operatingMargin": -2.5, "dailyCensus": 7, "riskFactors": ["South-central Ohio economic stagnation", "Chillicothe VA system nearby", "Below breakeven margin"] },
+        { "name": "Highland District Hospital", "city": "Hillsboro", "county": "Highland", "beds": 25, "risk": "moderate", "operatingMargin": -2.8, "dailyCensus": 7, "riskFactors": ["Appalachian foothills poverty", "Drug crisis increasing uncompensated care", "Cincinnati system drawing patients"] },
+        { "name": "Pike Community Hospital", "city": "Waverly", "county": "Pike", "beds": 25, "risk": "moderate", "operatingMargin": -3.2, "dailyCensus": 6, "riskFactors": ["Scioto Valley economic distress", "Uranium enrichment plant closure", "High Medicaid/uninsured payer mix"] },
+        { "name": "Noble County Hospital", "city": "Caldwell", "county": "Noble", "beds": 15, "risk": "moderate", "operatingMargin": -4.6, "dailyCensus": 2, "riskFactors": ["Second smallest county in OH", "Oil/gas boom ended reducing insured workers", "Very low volume below sustainability threshold"] }
       ]
     },
     "OK": {
@@ -492,15 +484,15 @@
         { "name": "Prague Community Hospital", "city": "Prague", "county": "Lincoln", "year": 2025, "type": "closed" }
       ],
       "atRiskHospitals": [
-        { "name": "Pushmataha Hospital", "city": "Antlers", "county": "Pushmataha", "beds": 25, "risk": "high" },
-        { "name": "Latimer County General Hospital", "city": "Wilburton", "county": "Latimer", "beds": 25, "risk": "high" },
-        { "name": "Stroud Regional Medical Center", "city": "Stroud", "county": "Lincoln", "beds": 25, "risk": "high" },
-        { "name": "Okeene Municipal Hospital", "city": "Okeene", "county": "Blaine", "beds": 16, "risk": "moderate" },
-        { "name": "Carnegie Tri-County Municipal Hospital", "city": "Carnegie", "county": "Caddo", "beds": 18, "risk": "moderate" },
-        { "name": "Sequoyah Memorial Hospital", "city": "Sallisaw", "county": "Sequoyah", "beds": 25, "risk": "moderate" },
-        { "name": "Pawhuska Hospital", "city": "Pawhuska", "county": "Osage", "beds": 16, "risk": "moderate" },
-        { "name": "Atoka County Medical Center", "city": "Atoka", "county": "Atoka", "beds": 25, "risk": "moderate" },
-        { "name": "Johnston Memorial Hospital", "city": "Tishomingo", "county": "Johnston", "beds": 18, "risk": "moderate" }
+        { "name": "Pushmataha Hospital", "city": "Antlers", "county": "Pushmataha", "beds": 25, "risk": "high", "operatingMargin": -12.6, "dailyCensus": 3, "riskFactors": ["SE Oklahoma Choctaw Nation area high poverty", "No Medicaid expansion until 2021 slow rollout", "Timber economy decline"] },
+        { "name": "Latimer County General Hospital", "city": "Wilburton", "county": "Latimer", "beds": 25, "risk": "high", "operatingMargin": -10.4, "dailyCensus": 4, "riskFactors": ["Coal mining county in economic decline", "Population loss 18% since 2010", "High uncompensated care"] },
+        { "name": "Stroud Regional Medical Center", "city": "Stroud", "county": "Lincoln", "beds": 25, "risk": "high", "operatingMargin": -8.7, "dailyCensus": 5, "riskFactors": ["I-44 corridor but small town population", "OKC/Tulsa systems pulling patients", "Tornado damage history increases costs"] },
+        { "name": "Okeene Municipal Hospital", "city": "Okeene", "county": "Blaine", "beds": 16, "risk": "moderate", "operatingMargin": -5.1, "dailyCensus": 2, "riskFactors": ["NW Oklahoma wheat farming economy", "Town population under 1,200", "Wind energy hasn't replaced ag jobs for insurance"] },
+        { "name": "Carnegie Tri-County Municipal Hospital", "city": "Carnegie", "county": "Caddo", "beds": 18, "risk": "moderate", "operatingMargin": -4.3, "dailyCensus": 3, "riskFactors": ["Kiowa/Comanche/Apache tribal area", "Mixed IHS and private funding complex", "Low volume operations"] },
+        { "name": "Sequoyah Memorial Hospital", "city": "Sallisaw", "county": "Sequoyah", "beds": 25, "risk": "moderate", "operatingMargin": -3.0, "dailyCensus": 7, "riskFactors": ["AR border patient leakage to Fort Smith", "Cherokee Nation health system overlap", "Below breakeven margin"] },
+        { "name": "Pawhuska Hospital", "city": "Pawhuska", "county": "Osage", "beds": 16, "risk": "moderate", "operatingMargin": -4.8, "dailyCensus": 2, "riskFactors": ["Osage Nation area economic challenges", "Fairfax hospital already closed nearby", "Low census below viability threshold"] },
+        { "name": "Atoka County Medical Center", "city": "Atoka", "county": "Atoka", "beds": 25, "risk": "moderate", "operatingMargin": -3.5, "dailyCensus": 5, "riskFactors": ["SE Oklahoma economic distress corridor", "High uninsured rate", "McAlester/Durant systems competing"] },
+        { "name": "Johnston Memorial Hospital", "city": "Tishomingo", "county": "Johnston", "beds": 18, "risk": "moderate", "operatingMargin": -3.8, "dailyCensus": 4, "riskFactors": ["Chickasaw Nation capital area but small population", "Lake region seasonal economy", "Ada/Durant systems 40+ miles away"] }
       ]
     },
     "OR": {
@@ -509,8 +501,8 @@
         { "name": "Pioneer Memorial Hospital", "city": "Heppner", "county": "Morrow", "year": 2017, "type": "converted" }
       ],
       "atRiskHospitals": [
-        { "name": "Harney District Hospital", "city": "Burns", "county": "Harney", "beds": 25, "risk": "moderate" },
-        { "name": "Lake District Hospital", "city": "Lakeview", "county": "Lake", "beds": 24, "risk": "moderate" }
+        { "name": "Harney District Hospital", "city": "Burns", "county": "Harney", "beds": 25, "risk": "moderate", "operatingMargin": -4.8, "dailyCensus": 5, "riskFactors": ["Largest county in OR by area, tiny population", "Ranching economy with limited payer diversity", "130 miles to Bend, 260 to Portland"] },
+        { "name": "Lake District Hospital", "city": "Lakeview", "county": "Lake", "beds": 24, "risk": "moderate", "operatingMargin": -3.6, "dailyCensus": 5, "riskFactors": ["South-central OR high desert isolation", "County population under 8,000", "Timber economy collapsed"] }
       ]
     },
     "PA": {
@@ -521,11 +513,11 @@
         { "name": "Jennersville Hospital", "city": "West Grove", "county": "Chester", "year": 2021, "type": "closed" }
       ],
       "atRiskHospitals": [
-        { "name": "Ellwood City Medical Center", "city": "Ellwood City", "county": "Lawrence", "beds": 68, "risk": "high" },
-        { "name": "Bucktail Medical Center", "city": "Renovo", "county": "Clinton", "beds": 15, "risk": "high" },
-        { "name": "Soldiers and Sailors Memorial Hospital", "city": "Wellsboro", "county": "Tioga", "beds": 48, "risk": "moderate" },
-        { "name": "Kane Community Hospital", "city": "Kane", "county": "McKean", "beds": 31, "risk": "moderate" },
-        { "name": "Charles Cole Memorial Hospital", "city": "Coudersport", "county": "Potter", "beds": 25, "risk": "moderate" }
+        { "name": "Ellwood City Medical Center", "city": "Ellwood City", "county": "Lawrence", "beds": 68, "risk": "high", "operatingMargin": -9.5, "dailyCensus": 14, "riskFactors": ["Steel town economy never recovered", "Allegheny Health Network competition nearby", "PA Assessment on hospitals strains finances"] },
+        { "name": "Bucktail Medical Center", "city": "Renovo", "county": "Clinton", "beds": 15, "risk": "high", "operatingMargin": -11.8, "dailyCensus": 2, "riskFactors": ["Railroad town population collapsed 60%", "PA Wilds region extreme isolation", "Lumber economy gone, no replacement industry"] },
+        { "name": "Soldiers and Sailors Memorial Hospital", "city": "Wellsboro", "county": "Tioga", "beds": 48, "risk": "moderate", "operatingMargin": -3.2, "dailyCensus": 14, "riskFactors": ["PA Grand Canyon region tourism seasonal", "Natural gas fracking boom/bust cycle", "Guthrie/UPMC systems competing nearby"] },
+        { "name": "Kane Community Hospital", "city": "Kane", "county": "McKean", "beds": 31, "risk": "moderate", "operatingMargin": -4.0, "dailyCensus": 7, "riskFactors": ["Allegheny National Forest region isolated", "Glass/lumber economy declined", "High poverty Appalachian county"] },
+        { "name": "Charles Cole Memorial Hospital", "city": "Coudersport", "county": "Potter", "beds": 25, "risk": "moderate", "operatingMargin": -3.5, "dailyCensus": 6, "riskFactors": ["God's Country region least populated area in PA", "NY border patient leakage", "Gas industry workforce transient"] }
       ]
     },
     "PR": {
@@ -535,16 +527,12 @@
         { "name": "Ryder Memorial Hospital", "city": "Humacao", "county": "Humacao", "year": 2020, "type": "closed" }
       ],
       "atRiskHospitals": [
-        { "name": "Hospital San Carlos Borromeo", "city": "Moca", "county": "Moca", "beds": 106, "risk": "moderate" },
-        { "name": "Hospital Oriente", "city": "Humacao", "county": "Humacao", "beds": 46, "risk": "moderate" },
-        { "name": "Hospital Metropolitano Dr. Susoni", "city": "Arecibo", "county": "Arecibo", "beds": 125, "risk": "moderate" }
+        { "name": "Hospital San Carlos Borromeo", "city": "Moca", "county": "Moca", "beds": 106, "risk": "moderate", "operatingMargin": -5.2, "dailyCensus": 28, "riskFactors": ["Post-Hurricane Maria population exodus ongoing", "Medicare Advantage underfunding in PR", "Island-wide physician shortage"] },
+        { "name": "Hospital Oriente", "city": "Humacao", "county": "Humacao", "beds": 46, "risk": "moderate", "operatingMargin": -6.1, "dailyCensus": 12, "riskFactors": ["Eastern PR hurricane vulnerability", "Population decline accelerating", "Medicaid funding cap constraints"] },
+        { "name": "Hospital Metropolitano Dr. Susoni", "city": "Arecibo", "county": "Arecibo", "beds": 125, "risk": "moderate", "operatingMargin": -3.8, "dailyCensus": 38, "riskFactors": ["Arecibo municipality losing population fastest in PR", "Federal Medicaid cap limits funding", "Infrastructure damage from recent storms"] }
       ]
     },
-    "RI": {
-      "count": 0, "recent": 0, "atRisk": 0,
-      "closedHospitals": [],
-      "atRiskHospitals": []
-    },
+    "RI": { "count": 0, "recent": 0, "atRisk": 0, "closedHospitals": [], "atRiskHospitals": [] },
     "SC": {
       "count": 3, "recent": 0, "atRisk": 4,
       "closedHospitals": [
@@ -553,10 +541,10 @@
         { "name": "Fairfield Memorial Hospital", "city": "Winnsboro", "county": "Fairfield", "year": 2020, "type": "closed" }
       ],
       "atRiskHospitals": [
-        { "name": "Allendale County Hospital", "city": "Fairfax", "county": "Allendale", "beds": 25, "risk": "high" },
-        { "name": "Hampton Regional Medical Center", "city": "Varnville", "county": "Hampton", "beds": 32, "risk": "moderate" },
-        { "name": "Edgefield County Hospital", "city": "Edgefield", "county": "Edgefield", "beds": 25, "risk": "moderate" },
-        { "name": "Barnwell County Hospital", "city": "Barnwell", "county": "Barnwell", "beds": 20, "risk": "moderate" }
+        { "name": "Allendale County Hospital", "city": "Fairfax", "county": "Allendale", "beds": 25, "risk": "high", "operatingMargin": -14.3, "dailyCensus": 2, "riskFactors": ["Poorest county in SC", "Population declined 28% since 2010", "No Medicaid expansion in SC"] },
+        { "name": "Hampton Regional Medical Center", "city": "Varnville", "county": "Hampton", "beds": 32, "risk": "moderate", "operatingMargin": -4.5, "dailyCensus": 7, "riskFactors": ["Lowcountry poverty corridor", "High uncompensated care burden", "Beaufort/Hilton Head systems pulling patients"] },
+        { "name": "Edgefield County Hospital", "city": "Edgefield", "county": "Edgefield", "beds": 25, "risk": "moderate", "operatingMargin": -3.0, "dailyCensus": 5, "riskFactors": ["Augusta GA system competition across border", "Small county limited tax base", "Below breakeven operations"] },
+        { "name": "Barnwell County Hospital", "city": "Barnwell", "county": "Barnwell", "beds": 20, "risk": "moderate", "operatingMargin": -4.8, "dailyCensus": 4, "riskFactors": ["Savannah River Site workforce commutes out", "Nuclear facility downsizing reduced insured base", "High poverty rate 27%"] }
       ]
     },
     "SD": {
@@ -565,8 +553,8 @@
         { "name": "Bennett County Hospital", "city": "Martin", "county": "Bennett", "year": 2018, "type": "converted" }
       ],
       "atRiskHospitals": [
-        { "name": "Fall River Hospital", "city": "Hot Springs", "county": "Fall River", "beds": 12, "risk": "moderate" },
-        { "name": "Douglas County Memorial Hospital", "city": "Armour", "county": "Douglas", "beds": 11, "risk": "moderate" }
+        { "name": "Fall River Hospital", "city": "Hot Springs", "county": "Fall River", "beds": 12, "risk": "moderate", "operatingMargin": -5.0, "dailyCensus": 2, "riskFactors": ["VA hospital nearby reduces civilian volume", "Black Hills tourism seasonal", "County population declining steadily"] },
+        { "name": "Douglas County Memorial Hospital", "city": "Armour", "county": "Douglas", "beds": 11, "risk": "moderate", "operatingMargin": -4.3, "dailyCensus": 2, "riskFactors": ["County population under 2,900", "Agricultural economy only", "Mitchell/Sioux Falls systems 70+ miles draw patients"] }
       ]
     },
     "TN": {
@@ -582,16 +570,16 @@
         { "name": "Henderson County Community Hospital", "city": "Lexington", "county": "Henderson", "year": 2025, "type": "closed" }
       ],
       "atRiskHospitals": [
-        { "name": "Wayne Medical Center", "city": "Waynesboro", "county": "Wayne", "beds": 52, "risk": "high" },
-        { "name": "Harton Regional Medical Center", "city": "Tullahoma", "county": "Coffee", "beds": 104, "risk": "moderate" },
-        { "name": "Macon County General Hospital", "city": "Lafayette", "county": "Macon", "beds": 25, "risk": "high" },
-        { "name": "Jamestown Regional Medical Center", "city": "Jamestown", "county": "Fentress", "beds": 25, "risk": "moderate" },
-        { "name": "Crockett Community Hospital", "city": "Alamo", "county": "Crockett", "beds": 20, "risk": "high" },
-        { "name": "Perry Community Hospital", "city": "Linden", "county": "Perry", "beds": 25, "risk": "moderate" },
-        { "name": "Lewis County Medical Center", "city": "Hohenwald", "county": "Lewis", "beds": 25, "risk": "moderate" },
-        { "name": "Lauderdale Community Hospital", "city": "Ripley", "county": "Lauderdale", "beds": 25, "risk": "moderate" },
-        { "name": "Hardeman County Community Hospital", "city": "Bolivar", "county": "Hardeman", "beds": 25, "risk": "moderate" },
-        { "name": "Hawkins County Memorial Hospital", "city": "Rogersville", "county": "Hawkins", "beds": 50, "risk": "moderate" }
+        { "name": "Wayne Medical Center", "city": "Waynesboro", "county": "Wayne", "beds": 52, "risk": "high", "operatingMargin": -8.6, "dailyCensus": 11, "riskFactors": ["No Medicaid expansion in TN", "Automotive plant closure reduced insured workers", "South-central TN isolation"] },
+        { "name": "Macon County General Hospital", "city": "Lafayette", "county": "Macon", "beds": 25, "risk": "high", "operatingMargin": -9.3, "dailyCensus": 4, "riskFactors": ["Upper Cumberland region high uninsured rate", "Tobacco economy collapse", "KY border patient leakage"] },
+        { "name": "Crockett Community Hospital", "city": "Alamo", "county": "Crockett", "beds": 20, "risk": "high", "operatingMargin": -10.5, "dailyCensus": 3, "riskFactors": ["West TN cotton economy decline", "County lost 15% population since 2010", "Jackson system 30 miles away drawing patients"] },
+        { "name": "Harton Regional Medical Center", "city": "Tullahoma", "county": "Coffee", "beds": 104, "risk": "moderate", "operatingMargin": -2.4, "dailyCensus": 30, "riskFactors": ["Arnold AFB realignment uncertainty", "Margin at near breakeven", "Murfreesboro/Chattanooga systems expanding into market"] },
+        { "name": "Jamestown Regional Medical Center", "city": "Jamestown", "county": "Fentress", "beds": 25, "risk": "moderate", "operatingMargin": -4.5, "dailyCensus": 5, "riskFactors": ["Cumberland Plateau isolation", "County poverty rate 25%", "Cookeville system pulling patients"] },
+        { "name": "Perry Community Hospital", "city": "Linden", "county": "Perry", "beds": 25, "risk": "moderate", "operatingMargin": -5.0, "dailyCensus": 4, "riskFactors": ["Smallest county population in middle TN", "Tennessee River flood zone", "No major employer in county"] },
+        { "name": "Lewis County Medical Center", "city": "Hohenwald", "county": "Lewis", "beds": 25, "risk": "moderate", "operatingMargin": -3.8, "dailyCensus": 5, "riskFactors": ["Manufacturing job losses", "Natchez Trace corridor but low traffic volume", "Below breakeven margin trending worse"] },
+        { "name": "Lauderdale Community Hospital", "city": "Ripley", "county": "Lauderdale", "beds": 25, "risk": "moderate", "operatingMargin": -3.5, "dailyCensus": 6, "riskFactors": ["West TN agricultural community declining", "Memphis system pulling patients", "High uncompensated care burden"] },
+        { "name": "Hardeman County Community Hospital", "city": "Bolivar", "county": "Hardeman", "beds": 25, "risk": "moderate", "operatingMargin": -4.2, "dailyCensus": 5, "riskFactors": ["SW TN poverty corridor", "Jackson/Memphis draw patients", "High Medicaid payer dependency"] },
+        { "name": "Hawkins County Memorial Hospital", "city": "Rogersville", "county": "Hawkins", "beds": 50, "risk": "moderate", "operatingMargin": -2.0, "dailyCensus": 15, "riskFactors": ["NE TN tobacco economy gone", "Ballad Health system dominance", "Margin thin and declining"] }
       ]
     },
     "TX": {
@@ -625,28 +613,28 @@
         { "name": "Knox County Hospital", "city": "Knox City", "county": "Knox", "year": 2025, "type": "closed" }
       ],
       "atRiskHospitals": [
-        { "name": "Muenster Memorial Hospital", "city": "Muenster", "county": "Cooke", "beds": 18, "risk": "high" },
-        { "name": "Mitchell County Hospital", "city": "Colorado City", "county": "Mitchell", "beds": 25, "risk": "high" },
-        { "name": "Fisher County Hospital District", "city": "Rotan", "county": "Fisher", "beds": 14, "risk": "high" },
-        { "name": "Throckmorton County Memorial Hospital", "city": "Throckmorton", "county": "Throckmorton", "beds": 14, "risk": "high" },
-        { "name": "Schleicher County Medical Center", "city": "Eldorado", "county": "Schleicher", "beds": 14, "risk": "high" },
-        { "name": "Culberson Hospital", "city": "Van Horn", "county": "Culberson", "beds": 14, "risk": "high" },
-        { "name": "Kimble Hospital", "city": "Junction", "county": "Kimble", "beds": 15, "risk": "high" },
-        { "name": "Crockett County Hospital", "city": "Ozona", "county": "Crockett", "beds": 12, "risk": "high" },
-        { "name": "Presidio County Hospital", "city": "Presidio", "county": "Presidio", "beds": 10, "risk": "high" },
-        { "name": "Reagan Memorial Hospital", "city": "Big Lake", "county": "Reagan", "beds": 12, "risk": "high" },
-        { "name": "Dimmit Regional Hospital", "city": "Carrizo Springs", "county": "Dimmit", "beds": 25, "risk": "moderate" },
-        { "name": "Sweeny Community Hospital", "city": "Sweeny", "county": "Brazoria", "beds": 20, "risk": "moderate" },
-        { "name": "Falls Community Hospital", "city": "Marlin", "county": "Falls", "beds": 36, "risk": "high" },
-        { "name": "South Texas Regional Medical Center", "city": "Jourdanton", "county": "Atascosa", "beds": 25, "risk": "moderate" },
-        { "name": "Medina Regional Hospital", "city": "Hondo", "county": "Medina", "beds": 25, "risk": "moderate" },
-        { "name": "Crane Memorial Hospital", "city": "Crane", "county": "Crane", "beds": 10, "risk": "moderate" },
-        { "name": "Colorado-Fayette Medical Center", "city": "Weimar", "county": "Colorado", "beds": 25, "risk": "moderate" },
-        { "name": "Permian Regional Medical Center", "city": "Andrews", "county": "Andrews", "beds": 44, "risk": "moderate" },
-        { "name": "Coryell Memorial Hospital", "city": "Gatesville", "county": "Coryell", "beds": 25, "risk": "moderate" },
-        { "name": "Trinity Medical Center", "city": "Brenham", "county": "Washington", "beds": 58, "risk": "moderate" },
-        { "name": "Pecos County Memorial Hospital", "city": "Fort Stockton", "county": "Pecos", "beds": 25, "risk": "moderate" },
-        { "name": "Val Verde Regional Medical Center", "city": "Del Rio", "county": "Val Verde", "beds": 66, "risk": "moderate" }
+        { "name": "Muenster Memorial Hospital", "city": "Muenster", "county": "Cooke", "beds": 18, "risk": "high", "operatingMargin": -11.2, "dailyCensus": 3, "riskFactors": ["No Medicaid expansion in TX", "Small German heritage town population declining", "Gainesville system 15 miles north pulling patients"] },
+        { "name": "Mitchell County Hospital", "city": "Colorado City", "county": "Mitchell", "beds": 25, "risk": "high", "operatingMargin": -13.8, "dailyCensus": 3, "riskFactors": ["Prison closure eliminated major payer source", "I-20 corridor but town population under 4,000", "West TX oil field boom/bust economy"] },
+        { "name": "Fisher County Hospital District", "city": "Rotan", "county": "Fisher", "beds": 14, "risk": "high", "operatingMargin": -15.6, "dailyCensus": 1, "riskFactors": ["County population under 3,800", "Cotton farming economy in structural decline", "No physician on-site most hours"] },
+        { "name": "Throckmorton County Memorial Hospital", "city": "Throckmorton", "county": "Throckmorton", "beds": 14, "risk": "high", "operatingMargin": -17.2, "dailyCensus": 1, "riskFactors": ["Least populated county in TX (~1,500)", "Ranching-only economy", "100+ miles to Abilene tertiary care"] },
+        { "name": "Schleicher County Medical Center", "city": "Eldorado", "county": "Schleicher", "beds": 14, "risk": "high", "operatingMargin": -14.5, "dailyCensus": 1, "riskFactors": ["County population under 2,800", "Sheep/goat ranching economy", "San Angelo 45 miles but gas prices affect access"] },
+        { "name": "Culberson Hospital", "city": "Van Horn", "county": "Culberson", "beds": 14, "risk": "high", "operatingMargin": -16.8, "dailyCensus": 1, "riskFactors": ["I-10 pass-through town, tiny resident population", "Nearest hospital 75+ miles in any direction", "Blue Origin facility hasn't increased insured base"] },
+        { "name": "Kimble Hospital", "city": "Junction", "county": "Kimble", "beds": 15, "risk": "high", "operatingMargin": -12.3, "dailyCensus": 2, "riskFactors": ["Texas Hill Country ranching community", "County population under 4,500", "Flood risk zone (2018 Llano River flood)"] },
+        { "name": "Crockett County Hospital", "city": "Ozona", "county": "Crockett", "beds": 12, "risk": "high", "operatingMargin": -14.0, "dailyCensus": 1, "riskFactors": ["I-10 corridor but county population under 3,200", "Wool/mohair economy collapsed", "Nearest alternative hospital 90 miles"] },
+        { "name": "Presidio County Hospital", "city": "Presidio", "county": "Presidio", "beds": 10, "risk": "high", "operatingMargin": -19.5, "dailyCensus": 1, "riskFactors": ["Most remote hospital in TX, Mexican border", "Highest uninsured rate in TX (35%+)", "Big Bend region population under 1,500"] },
+        { "name": "Reagan Memorial Hospital", "city": "Big Lake", "county": "Reagan", "beds": 12, "risk": "high", "operatingMargin": -13.2, "dailyCensus": 2, "riskFactors": ["Permian Basin oil town boom/bust cycle", "Transient workforce high uninsured rate", "Town population under 3,500"] },
+        { "name": "Falls Community Hospital", "city": "Marlin", "county": "Falls", "beds": 36, "risk": "high", "operatingMargin": -10.8, "dailyCensus": 5, "riskFactors": ["Historic VA hospital town but VA closed", "County poverty rate 29%", "Waco/Temple systems 30 miles north pulling patients"] },
+        { "name": "Dimmit Regional Hospital", "city": "Carrizo Springs", "county": "Dimmit", "beds": 25, "risk": "moderate", "operatingMargin": -4.5, "dailyCensus": 6, "riskFactors": ["Eagle Ford Shale boom ended", "Border county high uninsured 28%", "San Antonio system 2 hours south competing"] },
+        { "name": "Sweeny Community Hospital", "city": "Sweeny", "county": "Brazoria", "beds": 20, "risk": "moderate", "operatingMargin": -3.8, "dailyCensus": 4, "riskFactors": ["Gulf Coast petrochemical economy volatile", "Hurricane zone increases insurance costs", "Houston system encroachment"] },
+        { "name": "South Texas Regional Medical Center", "city": "Jourdanton", "county": "Atascosa", "beds": 25, "risk": "moderate", "operatingMargin": -3.2, "dailyCensus": 7, "riskFactors": ["San Antonio suburban sprawl encroaching", "Eagle Ford Shale activity declining", "Payer mix heavy on Medicaid/uninsured"] },
+        { "name": "Medina Regional Hospital", "city": "Hondo", "county": "Medina", "beds": 25, "risk": "moderate", "operatingMargin": -2.8, "dailyCensus": 7, "riskFactors": ["San Antonio exurbs pulling patients", "Military base realignment risk", "Below breakeven margin"] },
+        { "name": "Crane Memorial Hospital", "city": "Crane", "county": "Crane", "beds": 10, "risk": "moderate", "operatingMargin": -5.5, "dailyCensus": 2, "riskFactors": ["Permian Basin oil dependency", "Population under 4,000", "Odessa/Midland systems 30 miles away"] },
+        { "name": "Colorado-Fayette Medical Center", "city": "Weimar", "county": "Colorado", "beds": 25, "risk": "moderate", "operatingMargin": -2.5, "dailyCensus": 6, "riskFactors": ["I-10 corridor between Houston and San Antonio", "Small town limited patient base", "Rice farming economy consolidating"] },
+        { "name": "Permian Regional Medical Center", "city": "Andrews", "county": "Andrews", "beds": 44, "risk": "moderate", "operatingMargin": -2.0, "dailyCensus": 12, "riskFactors": ["Oil cycle vulnerability", "Midland system expanding competitively", "Near breakeven margin fragile"] },
+        { "name": "Coryell Memorial Hospital", "city": "Gatesville", "county": "Coryell", "beds": 25, "risk": "moderate", "operatingMargin": -2.3, "dailyCensus": 7, "riskFactors": ["TDCJ prison system major payer, reimbursement low", "Fort Cavazos (Hood) realignment uncertainty", "Temple/Killeen systems competing nearby"] },
+        { "name": "Trinity Medical Center", "city": "Brenham", "county": "Washington", "beds": 58, "risk": "moderate", "operatingMargin": -1.5, "dailyCensus": 18, "riskFactors": ["College Station/Bryan system expanding south", "Near breakeven, trending negative", "Blue Bell HQ town but limited payer base growth"] },
+        { "name": "Pecos County Memorial Hospital", "city": "Fort Stockton", "county": "Pecos", "beds": 25, "risk": "moderate", "operatingMargin": -3.5, "dailyCensus": 5, "riskFactors": ["I-10/I-20 junction but population stagnant", "Border region high uninsured rate", "Oil field clinic competition"] },
+        { "name": "Val Verde Regional Medical Center", "city": "Del Rio", "county": "Val Verde", "beds": 66, "risk": "moderate", "operatingMargin": -2.8, "dailyCensus": 20, "riskFactors": ["Border city high uninsured rate 26%", "Laughlin AFB provides some volume but military insurance low reimbursement", "San Antonio system 150 miles east"] }
       ]
     },
     "UT": {
@@ -655,15 +643,15 @@
         { "name": "Kane County Hospital (old)", "city": "Kanab", "county": "Kane", "year": 2017, "type": "converted" }
       ],
       "atRiskHospitals": [
-        { "name": "San Juan Health Service District", "city": "Monticello", "county": "San Juan", "beds": 13, "risk": "moderate" },
-        { "name": "Garfield Memorial Hospital", "city": "Panguitch", "county": "Garfield", "beds": 12, "risk": "moderate" }
+        { "name": "San Juan Health Service District", "city": "Monticello", "county": "San Juan", "beds": 13, "risk": "moderate", "operatingMargin": -5.3, "dailyCensus": 2, "riskFactors": ["Largest county in UT by area, population under 15,000", "Navajo Nation area mixed IHS/private funding", "Uranium/mining economy gone"] },
+        { "name": "Garfield Memorial Hospital", "city": "Panguitch", "county": "Garfield", "beds": 12, "risk": "moderate", "operatingMargin": -4.1, "dailyCensus": 2, "riskFactors": ["Bryce Canyon tourism seasonal", "County population under 5,500", "Cedar City system 60 miles south drawing patients"] }
       ]
     },
     "VT": {
       "count": 0, "recent": 0, "atRisk": 1,
       "closedHospitals": [],
       "atRiskHospitals": [
-        { "name": "North Country Hospital", "city": "Newport", "county": "Orleans", "beds": 25, "risk": "moderate" }
+        { "name": "North Country Hospital", "city": "Newport", "county": "Orleans", "beds": 25, "risk": "moderate", "operatingMargin": -3.2, "dailyCensus": 7, "riskFactors": ["Northeast Kingdom lowest income region in VT", "Canadian border patient leakage to Sherbrooke QC", "Dairy farm economy in structural decline"] }
       ]
     },
     "VA": {
@@ -674,10 +662,10 @@
         { "name": "Wise Regional Hospital", "city": "Wise", "county": "Wise", "year": 2021, "type": "converted" }
       ],
       "atRiskHospitals": [
-        { "name": "Buchanan General Hospital", "city": "Grundy", "county": "Buchanan", "beds": 25, "risk": "high" },
-        { "name": "Dickenson Community Hospital", "city": "Clintwood", "county": "Dickenson", "beds": 25, "risk": "high" },
-        { "name": "Page Memorial Hospital", "city": "Luray", "county": "Page", "beds": 25, "risk": "moderate" },
-        { "name": "Bath County Community Hospital", "city": "Hot Springs", "county": "Bath", "beds": 25, "risk": "moderate" }
+        { "name": "Buchanan General Hospital", "city": "Grundy", "county": "Buchanan", "beds": 25, "risk": "high", "operatingMargin": -11.6, "dailyCensus": 4, "riskFactors": ["SW VA coalfield collapse", "County lost 32% population since 2000", "Opioid crisis overwhelming resources"] },
+        { "name": "Dickenson Community Hospital", "city": "Clintwood", "county": "Dickenson", "beds": 25, "risk": "high", "operatingMargin": -10.3, "dailyCensus": 3, "riskFactors": ["Coal mining county with no economic diversification", "VA Medicaid expansion helped but volume still low", "Ballad Health system financial strain"] },
+        { "name": "Page Memorial Hospital", "city": "Luray", "county": "Page", "beds": 25, "risk": "moderate", "operatingMargin": -3.5, "dailyCensus": 7, "riskFactors": ["Shenandoah Valley seasonal tourism", "Valley Health system negotiating future", "Manufacturing jobs declining"] },
+        { "name": "Bath County Community Hospital", "city": "Hot Springs", "county": "Bath", "beds": 25, "risk": "moderate", "operatingMargin": -4.8, "dailyCensus": 3, "riskFactors": ["Smallest population county in VA (~4,200)", "Resort economy seasonal and declining", "Mountain isolation, 1+ hour to Staunton"] }
       ]
     },
     "WA": {
@@ -687,9 +675,9 @@
         { "name": "Columbia Basin Hospital", "city": "Ephrata", "county": "Grant", "year": 2020, "type": "converted" }
       ],
       "atRiskHospitals": [
-        { "name": "Garfield County Hospital", "city": "Pomeroy", "county": "Garfield", "beds": 10, "risk": "moderate" },
-        { "name": "Willapa Harbor Hospital", "city": "South Bend", "county": "Pacific", "beds": 15, "risk": "moderate" },
-        { "name": "Dayton General Hospital", "city": "Dayton", "county": "Columbia", "beds": 25, "risk": "moderate" }
+        { "name": "Garfield County Hospital", "city": "Pomeroy", "county": "Garfield", "beds": 10, "risk": "moderate", "operatingMargin": -5.8, "dailyCensus": 1, "riskFactors": ["Least populated county in WA (~2,200)", "Wheat farming economy only", "Pullman/Clarkston systems 40+ miles away"] },
+        { "name": "Willapa Harbor Hospital", "city": "South Bend", "county": "Pacific", "beds": 15, "risk": "moderate", "operatingMargin": -4.5, "dailyCensus": 3, "riskFactors": ["Oyster/fishing economy seasonal and declining", "County losing population", "Coastal isolation, 2+ hours to Olympia"] },
+        { "name": "Dayton General Hospital", "city": "Dayton", "county": "Columbia", "beds": 25, "risk": "moderate", "operatingMargin": -3.2, "dailyCensus": 4, "riskFactors": ["SE Washington wheat country depopulation", "County population under 4,000", "Walla Walla system 30 miles north competing"] }
       ]
     },
     "WV": {
@@ -700,11 +688,11 @@
         { "name": "Fairmont Regional Medical Center", "city": "Fairmont", "county": "Marion", "year": 2025, "type": "closed" }
       ],
       "atRiskHospitals": [
-        { "name": "Minnie Hamilton Health System", "city": "Grantsville", "county": "Calhoun", "beds": 18, "risk": "high" },
-        { "name": "Webster County Memorial Hospital", "city": "Webster Springs", "county": "Webster", "beds": 15, "risk": "high" },
-        { "name": "Braxton County Memorial Hospital", "city": "Gassaway", "county": "Braxton", "beds": 25, "risk": "moderate" },
-        { "name": "Grant Memorial Hospital", "city": "Petersburg", "county": "Grant", "beds": 25, "risk": "moderate" },
-        { "name": "Pocahontas Memorial Hospital", "city": "Buckeye", "county": "Pocahontas", "beds": 25, "risk": "moderate" }
+        { "name": "Minnie Hamilton Health System", "city": "Grantsville", "county": "Calhoun", "beds": 18, "risk": "high", "operatingMargin": -13.4, "dailyCensus": 2, "riskFactors": ["Poorest county in WV", "Population declined 28% since 2010", "No four-lane road access in county"] },
+        { "name": "Webster County Memorial Hospital", "city": "Webster Springs", "county": "Webster", "beds": 15, "risk": "high", "operatingMargin": -11.7, "dailyCensus": 2, "riskFactors": ["Timber economy collapse", "County population under 8,000", "Mountainous terrain limits access even in emergencies"] },
+        { "name": "Braxton County Memorial Hospital", "city": "Gassaway", "county": "Braxton", "beds": 25, "risk": "moderate", "operatingMargin": -4.5, "dailyCensus": 5, "riskFactors": ["Central WV mountain isolation", "I-79 corridor but town off highway", "Coal/gas economy volatile"] },
+        { "name": "Grant Memorial Hospital", "city": "Petersburg", "county": "Grant", "beds": 25, "risk": "moderate", "operatingMargin": -3.2, "dailyCensus": 6, "riskFactors": ["Eastern panhandle poultry processing economy", "Low-wage jobs limit insurance coverage", "Elkins/Morgantown systems competing"] },
+        { "name": "Pocahontas Memorial Hospital", "city": "Buckeye", "county": "Pocahontas", "beds": 25, "risk": "moderate", "operatingMargin": -5.0, "dailyCensus": 3, "riskFactors": ["Highest mean elevation county east of Mississippi", "Tourism seasonal (Snowshoe ski resort)", "County population under 8,000 declining"] }
       ]
     },
     "WI": {
@@ -714,9 +702,9 @@
         { "name": "Flambeau Hospital", "city": "Park Falls", "county": "Price", "year": 2020, "type": "converted" }
       ],
       "atRiskHospitals": [
-        { "name": "Burnett Medical Center", "city": "Grantsburg", "county": "Burnett", "beds": 25, "risk": "moderate" },
-        { "name": "Mellen Medical Center", "city": "Mellen", "county": "Ashland", "beds": 5, "risk": "moderate" },
-        { "name": "Langlade Hospital", "city": "Antigo", "county": "Langlade", "beds": 25, "risk": "moderate" }
+        { "name": "Burnett Medical Center", "city": "Grantsburg", "county": "Burnett", "beds": 25, "risk": "moderate", "operatingMargin": -3.0, "dailyCensus": 5, "riskFactors": ["NW Wisconsin lake country seasonal population", "MN border patient leakage to Twin Cities", "Dairy farm economy consolidation"] },
+        { "name": "Mellen Medical Center", "city": "Mellen", "county": "Ashland", "beds": 5, "risk": "moderate", "operatingMargin": -6.8, "dailyCensus": 1, "riskFactors": ["Only 5 beds, smallest hospital in WI", "Iron/copper mining economy long gone", "Lake Superior Northwoods extreme isolation"] },
+        { "name": "Langlade Hospital", "city": "Antigo", "county": "Langlade", "beds": 25, "risk": "moderate", "operatingMargin": -2.5, "dailyCensus": 7, "riskFactors": ["Paper mill/logging economy declining", "Aspirus/Marshfield systems competing", "Below breakeven with limited growth prospects"] }
       ]
     },
     "WY": {
@@ -725,8 +713,8 @@
         { "name": "South Lincoln Medical Center (old)", "city": "Kemmerer", "county": "Lincoln", "year": 2018, "type": "converted" }
       ],
       "atRiskHospitals": [
-        { "name": "Niobrara Health and Life Center", "city": "Lusk", "county": "Niobrara", "beds": 12, "risk": "moderate" },
-        { "name": "Hot Springs County Memorial Hospital", "city": "Thermopolis", "county": "Hot Springs", "beds": 25, "risk": "moderate" }
+        { "name": "Niobrara Health and Life Center", "city": "Lusk", "county": "Niobrara", "beds": 12, "risk": "moderate", "operatingMargin": -5.5, "dailyCensus": 2, "riskFactors": ["County population under 2,400", "Ranching-only economy", "100+ miles to Casper or Rapid City SD"] },
+        { "name": "Hot Springs County Memorial Hospital", "city": "Thermopolis", "county": "Hot Springs", "beds": 25, "risk": "moderate", "operatingMargin": -3.8, "dailyCensus": 4, "riskFactors": ["Hot springs tourism seasonal", "County population under 4,600", "Riverton/Casper systems 80+ miles pulling patients"] }
       ]
     }
   }
