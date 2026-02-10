@@ -30,6 +30,8 @@ const statUpdated = document.getElementById('stat-updated');
 const usMapContainer = document.getElementById('us-map');
 const mapTooltip = document.getElementById('map-tooltip');
 const mapToast = document.getElementById('map-toast');
+const mapTargetModeBtn = document.getElementById('map-target-mode-btn');
+const mapTargetStateBtn = document.getElementById('map-target-state-btn');
 const mapFactorsBtn = document.getElementById('map-factors-btn');
 const mapFactorsPanel = document.getElementById('map-factors-panel');
 const mapFactorsClose = document.getElementById('map-factors-close');
@@ -205,8 +207,10 @@ const STATE_BEACON_HOME_DEFAULT = 'IN';
 const STATE_BEACON_INPUTS_KEY = 'lni_state_beacon_inputs';
 const STATE_BEACON_NOTES_KEY = 'lni_state_beacon_notes';
 const MAP_HOME_STATE_KEY = 'lighthouseiq_map_home_state';
+const MAP_TARGET_STATE_KEY = 'lighthouseiq_map_target_state';
 let lastNoticeWindowCount = 0;
 let noticeWindowRaf = null;
+let isMapTargetMode = false;
 
 const REQUIRED_PROGRAM_ACCREDITORS = ['CCNE', 'ACEN', 'CNEA'];
 
@@ -1435,6 +1439,15 @@ const initWeatherMap = async () => {
     shape.addEventListener('mousemove', (e) => moveTooltip(e));
     shape.addEventListener('mouseleave', hideTooltip);
     shape.addEventListener('click', () => {
+      if (isMapTargetMode) {
+        const currentTarget = getMapTargetState();
+        if (currentTarget === stateId) {
+          clearMapTargetState();
+        } else {
+          setMapTargetState(stateId);
+        }
+        return;
+      }
       stateSelect.value = stateId;
       loadNotices();
     });
@@ -1454,6 +1467,8 @@ const initWeatherMap = async () => {
     labelGroup.appendChild(label);
   });
   svg.appendChild(labelGroup);
+
+  updateMapTargetStateHighlight();
 };
 
 // Show tooltip
@@ -1501,6 +1516,57 @@ const showMapToast = (message, duration = 3000) => {
     mapToast.classList.remove('visible');
     mapToast.classList.add('hidden');
   }, duration);
+};
+
+const getMapTargetState = () => {
+  try {
+    return localStorage.getItem(MAP_TARGET_STATE_KEY) || null;
+  } catch {
+    return null;
+  }
+};
+
+const updateMapTargetStateHighlight = () => {
+  const targetState = getMapTargetState();
+  usMapContainer?.querySelectorAll('[data-state]').forEach(shape => {
+    shape.classList.remove('target-state-glow');
+    if (targetState && shape.getAttribute('data-state') === targetState) {
+      shape.classList.add('target-state-glow');
+    }
+  });
+  if (mapTargetStateBtn) {
+    mapTargetStateBtn.style.display = targetState ? 'inline-flex' : 'none';
+  }
+};
+
+const setMapTargetState = (stateAbbrev) => {
+  try {
+    localStorage.setItem(MAP_TARGET_STATE_KEY, stateAbbrev);
+  } catch {
+    // ignore
+  }
+  updateMapTargetStateHighlight();
+  showMapToast(`Target state set to ${STATE_NAMES[stateAbbrev] || stateAbbrev}`);
+};
+
+const clearMapTargetState = () => {
+  try {
+    localStorage.removeItem(MAP_TARGET_STATE_KEY);
+  } catch {
+    // ignore
+  }
+  updateMapTargetStateHighlight();
+  showMapToast('Target state cleared');
+};
+
+const setMapTargetMode = (nextValue) => {
+  isMapTargetMode = nextValue;
+  if (mapTargetModeBtn) {
+    mapTargetModeBtn.classList.toggle('active', isMapTargetMode);
+    mapTargetModeBtn.setAttribute('aria-pressed', String(isMapTargetMode));
+    const status = mapTargetModeBtn.querySelector('.map-target-mode-status');
+    if (status) status.textContent = isMapTargetMode ? 'On' : 'Off';
+  }
 };
 
 const refetchStateNotices = async (stateAbbrev) => {
@@ -3815,6 +3881,10 @@ const initMapToggle = () => {
 
   mapViewBtn?.addEventListener('click', () => toggleMapView('map'));
   chartViewBtn?.addEventListener('click', () => toggleMapView('chart'));
+
+  mapTargetModeBtn?.addEventListener('click', () => {
+    setMapTargetMode(!isMapTargetMode);
+  });
 };
 
 // ==================== END MAP/CHART VIEW TOGGLE ====================
