@@ -154,6 +154,7 @@ const masterExportStateSelect = document.getElementById('master-export-state');
 const masterExportMetroCount = document.getElementById('master-export-metros');
 const masterExportWarnCount = document.getElementById('master-export-warn');
 const masterExportRuralCount = document.getElementById('master-export-rural');
+const masterExportButtons = document.getElementById('master-export-buttons');
 const masterExportToggle = document.getElementById('master-export-toggle');
 const masterExportMenu = document.getElementById('master-export-menu');
 const masterExportProgressBar = document.getElementById('master-export-progress-bar');
@@ -3758,6 +3759,15 @@ const setMasterExportProgress = (value) => {
   if (masterExportProgressBar) masterExportProgressBar.style.width = `${pct}%`;
   if (masterExportProgressLabel) masterExportProgressLabel.textContent = `${pct}%`;
 };
+const setMasterExportDisabled = (isDisabled) => {
+  if (masterExportToggle) masterExportToggle.disabled = isDisabled;
+  if (masterExportModal) {
+    masterExportModal.querySelectorAll('button[data-format]').forEach((btn) => {
+      btn.disabled = isDisabled;
+    });
+  }
+};
+
 
 const withTimeout = (promise, ms, label) => (
   new Promise((resolve, reject) => {
@@ -3978,7 +3988,7 @@ const buildMasterExportRows = (data) => {
 const exportMasterExport = async (format = 'csv') => {
   const state = masterExportStateSelect?.value || TARGET_STATE_DEFAULT;
   setMasterExportProgress(5);
-  if (masterExportToggle) masterExportToggle.disabled = true;
+  setMasterExportDisabled(true);
   try {
     const data = await withTimeout(
       buildMasterExportData(state, setMasterExportProgress),
@@ -4023,7 +4033,7 @@ const exportMasterExport = async (format = 'csv') => {
     showExportToast('Master Export failed. Please try again.');
     setMasterExportProgress(0);
   } finally {
-    if (masterExportToggle) masterExportToggle.disabled = false;
+    setMasterExportDisabled(false);
   }
 };
 
@@ -4080,6 +4090,13 @@ const initMasterExport = () => {
     masterExportMenu.classList.remove('active');
     exportMasterExport(format);
   });
+  masterExportButtons?.addEventListener('click', (event) => {
+    const btn = event.target.closest('button[data-format]');
+    if (!btn) return;
+    exportMasterExport(btn.dataset.format || 'csv');
+  });
+
+
 };
 
 const exportStateBeaconJson = () => {

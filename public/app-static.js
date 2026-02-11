@@ -7258,6 +7258,7 @@ const masterExportStateSelect = document.getElementById('master-export-state');
 const masterExportMetroCount = document.getElementById('master-export-metros');
 const masterExportWarnCount = document.getElementById('master-export-warn');
 const masterExportRuralCount = document.getElementById('master-export-rural');
+const masterExportButtons = document.getElementById('master-export-buttons');
 const masterExportToggle = document.getElementById('master-export-toggle');
 const masterExportMenu = document.getElementById('master-export-menu');
 const masterExportProgressBar = document.getElementById('master-export-progress-bar');
@@ -8306,6 +8307,11 @@ const initMasterExport = () => {
     const format = item.dataset.format || 'csv';
     masterExportMenu.classList.remove('active');
     exportMasterExport(format);
+  });
+  masterExportButtons?.addEventListener('click', (event) => {
+    const btn = event.target.closest('button[data-format]');
+    if (!btn) return;
+    exportMasterExport(btn.dataset.format || 'csv');
   });
 };
 
