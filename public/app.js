@@ -7943,7 +7943,14 @@ const buildMasterExportData = async (state) => {
 const buildMasterExportRows = (data) => {
   const rows = [];
   const pushRow = (section, item, detail = '') => rows.push([section, item, detail]);
+  let sectionIndex = 0;
+  const pushSection = (label) => {
+    if (sectionIndex > 0) rows.push(['', '', '']);
+    sectionIndex += 1;
+    rows.push([label, '', '']);
+  };
 
+  pushSection('Master Overview');
   pushRow('Master Overview', 'State', data.name);
   pushRow('Master Overview', 'Generated At', data.generatedAt);
   pushRow('Master Overview', 'Home State (Comparison)', STATE_NAMES[MASTER_EXPORT_HOME_STATE] || MASTER_EXPORT_HOME_STATE);
@@ -7955,36 +7962,40 @@ const buildMasterExportRows = (data) => {
   pushRow('Master Overview', 'Rural hospitals at risk', data.rural.summary.atRisk);
 
   (data.metros || []).forEach((metro) => {
+    const metroSection = `Metro: ${metro.name}`;
+    pushSection(metroSection);
     const detail = [metro.population, `${metro.hospitals?.length || 0} hospitals`, metro.competition].filter(Boolean).join(' â€¢ ');
-    pushRow('Metro Summary', metro.name, detail);
+    pushRow(metroSection, 'Summary', detail);
     (metro.hospitals || []).forEach((hospital) => {
       const hDetail = [hospital.system, `${hospital.beds} beds`, `Rating ${hospital.reviews}`, `Score ${hospital.score}`]
         .filter(Boolean)
         .join(' â€¢ ');
-      pushRow('Metro Hospitals', `${metro.name} - ${hospital.name}`, hDetail);
+      pushRow(metroSection, `Hospital: ${hospital.name}`, hDetail);
     });
     (metro.systems || []).forEach((system) => {
       const sDetail = [system.marketShare, `${system.facilities} facilities`].filter(Boolean).join(' â€¢ ');
-      pushRow('Metro Systems', `${metro.name} - ${system.name}`, sDetail);
+      pushRow(metroSection, `System: ${system.name}`, sDetail);
     });
     if (metro.salary) {
-      pushRow('Metro Salary', `${metro.name} Staff RN`, metro.salary.staffRN || '--');
-      pushRow('Metro Salary', `${metro.name} Travel RN`, metro.salary.travelRN || '--');
-      pushRow('Metro Salary', `${metro.name} Sign-On`, metro.salary.signOn || '--');
+      pushRow(metroSection, 'Staff RN', metro.salary.staffRN || '--');
+      pushRow(metroSection, 'Travel RN', metro.salary.travelRN || '--');
+      pushRow(metroSection, 'Sign-On', metro.salary.signOn || '--');
       (metro.salary.breakdown || []).forEach((item) => {
         const detail = [item.value, item.note].filter(Boolean).join(' â€¢ ');
-        pushRow('Metro Salary Breakdown', `${metro.name} - ${item.label || 'Benchmark'}`, detail);
+        pushRow(metroSection, `Salary: ${item.label || 'Benchmark'}`, detail);
       });
     }
   });
 
   if (data.salaryMeta?.breakdown?.length) {
+    pushSection('State Salary Benchmarks');
     data.salaryMeta.breakdown.forEach((item) => {
       const detail = [item.value, item.note].filter(Boolean).join(' â€¢ ');
       pushRow('State Salary Benchmarks', item.label || 'Benchmark', detail);
     });
   }
 
+  pushSection('WARN Notices (30d)');
   data.recentWarnNotices.forEach((notice) => {
     const employer = notice.employer_name || notice.employerName || 'Unknown employer';
     const noticeDate = notice.notice_date || notice.noticeDate || notice.retrieved_at || '';
@@ -7998,31 +8009,48 @@ const buildMasterExportRows = (data) => {
     pushRow('WARN Notices (30d)', employer, detail);
   });
 
+  pushSection('Rural Summary');
   pushRow('Rural Summary', 'Data updated', data.rural.lastUpdated || 'Unknown');
-  data.rural.atRiskHospitals.forEach((hospital) => {
-    const detail = [
-      hospital.city,
-      hospital.county ? `${hospital.county} Co.` : null,
-      hospital.beds ? `${hospital.beds} beds` : null,
-      hospital.operatingMargin !== undefined ? `Margin ${hospital.operatingMargin}%` : null,
-      hospital.dailyCensus ? `${hospital.dailyCensus} daily census` : null,
-      hospital.risk ? `Risk ${hospital.risk}` : null
-    ].filter(Boolean).join(' â€¢ ');
-    pushRow('Rural At-Risk Hospitals', hospital.name || 'Unknown', detail);
-  });
-  data.rural.closedHospitals.forEach((hospital) => {
-    const detail = [
-      hospital.city,
-      hospital.county ? `${hospital.county} Co.` : null,
-      hospital.year ? `Year ${hospital.year}` : null,
-      hospital.type ? hospital.type : null
-    ].filter(Boolean).join(' â€¢ ');
-    pushRow('Rural Closures', hospital.name || 'Unknown', detail);
-  });
+  pushRow('Rural Summary', 'Total closures since 2010', data.rural.summary.count);
+  pushRow('Rural Summary', 'Recent closures (2 years)', data.rural.summary.recent);
+  pushRow('Rural Summary', 'Hospitals at risk', data.rural.summary.atRisk);
+
+  if (data.rural.atRiskHospitals.length) {
+    pushSection('Rural At-Risk Hospitals');
+    data.rural.atRiskHospitals.forEach((hospital) => {
+      const detail = [
+        hospital.city,
+        hospital.county ? `${hospital.county} Co.` : null,
+        hospital.beds ? `${hospital.beds} beds` : null,
+        hospital.operatingMargin !== undefined ? `Margin ${hospital.operatingMargin}%` : null,
+        hospital.dailyCensus ? `${hospital.dailyCensus} daily census` : null,
+        hospital.risk ? `Risk ${hospital.risk}` : null
+      ].filter(Boolean).join(' â€¢ ');
+      pushRow('Rural At-Risk Hospitals', hospital.name || 'Unknown', detail);
+    });
+  }
+
+  if (data.rural.closedHospitals.length) {
+    pushSection('Rural Closures');
+    data.rural.closedHospitals.forEach((hospital) => {
+      const detail = [
+        hospital.city,
+        hospital.county ? `${hospital.county} Co.` : null,
+        hospital.year ? `Year ${hospital.year}` : null,
+        hospital.type ? hospital.type : null
+      ].filter(Boolean).join(' â€¢ ');
+      pushRow('Rural Closures', hospital.name || 'Unknown', detail);
+    });
+  }
 
   const beaconRows = buildStateBeaconExportRows(data.stateBeacon);
+  let beaconSection = null;
   beaconRows.forEach(([section, item, detail]) => {
-    pushRow(`State Beacon - ${section}`, item, detail);
+    if (beaconSection !== section) {
+      beaconSection = section;
+      pushSection(`State Beacon: ${section}`);
+    }
+    pushRow(`State Beacon: ${section}`, item, detail);
   });
 
   return rows;
