@@ -8068,44 +8068,49 @@ const exportMasterExport = async (format = 'csv') => {
   const state = masterExportStateSelect?.value || TARGET_STATE_DEFAULT;
   setMasterExportProgress(5);
   if (masterExportToggle) masterExportToggle.disabled = true;
-  const data = await buildMasterExportData(state);
-  setMasterExportProgress(55);
-  const rows = buildMasterExportRows(data);
-  setMasterExportProgress(75);
-  const filenameBase = `master-export-${state}`;
+  try {
+    const data = await buildMasterExportData(state);
+    setMasterExportProgress(55);
+    const rows = buildMasterExportRows(data);
+    setMasterExportProgress(75);
+    const filenameBase = `master-export-${state}`;
 
-  if (format === 'excel') {
-    downloadExcel({
-      title: `Master Export - ${data.name}`,
-      meta: [`Exported: ${new Date().toLocaleString()}`],
-      headers: ['Section', 'Item', 'Detail'],
-      rows,
-      filename: `${filenameBase}.xls`
-    });
+    if (format === 'excel') {
+      downloadExcel({
+        title: `Master Export - ${data.name}`,
+        meta: [`Exported: ${new Date().toLocaleString()}`],
+        headers: ['Section', 'Item', 'Detail'],
+        rows,
+        filename: `${filenameBase}.xls`
+      });
+      setMasterExportProgress(100);
+      showExportToast('Master Export Excel exported.');
+      return;
+    }
+
+    if (format === 'pdf') {
+      openPdfExport({
+        title: `Master Export - ${data.name}`,
+        meta: [`Exported: ${new Date().toLocaleString()}`],
+        headers: ['Section', 'Item', 'Detail'],
+        rows
+      });
+      setMasterExportProgress(100);
+      showExportToast('Master Export PDF opened.');
+      return;
+    }
+
+    const csv = buildCsv(['Section', 'Item', 'Detail'], rows);
+    downloadFile(csv, `${filenameBase}.csv`, 'text/csv');
     setMasterExportProgress(100);
-    showExportToast('Master Export Excel exported.');
+    showExportToast('Master Export CSV exported.');
+  } catch (err) {
+    console.error('Master export failed:', err);
+    showExportToast('Master Export failed. Please try again.');
+    setMasterExportProgress(0);
+  } finally {
     if (masterExportToggle) masterExportToggle.disabled = false;
-    return;
   }
-
-  if (format === 'pdf') {
-    openPdfExport({
-      title: `Master Export - ${data.name}`,
-      meta: [`Exported: ${new Date().toLocaleString()}`],
-      headers: ['Section', 'Item', 'Detail'],
-      rows
-    });
-    setMasterExportProgress(100);
-    showExportToast('Master Export PDF opened.');
-    if (masterExportToggle) masterExportToggle.disabled = false;
-    return;
-  }
-
-  const csv = buildCsv(['Section', 'Item', 'Detail'], rows);
-  downloadFile(csv, `${filenameBase}.csv`, 'text/csv');
-  setMasterExportProgress(100);
-  showExportToast('Master Export CSV exported.');
-  if (masterExportToggle) masterExportToggle.disabled = false;
 };
 
 const openMasterExport = () => {
