@@ -5297,7 +5297,7 @@ const renderStateBeacon = async (state) => {
         <table>
           <thead>
             <tr>
-              <th>Florida Metro Area</th>
+              <th>${escapeHtml(entry.name)} Metro Area</th>
               <th>Est. Indiana-Educated RNs</th>
               <th>Top Indiana Feeder Schools</th>
             </tr>
@@ -7792,6 +7792,11 @@ const exportTargetState = async ({ format = 'csv', scope = 'all' } = {}) => {
 // =============================================================================
 const MASTER_EXPORT_HOME_STATE = 'IN';
 const MASTER_EXPORT_WARN_DAYS = 30;
+const MASTER_EXPORT_OUTBOUND_SOURCES = {
+  gradOutput: 'https://www.in.gov/pla/nursing-home/nursing-education/',
+  migration: 'https://www.census.gov/data/tables/time-series/demo/geographic-mobility/state-to-state-migration.html',
+  relocationSurvey: 'https://www.beckershospitalreview.com/quality/nursing/states-where-more-nurses-want-to-relocate/'
+};
 
 const buildStateBeaconExportWithHome = (state, homeStateOverride) => {
   const entry = getBeaconEntry(state);
@@ -7883,15 +7888,12 @@ const buildStateBeaconExportWithHome = (state, homeStateOverride) => {
 const getRecentWarnNoticesForState = async (state, days = MASTER_EXPORT_WARN_DAYS) => {
   let notices = getStateNotices(state);
   if (!notices.length) {
-    try {
-      const response = await fetchJson(`/notices?state=${state}&limit=500`);
-      notices = response.notices ?? [];
-    } catch {
-      notices = [];
-    }
+    notices = await loadStateNotices(state);
   }
   const since = Date.now() - (days * 24 * 60 * 60 * 1000);
-  return notices.filter((notice) => getNoticeDateValue(notice) >= since);
+  return notices
+    .filter((notice) => isHealthcareNotice(notice))
+    .filter((notice) => getNoticeDateValue(notice) >= since);
 };
 
 const getRuralDataForMasterExport = (state) => {
@@ -7910,6 +7912,20 @@ const getRuralDataForMasterExport = (state) => {
   };
 };
 
+const getTopInstitutionsForState = (state, limit = 12) => {
+  const counts = new Map();
+  nursingPrograms.forEach((program) => {
+    const entry = normalizeProgram(program);
+    if (entry.state !== state) return;
+    const key = entry.institution || 'Unknown';
+    counts.set(key, (counts.get(key) || 0) + 1);
+  });
+  return Array.from(counts.entries())
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, limit)
+    .map(([name, count]) => ({ name, count }));
+};
+
 const buildMasterExportData = async (state) => {
   await loadStateBeaconData();
   await ensureProgramsDataForBeacon();
@@ -7923,7 +7939,12 @@ const buildMasterExportData = async (state) => {
   const totalHospitals = metros.reduce((sum, metro) => sum + (metro.hospitals?.length || 0), 0);
   const recentWarnNotices = await getRecentWarnNoticesForState(state);
   const rural = getRuralDataForMasterExport(state);
+  const topInstitutions = getTopInstitutionsForState(state);
+  const topIndianaInstitutions = getTopInstitutionsForState(MASTER_EXPORT_HOME_STATE);
   const stateBeacon = buildStateBeaconExportWithHome(state, MASTER_EXPORT_HOME_STATE);
+  const rawBeaconEntry = stateBeaconData?.states?.[state] ?? {};
+  const nursingEducation = rawBeaconEntry.nursingEducation ?? null;
+  const indianaEducation = stateBeaconData?.states?.[MASTER_EXPORT_HOME_STATE]?.nursingEducation ?? null;
 
   return {
     generatedAt: new Date().toISOString(),
@@ -7937,7 +7958,13 @@ const buildMasterExportData = async (state) => {
     salaryMeta: metroData.salaryMeta || null,
     recentWarnNotices,
     rural,
-    stateBeacon
+    stateBeacon,
+    pipeline: entry.pipeline || {},
+    nursingEducation,
+    indianaEducation,
+    topInstitutions,
+    topIndianaInstitutions,
+    outboundSources: MASTER_EXPORT_OUTBOUND_SOURCES
   };
 };
 
@@ -7956,6 +7983,7 @@ const buildMasterExportRows = (data) => {
     sectionIndex += 1;
     rows.push([label, '', '']);
   };
+  const joinDetail = (items) => items.filter(Boolean).join(' | ');
 
   pushSection('Master Overview');
   pushRow('Master Overview', 'State', data.name);
@@ -7971,16 +7999,14 @@ const buildMasterExportRows = (data) => {
   (data.metros || []).forEach((metro) => {
     const metroSection = `Metro: ${metro.name}`;
     pushSection(metroSection);
-    const detail = [metro.population, `${metro.hospitals?.length || 0} hospitals`, metro.competition].filter(Boolean).join(' â€¢ ');
+    const detail = joinDetail([metro.population, `${metro.hospitals?.length || 0} hospitals`, metro.competition]);
     pushRow(metroSection, 'Summary', detail);
     (metro.hospitals || []).forEach((hospital) => {
-      const hDetail = [hospital.system, `${hospital.beds} beds`, `Rating ${hospital.reviews}`, `Score ${hospital.score}`]
-        .filter(Boolean)
-        .join(' â€¢ ');
+      const hDetail = joinDetail([hospital.system, `${hospital.beds} beds`, `Rating ${hospital.reviews}`, `Score ${hospital.score}`]);
       pushRow(metroSection, `Hospital: ${hospital.name}`, hDetail);
     });
     (metro.systems || []).forEach((system) => {
-      const sDetail = [system.marketShare, `${system.facilities} facilities`].filter(Boolean).join(' â€¢ ');
+      const sDetail = joinDetail([system.marketShare, `${system.facilities} facilities`]);
       pushRow(metroSection, `System: ${system.name}`, sDetail);
     });
     if (metro.salary) {
@@ -7988,7 +8014,7 @@ const buildMasterExportRows = (data) => {
       pushRow(metroSection, 'Travel RN', metro.salary.travelRN || '--');
       pushRow(metroSection, 'Sign-On', metro.salary.signOn || '--');
       (metro.salary.breakdown || []).forEach((item) => {
-        const detail = [item.value, item.note].filter(Boolean).join(' â€¢ ');
+        const detail = joinDetail([item.value, item.note]);
         pushRow(metroSection, `Salary: ${item.label || 'Benchmark'}`, detail);
       });
     }
@@ -7997,22 +8023,108 @@ const buildMasterExportRows = (data) => {
   if (data.salaryMeta?.breakdown?.length) {
     pushSection('State Salary Benchmarks');
     data.salaryMeta.breakdown.forEach((item) => {
-      const detail = [item.value, item.note].filter(Boolean).join(' â€¢ ');
+      const detail = joinDetail([item.value, item.note]);
       pushRow('State Salary Benchmarks', item.label || 'Benchmark', detail);
     });
   }
+
+  pushSection('Target State Pipeline');
+  if (!data.pipeline?.majorPrograms?.length && !data.pipeline?.residencies?.length && !data.pipeline?.clinicalPartners?.length) {
+    pushRow('Target State Pipeline', 'Notes', 'No pipeline notes available yet.');
+  }
+  (data.pipeline?.majorPrograms || []).forEach((program) => {
+    pushRow('Target State Pipeline', 'Major Program', program);
+  });
+  (data.pipeline?.residencies || []).forEach((item) => {
+    pushRow('Target State Pipeline', 'Residencies', item);
+  });
+  (data.pipeline?.clinicalPartners || []).forEach((item) => {
+    pushRow('Target State Pipeline', 'Clinical Partners', item);
+  });
+
+  if (data.nursingEducation?.breakdown) {
+    pushSection('Target State Nursing Education');
+    Object.values(data.nursingEducation.breakdown).forEach((group) => {
+      if (!group?.schools) return;
+      group.schools.forEach((school) => {
+        const detail = joinDetail([school.type, school.graduates ? `${school.graduates} grads` : null]);
+        pushRow('Target State Nursing Education', school.name, detail);
+      });
+    });
+  }
+
+  if (data.topInstitutions?.length) {
+    pushSection('Target State Nursing Programs (Top)');
+    data.topInstitutions.forEach((entry) => {
+      pushRow('Target State Nursing Programs (Top)', entry.name, `${entry.count} programs`);
+    });
+  }
+
+  if (data.stateBeacon?.candidateMetroTable?.length) {
+    pushSection('Indiana Feeder Pipeline (Target State)');
+    data.stateBeacon.candidateMetroTable.forEach((row) => {
+      const detail = joinDetail([row.estimate, row.feederSchools]);
+      pushRow('Indiana Feeder Pipeline (Target State)', row.metro || 'Metro', detail);
+    });
+  } else if (data.indianaEducation?.breakdown) {
+    pushSection('Indiana Nursing Education');
+    Object.values(data.indianaEducation.breakdown).forEach((group) => {
+      if (!group?.schools) return;
+      group.schools.forEach((school) => {
+        const detail = joinDetail([school.type, school.graduates ? `${school.graduates} grads` : null]);
+        pushRow('Indiana Nursing Education', school.name, detail);
+      });
+    });
+  } else if (data.topIndianaInstitutions?.length) {
+    pushSection('Indiana Nursing Programs (Top)');
+    data.topIndianaInstitutions.forEach((entry) => {
+      pushRow('Indiana Nursing Programs (Top)', entry.name, `${entry.count} programs`);
+    });
+  }
+
+
+
+  pushSection('Outbound Insights (Target State)');
+  if (data.stateBeacon?.candidateInsights?.length) {
+    data.stateBeacon.candidateInsights.forEach((item) => {
+      pushRow('Outbound Insights (Target State)', item.title || 'Insight', item.detail || '');
+    });
+  } else {
+    pushRow('Outbound Insights (Target State)', 'Notes', 'No outbound insights available yet.');
+  }
+
+  if (data.stateBeacon?.candidateModel) {
+    const model = data.stateBeacon.candidateModel;
+    pushRow('Outbound Insights (Target State)', 'Grad output', model.gradOutput ?? '--');
+    pushRow('Outbound Insights (Target State)', 'Brain drain rate', model.brainDrainRate ?? '--');
+    pushRow('Outbound Insights (Target State)', 'Relocation preference', model.relocationPreference ?? '--');
+    pushRow('Outbound Insights (Target State)', 'Healthcare ratio', model.healthcareRatio ?? '--');
+  }
+
+  pushSection('Outbound Insights Sources');
+  Object.entries(data.outboundSources || {}).forEach(([key, value]) => {
+    pushRow('Outbound Insights Sources', key, value);
+  });
 
   pushSection('WARN Notices (30d)');
   data.recentWarnNotices.forEach((notice) => {
     const employer = notice.employer_name || notice.employerName || 'Unknown employer';
     const noticeDate = notice.notice_date || notice.noticeDate || notice.retrieved_at || '';
-    const detail = [
+    const detail = joinDetail([
+      notice.facility_name,
+      notice.parent_system,
+      notice.address,
       notice.city,
       notice.state,
-      noticeDate,
-      notice.employees_affected || notice.affectedCount,
-      notice.nursing_label || notice.nursingImpact?.label
-    ].filter(Boolean).join(' â€¢ ');
+      noticeDate ? `Notice ${noticeDate}` : null,
+      notice.effective_date ? `Effective ${notice.effective_date}` : null,
+      notice.employees_affected || notice.affectedCount ? `Affected ${notice.employees_affected || notice.affectedCount}` : null,
+      notice.nursing_label || notice.nursingImpact?.label ? `Impact ${notice.nursing_label || notice.nursingImpact?.label}` : null,
+      notice.reason ? `Reason ${notice.reason}` : null,
+      notice.naics ? `NAICS ${notice.naics}` : null,
+      notice.source_name ? `Source ${notice.source_name}` : null,
+      notice.source_url ? `Source URL ${notice.source_url}` : null
+    ]);
     pushRow('WARN Notices (30d)', employer, detail);
   });
 
@@ -8025,14 +8137,14 @@ const buildMasterExportRows = (data) => {
   if (data.rural.atRiskHospitals.length) {
     pushSection('Rural At-Risk Hospitals');
     data.rural.atRiskHospitals.forEach((hospital) => {
-      const detail = [
+      const detail = joinDetail([
         hospital.city,
         hospital.county ? `${hospital.county} Co.` : null,
         hospital.beds ? `${hospital.beds} beds` : null,
         hospital.operatingMargin !== undefined ? `Margin ${hospital.operatingMargin}%` : null,
         hospital.dailyCensus ? `${hospital.dailyCensus} daily census` : null,
         hospital.risk ? `Risk ${hospital.risk}` : null
-      ].filter(Boolean).join(' â€¢ ');
+      ]);
       pushRow('Rural At-Risk Hospitals', hospital.name || 'Unknown', detail);
     });
   }
@@ -8040,12 +8152,12 @@ const buildMasterExportRows = (data) => {
   if (data.rural.closedHospitals.length) {
     pushSection('Rural Closures');
     data.rural.closedHospitals.forEach((hospital) => {
-      const detail = [
+      const detail = joinDetail([
         hospital.city,
         hospital.county ? `${hospital.county} Co.` : null,
         hospital.year ? `Year ${hospital.year}` : null,
         hospital.type ? hospital.type : null
-      ].filter(Boolean).join(' â€¢ ');
+      ]);
       pushRow('Rural Closures', hospital.name || 'Unknown', detail);
     });
   }

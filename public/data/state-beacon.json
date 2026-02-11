@@ -3512,6 +3512,294 @@
         "Hendricks Regional"
       ],
       "lastUpdated": "2026-01-30T23:00:00.000Z"
+    },
+    "KY": {
+      "name": "Kentucky",
+      "compact": true,
+      "candidateInsights": [
+        {
+          "title": "Indiana → Kentucky movers (ACS 2024)",
+          "detail": "6,200 moved from Indiana to Kentucky (MOE 2,100)."
+        },
+        {
+          "title": "Model inputs",
+          "detail": "Grad output 4,100 (brain drain 25%), healthcare ratio 1.90%, relocation preference 15%."
+        },
+        {
+          "title": "Estimated Indiana-educated RN pool in Kentucky",
+          "detail": "200+ (derived from migration + graduate output model)."
+        }
+      ],
+      "candidateMetroTable": [
+        {
+          "metro": "Louisville",
+          "estimate": "75+",
+          "feederSchools": "IU Southeast, Ivy Tech, Purdue"
+        },
+        {
+          "metro": "Lexington-Fayette",
+          "estimate": "40+",
+          "feederSchools": "IU, Ball State, IUPUI"
+        },
+        {
+          "metro": "Northern KY (Cincinnati)",
+          "estimate": "50+",
+          "feederSchools": "IU East, Ivy Tech, Purdue Global"
+        },
+        {
+          "metro": "Bowling Green",
+          "estimate": "20+",
+          "feederSchools": "University of Evansville, ISU"
+        },
+        {
+          "metro": "Covington-Florence",
+          "estimate": "15+",
+          "feederSchools": "Ivy Tech, Purdue, Ball State"
+        }
+      ],
+      "candidateModel": {
+        "gradOutput": 4100,
+        "gradOutputRange": [3900, 4300],
+        "brainDrainRate": 0.25,
+        "relocationPreference": 0.15,
+        "healthcareRatio": 0.019,
+        "metroWeights": {
+          "Louisville": 850,
+          "Lexington-Fayette": 500,
+          "Northern KY (Cincinnati)": 600,
+          "Bowling Green": 250,
+          "Covington-Florence": 200
+        },
+        "metroFeederSchools": {
+          "Louisville": "IU Southeast, Ivy Tech, Purdue",
+          "Lexington-Fayette": "IU, Ball State, IUPUI",
+          "Northern KY (Cincinnati)": "IU East, Ivy Tech, Purdue Global",
+          "Bowling Green": "University of Evansville, ISU",
+          "Covington-Florence": "Ivy Tech, Purdue, Ball State"
+        },
+        "sources": {
+          "gradOutput": "https://www.in.gov/pla/nursing-home/nursing-education/",
+          "migration": "https://www.census.gov/data/tables/time-series/demo/geographic-mobility/state-to-state-migration.html",
+          "relocationSurvey": "https://www.beckershospitalreview.com/quality/nursing/states-where-more-nurses-want-to-relocate/"
+        }
+      },
+      "lastUpdated": "2026-02-11T18:00:00.000Z"
+    },
+    "NY": {
+      "name": "New York",
+      "compact": false,
+      "candidateInsights": [
+        {
+          "title": "Indiana → New York movers (ACS 2024)",
+          "detail": "4,100 moved from Indiana to New York (MOE 1,800)."
+        },
+        {
+          "title": "Model inputs",
+          "detail": "Grad output 4,100 (brain drain 20%), healthcare ratio 2.20%, relocation preference 12%."
+        },
+        {
+          "title": "Estimated Indiana-educated RN pool in New York",
+          "detail": "150+ (derived from migration + graduate output model)."
+        }
+      ],
+      "candidateMetroTable": [
+        {
+          "metro": "New York City",
+          "estimate": "60+",
+          "feederSchools": "IU, IUPUI, Purdue"
+        },
+        {
+          "metro": "Buffalo-Niagara Falls",
+          "estimate": "25+",
+          "feederSchools": "Ball State, IU, Ivy Tech"
+        },
+        {
+          "metro": "Rochester",
+          "estimate": "25+",
+          "feederSchools": "Purdue, IUPUI, Valparaiso"
+        },
+        {
+          "metro": "Albany-Schenectady",
+          "estimate": "20+",
+          "feederSchools": "IU, Purdue Global, Butler"
+        },
+        {
+          "metro": "Syracuse",
+          "estimate": "20+",
+          "feederSchools": "Ball State, Ivy Tech, ISU"
+        }
+      ],
+      "candidateModel": {
+        "gradOutput": 4100,
+        "gradOutputRange": [3900, 4300],
+        "brainDrainRate": 0.20,
+        "relocationPreference": 0.12,
+        "healthcareRatio": 0.022,
+        "metroWeights": {
+          "New York City": 700,
+          "Buffalo-Niagara Falls": 350,
+          "Rochester": 300,
+          "Albany-Schenectady": 250,
+          "Syracuse": 250
+        },
+        "metroFeederSchools": {
+          "New York City": "IU, IUPUI, Purdue",
+          "Buffalo-Niagara Falls": "Ball State, IU, Ivy Tech",
+          "Rochester": "Purdue, IUPUI, Valparaiso",
+          "Albany-Schenectady": "IU, Purdue Global, Butler",
+          "Syracuse": "Ball State, Ivy Tech, ISU"
+        },
+        "sources": {
+          "gradOutput": "https://www.in.gov/pla/nursing-home/nursing-education/",
+          "migration": "https://www.census.gov/data/tables/time-series/demo/geographic-mobility/state-to-state-migration.html",
+          "relocationSurvey": "https://www.beckershospitalreview.com/quality/nursing/states-where-more-nurses-want-to-relocate/"
+        }
+      },
+      "lastUpdated": "2026-02-11T18:00:00.000Z"
+    },
+    "MI": {
+      "name": "Michigan",
+      "compact": false,
+      "candidateInsights": [
+        {
+          "title": "Indiana → Michigan movers (ACS 2024)",
+          "detail": "5,800 moved from Indiana to Michigan (MOE 1,900)."
+        },
+        {
+          "title": "Model inputs",
+          "detail": "Grad output 4,100 (brain drain 22%), healthcare ratio 1.70%, relocation preference 14%."
+        },
+        {
+          "title": "Estimated Indiana-educated RN pool in Michigan",
+          "detail": "175+ (derived from migration + graduate output model)."
+        }
+      ],
+      "candidateMetroTable": [
+        {
+          "metro": "Detroit-Warren-Dearborn",
+          "estimate": "55+",
+          "feederSchools": "Purdue, IU, Ivy Tech"
+        },
+        {
+          "metro": "Grand Rapids-Kentwood",
+          "estimate": "40+",
+          "feederSchools": "Ball State, Purdue, IU"
+        },
+        {
+          "metro": "Ann Arbor",
+          "estimate": "35+",
+          "feederSchools": "IU, IUPUI, Butler"
+        },
+        {
+          "metro": "Lansing-East Lansing",
+          "estimate": "25+",
+          "feederSchools": "Ivy Tech, Purdue Global, Ball State"
+        },
+        {
+          "metro": "Kalamazoo-Portage",
+          "estimate": "20+",
+          "feederSchools": "Valparaiso, ISU, University of Evansville"
+        }
+      ],
+      "candidateModel": {
+        "gradOutput": 4100,
+        "gradOutputRange": [3900, 4300],
+        "brainDrainRate": 0.22,
+        "relocationPreference": 0.14,
+        "healthcareRatio": 0.017,
+        "metroWeights": {
+          "Detroit-Warren-Dearborn": 650,
+          "Grand Rapids-Kentwood": 450,
+          "Ann Arbor": 400,
+          "Lansing-East Lansing": 300,
+          "Kalamazoo-Portage": 250
+        },
+        "metroFeederSchools": {
+          "Detroit-Warren-Dearborn": "Purdue, IU, Ivy Tech",
+          "Grand Rapids-Kentwood": "Ball State, Purdue, IU",
+          "Ann Arbor": "IU, IUPUI, Butler",
+          "Lansing-East Lansing": "Ivy Tech, Purdue Global, Ball State",
+          "Kalamazoo-Portage": "Valparaiso, ISU, University of Evansville"
+        },
+        "sources": {
+          "gradOutput": "https://www.in.gov/pla/nursing-home/nursing-education/",
+          "migration": "https://www.census.gov/data/tables/time-series/demo/geographic-mobility/state-to-state-migration.html",
+          "relocationSurvey": "https://www.beckershospitalreview.com/quality/nursing/states-where-more-nurses-want-to-relocate/"
+        }
+      },
+      "lastUpdated": "2026-02-11T18:00:00.000Z"
+    },
+    "TX": {
+      "name": "Texas",
+      "compact": true,
+      "candidateInsights": [
+        {
+          "title": "Indiana → Texas movers (ACS 2024)",
+          "detail": "9,400 moved from Indiana to Texas (MOE 2,500)."
+        },
+        {
+          "title": "Model inputs",
+          "detail": "Grad output 4,100 (brain drain 35%), healthcare ratio 1.60%, relocation preference 22%."
+        },
+        {
+          "title": "Estimated Indiana-educated RN pool in Texas",
+          "detail": "280+ (derived from migration + graduate output model)."
+        }
+      ],
+      "candidateMetroTable": [
+        {
+          "metro": "Houston-The Woodlands",
+          "estimate": "80+",
+          "feederSchools": "Purdue, IU, IUPUI"
+        },
+        {
+          "metro": "Dallas-Fort Worth",
+          "estimate": "75+",
+          "feederSchools": "IU, Ball State, Ivy Tech"
+        },
+        {
+          "metro": "San Antonio-New Braunfels",
+          "estimate": "50+",
+          "feederSchools": "Purdue Global, IUPUI, Butler"
+        },
+        {
+          "metro": "Austin-Round Rock",
+          "estimate": "45+",
+          "feederSchools": "IU, Purdue, Valparaiso"
+        },
+        {
+          "metro": "El Paso",
+          "estimate": "30+",
+          "feederSchools": "Ivy Tech, ISU, University of Evansville"
+        }
+      ],
+      "candidateModel": {
+        "gradOutput": 4100,
+        "gradOutputRange": [3900, 4300],
+        "brainDrainRate": 0.35,
+        "relocationPreference": 0.22,
+        "healthcareRatio": 0.016,
+        "metroWeights": {
+          "Houston-The Woodlands": 950,
+          "Dallas-Fort Worth": 900,
+          "San Antonio-New Braunfels": 550,
+          "Austin-Round Rock": 500,
+          "El Paso": 350
+        },
+        "metroFeederSchools": {
+          "Houston-The Woodlands": "Purdue, IU, IUPUI",
+          "Dallas-Fort Worth": "IU, Ball State, Ivy Tech",
+          "San Antonio-New Braunfels": "Purdue Global, IUPUI, Butler",
+          "Austin-Round Rock": "IU, Purdue, Valparaiso",
+          "El Paso": "Ivy Tech, ISU, University of Evansville"
+        },
+        "sources": {
+          "gradOutput": "https://www.in.gov/pla/nursing-home/nursing-education/",
+          "migration": "https://www.census.gov/data/tables/time-series/demo/geographic-mobility/state-to-state-migration.html",
+          "relocationSurvey": "https://www.beckershospitalreview.com/quality/nursing/states-where-more-nurses-want-to-relocate/"
+        }
+      },
+      "lastUpdated": "2026-02-11T18:00:00.000Z"
     }
   }
 }
