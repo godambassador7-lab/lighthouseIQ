@@ -73,6 +73,9 @@
             <button class="module-item target-state-pulse" id="open-target-state" type="button">
               Target State
             </button>
+            <button class="module-item" id="open-master-export" type="button">
+              Master Export
+            </button>
           </div>
         </div>
       </div>
@@ -1369,6 +1372,55 @@
           <div class="target-state-footer-right">
             <button type="button" class="btn ghost" id="target-state-open-beacon">Open Full State Beacon</button>
             <button type="button" class="btn secondary" id="target-state-close-footer">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Master Export Modal -->
+    <div class="modal-overlay" id="master-export-modal">
+      <div class="modal-card master-export-card">
+        <div class="modal-header">
+          <h3>Master Export</h3>
+          <button class="modal-close" id="master-export-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p class="panel-subtitle">
+            Comprehensive export for a target state: all metros, last 30 days of WARN notices, state beacon comparison
+            (home state defaults to Indiana), and rural hospital data. News feeds are excluded.
+          </p>
+          <div class="master-export-controls">
+            <label for="master-export-state">Select Target State</label>
+            <select id="master-export-state"></select>
+          </div>
+          <div class="master-export-summary">
+            <div class="summary-item">
+              <span class="summary-label">Metros</span>
+              <span class="summary-value" id="master-export-metros">--</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">WARN Notices (30d)</span>
+              <span class="summary-value" id="master-export-warn">--</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Rural At Risk</span>
+              <span class="summary-value" id="master-export-rural">--</span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="modal-footer-left">
+            <div class="export-dropdown" id="master-export-dropdown">
+              <button type="button" class="beacon-action-btn export-dropdown-btn" id="master-export-toggle">Export</button>
+              <div class="save-dropdown export-dropdown-menu" id="master-export-menu">
+                <div class="save-dropdown-item" data-format="csv">CSV</div>
+                <div class="save-dropdown-item" data-format="excel">Excel</div>
+                <div class="save-dropdown-item" data-format="pdf">PDF</div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer-right">
+            <button type="button" class="btn secondary" id="master-export-close-footer">Close</button>
           </div>
         </div>
       </div>

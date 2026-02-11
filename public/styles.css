@@ -2968,6 +2968,53 @@ select {
   min-width: 220px;
 }
 
+.master-export-card {
+  max-width: 720px;
+}
+
+.master-export-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.master-export-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 1rem;
+}
+
+.master-export-summary .summary-item {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(26, 54, 93, 0.08);
+  border-radius: var(--radius-sm);
+  padding: 0.8rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.master-export-summary .summary-label {
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.master-export-summary .summary-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+@media (max-width: 720px) {
+  .master-export-summary {
+    grid-template-columns: 1fr;
+  }
+}
+
 .premium-insights {
   margin: 2.5rem 0 3rem;
   padding: 0 64px;
