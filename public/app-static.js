@@ -7256,8 +7256,7 @@ const masterExportStateSelect = document.getElementById('master-export-state');
 const masterExportMetroCount = document.getElementById('master-export-metros');
 const masterExportWarnCount = document.getElementById('master-export-warn');
 const masterExportRuralCount = document.getElementById('master-export-rural');
-const masterExportToggle = document.getElementById('master-export-toggle');
-const masterExportMenu = document.getElementById('master-export-menu');
+const masterExportButtons = document.getElementById('master-export-buttons');
 const masterExportProgressBar = document.getElementById('master-export-progress-bar');
 const masterExportProgressLabel = document.getElementById('master-export-progress-label');
 const targetStateExportToggle = document.getElementById('target-state-export-toggle');
@@ -8067,7 +8066,7 @@ const buildMasterExportRows = (data) => {
 const exportMasterExport = async (format = 'csv') => {
   const state = masterExportStateSelect?.value || TARGET_STATE_DEFAULT;
   setMasterExportProgress(5);
-  if (masterExportToggle) masterExportToggle.disabled = true;
+  if (masterExportButtons) masterExportButtons.querySelectorAll('button').forEach(b => b.disabled = true);
   try {
     const data = await buildMasterExportData(state);
     setMasterExportProgress(55);
@@ -8109,7 +8108,7 @@ const exportMasterExport = async (format = 'csv') => {
     showExportToast('Master Export failed. Please try again.');
     setMasterExportProgress(0);
   } finally {
-    if (masterExportToggle) masterExportToggle.disabled = false;
+    if (masterExportButtons) masterExportButtons.querySelectorAll('button').forEach(b => b.disabled = false);
   }
 };
 
@@ -8155,16 +8154,10 @@ const initMasterExport = () => {
     if (event.target === masterExportModal) closeMasterExport();
   });
 
-  masterExportToggle?.addEventListener('click', (event) => {
-    event.stopPropagation();
-    masterExportMenu?.classList.toggle('active');
-  });
-  masterExportMenu?.addEventListener('click', (event) => {
-    const item = event.target.closest('.save-dropdown-item');
-    if (!item) return;
-    const format = item.dataset.format || 'csv';
-    masterExportMenu.classList.remove('active');
-    exportMasterExport(format);
+  masterExportButtons?.addEventListener('click', (event) => {
+    const btn = event.target.closest('button[data-format]');
+    if (!btn) return;
+    exportMasterExport(btn.dataset.format);
   });
 };
 

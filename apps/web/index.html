@@ -1410,14 +1410,11 @@
         </div>
           <div class="modal-footer">
             <div class="modal-footer-left">
-              <div class="export-dropdown" id="master-export-dropdown">
-              <button type="button" class="beacon-action-btn export-dropdown-btn" id="master-export-toggle">Export</button>
-              <div class="save-dropdown export-dropdown-menu" id="master-export-menu">
-                <div class="save-dropdown-item" data-format="csv">CSV</div>
-                <div class="save-dropdown-item" data-format="excel">Excel</div>
-                <div class="save-dropdown-item" data-format="pdf">PDF</div>
+              <div class="master-export-buttons" id="master-export-buttons">
+                <button type="button" class="beacon-action-btn" data-format="csv">CSV</button>
+                <button type="button" class="beacon-action-btn" data-format="excel">Excel</button>
+                <button type="button" class="beacon-action-btn" data-format="pdf">PDF</button>
               </div>
-            </div>
             <div class="master-export-progress" aria-hidden="true">
               <div class="master-export-progress-track">
                 <div class="master-export-progress-bar" id="master-export-progress-bar" style="width: 0%;"></div>
