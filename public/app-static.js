@@ -7888,7 +7888,12 @@ const buildStateBeaconExportWithHome = (state, homeStateOverride) => {
 const getRecentWarnNoticesForState = async (state, days = MASTER_EXPORT_WARN_DAYS) => {
   let notices = getStateNotices(state);
   if (!notices.length) {
-    notices = await loadStateNotices(state);
+    try {
+      const response = await fetchJson(`/notices?state=${state}&limit=500`);
+      notices = response.notices ?? [];
+    } catch {
+      notices = [];
+    }
   }
   const since = Date.now() - (days * 24 * 60 * 60 * 1000);
   return notices
@@ -8178,7 +8183,7 @@ const buildMasterExportRows = (data) => {
 const exportMasterExport = async (format = 'csv') => {
   const state = masterExportStateSelect?.value || TARGET_STATE_DEFAULT;
   setMasterExportProgress(5);
-  if (masterExportButtons) masterExportButtons.querySelectorAll('button').forEach(b => b.disabled = true);
+  if (masterExportToggle) masterExportToggle.disabled = true;
   try {
     const data = await buildMasterExportData(state);
     setMasterExportProgress(55);
@@ -8220,7 +8225,7 @@ const exportMasterExport = async (format = 'csv') => {
     showExportToast('Master Export failed. Please try again.');
     setMasterExportProgress(0);
   } finally {
-    if (masterExportButtons) masterExportButtons.querySelectorAll('button').forEach(b => b.disabled = false);
+    if (masterExportToggle) masterExportToggle.disabled = false;
   }
 };
 
