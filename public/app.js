@@ -7987,15 +7987,6 @@ const setMasterExportProgress = (value) => {
   if (masterExportProgressBar) masterExportProgressBar.style.width = `${pct}%`;
   if (masterExportProgressLabel) masterExportProgressLabel.textContent = `${pct}%`;
 };
-const setMasterExportDisabled = (isDisabled) => {
-  if (masterExportToggle) masterExportToggle.disabled = isDisabled;
-  if (masterExportModal) {
-    masterExportModal.querySelectorAll('button[data-format]').forEach((btn) => {
-      btn.disabled = isDisabled;
-    });
-  }
-};
-
 const withTimeout = (promise, ms, label) => (
   new Promise((resolve, reject) => {
     const timer = setTimeout(() => reject(new Error(`${label} timed out`)), ms);
@@ -8215,7 +8206,7 @@ const buildMasterExportRows = (data) => {
 const exportMasterExport = async (format = 'csv') => {
   const state = masterExportStateSelect?.value || TARGET_STATE_DEFAULT;
   setMasterExportProgress(5);
-  setMasterExportDisabled(true);
+  if (masterExportToggle) masterExportToggle.disabled = true;
   try {
     const data = await withTimeout(
       buildMasterExportData(state, setMasterExportProgress),
@@ -8260,7 +8251,7 @@ const exportMasterExport = async (format = 'csv') => {
     showExportToast('Master Export failed. Please try again.');
     setMasterExportProgress(0);
   } finally {
-    setMasterExportDisabled(false);
+    if (masterExportToggle) masterExportToggle.disabled = false;
   }
 };
 
@@ -8322,8 +8313,6 @@ const initMasterExport = () => {
     if (!btn) return;
     exportMasterExport(btn.dataset.format || 'csv');
   });
-
-
 };
 
 const exportStateBeaconJson = () => {
