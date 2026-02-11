@@ -154,7 +154,8 @@ const masterExportStateSelect = document.getElementById('master-export-state');
 const masterExportMetroCount = document.getElementById('master-export-metros');
 const masterExportWarnCount = document.getElementById('master-export-warn');
 const masterExportRuralCount = document.getElementById('master-export-rural');
-const masterExportButtons = document.getElementById('master-export-buttons');
+const masterExportToggle = document.getElementById('master-export-toggle');
+const masterExportMenu = document.getElementById('master-export-menu');
 const masterExportProgressBar = document.getElementById('master-export-progress-bar');
 const masterExportProgressLabel = document.getElementById('master-export-progress-label');
 const targetStateName = document.getElementById('target-state-name');
@@ -4068,10 +4069,16 @@ const initMasterExport = () => {
     if (event.target === masterExportModal) closeMasterExport();
   });
 
-  masterExportButtons?.addEventListener('click', (event) => {
-    const btn = event.target.closest('button[data-format]');
-    if (!btn) return;
-    exportMasterExport(btn.dataset.format);
+  masterExportToggle?.addEventListener('click', (event) => {
+    event.stopPropagation();
+    masterExportMenu?.classList.toggle('active');
+  });
+  masterExportMenu?.addEventListener('click', (event) => {
+    const item = event.target.closest('.save-dropdown-item');
+    if (!item) return;
+    const format = item.dataset.format || 'csv';
+    masterExportMenu.classList.remove('active');
+    exportMasterExport(format);
   });
 };
 
