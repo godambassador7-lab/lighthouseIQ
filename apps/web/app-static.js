@@ -5053,6 +5053,7 @@ const getBeaconEntry = (state) => {
     newsFeed: entry.newsFeed ?? [],
     candidateInsights: entry.candidateInsights ?? [],
     candidateMetroTable: entry.candidateMetroTable ?? [],
+    candidateModel: entry.candidateModel ?? null,
     newsKeywords: entry.newsKeywords ?? [STATE_NAMES[state], state].filter(Boolean),
     priorityMetros: entry.priorityMetros ?? []
   };
@@ -5484,6 +5485,7 @@ const buildStateBeaconExport = (state) => {
     },
     candidateInsights: entry.candidateInsights || [],
     candidateMetroTable: entry.candidateMetroTable || [],
+    candidateModel: entry.candidateModel || null,
     pros: entry.pros,
     cons: entry.cons,
     attractions: exportNotes.attractions,
@@ -7876,6 +7878,7 @@ const buildStateBeaconExportWithHome = (state, homeStateOverride) => {
     },
     candidateInsights: entry.candidateInsights || [],
     candidateMetroTable: entry.candidateMetroTable || [],
+    candidateModel: entry.candidateModel || null,
     pros: entry.pros,
     cons: entry.cons,
     attractions: exportNotes.attractions,
