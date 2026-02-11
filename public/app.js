@@ -7225,9 +7225,6 @@ const initStateBeacon = () => {
   openTargetStateBtn?.addEventListener('click', openTargetState);
   targetStateCloseBtn?.addEventListener('click', closeTargetState);
   targetStateCloseFooter?.addEventListener('click', closeTargetState);
-  targetStateSelect?.addEventListener('change', () => {
-    renderTargetState(targetStateSelect.value);
-  });
   targetStateExportCsv?.addEventListener('click', exportTargetStateCsv);
   targetStateExportExcel?.addEventListener('click', exportTargetStateExcel);
   targetStateExportPdf?.addEventListener('click', exportTargetStatePdf);
