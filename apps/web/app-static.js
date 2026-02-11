@@ -6712,7 +6712,11 @@ const selectTargetStateMetro = (metro, stateAbbrev) => {
 };
 
 const openTargetState = async () => {
-  await renderTargetState(TARGET_STATE_DEFAULT);
+  // Use the map's selected target state, then the dropdown value, then the default
+  const state = getMapTargetState() || targetStateSelect?.value || TARGET_STATE_DEFAULT;
+  // Sync the dropdown to reflect the active state
+  if (targetStateSelect) targetStateSelect.value = state;
+  await renderTargetState(state);
   targetStateModal?.classList.add('active');
 };
 
@@ -7226,12 +7230,16 @@ const initStateBeacon = () => {
   openTargetStateBtn?.addEventListener('click', openTargetState);
   targetStateCloseBtn?.addEventListener('click', closeTargetState);
   targetStateCloseFooter?.addEventListener('click', closeTargetState);
+  targetStateSelect?.addEventListener('change', () => {
+    renderTargetState(targetStateSelect.value);
+  });
   targetStateExportCsv?.addEventListener('click', exportTargetStateCsv);
   targetStateExportExcel?.addEventListener('click', exportTargetStateExcel);
   targetStateExportPdf?.addEventListener('click', exportTargetStatePdf);
   targetStateOpenBeacon?.addEventListener('click', () => {
+    const state = targetStateSelect?.value || TARGET_STATE_DEFAULT;
     closeTargetState();
-    openStateBeacon(TARGET_STATE_DEFAULT);
+    openStateBeacon(state);
   });
 
   // Initialize quick tags
