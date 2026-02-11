@@ -7934,18 +7934,22 @@ const getTopInstitutionsForState = (state, limit = 12) => {
     .map(([name, count]) => ({ name, count }));
 };
 
-const buildMasterExportData = async (state) => {
+const buildMasterExportData = async (state, progressCb) => {
   await loadStateBeaconData();
+  if (progressCb) progressCb(25);
   await ensureProgramsDataForBeacon();
+  if (progressCb) progressCb(35);
   if (typeof loadRuralClosuresData === 'function') {
     await loadRuralClosuresData();
   }
+  if (progressCb) progressCb(45);
 
   const entry = getBeaconEntry(state);
   const metroData = STATE_METRO_DATA[state] || STATE_METRO_DATA.KY || {};
   const metros = metroData?.metros || [];
   const totalHospitals = metros.reduce((sum, metro) => sum + (metro.hospitals?.length || 0), 0);
   const recentWarnNotices = await getRecentWarnNoticesForState(state);
+  if (progressCb) progressCb(55);
   const rural = getRuralDataForMasterExport(state);
   const topInstitutions = getTopInstitutionsForState(state);
   const topIndianaInstitutions = getTopInstitutionsForState(MASTER_EXPORT_HOME_STATE);
@@ -7981,6 +7985,20 @@ const setMasterExportProgress = (value) => {
   if (masterExportProgressBar) masterExportProgressBar.style.width = `${pct}%`;
   if (masterExportProgressLabel) masterExportProgressLabel.textContent = `${pct}%`;
 };
+const withTimeout = (promise, ms, label) => (
+  new Promise((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error(`${label} timed out`)), ms);
+    promise
+      .then((value) => {
+        clearTimeout(timer);
+        resolve(value);
+      })
+      .catch((err) => {
+        clearTimeout(timer);
+        reject(err);
+      });
+  })
+);
 
 const buildMasterExportRows = (data) => {
   const rows = [];
@@ -8188,8 +8206,11 @@ const exportMasterExport = async (format = 'csv') => {
   setMasterExportProgress(5);
   if (masterExportToggle) masterExportToggle.disabled = true;
   try {
-    const data = await buildMasterExportData(state);
-    setMasterExportProgress(55);
+    const data = await withTimeout(
+      buildMasterExportData(state, setMasterExportProgress),
+      45000,
+      'Master export'
+    );
     const rows = buildMasterExportRows(data);
     setMasterExportProgress(75);
     const filenameBase = `master-export-${state}`;
