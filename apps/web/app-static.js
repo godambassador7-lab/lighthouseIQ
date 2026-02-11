@@ -6461,6 +6461,7 @@ const targetStateCloseBtn = document.getElementById('target-state-close');
 const targetStateCloseFooter = document.getElementById('target-state-close-footer');
 const targetStateOpenBeacon = document.getElementById('target-state-open-beacon');
 const openTargetStateBtn = document.getElementById('open-target-state');
+const targetStateSelect = document.getElementById('target-state-select');
 const targetStateExportCsv = document.getElementById('target-state-export-csv');
 const targetStateExportExcel = document.getElementById('target-state-export-excel');
 const targetStateExportPdf = document.getElementById('target-state-export-pdf');
