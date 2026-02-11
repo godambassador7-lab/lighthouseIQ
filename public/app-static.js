@@ -7882,7 +7882,12 @@ const buildStateBeaconExportWithHome = (state, homeStateOverride) => {
 const getRecentWarnNoticesForState = async (state, days = MASTER_EXPORT_WARN_DAYS) => {
   let notices = getStateNotices(state);
   if (!notices.length) {
-    notices = await loadStateNotices(state);
+    try {
+      const response = await fetchJson(`/notices?state=${state}&limit=500`);
+      notices = response.notices ?? [];
+    } catch {
+      notices = [];
+    }
   }
   const since = Date.now() - (days * 24 * 60 * 60 * 1000);
   return notices.filter((notice) => getNoticeDateValue(notice) >= since);

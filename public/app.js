@@ -7248,8 +7248,6 @@ const targetStateCloseFooter = document.getElementById('target-state-close-foote
 const targetStateOpenBeacon = document.getElementById('target-state-open-beacon');
 const openTargetStateBtn = document.getElementById('open-target-state');
 const targetStateSelect = document.getElementById('target-state-select');
-const targetStateExportToggle = document.getElementById('target-state-export-toggle');
-const targetStateExportMenu = document.getElementById('target-state-export-menu');
 const openMasterExportBtn = document.getElementById('open-master-export');
 const masterExportModal = document.getElementById('master-export-modal');
 const masterExportCloseBtn = document.getElementById('master-export-close');
@@ -7260,6 +7258,8 @@ const masterExportWarnCount = document.getElementById('master-export-warn');
 const masterExportRuralCount = document.getElementById('master-export-rural');
 const masterExportToggle = document.getElementById('master-export-toggle');
 const masterExportMenu = document.getElementById('master-export-menu');
+const targetStateExportToggle = document.getElementById('target-state-export-toggle');
+const targetStateExportMenu = document.getElementById('target-state-export-menu');
 
 // Target State module elements
 const targetStateName = document.getElementById('target-state-name');
@@ -7882,7 +7882,12 @@ const buildStateBeaconExportWithHome = (state, homeStateOverride) => {
 const getRecentWarnNoticesForState = async (state, days = MASTER_EXPORT_WARN_DAYS) => {
   let notices = getStateNotices(state);
   if (!notices.length) {
-    notices = await loadStateNotices(state);
+    try {
+      const response = await fetchJson(`/notices?state=${state}&limit=500`);
+      notices = response.notices ?? [];
+    } catch {
+      notices = [];
+    }
   }
   const since = Date.now() - (days * 24 * 60 * 60 * 1000);
   return notices.filter((notice) => getNoticeDateValue(notice) >= since);
