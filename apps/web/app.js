@@ -1574,10 +1574,14 @@ const ensureMapTargetModeListener = () => {
   mapTargetModeBtn.dataset.listenerAttached = 'true';
   const toggle = (event) => {
     event.preventDefault();
+    event.stopPropagation();
     setMapTargetMode(!isMapTargetMode);
   };
-  mapTargetModeBtn.addEventListener('click', toggle);
   mapTargetModeBtn.addEventListener('pointerdown', toggle);
+  mapTargetModeBtn.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+  });
 };
 
 const refetchStateNotices = async (stateAbbrev) => {
