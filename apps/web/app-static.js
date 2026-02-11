@@ -7247,9 +7247,8 @@ const targetStateCloseFooter = document.getElementById('target-state-close-foote
 const targetStateOpenBeacon = document.getElementById('target-state-open-beacon');
 const openTargetStateBtn = document.getElementById('open-target-state');
 const targetStateSelect = document.getElementById('target-state-select');
-const targetStateExportCsv = document.getElementById('target-state-export-csv');
-const targetStateExportExcel = document.getElementById('target-state-export-excel');
-const targetStateExportPdf = document.getElementById('target-state-export-pdf');
+const targetStateExportToggle = document.getElementById('target-state-export-toggle');
+const targetStateExportMenu = document.getElementById('target-state-export-menu');
 
 // Target State module elements
 const targetStateName = document.getElementById('target-state-name');
@@ -7644,12 +7643,15 @@ const exportHomeStatePdf = async () => {
   showExportToast('Home State PDF opened.');
 };
 
-const buildTargetStateExport = (stateAbbrev) => {
+const buildTargetStateExport = (stateAbbrev, options = {}) => {
+  const { scope = 'all' } = options;
   const entry = getBeaconEntry(stateAbbrev);
   const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === stateAbbrev);
   const metroData = STATE_METRO_DATA[stateAbbrev] || STATE_METRO_DATA.KY;
   const metros = metroData?.metros || [];
   const totalHospitals = metros.reduce((sum, metro) => sum + (metro.hospitals?.length || 0), 0);
+  const selectedMetro = scope === 'selected' ? currentTargetStateMetro : null;
+  const metrosForExport = scope === 'selected' && selectedMetro ? [selectedMetro] : metros;
 
   return {
     generatedAt: new Date().toISOString(),
@@ -7659,17 +7661,20 @@ const buildTargetStateExport = (stateAbbrev) => {
     programsCount: programsInState.length,
     metrosCount: metros.length,
     totalHospitals,
-    metros,
-    selectedMetro: currentTargetStateMetro
+    metros: metrosForExport,
+    selectedMetro,
+    exportScope: scope
   };
 };
 
 const buildTargetStateExportRows = (data) => {
   const rows = [];
   const pushRow = (section, item, detail = '') => rows.push([section, item, detail]);
+  const scopeLabel = data.exportScope === 'selected' ? 'Selected Metro' : 'All Metros';
 
   pushRow('Overview', 'State', data.name);
   pushRow('Overview', 'Generated At', data.generatedAt);
+  pushRow('Overview', 'Export Scope', scopeLabel);
   if (data.compact !== null && data.compact !== undefined) {
     pushRow('Overview', 'Compact', data.compact ? 'Yes' : 'No');
   }
@@ -7677,13 +7682,17 @@ const buildTargetStateExportRows = (data) => {
   pushRow('Overview', 'Metros', data.metrosCount);
   pushRow('Overview', 'Hospitals', data.totalHospitals);
 
-  data.metros.forEach((metro) => {
-    const detail = [metro.population, `${metro.hospitals?.length || 0} hospitals`, metro.competition].filter(Boolean).join(' • ');
-    pushRow('Metro Summary', metro.name, detail);
-  });
+  if (data.exportScope === 'all') {
+    data.metros.forEach((metro) => {
+      const detail = [metro.population, `${metro.hospitals?.length || 0} hospitals`, metro.competition].filter(Boolean).join(' ??? ');
+      pushRow('Metro Summary', metro.name, detail);
+    });
+  }
 
   if (!data.selectedMetro) {
-    pushRow('Selected Metro', 'Selection', 'None selected');
+    if (data.exportScope === 'selected') {
+      pushRow('Selected Metro', 'Selection', 'None selected');
+    }
     return rows;
   }
 
@@ -7722,46 +7731,48 @@ const buildTargetStateExportRows = (data) => {
   return rows;
 };
 
-const exportTargetStateCsv = async () => {
+const exportTargetState = async ({ format = 'csv', scope = 'all' } = {}) => {
   const state = targetStateSelect?.value || TARGET_STATE_DEFAULT;
+  if (scope === 'selected' && !currentTargetStateMetro) {
+    showExportToast('Select a metro to export.');
+    return;
+  }
   await loadStateBeaconData();
   await ensureProgramsDataForBeacon();
-  const data = buildTargetStateExport(state);
+  const data = buildTargetStateExport(state, { scope });
   const rows = buildTargetStateExportRows(data);
+  const scopeLabel = scope === 'selected' ? 'selected-metro' : 'all-metros';
+  const metroName = data.selectedMetro?.name
+    ? data.selectedMetro.name.replace(/[^a-z0-9]+/gi, '_').toLowerCase()
+    : scopeLabel;
+  const filenameBase = `target-state-${state}-${metroName}`;
+
+  if (format === 'excel') {
+    downloadExcel({
+      title: `Target State - ${data.name}`,
+      meta: [`Exported: ${new Date().toLocaleString()}`],
+      headers: ['Section', 'Item', 'Detail'],
+      rows,
+      filename: `${filenameBase}.xls`
+    });
+    showExportToast(`Target State Excel exported (${scope === 'selected' ? 'Selected Metro' : 'All Metros'}).`);
+    return;
+  }
+
+  if (format === 'pdf') {
+    openPdfExport({
+      title: `Target State - ${data.name}`,
+      meta: [`Exported: ${new Date().toLocaleString()}`],
+      headers: ['Section', 'Item', 'Detail'],
+      rows
+    });
+    showExportToast(`Target State PDF opened (${scope === 'selected' ? 'Selected Metro' : 'All Metros'}).`);
+    return;
+  }
+
   const csv = buildCsv(['Section', 'Item', 'Detail'], rows);
-  downloadFile(csv, `target-state-${state}.csv`, 'text/csv');
-  showExportToast('Target State CSV exported.');
-};
-
-const exportTargetStateExcel = async () => {
-  const state = targetStateSelect?.value || TARGET_STATE_DEFAULT;
-  await loadStateBeaconData();
-  await ensureProgramsDataForBeacon();
-  const data = buildTargetStateExport(state);
-  const rows = buildTargetStateExportRows(data);
-  downloadExcel({
-    title: `Target State - ${data.name}`,
-    meta: [`Exported: ${new Date().toLocaleString()}`],
-    headers: ['Section', 'Item', 'Detail'],
-    rows,
-    filename: `target-state-${state}.xls`
-  });
-  showExportToast('Target State Excel exported.');
-};
-
-const exportTargetStatePdf = async () => {
-  const state = targetStateSelect?.value || TARGET_STATE_DEFAULT;
-  await loadStateBeaconData();
-  await ensureProgramsDataForBeacon();
-  const data = buildTargetStateExport(state);
-  const rows = buildTargetStateExportRows(data);
-  openPdfExport({
-    title: `Target State - ${data.name}`,
-    meta: [`Exported: ${new Date().toLocaleString()}`],
-    headers: ['Section', 'Item', 'Detail'],
-    rows
-  });
-  showExportToast('Target State PDF opened.');
+  downloadFile(csv, `${filenameBase}.csv`, 'text/csv');
+  showExportToast(`Target State CSV exported (${scope === 'selected' ? 'Selected Metro' : 'All Metros'}).`);
 };
 
 const exportStateBeaconJson = () => {
@@ -8018,9 +8029,18 @@ const initStateBeacon = () => {
   targetStateSelect?.addEventListener('change', () => {
     renderTargetState(targetStateSelect.value);
   });
-  targetStateExportCsv?.addEventListener('click', exportTargetStateCsv);
-  targetStateExportExcel?.addEventListener('click', exportTargetStateExcel);
-  targetStateExportPdf?.addEventListener('click', exportTargetStatePdf);
+  targetStateExportToggle?.addEventListener('click', (event) => {
+    event.stopPropagation();
+    targetStateExportMenu?.classList.toggle('active');
+  });
+  targetStateExportMenu?.addEventListener('click', (event) => {
+    const item = event.target.closest('.save-dropdown-item');
+    if (!item) return;
+    const format = item.dataset.format || 'csv';
+    const scope = item.dataset.scope || 'all';
+    targetStateExportMenu.classList.remove('active');
+    exportTargetState({ format, scope });
+  });
   targetStateOpenBeacon?.addEventListener('click', () => {
     const state = targetStateSelect?.value || TARGET_STATE_DEFAULT;
     closeTargetState();

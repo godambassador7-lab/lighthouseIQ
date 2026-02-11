@@ -1352,9 +1352,19 @@
         <!-- Footer -->
         <div class="target-state-footer">
           <div class="target-state-footer-left">
-            <button type="button" class="beacon-action-btn" id="target-state-export-csv">CSV</button>
-            <button type="button" class="beacon-action-btn" id="target-state-export-excel">Excel</button>
-            <button type="button" class="beacon-action-btn" id="target-state-export-pdf">PDF</button>
+            <div class="export-dropdown" id="target-state-export-dropdown">
+              <button type="button" class="beacon-action-btn export-dropdown-btn" id="target-state-export-toggle">
+                Export
+              </button>
+              <div class="save-dropdown export-dropdown-menu" id="target-state-export-menu">
+                <div class="save-dropdown-item" data-format="csv" data-scope="selected">CSV • Selected Metro</div>
+                <div class="save-dropdown-item" data-format="csv" data-scope="all">CSV • All Metros</div>
+                <div class="save-dropdown-item" data-format="excel" data-scope="selected">Excel • Selected Metro</div>
+                <div class="save-dropdown-item" data-format="excel" data-scope="all">Excel • All Metros</div>
+                <div class="save-dropdown-item" data-format="pdf" data-scope="selected">PDF • Selected Metro</div>
+                <div class="save-dropdown-item" data-format="pdf" data-scope="all">PDF • All Metros</div>
+              </div>
+            </div>
           </div>
           <div class="target-state-footer-right">
             <button type="button" class="btn ghost" id="target-state-open-beacon">Open Full State Beacon</button>
