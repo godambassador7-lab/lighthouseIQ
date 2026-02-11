@@ -156,6 +156,8 @@ const masterExportWarnCount = document.getElementById('master-export-warn');
 const masterExportRuralCount = document.getElementById('master-export-rural');
 const masterExportToggle = document.getElementById('master-export-toggle');
 const masterExportMenu = document.getElementById('master-export-menu');
+const masterExportProgressBar = document.getElementById('master-export-progress-bar');
+const masterExportProgressLabel = document.getElementById('master-export-progress-label');
 const targetStateName = document.getElementById('target-state-name');
 const targetStateAbbr = document.getElementById('target-state-abbr');
 const targetStateStatHospitals = document.getElementById('target-state-stat-hospitals');
@@ -3712,6 +3714,12 @@ const buildMasterExportData = async (state) => {
   };
 };
 
+const setMasterExportProgress = (value) => {
+  const pct = Math.max(0, Math.min(100, value));
+  if (masterExportProgressBar) masterExportProgressBar.style.width = `${pct}%`;
+  if (masterExportProgressLabel) masterExportProgressLabel.textContent = `${pct}%`;
+};
+
 const buildMasterExportRows = (data) => {
   const rows = [];
   const pushRow = (section, item, detail = '') => rows.push([section, item, detail]);
@@ -3830,8 +3838,12 @@ const buildMasterExportRows = (data) => {
 
 const exportMasterExport = async (format = 'csv') => {
   const state = masterExportStateSelect?.value || TARGET_STATE_DEFAULT;
+  setMasterExportProgress(5);
+  if (masterExportToggle) masterExportToggle.disabled = true;
   const data = await buildMasterExportData(state);
+  setMasterExportProgress(55);
   const rows = buildMasterExportRows(data);
+  setMasterExportProgress(75);
   const filenameBase = `master-export-${state}`;
 
   if (format === 'excel') {
@@ -3842,7 +3854,9 @@ const exportMasterExport = async (format = 'csv') => {
       rows,
       filename: `${filenameBase}.xls`
     });
+    setMasterExportProgress(100);
     showExportToast('Master Export Excel exported.');
+    if (masterExportToggle) masterExportToggle.disabled = false;
     return;
   }
 
@@ -3853,18 +3867,23 @@ const exportMasterExport = async (format = 'csv') => {
       headers: ['Section', 'Item', 'Detail'],
       rows
     });
+    setMasterExportProgress(100);
     showExportToast('Master Export PDF opened.');
+    if (masterExportToggle) masterExportToggle.disabled = false;
     return;
   }
 
   const csv = buildCsv(['Section', 'Item', 'Detail'], rows);
   downloadFile(csv, `${filenameBase}.csv`, 'text/csv');
+  setMasterExportProgress(100);
   showExportToast('Master Export CSV exported.');
+  if (masterExportToggle) masterExportToggle.disabled = false;
 };
 
 const openMasterExport = () => {
   const preferredState = getMapTargetState?.() || targetStateSelect?.value || TARGET_STATE_DEFAULT;
   if (masterExportStateSelect) masterExportStateSelect.value = preferredState;
+  setMasterExportProgress(0);
   masterExportModal?.classList.add('active');
   updateMasterExportSummary();
   closeModulesMenu();
