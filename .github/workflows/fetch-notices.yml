@@ -105,11 +105,23 @@ jobs:
         env:
           LNI_OUTPUT_DIR: ${{ github.workspace }}/public/data
 
+      - name: Preserve existing news for merge
+        run: |
+          if [ -f public/data/news.json ]; then
+            cp public/data/news.json public/data/news-existing.json
+            echo "Saved existing news.json ($(wc -l < public/data/news.json) lines)"
+          else
+            echo "No existing news.json to preserve"
+          fi
+
       - name: Run news feed export script
         run: node dist/scripts/export-news.js
         env:
           LNI_OUTPUT_DIR: ${{ github.workspace }}/public/data
         working-directory: core
+
+      - name: Merge news with historical articles
+        run: node scripts/merge-news.js
 
       - name: Run state beacon export script
         run: node dist/scripts/export-state-beacon.js

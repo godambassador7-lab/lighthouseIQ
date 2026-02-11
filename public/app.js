@@ -2219,6 +2219,12 @@ const filterNotices = () => {
     });
   }
 
+  // Exclude hotel / hospitality employers (not nursing-relevant)
+  filtered = filtered.filter(n => {
+    const name = (n.employer_name || '').toLowerCase();
+    return !name.includes('hotel') && !name.includes('hospitality');
+  });
+
   // Filter by date
   const since = sinceInput.value;
   if (since) {

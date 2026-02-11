@@ -410,9 +410,15 @@ const isHealthcareNotice = (notice) => {
   return HEALTHCARE_KEYWORDS.some(keyword => haystack.includes(keyword));
 };
 
-const filterNoticesByScope = (notices) => (
-  mapScope === 'healthcare' ? notices.filter(isHealthcareNotice) : notices
-);
+const filterNoticesByScope = (notices) => {
+  let out = mapScope === 'healthcare' ? notices.filter(isHealthcareNotice) : notices;
+  // Exclude hotel / hospitality employers (not nursing-relevant)
+  out = out.filter(n => {
+    const name = (n.employer_name || '').toLowerCase();
+    return !name.includes('hotel') && !name.includes('hospitality');
+  });
+  return out;
+};
 
 const getNoticeDateValue = (notice) => {
   const raw = notice.notice_date || notice.noticeDate || notice.retrieved_at || notice.createdAt || notice.retrievedAt;
