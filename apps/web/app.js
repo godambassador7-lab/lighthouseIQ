@@ -4682,7 +4682,7 @@ const getFilteredNewsArticles = () => {
   return filtered;
 };
 
-const exportNewsFeed = async (btn) => {
+window.exportNewsFeed = async function(btn) {
   const filtered = getFilteredNewsArticles();
   if (!filtered.length) return;
   const lines = filtered.map(a => `${a.title}\n${a.url}`).join('\n\n');
@@ -4713,8 +4713,8 @@ const loadNews = async () => {
   }
 };
 
-// Global function for inline onclick fallback
-const toggleNewsClosures = (btn) => {
+// Explicit window globals so inline onclick handlers can always find them
+window.toggleNewsClosures = function(btn) {
   newsClosuresOnly = !newsClosuresOnly;
   btn.classList.toggle('active', newsClosuresOnly);
   renderNewsFeed();
@@ -4731,7 +4731,7 @@ const toggleNewsClosures = (btn) => {
   }
 };
 
-const showNewsToast = (message) => {
+function showNewsToast(message) {
   let toast = document.getElementById('news-toast');
   if (!toast) {
     toast = document.createElement('div');
@@ -4755,12 +4755,12 @@ const initNewsFeed = () => {
   const closuresBtn = document.getElementById('news-closures-toggle');
   if (closuresBtn && !closuresBtn.dataset.listenerAttached) {
     closuresBtn.dataset.listenerAttached = 'true';
-    closuresBtn.addEventListener('click', () => toggleNewsClosures(closuresBtn));
+    closuresBtn.addEventListener('click', () => window.toggleNewsClosures(closuresBtn));
   }
   const exportBtn = document.getElementById('news-export-btn');
   if (exportBtn && !exportBtn.dataset.listenerAttached) {
     exportBtn.dataset.listenerAttached = 'true';
-    exportBtn.addEventListener('click', () => exportNewsFeed(exportBtn));
+    exportBtn.addEventListener('click', () => window.exportNewsFeed(exportBtn));
   }
 };
 
