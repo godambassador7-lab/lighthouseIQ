@@ -4752,16 +4752,7 @@ const initNewsFeed = () => {
   if (filter) {
     filter.addEventListener('change', renderNewsFeed);
   }
-  const closuresBtn = document.getElementById('news-closures-toggle');
-  if (closuresBtn && !closuresBtn.dataset.listenerAttached) {
-    closuresBtn.dataset.listenerAttached = 'true';
-    closuresBtn.addEventListener('click', () => window.toggleNewsClosures(closuresBtn));
-  }
-  const exportBtn = document.getElementById('news-export-btn');
-  if (exportBtn && !exportBtn.dataset.listenerAttached) {
-    exportBtn.dataset.listenerAttached = 'true';
-    exportBtn.addEventListener('click', () => window.exportNewsFeed(exportBtn));
-  }
+  // Closures & Export buttons use inline onclick handlers (see HTML)
 };
 
 // Initialize app (called after login)

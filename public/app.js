@@ -3818,16 +3818,8 @@ const initNewsFeed = () => {
   if (filter) {
     filter.addEventListener('change', renderNewsFeed);
   }
-  const closuresBtn = document.getElementById('news-closures-toggle');
-  if (closuresBtn && !closuresBtn.dataset.listenerAttached) {
-    closuresBtn.dataset.listenerAttached = 'true';
-    closuresBtn.addEventListener('click', () => window.toggleNewsClosures(closuresBtn));
-  }
-  const exportBtn = document.getElementById('news-export-btn');
-  if (exportBtn && !exportBtn.dataset.listenerAttached) {
-    exportBtn.dataset.listenerAttached = 'true';
-    exportBtn.addEventListener('click', () => window.exportNewsFeed(exportBtn));
-  }
+  // Closures & Export buttons use inline onclick handlers (see HTML)
+  // to avoid double-fire from addEventListener + onclick conflict
 };
 
 // =============================================================================
@@ -8794,27 +8786,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Closures filter fallback — attach if initNewsFeed didn't already
-  const closuresBtn = document.getElementById('news-closures-toggle');
-  if (closuresBtn && !closuresBtn.dataset.listenerAttached) {
-    closuresBtn.dataset.listenerAttached = 'true';
-    closuresBtn.addEventListener('click', () => {
-      if (window.toggleNewsClosures) {
-        window.toggleNewsClosures(closuresBtn);
-      }
-    });
-  }
-
-  // Export button fallback
-  const newsExportBtn = document.getElementById('news-export-btn');
-  if (newsExportBtn && !newsExportBtn.dataset.listenerAttached) {
-    newsExportBtn.dataset.listenerAttached = 'true';
-    newsExportBtn.addEventListener('click', () => {
-      if (window.exportNewsFeed) {
-        window.exportNewsFeed(newsExportBtn);
-      }
-    });
-  }
+  // Closures & Export buttons use inline onclick handlers (see HTML)
 });
 
 
