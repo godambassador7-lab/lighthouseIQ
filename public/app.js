@@ -3819,7 +3819,6 @@ const initNewsFeed = () => {
     filter.addEventListener('change', renderNewsFeed);
   }
   // Closures & Export buttons use inline onclick handlers (see HTML)
-  // to avoid double-fire from addEventListener + onclick conflict
 };
 
 // =============================================================================
