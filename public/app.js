@@ -3784,6 +3784,33 @@ const toggleNewsClosures = (btn) => {
   newsClosuresOnly = !newsClosuresOnly;
   btn.classList.toggle('active', newsClosuresOnly);
   renderNewsFeed();
+
+  // Show toast with closure article count
+  if (newsClosuresOnly) {
+    const days = getNewsDateFilter();
+    const dated = filterNewsByDate(newsArticles, days);
+    const count = dated.filter(matchesClosureKeywords).length;
+    const msg = count > 0
+      ? `${count} closure article${count === 1 ? '' : 's'} found`
+      : 'No closure articles listed';
+    showNewsToast(msg);
+  }
+};
+
+const showNewsToast = (message) => {
+  let toast = document.getElementById('news-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'news-toast';
+    toast.className = 'news-toast';
+    const toolbar = document.querySelector('.news-feed-toolbar');
+    if (toolbar) toolbar.parentElement.insertBefore(toast, toolbar.nextSibling);
+    else document.body.appendChild(toast);
+  }
+  toast.textContent = message;
+  toast.classList.add('visible');
+  clearTimeout(toast._hideTimer);
+  toast._hideTimer = setTimeout(() => toast.classList.remove('visible'), 3000);
 };
 
 const initNewsFeed = () => {

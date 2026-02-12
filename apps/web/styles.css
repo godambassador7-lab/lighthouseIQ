@@ -3801,6 +3801,29 @@ input[type="range"] {
   color: #fff;
 }
 
+.news-toast {
+  text-align: center;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #dc2626;
+  background: #fef2f2;
+  border: 1px solid rgba(220, 38, 38, 0.15);
+  border-radius: 6px;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.3s ease, max-height 0.3s ease, padding 0.3s ease, margin 0.3s ease;
+  margin: 0;
+}
+
+.news-toast.visible {
+  opacity: 1;
+  max-height: 40px;
+  padding: 8px 16px;
+  margin: 8px 0 0;
+}
+
 .news-export-btn {
   padding: 6px 14px;
   border-radius: 6px;
