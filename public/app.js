@@ -3638,10 +3638,23 @@ const getSourceBadgeClass = (source) => {
   return 'default';
 };
 
+const parseNewsDate = (value) => {
+  if (!value) return null;
+  if (value instanceof Date) return value;
+  const raw = typeof value === 'number' ? new Date(value) : String(value);
+  if (raw instanceof Date) return raw;
+  try {
+    if (raw.includes('T')) return new Date(raw);
+    return new Date(`${raw}T00:00:00`);
+  } catch {
+    return null;
+  }
+};
+
 const formatNewsDate = (dateStr) => {
   if (!dateStr) return '';
   try {
-    const d = new Date(dateStr + 'T00:00:00');
+    const d = parseNewsDate(dateStr) || new Date(dateStr);
     return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   } catch {
     return dateStr;
@@ -3659,13 +3672,9 @@ const filterNewsByDate = (articles, days) => {
   now.setHours(0, 0, 0, 0); // Start of today
   const cutoff = new Date(now.getTime() - (days - 1) * 24 * 60 * 60 * 1000);
   return articles.filter(article => {
-    if (!article.publishedAt) return true;
-    try {
-      const articleDate = new Date(article.publishedAt + 'T00:00:00');
-      return articleDate >= cutoff;
-    } catch {
-      return true;
-    }
+    const articleDate = parseNewsDate(article.publishedAt || article.date);
+    if (!articleDate || Number.isNaN(articleDate.getTime())) return true;
+    return articleDate >= cutoff;
   });
 };
 
