@@ -3779,21 +3779,26 @@ const exportNewsFeed = async (btn) => {
   }
 };
 
+// Global function for inline onclick fallback
+const toggleNewsClosures = (btn) => {
+  newsClosuresOnly = !newsClosuresOnly;
+  btn.classList.toggle('active', newsClosuresOnly);
+  renderNewsFeed();
+};
+
 const initNewsFeed = () => {
   const filter = document.getElementById('news-date-filter');
   if (filter) {
     filter.addEventListener('change', renderNewsFeed);
   }
   const closuresBtn = document.getElementById('news-closures-toggle');
-  if (closuresBtn) {
-    closuresBtn.addEventListener('click', () => {
-      newsClosuresOnly = !newsClosuresOnly;
-      closuresBtn.classList.toggle('active', newsClosuresOnly);
-      renderNewsFeed();
-    });
+  if (closuresBtn && !closuresBtn.dataset.listenerAttached) {
+    closuresBtn.dataset.listenerAttached = 'true';
+    closuresBtn.addEventListener('click', () => toggleNewsClosures(closuresBtn));
   }
   const exportBtn = document.getElementById('news-export-btn');
-  if (exportBtn) {
+  if (exportBtn && !exportBtn.dataset.listenerAttached) {
+    exportBtn.dataset.listenerAttached = 'true';
     exportBtn.addEventListener('click', () => exportNewsFeed(exportBtn));
   }
 };
@@ -8758,6 +8763,28 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       if (isOpen && typeof renderStrategicReview === 'function') {
         renderStrategicReview();
+      }
+    });
+  }
+
+  // Closures filter fallback — attach if initNewsFeed didn't already
+  const closuresBtn = document.getElementById('news-closures-toggle');
+  if (closuresBtn && !closuresBtn.dataset.listenerAttached) {
+    closuresBtn.dataset.listenerAttached = 'true';
+    closuresBtn.addEventListener('click', () => {
+      if (typeof toggleNewsClosures === 'function') {
+        toggleNewsClosures(closuresBtn);
+      }
+    });
+  }
+
+  // Export button fallback
+  const newsExportBtn = document.getElementById('news-export-btn');
+  if (newsExportBtn && !newsExportBtn.dataset.listenerAttached) {
+    newsExportBtn.dataset.listenerAttached = 'true';
+    newsExportBtn.addEventListener('click', () => {
+      if (typeof exportNewsFeed === 'function') {
+        exportNewsFeed(newsExportBtn);
       }
     });
   }

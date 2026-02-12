@@ -17,7 +17,7 @@
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=4.2" />
+    <link rel="stylesheet" href="./styles.css?v=4.3" />
   </head>
   <body>
     <!-- Login Overlay -->
@@ -542,8 +542,8 @@
             <option value="30">Last month</option>
             <option value="90">Last 3 months</option>
           </select>
-          <button type="button" class="news-closures-btn" id="news-closures-toggle" title="Show only closure, layoff &amp; at-risk articles">Closures</button>
-          <button type="button" class="news-export-btn" id="news-export-btn" title="Copy filtered headlines &amp; links to clipboard">Export</button>
+          <button type="button" class="news-closures-btn" id="news-closures-toggle" title="Show only closure, layoff &amp; at-risk articles" onclick="if(typeof toggleNewsClosures==='function')toggleNewsClosures(this)">Closures</button>
+          <button type="button" class="news-export-btn" id="news-export-btn" title="Copy filtered headlines &amp; links to clipboard" onclick="if(typeof exportNewsFeed==='function')exportNewsFeed(this)">Export</button>
         </div>
         <div class="news-feed-list" id="news-feed-list">
           <div class="empty-state">Loading news...</div>
@@ -1531,7 +1531,7 @@
       </div>
     </footer>
 
-    <script src="./app.js?v=4.2"></script>
+    <script src="./app.js?v=4.3"></script>
   </body>
 </html>
 
