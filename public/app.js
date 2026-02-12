@@ -3244,6 +3244,10 @@ const initCollapsibleSections = () => {
       toggle.setAttribute('aria-expanded', String(!isCollapsed));
       if (label) label.textContent = isCollapsed ? 'Expand' : 'Collapse';
       if (icon) icon.textContent = isCollapsed ? '+' : '–';
+      // Re-render news when its section expands so scroll window recalculates
+      if (!isCollapsed && section.classList.contains('news-feed-section')) {
+        renderNewsFeed();
+      }
     });
   });
 
@@ -3696,7 +3700,7 @@ const renderNewsFeed = () => {
     </a>
   `).join('');
 
-  // Apply 15-item scroll window
+  // Apply scroll window (show first N cards, scroll the rest)
   requestAnimationFrame(() => {
     const cards = list.querySelectorAll('.news-card');
     if (cards.length <= NEWS_WINDOW_COUNT) {
@@ -3707,6 +3711,12 @@ const renderNewsFeed = () => {
     let height = 0;
     for (let i = 0; i < Math.min(NEWS_WINDOW_COUNT, cards.length); i++) {
       height += cards[i].getBoundingClientRect().height;
+    }
+    // If cards aren't visible yet (section collapsed), skip clamping
+    if (height === 0) {
+      list.style.maxHeight = '';
+      list.classList.remove('news-feed-windowed');
+      return;
     }
     // Add 1px per card for the border-bottom
     height += NEWS_WINDOW_COUNT - 1;
