@@ -3606,7 +3606,23 @@ const initApp = async () => {
 // Daily News Feed
 // =============================================================================
 let newsArticles = [];
+let newsClosuresOnly = false;
 const NEWS_WINDOW_COUNT = 5;
+
+const NEWS_CLOSURE_KEYWORDS = [
+  'closure', 'closing', 'closes', 'closed', 'shut down', 'shutting down', 'shuttered',
+  'bankrupt', 'chapter 11', 'chapter 7', 'insolvency', 'insolvent',
+  'layoff', 'lay off', 'laid off', 'layoffs',  'furlough', 'workforce reduction', 'job cuts', 'job losses', 'downsiz',
+  'at risk', 'at-risk', 'financial distress', 'struggling',
+  'restructur', 'wind down', 'winding down', 'liquidat',
+  'cease operations', 'ceasing operations', 'discontinu',
+  'receivership', 'default', 'debt crisis',
+];
+
+const matchesClosureKeywords = (article) => {
+  const text = ((article.title || '') + ' ' + (article.summary || '')).toLowerCase();
+  return NEWS_CLOSURE_KEYWORDS.some(kw => text.includes(kw));
+};
 
 const getSourceBadgeClass = (source) => {
   const s = source.toLowerCase();
@@ -3654,10 +3670,14 @@ const renderNewsFeed = () => {
   if (!list) return;
 
   const days = getNewsDateFilter();
-  const filtered = filterNewsByDate(newsArticles, days);
+  let filtered = filterNewsByDate(newsArticles, days);
+  if (newsClosuresOnly) {
+    filtered = filtered.filter(matchesClosureKeywords);
+  }
 
   if (!filtered.length) {
-    list.innerHTML = `<div class="empty-state">No news articles in the last ${days} days.</div>`;
+    const label = newsClosuresOnly ? 'closure-related ' : '';
+    list.innerHTML = `<div class="empty-state">No ${label}news articles in the last ${days} days.</div>`;
     list.style.maxHeight = '';
     list.classList.remove('news-feed-windowed');
     return;
@@ -3713,6 +3733,14 @@ const initNewsFeed = () => {
   const filter = document.getElementById('news-date-filter');
   if (filter) {
     filter.addEventListener('change', renderNewsFeed);
+  }
+  const closuresBtn = document.getElementById('news-closures-toggle');
+  if (closuresBtn) {
+    closuresBtn.addEventListener('click', () => {
+      newsClosuresOnly = !newsClosuresOnly;
+      closuresBtn.classList.toggle('active', newsClosuresOnly);
+      renderNewsFeed();
+    });
   }
 };
 

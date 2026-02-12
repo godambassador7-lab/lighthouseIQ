@@ -3777,6 +3777,30 @@ input[type="range"] {
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
+.news-closures-btn {
+  margin-left: auto;
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid rgba(220, 38, 38, 0.25);
+  background: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.news-closures-btn:hover {
+  border-color: rgba(220, 38, 38, 0.5);
+  color: #dc2626;
+}
+
+.news-closures-btn.active {
+  background: #dc2626;
+  border-color: #dc2626;
+  color: #fff;
+}
+
 .news-feed-list {
   display: grid;
   gap: 0;
