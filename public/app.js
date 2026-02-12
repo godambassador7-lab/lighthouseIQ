@@ -3729,6 +3729,37 @@ const loadNews = async () => {
   }
 };
 
+const getFilteredNewsArticles = () => {
+  const days = getNewsDateFilter();
+  let filtered = filterNewsByDate(newsArticles, days);
+  if (newsClosuresOnly) {
+    filtered = filtered.filter(matchesClosureKeywords);
+  }
+  return filtered;
+};
+
+const exportNewsFeed = async (btn) => {
+  const filtered = getFilteredNewsArticles();
+  if (!filtered.length) return;
+
+  const lines = filtered.map(a => `${a.title}\n${a.url}`).join('\n\n');
+
+  try {
+    await navigator.clipboard.writeText(lines);
+    const original = btn.textContent;
+    btn.textContent = 'Copied!';
+    btn.classList.add('active');
+    setTimeout(() => { btn.textContent = original; btn.classList.remove('active'); }, 2000);
+  } catch {
+    // Fallback: open in a new window so user can copy manually
+    const w = window.open('', '_blank');
+    if (w) {
+      w.document.write(`<pre style="font-family:system-ui;white-space:pre-wrap">${lines.replace(/</g, '&lt;')}</pre>`);
+      w.document.close();
+    }
+  }
+};
+
 const initNewsFeed = () => {
   const filter = document.getElementById('news-date-filter');
   if (filter) {
@@ -3741,6 +3772,10 @@ const initNewsFeed = () => {
       closuresBtn.classList.toggle('active', newsClosuresOnly);
       renderNewsFeed();
     });
+  }
+  const exportBtn = document.getElementById('news-export-btn');
+  if (exportBtn) {
+    exportBtn.addEventListener('click', () => exportNewsFeed(exportBtn));
   }
 };
 

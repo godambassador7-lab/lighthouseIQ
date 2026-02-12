@@ -3801,6 +3801,29 @@ input[type="range"] {
   color: #fff;
 }
 
+.news-export-btn {
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid rgba(26, 54, 93, 0.15);
+  background: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.news-export-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.news-export-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
 .news-feed-list {
   display: grid;
   gap: 0;
