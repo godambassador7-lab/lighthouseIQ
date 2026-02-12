@@ -4561,7 +4561,23 @@ const initMapToggle = () => {
 // Daily News Feed
 // =============================================================================
 let newsArticles = [];
+let newsClosuresOnly = false;
 const NEWS_WINDOW_COUNT = 5;
+
+const NEWS_CLOSURE_KEYWORDS = [
+  'closure', 'closing', 'closes', 'closed', 'shut down', 'shutting down', 'shuttered',
+  'bankrupt', 'chapter 11', 'chapter 7', 'insolvency', 'insolvent',
+  'layoff', 'lay off', 'laid off', 'layoffs', 'furlough', 'workforce reduction', 'job cuts', 'job losses', 'downsiz',
+  'at risk', 'at-risk', 'financial distress', 'struggling',
+  'restructur', 'wind down', 'winding down', 'liquidat',
+  'cease operations', 'ceasing operations', 'discontinu',
+  'receivership', 'default', 'debt crisis',
+];
+
+const matchesClosureKeywords = (article) => {
+  const text = ((article.title || '') + ' ' + (article.summary || '')).toLowerCase();
+  return NEWS_CLOSURE_KEYWORDS.some(kw => text.includes(kw));
+};
 
 const getSourceBadgeClass = (source) => {
   const s = source.toLowerCase();
@@ -4583,40 +4599,45 @@ const formatNewsDate = (dateStr) => {
   }
 };
 
-const refreshNewsFeedWindow = () => {
-  const list = document.getElementById('news-feed-list');
-  if (!list) return;
-  const cards = list.querySelectorAll('.news-card');
-  if (cards.length <= NEWS_WINDOW_COUNT) {
-    list.style.maxHeight = '';
-    list.classList.remove('news-feed-windowed');
-    return;
-  }
-  let height = 0;
-  for (let i = 0; i < Math.min(NEWS_WINDOW_COUNT, cards.length); i++) {
-    height += cards[i].getBoundingClientRect().height;
-  }
-  if (height <= 0) {
-    requestAnimationFrame(refreshNewsFeedWindow);
-    return;
-  }
-  height += NEWS_WINDOW_COUNT - 1;
-  list.style.maxHeight = `${Math.ceil(height)}px`;
-  list.classList.add('news-feed-windowed');
+const getNewsDateFilter = () => {
+  const filter = document.getElementById('news-date-filter');
+  return filter ? parseInt(filter.value, 10) || 3 : 3;
+};
+
+const filterNewsByDate = (articles, days) => {
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
+  const cutoff = new Date(now.getTime() - (days - 1) * 24 * 60 * 60 * 1000);
+  return articles.filter(article => {
+    if (!article.publishedAt) return true;
+    try {
+      const articleDate = new Date(article.publishedAt + 'T00:00:00');
+      return articleDate >= cutoff;
+    } catch {
+      return true;
+    }
+  });
 };
 
 const renderNewsFeed = () => {
   const list = document.getElementById('news-feed-list');
   if (!list) return;
 
-  if (!newsArticles.length) {
-    list.innerHTML = '<div class="empty-state">No news articles available.</div>';
+  const days = getNewsDateFilter();
+  let filtered = filterNewsByDate(newsArticles, days);
+  if (newsClosuresOnly) {
+    filtered = filtered.filter(matchesClosureKeywords);
+  }
+
+  if (!filtered.length) {
+    const label = newsClosuresOnly ? 'closure-related ' : '';
+    list.innerHTML = `<div class="empty-state">No ${label}news articles in the last ${days} days.</div>`;
     list.style.maxHeight = '';
     list.classList.remove('news-feed-windowed');
     return;
   }
 
-  list.innerHTML = newsArticles.map(article => `
+  list.innerHTML = filtered.map(article => `
     <a class="news-card" href="${article.url}" target="_blank" rel="noopener noreferrer">
       <div class="news-card-body">
         <h4 class="news-card-title">${article.title}</h4>
@@ -4629,7 +4650,55 @@ const renderNewsFeed = () => {
     </a>
   `).join('');
 
-  requestAnimationFrame(refreshNewsFeedWindow);
+  // Apply scroll window
+  requestAnimationFrame(() => {
+    const cards = list.querySelectorAll('.news-card');
+    if (cards.length <= NEWS_WINDOW_COUNT) {
+      list.style.maxHeight = '';
+      list.classList.remove('news-feed-windowed');
+      return;
+    }
+    let height = 0;
+    for (let i = 0; i < Math.min(NEWS_WINDOW_COUNT, cards.length); i++) {
+      height += cards[i].getBoundingClientRect().height;
+    }
+    if (height === 0) {
+      list.style.maxHeight = '';
+      list.classList.remove('news-feed-windowed');
+      return;
+    }
+    height += NEWS_WINDOW_COUNT - 1;
+    list.style.maxHeight = `${Math.ceil(height)}px`;
+    list.classList.add('news-feed-windowed');
+  });
+};
+
+const getFilteredNewsArticles = () => {
+  const days = getNewsDateFilter();
+  let filtered = filterNewsByDate(newsArticles, days);
+  if (newsClosuresOnly) {
+    filtered = filtered.filter(matchesClosureKeywords);
+  }
+  return filtered;
+};
+
+const exportNewsFeed = async (btn) => {
+  const filtered = getFilteredNewsArticles();
+  if (!filtered.length) return;
+  const lines = filtered.map(a => `${a.title}\n${a.url}`).join('\n\n');
+  try {
+    await navigator.clipboard.writeText(lines);
+    const original = btn.textContent;
+    btn.textContent = 'Copied!';
+    btn.classList.add('active');
+    setTimeout(() => { btn.textContent = original; btn.classList.remove('active'); }, 2000);
+  } catch {
+    const w = window.open('', '_blank');
+    if (w) {
+      w.document.write(`<pre style="font-family:system-ui;white-space:pre-wrap">${lines.replace(/</g, '&lt;')}</pre>`);
+      w.document.close();
+    }
+  }
 };
 
 const loadNews = async () => {
@@ -4644,7 +4713,24 @@ const loadNews = async () => {
   }
 };
 
-const initNewsFeed = () => {};
+const initNewsFeed = () => {
+  const filter = document.getElementById('news-date-filter');
+  if (filter) {
+    filter.addEventListener('change', renderNewsFeed);
+  }
+  const closuresBtn = document.getElementById('news-closures-toggle');
+  if (closuresBtn) {
+    closuresBtn.addEventListener('click', () => {
+      newsClosuresOnly = !newsClosuresOnly;
+      closuresBtn.classList.toggle('active', newsClosuresOnly);
+      renderNewsFeed();
+    });
+  }
+  const exportBtn = document.getElementById('news-export-btn');
+  if (exportBtn) {
+    exportBtn.addEventListener('click', () => exportNewsFeed(exportBtn));
+  }
+};
 
 // Initialize app (called after login)
 const initApp = () => {
