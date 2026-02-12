@@ -3811,7 +3811,7 @@ function showNewsToast(message) {
   toast.classList.add('visible');
   clearTimeout(toast._hideTimer);
   toast._hideTimer = setTimeout(() => toast.classList.remove('visible'), 3000);
-};
+}
 
 const initNewsFeed = () => {
   const filter = document.getElementById('news-date-filter');
