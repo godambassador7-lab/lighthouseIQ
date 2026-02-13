@@ -4322,10 +4322,11 @@ const WORKFORCE_PROJECTIONS = {
     const stateInfo = salaryData[state];
     if (!stateInfo) return;
 
+    const marketStatus = getBlendedShortageStatus(state, salaryData);
+
     const travelPremium = stateInfo.travelAnnual - stateInfo.staffRN;
     const estimatedNurses = Math.round(data.affected * 0.35); // ~35% nursing in healthcare layoffs
 
-    const marketStatus = getBlendedShortageStatus(state, salaryData);
     if (marketStatus === 'shortage' && estimatedNurses > 50) {
       opportunities.push({
         state,
