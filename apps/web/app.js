@@ -2364,12 +2364,26 @@ const initProjectEvents = () => {
 const initHelpSection = () => {
   const helpSection = document.querySelector('.help-section');
   const helpToggle = document.getElementById('help-toggle');
+  const helpContent = document.getElementById('help-content');
+  const toggleIcon = helpToggle?.querySelector('.help-toggle-icon');
 
-  if (helpToggle && helpSection) {
-    helpToggle.addEventListener('click', () => {
-      helpSection.classList.toggle('open');
-    });
-  }
+  if (!helpToggle || !helpSection) return;
+
+  const setOpen = (open) => {
+    helpSection.classList.toggle('open', open);
+    if (helpContent) {
+      helpContent.style.maxHeight = open ? `${helpContent.scrollHeight}px` : '0px';
+    }
+    if (toggleIcon) toggleIcon.textContent = open ? '-' : '+';
+    helpToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  };
+
+  helpToggle.addEventListener('click', () => {
+    const isOpen = helpSection.classList.contains('open');
+    setOpen(!isOpen);
+  });
+
+  setOpen(helpSection.classList.contains('open'));
 };
 
 // ==================== COLLAPSIBLE SECTIONS ====================
