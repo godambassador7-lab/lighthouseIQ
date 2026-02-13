@@ -4565,13 +4565,14 @@ let newsClosuresOnly = false;
 const NEWS_WINDOW_COUNT = 5;
 
 const NEWS_CLOSURE_KEYWORDS = [
-  'closure', 'closing', 'closes', 'closed', 'shut down', 'shutting down', 'shuttered',
+  'closure', 'closing', 'shut down', 'shutting down', 'shuttered',
   'bankrupt', 'chapter 11', 'chapter 7', 'insolvency', 'insolvent',
-  'layoff', 'lay off', 'laid off', 'layoffs', 'furlough', 'workforce reduction', 'job cuts', 'job losses', 'downsiz',
-  'at risk', 'at-risk', 'financial distress', 'struggling',
-  'restructur', 'wind down', 'winding down', 'liquidat',
-  'cease operations', 'ceasing operations', 'discontinu',
-  'receivership', 'default', 'debt crisis',
+  'layoff', 'lay off', 'laid off', 'layoffs', 'laying off', 'furlough',
+  'workforce reduction', 'job cuts', 'job losses', 'downsiz', 'job elimination',
+  'at risk', 'at-risk', 'financial distress',
+  'wind down', 'winding down', 'liquidat',
+  'cease operations', 'ceasing operations',
+  'receivership',
 ];
 
 const matchesClosureKeywords = (article) => {
