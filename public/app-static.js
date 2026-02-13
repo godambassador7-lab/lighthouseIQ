@@ -3039,6 +3039,7 @@ const renderProjects = () => {
         <h4>${p.name}</h4>
         <span class="project-count">${(p.notices || []).length} notices</span>
       </div>
+      ${p.owner ? `<p class="project-owner">Owner: ${p.owner}</p>` : ''}
       <p class="project-desc">${p.description || 'No description'}</p>
     </div>
   `).join('');
@@ -3054,6 +3055,8 @@ const openProjectDetail = (projectId) => {
 
   currentProjectId = projectId;
   document.getElementById('project-detail-name').textContent = project.name;
+  const ownerEl = document.getElementById('project-detail-owner');
+  if (ownerEl) ownerEl.textContent = project.owner ? `Owner: ${project.owner}` : '';
   document.getElementById('project-detail-desc').textContent = project.description || 'No description';
 
   const noticesList = document.getElementById('project-notices-list');
@@ -3080,21 +3083,39 @@ const initProjects = () => {
   newProjectBtn?.addEventListener('click', () => {
     currentProjectId = null;
     projectForm?.reset();
+    const nameError = document.getElementById('project-name-error');
+    if (nameError) { nameError.textContent = ''; nameError.style.display = 'none'; }
     projectModal?.classList.add('active');
   });
 
   projectForm?.addEventListener('submit', (e) => {
     e.preventDefault();
     const name = document.getElementById('project-name')?.value?.trim();
-    const description = document.getElementById('project-desc')?.value?.trim();
+    const owner = document.getElementById('project-owner')?.value?.trim();
+    const description = document.getElementById('project-description')?.value?.trim();
     const color = document.querySelector('.color-option.selected')?.dataset?.color || '#3b82f6';
+    const nameError = document.getElementById('project-name-error');
 
-    if (!name) return;
+    if (!name || !owner) return;
+
+    // Check for duplicate project name (case-insensitive, exclude current project when editing)
+    const duplicate = projects.find(p =>
+      p.name.toLowerCase() === name.toLowerCase() && p.id !== currentProjectId
+    );
+    if (duplicate) {
+      if (nameError) {
+        nameError.textContent = 'A project with this name already exists.';
+        nameError.style.display = 'block';
+      }
+      return;
+    }
+    if (nameError) { nameError.textContent = ''; nameError.style.display = 'none'; }
 
     if (currentProjectId) {
       const project = projects.find(p => p.id === currentProjectId);
       if (project) {
         project.name = name;
+        project.owner = owner;
         project.description = description;
         project.color = color;
       }
@@ -3102,6 +3123,7 @@ const initProjects = () => {
       projects.push({
         id: Date.now().toString(),
         name,
+        owner,
         description,
         color,
         notices: [],

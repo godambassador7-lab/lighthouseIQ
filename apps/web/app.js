@@ -2053,6 +2053,7 @@ const renderProjects = (searchTerm = '') => {
         <h4>${project.name}</h4>
         <span class="project-card-count">${project.notices?.length || 0} notices</span>
       </div>
+      ${project.owner ? `<p class="project-owner">Owner: ${project.owner}</p>` : ''}
       <p>${project.description || 'No description'}</p>
       <div class="project-card-meta">Created ${formatDate(project.createdAt)}</div>
     </div>
@@ -2080,6 +2081,8 @@ const openProjectModal = (projectId = null) => {
   } else {
     modalTitle.textContent = 'Create New Project';
     projectForm.reset();
+    const nameError = document.getElementById('project-name-error');
+    if (nameError) { nameError.textContent = ''; nameError.style.display = 'none'; }
     document.querySelectorAll('.color-option').forEach((opt, i) => {
       opt.classList.toggle('selected', i === 0);
     });
@@ -2099,20 +2102,33 @@ const handleProjectSubmit = (e) => {
   e.preventDefault();
 
   const name = document.getElementById('project-name').value.trim();
-  const description = document.getElementById('project-description').value.trim();
+  const owner = document.getElementById('project-owner')?.value?.trim();
+  const description = document.getElementById('project-description')?.value?.trim();
   const selectedColor = document.querySelector('.color-option.selected');
   const color = selectedColor ? selectedColor.dataset.color : '#3182ce';
+  const nameError = document.getElementById('project-name-error');
 
-  if (!name) {
-    alert('Please enter a project name.');
+  if (!name || !owner) return;
+
+  // Check for duplicate project name (case-insensitive, exclude current project when editing)
+  const duplicate = projects.find(p =>
+    p.name.toLowerCase() === name.toLowerCase() && p.id !== currentProjectId
+  );
+  if (duplicate) {
+    if (nameError) {
+      nameError.textContent = 'A project with this name already exists.';
+      nameError.style.display = 'block';
+    }
     return;
   }
+  if (nameError) { nameError.textContent = ''; nameError.style.display = 'none'; }
 
   if (currentProjectId) {
     // Update existing project
     const project = projects.find(p => p.id === currentProjectId);
     if (project) {
       project.name = name;
+      project.owner = owner;
       project.description = description;
       project.color = color;
       project.updatedAt = new Date().toISOString();
@@ -2122,6 +2138,7 @@ const handleProjectSubmit = (e) => {
     const newProject = {
       id: `project-${Date.now()}`,
       name,
+      owner,
       description,
       color,
       notices: [],
@@ -2143,6 +2160,8 @@ const openProjectDetail = (projectId) => {
 
   currentProjectId = projectId;
   document.getElementById('project-detail-title').textContent = project.name;
+  const ownerEl = document.getElementById('project-detail-owner');
+  if (ownerEl) ownerEl.textContent = project.owner ? `Owner: ${project.owner}` : '';
   document.getElementById('project-detail-desc').textContent = project.description || 'No description';
 
   const noticesList = document.getElementById('project-notices-list');

@@ -467,6 +467,11 @@
               <label>
                 Project Name *
                 <input type="text" id="project-name" placeholder="e.g., Q1 2026 Midwest Targets" required />
+                <span class="form-error" id="project-name-error"></span>
+              </label>
+              <label>
+                Owner *
+                <input type="text" id="project-owner" placeholder="Your name" required />
               </label>
               <label>
                 Description
@@ -500,6 +505,7 @@
             <button class="modal-close" id="project-detail-close">&times;</button>
           </div>
           <div class="modal-body">
+            <p class="project-detail-owner" id="project-detail-owner"></p>
             <p class="project-detail-desc" id="project-detail-desc"></p>
             <div class="project-notices-list" id="project-notices-list">
               <div class="empty-state">No notices saved to this project yet.</div>
