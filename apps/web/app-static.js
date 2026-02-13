@@ -1343,7 +1343,7 @@ const scoreOutOfStateTarget = (homeState, targetState) => {
 
   // Get display factors (safe to expose - just data, not algorithms)
   const salaryData = salaryBenchmarks || strategicData?.salaryData || NURSING_SALARY_DATA;
-  const shortage = salaryData[targetState]?.shortage ?? 'balanced';
+  const shortage = getBlendedShortageStatus(targetState, salaryData);
   const homeSalary = Number(salaryData[homeState]?.staffRN ?? 0);
   const targetSalary = Number(salaryData[targetState]?.staffRN ?? 0);
   const salaryDelta = homeSalary && targetSalary ? homeSalary - targetSalary : 0;
@@ -3917,6 +3917,96 @@ const NURSING_SALARY_DATA = {
   WY: { staffRN: 84760, staffHourly: 41, travelWeekly: 2080, travelAnnual: 108160, shortage: 'shortage', projectedGap: -700 }
 };
 
+const WDBO_RN_ADEQUACY_2025 = {
+  AL: 114,
+  AK: 145,
+  AZ: 76,
+  AR: 84,
+  CA: 88,
+  CO: 80,
+  CT: 108,
+  DE: 107,
+  DC: 193,
+  FL: 92,
+  GA: 83,
+  HI: 134,
+  ID: 62,
+  IL: 105,
+  IN: 97,
+  IA: 79,
+  KS: 86,
+  KY: 81,
+  LA: 85,
+  ME: 86,
+  MD: 75,
+  MA: 124,
+  MI: 84,
+  MN: 110,
+  MS: 90,
+  MO: 83,
+  MT: 102,
+  NE: 86,
+  NV: 92,
+  NH: 85,
+  NJ: 92,
+  NM: 64,
+  NY: 100,
+  NC: 85,
+  ND: 125,
+  OH: 98,
+  OK: 69,
+  OR: 98,
+  PA: 83,
+  RI: 112,
+  SC: 72,
+  SD: 112,
+  TN: 84,
+  TX: 88,
+  UT: 99,
+  VT: 134,
+  VA: 70,
+  WA: 87,
+  WV: 81,
+  WI: 108,
+  WY: 199
+};
+
+const WDBO_MARKET_SOURCES = {
+  'WDBO (2025 nursing shortages)': 'https://www.wdbo.com/news/crisis-by-numbers-nursing-shortages-2025-by-state/TIU5D6ZD25NV3M36TJ3FYDPTIY/',
+  'Vivian HRSA adequacy (2025)': 'https://www.vivian.com/community/industry-trends/nursing-shortage-by-state/'
+};
+
+const getShortageScore = (status) => (status === 'surplus' ? 1 : status === 'shortage' ? -1 : 0);
+
+const getWdboAdequacy = (state) => WDBO_RN_ADEQUACY_2025[state];
+
+const getWdboShortageStatus = (state) => {
+  const adequacy = getWdboAdequacy(state);
+  if (adequacy === undefined || adequacy === null) return null;
+  if (adequacy > 100) return 'surplus';
+  if (adequacy < 100) return 'shortage';
+  return 'balanced';
+};
+
+const getBlendedShortageStatus = (state, salaryData) => {
+  const base = salaryData?.[state]?.shortage ?? 'balanced';
+  const wdbo = getWdboShortageStatus(state);
+  if (!wdbo) return base;
+  const score = (getShortageScore(wdbo) * 2) + getShortageScore(base);
+  if (score > 0) return 'surplus';
+  if (score < 0) return 'shortage';
+  return 'balanced';
+};
+
+const getMarketStatusSources = (state) => {
+  const sources = [];
+  if (getWdboShortageStatus(state)) {
+    sources.push(...Object.entries(WDBO_MARKET_SOURCES).map(([label, url]) => `${label}: ${url}`));
+  }
+  return sources;
+};
+
+
 // Cost of Living Index by state (100 = national average, data from Missouri Economic Research 2024-2026)
 const COST_OF_LIVING_INDEX = {
   AL: 89.3, AK: 127.1, AZ: 102.2, AR: 89.8, CA: 142.2,
@@ -4067,7 +4157,7 @@ const WORKFORCE_PROJECTIONS = {
 
   const computeBestTargets = (homeState) => {
     return Object.entries(salaryData)
-      .filter(([state, data]) => state !== homeState && data.shortage === 'shortage')
+      .filter(([state]) => state !== homeState && getBlendedShortageStatus(state, salaryData) === 'shortage')
       .sort((a, b) => {
         const gapA = Number(a[1].projectedGap ?? 0);
         const gapB = Number(b[1].projectedGap ?? 0);
@@ -4232,10 +4322,12 @@ const WORKFORCE_PROJECTIONS = {
     const stateInfo = salaryData[state];
     if (!stateInfo) return;
 
+    const marketStatus = getBlendedShortageStatus(state, salaryData);
+
     const travelPremium = stateInfo.travelAnnual - stateInfo.staffRN;
     const estimatedNurses = Math.round(data.affected * 0.35); // ~35% nursing in healthcare layoffs
 
-    if (stateInfo.shortage === 'shortage' && estimatedNurses > 50) {
+    if (marketStatus === 'shortage' && estimatedNurses > 50) {
       opportunities.push({
         state,
         estimatedNurses,
@@ -4252,7 +4344,7 @@ const WORKFORCE_PROJECTIONS = {
         state,
         noticeCount: data.count,
         totalAffected: data.affected,
-        shortage: stateInfo.shortage,
+        shortage: marketStatus,
         projectedGap: stateInfo.projectedGap
       });
     }
@@ -4262,8 +4354,12 @@ const WORKFORCE_PROJECTIONS = {
   risks.sort((a, b) => b.totalAffected - a.totalAffected);
 
   // Generate executive summary
-  const shortageStatesList = Object.entries(salaryData).filter(([_, d]) => d.shortage === 'shortage').map(([s]) => s).sort();
-  const surplusStatesList = Object.entries(salaryData).filter(([_, d]) => d.shortage === 'surplus').map(([s]) => s).sort();
+  const shortageStatesList = Object.keys(salaryData)
+    .filter((state) => getBlendedShortageStatus(state, salaryData) === 'shortage')
+    .sort();
+  const surplusStatesList = Object.keys(salaryData)
+    .filter((state) => getBlendedShortageStatus(state, salaryData) === 'surplus')
+    .sort();
   const totalProjectedGap = Object.values(salaryData).reduce((sum, d) => sum + d.projectedGap, 0);
   const avgStaffSalary = Math.round(Object.values(salaryData).reduce((sum, d) => sum + d.staffRN, 0) /
     Math.max(Object.keys(salaryData).length, 1));
@@ -4506,8 +4602,10 @@ const WORKFORCE_PROJECTIONS = {
               ${Object.entries(salaryData)
                 .sort((a, b) => b[1].staffRN - a[1].staffRN)
                 .slice(0, 15)
-                .map(([state, data]) => `
-                  <tr class="${data.shortage === 'shortage' ? 'shortage-row' : data.shortage === 'surplus' ? 'surplus-row' : ''}">
+                .map(([state, data]) => {
+                  const marketStatus = getBlendedShortageStatus(state, salaryData);
+                  return `
+                  <tr class="${marketStatus === 'shortage' ? 'shortage-row' : marketStatus === 'surplus' ? 'surplus-row' : ''}">
                     <td><strong>${state}</strong></td>
                     <td class="salary-cell">$${data.staffRN.toLocaleString()}</td>
                     <td class="salary-cell travel">$${data.travelWeekly.toLocaleString()}</td>
@@ -4516,10 +4614,11 @@ const WORKFORCE_PROJECTIONS = {
                       ${data.travelAnnual - data.staffRN >= 0 ? '+' : '-'}$${Math.abs(data.travelAnnual - data.staffRN).toLocaleString()}
                     </td>
                     <td>
-                      <span class="market-badge ${data.shortage}">${data.shortage}</span>
+                      <span class="market-badge ${marketStatus}">${marketStatus}</span>
                     </td>
                   </tr>
-                `).join('')}
+                `;
+                }).join('')}
             </tbody>
           </table>
         </div>
@@ -5316,8 +5415,9 @@ const renderStateBeacon = async (state) => {
     Array.isArray(stateFeed) ? stateFeed.length : 0,
     entry.warnMajorSystems?.length || 0
   );
+  const salaryData = strategicData?.salaryData || NURSING_SALARY_DATA;
+  const marketStatus = getBlendedShortageStatus(state, salaryData);
   const payPosition = (() => {
-    const salaryData = strategicData?.salaryData || NURSING_SALARY_DATA;
     const avgStaffSalary = Math.round(Object.values(salaryData).reduce((sum, d) => sum + d.staffRN, 0) /
       Math.max(Object.keys(salaryData).length, 1));
     const stateSalary = salaryData[state]?.staffRN ?? null;
@@ -5335,6 +5435,7 @@ const renderStateBeacon = async (state) => {
   if (noticeCount) chips.push(`WARN notices (major systems): ${noticeCount}`);
   if (confidence?.label) chips.push(`Signal confidence: ${confidence.label}`);
   if (payPosition) chips.push(`Pay position: ${payPosition}`);
+  if (marketStatus) chips.push(`Market: ${marketStatus} (WDBO weighted)`);
 
   if (stateBeaconMeta) {
     stateBeaconMeta.innerHTML = chips.map((chip) => `<span class="state-beacon-chip">${escapeHtml(chip)}</span>`).join('');
@@ -8101,6 +8202,10 @@ const buildMasterExportData = async (state, progressCb) => {
   const rural = getRuralDataForMasterExport(state);
   const topInstitutions = getTopInstitutionsForState(state);
   const topIndianaInstitutions = getTopInstitutionsForState(MASTER_EXPORT_HOME_STATE);
+  const salaryData = strategicData?.salaryData || NURSING_SALARY_DATA;
+  const marketStatus = getBlendedShortageStatus(state, salaryData);
+  const wdboAdequacy = getWdboAdequacy(state);
+  const marketSources = getMarketStatusSources(state);
   const stateBeacon = buildStateBeaconExportWithHome(state, MASTER_EXPORT_HOME_STATE);
   const rawBeaconEntry = stateBeaconData?.states?.[state] ?? {};
   const nursingEducation = rawBeaconEntry.nursingEducation ?? null;
@@ -8119,6 +8224,9 @@ const buildMasterExportData = async (state, progressCb) => {
     recentWarnNotices,
     rural,
     stateBeacon,
+    marketStatus,
+    wdboAdequacy,
+    marketSources,
     pipeline: entry.pipeline || {},
     nursingEducation,
     indianaEducation,
@@ -8165,6 +8273,10 @@ const buildMasterExportRows = (data) => {
   pushRow('Master Overview', 'Home State (Comparison)', STATE_NAMES[MASTER_EXPORT_HOME_STATE] || MASTER_EXPORT_HOME_STATE);
   pushRow('Master Overview', 'Metros', data.metroSummary.count);
   pushRow('Master Overview', 'Hospitals', data.metroSummary.totalHospitals);
+  pushRow('Master Overview', 'Market status (WDBO weighted)', data.marketStatus || 'balanced');
+  if (data.wdboAdequacy !== null && data.wdboAdequacy !== undefined) {
+    pushRow('Master Overview', 'WDBO adequacy (2025)', `${data.wdboAdequacy}%`);
+  }
   pushRow('Master Overview', 'WARN notices (30d)', data.recentWarnNotices.length);
   pushRow('Master Overview', 'Rural closures (since 2010)', data.rural.summary.count);
   pushRow('Master Overview', 'Rural closures (recent)', data.rural.summary.recent);
@@ -8279,6 +8391,13 @@ const buildMasterExportRows = (data) => {
   Object.entries(data.outboundSources || {}).forEach(([key, value]) => {
     pushRow('Outbound Insights Sources', key, value);
   });
+
+  if (data.marketSources?.length) {
+    pushSection('Market Status Sources');
+    data.marketSources.forEach((source) => {
+      pushRow('Market Status Sources', 'Source', source);
+    });
+  }
 
   pushSection('WARN Notices (30d)');
   data.recentWarnNotices.forEach((notice) => {
