@@ -3254,13 +3254,19 @@ const initHelpSection = () => {
     helpToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
   };
 
-  helpToggle.addEventListener('click', () => {
-    const isOpen = helpSection.classList.contains('open');
-    setOpen(!isOpen);
-  });
+  if (helpToggle.dataset.boundToggle !== 'true') {
+    helpToggle.addEventListener('click', () => {
+      const isOpen = helpSection.classList.contains('open');
+      setOpen(!isOpen);
+    });
+    helpToggle.dataset.boundToggle = 'true';
+  }
 
   setOpen(helpSection.classList.contains('open'));
 };
+
+// Bind once at script load so help toggle still works if initApp isn't reached yet.
+initHelpSection();
 
 // =============================================================================
 // Collapsible Sections
