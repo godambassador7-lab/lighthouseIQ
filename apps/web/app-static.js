@@ -3099,8 +3099,7 @@ const initProjects = () => {
     openProjectModal();
   });
 
-  projectForm?.addEventListener('submit', (e) => {
-    e.preventDefault();
+  document.getElementById('save-project-btn')?.addEventListener('click', () => {
     const name = document.getElementById('project-name')?.value?.trim();
     const owner = document.getElementById('project-owner')?.value?.trim();
     const description = document.getElementById('project-description')?.value?.trim();
@@ -3108,9 +3107,14 @@ const initProjects = () => {
     const nameError = document.getElementById('project-name-error');
 
     // Validate required fields with visible feedback
-    if (!name || !owner) {
-      if (!name) document.getElementById('project-name')?.focus();
-      else if (!owner) document.getElementById('project-owner')?.focus();
+    if (!name) {
+      if (nameError) { nameError.textContent = 'Project name is required.'; nameError.style.display = 'block'; }
+      document.getElementById('project-name')?.focus();
+      return;
+    }
+    if (!owner) {
+      if (nameError) { nameError.textContent = 'Owner name is required.'; nameError.style.display = 'block'; }
+      document.getElementById('project-owner')?.focus();
       return;
     }
 
@@ -3119,10 +3123,7 @@ const initProjects = () => {
       p.name.toLowerCase() === name.toLowerCase() && p.id !== currentProjectId
     );
     if (duplicate) {
-      if (nameError) {
-        nameError.textContent = 'A project with this name already exists.';
-        nameError.style.display = 'block';
-      }
+      if (nameError) { nameError.textContent = 'A project with this name already exists.'; nameError.style.display = 'block'; }
       return;
     }
     if (nameError) { nameError.textContent = ''; nameError.style.display = 'none'; }
@@ -3281,19 +3282,13 @@ const initHelpSection = () => {
     helpToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
   };
 
-  if (helpToggle.dataset.boundToggle !== 'true') {
-    helpToggle.addEventListener('click', () => {
-      const isOpen = helpSection.classList.contains('open');
-      setOpen(!isOpen);
-    });
-    helpToggle.dataset.boundToggle = 'true';
-  }
+  helpToggle.addEventListener('click', () => {
+    const isOpen = helpSection.classList.contains('open');
+    setOpen(!isOpen);
+  });
 
   setOpen(helpSection.classList.contains('open'));
 };
-
-// Bind once at script load so help toggle still works if initApp isn't reached yet.
-initHelpSection();
 
 // =============================================================================
 // Collapsible Sections

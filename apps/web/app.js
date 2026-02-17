@@ -2100,9 +2100,7 @@ const closeProjectModal = () => {
 };
 
 // Handle project form submit
-const handleProjectSubmit = (e) => {
-  e.preventDefault();
-
+const handleProjectSubmit = () => {
   const name = document.getElementById('project-name').value.trim();
   const owner = document.getElementById('project-owner')?.value?.trim();
   const description = document.getElementById('project-description')?.value?.trim();
@@ -2110,9 +2108,14 @@ const handleProjectSubmit = (e) => {
   const color = selectedColor ? selectedColor.dataset.color : '#3182ce';
   const nameError = document.getElementById('project-name-error');
 
-  if (!name || !owner) {
-    if (!name) document.getElementById('project-name')?.focus();
-    else document.getElementById('project-owner')?.focus();
+  if (!name) {
+    if (nameError) { nameError.textContent = 'Project name is required.'; nameError.style.display = 'block'; }
+    document.getElementById('project-name')?.focus();
+    return;
+  }
+  if (!owner) {
+    if (nameError) { nameError.textContent = 'Owner name is required.'; nameError.style.display = 'block'; }
+    document.getElementById('project-owner')?.focus();
     return;
   }
 
@@ -2342,10 +2345,8 @@ const initProjectEvents = () => {
   document.getElementById('export-project-csv')?.addEventListener('click', exportProjectCSV);
   document.getElementById('export-project-json')?.addEventListener('click', exportProjectJSON);
 
-  // Project form submit
-  if (projectForm) {
-    projectForm.addEventListener('submit', handleProjectSubmit);
-  }
+  // Save project button (direct click, not form submit)
+  document.getElementById('save-project-btn')?.addEventListener('click', handleProjectSubmit);
 
   // Color picker
   if (colorPicker) {
