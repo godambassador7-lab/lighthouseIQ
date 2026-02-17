@@ -3153,6 +3153,17 @@ const initProjects = () => {
     closeProjectModal();
   });
 
+  if (projectForm && projectForm.dataset.boundProjectSubmit !== 'true') {
+    projectForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const saveBtn = document.getElementById('save-project-btn');
+      if (saveBtn) {
+        saveBtn.click();
+      }
+    });
+    projectForm.dataset.boundProjectSubmit = 'true';
+  }
+
   // X button (top-right)
   document.getElementById('modal-close')?.addEventListener('click', closeProjectModal);
   // Cancel button

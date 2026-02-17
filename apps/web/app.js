@@ -2065,13 +2065,16 @@ const openProjectModal = (projectId = null) => {
   currentProjectId = projectId;
   const modalTitle = document.getElementById('modal-title');
   const nameInput = document.getElementById('project-name');
+  const ownerInput = document.getElementById('project-owner');
   const descInput = document.getElementById('project-description');
+  const nameError = document.getElementById('project-name-error');
 
   if (projectId) {
     const project = projects.find(p => p.id === projectId);
     if (project) {
       modalTitle.textContent = 'Edit Project';
       nameInput.value = project.name;
+      if (ownerInput) ownerInput.value = project.owner || '';
       descInput.value = project.description || '';
       // Select the color
       document.querySelectorAll('.color-option').forEach(opt => {
@@ -2081,12 +2084,11 @@ const openProjectModal = (projectId = null) => {
   } else {
     modalTitle.textContent = 'Create New Project';
     projectForm.reset();
-    const nameError = document.getElementById('project-name-error');
-    if (nameError) { nameError.textContent = ''; nameError.style.display = 'none'; }
     document.querySelectorAll('.color-option').forEach((opt, i) => {
       opt.classList.toggle('selected', i === 0);
     });
   }
+  if (nameError) { nameError.textContent = ''; nameError.style.display = 'none'; }
 
   projectModal.classList.add('active');
   document.body.classList.add('modal-open');
@@ -2345,8 +2347,19 @@ const initProjectEvents = () => {
   document.getElementById('export-project-csv')?.addEventListener('click', exportProjectCSV);
   document.getElementById('export-project-json')?.addEventListener('click', exportProjectJSON);
 
-  // Save project button (direct click, not form submit)
-  document.getElementById('save-project-btn')?.addEventListener('click', handleProjectSubmit);
+  // Save project supports both button click and Enter key form submit.
+  if (projectForm && projectForm.dataset.boundProjectSubmit !== 'true') {
+    projectForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      handleProjectSubmit();
+    });
+    projectForm.dataset.boundProjectSubmit = 'true';
+  }
+  const saveProjectBtn = document.getElementById('save-project-btn');
+  if (saveProjectBtn && saveProjectBtn.dataset.boundProjectClick !== 'true') {
+    saveProjectBtn.addEventListener('click', handleProjectSubmit);
+    saveProjectBtn.dataset.boundProjectClick = 'true';
+  }
 
   // Color picker
   if (colorPicker) {
