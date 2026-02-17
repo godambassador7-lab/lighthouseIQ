@@ -74,16 +74,27 @@ STATE_NAME_TO_ABBR = {
 }
 
 
-def fetch_url(url):
+def fetch_url(url, retries=2):
     req = urllib.request.Request(
         url,
         headers={
-            "User-Agent": "Mozilla/5.0",
+            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "Accept-Language": "en-US,en;q=0.9",
         },
     )
-    with urllib.request.urlopen(req) as resp:
-        return resp.read()
+    import time
+    for attempt in range(retries + 1):
+        try:
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                return resp.read()
+        except urllib.error.HTTPError as e:
+            if attempt < retries and e.code in (403, 429, 503):
+                wait = 5 * (attempt + 1)
+                print(f"  HTTP {e.code} from {url}, retrying in {wait}s... (attempt {attempt + 1}/{retries + 1})")
+                time.sleep(wait)
+            else:
+                raise
 
 
 def normalize_text(raw):
@@ -275,10 +286,18 @@ def main():
         except Exception:
             pass
 
-    hrsa_html = fetch_url(HRSA_URL)
-    section = extract_hrsa_section(normalize_text(hrsa_html))
-    hrsa_rows = parse_hrsa_migration(section)
-    rn_share, lpn_share = build_hrsa_shares(hrsa_rows)
+    try:
+        hrsa_html = fetch_url(HRSA_URL)
+        section = extract_hrsa_section(normalize_text(hrsa_html))
+        hrsa_rows = parse_hrsa_migration(section)
+        rn_share, lpn_share = build_hrsa_shares(hrsa_rows)
+    except Exception as e:
+        print(f"Warning: Could not fetch HRSA data ({e}). Checking for existing data...")
+        if os.path.exists(output_path):
+            print(f"  Using existing {output_path} — skipping update.")
+            return
+        print("  No existing data found. Generating with empty HRSA data.")
+        rn_share, lpn_share = {}, {}
 
     tmp_census = os.path.join(output_dir, "_tmp_census.xlsx")
     census_url = try_load_census_migration(tmp_census)
