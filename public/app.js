@@ -3074,18 +3074,29 @@ const openProjectDetail = (projectId) => {
   }
 
   projectDetailModal.classList.add('active');
+  document.body.classList.add('modal-open');
 };
 
 const initProjects = () => {
   loadProjects();
   renderProjects();
 
+  const openProjectModal = () => {
+    projectModal?.classList.add('active');
+    document.body.classList.add('modal-open');
+  };
+  const closeProjectModal = () => {
+    projectModal?.classList.remove('active');
+    document.body.classList.remove('modal-open');
+  };
+
   newProjectBtn?.addEventListener('click', () => {
     currentProjectId = null;
     projectForm?.reset();
     const nameError = document.getElementById('project-name-error');
     if (nameError) { nameError.textContent = ''; nameError.style.display = 'none'; }
-    projectModal?.classList.add('active');
+    document.getElementById('modal-title').textContent = 'Create New Project';
+    openProjectModal();
   });
 
   projectForm?.addEventListener('submit', (e) => {
@@ -3096,7 +3107,12 @@ const initProjects = () => {
     const color = document.querySelector('.color-option.selected')?.dataset?.color || '#3b82f6';
     const nameError = document.getElementById('project-name-error');
 
-    if (!name || !owner) return;
+    // Validate required fields with visible feedback
+    if (!name || !owner) {
+      if (!name) document.getElementById('project-name')?.focus();
+      else if (!owner) document.getElementById('project-owner')?.focus();
+      return;
+    }
 
     // Check for duplicate project name (case-insensitive, exclude current project when editing)
     const duplicate = projects.find(p =>
@@ -3133,15 +3149,26 @@ const initProjects = () => {
 
     saveProjects();
     renderProjects();
-    projectModal?.classList.remove('active');
+    closeProjectModal();
   });
 
-  document.getElementById('close-project-modal')?.addEventListener('click', () => {
-    projectModal?.classList.remove('active');
+  // X button (top-right)
+  document.getElementById('modal-close')?.addEventListener('click', closeProjectModal);
+  // Cancel button
+  document.getElementById('modal-cancel')?.addEventListener('click', closeProjectModal);
+  // Click overlay background to close
+  projectModal?.addEventListener('click', (e) => {
+    if (e.target === projectModal) closeProjectModal();
   });
 
-  document.getElementById('close-project-detail')?.addEventListener('click', () => {
+  const closeDetailModal = () => {
     projectDetailModal?.classList.remove('active');
+    document.body.classList.remove('modal-open');
+  };
+
+  document.getElementById('close-project-detail')?.addEventListener('click', closeDetailModal);
+  projectDetailModal?.addEventListener('click', (e) => {
+    if (e.target === projectDetailModal) closeDetailModal();
   });
 
   document.getElementById('delete-project-btn')?.addEventListener('click', () => {
@@ -3149,7 +3176,7 @@ const initProjects = () => {
       projects = projects.filter(p => p.id !== currentProjectId);
       saveProjects();
       renderProjects();
-      projectDetailModal?.classList.remove('active');
+      closeDetailModal();
     }
   });
 

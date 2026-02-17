@@ -2089,11 +2089,13 @@ const openProjectModal = (projectId = null) => {
   }
 
   projectModal.classList.add('active');
+  document.body.classList.add('modal-open');
 };
 
 // Close project modal
 const closeProjectModal = () => {
   projectModal.classList.remove('active');
+  document.body.classList.remove('modal-open');
   currentProjectId = null;
 };
 
@@ -2108,7 +2110,11 @@ const handleProjectSubmit = (e) => {
   const color = selectedColor ? selectedColor.dataset.color : '#3182ce';
   const nameError = document.getElementById('project-name-error');
 
-  if (!name || !owner) return;
+  if (!name || !owner) {
+    if (!name) document.getElementById('project-name')?.focus();
+    else document.getElementById('project-owner')?.focus();
+    return;
+  }
 
   // Check for duplicate project name (case-insensitive, exclude current project when editing)
   const duplicate = projects.find(p =>
@@ -2180,11 +2186,13 @@ const openProjectDetail = (projectId) => {
   }
 
   projectDetailModal.classList.add('active');
+  document.body.classList.add('modal-open');
 };
 
 // Close project detail modal
 const closeProjectDetail = () => {
   projectDetailModal.classList.remove('active');
+  document.body.classList.remove('modal-open');
   currentProjectId = null;
 };
 
