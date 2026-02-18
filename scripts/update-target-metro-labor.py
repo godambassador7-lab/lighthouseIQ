@@ -149,26 +149,27 @@ def main() -> int:
     except Exception as e:
         print(f"Warning: Could not fetch BLS metro table ({e}). Skipping metro labor update.")
         return 0
-    baseline_label_full, _latest_label_full = get_latest_month_pair(lines)
-    baseline_label = f"{baseline_label_full.split()[0][:3]} {baseline_label_full.split()[1]}"
 
-    values: dict[str, str] = {}
-    for label, metro_prefix in LABEL_TO_METRO.items():
-        latest_rate, baseline_rate = extract_latest_and_baseline_rates(lines, metro_prefix)
-        values[label] = f"{latest_rate}% ({baseline_label}: {baseline_rate}%)"
+    try:
+        baseline_label_full, _latest_label_full = get_latest_month_pair(lines)
+        baseline_label = f"{baseline_label_full.split()[0][:3]} {baseline_label_full.split()[1]}"
 
-    as_of = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    for file_path in FILES_TO_UPDATE:
-        update_file(file_path, values, as_of)
-        print(f"Updated {file_path}")
+        values: dict[str, str] = {}
+        for label, metro_prefix in LABEL_TO_METRO.items():
+            latest_rate, baseline_rate = extract_latest_and_baseline_rates(lines, metro_prefix)
+            values[label] = f"{latest_rate}% ({baseline_label}: {baseline_rate}%)"
 
-    print(f"Updated {len(values)} metro rows from {BLS_METRO_TABLE_URL}")
+        as_of = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        for file_path in FILES_TO_UPDATE:
+            update_file(file_path, values, as_of)
+            print(f"Updated {file_path}")
+
+        print(f"Updated {len(values)} metro rows from {BLS_METRO_TABLE_URL}")
+    except Exception as e:
+        print(f"Warning: Could not parse BLS metro table ({e}). Skipping metro labor update.")
+
     return 0
 
 
 if __name__ == "__main__":
-    try:
-        raise SystemExit(main())
-    except Exception as exc:  # pragma: no cover
-        print(f"ERROR: {exc}", file=sys.stderr)
-        raise SystemExit(1)
+    raise SystemExit(main())
