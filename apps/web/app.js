@@ -2355,12 +2355,6 @@ const initProjectEvents = () => {
     });
     projectForm.dataset.boundProjectSubmit = 'true';
   }
-  const saveProjectBtn = document.getElementById('save-project-btn');
-  if (saveProjectBtn && saveProjectBtn.dataset.boundProjectClick !== 'true') {
-    saveProjectBtn.addEventListener('click', handleProjectSubmit);
-    saveProjectBtn.dataset.boundProjectClick = 'true';
-  }
-
   // Color picker
   if (colorPicker) {
     colorPicker.addEventListener('click', (e) => {
