@@ -58,9 +58,28 @@ MONTH_LABEL_RE = re.compile(
 )
 
 
-def fetch_table_lines() -> list[str]:
-    with urllib.request.urlopen(BLS_METRO_TABLE_URL, timeout=30) as resp:
-        raw = resp.read().decode("utf-8", errors="replace")
+def fetch_table_lines(retries: int = 2) -> list[str]:
+    import time
+    req = urllib.request.Request(
+        BLS_METRO_TABLE_URL,
+        headers={
+            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "Accept-Language": "en-US,en;q=0.9",
+        },
+    )
+    for attempt in range(retries + 1):
+        try:
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                raw = resp.read().decode("utf-8", errors="replace")
+            break
+        except urllib.error.HTTPError as e:
+            if attempt < retries and e.code in (403, 429, 503):
+                wait = 5 * (attempt + 1)
+                print(f"  HTTP {e.code} from BLS, retrying in {wait}s... (attempt {attempt + 1}/{retries + 1})")
+                time.sleep(wait)
+            else:
+                raise
     # Convert HTML to roughly line-based plain text.
     text = html.unescape(raw)
     text = re.sub(r"<[^>]+>", "\n", text)
@@ -125,7 +144,11 @@ def update_file(path: Path, values: dict[str, str], as_of: str) -> None:
 
 
 def main() -> int:
-    lines = fetch_table_lines()
+    try:
+        lines = fetch_table_lines()
+    except Exception as e:
+        print(f"Warning: Could not fetch BLS metro table ({e}). Skipping metro labor update.")
+        return 0
     baseline_label_full, _latest_label_full = get_latest_month_pair(lines)
     baseline_label = f"{baseline_label_full.split()[0][:3]} {baseline_label_full.split()[1]}"
 
