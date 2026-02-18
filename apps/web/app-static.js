@@ -7282,10 +7282,10 @@ const TARGET_STATE_MONTHLY_LABOR_OVERRIDES = {
     updatedAt: '2026-02-06',
     updateEveryDays: 30,
     breakdown: [
-      { label: 'Indianapolis-Carmel-Anderson unemployment (Dec 2025)', value: '2.5% (Dec 2024: 3.7%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Fort Wayne unemployment (Dec 2025)', value: '2.5% (Dec 2024: 3.7%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Evansville unemployment (Dec 2025)', value: '2.6% (Dec 2024: 3.6%)', note: 'BLS LAUS metro monthly' },
-      { label: 'South Bend-Mishawaka unemployment (Dec 2025)', value: '3.2% (Dec 2024: 4.7%)', note: 'BLS LAUS metro monthly' }
+      { label: 'Indianapolis-Carmel-Anderson unemployment (latest)', value: '2.5% (Dec 2024: 3.7%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Fort Wayne unemployment (latest)', value: '2.5% (Dec 2024: 3.7%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Evansville unemployment (latest)', value: '2.6% (Dec 2024: 3.6%)', note: 'BLS LAUS metro monthly' },
+      { label: 'South Bend-Mishawaka unemployment (latest)', value: '3.2% (Dec 2024: 4.7%)', note: 'BLS LAUS metro monthly' }
     ],
     sources: []
   },
@@ -7293,11 +7293,11 @@ const TARGET_STATE_MONTHLY_LABOR_OVERRIDES = {
     updatedAt: '2026-02-06',
     updateEveryDays: 30,
     breakdown: [
-      { label: 'Louisville/Jefferson County unemployment (Dec 2025)', value: '3.1% (Dec 2024: 4.4%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Lexington-Fayette unemployment (Dec 2025)', value: '2.9% (Dec 2024: 4.1%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Bowling Green unemployment (Dec 2025)', value: '3.4% (Dec 2024: 4.6%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Owensboro unemployment (Dec 2025)', value: '3.3% (Dec 2024: 4.9%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Cincinnati (Northern KY market) unemployment (Dec 2025)', value: '3.6% (Dec 2024: 4.1%)', note: 'BLS LAUS metro monthly' }
+      { label: 'Louisville/Jefferson County unemployment (latest)', value: '3.1% (Dec 2024: 4.4%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Lexington-Fayette unemployment (latest)', value: '2.9% (Dec 2024: 4.1%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Bowling Green unemployment (latest)', value: '3.4% (Dec 2024: 4.6%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Owensboro unemployment (latest)', value: '3.3% (Dec 2024: 4.9%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Cincinnati (Northern KY market) unemployment (latest)', value: '3.6% (Dec 2024: 4.1%)', note: 'BLS LAUS metro monthly' }
     ],
     sources: []
   },
@@ -7305,10 +7305,10 @@ const TARGET_STATE_MONTHLY_LABOR_OVERRIDES = {
     updatedAt: '2026-02-06',
     updateEveryDays: 30,
     breakdown: [
-      { label: 'Miami-Fort Lauderdale-West Palm Beach unemployment (Dec 2025)', value: '3.5% (Dec 2024: 2.7%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Tampa-St. Petersburg-Clearwater unemployment (Dec 2025)', value: '4.6% (Dec 2024: 3.3%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Orlando-Kissimmee-Sanford unemployment (Dec 2025)', value: '4.4% (Dec 2024: 3.0%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Jacksonville unemployment (Dec 2025)', value: '4.6% (Dec 2024: 3.2%)', note: 'BLS LAUS metro monthly' }
+      { label: 'Miami-Fort Lauderdale-West Palm Beach unemployment (latest)', value: '3.5% (Dec 2024: 2.7%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Tampa-St. Petersburg-Clearwater unemployment (latest)', value: '4.6% (Dec 2024: 3.3%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Orlando-Kissimmee-Sanford unemployment (latest)', value: '4.4% (Dec 2024: 3.0%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Jacksonville unemployment (latest)', value: '4.6% (Dec 2024: 3.2%)', note: 'BLS LAUS metro monthly' }
     ],
     sources: []
   },
@@ -7316,9 +7316,9 @@ const TARGET_STATE_MONTHLY_LABOR_OVERRIDES = {
     updatedAt: '2026-02-06',
     updateEveryDays: 30,
     breakdown: [
-      { label: 'Chicago-Naperville-Elgin unemployment (Dec 2025)', value: '4.5% (Dec 2024: 4.5%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Springfield unemployment (Dec 2025)', value: '5.0% (Dec 2024: 3.8%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Peoria unemployment (Dec 2025)', value: '5.6% (Dec 2024: 4.5%)', note: 'BLS LAUS metro monthly' }
+      { label: 'Chicago-Naperville-Elgin unemployment (latest)', value: '4.5% (Dec 2024: 4.5%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Springfield unemployment (latest)', value: '5.0% (Dec 2024: 3.8%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Peoria unemployment (latest)', value: '5.6% (Dec 2024: 4.5%)', note: 'BLS LAUS metro monthly' }
     ],
     sources: []
   },
@@ -7326,9 +7326,9 @@ const TARGET_STATE_MONTHLY_LABOR_OVERRIDES = {
     updatedAt: '2026-02-06',
     updateEveryDays: 30,
     breakdown: [
-      { label: 'Detroit-Warren-Dearborn unemployment (Dec 2025)', value: '4.7% (Dec 2024: 4.7%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Grand Rapids-Wyoming-Kentwood unemployment (Dec 2025)', value: '4.0% (Dec 2024: 4.3%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Ann Arbor unemployment (Dec 2025)', value: '3.7% (Dec 2024: 3.8%)', note: 'BLS LAUS metro monthly' }
+      { label: 'Detroit-Warren-Dearborn unemployment (latest)', value: '4.7% (Dec 2024: 4.7%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Grand Rapids-Wyoming-Kentwood unemployment (latest)', value: '4.0% (Dec 2024: 4.3%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Ann Arbor unemployment (latest)', value: '3.7% (Dec 2024: 3.8%)', note: 'BLS LAUS metro monthly' }
     ],
     sources: []
   },
@@ -7336,9 +7336,9 @@ const TARGET_STATE_MONTHLY_LABOR_OVERRIDES = {
     updatedAt: '2026-02-06',
     updateEveryDays: 30,
     breakdown: [
-      { label: 'New York-Newark-Jersey City unemployment (Dec 2025)', value: '4.5% (Dec 2024: 4.3%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Buffalo-Cheektowaga unemployment (Dec 2025)', value: '4.4% (Dec 2024: 4.0%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Rochester unemployment (Dec 2025)', value: '4.3% (Dec 2024: 4.0%)', note: 'BLS LAUS metro monthly' }
+      { label: 'New York-Newark-Jersey City unemployment (latest)', value: '4.5% (Dec 2024: 4.3%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Buffalo-Cheektowaga unemployment (latest)', value: '4.0% (Dec 2024: 3.9%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Rochester unemployment (latest)', value: '3.7% (Dec 2024: 3.4%)', note: 'BLS LAUS metro monthly' }
     ],
     sources: []
   },
@@ -7346,10 +7346,10 @@ const TARGET_STATE_MONTHLY_LABOR_OVERRIDES = {
     updatedAt: '2026-02-06',
     updateEveryDays: 30,
     breakdown: [
-      { label: 'Houston-The Woodlands-Sugar Land unemployment (Dec 2025)', value: '5.0% (Dec 2024: 4.6%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Dallas-Fort Worth-Arlington unemployment (Dec 2025)', value: '4.2% (Dec 2024: 4.0%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Austin-Round Rock-San Marcos unemployment (Dec 2025)', value: '3.4% (Dec 2024: 3.4%)', note: 'BLS LAUS metro monthly' },
-      { label: 'San Antonio-New Braunfels unemployment (Dec 2025)', value: '4.0% (Dec 2024: 3.7%)', note: 'BLS LAUS metro monthly' }
+      { label: 'Houston-Pasadena-The Woodlands unemployment (latest)', value: '4.2% (Dec 2024: 4.0%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Dallas-Fort Worth-Arlington unemployment (latest)', value: '3.6% (Dec 2024: 3.5%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Austin-Round Rock-San Marcos unemployment (latest)', value: '3.2% (Dec 2024: 3.1%)', note: 'BLS LAUS metro monthly' },
+      { label: 'San Antonio-New Braunfels unemployment (latest)', value: '3.7% (Dec 2024: 3.4%)', note: 'BLS LAUS metro monthly' }
     ],
     sources: []
   }
@@ -7370,6 +7370,90 @@ Object.entries(TARGET_STATE_MONTHLY_LABOR_OVERRIDES).forEach(([state, salaryMeta
     sources: TARGET_STATE_MONTHLY_LABOR_SOURCES
   };
 });
+
+const METRO_LABOR_CARD_LABEL_MAP = {
+  IN: {
+    Indianapolis: 'Indianapolis-Carmel-Anderson unemployment (latest)',
+    'Fort Wayne': 'Fort Wayne unemployment (latest)',
+    Evansville: 'Evansville unemployment (latest)',
+    'South Bend-Elkhart': 'South Bend-Mishawaka unemployment (latest)'
+  },
+  KY: {
+    Louisville: 'Louisville/Jefferson County unemployment (latest)',
+    Lexington: 'Lexington-Fayette unemployment (latest)',
+    'Northern Kentucky': 'Cincinnati (Northern KY market) unemployment (latest)',
+    'Bowling Green': 'Bowling Green unemployment (latest)',
+    Owensboro: 'Owensboro unemployment (latest)'
+  },
+  FL: {
+    Miami: 'Miami-Fort Lauderdale-West Palm Beach unemployment (latest)',
+    'Tampa Bay': 'Tampa-St. Petersburg-Clearwater unemployment (latest)',
+    Orlando: 'Orlando-Kissimmee-Sanford unemployment (latest)',
+    Jacksonville: 'Jacksonville unemployment (latest)'
+  },
+  IL: {
+    Chicago: 'Chicago-Naperville-Elgin unemployment (latest)',
+    Springfield: 'Springfield unemployment (latest)',
+    Peoria: 'Peoria unemployment (latest)'
+  },
+  MI: {
+    Detroit: 'Detroit-Warren-Dearborn unemployment (latest)',
+    'Grand Rapids': 'Grand Rapids-Wyoming-Kentwood unemployment (latest)',
+    'Ann Arbor': 'Ann Arbor unemployment (latest)'
+  },
+  NY: {
+    'New York City': 'New York-Newark-Jersey City unemployment (latest)',
+    Buffalo: 'Buffalo-Cheektowaga unemployment (latest)',
+    Rochester: 'Rochester unemployment (latest)'
+  },
+  TX: {
+    Houston: 'Houston-Pasadena-The Woodlands unemployment (latest)',
+    'Dallas-Fort Worth': 'Dallas-Fort Worth-Arlington unemployment (latest)',
+    'San Antonio': 'San Antonio-New Braunfels unemployment (latest)',
+    Austin: 'Austin-Round Rock-San Marcos unemployment (latest)'
+  }
+};
+
+const parseLaborRates = (value) => {
+  const match = String(value || '').match(/(\d+(?:\.\d+)?)%\s*\(([^:]+):\s*(\d+(?:\.\d+)?)%\)/);
+  if (!match) return null;
+  return {
+    current: Number(match[1]),
+    baselineLabel: match[2],
+    baseline: Number(match[3])
+  };
+};
+
+const getMetroLaborCards = (stateAbbrev, metroName, breakdown) => {
+  const labelMap = METRO_LABOR_CARD_LABEL_MAP[stateAbbrev] || {};
+  const targetLabel = labelMap[metroName];
+  const rows = Array.isArray(breakdown) ? breakdown : [];
+  const row = targetLabel
+    ? rows.find((item) => item?.label === targetLabel)
+    : rows[0];
+  const selectedRow = row || rows[0];
+  if (!selectedRow) {
+    return [
+      { value: '--', label: 'Latest Unemployment' },
+      { value: '--', label: 'YoY Change' },
+      { value: '--', label: 'Prior Year' }
+    ];
+  }
+  const parsed = parseLaborRates(selectedRow.value);
+  if (!parsed) {
+    return [
+      { value: String(selectedRow.value || '--'), label: 'Latest Labor Metric' },
+      { value: String(selectedRow.label || '--'), label: 'Series' },
+      { value: String(selectedRow.note || 'BLS metro monthly'), label: 'Source' }
+    ];
+  }
+  const delta = parsed.current - parsed.baseline;
+  return [
+    { value: `${parsed.current.toFixed(1)}%`, label: 'Latest Unemployment' },
+    { value: `${delta >= 0 ? '+' : ''}${delta.toFixed(1)} pp`, label: 'YoY Change' },
+    { value: `${parsed.baseline.toFixed(1)}%`, label: parsed.baselineLabel }
+  ];
+};
 
 let currentHomeStateMetro = null;
 
@@ -7571,19 +7655,16 @@ const selectHomeStateMetro = (metro, stateAbbrev) => {
       `
       : '';
 
+    const laborCards = getMetroLaborCards(stateAbbrev, metro.name, breakdown);
+    const topCardsHtml = laborCards.map((card) => `
+      <div class="salary-card">
+        <div class="salary-value">${escapeHtml(card.value || '--')}</div>
+        <div class="salary-label">${escapeHtml(card.label || '--')}</div>
+      </div>
+    `).join('');
+
     homeStateMetroSalary.innerHTML = `
-      <div class="salary-card">
-        <div class="salary-value">${escapeHtml(salary.staffRN || '--')}</div>
-        <div class="salary-label">Staff RN Hourly</div>
-      </div>
-      <div class="salary-card">
-        <div class="salary-value">${escapeHtml(salary.travelRN || '--')}</div>
-        <div class="salary-label">Travel RN Weekly</div>
-      </div>
-      <div class="salary-card">
-        <div class="salary-value">${escapeHtml(salary.signOn || '--')}</div>
-        <div class="salary-label">Sign-On Bonus</div>
-      </div>
+      ${topCardsHtml}
       ${breakdownHtml}
     `;
   }
@@ -7854,19 +7935,16 @@ const selectTargetStateMetro = (metro, stateAbbrev) => {
       `
       : '';
 
+    const laborCards = getMetroLaborCards(stateAbbrev, metro.name, breakdown);
+    const topCardsHtml = laborCards.map((card) => `
+      <div class="salary-card">
+        <div class="salary-value">${escapeHtml(card.value || '--')}</div>
+        <div class="salary-label">${escapeHtml(card.label || '--')}</div>
+      </div>
+    `).join('');
+
     targetStateMetroSalary.innerHTML = `
-      <div class="salary-card">
-        <div class="salary-value">${escapeHtml(salary.staffRN || '--')}</div>
-        <div class="salary-label">Staff RN Hourly</div>
-      </div>
-      <div class="salary-card">
-        <div class="salary-value">${escapeHtml(salary.travelRN || '--')}</div>
-        <div class="salary-label">Travel RN Weekly</div>
-      </div>
-      <div class="salary-card">
-        <div class="salary-value">${escapeHtml(salary.signOn || '--')}</div>
-        <div class="salary-label">Sign-On Bonus</div>
-      </div>
+      ${topCardsHtml}
       ${breakdownHtml}
     `;
   }
