@@ -7277,6 +7277,100 @@ const STATE_METRO_DATA = {
   KY: KY_DETAILS.KY
 };
 
+const TARGET_STATE_MONTHLY_LABOR_OVERRIDES = {
+  IN: {
+    updatedAt: '2026-02-06',
+    updateEveryDays: 30,
+    breakdown: [
+      { label: 'Indianapolis-Carmel-Anderson unemployment (Dec 2025)', value: '2.5% (Dec 2024: 3.7%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Fort Wayne unemployment (Dec 2025)', value: '2.5% (Dec 2024: 3.7%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Evansville unemployment (Dec 2025)', value: '2.6% (Dec 2024: 3.6%)', note: 'BLS LAUS metro monthly' },
+      { label: 'South Bend-Mishawaka unemployment (Dec 2025)', value: '3.2% (Dec 2024: 4.7%)', note: 'BLS LAUS metro monthly' }
+    ],
+    sources: []
+  },
+  KY: {
+    updatedAt: '2026-02-06',
+    updateEveryDays: 30,
+    breakdown: [
+      { label: 'Louisville/Jefferson County unemployment (Dec 2025)', value: '3.1% (Dec 2024: 4.4%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Lexington-Fayette unemployment (Dec 2025)', value: '2.9% (Dec 2024: 4.1%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Bowling Green unemployment (Dec 2025)', value: '3.4% (Dec 2024: 4.6%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Owensboro unemployment (Dec 2025)', value: '3.3% (Dec 2024: 4.9%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Cincinnati (Northern KY market) unemployment (Dec 2025)', value: '3.6% (Dec 2024: 4.1%)', note: 'BLS LAUS metro monthly' }
+    ],
+    sources: []
+  },
+  FL: {
+    updatedAt: '2026-02-06',
+    updateEveryDays: 30,
+    breakdown: [
+      { label: 'Miami-Fort Lauderdale-West Palm Beach unemployment (Dec 2025)', value: '3.5% (Dec 2024: 2.7%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Tampa-St. Petersburg-Clearwater unemployment (Dec 2025)', value: '4.6% (Dec 2024: 3.3%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Orlando-Kissimmee-Sanford unemployment (Dec 2025)', value: '4.4% (Dec 2024: 3.0%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Jacksonville unemployment (Dec 2025)', value: '4.6% (Dec 2024: 3.2%)', note: 'BLS LAUS metro monthly' }
+    ],
+    sources: []
+  },
+  IL: {
+    updatedAt: '2026-02-06',
+    updateEveryDays: 30,
+    breakdown: [
+      { label: 'Chicago-Naperville-Elgin unemployment (Dec 2025)', value: '4.5% (Dec 2024: 4.5%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Springfield unemployment (Dec 2025)', value: '5.0% (Dec 2024: 3.8%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Peoria unemployment (Dec 2025)', value: '5.6% (Dec 2024: 4.5%)', note: 'BLS LAUS metro monthly' }
+    ],
+    sources: []
+  },
+  MI: {
+    updatedAt: '2026-02-06',
+    updateEveryDays: 30,
+    breakdown: [
+      { label: 'Detroit-Warren-Dearborn unemployment (Dec 2025)', value: '4.7% (Dec 2024: 4.7%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Grand Rapids-Wyoming-Kentwood unemployment (Dec 2025)', value: '4.0% (Dec 2024: 4.3%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Ann Arbor unemployment (Dec 2025)', value: '3.7% (Dec 2024: 3.8%)', note: 'BLS LAUS metro monthly' }
+    ],
+    sources: []
+  },
+  NY: {
+    updatedAt: '2026-02-06',
+    updateEveryDays: 30,
+    breakdown: [
+      { label: 'New York-Newark-Jersey City unemployment (Dec 2025)', value: '4.5% (Dec 2024: 4.3%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Buffalo-Cheektowaga unemployment (Dec 2025)', value: '4.4% (Dec 2024: 4.0%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Rochester unemployment (Dec 2025)', value: '4.3% (Dec 2024: 4.0%)', note: 'BLS LAUS metro monthly' }
+    ],
+    sources: []
+  },
+  TX: {
+    updatedAt: '2026-02-06',
+    updateEveryDays: 30,
+    breakdown: [
+      { label: 'Houston-The Woodlands-Sugar Land unemployment (Dec 2025)', value: '5.0% (Dec 2024: 4.6%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Dallas-Fort Worth-Arlington unemployment (Dec 2025)', value: '4.2% (Dec 2024: 4.0%)', note: 'BLS LAUS metro monthly' },
+      { label: 'Austin-Round Rock-San Marcos unemployment (Dec 2025)', value: '3.4% (Dec 2024: 3.4%)', note: 'BLS LAUS metro monthly' },
+      { label: 'San Antonio-New Braunfels unemployment (Dec 2025)', value: '4.0% (Dec 2024: 3.7%)', note: 'BLS LAUS metro monthly' }
+    ],
+    sources: []
+  }
+};
+
+const TARGET_STATE_MONTHLY_LABOR_SOURCES = [
+  { name: 'BLS Metro Area Employment and Unemployment (latest)', url: 'https://www.bls.gov/news.release/metro.t01.htm' },
+  { name: 'BLS Metro unemployment text table', url: 'https://www.bls.gov/web/metro/laucntycur14.txt' },
+  { name: 'BLS CES State and Metro Area Employment (monthly)', url: 'https://www.bls.gov/sae/' },
+  { name: 'BLS QCEW (quarterly wages and employment)', url: 'https://www.bls.gov/cew/' },
+  { name: 'ADP National Employment Report (monthly)', url: 'https://adpemploymentreport.com/' }
+];
+
+Object.entries(TARGET_STATE_MONTHLY_LABOR_OVERRIDES).forEach(([state, salaryMeta]) => {
+  if (!STATE_METRO_DATA[state]) return;
+  STATE_METRO_DATA[state].salaryMeta = {
+    ...salaryMeta,
+    sources: TARGET_STATE_MONTHLY_LABOR_SOURCES
+  };
+});
+
 let currentHomeStateMetro = null;
 
 const renderHomeState = async (stateAbbrev) => {
