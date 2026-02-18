@@ -4040,7 +4040,7 @@ input[type="range"] {
 .weather-map-section {
   padding: 20px 64px 40px;
   position: relative;
-  z-index: 2;
+  z-index: 3;
 }
 
 .weather-map-section .section-header {
@@ -4285,6 +4285,9 @@ input[type="range"] {
 .map-factors-list {
   display: grid;
   gap: 10px;
+  max-height: 420px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .map-factor-card {
