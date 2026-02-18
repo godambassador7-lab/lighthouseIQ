@@ -3099,7 +3099,7 @@ const initProjects = () => {
     openProjectModal();
   });
 
-  const saveProject = () => {
+  document.getElementById('save-project-btn')?.addEventListener('click', () => {
     const name = document.getElementById('project-name')?.value?.trim();
     const owner = document.getElementById('project-owner')?.value?.trim();
     const description = document.getElementById('project-description')?.value?.trim();
@@ -3151,21 +3151,8 @@ const initProjects = () => {
     saveProjects();
     renderProjects();
     closeProjectModal();
-  };
+  });
 
-  const saveProjectBtn = document.getElementById('save-project-btn');
-  if (saveProjectBtn && saveProjectBtn.dataset.boundProjectClick !== 'true') {
-    saveProjectBtn.addEventListener('click', saveProject);
-    saveProjectBtn.dataset.boundProjectClick = 'true';
-  }
-
-  if (projectForm && projectForm.dataset.boundProjectSubmit !== 'true') {
-    projectForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      saveProject();
-    });
-    projectForm.dataset.boundProjectSubmit = 'true';
-  }
   // X button (top-right)
   document.getElementById('modal-close')?.addEventListener('click', closeProjectModal);
   // Cancel button
