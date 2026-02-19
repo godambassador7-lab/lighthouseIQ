@@ -2784,12 +2784,8 @@ const initProgramsModule = () => {
 // ==================== STATE BEACON MODULE ====================
 const loadStateBeaconData = async () => {
   if (stateBeaconLoaded) return stateBeaconData;
-  try {
-    stateBeaconData = await fetchJson(`/data/state-beacon.json?ts=${Date.now()}`);
-  } catch (err) {
-    console.warn('State Beacon unavailable:', err.message);
-    stateBeaconData = { lastUpdated: null, states: {} };
-  }
+  // State Beacon is runtime-derived only; do not load static state dataset.
+  stateBeaconData = { lastUpdated: new Date().toISOString(), states: {} };
   stateBeaconLoaded = true;
   return stateBeaconData;
 };

@@ -5252,14 +5252,8 @@ const loadStateBeaconData = async (forceRefresh = false) => {
   if (stateBeaconLoaded && !forceRefresh && (now - stateBeaconLoadedAt) < STATE_BEACON_REFRESH_MS) {
     return stateBeaconData;
   }
-  try {
-    const response = await fetch(`${DATA_BASE_URL}/state-beacon.json?ts=${now}`);
-    if (!response.ok) throw new Error(`Failed to load state beacon: ${response.status}`);
-    stateBeaconData = await response.json();
-  } catch (err) {
-    console.warn('State Beacon unavailable:', err.message);
-    if (!stateBeaconData) stateBeaconData = { lastUpdated: null, states: {} };
-  }
+  // State Beacon is runtime-derived only; do not load static state dataset.
+  stateBeaconData = { lastUpdated: new Date(now).toISOString(), states: {} };
   stateBeaconLoaded = true;
   stateBeaconLoadedAt = now;
   return stateBeaconData;
