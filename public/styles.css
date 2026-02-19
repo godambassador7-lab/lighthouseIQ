@@ -5194,8 +5194,8 @@ input[type="range"] {
   border-radius: var(--radius-lg);
   padding: 18px 20px 28px;
   box-shadow: 0 16px 40px rgba(12, 15, 18, 0.12);
-  display: grid;
-  grid-template-rows: auto auto auto;
+  display: flex;
+  flex-direction: column;
   gap: 10px;
   border: 1px solid transparent;
   transition: transform 0.2s ease, border 0.2s ease;
@@ -5204,6 +5204,7 @@ input[type="range"] {
   min-height: 95px;
   min-width: 0;
   box-sizing: border-box;
+  justify-content: flex-start;
 }
 
 .notice-card:hover {
@@ -5289,8 +5290,8 @@ input[type="range"] {
   color: var(--muted);
   font-size: 13px;
   line-height: 1.25;
-  margin-top: 2px;
-  padding-bottom: 2px;
+  margin-top: 4px;
+  padding-bottom: 0;
 }
 
 .detail-shell {
