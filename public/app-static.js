@@ -3090,6 +3090,9 @@ const initProjects = () => {
     document.body.classList.remove('modal-open');
   };
 
+  // Prevent any accidental form submission from reloading the page
+  document.getElementById('project-form')?.addEventListener('submit', (e) => e.preventDefault());
+
   newProjectBtn?.addEventListener('click', () => {
     currentProjectId = null;
     projectForm?.reset();
