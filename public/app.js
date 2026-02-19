@@ -5329,6 +5329,158 @@ const getBeaconEntry = (state) => {
   };
 };
 
+const buildFallbackBeaconObjections = () => ([
+  {
+    concern: 'I am not sure moving states is worth it',
+    response: 'We compare pay, schedule stability, and onboarding support so you can decide with clear numbers.'
+  },
+  {
+    concern: 'I am worried about moving costs',
+    response: 'We prioritize systems that offer relocation support, sign-on incentives, and flexible start dates.'
+  },
+  {
+    concern: 'I need schedule flexibility',
+    response: 'We can target {shift} openings first and sequence interviews within your {timeline} window.'
+  }
+]);
+
+const buildFallbackCandidateMetroTable = (notices, state, fallbackMetros = []) => {
+  const cityCounts = new Map();
+  notices
+    .filter((notice) => isHealthcareNotice(notice))
+    .forEach((notice) => {
+      const city = String(notice.city || '').trim();
+      if (!city) return;
+      cityCounts.set(city, (cityCounts.get(city) || 0) + 1);
+    });
+
+  const fromNotices = Array.from(cityCounts.entries())
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5)
+    .map(([city, count]) => ({
+      metro: city,
+      estimate: `${Math.max(10, count * 10)}+`,
+      feederSchools: `${STATE_NAMES[state] || state} nursing programs`
+    }));
+
+  if (fromNotices.length) return fromNotices;
+  return fallbackMetros.slice(0, 5).map((metro) => ({
+    metro,
+    estimate: '25+',
+    feederSchools: `${STATE_NAMES[state] || state} nursing programs`
+  }));
+};
+
+const enrichBeaconEntry = (state, entry, notices, programsInState) => {
+  const stateName = entry.name || STATE_NAMES[state] || state;
+  const healthcareNotices = notices.filter((notice) => isHealthcareNotice(notice));
+  const groupedEmployers = Array.from(
+    groupBy(healthcareNotices, (notice) => notice.employer_name || notice.employerName || 'Unknown employer').entries()
+  )
+    .map(([name, items]) => ({
+      name,
+      items,
+      notices: items.length,
+      affected: items.reduce((sum, n) => sum + Number(n.affectedCount || n.employees_affected || 0), 0),
+      county: items.find((n) => n.county)?.county || '',
+      city: items.find((n) => n.city)?.city || ''
+    }))
+    .sort((a, b) => b.affected - a.affected || b.notices - a.notices);
+
+  const inferredMetros = Array.from(new Set(groupedEmployers.map((item) => item.city).filter(Boolean))).slice(0, 6);
+  const inferredSystems = groupedEmployers.slice(0, 8).map((item) => ({
+    name: item.name,
+    presence: `${item.notices} WARN notices`,
+    notes: `${formatNumber(item.affected)} impacted (derived from WARN)`
+  }));
+  const rankingFallback = groupedEmployers.slice(0, 10).map((item, idx) => ({
+    name: item.name,
+    system: item.name,
+    metro: item.city || stateName,
+    baseScore: Math.max(72, 96 - idx),
+    warnWeight: 1,
+    match: item.name.toLowerCase()
+  }));
+  const hospitalRegistryFallback = groupedEmployers.slice(0, 120).map((item, idx) => ({
+    name: item.name,
+    county: item.county || '',
+    flagship: idx < 5
+  }));
+  const clinicRegistryFallback = hospitalRegistryFallback
+    .filter((item) => /clinic|outpatient|ambulatory|rehab|medical group|health center/i.test(item.name))
+    .slice(0, 30)
+    .map((item) => ({ ...item, metro: inferredMetros[0] || stateName }));
+
+  const majorProgramsFallback = programsInState
+    .map((program) => normalizeProgram(program).name)
+    .filter(Boolean)
+    .slice(0, 8);
+  const candidateMetroFallback = buildFallbackCandidateMetroTable(notices, state, inferredMetros);
+
+  const competitionSystems = entry.competition?.systems?.length ? entry.competition.systems : inferredSystems;
+  return {
+    ...entry,
+    summary: {
+      demand: entry.summary?.demand || `${stateName} shows active healthcare demand and recruitment movement.`,
+      unionization: entry.summary?.unionization || 'Varies by market and employer.',
+      growth: entry.summary?.growth || 'Driven by hospital and outpatient hiring cycles.',
+      seasonality: entry.summary?.seasonality || 'Seasonal demand can vary by metro and service line.'
+    },
+    market: {
+      ...entry.market,
+      drivers: entry.market?.drivers?.length ? entry.market.drivers : [
+        'Healthcare labor demand remains active in major metros.',
+        'System-level staffing shifts create recurring recruitment windows.',
+        'Outpatient and post-acute demand supports role diversity.'
+      ]
+    },
+    competition: {
+      ...entry.competition,
+      systems: competitionSystems
+    },
+    pipeline: {
+      ...entry.pipeline,
+      majorPrograms: entry.pipeline?.majorPrograms?.length ? entry.pipeline.majorPrograms : majorProgramsFallback,
+      residencies: entry.pipeline?.residencies?.length ? entry.pipeline.residencies : [
+        'Nurse residency options vary by major health system.',
+        'Onboarding timelines should be validated per facility.'
+      ],
+      clinicalPartners: entry.pipeline?.clinicalPartners?.length ? entry.pipeline.clinicalPartners : competitionSystems.slice(0, 4).map((s) => s.name)
+    },
+    pros: entry.pros?.length ? entry.pros : [
+      `${stateName} offers multiple metro placement options.`,
+      'Programs and health systems provide broad specialty coverage.',
+      'Current WARN and market signals can identify focused opportunities.'
+    ],
+    cons: entry.cons?.length ? entry.cons : [
+      'Compensation and staffing ratios vary significantly by facility.',
+      'Relocation logistics and licensing timelines should be confirmed.',
+      'Competition can be high in major urban markets.'
+    ],
+    attractions: entry.attractions?.length ? entry.attractions : [
+      `${stateName} includes varied metro and community settings.`,
+      'Large systems provide multiple internal mobility paths.'
+    ],
+    drawbacks: entry.drawbacks?.length ? entry.drawbacks : [
+      'Cost-of-living and commute burden can differ by metro.',
+      'Shift availability and onboarding speed vary by employer.'
+    ],
+    objections: entry.objections?.length ? entry.objections : buildFallbackBeaconObjections(),
+    warnMajorSystems: entry.warnMajorSystems?.length ? entry.warnMajorSystems : competitionSystems.map((s) => s.name),
+    hospitalRankings: entry.hospitalRankings?.length ? entry.hospitalRankings : rankingFallback,
+    hospitalRegistry: entry.hospitalRegistry?.length ? entry.hospitalRegistry : hospitalRegistryFallback,
+    clinicRegistry: entry.clinicRegistry?.length ? entry.clinicRegistry : clinicRegistryFallback,
+    candidateInsights: entry.candidateInsights?.length ? entry.candidateInsights : [
+      { title: `${stateName} demand signal`, detail: `${healthcareNotices.length} healthcare notices in current dataset.` },
+      { title: 'Pipeline signal', detail: `${programsInState.length} nursing programs currently loaded.` },
+      { title: 'Competition signal', detail: `${competitionSystems.length} major systems identified for this market.` }
+    ],
+    candidateMetroTable: entry.candidateMetroTable?.length ? entry.candidateMetroTable : candidateMetroFallback,
+    priorityMetros: entry.priorityMetros?.length ? entry.priorityMetros : inferredMetros,
+    newsKeywords: entry.newsKeywords?.length ? entry.newsKeywords : [stateName, state, ...inferredMetros].filter(Boolean)
+  };
+};
+
 const buildHomeStateTalkingPoints = (homeEntry, inputs, programsCount = 0) => {
   const points = [];
   const name = homeEntry.name || inputs.homeState || 'your destination';
@@ -5429,11 +5581,11 @@ const renderStateBeacon = async (state) => {
     await loadStateNotices(state);
   }
 
-  const entry = getBeaconEntry(state);
   const notices = getStateNotices(state);
+  const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === state);
+  const entry = enrichBeaconEntry(state, getBeaconEntry(state), notices, programsInState);
   const majorNotices = filterNoticesByMajorSystems(notices, entry.warnMajorSystems);
   const noticeCount = majorNotices.length;
-  const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === state);
   const stateFeed = getStateNewsFeed(state, entry);
   const confidence = computeSignalConfidence(
     noticeCount,
@@ -5571,8 +5723,8 @@ const renderStateBeacon = async (state) => {
           <thead>
             <tr>
               <th>${escapeHtml(entry.name)} Metro Area</th>
-              <th>Est. Indiana-Educated RNs</th>
-              <th>Top Indiana Feeder Schools</th>
+              <th>Est. Home-State-Educated RNs</th>
+              <th>Top Home-State Feeder Schools</th>
             </tr>
           </thead>
           <tbody>${rows}</tbody>
@@ -5678,8 +5830,9 @@ const renderStateBeacon = async (state) => {
 };
 
 const buildStateBeaconExport = (state) => {
-  const entry = getBeaconEntry(state);
   const notices = getStateNotices(state);
+  const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === state);
+  const entry = enrichBeaconEntry(state, getBeaconEntry(state), notices, programsInState);
   const majorNotices = filterNoticesByMajorSystems(notices, entry.warnMajorSystems);
   const { best, worst } = buildHospitalRank(majorNotices, entry.warnMajorSystems);
   const competitionSystems = entry.competition?.systems?.length
@@ -5687,8 +5840,6 @@ const buildStateBeaconExport = (state) => {
     : Array.from(groupBy(majorNotices, (n) => n.parent_system || n.employer_name || n.employerName).entries())
       .map(([name, items]) => ({ name, presence: `${items.length} notices`, notes: 'Derived from WARN activity.' }))
       .slice(0, 6);
-
-  const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === state);
   const programsByLevel = programsInState.reduce((acc, program) => {
     const level = normalizeProgram(program).level || 'Other';
     acc[level] = (acc[level] || 0) + 1;
@@ -7971,10 +8122,10 @@ const closeTargetState = () => targetStateModal?.classList.remove('active');
 // =============================================================================
 
 const buildHomeStateExport = (state) => {
-  const entry = getBeaconEntry(state);
   const notices = getStateNotices(state);
-  const majorNotices = filterNoticesByMajorSystems(notices, entry.warnMajorSystems);
   const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === state);
+  const entry = enrichBeaconEntry(state, getBeaconEntry(state), notices, programsInState);
+  const majorNotices = filterNoticesByMajorSystems(notices, entry.warnMajorSystems);
   const programsByLevel = programsInState.reduce((acc, program) => {
     const level = normalizeProgram(program).level || 'Other';
     acc[level] = (acc[level] || 0) + 1;
@@ -8247,8 +8398,9 @@ const MASTER_EXPORT_OUTBOUND_SOURCES = {
 };
 
 const buildStateBeaconExportWithHome = (state, homeStateOverride) => {
-  const entry = getBeaconEntry(state);
   const notices = getStateNotices(state);
+  const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === state);
+  const entry = enrichBeaconEntry(state, getBeaconEntry(state), notices, programsInState);
   const majorNotices = filterNoticesByMajorSystems(notices, entry.warnMajorSystems);
   const { best, worst } = buildHospitalRank(majorNotices, entry.warnMajorSystems);
   const competitionSystems = entry.competition?.systems?.length
@@ -8256,8 +8408,6 @@ const buildStateBeaconExportWithHome = (state, homeStateOverride) => {
     : Array.from(groupBy(majorNotices, (n) => n.parent_system || n.employer_name || n.employerName).entries())
       .map(([name, items]) => ({ name, presence: `${items.length} notices`, notes: 'Derived from WARN activity.' }))
       .slice(0, 6);
-
-  const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === state);
   const programsByLevel = programsInState.reduce((acc, program) => {
     const level = normalizeProgram(program).level || 'Other';
     acc[level] = (acc[level] || 0) + 1;
@@ -8391,6 +8541,12 @@ const buildMasterExportData = async (state, progressCb) => {
   if (progressCb) progressCb(45);
 
   const entry = getBeaconEntry(state);
+  const enrichedEntry = enrichBeaconEntry(
+    state,
+    entry,
+    getStateNotices(state),
+    nursingPrograms.filter((program) => normalizeProgram(program).state === state)
+  );
   const metroData = STATE_METRO_DATA[state] || STATE_METRO_DATA.KY || {};
   const metros = metroData?.metros || [];
   const totalHospitals = metros.reduce((sum, metro) => sum + (metro.hospitals?.length || 0), 0);
@@ -8411,7 +8567,7 @@ const buildMasterExportData = async (state, progressCb) => {
   return {
     generatedAt: new Date().toISOString(),
     state,
-    name: entry.name,
+    name: enrichedEntry.name,
     metros,
     metroSummary: {
       count: metros.length,
@@ -8424,7 +8580,7 @@ const buildMasterExportData = async (state, progressCb) => {
     marketStatus,
     wdboAdequacy,
     marketSources,
-    pipeline: entry.pipeline || {},
+    pipeline: enrichedEntry.pipeline || {},
     nursingEducation,
     indianaEducation,
     topInstitutions,
