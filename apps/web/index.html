@@ -455,75 +455,6 @@
         </div>
       </div>
 
-      <!-- New Project Modal -->
-      <div class="modal-overlay" id="project-modal">
-        <div class="modal-card">
-          <div class="modal-header">
-            <h3 id="modal-title">Create New Project</h3>
-            <button class="modal-close" id="modal-close">&times;</button>
-          </div>
-          <form id="project-form">
-            <div class="modal-body">
-              <label>
-                Project Name *
-                <input type="text" id="project-name" placeholder="e.g., Q1 2026 Midwest Targets" required />
-                <span class="form-error" id="project-name-error"></span>
-              </label>
-              <label>
-                Owner *
-                <input type="text" id="project-owner" placeholder="Your name" required />
-              </label>
-              <label>
-                Description
-                <textarea id="project-description" placeholder="Brief description of this project..." rows="2"></textarea>
-              </label>
-              <label>
-                Color Tag
-                <div class="color-picker" id="color-picker">
-                  <span class="color-option selected" data-color="#3182ce"></span>
-                  <span class="color-option" data-color="#38a169"></span>
-                  <span class="color-option" data-color="#d69e2e"></span>
-                  <span class="color-option" data-color="#e53e3e"></span>
-                  <span class="color-option" data-color="#805ad5"></span>
-                  <span class="color-option" data-color="#ed64a6"></span>
-                </div>
-              </label>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn ghost" id="modal-cancel">Cancel</button>
-              <button type="button" class="btn primary" id="save-project-btn">Save Project</button>
-            </div>
-          </form>
-        </div>
-      </div>
-
-      <!-- Project Detail Modal -->
-      <div class="modal-overlay" id="project-detail-modal">
-        <div class="modal-card modal-large">
-          <div class="modal-header">
-            <h3 id="project-detail-title">Project Name</h3>
-            <button class="modal-close" id="project-detail-close">&times;</button>
-          </div>
-          <div class="modal-body">
-            <p class="project-detail-owner" id="project-detail-owner"></p>
-            <p class="project-detail-desc" id="project-detail-desc"></p>
-            <div class="project-notices-list" id="project-notices-list">
-              <div class="empty-state">No notices saved to this project yet.</div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <div class="modal-footer-left">
-              <button type="button" class="btn ghost danger" id="delete-project-btn">Delete Project</button>
-            </div>
-            <div class="modal-footer-right">
-              <button type="button" class="btn ghost" id="export-project-csv">Export CSV</button>
-              <button type="button" class="btn ghost" id="export-project-json">Export JSON</button>
-              <button type="button" class="btn secondary" id="close-project-detail">Close</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
     </section>
 
     <!-- Daily News Feed Section -->
@@ -1536,6 +1467,76 @@
         </details>
       </div>
     </footer>
+
+    <!-- Project Modals — placed at body level so z-index is not trapped by section stacking contexts -->
+    <!-- New Project Modal -->
+    <div class="modal-overlay" id="project-modal">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3 id="modal-title">Create New Project</h3>
+          <button class="modal-close" id="modal-close">&times;</button>
+        </div>
+        <form id="project-form">
+          <div class="modal-body">
+            <label>
+              Project Name *
+              <input type="text" id="project-name" placeholder="e.g., Q1 2026 Midwest Targets" required />
+              <span class="form-error" id="project-name-error"></span>
+            </label>
+            <label>
+              Owner *
+              <input type="text" id="project-owner" placeholder="Your name" required />
+            </label>
+            <label>
+              Description
+              <textarea id="project-description" placeholder="Brief description of this project..." rows="2"></textarea>
+            </label>
+            <label>
+              Color Tag
+              <div class="color-picker" id="color-picker">
+                <span class="color-option selected" data-color="#3182ce"></span>
+                <span class="color-option" data-color="#38a169"></span>
+                <span class="color-option" data-color="#d69e2e"></span>
+                <span class="color-option" data-color="#e53e3e"></span>
+                <span class="color-option" data-color="#805ad5"></span>
+                <span class="color-option" data-color="#ed64a6"></span>
+              </div>
+            </label>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn ghost" id="modal-cancel">Cancel</button>
+            <button type="button" class="btn primary" id="save-project-btn">Save Project</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Project Detail Modal -->
+    <div class="modal-overlay" id="project-detail-modal">
+      <div class="modal-card modal-large">
+        <div class="modal-header">
+          <h3 id="project-detail-title">Project Name</h3>
+          <button class="modal-close" id="project-detail-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p class="project-detail-owner" id="project-detail-owner"></p>
+          <p class="project-detail-desc" id="project-detail-desc"></p>
+          <div class="project-notices-list" id="project-notices-list">
+            <div class="empty-state">No notices saved to this project yet.</div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="modal-footer-left">
+            <button type="button" class="btn ghost danger" id="delete-project-btn">Delete Project</button>
+          </div>
+          <div class="modal-footer-right">
+            <button type="button" class="btn ghost" id="export-project-csv">Export CSV</button>
+            <button type="button" class="btn ghost" id="export-project-json">Export JSON</button>
+            <button type="button" class="btn secondary" id="close-project-detail">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <script src="./app.js?v=4.4"></script>
   </body>
