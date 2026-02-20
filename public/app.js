@@ -3253,7 +3253,6 @@ const initLightworker = () => {
   const homeSelect   = document.getElementById('lw-home-state');
   const targetGrid   = document.getElementById('lw-target-states');
 
-  // ── Firebase not configured banner ──────────────────────────────────────
   if (!window.__lw_ready) {
     if (lwList) lwList.innerHTML = `
       <div class="lw-not-configured">
@@ -3271,7 +3270,6 @@ const initLightworker = () => {
   const deleteDoc  = window.__lw_deleteDoc;
   const docRef     = window.__lw_doc;
 
-  // ── Populate state dropdowns ─────────────────────────────────────────────
   const populateStatePickers = () => {
     if (homeSelect) {
       homeSelect.innerHTML = '<option value="">Select home state...</option>';
@@ -3294,7 +3292,6 @@ const initLightworker = () => {
   };
   populateStatePickers();
 
-  // ── Modal helpers ────────────────────────────────────────────────────────
   const openLwModal = () => {
     document.getElementById('lw-name').value  = '';
     document.getElementById('lw-email').value = '';
@@ -3317,7 +3314,6 @@ const initLightworker = () => {
   cancelBtn?.addEventListener('click', closeLwModal);
   lwModal?.addEventListener('click', e => { if (e.target === lwModal) closeLwModal(); });
 
-  // ── Render pool ──────────────────────────────────────────────────────────
   const renderPool = (contacts) => {
     if (!lwList) return;
     if (!contacts.length) {
@@ -3349,7 +3345,6 @@ const initLightworker = () => {
     });
   };
 
-  // ── Load pool ────────────────────────────────────────────────────────────
   let allContacts = [];
   const loadPool = async () => {
     try {
@@ -3362,7 +3357,6 @@ const initLightworker = () => {
   };
   loadPool();
 
-  // ── Search ───────────────────────────────────────────────────────────────
   lwSearch?.addEventListener('input', e => {
     const q = e.target.value.toLowerCase();
     const filtered = allContacts.filter(c =>
@@ -3373,7 +3367,6 @@ const initLightworker = () => {
     renderPool(filtered);
   });
 
-  // ── Save contact ─────────────────────────────────────────────────────────
   saveBtn?.addEventListener('click', async () => {
     const name  = document.getElementById('lw-name')?.value?.trim();
     const email = document.getElementById('lw-email')?.value?.trim();
@@ -3409,10 +3402,7 @@ const initLightworker = () => {
       saveBtn.disabled = true;
       saveBtn.textContent = 'Saving...';
       await addDoc(col(db, 'lightworker_pool'), {
-        name,
-        email,
-        homeState: state,
-        targetStates,
+        name, email, homeState: state, targetStates,
         addedAt: new Date().toISOString(),
       });
       closeLwModal();
