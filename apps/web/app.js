@@ -793,6 +793,155 @@ const updateStateCalibration = () => {
   }).join('');
 };
 
+// =============================================================================
+// Lightworker Pool
+// =============================================================================
+const initLightworker = () => {
+  const lwList     = document.getElementById('lightworker-list');
+  const lwModal    = document.getElementById('lightworker-modal');
+  const lwSearch   = document.getElementById('lightworker-search');
+  const addBtn     = document.getElementById('new-lightworker-btn');
+  const saveBtn    = document.getElementById('save-lightworker-btn');
+  const closeBtn   = document.getElementById('lightworker-modal-close');
+  const cancelBtn  = document.getElementById('lightworker-modal-cancel');
+  const homeSelect = document.getElementById('lw-home-state');
+  const targetGrid = document.getElementById('lw-target-states');
+
+  if (!window.__lw_ready) {
+    if (lwList) lwList.innerHTML = `
+      <div class="lw-not-configured">
+        <strong>Firebase not configured.</strong><br>
+        Fill in your Firebase project config in the <code>&lt;script type="module"&gt;</code>
+        block at the bottom of <code>index.html</code> to enable the Lightworker Pool.
+      </div>`;
+    return;
+  }
+
+  const db        = window.__lw_db;
+  const col       = window.__lw_collection;
+  const addDoc    = window.__lw_addDoc;
+  const getDocs   = window.__lw_getDocs;
+  const deleteDoc = window.__lw_deleteDoc;
+  const docRef    = window.__lw_doc;
+
+  const populateStatePickers = () => {
+    if (homeSelect) {
+      homeSelect.innerHTML = '<option value="">Select home state...</option>';
+      ALL_STATES.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s;
+        opt.textContent = `${s} — ${STATE_NAMES[s] || s}`;
+        homeSelect.appendChild(opt);
+      });
+    }
+    if (targetGrid) {
+      targetGrid.innerHTML = '';
+      ALL_STATES.forEach(s => {
+        const lbl = document.createElement('label');
+        lbl.className = 'lw-state-checkbox';
+        lbl.innerHTML = `<input type="checkbox" value="${s}"> ${s}`;
+        targetGrid.appendChild(lbl);
+      });
+    }
+  };
+  populateStatePickers();
+
+  const openLwModal = () => {
+    document.getElementById('lw-name').value  = '';
+    document.getElementById('lw-email').value = '';
+    if (homeSelect) homeSelect.value = '';
+    targetGrid?.querySelectorAll('input[type="checkbox"]').forEach(cb => { cb.checked = false; });
+    ['lw-name-error','lw-email-error','lw-state-error'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) { el.textContent = ''; el.style.display = 'none'; }
+    });
+    lwModal?.classList.add('active');
+    document.body.classList.add('modal-open');
+  };
+  const closeLwModal = () => {
+    lwModal?.classList.remove('active');
+    document.body.classList.remove('modal-open');
+  };
+
+  addBtn?.addEventListener('click', openLwModal);
+  closeBtn?.addEventListener('click', closeLwModal);
+  cancelBtn?.addEventListener('click', closeLwModal);
+  lwModal?.addEventListener('click', e => { if (e.target === lwModal) closeLwModal(); });
+
+  const renderPool = (contacts) => {
+    if (!lwList) return;
+    if (!contacts.length) {
+      lwList.innerHTML = '<div class="empty-state">No contacts in pool yet. Add one to start sending alerts.</div>';
+      return;
+    }
+    lwList.innerHTML = contacts.map(c => `
+      <div class="lightworker-card" data-id="${c.id}">
+        <button class="lw-remove-btn" data-id="${c.id}">Remove</button>
+        <p class="lw-card-name">${c.name}</p>
+        <p class="lw-card-email">${c.email}</p>
+        <div class="lw-card-states">
+          <span class="lw-home-pill">&#127968; ${c.homeState}</span>
+          ${(c.targetStates || []).map(s => `<span class="lw-target-pill">${s}</span>`).join('')}
+        </div>
+      </div>
+    `).join('');
+    lwList.querySelectorAll('.lw-remove-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        if (!confirm('Remove this contact from the Lightworker Pool?')) return;
+        try { await deleteDoc(docRef(db, 'lightworker_pool', btn.dataset.id)); loadPool(); }
+        catch (e) { alert('Could not remove: ' + e.message); }
+      });
+    });
+  };
+
+  let allContacts = [];
+  const loadPool = async () => {
+    try {
+      const snap = await getDocs(col(db, 'lightworker_pool'));
+      allContacts = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      renderPool(allContacts);
+    } catch (e) {
+      if (lwList) lwList.innerHTML = `<div class="empty-state">Could not load pool: ${e.message}</div>`;
+    }
+  };
+  loadPool();
+
+  lwSearch?.addEventListener('input', e => {
+    const q = e.target.value.toLowerCase();
+    renderPool(allContacts.filter(c =>
+      c.name?.toLowerCase().includes(q) || c.email?.toLowerCase().includes(q) || c.homeState?.toLowerCase().includes(q)
+    ));
+  });
+
+  saveBtn?.addEventListener('click', async () => {
+    const name  = document.getElementById('lw-name')?.value?.trim();
+    const email = document.getElementById('lw-email')?.value?.trim();
+    const state = homeSelect?.value;
+    const nameErr  = document.getElementById('lw-name-error');
+    const emailErr = document.getElementById('lw-email-error');
+    const stateErr = document.getElementById('lw-state-error');
+    let valid = true;
+    if (!name)  { if (nameErr)  { nameErr.textContent  = 'Name is required.';       nameErr.style.display  = 'block'; } valid = false; }
+    else        { if (nameErr)  { nameErr.textContent  = '';                         nameErr.style.display  = 'none';  } }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+                { if (emailErr) { emailErr.textContent = 'Valid email is required.'; emailErr.style.display = 'block'; } valid = false; }
+    else        { if (emailErr) { emailErr.textContent = '';                         emailErr.style.display = 'none';  } }
+    if (!state) { if (stateErr) { stateErr.textContent = 'Home state is required.'; stateErr.style.display = 'block'; } valid = false; }
+    else        { if (stateErr) { stateErr.textContent = '';                         stateErr.style.display = 'none';  } }
+    if (!valid) return;
+    const targetStates = [];
+    targetGrid?.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => targetStates.push(cb.value));
+    try {
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'Saving...';
+      await addDoc(col(db, 'lightworker_pool'), { name, email, homeState: state, targetStates, addedAt: new Date().toISOString() });
+      closeLwModal();
+      loadPool();
+    } catch (e) { alert('Could not save: ' + e.message); }
+    finally { saveBtn.disabled = false; saveBtn.textContent = 'Add to Pool'; }
+  });
+};
+
 const initStateCalibration = () => {
   if (!calibrationHome || !calibrationTarget) return;
   const options = ALL_STATES.map(state => `<option value="${state}">${state}</option>`).join('');
@@ -4998,6 +5147,7 @@ const initApp = () => {
   loadProjects();
   populateCustomStateDropdown();
   initProjectEvents();
+  initLightworker();
   initStateCalibration();
   renderProjects();
   loadNotices();
