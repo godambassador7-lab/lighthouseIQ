@@ -228,6 +228,9 @@ let stateBeaconInputs = null;
 let stateNewsData = null;
 let stateNewsLoaded = false;
 let stateNewsLoadedAt = 0;
+let hospitalRankingsData = null;
+let hospitalRankingsLoaded = false;
+let hospitalRankingsLoadedAt = 0;
 let ruralClosuresData = null;
 let ruralClosuresLoaded = false;
 let ruralClosuresLoadedAt = 0;
@@ -5282,6 +5285,26 @@ const loadStateNewsData = async (forceRefresh = false) => {
   return stateNewsData;
 };
 
+const loadHospitalRankingsData = async (forceRefresh = false) => {
+  const now = Date.now();
+  if (hospitalRankingsLoaded && !forceRefresh && (now - hospitalRankingsLoadedAt) < STATE_BEACON_REFRESH_MS) {
+    return hospitalRankingsData;
+  }
+  try {
+    hospitalRankingsData = await fetchJson(`${DATA_BASE_URL}/hospital-rankings.json?ts=${now}`);
+  } catch (err) {
+    if (!hospitalRankingsData) hospitalRankingsData = null;
+  }
+  hospitalRankingsLoaded = true;
+  hospitalRankingsLoadedAt = now;
+  return hospitalRankingsData;
+};
+
+const getFetchedHospitalRankingsForState = (state) => {
+  const rankings = hospitalRankingsData?.states?.[state]?.hospitalRankings || [];
+  return Array.isArray(rankings) ? rankings : [];
+};
+
 const getStateNewsFeed = (state, entry) => {
   const entryFeed = Array.isArray(entry.newsFeed) ? entry.newsFeed : [];
   if (entryFeed.length) return entryFeed;
@@ -5309,6 +5332,7 @@ const ensureProgramsDataForBeacon = async () => {
 
 const getBeaconEntry = (state) => {
   const entry = stateBeaconData?.states?.[state] ?? {};
+  const fetchedHospitalRankings = getFetchedHospitalRankingsForState(state);
   return {
     name: entry.name || STATE_NAMES[state] || state,
     compact: entry.compact ?? null,
@@ -5325,7 +5349,7 @@ const getBeaconEntry = (state) => {
     talkingPoints: entry.talkingPoints ?? [],
     objections: entry.objections ?? [],
       warnMajorSystems: entry.warnMajorSystems ?? [],
-      hospitalRankings: entry.hospitalRankings ?? [],
+      hospitalRankings: entry.hospitalRankings?.length ? entry.hospitalRankings : fetchedHospitalRankings,
       hospitalRegistry: entry.hospitalRegistry ?? [],
     clinicRegistry: entry.clinicRegistry ?? [],
     newsFeed: entry.newsFeed ?? [],
@@ -5583,6 +5607,7 @@ const getWarnCountForHospital = (notices, hospital, majorSystems = []) => {
 
 const renderStateBeacon = async (state) => {
   await loadStateBeaconData();
+  await loadHospitalRankingsData();
   await ensureProgramsDataForBeacon();
   await loadStateNewsData();
   if (!allNoticesLoaded && !stateNoticesCache.has(state)) {
@@ -8016,6 +8041,7 @@ const TARGET_STATE_DEFAULT = 'KY'; // Kentucky as pilot
 
 const renderTargetState = async (stateAbbrev = TARGET_STATE_DEFAULT) => {
   await loadStateBeaconData();
+  await loadHospitalRankingsData();
   await ensureProgramsDataForBeacon();
 
   const entry = getBeaconEntry(stateAbbrev);
@@ -8082,6 +8108,12 @@ const selectTargetStateMetro = (metro, stateAbbrev) => {
 
   // Render hospitals
   const hospitals = metro.hospitals || [];
+  const fetchedRankings = getFetchedHospitalRankingsForState(stateAbbrev);
+  const fetchedScoreMap = new Map(
+    fetchedRankings
+      .filter((item) => item?.name)
+      .map((item) => [String(item.name).toLowerCase(), Number(item.baseScore ?? item.score ?? 0)])
+  );
   if (targetStateHospitalCount) targetStateHospitalCount.textContent = `${hospitals.length} facilities`;
   if (targetStateMetroHospitals) {
     targetStateMetroHospitals.innerHTML = hospitals.map((h, idx) => `
@@ -8096,7 +8128,7 @@ const selectTargetStateMetro = (metro, stateAbbrev) => {
           </div>
         </div>
         <div class="hospital-score">
-          <span class="score-value">${h.score}</span>
+          <span class="score-value">${fetchedScoreMap.get(String(h.name || '').toLowerCase()) || h.score}</span>
           <span class="score-label">Score</span>
         </div>
       </div>
@@ -8661,6 +8693,7 @@ const getTopInstitutionsForState = (state, limit = 12) => {
 
 const buildMasterExportData = async (state, progressCb) => {
   await loadStateBeaconData();
+  await loadHospitalRankingsData();
   if (progressCb) progressCb(25);
   await ensureProgramsDataForBeacon();
   if (progressCb) progressCb(35);
