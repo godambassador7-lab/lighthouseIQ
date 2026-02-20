@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Nursing Layoff Radar - Static Frontend
  *
  * This version works with static JSON files hosted on GitHub Pages.
@@ -1959,7 +1959,7 @@ const renderAlerts = (data) => {
     <div class="insight-row">
       <div>
         <div class="insight-title">${alert.employer_name || 'Unknown employer'}</div>
-        <div class="insight-meta">${[alert.state, alert.facility_name || alert.parent_system].filter(Boolean).join(' • ')}</div>
+        <div class="insight-meta">${[alert.state, alert.facility_name || alert.parent_system].filter(Boolean).join(' â€¢ ')}</div>
       </div>
       <div>
         <div class="insight-pill ${alert.early_warning ? 'yellow' : ''}">${alert.early_warning ? 'Early' : 'Signal'}</div>
@@ -1986,7 +1986,7 @@ const renderHeatmap = (data) => {
     <div class="insight-row">
       <div>
         <div class="insight-title">${cityDisplay}</div>
-        <div class="insight-meta">${loc.state} • ${loc.notices_last_90_days} in 90d</div>
+        <div class="insight-meta">${loc.state} â€¢ ${loc.notices_last_90_days} in 90d</div>
       </div>
       <div class="insight-pill ${loc.risk_level === 'red' ? 'red' : 'yellow'}">${loc.risk_level.toUpperCase()}</div>
     </div>
@@ -2010,7 +2010,7 @@ const renderTalent = (data) => {
     <div class="insight-row">
       <div>
         <div class="insight-title">${cityDisplay}</div>
-        <div class="insight-meta">${entry.state} • ${entry.notices_count} notices</div>
+        <div class="insight-meta">${entry.state} â€¢ ${entry.notices_count} notices</div>
       </div>
       <div>
         <div class="insight-pill">${entry.estimated_nurses_available}</div>
@@ -2035,7 +2035,7 @@ const renderEmployers = (data) => {
     <div class="insight-row">
       <div>
         <div class="insight-title">${entry.employer_name || 'Unknown employer'}</div>
-        <div class="insight-meta">${entry.parent_system || entry.state} • ${entry.total_notices} notices</div>
+        <div class="insight-meta">${entry.parent_system || entry.state} â€¢ ${entry.total_notices} notices</div>
       </div>
       <div class="insight-meta">${entry.avg_lead_time_days ?? 'n/a'}d avg lead</div>
     </div>
@@ -2140,7 +2140,7 @@ const initForecast = () => {
     forecastOutput.innerHTML = `
       Estimated displacement over ${horizon || 60} days:
       <strong>${totalNurses}</strong> total nurses
-      (RN ${rn} • LPN ${lpn} • CNA ${cna}).
+      (RN ${rn} â€¢ LPN ${lpn} â€¢ CNA ${cna}).
     `;
   };
 
@@ -2565,7 +2565,7 @@ const renderDetail = (notice) => {
   detailBody.innerHTML = `
     <div class="detail-section">
       <h5>${notice.employer_name || 'Unknown employer'}</h5>
-      <p>${[notice.facility_name, notice.parent_system].filter(Boolean).join(' • ') || 'System unknown'}</p>
+      <p>${[notice.facility_name, notice.parent_system].filter(Boolean).join(' â€¢ ') || 'System unknown'}</p>
       <p>${[notice.address, notice.city, notice.county, notice.state].filter(Boolean).join(', ') || 'Location unknown'}</p>
     </div>
     <div class="detail-section">
@@ -2578,7 +2578,7 @@ const renderDetail = (notice) => {
       <h5>Nursing Impact Breakdown</h5>
       <p>Care setting: ${careSetting}</p>
       <p>Lead time: ${leadTime !== null && leadTime !== undefined ? `${leadTime} days` : 'Unknown'}</p>
-      <p>Role mix: ${roleMix ? `RN ${roleMix.rn}% • LPN ${roleMix.lpn}% • CNA ${roleMix.cna}%` : 'Unavailable'}</p>
+      <p>Role mix: ${roleMix ? `RN ${roleMix.rn}% â€¢ LPN ${roleMix.lpn}% â€¢ CNA ${roleMix.cna}%` : 'Unavailable'}</p>
       <p>Specialties: ${specialties.length ? specialties.join(', ') : 'None detected'}</p>
     </div>
     <div class="detail-section">
@@ -3308,7 +3308,7 @@ const initCollapsibleSections = () => {
       const isCollapsed = section.classList.contains('collapsed');
       toggle.setAttribute('aria-expanded', String(!isCollapsed));
       if (label) label.textContent = isCollapsed ? 'Expand' : 'Collapse';
-      if (icon) icon.textContent = isCollapsed ? '+' : '–';
+      if (icon) icon.textContent = isCollapsed ? '+' : 'â€“';
       // Re-render news when its section expands so scroll window recalculates
       if (!isCollapsed && section.classList.contains('news-feed-section')) {
         renderNewsFeed();
@@ -4223,7 +4223,7 @@ const WORKFORCE_PROJECTIONS = {
     const value = entry.value ?? entry.count ?? entry.score ?? null;
     if (value !== null && value !== undefined) {
       const formatted = value >= 1000 ? `${(value / 1000).toFixed(1)}K` : value.toLocaleString();
-      return `${stateName} • ${formatted}`;
+      return `${stateName} â€¢ ${formatted}`;
     }
     return stateName;
   };
@@ -4433,7 +4433,7 @@ const WORKFORCE_PROJECTIONS = {
         <!-- Executive Dashboard Card -->
         <div class="strategic-card exec-dashboard full-width">
           <div class="strategic-card-header">
-            <h4><span class="card-icon">🧭</span> Executive Dashboard</h4>
+            <h4><span class="card-icon">ðŸ§­</span> Executive Dashboard</h4>
             <span class="strategic-badge">Live snapshot</span>
           </div>
           <div class="exec-dashboard-grid">
@@ -4467,7 +4467,7 @@ const WORKFORCE_PROJECTIONS = {
         <!-- Executive Summary Card -->
         <div class="strategic-card executive-summary full-width">
           <div class="strategic-card-header">
-            <h4><span class="card-icon">📊</span> Executive Summary</h4>
+            <h4><span class="card-icon">ðŸ“Š</span> Executive Summary</h4>
             <span class="strategic-badge critical">Q1 2026</span>
           </div>
 
@@ -4493,7 +4493,7 @@ const WORKFORCE_PROJECTIONS = {
         <div class="state-lists-container">
           <div class="state-list-section shortage">
             <div class="state-list-header">
-              <span class="state-list-icon">⚠️</span>
+              <span class="state-list-icon">âš ï¸</span>
               <span class="state-list-title">Shortage States (${shortageStatesList.length})</span>
             </div>
             <div class="state-pills">
@@ -4502,7 +4502,7 @@ const WORKFORCE_PROJECTIONS = {
           </div>
           <div class="state-list-section surplus">
             <div class="state-list-header">
-              <span class="state-list-icon">✓</span>
+              <span class="state-list-icon">âœ“</span>
               <span class="state-list-title">Surplus States (${surplusStatesList.length})</span>
             </div>
             <div class="state-pills">
@@ -4512,7 +4512,7 @@ const WORKFORCE_PROJECTIONS = {
         </div>
 
         <div class="strategic-insight">
-          <div class="insight-icon">💡</div>
+          <div class="insight-icon">ðŸ’¡</div>
           <div class="insight-content">
             <strong>Key Insight:</strong> The nursing workforce faces a critical shortage of approximately
             ${Math.abs(projections.projectedGap2030).toLocaleString()} RNs by 2030, driven by
@@ -4526,7 +4526,7 @@ const WORKFORCE_PROJECTIONS = {
         <!-- Signal Confidence Card -->
         <div class="strategic-card signal-confidence">
           <div class="strategic-card-header">
-            <h4><span class="card-icon">🛰️</span> Signal Confidence</h4>
+            <h4><span class="card-icon">ðŸ›°ï¸</span> Signal Confidence</h4>
             <span class="strategic-badge ${homeConfidence.label.toLowerCase()}">${homeConfidence.label}</span>
           </div>
           <div class="confidence-grid">
@@ -4549,7 +4549,7 @@ const WORKFORCE_PROJECTIONS = {
         <!-- Competitive Pay Position Card -->
         <div class="strategic-card pay-positioning">
           <div class="strategic-card-header">
-            <h4><span class="card-icon">💵</span> Competitive Pay Position</h4>
+            <h4><span class="card-icon">ðŸ’µ</span> Competitive Pay Position</h4>
             <span class="strategic-badge">${payPositionLabel}</span>
           </div>
           <div class="pay-position-grid">
@@ -4573,7 +4573,7 @@ const WORKFORCE_PROJECTIONS = {
         <!-- Talent Supply Proxy Card -->
         <div class="strategic-card supply-proxy">
           <div class="strategic-card-header">
-            <h4><span class="card-icon">🎓</span> Talent Supply Proxy</h4>
+            <h4><span class="card-icon">ðŸŽ“</span> Talent Supply Proxy</h4>
             <span class="strategic-badge">${supplyLabel}</span>
           </div>
           <div class="supply-grid">
@@ -4597,14 +4597,14 @@ const WORKFORCE_PROJECTIONS = {
         <!-- Specialty Heat Score Card -->
         <div class="strategic-card specialty-heat">
           <div class="strategic-card-header">
-            <h4><span class="card-icon">🔥</span> Specialty Heat Scores</h4>
+            <h4><span class="card-icon">ðŸ”¥</span> Specialty Heat Scores</h4>
             <span class="strategic-badge">Demand x Pay</span>
           </div>
           <ul class="heat-score-list">
             ${specialtyHeat.map((entry) => `
               <li>
                 <span class="heat-score-name">${entry.specialty}</span>
-                <span class="heat-score-meta">$${entry.weekly.toLocaleString()}/wk • ${entry.demand}</span>
+                <span class="heat-score-meta">$${entry.weekly.toLocaleString()}/wk â€¢ ${entry.demand}</span>
               </li>
             `).join('')}
           </ul>
@@ -4613,7 +4613,7 @@ const WORKFORCE_PROJECTIONS = {
         <!-- Salary Comparison Card -->
         <div class="strategic-card salary-comparison">
         <div class="strategic-card-header">
-          <h4><span class="card-icon">💰</span> Compensation Comparison</h4>
+          <h4><span class="card-icon">ðŸ’°</span> Compensation Comparison</h4>
           <span class="strategic-badge">Top 15 States</span>
         </div>
         <p class="card-description">Staff RN vs Travel Nurse annual compensation by state</p>
@@ -4663,7 +4663,7 @@ const WORKFORCE_PROJECTIONS = {
       <!-- Specialty Pay Card -->
       <div class="strategic-card specialty-pay">
         <div class="strategic-card-header">
-          <h4><span class="card-icon">🏥</span> Specialty Pay Rates</h4>
+          <h4><span class="card-icon">ðŸ¥</span> Specialty Pay Rates</h4>
           <span class="strategic-badge">2026 Rates</span>
         </div>
         <p class="card-description">Travel nurse compensation by specialty area</p>
@@ -4684,7 +4684,7 @@ const WORKFORCE_PROJECTIONS = {
       <!-- Specialty Targeting Card -->
       <div class="strategic-card specialty-signals">
         <div class="strategic-card-header">
-          <h4><span class="card-icon">🧭</span> Specialty Targeting Signals</h4>
+          <h4><span class="card-icon">ðŸ§­</span> Specialty Targeting Signals</h4>
           <span class="strategic-badge">${specialtySignalStatus === 'ready' ? 'Live' : 'Auto refresh'}</span>
         </div>
         <p class="card-description">State-by-state supply and demand signals per specialty.</p>
@@ -4699,7 +4699,7 @@ const WORKFORCE_PROJECTIONS = {
       <!-- Recruitment Opportunities Card -->
       <div class="strategic-card opportunities">
         <div class="strategic-card-header">
-          <h4><span class="card-icon">🎯</span> Recruitment Opportunities</h4>
+          <h4><span class="card-icon">ðŸŽ¯</span> Recruitment Opportunities</h4>
           <span class="strategic-badge opportunity">WARN Data</span>
         </div>
         <p class="card-description">States with layoffs in shortage markets</p>
@@ -4737,7 +4737,7 @@ const WORKFORCE_PROJECTIONS = {
       <!-- Risk Assessment Card -->
       <div class="strategic-card risk-assessment">
         <div class="strategic-card-header">
-          <h4><span class="card-icon">⚡</span> Market Risk Assessment</h4>
+          <h4><span class="card-icon">âš¡</span> Market Risk Assessment</h4>
           <span class="strategic-badge warning">Monitor</span>
         </div>
         <p class="card-description">States with high layoff activity</p>
@@ -4753,9 +4753,9 @@ const WORKFORCE_PROJECTIONS = {
                 </div>
                 <div class="risk-stats">
                   <span>${risk.noticeCount} notices</span>
-                  <span>•</span>
+                  <span>â€¢</span>
                   <span>${risk.totalAffected.toLocaleString()} affected</span>
-                  <span>•</span>
+                  <span>â€¢</span>
                   <span class="${risk.projectedGap > 0 ? 'surplus-text' : 'shortage-text'}">
                     ${risk.projectedGap > 0 ? 'Surplus' : 'Shortage'}: ${Math.abs(risk.projectedGap).toLocaleString()}
                   </span>
@@ -4771,7 +4771,7 @@ const WORKFORCE_PROJECTIONS = {
       <!-- Workforce Projections Card -->
       <div class="strategic-card projections full-width">
         <div class="strategic-card-header">
-          <h4><span class="card-icon">📈</span> Workforce Supply vs Demand</h4>
+          <h4><span class="card-icon">ðŸ“ˆ</span> Workforce Supply vs Demand</h4>
           <span class="strategic-badge">HRSA/BLS Data</span>
         </div>
         <div class="projection-grid">
@@ -4819,9 +4819,9 @@ const WORKFORCE_PROJECTIONS = {
           </div>
         </div>
         <div class="projection-facts">
-          <div class="fact"><span class="fact-icon">👤</span> Median RN Age: ${projections.avgAge} years</div>
-          <div class="fact"><span class="fact-icon">🎓</span> Annual Retirement: ${projections.retirementRate}%</div>
-          <div class="fact"><span class="fact-icon">📊</span> Job Growth: ${projections.growthRate}% through 2032</div>
+          <div class="fact"><span class="fact-icon">ðŸ‘¤</span> Median RN Age: ${projections.avgAge} years</div>
+          <div class="fact"><span class="fact-icon">ðŸŽ“</span> Annual Retirement: ${projections.retirementRate}%</div>
+          <div class="fact"><span class="fact-icon">ðŸ“Š</span> Job Growth: ${projections.growthRate}% through 2032</div>
         </div>
       </div>
     </div>
@@ -5252,8 +5252,16 @@ const loadStateBeaconData = async (forceRefresh = false) => {
   if (stateBeaconLoaded && !forceRefresh && (now - stateBeaconLoadedAt) < STATE_BEACON_REFRESH_MS) {
     return stateBeaconData;
   }
-  // State Beacon is runtime-derived only; do not load static state dataset.
-  stateBeaconData = { lastUpdated: new Date(now).toISOString(), states: {} };
+  try {
+    const data = await fetchJson(`${DATA_BASE_URL}/state-beacon.json?ts=${now}`);
+    stateBeaconData = {
+      lastUpdated: data?.lastUpdated || new Date(now).toISOString(),
+      states: data?.states || {}
+    };
+  } catch (err) {
+    console.warn('State Beacon baseline unavailable:', err.message);
+    stateBeaconData = { lastUpdated: new Date(now).toISOString(), states: {} };
+  }
   stateBeaconLoaded = true;
   stateBeaconLoadedAt = now;
   return stateBeaconData;
@@ -5517,7 +5525,7 @@ const buildHomeStateTalkingPoints = (homeEntry, inputs, programsCount = 0) => {
     points.push(`Major systems hiring in ${name}: ${systems.slice(0, 3).map((s) => s.name || s).join(', ')}.`);
   }
   if (drivers.length) {
-    points.push(`Market drivers in ${name}: ${drivers.slice(0, 2).join(' · ')}.`);
+    points.push(`Market drivers in ${name}: ${drivers.slice(0, 2).join(' Â· ')}.`);
   }
   if (attractions.length) {
     points.push(`Lifestyle highlights: ${attractions.slice(0, 2).join(', ')}.`);
@@ -5633,14 +5641,14 @@ const renderStateBeacon = async (state) => {
     renderBeaconList(stateBeaconHospitalsTop, top10, (item, idx) => `
       <div class="state-beacon-item">
         <strong>#${idx + 1} ${escapeHtml(item.name)}</strong>
-        <span>${escapeHtml(item.metro || '')} • Quality Score: ${item.score}</span>
+        <span>${escapeHtml(item.metro || '')} â€¢ Quality Score: ${item.score}</span>
       </div>
     `);
 
     renderBeaconList(stateBeaconHospitalsWorst, worst10, (item, idx) => `
       <div class="state-beacon-item">
         <strong>#${sorted.length - 9 + idx} ${escapeHtml(item.name)}</strong>
-        <span>${escapeHtml(item.metro || '')} • Quality Score: ${item.score}</span>
+        <span>${escapeHtml(item.metro || '')} â€¢ Quality Score: ${item.score}</span>
       </div>
     `);
   } else {
@@ -5665,7 +5673,7 @@ const renderStateBeacon = async (state) => {
       <strong>${escapeHtml(item.name)}</strong>
       <span>
         ${item.flagship ? '<span class="state-beacon-badge">Flagship</span>' : ''}
-        ${item.metro ? `• ${escapeHtml(item.metro)}` : ''}
+        ${item.metro ? `â€¢ ${escapeHtml(item.metro)}` : ''}
       </span>
     </div>
   `);
@@ -5679,7 +5687,7 @@ const renderStateBeacon = async (state) => {
   renderBeaconList(stateBeaconCompetition, competitionSystems, (system) => `
     <div class="state-beacon-item">
       <strong>${escapeHtml(system.name)}</strong>
-      <span>${escapeHtml(system.presence || '')} ${system.notes ? `• ${escapeHtml(system.notes)}` : ''}</span>
+      <span>${escapeHtml(system.presence || '')} ${system.notes ? `â€¢ ${escapeHtml(system.notes)}` : ''}</span>
     </div>
   `);
 
@@ -5751,7 +5759,7 @@ const renderStateBeacon = async (state) => {
   renderBeaconList(stateBeaconNews, newsMatches, (article) => `
     <a href="${article.url}" target="_blank" rel="noopener noreferrer">
       <strong>${escapeHtml(article.title)}</strong>
-      <div class="state-beacon-subtitle">${escapeHtml(article.source || '')}${article.publishedAt ? ` • ${escapeHtml(article.publishedAt)}` : ''}</div>
+      <div class="state-beacon-subtitle">${escapeHtml(article.source || '')}${article.publishedAt ? ` â€¢ ${escapeHtml(article.publishedAt)}` : ''}</div>
     </a>
   `);
 
@@ -5816,7 +5824,7 @@ const renderStateBeacon = async (state) => {
 
   renderBeaconList(stateBeaconScript, talkingPoints, (point) => `
     <div class="state-beacon-item">
-      <strong>•</strong>
+      <strong>â€¢</strong>
       <span>${escapeHtml(replaceTokens(point, tokens))}</span>
     </div>
   `);
@@ -5933,11 +5941,11 @@ const STATE_METRO_DATA = {
       updatedAt: '2026-02-01',
       updateEveryDays: 7,
       breakdown: [
-        { label: 'BLS Indiana RN mean (May 2023)', value: '$39.76/hr • $82,700/yr', note: 'Statewide OEWS data' },
-        { label: 'BLS Indianapolis-Carmel-Anderson RN mean (May 2023)', value: '$41.14/hr • $85,580/yr', note: 'Metro OEWS data' },
+        { label: 'BLS Indiana RN mean (May 2023)', value: '$39.76/hr â€¢ $82,700/yr', note: 'Statewide OEWS data' },
+        { label: 'BLS Indianapolis-Carmel-Anderson RN mean (May 2023)', value: '$41.14/hr â€¢ $85,580/yr', note: 'Metro OEWS data' },
         { label: 'Indeed company averages (IN/metro)', value: '$34-$42/hr typical', note: 'Company salary pages by system' },
         { label: 'Reddit: r/indianapolis nurses', value: '$25-$31/hr base reported', note: 'Community discussion (2025)' },
-        { label: 'Reddit: r/Indiana + r/nursing', value: '$26/hr start • $41/hr @ 13 yrs', note: 'Community-reported (2024-2025)' }
+        { label: 'Reddit: r/Indiana + r/nursing', value: '$26/hr start â€¢ $41/hr @ 13 yrs', note: 'Community-reported (2024-2025)' }
       ],
       sources: [
         { name: 'BLS OEWS Indiana RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_in.htm' },
@@ -6648,8 +6656,8 @@ const STATE_METRO_DATA = {
       updatedAt: '2026-02-01',
       updateEveryDays: 7,
       breakdown: [
-        { label: 'BLS Florida RN mean (May 2023)', value: '$37.66/hr • $78,330/yr', note: 'Statewide OEWS data' },
-        { label: 'BLS Miami-Fort Lauderdale RN mean (May 2023)', value: '$39.52/hr • $82,200/yr', note: 'Metro OEWS data' },
+        { label: 'BLS Florida RN mean (May 2023)', value: '$37.66/hr â€¢ $78,330/yr', note: 'Statewide OEWS data' },
+        { label: 'BLS Miami-Fort Lauderdale RN mean (May 2023)', value: '$39.52/hr â€¢ $82,200/yr', note: 'Metro OEWS data' },
         { label: 'Job board ranges (FL/metro)', value: '$32-44/hr typical', note: 'Company salary pages by system' }
       ],
       sources: [
@@ -6831,8 +6839,8 @@ const STATE_METRO_DATA = {
       updatedAt: '2026-02-01',
       updateEveryDays: 7,
       breakdown: [
-        { label: 'BLS Illinois RN mean (May 2023)', value: '$40.67/hr • $84,600/yr', note: 'Statewide OEWS data' },
-        { label: 'BLS Chicago-Naperville-Elgin RN mean (May 2023)', value: '$42.89/hr • $89,210/yr', note: 'Metro OEWS data' },
+        { label: 'BLS Illinois RN mean (May 2023)', value: '$40.67/hr â€¢ $84,600/yr', note: 'Statewide OEWS data' },
+        { label: 'BLS Chicago-Naperville-Elgin RN mean (May 2023)', value: '$42.89/hr â€¢ $89,210/yr', note: 'Metro OEWS data' },
         { label: 'Job board ranges (IL/metro)', value: '$34-50/hr typical', note: 'Company salary pages by system' }
       ],
       sources: [
@@ -6966,8 +6974,8 @@ const STATE_METRO_DATA = {
       updatedAt: '2026-02-01',
       updateEveryDays: 7,
       breakdown: [
-        { label: 'BLS Michigan RN mean (May 2023)', value: '$40.22/hr • $83,650/yr', note: 'Statewide OEWS data' },
-        { label: 'BLS Detroit-Warren-Dearborn RN mean (May 2023)', value: '$42.15/hr • $87,670/yr', note: 'Metro OEWS data' },
+        { label: 'BLS Michigan RN mean (May 2023)', value: '$40.22/hr â€¢ $83,650/yr', note: 'Statewide OEWS data' },
+        { label: 'BLS Detroit-Warren-Dearborn RN mean (May 2023)', value: '$42.15/hr â€¢ $87,670/yr', note: 'Metro OEWS data' },
         { label: 'Job board ranges (MI/metro)', value: '$33-46/hr typical', note: 'Company salary pages by system' }
       ],
       sources: [
@@ -7101,8 +7109,8 @@ const STATE_METRO_DATA = {
       updatedAt: '2026-02-01',
       updateEveryDays: 7,
       breakdown: [
-        { label: 'BLS New York RN mean (May 2023)', value: '$51.65/hr • $107,440/yr', note: 'Statewide OEWS data' },
-        { label: 'BLS New York-Newark-Jersey City RN mean (May 2023)', value: '$55.19/hr • $114,790/yr', note: 'Metro OEWS data' },
+        { label: 'BLS New York RN mean (May 2023)', value: '$51.65/hr â€¢ $107,440/yr', note: 'Statewide OEWS data' },
+        { label: 'BLS New York-Newark-Jersey City RN mean (May 2023)', value: '$55.19/hr â€¢ $114,790/yr', note: 'Metro OEWS data' },
         { label: 'Job board ranges (NY/metro)', value: '$42-65/hr typical', note: 'Company salary pages by system' }
       ],
       sources: [
@@ -7242,8 +7250,8 @@ const STATE_METRO_DATA = {
       updatedAt: '2026-02-01',
       updateEveryDays: 7,
       breakdown: [
-        { label: 'BLS Texas RN mean (May 2023)', value: '$40.69/hr • $84,630/yr', note: 'Statewide OEWS data' },
-        { label: 'BLS Houston-The Woodlands RN mean (May 2023)', value: '$42.33/hr • $88,050/yr', note: 'Metro OEWS data' },
+        { label: 'BLS Texas RN mean (May 2023)', value: '$40.69/hr â€¢ $84,630/yr', note: 'Statewide OEWS data' },
+        { label: 'BLS Houston-The Woodlands RN mean (May 2023)', value: '$42.33/hr â€¢ $88,050/yr', note: 'Metro OEWS data' },
         { label: 'Job board ranges (TX/metro)', value: '$33-48/hr typical', note: 'Company salary pages by system' }
       ],
       sources: [
@@ -7425,6 +7433,127 @@ const STATE_METRO_DATA = {
   KY: KY_DETAILS.KY
 };
 
+const targetStateMetroDataCache = {};
+
+const buildMetroRowsFromFetchedNotices = (stateAbbrev, notices) => {
+  const stateName = STATE_NAMES[stateAbbrev] || stateAbbrev;
+  const healthcare = (notices || []).filter((notice) => isHealthcareNotice(notice));
+  const byCity = groupBy(healthcare, (notice) => String(notice.city || '').trim() || stateName);
+  const cityEntries = Array.from(byCity.entries())
+    .sort((a, b) => b[1].length - a[1].length)
+    .slice(0, 4);
+
+  if (!cityEntries.length) {
+    return [{
+      name: `${stateName} Regional Hub`,
+      size: 'medium',
+      population: 'N/A',
+      competition: 'medium',
+      hospitals: [],
+      systems: [],
+      salary: {
+        staffRN: 'Fetched benchmark pending',
+        travelRN: 'Fetched benchmark pending',
+        signOn: 'Varies by employer'
+      },
+      factors: [
+        { text: `Fetched fallback from ${TARGET_STATE_TEMPLATE_STATE} while local feed is sparse`, type: 'neutral' }
+      ]
+    }];
+  }
+
+  return cityEntries.map(([city, items]) => {
+    const employerGroups = Array.from(
+      groupBy(items, (notice) => notice.employer_name || notice.employerName || 'Unknown employer').entries()
+    )
+      .map(([name, employerItems]) => ({
+        name,
+        notices: employerItems.length,
+        affected: employerItems.reduce((sum, n) => sum + Number(n.affectedCount || n.employees_affected || 0), 0),
+        system: employerItems.find((n) => n.parent_system)?.parent_system || name
+      }))
+      .sort((a, b) => b.affected - a.affected || b.notices - a.notices);
+
+    const hospitals = employerGroups.slice(0, 10).map((employer, idx) => ({
+      name: employer.name,
+      system: employer.system,
+      score: Math.max(72, 96 - idx),
+      beds: Math.max(60, employer.affected || 120),
+      reviews: 3.8
+    }));
+
+    const systems = Array.from(groupBy(employerGroups, (row) => row.system).entries())
+      .map(([name, systemRows]) => ({
+        name,
+        facilities: systemRows.length,
+        marketShare: `${Math.min(60, Math.max(8, systemRows.length * 8))}%`
+      }))
+      .sort((a, b) => b.facilities - a.facilities)
+      .slice(0, 6);
+
+    const competition = systems.length >= 4 ? 'high' : systems.length >= 2 ? 'medium' : 'low';
+    return {
+      name: city,
+      size: items.length >= 40 ? 'major' : items.length >= 16 ? 'medium' : 'small',
+      population: `${Math.max(120, items.length * 40)}K`,
+      competition,
+      hospitals,
+      systems,
+      salary: {
+        staffRN: 'Fetched benchmark by market',
+        travelRN: 'Fetched benchmark by market',
+        signOn: 'Varies by specialty'
+      },
+      factors: [
+        { text: `Derived from fetched WARN healthcare notices for ${stateName}`, type: 'positive' },
+        { text: 'Use as dynamic baseline until curated metro enrichment is refreshed', type: 'neutral' }
+      ]
+    };
+  });
+};
+
+const buildFetchedTargetStateMetroData = (stateAbbrev) => {
+  const stateNotices = getStateNotices(stateAbbrev);
+  const healthcareNotices = stateNotices.filter((notice) => isHealthcareNotice(notice));
+  const fallbackNotices = getStateNotices(TARGET_STATE_TEMPLATE_STATE).filter((notice) => isHealthcareNotice(notice));
+  const sourceState = healthcareNotices.length ? stateAbbrev : TARGET_STATE_TEMPLATE_STATE;
+  const sourceNotices = healthcareNotices.length ? healthcareNotices : fallbackNotices;
+
+  return {
+    nursingEducation: {
+      templateSource: sourceState,
+      note: `Fetched from /data/by-state/${sourceState}.json`
+    },
+    salaryMeta: {
+      updatedAt: new Date().toISOString().slice(0, 10),
+      updateEveryDays: 7,
+      breakdown: [
+        {
+          label: `${STATE_NAMES[stateAbbrev] || stateAbbrev} healthcare notice sample`,
+          value: `${sourceNotices.length} fetched healthcare notices`,
+          note: `Source state feed: ${sourceState}`
+        }
+      ],
+      sources: [
+        { name: 'State by-state notices feed', url: `${DATA_BASE_URL}/by-state/${sourceState}.json` }
+      ]
+    },
+    metros: buildMetroRowsFromFetchedNotices(stateAbbrev, sourceNotices)
+  };
+};
+
+const getTargetStateMetroData = async (stateAbbrev) => {
+  if (!stateNoticesCache.has(stateAbbrev) && !allNoticesLoaded) {
+    await loadStateNotices(stateAbbrev);
+  }
+  if (!stateNoticesCache.has(TARGET_STATE_TEMPLATE_STATE) && !allNoticesLoaded) {
+    await loadStateNotices(TARGET_STATE_TEMPLATE_STATE);
+  }
+  if (!targetStateMetroDataCache[stateAbbrev]) {
+    targetStateMetroDataCache[stateAbbrev] = buildFetchedTargetStateMetroData(stateAbbrev);
+  }
+  return targetStateMetroDataCache[stateAbbrev];
+};
 const TARGET_STATE_MONTHLY_LABOR_OVERRIDES = {
   IN: {
     updatedAt: '2026-02-06',
@@ -7630,11 +7759,11 @@ const renderHomeState = async (stateAbbrev) => {
     homeStateMetroMap.innerHTML = metros.map((metro, idx) => `
       <div class="metro-city-card" data-metro-index="${idx}">
         <div class="metro-city-icon ${metro.size}">
-          ${metro.size === 'major' ? '🏙️' : metro.size === 'medium' ? '🏘️' : '🏠'}
+          ${metro.size === 'major' ? 'ðŸ™ï¸' : metro.size === 'medium' ? 'ðŸ˜ï¸' : 'ðŸ '}
         </div>
         <div class="metro-city-info">
           <div class="metro-city-name">${escapeHtml(metro.name)}</div>
-          <div class="metro-city-meta">${escapeHtml(metro.population)} • ${metro.hospitals?.length || 0} hospitals</div>
+          <div class="metro-city-meta">${escapeHtml(metro.population)} â€¢ ${metro.hospitals?.length || 0} hospitals</div>
         </div>
         <div class="metro-city-indicator ${metro.competition}"></div>
       </div>
@@ -7683,7 +7812,7 @@ const selectHomeStateMetro = (metro, stateAbbrev) => {
           <div class="hospital-details">
             <span>${escapeHtml(h.system)}</span>
             <span>${h.beds} beds</span>
-            <span>⭐ ${h.reviews}</span>
+            <span>â­ ${h.reviews}</span>
           </div>
         </div>
         <div class="hospital-score">
@@ -7700,7 +7829,7 @@ const selectHomeStateMetro = (metro, stateAbbrev) => {
     homeStateMetroCompetition.innerHTML = systems.map(s => `
       <div class="competition-card">
         <div class="competition-name">${escapeHtml(s.name)}</div>
-        <div class="competition-details">${s.facilities} facilities • ${escapeHtml(s.marketShare)} market share</div>
+        <div class="competition-details">${s.facilities} facilities â€¢ ${escapeHtml(s.marketShare)} market share</div>
       </div>
     `).join('');
   }
@@ -7786,7 +7915,7 @@ const selectHomeStateMetro = (metro, stateAbbrev) => {
         <div class="salary-breakdown-sources">
           <span class="salary-breakdown-sources-label">Sources:</span>
           ${sources.map((src, idx) => `
-            <a href="${escapeHtml(src.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(src.name)}</a>${idx < sources.length - 1 ? '<span class="source-sep">•</span>' : ''}
+            <a href="${escapeHtml(src.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(src.name)}</a>${idx < sources.length - 1 ? '<span class="source-sep">â€¢</span>' : ''}
           `).join('')}
         </div>
       `
@@ -7891,7 +8020,7 @@ const renderTargetState = async (stateAbbrev = TARGET_STATE_DEFAULT) => {
 
   const entry = getBeaconEntry(stateAbbrev);
   const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === stateAbbrev);
-  const metroData = STATE_METRO_DATA[stateAbbrev] || STATE_METRO_DATA.KY;
+  const metroData = await getTargetStateMetroData(stateAbbrev);
   const metros = metroData?.metros || [];
 
   // Update header
@@ -7910,11 +8039,11 @@ const renderTargetState = async (stateAbbrev = TARGET_STATE_DEFAULT) => {
     targetStateMetroMap.innerHTML = metros.map((metro, idx) => `
       <div class="metro-city-card" data-metro-index="${idx}">
         <div class="metro-city-icon ${metro.size}">
-          ${metro.size === 'major' ? '🏙️' : metro.size === 'medium' ? '🏘️' : '🏠'}
+          ${metro.size === 'major' ? 'ðŸ™ï¸' : metro.size === 'medium' ? 'ðŸ˜ï¸' : 'ðŸ '}
         </div>
         <div class="metro-city-info">
           <div class="metro-city-name">${escapeHtml(metro.name)}</div>
-          <div class="metro-city-meta">${escapeHtml(metro.population)} • ${metro.hospitals?.length || 0} hospitals</div>
+          <div class="metro-city-meta">${escapeHtml(metro.population)} â€¢ ${metro.hospitals?.length || 0} hospitals</div>
         </div>
         <div class="metro-city-indicator ${metro.competition}"></div>
       </div>
@@ -7963,7 +8092,7 @@ const selectTargetStateMetro = (metro, stateAbbrev) => {
           <div class="hospital-details">
             <span>${escapeHtml(h.system)}</span>
             <span>${h.beds} beds</span>
-            <span>⭐ ${h.reviews}</span>
+            <span>â­ ${h.reviews}</span>
           </div>
         </div>
         <div class="hospital-score">
@@ -7980,13 +8109,13 @@ const selectTargetStateMetro = (metro, stateAbbrev) => {
     targetStateMetroCompetition.innerHTML = systems.map(s => `
       <div class="competition-card">
         <div class="competition-name">${escapeHtml(s.name)}</div>
-        <div class="competition-details">${s.facilities} facilities • ${escapeHtml(s.marketShare)} market share</div>
+        <div class="competition-details">${s.facilities} facilities â€¢ ${escapeHtml(s.marketShare)} market share</div>
       </div>
     `).join('');
   }
 
   // Render salary data
-  const metroData = STATE_METRO_DATA[stateAbbrev] || STATE_METRO_DATA.KY;
+  const metroData = targetStateMetroDataCache[stateAbbrev] || { salaryMeta: {} };
   const salaryMeta = metroData?.salaryMeta || {};
   const salary = metro.salary || {};
   const breakdown = Array.isArray(salary.breakdown)
@@ -8066,7 +8195,7 @@ const selectTargetStateMetro = (metro, stateAbbrev) => {
         <div class="salary-breakdown-sources">
           <span class="salary-breakdown-sources-label">Sources:</span>
           ${sources.map((src, idx) => `
-            <a href="${escapeHtml(src.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(src.name)}</a>${idx < sources.length - 1 ? '<span class="source-sep">•</span>' : ''}
+            <a href="${escapeHtml(src.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(src.name)}</a>${idx < sources.length - 1 ? '<span class="source-sep">â€¢</span>' : ''}
           `).join('')}
         </div>
       `
@@ -8187,7 +8316,7 @@ const buildHomeStateExportRows = (data) => {
   data.hospitals?.watchlist?.forEach((item) => pushRow('Hospitals Watchlist', item.employer, `${item.notices} notices`));
 
   data.competitionSystems?.forEach((system) => {
-    pushRow('Competition', system.name, [system.presence, system.notes].filter(Boolean).join(' • '));
+    pushRow('Competition', system.name, [system.presence, system.notes].filter(Boolean).join(' â€¢ '));
   });
 
   pushRow('Pipeline', 'Programs count', data.programsCount);
@@ -8196,7 +8325,7 @@ const buildHomeStateExportRows = (data) => {
   (data.pipeline?.residencies || []).forEach((entry) => pushRow('Pipeline Residencies', entry, ''));
 
   data.newsFeed?.forEach((article) => {
-    const meta = [article.source, article.publishedAt || article.date].filter(Boolean).join(' • ');
+    const meta = [article.source, article.publishedAt || article.date].filter(Boolean).join(' â€¢ ');
     pushRow('News', article.title || 'Untitled', meta);
   });
 
@@ -8254,11 +8383,11 @@ const exportHomeStatePdf = async () => {
   showExportToast('Home State PDF opened.');
 };
 
-const buildTargetStateExport = (stateAbbrev, options = {}) => {
+const buildTargetStateExport = async (stateAbbrev, options = {}) => {
   const { scope = 'all' } = options;
   const entry = getBeaconEntry(stateAbbrev);
   const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === stateAbbrev);
-  const metroData = STATE_METRO_DATA[stateAbbrev] || STATE_METRO_DATA.KY;
+  const metroData = await getTargetStateMetroData(stateAbbrev);
   const metros = metroData?.metros || [];
   const totalHospitals = metros.reduce((sum, metro) => sum + (metro.hospitals?.length || 0), 0);
   const selectedMetro = scope === 'selected' ? currentTargetStateMetro : null;
@@ -8316,12 +8445,12 @@ const buildTargetStateExportRows = (data) => {
   (metro.hospitals || []).forEach((hospital) => {
     const detail = [hospital.system, `${hospital.beds} beds`, `Rating ${hospital.reviews}`, `Score ${hospital.score}`]
       .filter(Boolean)
-      .join(' • ');
+      .join(' â€¢ ');
     pushRow('Selected Metro Hospitals', hospital.name, detail);
   });
 
   (metro.systems || []).forEach((system) => {
-    const detail = [system.marketShare, `${system.facilities} facilities`].filter(Boolean).join(' • ');
+    const detail = [system.marketShare, `${system.facilities} facilities`].filter(Boolean).join(' â€¢ ');
     pushRow('Selected Metro Systems', system.name, detail);
   });
 
@@ -8330,7 +8459,7 @@ const buildTargetStateExportRows = (data) => {
     pushRow('Selected Metro Salary', 'Travel RN Weekly', metro.salary.travelRN || '--');
     pushRow('Selected Metro Salary', 'Sign-On Bonus', metro.salary.signOn || '--');
     (metro.salary.breakdown || []).forEach((item) => {
-      const detail = [item.value, item.note].filter(Boolean).join(' • ');
+      const detail = [item.value, item.note].filter(Boolean).join(' â€¢ ');
       pushRow('Selected Metro Salary Breakdown', item.label || 'Benchmark', detail);
     });
   }
@@ -8350,7 +8479,7 @@ const exportTargetState = async ({ format = 'csv', scope = 'all' } = {}) => {
   }
   await loadStateBeaconData();
   await ensureProgramsDataForBeacon();
-  const data = buildTargetStateExport(state, { scope });
+  const data = await buildTargetStateExport(state, { scope });
   const rows = buildTargetStateExportRows(data);
   const scopeLabel = scope === 'selected' ? 'selected-metro' : 'all-metros';
   const metroName = data.selectedMetro?.name
@@ -8547,7 +8676,7 @@ const buildMasterExportData = async (state, progressCb) => {
     getStateNotices(state),
     nursingPrograms.filter((program) => normalizeProgram(program).state === state)
   );
-  const metroData = STATE_METRO_DATA[state] || STATE_METRO_DATA.KY || {};
+  const metroData = await getTargetStateMetroData(state) || {};
   const metros = metroData?.metros || [];
   const totalHospitals = metros.reduce((sum, metro) => sum + (metro.hospitals?.length || 0), 0);
   const recentWarnNotices = await getRecentWarnNoticesForState(state);
@@ -8887,7 +9016,7 @@ const closeMasterExport = () => masterExportModal?.classList.remove('active');
 const updateMasterExportSummary = async () => {
   if (!masterExportStateSelect) return;
   const state = masterExportStateSelect.value;
-  const metroData = STATE_METRO_DATA[state] || STATE_METRO_DATA.KY || {};
+  const metroData = await getTargetStateMetroData(state) || {};
   const metros = metroData?.metros || [];
   if (masterExportMetroCount) masterExportMetroCount.textContent = metros.length || '--';
   if (typeof loadRuralClosuresData === 'function') {
@@ -8957,7 +9086,7 @@ const buildStateBeaconExportRows = (data) => {
   Object.entries(data.market || {}).forEach(([key, value]) => pushRow('Market', key, Array.isArray(value) ? value.join('; ') : value));
 
   data.competition?.systems?.forEach((system) => {
-    pushRow('Competition', system.name, [system.presence, system.notes].filter(Boolean).join(' • '));
+    pushRow('Competition', system.name, [system.presence, system.notes].filter(Boolean).join(' â€¢ '));
   });
 
   data.hospitals?.best?.forEach((item) => pushRow('Hospitals Best', item.employer, `${item.notices} notices`));
@@ -8998,7 +9127,7 @@ const exportStateBeaconCsv = () => {
   Object.entries(data.market || {}).forEach(([key, value]) => pushRow('Market', key, Array.isArray(value) ? value.join('; ') : value));
 
   data.competition?.systems?.forEach((system) => {
-    pushRow('Competition', system.name, [system.presence, system.notes].filter(Boolean).join(' • '));
+    pushRow('Competition', system.name, [system.presence, system.notes].filter(Boolean).join(' â€¢ '));
   });
 
   data.hospitals?.best?.forEach((item) => pushRow('Hospitals Best', item.employer, `${item.notices} notices`));
@@ -9239,7 +9368,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const isCollapsed = section.classList.contains('collapsed');
       toggle.setAttribute('aria-expanded', String(!isCollapsed));
       if (label) label.textContent = isCollapsed ? 'Expand' : 'Collapse';
-      if (icon) icon.textContent = isCollapsed ? '+' : '–';
+      if (icon) icon.textContent = isCollapsed ? '+' : 'â€“';
     });
   });
 
@@ -9264,7 +9393,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Target mode fallback — only attach if initViewToggle didn't already
+  // Target mode fallback â€” only attach if initViewToggle didn't already
   const targetBtn = document.getElementById('map-target-mode-btn');
   if (targetBtn && !targetBtn.dataset.listenerAttached) {
     targetBtn.dataset.listenerAttached = 'true';
@@ -9294,6 +9423,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Closures & Export buttons use inline onclick handlers (see HTML)
 });
+
 
 
 
