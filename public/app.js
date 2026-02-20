@@ -75,6 +75,9 @@ const ruralClosuresTitle = document.getElementById('rural-closures-title');
 const ruralClosuresSubtitle = document.getElementById('rural-closures-subtitle');
 const ruralClosuresList = document.getElementById('rural-closures-list');
 const ruralClosuresClose = document.getElementById('rural-closures-close');
+const mapHospitalSearchInput = document.getElementById('map-hospital-search');
+const mapHospitalSearchBtn = document.getElementById('map-hospital-search-btn');
+const mapHospitalSearchResults = document.getElementById('map-hospital-search-results');
 const alertsList = document.getElementById('alerts-list');
 const heatmapList = document.getElementById('heatmap-list');
 const talentList = document.getElementById('talent-list');
@@ -115,6 +118,7 @@ const programsSearch = document.getElementById('programs-search');
 const programsStateFilter = document.getElementById('programs-state-filter');
 const programsLevelFilter = document.getElementById('programs-level-filter');
 const programsSourceNote = document.getElementById('programs-source-note');
+const programsSchoolInsight = document.getElementById('programs-school-insight');
 const programsExportCsv = document.getElementById('programs-export-csv');
 const programsExportExcel = document.getElementById('programs-export-excel');
 const programsExportPdf = document.getElementById('programs-export-pdf');
@@ -1293,6 +1297,36 @@ const clearMapTargetState = () => {
   }
   updateMapTargetStateHighlight();
   showMapToast('Target state cleared');
+};
+
+const resetMapToDefaultState = async () => {
+  selectedStates = [];
+  populateStateDropdown(regionSelect.value);
+  updateStateDisplay();
+  updateMapHighlights();
+
+  clearMapHomeState();
+  clearMapTargetState();
+  clearMapRecruitTargets();
+
+  if (mapFactorsPanel) mapFactorsPanel.style.display = 'none';
+  hideRuralClosuresPanel();
+  if (mapTooltip) mapTooltip.classList.remove('visible');
+
+  if (mapLongPressTimer) {
+    clearTimeout(mapLongPressTimer);
+    mapLongPressTimer = null;
+  }
+  mapLongPressSuppressUntil = 0;
+
+  setMapTargetMode(false);
+  await switchMapTab('layoffs');
+  await setMapScope('healthcare');
+
+  await applyFilters();
+  if (currentMapView === 'chart') {
+    renderBarChart();
+  }
 };
 
 const updateMapTargetStateHighlight = () => {
@@ -3481,15 +3515,9 @@ const initViewToggle = () => {
     }
   });
 
-  mapClearBtn?.addEventListener('click', () => {
-    selectedStates = [];
-    populateStateDropdown(regionSelect.value);
-    updateStateDisplay();
-    updateMapHighlights();
-    applyFilters();
-    if (currentMapView === 'chart') {
-      renderBarChart();
-    }
+  mapClearBtn?.addEventListener('click', async () => {
+    await resetMapToDefaultState();
+    showMapToast('Map reset complete');
   });
 
   mapHomeStateBtn?.addEventListener('click', () => {
@@ -3623,6 +3651,174 @@ const initMapTabSwitcher = () => {
   mapTabRural?.addEventListener('click', () => switchMapTab('rural'));
 };
 
+const normalizeHospitalSearchValue = (value) => (
+  String(value || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim()
+);
+
+const matchHospitalName = (a, b) => {
+  const left = normalizeHospitalSearchValue(a);
+  const right = normalizeHospitalSearchValue(b);
+  return Boolean(left && right && (left.includes(right) || right.includes(left)));
+};
+
+const findHospitalBedsFromMetros = (metros, hospitalName) => {
+  if (!Array.isArray(metros) || !hospitalName) return null;
+  for (const metro of metros) {
+    const hospitals = Array.isArray(metro?.hospitals) ? metro.hospitals : [];
+    for (const hospital of hospitals) {
+      if (matchHospitalName(hospital?.name, hospitalName)) {
+        const beds = Number(hospital?.beds);
+        if (Number.isFinite(beds) && beds > 0) return beds;
+      }
+    }
+  }
+  return null;
+};
+
+const findHospitalBeds = async (stateAbbrev, hospitalName) => {
+  const staticBeds = findHospitalBedsFromMetros(STATE_METRO_DATA?.[stateAbbrev]?.metros || [], hospitalName);
+  if (staticBeds) return staticBeds;
+  const ruralData = RURAL_HOSPITAL_CLOSURES?.[stateAbbrev] || {};
+  const allRural = [
+    ...(Array.isArray(ruralData.atRiskHospitals) ? ruralData.atRiskHospitals : []),
+    ...(Array.isArray(ruralData.closedHospitals) ? ruralData.closedHospitals : [])
+  ];
+  for (const row of allRural) {
+    if (matchHospitalName(row?.name, hospitalName)) {
+      const beds = Number(row?.beds);
+      if (Number.isFinite(beds) && beds > 0) return beds;
+    }
+  }
+  return null;
+};
+
+const getHospitalNoticeBreakdown = async (stateAbbrev, hospital) => {
+  if (!stateAbbrev) return { warnNotices: 0, personnel: 0, nursingSignalNotices: 0 };
+  if (!allNoticesLoaded && !stateNoticesCache.has(stateAbbrev)) {
+    await loadStateNotices(stateAbbrev);
+  }
+
+  const notices = getStateNotices(stateAbbrev);
+  const targets = [hospital?.match, hospital?.name, hospital?.system]
+    .filter(Boolean)
+    .map((value) => String(value).toLowerCase());
+  if (!targets.length) return { warnNotices: 0, personnel: 0, nursingSignalNotices: 0 };
+
+  const matched = notices.filter((notice) => {
+    const employer = String(notice.employer_name || notice.employerName || '').toLowerCase();
+    const system = String(notice.parent_system || '').toLowerCase();
+    return targets.some((target) => employer.includes(target) || system.includes(target));
+  });
+
+  const personnel = matched.reduce((sum, notice) => (
+    sum + Number(notice.affectedCount || notice.employees_affected || 0)
+  ), 0);
+  const nursingSignalNotices = matched.filter((notice) => isHealthcareNotice(notice)).length;
+  return { warnNotices: matched.length, personnel, nursingSignalNotices };
+};
+
+const searchHospitalsAcrossStates = (query, limit = 5) => {
+  const normalizedQuery = normalizeHospitalSearchValue(query);
+  if (!normalizedQuery || normalizedQuery.length < 2) return [];
+
+  const states = hospitalRankingsData?.states || {};
+  const matches = [];
+  Object.entries(states).forEach(([stateAbbrev, stateEntry]) => {
+    const rankings = Array.isArray(stateEntry?.hospitalRankings) ? stateEntry.hospitalRankings : [];
+    const ranked = rankings
+      .map((hospital) => ({ ...hospital, score: Number(hospital.baseScore ?? 0) }))
+      .sort((a, b) => b.score - a.score);
+    ranked.forEach((hospital, index) => {
+      const name = normalizeHospitalSearchValue(hospital.name);
+      const system = normalizeHospitalSearchValue(hospital.system);
+      const metro = normalizeHospitalSearchValue(hospital.metro);
+      const key = normalizeHospitalSearchValue(hospital.match);
+
+      if (!(name.includes(normalizedQuery) || key.includes(normalizedQuery) || system.includes(normalizedQuery) || metro.includes(normalizedQuery))) {
+        return;
+      }
+
+      let matchScore = 0;
+      if (name === normalizedQuery || key === normalizedQuery) matchScore += 100;
+      if (name.includes(normalizedQuery)) matchScore += 40;
+      if (key.includes(normalizedQuery)) matchScore += 25;
+      if (system.includes(normalizedQuery)) matchScore += 10;
+      if (metro.includes(normalizedQuery)) matchScore += 5;
+
+      matches.push({
+        ...hospital,
+        state: stateAbbrev,
+        rank: index + 1,
+        qualityScore: Number(hospital.baseScore ?? 0),
+        matchScore
+      });
+    });
+  });
+
+  return matches
+    .sort((a, b) => b.matchScore - a.matchScore || a.rank - b.rank || b.qualityScore - a.qualityScore)
+    .slice(0, limit);
+};
+
+const renderHospitalSearchResults = async (query) => {
+  if (!mapHospitalSearchResults) return;
+  const trimmed = String(query || '').trim();
+  if (!trimmed) {
+    mapHospitalSearchResults.innerHTML = '<div class="hospital-search-card"><div class="hospital-search-meta">Type a hospital name to search all states.</div></div>';
+    return;
+  }
+
+  mapHospitalSearchResults.innerHTML = '<div class="hospital-search-card"><div class="hospital-search-meta">Searching fetched hospital data...</div></div>';
+  await loadHospitalRankingsData();
+  await loadRecruitmentIntel();
+
+  const matches = searchHospitalsAcrossStates(trimmed, 5);
+  if (!matches.length) {
+    mapHospitalSearchResults.innerHTML = `<div class="hospital-search-card"><div class="hospital-search-meta">No hospital match found for "${escapeHtml(trimmed)}".</div></div>`;
+    return;
+  }
+
+  const detailed = await Promise.all(matches.map(async (hospital) => {
+    const beds = await findHospitalBeds(hospital.state, hospital.name);
+    const noticeBreakdown = await getHospitalNoticeBreakdown(hospital.state, hospital);
+    const staffingIndex = recruitmentIntel?.relocationIndex?.[hospital.state]?.staffing;
+    return { hospital, beds, noticeBreakdown, staffingIndex };
+  }));
+
+  mapHospitalSearchResults.innerHTML = detailed.map(({ hospital, beds, noticeBreakdown, staffingIndex }) => `
+    <div class="hospital-search-card">
+      <div class="hospital-search-title">${escapeHtml(hospital.name)} (${escapeHtml(hospital.state)})</div>
+      <div class="hospital-search-meta">
+        Rank in state: #${hospital.rank} | Quality score: ${hospital.qualityScore || '--'}<br />
+        Metro/System: ${escapeHtml(hospital.metro || '--')} | ${escapeHtml(hospital.system || '--')}<br />
+        Beds (fetched): ${beds !== null ? beds.toLocaleString() : 'Not available in current free source'}<br />
+        WARN matched notices: ${noticeBreakdown.warnNotices.toLocaleString()} | Personnel impacted: ${noticeBreakdown.personnel.toLocaleString()}<br />
+        Nursing signal notices: ${noticeBreakdown.nursingSignalNotices.toLocaleString()} | State staffing index: ${Number.isFinite(staffingIndex) ? staffingIndex.toFixed(2) : '--'}
+      </div>
+    </div>
+  `).join('');
+};
+
+const initHospitalSearch = () => {
+  if (!mapHospitalSearchBtn || !mapHospitalSearchInput) return;
+  mapHospitalSearchBtn.addEventListener('click', () => {
+    renderHospitalSearchResults(mapHospitalSearchInput.value).catch((err) => {
+      console.warn('Hospital search failed:', err);
+    });
+  });
+  mapHospitalSearchInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      renderHospitalSearchResults(mapHospitalSearchInput.value).catch((err) => {
+        console.warn('Hospital search failed:', err);
+      });
+    }
+  });
+};
+
 // =============================================================================
 // App Initialization
 // =============================================================================
@@ -3649,6 +3845,7 @@ const initApp = async () => {
   safeInit(initViewToggle, 'viewToggle');
   safeInit(initMapScopeToggle, 'mapScopeToggle');
   safeInit(initMapTabSwitcher, 'mapTabSwitcher');
+  safeInit(initHospitalSearch, 'hospitalSearch');
   safeInit(initForecast, 'forecast');
   safeInit(initProgramsModule, 'programsModule');
   safeInit(initStateBeacon, 'stateBeacon');
@@ -4947,13 +5144,86 @@ const buildProgramRow = (program) => {
 
   return `
     <tr>
-      <td><strong>${escapeHtml(entry.institution)}</strong>${credential}</td>
+      <td>
+        <button
+          type="button"
+          class="program-school-link"
+          data-school="${escapeHtml(entry.institution)}"
+          data-state="${escapeHtml(entry.state || '')}"
+        >
+          ${escapeHtml(entry.institution)}
+        </button>
+        ${credential}
+      </td>
       <td>${escapeHtml(entry.campus || '-')}</td>
       <td>${escapeHtml(entry.city || '-')}</td>
       <td>${escapeHtml(entry.state || '-')}</td>
       <td>${escapeHtml(entry.level || '-')}</td>
       <td>${escapeHtml(entry.accreditor || '-')}</td>
     </tr>
+  `;
+};
+
+const getProgramOutboundTargets = (sourceState, count = 3) => {
+  if (!sourceState || !ALL_STATES.includes(sourceState)) return [];
+
+  const salaryData = recruitmentIntel?.salaryBenchmarks || strategicData?.salaryData || NURSING_SALARY_DATA;
+  const topTargetsMatrix = recruitmentIntel?.topTargets;
+
+  if (topTargetsMatrix && typeof topTargetsMatrix === 'object') {
+    const rankedDestinations = Object.entries(topTargetsMatrix)
+      .map(([destinationState, feederStates]) => {
+        if (destinationState === sourceState || !Array.isArray(feederStates)) return null;
+        const feederRank = feederStates.indexOf(sourceState);
+        if (feederRank === -1) return null;
+        return {
+          state: destinationState,
+          feederRank: feederRank + 1,
+          projectedGap: Number(salaryData?.[destinationState]?.projectedGap ?? 0),
+          travelWeekly: Number(salaryData?.[destinationState]?.travelWeekly ?? 0)
+        };
+      })
+      .filter(Boolean)
+      .sort((a, b) => {
+        if (a.feederRank !== b.feederRank) return a.feederRank - b.feederRank;
+        if (a.projectedGap !== b.projectedGap) return a.projectedGap - b.projectedGap;
+        return b.travelWeekly - a.travelWeekly;
+      })
+      .slice(0, count);
+
+    if (rankedDestinations.length) return rankedDestinations;
+  }
+
+  return Object.entries(salaryData || {})
+    .filter(([state]) => state !== sourceState && getBlendedShortageStatus(state, salaryData) === 'shortage')
+    .sort((a, b) => {
+      const gapA = Number(a[1]?.projectedGap ?? 0);
+      const gapB = Number(b[1]?.projectedGap ?? 0);
+      if (gapA !== gapB) return gapA - gapB;
+      return Number(b[1]?.travelWeekly ?? 0) - Number(a[1]?.travelWeekly ?? 0);
+    })
+    .slice(0, count)
+    .map(([state], idx) => ({ state, feederRank: idx + 1 }));
+};
+
+const renderProgramsSchoolInsight = (schoolName, sourceState, targets) => {
+  if (!programsSchoolInsight) return;
+  if (!schoolName || !sourceState) {
+    programsSchoolInsight.innerHTML = 'Click a school name to see its top 3 destination states.';
+    return;
+  }
+
+  if (!targets.length) {
+    programsSchoolInsight.innerHTML = `<strong>${escapeHtml(schoolName)}</strong> (${escapeHtml(sourceState)}) has no destination signal available yet.`;
+    return;
+  }
+
+  const targetText = targets
+    .map((entry, idx) => `${idx + 1}. ${STATE_NAMES[entry.state] || entry.state}`)
+    .join(' | ');
+  programsSchoolInsight.innerHTML = `
+    <strong>${escapeHtml(schoolName)}</strong> (${escapeHtml(sourceState)}) likely feeds nurses to:
+    <span>${escapeHtml(targetText)}</span>
   `;
 };
 
@@ -5237,6 +5507,22 @@ const initProgramsModule = () => {
   const renderProgramsFiltered = () => renderProgramsWithProgress(getFilteredPrograms());
   programsSearch?.addEventListener('input', debounce(renderProgramsFiltered, 300));
   programsStateFilter?.addEventListener('change', renderProgramsFiltered);
+  programsList?.addEventListener('click', async (event) => {
+    const schoolBtn = event.target.closest('.program-school-link');
+    if (!schoolBtn) return;
+
+    const schoolName = schoolBtn.dataset.school || '';
+    const sourceState = (schoolBtn.dataset.state || '').toUpperCase();
+    if (!sourceState) {
+      renderProgramsSchoolInsight(schoolName, sourceState, []);
+      return;
+    }
+
+    await loadStrategicData();
+    await loadRecruitmentIntel();
+    const targets = getProgramOutboundTargets(sourceState, 3);
+    renderProgramsSchoolInsight(schoolName, sourceState, targets);
+  });
   // Add change listeners to all level checkboxes
   programsLevelFilter?.querySelectorAll('input[type="checkbox"]').forEach(cb => {
     cb.addEventListener('change', renderProgramsFiltered);
