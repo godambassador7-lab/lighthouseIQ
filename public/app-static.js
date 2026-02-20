@@ -5666,14 +5666,14 @@ const renderStateBeacon = async (state) => {
     renderBeaconList(stateBeaconHospitalsTop, top10, (item, idx) => `
       <div class="state-beacon-item">
         <strong>#${idx + 1} ${escapeHtml(item.name)}</strong>
-        <span>${escapeHtml(item.metro || '')} â€¢ Quality Score: ${item.score}</span>
+        <span>${escapeHtml(item.metro || '')} &bull; Quality Score: ${item.score}</span>
       </div>
     `);
 
     renderBeaconList(stateBeaconHospitalsWorst, worst10, (item, idx) => `
       <div class="state-beacon-item">
         <strong>#${sorted.length - 9 + idx} ${escapeHtml(item.name)}</strong>
-        <span>${escapeHtml(item.metro || '')} â€¢ Quality Score: ${item.score}</span>
+        <span>${escapeHtml(item.metro || '')} &bull; Quality Score: ${item.score}</span>
       </div>
     `);
   } else {
