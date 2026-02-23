@@ -5262,6 +5262,28 @@ input[type="range"] {
 .us-map svg path.layoff-9,
 .us-map svg circle.layoff-9 { fill: #c62828; } /* Deep red - critical */
 
+/* Salary value map (COL-adjusted RN pay): light blue (low) to dark blue (high) */
+.us-map svg path.salary-0,
+.us-map svg circle.salary-0 { fill: #e3f2fd; }
+.us-map svg path.salary-1,
+.us-map svg circle.salary-1 { fill: #d4e8fb; }
+.us-map svg path.salary-2,
+.us-map svg circle.salary-2 { fill: #bbdefb; }
+.us-map svg path.salary-3,
+.us-map svg circle.salary-3 { fill: #90caf9; }
+.us-map svg path.salary-4,
+.us-map svg circle.salary-4 { fill: #64b5f6; }
+.us-map svg path.salary-5,
+.us-map svg circle.salary-5 { fill: #42a5f5; }
+.us-map svg path.salary-6,
+.us-map svg circle.salary-6 { fill: #1e88e5; }
+.us-map svg path.salary-7,
+.us-map svg circle.salary-7 { fill: #1976d2; }
+.us-map svg path.salary-8,
+.us-map svg circle.salary-8 { fill: #1565c0; }
+.us-map svg path.salary-9,
+.us-map svg circle.salary-9 { fill: #0d47a1; }
+
 /* Rural hospital vulnerability colors */
 .us-map svg path.rural-critical,
 .us-map svg circle.rural-critical {
@@ -5281,6 +5303,18 @@ input[type="range"] {
 .us-map svg circle.rural-stable {
   fill: #22c55e;
 } /* Green - low/no risk */
+
+.salary-legend-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+.salary-legend-dot.salary-high { background: #0d47a1; }
+.salary-legend-dot.salary-mid { background: #42a5f5; }
+.salary-legend-dot.salary-low { background: #e3f2fd; border: 1px solid rgba(26, 54, 93, 0.2); }
 
 .us-map svg .state-labels text {
   font-size: 11px;

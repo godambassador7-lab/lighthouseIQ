@@ -68,6 +68,7 @@ const mapFactorsList = document.getElementById('map-factors-list');
 const mapFactorsSubtitle = document.getElementById('map-factors-subtitle');
 const mapTabLayoffs = document.getElementById('map-tab-layoffs');
 const mapTabRural = document.getElementById('map-tab-rural');
+const mapTabSalary = document.getElementById('map-tab-salary');
 const mapSectionTitle = document.getElementById('map-section-title');
 const mapSectionDesc = document.getElementById('map-section-desc');
 const ruralClosuresPanel = document.getElementById('rural-closures-panel');
@@ -207,7 +208,13 @@ let selectedStates = [];
 let selectedSpecialties = [];
 let mapScope = 'healthcare';
 let isMapTargetMode = false;
-let activeMapTab = 'layoffs'; // 'layoffs' or 'rural'
+let activeMapTab = 'layoffs'; // 'layoffs' | 'rural' | 'salary'
+let salaryMapMetrics = {
+  adjusted: {},
+  base: {},
+  col: {},
+  rank: {}
+};
 let currentPage = 1;
 let searchQuery = '';
 let applyFiltersToken = 0;
@@ -960,6 +967,17 @@ const initWeatherMap = async () => {
         <div class="tooltip-confidence">Hospitals at risk: ${data.atRisk}</div>
         <div class="tooltip-confidence">Risk level: ${riskLevel}</div>
       `;
+    } else if (activeMapTab === 'salary') {
+      const adjusted = salaryMapMetrics.adjusted?.[stateAbbrev];
+      const baseSalary = salaryMapMetrics.base?.[stateAbbrev];
+      const col = salaryMapMetrics.col?.[stateAbbrev];
+      const rank = salaryMapMetrics.rank?.[stateAbbrev];
+      mapTooltip.innerHTML = `
+        <div class="tooltip-state">${stateName}</div>
+        <div class="tooltip-count">COL-adjusted RN pay: ${Number.isFinite(adjusted) ? '$' + Math.round(adjusted).toLocaleString() : 'n/a'}</div>
+        <div class="tooltip-confidence">Base RN pay: ${Number.isFinite(baseSalary) ? '$' + Math.round(baseSalary).toLocaleString() : 'n/a'} | COL index: ${Number.isFinite(col) ? col.toFixed(1) : 'n/a'}</div>
+        <div class="tooltip-confidence">Best-value rank: ${Number.isFinite(rank) ? '#' + rank : 'n/a'}</div>
+      `;
     } else {
       const count = mapStateData[stateAbbrev]?.count || 0;
       const scopeLabel = mapScope === 'all' ? 'total notices' : 'healthcare notices';
@@ -1693,9 +1711,10 @@ const updateMapColors = () => {
     const state = shape.dataset.state;
     const count = mapStateData[state]?.count ?? 0;
 
-    // Remove all existing layoff and rural classes
+    // Remove all existing layoff/rural/salary classes
     for (let i = 0; i <= 9; i++) {
       shape.classList.remove(`layoff-${i}`);
+      shape.classList.remove(`salary-${i}`);
     }
     shape.classList.remove('rural-critical', 'rural-warning', 'rural-stable');
 
@@ -1736,9 +1755,10 @@ const updateRuralMapColors = () => {
     const state = shape.dataset.state;
     const data = RURAL_HOSPITAL_CLOSURES[state] || { count: 0, recent: 0, atRisk: 0 };
 
-    // Remove all existing layoff classes
+    // Remove all existing layoff/salary classes
     for (let i = 0; i <= 9; i++) {
       shape.classList.remove(`layoff-${i}`);
+      shape.classList.remove(`salary-${i}`);
     }
     shape.classList.remove('rural-critical', 'rural-warning', 'rural-stable');
 
@@ -1755,6 +1775,61 @@ const updateRuralMapColors = () => {
     } else {
       shape.classList.add('rural-stable');
     }
+  });
+};
+
+const updateSalaryMapColors = () => {
+  const salaryData = recruitmentIntel?.salaryBenchmarks || strategicData?.salaryData || NURSING_SALARY_DATA || {};
+  const adjustedValues = [];
+  const adjustedByState = {};
+  const baseByState = {};
+  const colByState = {};
+
+  Object.keys(STATE_NAMES).forEach((state) => {
+    const base = Number(salaryData?.[state]?.staffRN ?? 0);
+    const col = Number(COST_OF_LIVING_INDEX?.[state] ?? 100);
+    if (!Number.isFinite(base) || base <= 0 || !Number.isFinite(col) || col <= 0) return;
+    const adjusted = base * (100 / col);
+    adjustedByState[state] = adjusted;
+    baseByState[state] = base;
+    colByState[state] = col;
+    adjustedValues.push(adjusted);
+  });
+
+  const sortedStates = Object.entries(adjustedByState)
+    .sort((a, b) => b[1] - a[1])
+    .map(([state]) => state);
+  const rankByState = {};
+  sortedStates.forEach((state, idx) => { rankByState[state] = idx + 1; });
+  salaryMapMetrics = {
+    adjusted: adjustedByState,
+    base: baseByState,
+    col: colByState,
+    rank: rankByState
+  };
+
+  const minAdjusted = adjustedValues.length ? Math.min(...adjustedValues) : 0;
+  const maxAdjusted = adjustedValues.length ? Math.max(...adjustedValues) : 1;
+  const range = Math.max(maxAdjusted - minAdjusted, 1);
+
+  document.querySelectorAll('.us-map path[data-state], .us-map circle[data-state]').forEach(shape => {
+    const state = shape.dataset.state;
+    const adjusted = adjustedByState[state];
+
+    for (let i = 0; i <= 9; i++) {
+      shape.classList.remove(`layoff-${i}`);
+      shape.classList.remove(`salary-${i}`);
+    }
+    shape.classList.remove('rural-critical', 'rural-warning', 'rural-stable');
+
+    if (!Number.isFinite(adjusted)) {
+      shape.classList.add('salary-0');
+      return;
+    }
+
+    const ratio = (adjusted - minAdjusted) / range;
+    const level = Math.max(0, Math.min(9, Math.round(ratio * 9)));
+    shape.classList.add(`salary-${level}`);
   });
 };
 
@@ -1883,7 +1958,7 @@ const hideRuralClosuresPanel = () => {
   if (ruralClosuresPanel) ruralClosuresPanel.style.display = 'none';
 };
 
-// Switch between layoffs and rural hospital tabs
+// Switch between layoffs, rural hospital, and salary tabs
 const switchMapTab = async (tab) => {
   if (tab === activeMapTab) return;
   activeMapTab = tab;
@@ -1891,6 +1966,7 @@ const switchMapTab = async (tab) => {
   // Update tab button states
   mapTabLayoffs?.classList.toggle('active', tab === 'layoffs');
   mapTabRural?.classList.toggle('active', tab === 'rural');
+  mapTabSalary?.classList.toggle('active', tab === 'salary');
 
   // Update section title and description
   if (tab === 'layoffs') {
@@ -1930,6 +2006,25 @@ const switchMapTab = async (tab) => {
     }
     // Update map colors for rural hospitals
     updateRuralMapColors();
+  } else if (tab === 'salary') {
+    hideRuralClosuresPanel();
+    if (mapSectionTitle) mapSectionTitle.textContent = 'Nurse Salary Value Map';
+    if (mapSectionDesc) {
+      mapSectionDesc.innerHTML = 'States are colored by RN salary adjusted for cost of living (best purchasing-power states are darkest blue). Data source stack: BLS-aligned RN salary benchmarks + cost-of-living adjustment.';
+    }
+    document.querySelector('.scope-toggle')?.style.setProperty('display', 'none');
+    const legend = document.getElementById('map-legend');
+    if (legend) {
+      legend.innerHTML = `
+        <div class="rural-map-legend">
+          <div class="rural-legend-item"><span class="salary-legend-dot salary-high"></span> Highest adjusted pay</div>
+          <div class="rural-legend-item"><span class="salary-legend-dot salary-mid"></span> Mid adjusted pay</div>
+          <div class="rural-legend-item"><span class="salary-legend-dot salary-low"></span> Lowest adjusted pay</div>
+        </div>
+      `;
+      legend.style.display = '';
+    }
+    updateSalaryMapColors();
   }
 };
 
@@ -3825,6 +3920,7 @@ const initMapScopeToggle = () => {
 const initMapTabSwitcher = () => {
   mapTabLayoffs?.addEventListener('click', () => switchMapTab('layoffs'));
   mapTabRural?.addEventListener('click', () => switchMapTab('rural'));
+  mapTabSalary?.addEventListener('click', () => switchMapTab('salary'));
 };
 
 const normalizeHospitalSearchValue = (value) => (
