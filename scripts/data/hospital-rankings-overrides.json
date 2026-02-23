@@ -1,0 +1,24 @@
+{
+  "metadata": {
+    "description": "Optional public-source overlays merged into hospital rankings fetch output.",
+    "notes": [
+      "Use this for free/public source enrichments that are not reliably scrapable at runtime (e.g., Leapfrog grade snapshots, Healthgrades award flags, CMS bed crosswalk fields).",
+      "Each state value should be an array of hospital records keyed by name."
+    ],
+    "fields": [
+      "name",
+      "metro",
+      "system",
+      "beds",
+      "sourceType",
+      "sourceLabel",
+      "url",
+      "usnewsRank",
+      "newsweekRank",
+      "healthgradesTop250",
+      "healthgradesTop5Pct",
+      "leapfrogGrade"
+    ]
+  },
+  "states": {}
+}

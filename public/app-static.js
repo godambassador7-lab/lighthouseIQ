@@ -3905,7 +3905,7 @@ const searchHospitalsAcrossStates = (query, limit = 5) => {
   Object.entries(states).forEach(([stateAbbrev, stateEntry]) => {
     const rankings = Array.isArray(stateEntry?.hospitalRankings) ? stateEntry.hospitalRankings : [];
     const ranked = rankings
-      .map((hospital) => ({ ...hospital, score: Number(hospital.baseScore ?? 0) }))
+      .map((hospital) => ({ ...hospital, score: getHospitalRankingScore(hospital) }))
       .sort((a, b) => b.score - a.score);
     ranked.forEach((hospital, index) => {
       const name = normalizeHospitalSearchValue(hospital.name);
@@ -3928,7 +3928,7 @@ const searchHospitalsAcrossStates = (query, limit = 5) => {
         ...hospital,
         state: stateAbbrev,
         rank: index + 1,
-        qualityScore: Number(hospital.baseScore ?? 0),
+        qualityScore: getHospitalRankingScore(hospital),
         matchScore
       });
     });
@@ -3949,7 +3949,6 @@ const renderHospitalSearchResults = async (query) => {
 
   mapHospitalSearchResults.innerHTML = '<div class="hospital-search-card"><div class="hospital-search-meta">Searching fetched hospital data...</div></div>';
   await loadHospitalRankingsData();
-  await loadRecruitmentIntel();
 
   const matches = searchHospitalsAcrossStates(trimmed, 5);
   if (!matches.length) {
@@ -3957,25 +3956,73 @@ const renderHospitalSearchResults = async (query) => {
     return;
   }
 
-  const detailed = await Promise.all(matches.map(async (hospital) => {
-    const beds = await findHospitalBeds(hospital.state, hospital.name);
-    const noticeBreakdown = await getHospitalNoticeBreakdown(hospital.state, hospital);
-    const staffingIndex = recruitmentIntel?.relocationIndex?.[hospital.state]?.staffing;
-    return { hospital, beds, noticeBreakdown, staffingIndex };
-  }));
+  mapHospitalSearchResults.innerHTML = `
+    <div class="hospital-search-card">
+      <div class="hospital-search-meta">Top matches for "${escapeHtml(trimmed)}" (click a hospital for detailed breakdown):</div>
+    </div>
+    ${matches.map((hospital, idx) => `
+    <button type="button" class="hospital-search-card hospital-search-open" data-idx="${idx}">
+      <div class="hospital-search-title">${escapeHtml(hospital.name)} (${escapeHtml(hospital.state)})</div>
+      <div class="hospital-search-meta">
+        Rank #${hospital.rank} in state | Composite score: ${hospital.qualityScore || '--'}<br />
+        Metro/System: ${escapeHtml(hospital.metro || '--')} | ${escapeHtml(hospital.system || '--')}
+      </div>
+    </button>
+  `).join('')}
+  `;
 
-  mapHospitalSearchResults.innerHTML = detailed.map(({ hospital, beds, noticeBreakdown, staffingIndex }) => `
+  mapHospitalSearchResults.querySelectorAll('.hospital-search-open').forEach((node) => {
+    node.addEventListener('click', () => {
+      const idx = Number(node.getAttribute('data-idx'));
+      if (!Number.isFinite(idx) || !matches[idx]) return;
+      renderHospitalDetail(matches[idx]).catch((err) => console.warn('Hospital detail failed:', err));
+    });
+  });
+};
+
+const renderHospitalSources = (hospital) => {
+  const sourceRanks = hospital?.sourceRanks || {};
+  const sourceFlags = hospital?.sourceFlags || {};
+  const sources = Array.isArray(hospital?.sources) ? hospital.sources : [];
+  const rankRows = Object.entries(sourceRanks)
+    .filter(([, value]) => Number.isFinite(Number(value)))
+    .map(([key, value]) => `${key}: #${value}`);
+  const flagRows = [];
+  if (sourceFlags.healthgradesTop250) flagRows.push('Healthgrades Top 250');
+  if (sourceFlags.healthgradesTop5Pct) flagRows.push('Healthgrades Top 5%');
+  if (sourceFlags.leapfrogGrade) flagRows.push(`Leapfrog: ${sourceFlags.leapfrogGrade}`);
+  const sourceNames = sources.map((s) => s.name).filter(Boolean);
+  return {
+    ranks: rankRows.length ? rankRows.join(' | ') : '--',
+    flags: flagRows.length ? flagRows.join(' | ') : '--',
+    names: sourceNames.length ? sourceNames.join(' | ') : '--'
+  };
+};
+
+const renderHospitalDetail = async (hospital) => {
+  if (!mapHospitalSearchResults) return;
+  mapHospitalSearchResults.innerHTML = '<div class="hospital-search-card"><div class="hospital-search-meta">Loading details...</div></div>';
+  await loadHospitalRankingsData();
+  await loadRecruitmentIntel();
+  const beds = await findHospitalBeds(hospital.state, hospital.name);
+  const noticeBreakdown = await getHospitalNoticeBreakdown(hospital.state, hospital);
+  const staffingIndex = recruitmentIntel?.relocationIndex?.[hospital.state]?.staffing;
+  const sourceSummary = renderHospitalSources(hospital);
+  mapHospitalSearchResults.innerHTML = `
     <div class="hospital-search-card">
       <div class="hospital-search-title">${escapeHtml(hospital.name)} (${escapeHtml(hospital.state)})</div>
       <div class="hospital-search-meta">
-        Rank in state: #${hospital.rank} | Quality score: ${hospital.qualityScore || '--'}<br />
+        Rank in state: #${hospital.rank} | Composite score: ${hospital.qualityScore || '--'}<br />
         Metro/System: ${escapeHtml(hospital.metro || '--')} | ${escapeHtml(hospital.system || '--')}<br />
         Beds (fetched): ${beds !== null ? beds.toLocaleString() : 'Not available in current free source'}<br />
         WARN matched notices: ${noticeBreakdown.warnNotices.toLocaleString()} | Personnel impacted: ${noticeBreakdown.personnel.toLocaleString()}<br />
-        Nursing signal notices: ${noticeBreakdown.nursingSignalNotices.toLocaleString()} | State staffing index: ${Number.isFinite(staffingIndex) ? staffingIndex.toFixed(2) : '--'}
+        Nursing signal notices: ${noticeBreakdown.nursingSignalNotices.toLocaleString()} | State staffing index: ${Number.isFinite(staffingIndex) ? staffingIndex.toFixed(2) : '--'}<br />
+        Source ranks: ${escapeHtml(sourceSummary.ranks)}<br />
+        Source flags: ${escapeHtml(sourceSummary.flags)}<br />
+        Sources used: ${escapeHtml(sourceSummary.names)}
       </div>
     </div>
-  `).join('');
+  `;
 };
 
 const renderHospitalDetail = async (hospital) => {
@@ -4075,6 +4122,8 @@ const initHospitalSearch = () => {
         selectItem(dropdownMatches[activeIndex]);
       } else if (dropdownMatches.length === 1) {
         selectItem(dropdownMatches[0]);
+      } else {
+        renderHospitalSearchResults(mapHospitalSearchInput.value).catch((err) => console.warn('Hospital search failed:', err));
       }
     } else if (e.key === 'Escape') {
       hideDropdown();
@@ -5854,9 +5903,39 @@ const loadHospitalRankingsData = async (forceRefresh = false) => {
   return hospitalRankingsData;
 };
 
+const getHospitalRankingScore = (hospital) => {
+  if (!hospital || typeof hospital !== 'object') return 0;
+  const score = Number(
+    hospital.compositeScore
+    ?? hospital.baseScore
+    ?? hospital.score
+    ?? 0
+  );
+  return Number.isFinite(score) ? score : 0;
+};
+
 const getFetchedHospitalRankingsForState = (state) => {
   const rankings = hospitalRankingsData?.states?.[state]?.hospitalRankings || [];
   return Array.isArray(rankings) ? rankings : [];
+};
+
+const getRankedHospitalsForMetro = (stateAbbrev, metroName) => {
+  const metroKey = String(metroName || '').toLowerCase();
+  if (!metroKey) return [];
+  return getFetchedHospitalRankingsForState(stateAbbrev)
+    .filter((hospital) => {
+      const metro = String(hospital?.metro || '').toLowerCase();
+      return metro && (metro.includes(metroKey) || metroKey.includes(metro));
+    })
+    .sort((a, b) => getHospitalRankingScore(b) - getHospitalRankingScore(a))
+    .slice(0, 10)
+    .map((hospital) => ({
+      name: hospital.name,
+      system: hospital.system || hospital.name,
+      score: getHospitalRankingScore(hospital),
+      beds: Number.isFinite(Number(hospital?.beds)) ? Number(hospital.beds) : '--',
+      reviews: '--'
+    }));
 };
 
 const getStateNewsFeed = (state, entry) => {
@@ -6210,7 +6289,7 @@ const renderStateBeacon = async (state) => {
     const sorted = entry.hospitalRankings
       .map((hospital) => ({
         ...hospital,
-        score: Number(hospital.baseScore ?? 50)
+        score: getHospitalRankingScore(hospital)
       }))
       .sort((a, b) => b.score - a.score);
 
@@ -6220,14 +6299,14 @@ const renderStateBeacon = async (state) => {
     renderBeaconList(stateBeaconHospitalsTop, top10, (item, idx) => `
       <div class="state-beacon-item">
         <strong>#${idx + 1} ${escapeHtml(item.name)}</strong>
-        <span>${escapeHtml(item.metro || '')} &bull; Quality Score: ${item.score}</span>
+        <span>${escapeHtml(item.metro || '')} &bull; Composite Score: ${item.score}${item.sourceCount ? ` &bull; Sources: ${item.sourceCount}` : ''}</span>
       </div>
     `);
 
     renderBeaconList(stateBeaconHospitalsWorst, worst10, (item, idx) => `
       <div class="state-beacon-item">
         <strong>#${sorted.length - 9 + idx} ${escapeHtml(item.name)}</strong>
-        <span>${escapeHtml(item.metro || '')} &bull; Quality Score: ${item.score}</span>
+        <span>${escapeHtml(item.metro || '')} &bull; Composite Score: ${item.score}${item.sourceCount ? ` &bull; Sources: ${item.sourceCount}` : ''}</span>
       </div>
     `);
   } else {
@@ -8053,13 +8132,16 @@ const buildMetroRowsFromFetchedNotices = (stateAbbrev, notices) => {
       }))
       .sort((a, b) => b.affected - a.affected || b.notices - a.notices);
 
-    const hospitals = employerGroups.slice(0, 10).map((employer, idx) => ({
-      name: employer.name,
-      system: employer.system,
-      score: Math.max(72, 96 - idx),
-      beds: Math.max(60, employer.affected || 120),
-      reviews: 3.8
-    }));
+    const rankedMetroHospitals = getRankedHospitalsForMetro(stateAbbrev, city);
+    const hospitals = rankedMetroHospitals.length
+      ? rankedMetroHospitals
+      : employerGroups.slice(0, 10).map((employer) => ({
+        name: employer.name,
+        system: employer.system,
+        score: '--',
+        beds: '--',
+        reviews: '--'
+      }));
 
     const systems = Array.from(groupBy(employerGroups, (row) => row.system).entries())
       .map(([name, systemRows]) => ({
@@ -8085,7 +8167,9 @@ const buildMetroRowsFromFetchedNotices = (stateAbbrev, notices) => {
       },
       factors: [
         { text: `Derived from fetched WARN healthcare notices for ${stateName}`, type: 'positive' },
-        { text: 'Use as dynamic baseline until curated metro enrichment is refreshed', type: 'neutral' }
+        { text: rankedMetroHospitals.length
+          ? 'Hospital ranks sourced from statewide composite rankings and aligned to this metro.'
+          : 'No ranked hospitals matched this metro label yet; showing WARN-only facility context.', type: 'neutral' }
       ]
     };
   });
@@ -8122,6 +8206,9 @@ const buildFetchedTargetStateMetroData = (stateAbbrev) => {
 };
 
 const getTargetStateMetroData = async (stateAbbrev) => {
+  if (!hospitalRankingsLoaded) {
+    await loadHospitalRankingsData();
+  }
   if (!stateNoticesCache.has(stateAbbrev) && !allNoticesLoaded) {
     await loadStateNotices(stateAbbrev);
   }
@@ -8666,7 +8753,7 @@ const selectTargetStateMetro = (metro, stateAbbrev) => {
   const fetchedScoreMap = new Map(
     fetchedRankings
       .filter((item) => item?.name)
-      .map((item) => [String(item.name).toLowerCase(), Number(item.baseScore ?? item.score ?? 0)])
+      .map((item) => [String(item.name).toLowerCase(), getHospitalRankingScore(item)])
   );
   if (targetStateHospitalCount) targetStateHospitalCount.textContent = `${hospitals.length} facilities`;
   if (targetStateMetroHospitals) {
@@ -8683,7 +8770,7 @@ const selectTargetStateMetro = (metro, stateAbbrev) => {
         </div>
         <div class="hospital-score">
           <span class="score-value">${fetchedScoreMap.get(String(h.name || '').toLowerCase()) || h.score}</span>
-          <span class="score-label">Score</span>
+          <span class="score-label">Composite</span>
         </div>
       </div>
     `).join('');

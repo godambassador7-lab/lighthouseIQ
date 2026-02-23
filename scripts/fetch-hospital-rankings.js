@@ -1,8 +1,11 @@
 #!/usr/bin/env node
 /*
-  Fetches state hospital rankings from:
-  - Newsweek rankings dataset embedded in page HTML (primary)
-  - U.S. News (best-effort parser, optional supplemental)
+  Fetches and normalizes state hospital rankings from public sources.
+  Primary:
+  - Newsweek/Statista Best-in-State list
+  - U.S. News state list (best-effort parser)
+  Optional local overlays (free/public-derived):
+  - Healthgrades / Leapfrog / CMS crosswalk fields via overrides JSON
 
   Output:
   - public/data/hospital-rankings.json
@@ -12,9 +15,13 @@ const fs = require('fs');
 const path = require('path');
 
 const OUTPUT_PATH = path.join(__dirname, '..', 'public', 'data', 'hospital-rankings.json');
+const OVERRIDES_PATH = path.join(__dirname, 'data', 'hospital-rankings-overrides.json');
+const LEGACY_OVERRIDES_PATH = path.join(__dirname, '..', 'public', 'data', 'hospital-rankings-overrides.json');
 const FETCH_TIMEOUT_MS = 30000;
 const NEWSWEEK_YEAR = process.env.NEWSWEEK_RANKINGS_YEAR || '2026';
 const NEWSWEEK_SEED_STATE = process.env.NEWSWEEK_SEED_STATE || 'florida';
+const REFRESH_EVERY_DAYS = Number(process.env.HOSPITAL_RANKINGS_REFRESH_DAYS || 30);
+const VERSION = '1.2.0';
 
 const STATES = {
   AL: 'alabama', AK: 'alaska', AZ: 'arizona', AR: 'arkansas', CA: 'california',
@@ -45,6 +52,14 @@ const STATE_NAMES = {
 };
 
 const normalize = (value) => String(value || '').replace(/\s+/g, ' ').trim();
+const normalizeKey = (value) => normalize(value).toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+
+const SCORE_WEIGHTS = {
+  usnews: 0.45,
+  newsweek: 0.35,
+  healthgrades: 0.12,
+  leapfrog: 0.08
+};
 
 async function fetchText(url) {
   const controller = new AbortController();
@@ -131,19 +146,128 @@ function parseUsNewsSimpleList(html) {
   return out.map((name, idx) => ({ rank: idx + 1, name }));
 }
 
-function toRankingRows(rows, sourceUrl, sourceLabel) {
-  return rows.map((row) => ({
+function loadOverrides() {
+  try {
+    const sourcePath = fs.existsSync(OVERRIDES_PATH)
+      ? OVERRIDES_PATH
+      : (fs.existsSync(LEGACY_OVERRIDES_PATH) ? LEGACY_OVERRIDES_PATH : null);
+    if (!sourcePath) return { states: {}, metadata: {} };
+    const raw = JSON.parse(fs.readFileSync(sourcePath, 'utf8'));
+    return {
+      states: raw?.states && typeof raw.states === 'object' ? raw.states : {},
+      metadata: {
+        ...(raw?.metadata && typeof raw.metadata === 'object' ? raw.metadata : {}),
+        sourcePath
+      }
+    };
+  } catch {
+    return { states: {}, metadata: {} };
+  }
+}
+
+function rankToScore(rank) {
+  if (!Number.isFinite(rank)) return null;
+  return Math.max(60, 101 - Math.max(1, rank));
+}
+
+function leapfrogToScore(grade) {
+  const g = String(grade || '').trim().toUpperCase();
+  if (!g) return null;
+  if (g === 'A') return 95;
+  if (g === 'B') return 85;
+  if (g === 'C') return 75;
+  if (g === 'D') return 65;
+  if (g === 'F') return 55;
+  return null;
+}
+
+function deriveCompositeScore(sourceRanks = {}, sourceFlags = {}) {
+  const parts = [];
+
+  const usnewsScore = rankToScore(Number(sourceRanks.usnews));
+  if (usnewsScore !== null) parts.push({ weight: SCORE_WEIGHTS.usnews, score: usnewsScore });
+
+  const newsweekScore = rankToScore(Number(sourceRanks.newsweek));
+  if (newsweekScore !== null) parts.push({ weight: SCORE_WEIGHTS.newsweek, score: newsweekScore });
+
+  const healthgradesScore = sourceFlags.healthgradesTop250 ? 96 : sourceFlags.healthgradesTop5Pct ? 92 : null;
+  if (healthgradesScore !== null) parts.push({ weight: SCORE_WEIGHTS.healthgrades, score: healthgradesScore });
+
+  const leapfrogScore = leapfrogToScore(sourceFlags.leapfrogGrade);
+  if (leapfrogScore !== null) parts.push({ weight: SCORE_WEIGHTS.leapfrog, score: leapfrogScore });
+
+  if (!parts.length) return 60;
+  const weighted = parts.reduce((sum, part) => sum + part.score * part.weight, 0);
+  const weightTotal = parts.reduce((sum, part) => sum + part.weight, 0);
+  return Math.round((weighted / Math.max(weightTotal, 0.0001)) * 10) / 10;
+}
+
+function upsertHospital(map, stateAbbr, row) {
+  const key = normalizeKey(row.name);
+  if (!key) return;
+  const existing = map.get(key) || {
     name: row.name,
     system: '',
-    metro: row.city || '',
-    baseScore: Math.max(60, 101 - row.rank),
+    metro: '',
     warnWeight: 1,
-    match: row.name.toLowerCase(),
-    sources: [{
-      name: sourceLabel,
-      url: row.website || sourceUrl
-    }]
-  }));
+    match: key,
+    sourceRanks: {},
+    sourceFlags: {},
+    sources: []
+  };
+
+  if (row.name && !existing.name) existing.name = row.name;
+  if (row.metro && !existing.metro) existing.metro = row.metro;
+  if (row.system && !existing.system) existing.system = row.system;
+  if (Number.isFinite(row.beds) && row.beds > 0) existing.beds = row.beds;
+  if (row.website && row.sourceLabel) {
+    existing.sources.push({ name: row.sourceLabel, url: row.website });
+  }
+  if (Number.isFinite(row.newsweekRank)) existing.sourceRanks.newsweek = row.newsweekRank;
+  if (Number.isFinite(row.usnewsRank)) existing.sourceRanks.usnews = row.usnewsRank;
+  if (row.leapfrogGrade) existing.sourceFlags.leapfrogGrade = row.leapfrogGrade;
+  if (row.healthgradesTop250) existing.sourceFlags.healthgradesTop250 = true;
+  if (row.healthgradesTop5Pct) existing.sourceFlags.healthgradesTop5Pct = true;
+  if (stateAbbr === 'DC' && !existing.metro) existing.metro = 'Washington';
+
+  map.set(key, existing);
+}
+
+function uniqueSources(sources) {
+  const seen = new Set();
+  const out = [];
+  for (const source of sources || []) {
+    const name = normalize(source?.name);
+    const url = normalize(source?.url);
+    const key = `${name}|${url}`;
+    if (!name || seen.has(key)) continue;
+    seen.add(key);
+    out.push({ name, url });
+  }
+  return out;
+}
+
+function finalizeRows(map) {
+  return Array.from(map.values())
+    .map((row) => {
+      const composite = deriveCompositeScore(row.sourceRanks, row.sourceFlags);
+      return {
+        name: row.name,
+        system: row.system || '',
+        metro: row.metro || '',
+        compositeScore: composite,
+        baseScore: composite,
+        warnWeight: row.warnWeight ?? 1,
+        match: row.match || normalizeKey(row.name),
+        sourceRanks: row.sourceRanks || {},
+        sourceFlags: row.sourceFlags || {},
+        sourceCount: Object.keys(row.sourceRanks || {}).length + Object.keys(row.sourceFlags || {}).length,
+        beds: Number.isFinite(row.beds) ? row.beds : undefined,
+        sources: uniqueSources(row.sources)
+      };
+    })
+    .sort((a, b) => b.compositeScore - a.compositeScore || a.name.localeCompare(b.name))
+    .slice(0, 60);
 }
 
 async function fetchNewsweekAllRows() {
@@ -159,13 +283,25 @@ async function fetchUsNewsState(stateSlug) {
 }
 
 async function main() {
+  const now = new Date();
+  const nextRefresh = new Date(now.getTime() + REFRESH_EVERY_DAYS * 24 * 60 * 60 * 1000);
+  const overrides = loadOverrides();
   const output = {
-    lastUpdated: new Date().toISOString(),
-    version: '1.1.0',
+    lastUpdated: now.toISOString(),
+    version: VERSION,
+    refreshPolicy: {
+      updateEveryDays: REFRESH_EVERY_DAYS,
+      nextRecommendedUpdate: nextRefresh.toISOString()
+    },
     sources: {
       newsweek: `https://rankings.newsweek.com/americas-best-state-hospitals-${NEWSWEEK_YEAR}/<state-slug>`,
-      usnews: 'https://health.usnews.com/best-hospitals/area/<state-slug>'
+      usnews: 'https://health.usnews.com/best-hospitals/area/<state-slug>',
+      healthgrades: 'https://www.healthgrades.com/quality/americas-best-hospitals',
+      leapfrog: 'https://www.hospitalsafetygrade.org/',
+      cmsProviderData: 'https://data.cms.gov/provider-data'
     },
+    sourceWeights: SCORE_WEIGHTS,
+    overlays: overrides.metadata || {},
     states: {}
   };
 
@@ -182,11 +318,14 @@ async function main() {
 
   for (const [abbr, slug] of Object.entries(STATES)) {
     const stateName = STATE_NAMES[abbr] || '';
+    const stateMap = new Map();
     const statePayload = {
       hospitalRankings: [],
       sourceSummary: {
         newsweekCount: 0,
-        usnewsCount: 0
+        usnewsCount: 0,
+        healthgradesCount: 0,
+        leapfrogCount: 0
       }
     };
 
@@ -201,22 +340,60 @@ async function main() {
       if (!newsweekStateRows.length) {
         statePayload.sourceSummary.newsweekError = 'No rows parsed for state';
       } else {
-        statePayload.hospitalRankings.push(
-          ...toRankingRows(newsweekStateRows, newsweekSourceUrl, `Newsweek Best Hospitals ${NEWSWEEK_YEAR}`)
-        );
+        newsweekStateRows.forEach((row) => {
+          upsertHospital(stateMap, abbr, {
+            name: row.name,
+            metro: row.city || '',
+            newsweekRank: row.rank,
+            sourceLabel: `Newsweek Best Hospitals ${NEWSWEEK_YEAR}`,
+            website: row.website || newsweekSourceUrl
+          });
+        });
       }
     }
 
     try {
       const usnews = await fetchUsNewsState(slug);
       statePayload.sourceSummary.usnewsCount = usnews.rows.length;
-      const existing = new Set(statePayload.hospitalRankings.map((row) => row.name.toLowerCase()));
-      const deduped = usnews.rows.filter((row) => !existing.has(row.name.toLowerCase()));
-      statePayload.hospitalRankings.push(...toRankingRows(deduped, usnews.url, 'U.S. News Best Hospitals by State'));
+      usnews.rows.forEach((row) => {
+        upsertHospital(stateMap, abbr, {
+          name: row.name,
+          usnewsRank: row.rank,
+          sourceLabel: 'U.S. News Best Hospitals by State',
+          website: usnews.url
+        });
+      });
     } catch (err) {
       statePayload.sourceSummary.usnewsError = err.message;
     }
 
+    const overrideRows = Array.isArray(overrides.states?.[abbr]) ? overrides.states[abbr] : [];
+    overrideRows.forEach((row) => {
+      const type = normalizeKey(row.sourceType || row.source || '');
+      const payload = {
+        name: row.name,
+        metro: row.metro || '',
+        system: row.system || '',
+        beds: Number(row.beds),
+        sourceLabel: row.sourceLabel || row.source || 'Hospital source override',
+        website: row.url || ''
+      };
+      if (type.includes('healthgrades')) {
+        payload.healthgradesTop250 = Boolean(row.healthgradesTop250 || row.top250 || row.topFivePercent);
+        payload.healthgradesTop5Pct = Boolean(row.healthgradesTop5Pct || row.topFivePercent);
+        statePayload.sourceSummary.healthgradesCount += 1;
+      }
+      if (type.includes('leapfrog')) {
+        payload.leapfrogGrade = row.leapfrogGrade || row.grade || '';
+        statePayload.sourceSummary.leapfrogCount += 1;
+      }
+      if (Number.isFinite(Number(row.usnewsRank))) payload.usnewsRank = Number(row.usnewsRank);
+      if (Number.isFinite(Number(row.newsweekRank))) payload.newsweekRank = Number(row.newsweekRank);
+      upsertHospital(stateMap, abbr, payload);
+    });
+
+    statePayload.hospitalRankings = finalizeRows(stateMap);
+    statePayload.sourceSummary.compositeCount = statePayload.hospitalRankings.length;
     output.states[abbr] = statePayload;
     console.log(`${abbr}: rankings=${statePayload.hospitalRankings.length}`);
   }

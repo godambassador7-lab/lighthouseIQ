@@ -9,6 +9,7 @@
     "build": "npm run build --workspace=@lni/core && npm run build --workspace=@lni/adapters",
     "build:scripts": "npx tsc -p scripts/tsconfig.json",
     "fetch:hospital-rankings": "node scripts/fetch-hospital-rankings.js",
+    "fetch:hospital-rankings:monthly": "node scripts/fetch-hospital-rankings.js",
     "export": "npm run build && npm run build:scripts && node dist/scripts/export-notices.js",
     "dev": "npm -ws run dev",
     "lint": "npm -ws run lint",
