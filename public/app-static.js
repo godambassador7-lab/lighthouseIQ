@@ -4025,28 +4025,6 @@ const renderHospitalDetail = async (hospital) => {
   `;
 };
 
-const renderHospitalDetail = async (hospital) => {
-  if (!mapHospitalSearchResults) return;
-  mapHospitalSearchResults.innerHTML = '<div class="hospital-search-card"><div class="hospital-search-meta">Loading details…</div></div>';
-  await loadHospitalRankingsData();
-  await loadRecruitmentIntel();
-  const beds = await findHospitalBeds(hospital.state, hospital.name);
-  const noticeBreakdown = await getHospitalNoticeBreakdown(hospital.state, hospital);
-  const staffingIndex = recruitmentIntel?.relocationIndex?.[hospital.state]?.staffing;
-  mapHospitalSearchResults.innerHTML = `
-    <div class="hospital-search-card">
-      <div class="hospital-search-title">${escapeHtml(hospital.name)} (${escapeHtml(hospital.state)})</div>
-      <div class="hospital-search-meta">
-        Rank in state: #${hospital.rank} | Quality score: ${hospital.qualityScore || '--'}<br />
-        Metro/System: ${escapeHtml(hospital.metro || '--')} | ${escapeHtml(hospital.system || '--')}<br />
-        Beds (fetched): ${beds !== null ? beds.toLocaleString() : 'Not available in current free source'}<br />
-        WARN matched notices: ${noticeBreakdown.warnNotices.toLocaleString()} | Personnel impacted: ${noticeBreakdown.personnel.toLocaleString()}<br />
-        Nursing signal notices: ${noticeBreakdown.nursingSignalNotices.toLocaleString()} | State staffing index: ${Number.isFinite(staffingIndex) ? staffingIndex.toFixed(2) : '--'}
-      </div>
-    </div>
-  `;
-};
-
 const initHospitalSearch = () => {
   if (!mapHospitalSearchInput) return;
   const dropdownEl = document.getElementById('hospital-search-dropdown');
