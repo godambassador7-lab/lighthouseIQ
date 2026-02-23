@@ -4354,8 +4354,21 @@ input[type="range"] {
 
 .map-controls {
   display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.map-controls-row {
+  display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+}
+
+/* Mode buttons row — slightly more compact */
+.map-controls-modes .map-control-btn {
+  padding: 6px 11px;
+  font-size: 11px;
 }
 
 .map-scope-note {
