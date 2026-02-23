@@ -4293,14 +4293,14 @@ const initBonusFactor = () => {
   }
 
   const openModal = () => {
-    modal.style.display = 'flex';
+    modal.classList.add('active');
     document.body.classList.add('modal-open');
     // Sync view toggle UI state
     document.getElementById('bf-view-projected')?.classList.toggle('active', bonusScenario.viewMode !== 'delta');
     document.getElementById('bf-view-delta')?.classList.toggle('active', bonusScenario.viewMode === 'delta');
   };
   const closeModal = () => {
-    modal.style.display = 'none';
+    modal.classList.remove('active');
     document.body.classList.remove('modal-open');
   };
 
