@@ -76,7 +76,6 @@ const ruralClosuresSubtitle = document.getElementById('rural-closures-subtitle')
 const ruralClosuresList = document.getElementById('rural-closures-list');
 const ruralClosuresClose = document.getElementById('rural-closures-close');
 const mapHospitalSearchInput = document.getElementById('map-hospital-search');
-const mapHospitalSearchBtn = document.getElementById('map-hospital-search-btn');
 const mapHospitalSearchResults = document.getElementById('map-hospital-search-results');
 const alertsList = document.getElementById('alerts-list');
 const heatmapList = document.getElementById('heatmap-list');
@@ -3979,20 +3978,111 @@ const renderHospitalSearchResults = async (query) => {
   `).join('');
 };
 
+const renderHospitalDetail = async (hospital) => {
+  if (!mapHospitalSearchResults) return;
+  mapHospitalSearchResults.innerHTML = '<div class="hospital-search-card"><div class="hospital-search-meta">Loading details…</div></div>';
+  await loadHospitalRankingsData();
+  await loadRecruitmentIntel();
+  const beds = await findHospitalBeds(hospital.state, hospital.name);
+  const noticeBreakdown = await getHospitalNoticeBreakdown(hospital.state, hospital);
+  const staffingIndex = recruitmentIntel?.relocationIndex?.[hospital.state]?.staffing;
+  mapHospitalSearchResults.innerHTML = `
+    <div class="hospital-search-card">
+      <div class="hospital-search-title">${escapeHtml(hospital.name)} (${escapeHtml(hospital.state)})</div>
+      <div class="hospital-search-meta">
+        Rank in state: #${hospital.rank} | Quality score: ${hospital.qualityScore || '--'}<br />
+        Metro/System: ${escapeHtml(hospital.metro || '--')} | ${escapeHtml(hospital.system || '--')}<br />
+        Beds (fetched): ${beds !== null ? beds.toLocaleString() : 'Not available in current free source'}<br />
+        WARN matched notices: ${noticeBreakdown.warnNotices.toLocaleString()} | Personnel impacted: ${noticeBreakdown.personnel.toLocaleString()}<br />
+        Nursing signal notices: ${noticeBreakdown.nursingSignalNotices.toLocaleString()} | State staffing index: ${Number.isFinite(staffingIndex) ? staffingIndex.toFixed(2) : '--'}
+      </div>
+    </div>
+  `;
+};
+
 const initHospitalSearch = () => {
-  if (!mapHospitalSearchBtn || !mapHospitalSearchInput) return;
-  mapHospitalSearchBtn.addEventListener('click', () => {
-    renderHospitalSearchResults(mapHospitalSearchInput.value).catch((err) => {
-      console.warn('Hospital search failed:', err);
-    });
+  if (!mapHospitalSearchInput) return;
+  const dropdownEl = document.getElementById('hospital-search-dropdown');
+  let dropdownMatches = [];
+  let activeIndex = -1;
+  let debounceTimer = null;
+
+  const hideDropdown = () => {
+    if (dropdownEl) dropdownEl.style.display = 'none';
+    activeIndex = -1;
+  };
+
+  const renderDropdown = (matches) => {
+    if (!dropdownEl) return;
+    dropdownMatches = matches;
+    activeIndex = -1;
+    if (!matches.length) { hideDropdown(); return; }
+    dropdownEl.innerHTML = matches.map((h, i) => `
+      <div class="hospital-dropdown-item" data-idx="${i}">
+        <div class="hdi-name">${escapeHtml(h.name)} <span style="font-weight:400;color:var(--muted);">(${escapeHtml(h.state)})</span></div>
+        <div class="hdi-meta">Rank #${h.rank} in state · Score: ${h.qualityScore || '--'}${h.system ? ' · ' + escapeHtml(h.system) : ''}</div>
+      </div>
+    `).join('');
+    dropdownEl.style.display = 'block';
+  };
+
+  const selectItem = (hospital) => {
+    mapHospitalSearchInput.value = hospital.name;
+    hideDropdown();
+    renderHospitalDetail(hospital).catch((err) => console.warn('Hospital detail failed:', err));
+  };
+
+  dropdownEl?.addEventListener('mousedown', (e) => {
+    const item = e.target.closest('.hospital-dropdown-item');
+    if (!item) return;
+    e.preventDefault();
+    const idx = parseInt(item.dataset.idx, 10);
+    if (dropdownMatches[idx]) selectItem(dropdownMatches[idx]);
   });
-  mapHospitalSearchInput.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      renderHospitalSearchResults(mapHospitalSearchInput.value).catch((err) => {
-        console.warn('Hospital search failed:', err);
-      });
+
+  mapHospitalSearchInput.addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    const val = mapHospitalSearchInput.value.trim();
+    if (val.length < 2) { hideDropdown(); return; }
+    if (!hospitalRankingsData && dropdownEl) {
+      dropdownEl.innerHTML = '<div class="hospital-dropdown-loading">Loading hospital data…</div>';
+      dropdownEl.style.display = 'block';
     }
+    debounceTimer = setTimeout(async () => {
+      await loadHospitalRankingsData();
+      const matches = searchHospitalsAcrossStates(val, 8);
+      renderDropdown(matches);
+    }, 200);
+  });
+
+  mapHospitalSearchInput.addEventListener('keydown', (e) => {
+    if (dropdownEl?.style.display === 'none') return;
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      activeIndex = Math.min(activeIndex + 1, dropdownMatches.length - 1);
+      dropdownEl.querySelectorAll('.hospital-dropdown-item').forEach((el, i) =>
+        el.classList.toggle('active', i === activeIndex)
+      );
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      activeIndex = Math.max(activeIndex - 1, 0);
+      dropdownEl.querySelectorAll('.hospital-dropdown-item').forEach((el, i) =>
+        el.classList.toggle('active', i === activeIndex)
+      );
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (activeIndex >= 0 && dropdownMatches[activeIndex]) {
+        selectItem(dropdownMatches[activeIndex]);
+      } else if (dropdownMatches.length === 1) {
+        selectItem(dropdownMatches[0]);
+      }
+    } else if (e.key === 'Escape') {
+      hideDropdown();
+    }
+  });
+
+  mapHospitalSearchInput.addEventListener('blur', () => {
+    setTimeout(hideDropdown, 150);
   });
 };
 
