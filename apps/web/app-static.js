@@ -213,8 +213,16 @@ let salaryMapMetrics = {
   adjusted: {},
   base: {},
   col: {},
-  rank: {}
+  rank: {},
+  projected: {},
+  delta: {}
 };
+let bonusScenario = {
+  active: false, homeState: '', relo: 0, signOn: 0,
+  contractMonths: 24, hoursPerYear: 1872, stackable: true,
+  viewMode: 'projected', diffs: []
+};
+let bfDiffCounter = 0;
 let currentPage = 1;
 let searchQuery = '';
 let applyFiltersToken = 0;
@@ -968,16 +976,31 @@ const initWeatherMap = async () => {
         <div class="tooltip-confidence">Risk level: ${riskLevel}</div>
       `;
     } else if (activeMapTab === 'salary') {
-      const adjusted = salaryMapMetrics.adjusted?.[stateAbbrev];
-      const baseSalary = salaryMapMetrics.base?.[stateAbbrev];
-      const col = salaryMapMetrics.col?.[stateAbbrev];
-      const rank = salaryMapMetrics.rank?.[stateAbbrev];
-      mapTooltip.innerHTML = `
-        <div class="tooltip-state">${stateName}</div>
-        <div class="tooltip-count">COL-adjusted RN pay: ${Number.isFinite(adjusted) ? '$' + Math.round(adjusted).toLocaleString() : 'n/a'}</div>
-        <div class="tooltip-confidence">Base RN pay: ${Number.isFinite(baseSalary) ? '$' + Math.round(baseSalary).toLocaleString() : 'n/a'} | COL index: ${Number.isFinite(col) ? col.toFixed(1) : 'n/a'}</div>
-        <div class="tooltip-confidence">Best-value rank: ${Number.isFinite(rank) ? '#' + rank : 'n/a'}</div>
-      `;
+      if (bonusScenario.active) {
+        const proj = salaryMapMetrics.projected?.[stateAbbrev];
+        const delta = salaryMapMetrics.delta?.[stateAbbrev];
+        const homeStateName = bonusScenario.homeState ? (STATE_NAMES[bonusScenario.homeState] || bonusScenario.homeState) : '';
+        const isHome = stateAbbrev === bonusScenario.homeState;
+        const deltaStr = Number.isFinite(delta)
+          ? `${delta >= 0 ? '+' : ''}$${Math.round(delta).toLocaleString()}`
+          : null;
+        mapTooltip.innerHTML = `
+          <div class="tooltip-state">${stateName}${isHome ? ' <span style="font-size:0.7rem;opacity:0.7;">(home)</span>' : ''}</div>
+          <div class="tooltip-count">Projected annual: ${Number.isFinite(proj) ? '$' + Math.round(proj).toLocaleString() : 'n/a'}</div>
+          ${homeStateName && deltaStr ? `<div class="tooltip-confidence">vs ${homeStateName}: ${deltaStr}</div>` : ''}
+        `;
+      } else {
+        const adjusted = salaryMapMetrics.adjusted?.[stateAbbrev];
+        const baseSalary = salaryMapMetrics.base?.[stateAbbrev];
+        const col = salaryMapMetrics.col?.[stateAbbrev];
+        const rank = salaryMapMetrics.rank?.[stateAbbrev];
+        mapTooltip.innerHTML = `
+          <div class="tooltip-state">${stateName}</div>
+          <div class="tooltip-count">COL-adjusted RN pay: ${Number.isFinite(adjusted) ? '$' + Math.round(adjusted).toLocaleString() : 'n/a'}</div>
+          <div class="tooltip-confidence">Base RN pay: ${Number.isFinite(baseSalary) ? '$' + Math.round(baseSalary).toLocaleString() : 'n/a'} | COL index: ${Number.isFinite(col) ? col.toFixed(1) : 'n/a'}</div>
+          <div class="tooltip-confidence">Best-value rank: ${Number.isFinite(rank) ? '#' + rank : 'n/a'}</div>
+        `;
+      }
     } else {
       const count = mapStateData[stateAbbrev]?.count || 0;
       const scopeLabel = mapScope === 'all' ? 'total notices' : 'healthcare notices';
@@ -1833,6 +1856,129 @@ const updateSalaryMapColors = () => {
   });
 };
 
+// ── Bonus Factor calculations ──────────────────────────────────────────────
+const computeProjectedForState = (stateAbbrev, salaryData) => {
+  const relo = bonusScenario.relo || 0;
+  const signOn = bonusScenario.signOn || 0;
+  const contractMonths = Math.max(1, bonusScenario.contractMonths || 24);
+  const hoursPerYear = bonusScenario.hoursPerYear || 1872;
+
+  const annualRelo = relo;
+  const annualSignOn = signOn / (contractMonths / 12);
+  const annualIncentives = annualRelo + annualSignOn;
+
+  const base = Number(salaryData?.[stateAbbrev]?.staffRN ?? 0);
+  const hourly = Number(salaryData?.[stateAbbrev]?.staffHourly ?? 0) || (base / 1872);
+
+  const diffs = bonusScenario.diffs || [];
+  const diffValues = diffs.map((d) => {
+    const hours = d.hours || hoursPerYear;
+    if (d.unit === 'hourly') return (d.amount || 0) * hours;
+    return hourly * ((d.amount || 0) / 100) * hours;
+  });
+
+  const annualDiffTotal = bonusScenario.stackable
+    ? diffValues.reduce((a, b) => a + b, 0)
+    : (diffValues.length ? Math.max(...diffValues) : 0);
+
+  return base + annualIncentives + annualDiffTotal;
+};
+
+const updateBonusLegend = () => {
+  const legend = document.getElementById('map-legend');
+  if (!legend) return;
+  if (bonusScenario.viewMode === 'delta' && bonusScenario.homeState) {
+    legend.innerHTML = `
+      <div class="rural-map-legend">
+        <div class="rural-legend-item"><span class="salary-legend-dot salary-high"></span> Best lift vs home</div>
+        <div class="rural-legend-item"><span class="salary-legend-dot salary-mid"></span> Neutral</div>
+        <div class="rural-legend-item"><span class="salary-legend-dot" style="background:#d8d8d8;"></span> Below home baseline</div>
+      </div>
+    `;
+  } else {
+    legend.innerHTML = `
+      <div class="rural-map-legend">
+        <div class="rural-legend-item"><span class="salary-legend-dot salary-high"></span> Highest projected annual</div>
+        <div class="rural-legend-item"><span class="salary-legend-dot salary-mid"></span> Mid projected annual</div>
+        <div class="rural-legend-item"><span class="salary-legend-dot salary-low"></span> Lowest projected annual</div>
+      </div>
+    `;
+  }
+  legend.style.display = '';
+};
+
+const updateBonusMapColors = () => {
+  const salaryData = recruitmentIntel?.salaryBenchmarks || strategicData?.salaryData || NURSING_SALARY_DATA || {};
+  const usMap = document.getElementById('us-map');
+
+  const projectedByState = {};
+  Object.keys(STATE_NAMES).forEach((state) => {
+    const p = computeProjectedForState(state, salaryData);
+    if (p > 0) projectedByState[state] = p;
+  });
+  salaryMapMetrics.projected = projectedByState;
+
+  let valueByState = {};
+
+  if (bonusScenario.viewMode === 'delta' && bonusScenario.homeState) {
+    const homeProj = projectedByState[bonusScenario.homeState] || 0;
+    const deltaByState = {};
+    Object.keys(projectedByState).forEach((state) => {
+      deltaByState[state] = projectedByState[state] - homeProj;
+    });
+    salaryMapMetrics.delta = deltaByState;
+    valueByState = deltaByState;
+    usMap?.classList.add('bf-delta-mode');
+  } else {
+    salaryMapMetrics.delta = {};
+    valueByState = projectedByState;
+    usMap?.classList.remove('bf-delta-mode');
+  }
+
+  const values = Object.values(valueByState).filter(Number.isFinite);
+  if (!values.length) return;
+
+  const isDelta = bonusScenario.viewMode === 'delta' && bonusScenario.homeState;
+  const minVal = Math.min(...values);
+  const maxVal = Math.max(...values);
+  const range = Math.max(maxVal - minVal, 1);
+
+  document.querySelectorAll('.us-map path[data-state], .us-map circle[data-state]').forEach((shape) => {
+    const state = shape.dataset.state;
+    for (let i = 0; i <= 9; i++) {
+      shape.classList.remove(`layoff-${i}`, `salary-${i}`);
+    }
+    shape.classList.remove('rural-critical', 'rural-warning', 'rural-stable');
+
+    const val = valueByState[state];
+    if (!Number.isFinite(val)) { shape.classList.add('salary-0'); return; }
+
+    let level;
+    if (isDelta) {
+      // Split: negatives map to 0–4, positives to 5–9, zero to 5
+      if (val < 0) {
+        const negVals = values.filter(v => v < 0);
+        const minNeg = Math.min(...negVals);
+        const maxNeg = Math.max(...negVals);
+        const negRange = Math.max(maxNeg - minNeg, 1);
+        level = Math.max(0, Math.min(4, Math.round(((val - minNeg) / negRange) * 4)));
+      } else {
+        const posVals = values.filter(v => v > 0);
+        const minPos = posVals.length ? Math.min(...posVals) : 0;
+        const maxPos = posVals.length ? Math.max(...posVals) : 0;
+        const posRange = Math.max(maxPos - minPos, 1);
+        level = 5 + Math.max(0, Math.min(4, Math.round(((val - minPos) / posRange) * 4)));
+      }
+    } else {
+      const ratio = (val - minVal) / range;
+      level = Math.max(0, Math.min(9, Math.round(ratio * 9)));
+    }
+    shape.classList.add(`salary-${level}`);
+  });
+
+  updateBonusLegend();
+};
+
 // Show rural closures detail panel for a selected state
 const showRuralClosuresPanel = (stateAbbrev) => {
   if (!ruralClosuresPanel) return;
@@ -1967,6 +2113,13 @@ const switchMapTab = async (tab) => {
   mapTabLayoffs?.classList.toggle('active', tab === 'layoffs');
   mapTabRural?.classList.toggle('active', tab === 'rural');
   mapTabSalary?.classList.toggle('active', tab === 'salary');
+
+  // Show/hide Bonus Factor button (salary-only)
+  document.getElementById('map-bonus-factor-btn')?.style.setProperty('display', tab === 'salary' ? '' : 'none');
+  if (tab !== 'salary' && bonusScenario.active) {
+    bonusScenario.active = false;
+    document.getElementById('us-map')?.classList.remove('bf-delta-mode');
+  }
 
   // Update section title and description
   if (tab === 'layoffs') {
@@ -4121,6 +4274,114 @@ const renderHospitalDetail = async (hospital) => {
   `;
 };
 
+// ── Bonus Factor ─────────────────────────────────────────────────────────────
+const initBonusFactor = () => {
+  const btn = document.getElementById('map-bonus-factor-btn');
+  const modal = document.getElementById('bonus-factor-modal');
+  const closeBtn = document.getElementById('bf-modal-close');
+  if (!btn || !modal) return;
+
+  // Populate home state select
+  const homeStateSelect = document.getElementById('bf-home-state');
+  if (homeStateSelect) {
+    homeStateSelect.innerHTML =
+      '<option value="">Select state…</option>' +
+      Object.entries(STATE_NAMES)
+        .sort((a, b) => a[1].localeCompare(b[1]))
+        .map(([code, name]) => `<option value="${code}">${name} (${code})</option>`)
+        .join('');
+  }
+
+  const openModal = () => {
+    modal.style.display = 'flex';
+    document.body.classList.add('modal-open');
+    // Sync view toggle UI state
+    document.getElementById('bf-view-projected')?.classList.toggle('active', bonusScenario.viewMode !== 'delta');
+    document.getElementById('bf-view-delta')?.classList.toggle('active', bonusScenario.viewMode === 'delta');
+  };
+  const closeModal = () => {
+    modal.style.display = 'none';
+    document.body.classList.remove('modal-open');
+  };
+
+  btn.addEventListener('click', openModal);
+  closeBtn?.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+  // Add differential row
+  const addDiffRow = () => {
+    const id = bfDiffCounter++;
+    const list = document.getElementById('bf-diffs-list');
+    if (!list) return;
+    const hoursDefault = document.getElementById('bf-hours-per-year')?.value || '1872';
+    const row = document.createElement('div');
+    row.className = 'bf-diff-row';
+    row.dataset.diffId = id;
+    row.innerHTML = `
+      <input type="text" class="bf-diff-name" placeholder="e.g. Night shift" />
+      <select class="bf-diff-unit">
+        <option value="hourly">$/hr</option>
+        <option value="percent">%</option>
+      </select>
+      <input type="number" class="bf-diff-amount" placeholder="Amount" step="0.01" min="0" />
+      <input type="number" class="bf-diff-hours" placeholder="Hrs/yr" value="${hoursDefault}" min="0" />
+      <button type="button" class="bf-diff-remove" title="Remove">&times;</button>
+    `;
+    row.querySelector('.bf-diff-remove')?.addEventListener('click', () => row.remove());
+    list.appendChild(row);
+  };
+  document.getElementById('bf-add-diff-btn')?.addEventListener('click', addDiffRow);
+
+  // View toggle
+  const setView = (mode) => {
+    bonusScenario.viewMode = mode;
+    document.getElementById('bf-view-projected')?.classList.toggle('active', mode !== 'delta');
+    document.getElementById('bf-view-delta')?.classList.toggle('active', mode === 'delta');
+    if (bonusScenario.active) updateBonusMapColors();
+  };
+  document.getElementById('bf-view-projected')?.addEventListener('click', () => setView('projected'));
+  document.getElementById('bf-view-delta')?.addEventListener('click', () => setView('delta'));
+
+  // Apply
+  document.getElementById('bf-apply-btn')?.addEventListener('click', async () => {
+    const homeState = document.getElementById('bf-home-state')?.value || '';
+    const relo = parseFloat(document.getElementById('bf-relo')?.value || '0') || 0;
+    const signOn = parseFloat(document.getElementById('bf-signon')?.value || '0') || 0;
+    const contractMonths = parseInt(document.getElementById('bf-contract-months')?.value || '24', 10) || 24;
+    const hoursPerYear = parseInt(document.getElementById('bf-hours-per-year')?.value || '1872', 10) || 1872;
+    const stackable = document.getElementById('bf-stackable')?.checked ?? true;
+
+    const diffs = [];
+    document.querySelectorAll('.bf-diff-row').forEach((row) => {
+      const amount = parseFloat(row.querySelector('.bf-diff-amount')?.value || '0') || 0;
+      if (!amount) return;
+      diffs.push({
+        name: row.querySelector('.bf-diff-name')?.value || '',
+        unit: row.querySelector('.bf-diff-unit')?.value || 'hourly',
+        amount,
+        hours: parseFloat(row.querySelector('.bf-diff-hours')?.value || String(hoursPerYear)) || hoursPerYear,
+      });
+    });
+
+    bonusScenario = { active: true, homeState, relo, signOn, contractMonths, hoursPerYear, stackable, viewMode: bonusScenario.viewMode, diffs };
+
+    await loadRecruitmentIntel();
+    closeModal();
+    updateBonusMapColors();
+    btn.classList.add('bf-active');
+  });
+
+  // Clear
+  document.getElementById('bf-clear-btn')?.addEventListener('click', () => {
+    bonusScenario.active = false;
+    bonusScenario.diffs = [];
+    document.getElementById('us-map')?.classList.remove('bf-delta-mode');
+    btn.classList.remove('bf-active');
+    updateSalaryMapColors();
+    closeModal();
+  });
+};
+
 const initHospitalSearch = () => {
   if (!mapHospitalSearchInput) return;
   const dropdownEl = document.getElementById('hospital-search-dropdown');
@@ -4236,6 +4497,7 @@ const initApp = async () => {
   safeInit(initViewToggle, 'viewToggle');
   safeInit(initMapScopeToggle, 'mapScopeToggle');
   safeInit(initMapTabSwitcher, 'mapTabSwitcher');
+  safeInit(initBonusFactor, 'bonusFactor');
   safeInit(initHospitalSearch, 'hospitalSearch');
   safeInit(initForecast, 'forecast');
   safeInit(initProgramsModule, 'programsModule');

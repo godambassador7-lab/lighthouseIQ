@@ -3003,6 +3003,181 @@ body.modal-open {
   line-height: 1.45;
 }
 
+/* ── Bonus Factor Button ── */
+.map-bonus-factor-btn {
+  background: linear-gradient(135deg, #1a365d, #2b6cb0) !important;
+  color: #fff !important;
+  border: none !important;
+}
+.map-bonus-factor-btn:hover { opacity: 0.88; }
+.map-bonus-factor-btn.bf-active {
+  background: linear-gradient(135deg, #2b6cb0, #4299e1) !important;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.45) !important;
+}
+
+/* ── Bonus Factor Modal ── */
+.bf-modal-card { max-width: 640px; }
+
+.bf-section {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(26, 54, 93, 0.09);
+}
+.bf-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+.bf-section-title {
+  font-size: 0.79rem;
+  font-weight: 700;
+  color: var(--navy);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 0.55rem;
+}
+
+.bf-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.bf-field {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 130px;
+}
+.bf-field-sm { flex: 0 0 108px; min-width: 88px; }
+
+.bf-label {
+  font-size: 0.77rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 0.28rem;
+}
+
+.bf-field select,
+.bf-field input[type="number"],
+.bf-field input[type="text"] {
+  border: 1px solid rgba(26, 54, 93, 0.2);
+  border-radius: 8px;
+  padding: 0.42rem 0.6rem;
+  font-size: 0.83rem;
+  color: var(--navy);
+  width: 100%;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+.bf-currency-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.bf-currency-wrap > span {
+  position: absolute;
+  left: 0.6rem;
+  font-size: 0.83rem;
+  color: var(--muted);
+  pointer-events: none;
+  z-index: 1;
+}
+.bf-currency-wrap input { padding-left: 1.4rem !important; }
+
+.bf-hint {
+  font-size: 0.73rem;
+  color: var(--muted);
+  margin: 0.35rem 0 0;
+  line-height: 1.4;
+}
+
+/* Differentials */
+.bf-diff-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.45rem;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.bf-stackable-label {
+  display: flex;
+  align-items: center;
+  gap: 0.32rem;
+  font-size: 0.76rem;
+  color: var(--muted);
+  cursor: pointer;
+}
+.bf-diff-row {
+  display: grid;
+  grid-template-columns: 1fr 76px 84px 84px 26px;
+  gap: 0.35rem;
+  margin-bottom: 0.35rem;
+  align-items: center;
+}
+.bf-diff-row input,
+.bf-diff-row select {
+  border: 1px solid rgba(26, 54, 93, 0.2);
+  border-radius: 7px;
+  padding: 0.36rem 0.48rem;
+  font-size: 0.79rem;
+  color: var(--navy);
+  width: 100%;
+  box-sizing: border-box;
+  background: #fff;
+}
+.bf-diff-remove {
+  background: none;
+  border: 1px solid rgba(26, 54, 93, 0.18);
+  border-radius: 6px;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 0.88rem;
+  line-height: 1;
+  padding: 0.28rem 0.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bf-diff-remove:hover { color: #c53030; border-color: #c53030; }
+.bf-add-diff-btn { margin-top: 0.25rem; font-size: 0.79rem; padding: 0.32rem 0.7rem; }
+
+/* View toggle chips in modal footer */
+.bf-view-toggle {
+  display: flex;
+  gap: 5px;
+  flex: 1;
+}
+.bf-view-btn {
+  padding: 0.35rem 0.82rem;
+  border-radius: 20px;
+  border: 1px solid rgba(26, 54, 93, 0.22);
+  background: transparent;
+  font-size: 0.79rem;
+  color: var(--navy);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+.bf-view-btn.active {
+  background: var(--navy);
+  color: #fff;
+  border-color: var(--navy);
+}
+
+/* Delta mode map coloring — grey for below-home states */
+#us-map.bf-delta-mode path.salary-0,
+#us-map.bf-delta-mode circle.salary-0 { fill: #d8d8d8; }
+#us-map.bf-delta-mode path.salary-1,
+#us-map.bf-delta-mode circle.salary-1 { fill: #c4ccd4; }
+#us-map.bf-delta-mode path.salary-2,
+#us-map.bf-delta-mode circle.salary-2 { fill: #b0bdc8; }
+#us-map.bf-delta-mode path.salary-3,
+#us-map.bf-delta-mode circle.salary-3 { fill: #9db0bc; }
+#us-map.bf-delta-mode path.salary-4,
+#us-map.bf-delta-mode circle.salary-4 { fill: #8aa3b0; }
+/* salary-5 through salary-9 keep their existing blue hues for positive delta */
+
+
 .insight-card.state-calibration {
   background: linear-gradient(135deg, rgba(246, 166, 35, 0.15), rgba(255, 250, 240, 0.98));
 }

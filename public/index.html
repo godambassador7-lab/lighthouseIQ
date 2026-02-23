@@ -534,6 +534,7 @@
                 <span class="map-target-mode-status" aria-hidden="true">Off</span>
               </button>
               <button class="map-control-btn map-target-state-btn" id="map-target-state-btn" type="button" title="Open Target State" style="display: none;">Target State</button>
+              <button class="map-control-btn map-bonus-factor-btn" id="map-bonus-factor-btn" type="button" title="Offer Builder: analyze sign-on, relo, and differentials" style="display:none;">Bonus Factor</button>
               <button class="map-control-btn map-factors-btn" id="map-factors-btn" type="button" title="Out of State Factors">Factors</button>
               <button class="map-control-btn map-clear-btn" id="map-clear-btn" type="button" title="Clear selected states">Clear</button>
             </div>
@@ -1548,6 +1549,78 @@
             <button type="button" class="btn ghost" id="export-project-csv">Export CSV</button>
             <button type="button" class="btn ghost" id="export-project-json">Export JSON</button>
             <button type="button" class="btn secondary" id="close-project-detail">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bonus Factor Modal -->
+    <div class="modal-overlay" id="bonus-factor-modal">
+      <div class="modal-card bf-modal-card">
+        <div class="modal-header">
+          <h3>Bonus Factor — Offer Builder</h3>
+          <button class="modal-close" id="bf-modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+
+          <!-- Section 1: Home State + Contract Basics -->
+          <div class="bf-section">
+            <div class="bf-row">
+              <div class="bf-field">
+                <label class="bf-label">Home State</label>
+                <select id="bf-home-state"><option value="">Select state…</option></select>
+              </div>
+              <div class="bf-field bf-field-sm">
+                <label class="bf-label">Contract (months)</label>
+                <input type="number" id="bf-contract-months" value="24" min="1" max="60" />
+              </div>
+              <div class="bf-field bf-field-sm">
+                <label class="bf-label">Hours / year</label>
+                <input type="number" id="bf-hours-per-year" value="1872" min="500" max="3000" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 2: One-Time Incentives -->
+          <div class="bf-section">
+            <h4 class="bf-section-title">One-Time Incentives</h4>
+            <div class="bf-row">
+              <div class="bf-field">
+                <label class="bf-label">Relocation</label>
+                <div class="bf-currency-wrap"><span>$</span>
+                  <input type="number" id="bf-relo" value="0" min="0" step="500" /></div>
+              </div>
+              <div class="bf-field">
+                <label class="bf-label">Sign-On Bonus</label>
+                <div class="bf-currency-wrap"><span>$</span>
+                  <input type="number" id="bf-signon" value="0" min="0" step="500" /></div>
+              </div>
+            </div>
+            <p class="bf-hint">Relo amortized over 12 months · Sign-on amortized over contract length</p>
+          </div>
+
+          <!-- Section 3: Differentials -->
+          <div class="bf-section">
+            <div class="bf-diff-header">
+              <h4 class="bf-section-title">Differentials</h4>
+              <label class="bf-stackable-label">
+                <input type="checkbox" id="bf-stackable" checked />
+                Stackable (sum all; unchecked = highest only)
+              </label>
+            </div>
+            <div id="bf-diffs-list"></div>
+            <button type="button" class="btn ghost bf-add-diff-btn" id="bf-add-diff-btn">+ Add Differential</button>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <div class="bf-view-toggle">
+            <button type="button" class="bf-view-btn active" id="bf-view-projected">Projected Annual</button>
+            <button type="button" class="bf-view-btn" id="bf-view-delta">Delta vs Home</button>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button type="button" class="btn ghost" id="bf-clear-btn">Clear</button>
+            <button type="button" class="btn primary" id="bf-apply-btn">Apply to Map</button>
           </div>
         </div>
       </div>
