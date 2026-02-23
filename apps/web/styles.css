@@ -2910,28 +2910,59 @@ body.modal-open {
 
 .hospital-search-panel {
   margin-top: 0.6rem;
-  display: flex;
-  gap: 0.5rem;
+}
+
+.hospital-search-input-wrap {
+  position: relative;
 }
 
 .hospital-search-panel input {
-  flex: 1;
-  min-width: 200px;
+  width: 100%;
+  box-sizing: border-box;
   border: 1px solid rgba(26, 54, 93, 0.2);
   border-radius: 10px;
   padding: 0.55rem 0.7rem;
   font-size: 0.85rem;
 }
 
-.hospital-search-panel button {
-  border: none;
+.hospital-search-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid rgba(26, 54, 93, 0.18);
   border-radius: 10px;
-  padding: 0.55rem 0.85rem;
-  font-size: 0.82rem;
-  font-weight: 700;
-  background: var(--ocean);
-  color: white;
+  box-shadow: 0 4px 16px rgba(26, 54, 93, 0.12);
+  z-index: 200;
+  overflow: hidden;
+}
+
+.hospital-dropdown-item {
+  padding: 0.5rem 0.75rem;
   cursor: pointer;
+  font-size: 0.83rem;
+  color: var(--navy);
+  border-bottom: 1px solid rgba(26, 54, 93, 0.07);
+  line-height: 1.4;
+}
+.hospital-dropdown-item:last-child { border-bottom: none; }
+.hospital-dropdown-item:hover,
+.hospital-dropdown-item.active {
+  background: rgba(26, 54, 93, 0.07);
+}
+.hospital-dropdown-item .hdi-name {
+  font-weight: 600;
+}
+.hospital-dropdown-item .hdi-meta {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 1px;
+}
+.hospital-dropdown-loading {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.82rem;
+  color: var(--muted);
 }
 
 .hospital-search-results {

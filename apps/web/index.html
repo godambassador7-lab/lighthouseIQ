@@ -538,8 +538,10 @@
             </div>
           </div>
           <div class="hospital-search-panel">
-            <input type="text" id="map-hospital-search" placeholder="Type a hospital name for rank and breakdown..." />
-            <button type="button" id="map-hospital-search-btn">Find Hospital</button>
+            <div class="hospital-search-input-wrap">
+              <input type="text" id="map-hospital-search" placeholder="Type a hospital name to search..." autocomplete="off" />
+              <div class="hospital-search-dropdown" id="hospital-search-dropdown" style="display:none;"></div>
+            </div>
           </div>
           <div class="hospital-search-results" id="map-hospital-search-results"></div>
         </div>
