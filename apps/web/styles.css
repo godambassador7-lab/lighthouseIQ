@@ -3177,6 +3177,119 @@ body.modal-open {
 #us-map.bf-delta-mode circle.salary-4 { fill: #8aa3b0; }
 /* salary-5 through salary-9 keep their existing blue hues for positive delta */
 
+/* ── Bonus Factor State Breakdown ── */
+.bf-breakdown-section {
+  padding: 0 64px 28px;
+}
+
+.bf-breakdown-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 14px 20px 12px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(26, 54, 93, 0.12);
+  border-radius: 14px 14px 0 0;
+  border-bottom: none;
+}
+
+.bf-breakdown-header-text { flex: 1; min-width: 0; }
+
+.bf-breakdown-title {
+  font-size: 0.87rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 0 0 3px;
+}
+
+.bf-breakdown-subtitle {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.bf-breakdown-toggle {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid rgba(26, 54, 93, 0.18);
+  background: transparent;
+  border-radius: 20px;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.78rem;
+  color: var(--navy);
+  cursor: pointer;
+  white-space: nowrap;
+  margin-left: 12px;
+}
+.bf-breakdown-toggle:hover { background: rgba(26, 54, 93, 0.06); }
+
+.bf-toggle-icon {
+  font-size: 1rem;
+  line-height: 1;
+  font-weight: 300;
+}
+
+.bf-breakdown-body {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(26, 54, 93, 0.12);
+  border-radius: 0 0 14px 14px;
+  overflow: hidden;
+}
+
+.bf-breakdown-table-wrap {
+  max-height: 380px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.bf-breakdown-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.bf-breakdown-table thead th {
+  position: sticky;
+  top: 0;
+  background: rgba(26, 54, 93, 0.06);
+  padding: 0.42rem 0.75rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--navy);
+  font-size: 0.75rem;
+  white-space: nowrap;
+  border-bottom: 1px solid rgba(26, 54, 93, 0.1);
+  z-index: 1;
+}
+
+.bf-breakdown-table td {
+  padding: 0.36rem 0.75rem;
+  color: var(--navy);
+  border-bottom: 1px solid rgba(26, 54, 93, 0.05);
+  white-space: nowrap;
+}
+
+.bf-breakdown-table tr:last-child td { border-bottom: none; }
+.bf-breakdown-table tbody tr:hover td { background: rgba(26, 54, 93, 0.035); }
+.bf-home-row td { background: rgba(26, 54, 93, 0.06) !important; font-weight: 600; }
+
+.bf-color-dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  margin-right: 5px;
+  vertical-align: middle;
+  flex-shrink: 0;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+.bf-delta-positive { color: #1a6a3d; font-weight: 600; }
+.bf-delta-negative { color: #9b2c2c; }
+
 
 .insight-card.state-calibration {
   background: linear-gradient(135deg, rgba(246, 166, 35, 0.15), rgba(255, 250, 240, 0.98));
