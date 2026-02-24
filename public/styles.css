@@ -2907,6 +2907,16 @@ body.modal-open {
   color: var(--navy);
   background: rgba(26, 54, 93, 0.04);
 }
+.programs-show-all {
+  background: none;
+  border: none;
+  color: var(--ocean);
+  cursor: pointer;
+  font-size: 0.78rem;
+  padding: 0;
+  margin-left: 10px;
+  text-decoration: underline;
+}
 
 .hospital-search-panel {
   margin-top: 0.6rem;
@@ -3046,7 +3056,8 @@ body.modal-open {
   flex: 1;
   min-width: 130px;
 }
-.bf-field-sm { flex: 0 0 108px; min-width: 88px; }
+.bf-field-sm { flex: 1; min-width: 100px; max-width: 160px; }
+.bf-field-lg { flex: 0 0 200px; }
 
 .bf-label {
   font-size: 0.77rem;

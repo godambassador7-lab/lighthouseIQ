@@ -237,6 +237,7 @@ let programsSearchCache = []; // Pre-computed search haystacks
 let programsMeta = { lastUpdated: null, sources: [] };
 let programsLoaded = false;
 let programsModuleInitialized = false;
+let selectedProgramSchool = '';
 let programsRefreshPrompted = false;
 let stateBeaconData = null;
 let stateBeaconLoaded = false;
@@ -5985,6 +5986,20 @@ const getProgramOutboundTargets = (sourceState, count = 3) => {
     .map(([state], idx) => ({ state, feederRank: idx + 1 }));
 };
 
+const filterTableToSchool = (schoolName) => {
+  if (!programsList) return;
+  programsList.querySelectorAll('tr').forEach(row => {
+    const btn = row.querySelector('.program-school-link');
+    if (!btn) { row.style.display = ''; return; }
+    row.style.display = btn.dataset.school === schoolName ? '' : 'none';
+  });
+};
+
+const showAllProgramRows = () => {
+  if (!programsList) return;
+  programsList.querySelectorAll('tr').forEach(row => { row.style.display = ''; });
+};
+
 const renderProgramsSchoolInsight = (schoolName, sourceState, targets) => {
   if (!programsSchoolInsight) return;
   if (!schoolName || !sourceState) {
@@ -5992,8 +6007,10 @@ const renderProgramsSchoolInsight = (schoolName, sourceState, targets) => {
     return;
   }
 
+  const showAllBtn = '<button type="button" class="programs-show-all">← Show all schools</button>';
+
   if (!targets.length) {
-    programsSchoolInsight.innerHTML = `<strong>${escapeHtml(schoolName)}</strong> (${escapeHtml(sourceState)}) has no destination signal available yet.`;
+    programsSchoolInsight.innerHTML = `<strong>${escapeHtml(schoolName)}</strong> (${escapeHtml(sourceState)}) has no destination signal available yet. ${showAllBtn}`;
     return;
   }
 
@@ -6002,7 +6019,7 @@ const renderProgramsSchoolInsight = (schoolName, sourceState, targets) => {
     .join(' | ');
   programsSchoolInsight.innerHTML = `
     <strong>${escapeHtml(schoolName)}</strong> (${escapeHtml(sourceState)}) likely feeds nurses to:
-    <span>${escapeHtml(targetText)}</span>
+    <span>${escapeHtml(targetText)}</span> ${showAllBtn}
   `;
 };
 
@@ -6063,6 +6080,8 @@ const renderProgramsTable = (programs) => {
 
 const renderProgramsWithProgress = (programs) => {
   if (!programsList) return;
+  selectedProgramSchool = '';
+  if (programsSchoolInsight) programsSchoolInsight.innerHTML = 'Click a school name to see its top 3 destination states.';
   programsList.innerHTML = '';
 
   if (!programs.length) {
@@ -6287,11 +6306,30 @@ const initProgramsModule = () => {
   programsSearch?.addEventListener('input', debounce(renderProgramsFiltered, 300));
   programsStateFilter?.addEventListener('change', renderProgramsFiltered);
   programsList?.addEventListener('click', async (event) => {
+    if (event.target.closest('.programs-show-all')) {
+      selectedProgramSchool = '';
+      showAllProgramRows();
+      renderProgramsSchoolInsight('', '', []);
+      return;
+    }
+
     const schoolBtn = event.target.closest('.program-school-link');
     if (!schoolBtn) return;
 
     const schoolName = schoolBtn.dataset.school || '';
     const sourceState = (schoolBtn.dataset.state || '').toUpperCase();
+
+    // Toggle: clicking the same school again shows all
+    if (selectedProgramSchool === schoolName) {
+      selectedProgramSchool = '';
+      showAllProgramRows();
+      renderProgramsSchoolInsight('', '', []);
+      return;
+    }
+
+    selectedProgramSchool = schoolName;
+    filterTableToSchool(schoolName);
+
     if (!sourceState) {
       renderProgramsSchoolInsight(schoolName, sourceState, []);
       return;
