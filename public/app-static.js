@@ -4274,6 +4274,110 @@ const renderHospitalDetail = async (hospital) => {
   `;
 };
 
+// ── Bonus Factor State Breakdown ─────────────────────────────────────────────
+const BF_COLORS_STANDARD = ['#e3f2fd','#d4e8fb','#bbdefb','#90caf9','#64b5f6','#42a5f5','#1e88e5','#1976d2','#1565c0','#0d47a1'];
+const BF_COLORS_DELTA    = ['#d8d8d8','#c4ccd4','#b0bdc8','#9db0bc','#8aa3b0','#42a5f5','#1e88e5','#1976d2','#1565c0','#0d47a1'];
+
+const renderBonusBreakdown = () => {
+  const section   = document.getElementById('bf-breakdown-section');
+  const tableWrap = document.getElementById('bf-breakdown-table-wrap');
+  const subtitleEl = document.getElementById('bf-breakdown-subtitle');
+  if (!section || !tableWrap) return;
+
+  const salaryData = recruitmentIntel?.salaryBenchmarks || strategicData?.salaryData || NURSING_SALARY_DATA || {};
+  const projected  = salaryMapMetrics.projected || {};
+  const deltaMap   = salaryMapMetrics.delta || {};
+  const homeState  = bonusScenario.homeState;
+  const isDelta    = bonusScenario.viewMode === 'delta' && homeState;
+
+  const rows = Object.keys(STATE_NAMES)
+    .filter(state => projected[state] > 0)
+    .map(state => ({
+      state,
+      name:       STATE_NAMES[state],
+      base:       Number(salaryData[state]?.staffRN ?? 0),
+      projected:  projected[state],
+      delta:      deltaMap[state],
+      packageAdd: projected[state] - Number(salaryData[state]?.staffRN ?? 0),
+    }))
+    .sort((a, b) => b.projected - a.projected);
+
+  if (!rows.length) return;
+
+  // Level computation mirrors updateBonusMapColors exactly
+  const projVals    = rows.map(r => r.projected);
+  const minP = Math.min(...projVals), maxP = Math.max(...projVals), pRange = Math.max(maxP - minP, 1);
+  const deltaVals   = rows.map(r => r.delta).filter(Number.isFinite);
+  const negDV = deltaVals.filter(v => v < 0);
+  const posDV = deltaVals.filter(v => v > 0);
+
+  const getLevel = (row) => {
+    if (isDelta && Number.isFinite(row.delta)) {
+      if (row.delta < 0 && negDV.length) {
+        const mn = Math.min(...negDV), mx = Math.max(...negDV);
+        return Math.max(0, Math.min(4, Math.round(((row.delta - mn) / Math.max(mx - mn, 1)) * 4)));
+      }
+      if (row.delta > 0 && posDV.length) {
+        const mn = Math.min(...posDV), mx = Math.max(...posDV);
+        return 5 + Math.max(0, Math.min(4, Math.round(((row.delta - mn) / Math.max(mx - mn, 1)) * 4)));
+      }
+      return 5;
+    }
+    return Math.max(0, Math.min(9, Math.round(((row.projected - minP) / pRange) * 9)));
+  };
+
+  const palette = isDelta ? BF_COLORS_DELTA : BF_COLORS_STANDARD;
+
+  // Subtitle
+  const annualRelo   = bonusScenario.relo || 0;
+  const annualSignOn = (bonusScenario.signOn || 0) / (Math.max(1, bonusScenario.contractMonths || 24) / 12);
+  const incentives   = annualRelo + annualSignOn;
+  const parts = [`$${Math.round(incentives).toLocaleString()}/yr base incentive`];
+  if (bonusScenario.diffs.length) {
+    parts.push(`${bonusScenario.diffs.length} diff${bonusScenario.diffs.length > 1 ? 's' : ''} ${bonusScenario.stackable ? '(stackable)' : '(highest only)'}`);
+  }
+  if (homeState && projected[homeState]) {
+    const homeRank = rows.findIndex(r => r.state === homeState) + 1;
+    parts.push(`${STATE_NAMES[homeState]} home rank: #${homeRank}`);
+  }
+  if (subtitleEl) subtitleEl.textContent = parts.join(' · ');
+
+  tableWrap.innerHTML = `
+    <table class="bf-breakdown-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>State</th>
+          <th>Base RN</th>
+          <th>+ Package/yr</th>
+          <th>Projected Annual</th>
+          ${homeState ? '<th>vs Home</th>' : ''}
+        </tr>
+      </thead>
+      <tbody>
+        ${rows.map((row, i) => {
+          const isHome = row.state === homeState;
+          const dot    = palette[getLevel(row)] ?? '#e3f2fd';
+          const dv     = Number.isFinite(row.delta) ? row.delta : null;
+          const dStr   = dv !== null ? `${dv >= 0 ? '+' : ''}$${Math.round(dv).toLocaleString()}` : '—';
+          const dCls   = dv !== null && dv >= 0 ? 'bf-delta-positive' : 'bf-delta-negative';
+          return `
+            <tr class="${isHome ? 'bf-home-row' : ''}">
+              <td>${i + 1}</td>
+              <td><span class="bf-color-dot" style="background:${dot};"></span>${escapeHtml(row.name)} (${row.state})${isHome ? ' · home' : ''}</td>
+              <td>$${Math.round(row.base).toLocaleString()}</td>
+              <td>+$${Math.round(row.packageAdd).toLocaleString()}</td>
+              <td><strong>$${Math.round(row.projected).toLocaleString()}</strong></td>
+              ${homeState ? `<td class="${dCls}">${dStr}</td>` : ''}
+            </tr>`;
+        }).join('')}
+      </tbody>
+    </table>
+  `;
+
+  section.style.display = '';
+};
+
 // ── Bonus Factor ─────────────────────────────────────────────────────────────
 const initBonusFactor = () => {
   const btn = document.getElementById('map-bonus-factor-btn');
@@ -4332,12 +4436,24 @@ const initBonusFactor = () => {
   };
   document.getElementById('bf-add-diff-btn')?.addEventListener('click', addDiffRow);
 
+  // Breakdown collapse toggle
+  let bfCollapsed = false;
+  document.getElementById('bf-breakdown-toggle')?.addEventListener('click', () => {
+    bfCollapsed = !bfCollapsed;
+    const body  = document.getElementById('bf-breakdown-body');
+    const label = document.getElementById('bf-toggle-label');
+    const icon  = document.getElementById('bf-toggle-icon');
+    if (body)  body.style.display  = bfCollapsed ? 'none' : '';
+    if (label) label.textContent   = bfCollapsed ? 'Expand' : 'Collapse';
+    if (icon)  icon.textContent    = bfCollapsed ? '+' : '−';
+  });
+
   // View toggle
   const setView = (mode) => {
     bonusScenario.viewMode = mode;
     document.getElementById('bf-view-projected')?.classList.toggle('active', mode !== 'delta');
     document.getElementById('bf-view-delta')?.classList.toggle('active', mode === 'delta');
-    if (bonusScenario.active) updateBonusMapColors();
+    if (bonusScenario.active) { updateBonusMapColors(); renderBonusBreakdown(); }
   };
   document.getElementById('bf-view-projected')?.addEventListener('click', () => setView('projected'));
   document.getElementById('bf-view-delta')?.addEventListener('click', () => setView('delta'));
@@ -4367,7 +4483,16 @@ const initBonusFactor = () => {
 
     await loadRecruitmentIntel();
     closeModal();
+    // Reset breakdown collapse state on each apply
+    bfCollapsed = false;
+    const bfBody = document.getElementById('bf-breakdown-body');
+    const bfLbl  = document.getElementById('bf-toggle-label');
+    const bfIco  = document.getElementById('bf-toggle-icon');
+    if (bfBody) bfBody.style.display = '';
+    if (bfLbl)  bfLbl.textContent    = 'Collapse';
+    if (bfIco)  bfIco.textContent    = '−';
     updateBonusMapColors();
+    renderBonusBreakdown();
     btn.classList.add('bf-active');
   });
 
@@ -4376,6 +4501,7 @@ const initBonusFactor = () => {
     bonusScenario.active = false;
     bonusScenario.diffs = [];
     document.getElementById('us-map')?.classList.remove('bf-delta-mode');
+    document.getElementById('bf-breakdown-section')?.style.setProperty('display', 'none');
     btn.classList.remove('bf-active');
     updateSalaryMapColors();
     closeModal();
