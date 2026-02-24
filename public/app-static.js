@@ -522,6 +522,15 @@ const escapeHtml = (value) => {
     .replace(/'/g, '&#39;');
 };
 
+const decodeHtmlEntities = (str) => {
+  return String(str ?? '')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#x27;|&#39;|&apos;/g, "'");
+};
+
 const getStateBeaconInputs = () => {
   if (stateBeaconInputs) return stateBeaconInputs;
   try {
@@ -5879,7 +5888,7 @@ const normalizeProgram = (program) => {
     state: program.state ?? '',
     level,
     accreditor: program.accreditor ?? program.accreditation ?? '',
-    credentialNotes: program.credential_notes ?? program.credentialNotes ?? ''
+    credentialNotes: decodeHtmlEntities(program.credential_notes ?? program.credentialNotes ?? '')
   };
 };
 
@@ -6305,14 +6314,15 @@ const initProgramsModule = () => {
   const renderProgramsFiltered = () => renderProgramsWithProgress(getFilteredPrograms());
   programsSearch?.addEventListener('input', debounce(renderProgramsFiltered, 300));
   programsStateFilter?.addEventListener('change', renderProgramsFiltered);
-  programsList?.addEventListener('click', async (event) => {
+  programsSchoolInsight?.addEventListener('click', (event) => {
     if (event.target.closest('.programs-show-all')) {
       selectedProgramSchool = '';
       showAllProgramRows();
       renderProgramsSchoolInsight('', '', []);
-      return;
     }
+  });
 
+  programsList?.addEventListener('click', async (event) => {
     const schoolBtn = event.target.closest('.program-school-link');
     if (!schoolBtn) return;
 
