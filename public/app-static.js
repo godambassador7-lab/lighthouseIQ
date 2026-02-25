@@ -4641,6 +4641,7 @@ const initApp = async () => {
   safeInit(initCustomNotices, 'customNotices');
   safeInit(initHelpSection, 'helpSection');
   safeInit(initCollapsibleSections, 'collapsibleSections');
+  safeInit(initStrategicStateModal, 'strategicStateModal');
   safeInit(initViewToggle, 'viewToggle');
   safeInit(initMapScopeToggle, 'mapScopeToggle');
   safeInit(initMapTabSwitcher, 'mapTabSwitcher');
@@ -5166,6 +5167,129 @@ const WORKFORCE_PROJECTIONS = {
   medianTenure: 8.5
 };
 
+const initStrategicStateModal = () => {
+  const modal = document.getElementById('strategic-state-modal');
+  const closeBtn = document.getElementById('strategic-state-close');
+  const closeFooter = document.getElementById('strategic-state-close-footer');
+  if (!modal || modal.dataset.boundModal === 'true') return;
+
+  const close = () => {
+    modal.classList.remove('active');
+    document.body.classList.remove('modal-open');
+  };
+
+  closeBtn?.addEventListener('click', close);
+  closeFooter?.addEventListener('click', close);
+  modal.addEventListener('click', (event) => {
+    if (event.target === modal) close();
+  });
+
+  modal.dataset.boundModal = 'true';
+};
+
+const formatSourceFreshness = (isoDate) => {
+  if (!isoDate) return 'Unknown';
+  return `${formatDate(isoDate)} (${formatRelativeTime(isoDate)})`;
+};
+
+const getStaticYearAgeText = (year) => {
+  const currentYear = new Date().getFullYear();
+  const diff = Math.max(currentYear - Number(year), 0);
+  if (diff === 0) return `${year} snapshot (current year)`;
+  return `${year} snapshot (${diff} year${diff === 1 ? '' : 's'} old)`;
+};
+
+const getStrategicStateReason = (state, salaryData) => {
+  const data = salaryData?.[state] || {};
+  const projectedGap = Number(data.projectedGap ?? 0);
+  const baseStatus = data.shortage || 'balanced';
+  const wdboAdequacy = getWdboAdequacy(state);
+  const wdboStatus = getWdboShortageStatus(state);
+  const blended = getBlendedShortageStatus(state, salaryData);
+
+  const whyBits = [];
+  if (projectedGap > 0) {
+    whyBits.push(`Projected RN gap is +${projectedGap.toLocaleString()} (surplus signal).`);
+  } else if (projectedGap < 0) {
+    whyBits.push(`Projected RN gap is ${projectedGap.toLocaleString()} (shortage signal).`);
+  } else {
+    whyBits.push('Projected RN gap is near zero.');
+  }
+  if (wdboAdequacy !== undefined && wdboAdequacy !== null) {
+    whyBits.push(`HRSA adequacy proxy is ${wdboAdequacy}% (${wdboStatus || 'balanced'}).`);
+  }
+  if (baseStatus !== blended) {
+    whyBits.push(`Blended status adjusted from ${baseStatus} to ${blended} after external adequacy weighting.`);
+  } else {
+    whyBits.push(`Baseline and blended models both classify this state as ${blended}.`);
+  }
+
+  return {
+    why: whyBits.join(' '),
+    metrics: [
+      `Projected Gap: ${projectedGap >= 0 ? '+' : ''}${projectedGap.toLocaleString()}`,
+      `Baseline Model: ${baseStatus}`,
+      `Blended Model: ${blended}`,
+      `Staff RN Avg: $${Number(data.staffRN || 0).toLocaleString()}`,
+      `Travel Weekly: $${Number(data.travelWeekly || 0).toLocaleString()}`,
+      `HRSA Adequacy: ${wdboAdequacy === undefined || wdboAdequacy === null ? 'n/a' : `${wdboAdequacy}%`}`
+    ]
+  };
+};
+
+const openStrategicStateModal = (type, states, salaryData) => {
+  const modal = document.getElementById('strategic-state-modal');
+  const titleEl = document.getElementById('strategic-state-title');
+  const subtitleEl = document.getElementById('strategic-state-subtitle');
+  const summaryEl = document.getElementById('strategic-state-summary');
+  const sourcesEl = document.getElementById('strategic-state-sources');
+  const listEl = document.getElementById('strategic-state-list');
+  if (!modal || !titleEl || !subtitleEl || !summaryEl || !sourcesEl || !listEl) return;
+
+  const typeLabel = type === 'surplus' ? 'Surplus States' : 'Shortage States';
+  const strategicUpdated = strategicData?.lastUpdated || null;
+  const strategicFreshness = strategicUpdated
+    ? formatSourceFreshness(strategicUpdated)
+    : 'Bundled fallback data (timestamp unavailable)';
+  const staticSnapshotFreshness = getStaticYearAgeText(2025);
+
+  titleEl.textContent = `${typeLabel} Module`;
+  subtitleEl.textContent = `Critical rationale for each ${type} classification, source inputs, and data age.`;
+  summaryEl.textContent = `${states.length} states currently classified as ${type}. Click any state pill list from Strategic Market Review to reopen this module.`;
+
+  sourcesEl.innerHTML = `
+    <div class="strategic-source-row">
+      <span class="strategic-source-name">Strategic salary/workforce dataset</span>
+      <span>Used for projected RN gap, baseline shortage flag, and pay context.</span>
+      <span class="strategic-source-age">Freshness: ${escapeHtml(strategicFreshness)}</span>
+    </div>
+    <div class="strategic-source-row">
+      <span class="strategic-source-name">WDBO + Vivian HRSA adequacy proxy</span>
+      <span>Used to blend market status with external adequacy signal.</span>
+      <span class="strategic-source-age">Freshness: ${escapeHtml(staticSnapshotFreshness)}</span>
+    </div>
+  `;
+
+  listEl.innerHTML = states.map((state) => {
+    const reason = getStrategicStateReason(state, salaryData);
+    return `
+      <article class="strategic-state-item ${type}">
+        <div class="strategic-state-item-header">
+          <div class="strategic-state-item-title">${escapeHtml(STATE_NAMES[state] || state)} (${escapeHtml(state)})</div>
+          <span class="market-badge ${type}">${type}</span>
+        </div>
+        <p class="strategic-state-item-why">${escapeHtml(reason.why)}</p>
+        <div class="strategic-state-item-metrics">
+          ${reason.metrics.map((metric) => `<span class="strategic-state-item-metric">${escapeHtml(metric)}</span>`).join('')}
+        </div>
+      </article>
+    `;
+  }).join('');
+
+  modal.classList.add('active');
+  document.body.classList.add('modal-open');
+};
+
   const renderStrategicReview = async () => {
     const container = document.getElementById('strategic-review-content');
     if (!container) return;
@@ -5491,7 +5615,7 @@ const WORKFORCE_PROJECTIONS = {
         </div>
 
         <div class="state-lists-container">
-          <div class="state-list-section shortage">
+          <div class="state-list-section shortage interactive" data-strategic-state-group="shortage" role="button" tabindex="0" aria-label="Open shortage states module">
             <div class="state-list-header">
               <span class="state-list-icon">âš ï¸</span>
               <span class="state-list-title">Shortage States (${shortageStatesList.length})</span>
@@ -5499,8 +5623,9 @@ const WORKFORCE_PROJECTIONS = {
             <div class="state-pills">
               ${shortageStatesList.map(s => `<span class="state-pill shortage">${s}</span>`).join('')}
             </div>
+            <div class="state-list-subtext">Click for critical drivers, source data, and freshness.</div>
           </div>
-          <div class="state-list-section surplus">
+          <div class="state-list-section surplus interactive" data-strategic-state-group="surplus" role="button" tabindex="0" aria-label="Open surplus states module">
             <div class="state-list-header">
               <span class="state-list-icon">âœ“</span>
               <span class="state-list-title">Surplus States (${surplusStatesList.length})</span>
@@ -5508,6 +5633,7 @@ const WORKFORCE_PROJECTIONS = {
             <div class="state-pills">
               ${surplusStatesList.map(s => `<span class="state-pill surplus">${s}</span>`).join('')}
             </div>
+            <div class="state-list-subtext">Click for critical drivers, source data, and freshness.</div>
           </div>
         </div>
 
@@ -5826,6 +5952,23 @@ const WORKFORCE_PROJECTIONS = {
       </div>
     </div>
   `;
+
+  const bindStateGroup = (group, states) => {
+    const el = container.querySelector(`[data-strategic-state-group="${group}"]`);
+    if (!el || el.dataset.boundGroup === 'true') return;
+    const open = () => openStrategicStateModal(group, states, salaryData);
+    el.addEventListener('click', open);
+    el.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        open();
+      }
+    });
+    el.dataset.boundGroup = 'true';
+  };
+
+  bindStateGroup('shortage', shortageStatesList);
+  bindStateGroup('surplus', surplusStatesList);
 };
 
 const initStrategicReview = () => {

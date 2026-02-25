@@ -6703,6 +6703,28 @@ input[type="range"] {
   padding: 16px;
 }
 
+.state-list-section.interactive {
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.state-list-section.interactive:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(26, 54, 93, 0.08);
+  background: rgba(26, 54, 93, 0.06);
+}
+
+.state-list-section.interactive:focus-visible {
+  outline: 2px solid rgba(26, 54, 93, 0.35);
+  outline-offset: 2px;
+}
+
+.state-list-subtext {
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
 .state-list-section.shortage {
   border-left: 4px solid #e53e3e;
 }
@@ -6760,6 +6782,98 @@ input[type="range"] {
   border-left: 4px solid var(--gold);
   padding: 16px 20px;
   border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.strategic-state-modal-card {
+  max-width: 1100px;
+}
+
+.strategic-state-summary {
+  margin: 0 0 12px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.strategic-state-sources {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.strategic-source-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 12px;
+  padding: 8px 10px;
+  background: rgba(26, 54, 93, 0.04);
+  border: 1px solid rgba(26, 54, 93, 0.1);
+  border-radius: 8px;
+}
+
+.strategic-source-name {
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.strategic-source-age {
+  color: var(--muted);
+}
+
+.strategic-state-list {
+  display: grid;
+  gap: 12px;
+  max-height: 55vh;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.strategic-state-item {
+  border: 1px solid rgba(26, 54, 93, 0.1);
+  border-radius: 10px;
+  padding: 12px;
+  background: #fff;
+}
+
+.strategic-state-item.shortage {
+  border-left: 4px solid #e53e3e;
+}
+
+.strategic-state-item.surplus {
+  border-left: 4px solid #38a169;
+}
+
+.strategic-state-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.strategic-state-item-title {
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.strategic-state-item-why {
+  margin: 0 0 10px;
+  font-size: 13px;
+  color: #2d3748;
+}
+
+.strategic-state-item-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.strategic-state-item-metric {
+  background: rgba(26, 54, 93, 0.06);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 11px;
+  color: #2d3748;
 }
 
 .insight-icon {
