@@ -9060,8 +9060,8 @@ const renderHomeState = async (stateAbbrev) => {
   if (homeStateMetroMap) {
     homeStateMetroMap.innerHTML = metros.map((metro, idx) => `
       <div class="metro-city-card" data-metro-index="${idx}">
-        <div class="metro-city-icon ${metro.size}">
-          ${metro.size === 'major' ? 'Major' : metro.size === 'medium' ? 'Medium' : 'Local'}
+        <div class="metro-city-icon ${metro.size || 'small'}" title="${metro.size === 'major' ? 'High density metro' : metro.size === 'medium' ? 'Medium density metro' : 'Local density metro'}" aria-label="${metro.size === 'major' ? 'High density metro' : metro.size === 'medium' ? 'Medium density metro' : 'Local density metro'}">
+          <span class="metro-density-symbol">${metro.size === 'major' ? '+++' : metro.size === 'medium' ? '++' : '+'}</span>
         </div>
         <div class="metro-city-info">
           <div class="metro-city-name">${escapeHtml(metro.name)}</div>
@@ -9341,8 +9341,8 @@ const renderTargetState = async (stateAbbrev = TARGET_STATE_DEFAULT) => {
   if (targetStateMetroMap) {
     targetStateMetroMap.innerHTML = metros.map((metro, idx) => `
       <div class="metro-city-card" data-metro-index="${idx}">
-        <div class="metro-city-icon ${metro.size}">
-          ${metro.size === 'major' ? 'Major' : metro.size === 'medium' ? 'Medium' : 'Local'}
+        <div class="metro-city-icon ${metro.size || 'small'}" title="${metro.size === 'major' ? 'High density metro' : metro.size === 'medium' ? 'Medium density metro' : 'Local density metro'}" aria-label="${metro.size === 'major' ? 'High density metro' : metro.size === 'medium' ? 'Medium density metro' : 'Local density metro'}">
+          <span class="metro-density-symbol">${metro.size === 'major' ? '+++' : metro.size === 'medium' ? '++' : '+'}</span>
         </div>
         <div class="metro-city-info">
           <div class="metro-city-name">${escapeHtml(metro.name)}</div>
