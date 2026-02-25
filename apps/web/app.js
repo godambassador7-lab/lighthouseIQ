@@ -3802,7 +3802,7 @@ const buildTargetStateExportRows = (data) => {
 
   if (data.exportScope === 'all') {
     data.metros.forEach((metro) => {
-      const detail = [metro.population, `${metro.hospitals?.length || 0} hospitals`, metro.competition].filter(Boolean).join(' â€¢ ');
+      const detail = [metro.population, `${metro.hospitals?.length || 0} hospitals`, metro.competition].filter(Boolean).join(' | ');
       pushRow('Metro Summary', metro.name, detail);
     });
   }
@@ -3823,12 +3823,12 @@ const buildTargetStateExportRows = (data) => {
   (metro.hospitals || []).forEach((hospital) => {
     const detail = [hospital.system, `${hospital.beds} beds`, `Rating ${hospital.reviews}`, `Score ${hospital.score}`]
       .filter(Boolean)
-      .join(' â€¢ ');
+      .join(' | ');
     pushRow('Selected Metro Hospitals', hospital.name, detail);
   });
 
   (metro.systems || []).forEach((system) => {
-    const detail = [system.marketShare, `${system.facilities} facilities`].filter(Boolean).join(' â€¢ ');
+    const detail = [system.marketShare, `${system.facilities} facilities`].filter(Boolean).join(' | ');
     pushRow('Selected Metro Systems', system.name, detail);
   });
 
@@ -3837,7 +3837,7 @@ const buildTargetStateExportRows = (data) => {
     pushRow('Selected Metro Salary', 'Travel RN Weekly', metro.salary.travelRN || '--');
     pushRow('Selected Metro Salary', 'Sign-On Bonus', metro.salary.signOn || '--');
     (metro.salary.breakdown || []).forEach((item) => {
-      const detail = [item.value, item.note].filter(Boolean).join(' â€¢ ');
+      const detail = [item.value, item.note].filter(Boolean).join(' | ');
       pushRow('Selected Metro Salary Breakdown', item.label || 'Benchmark', detail);
     });
   }
