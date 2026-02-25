@@ -3779,7 +3779,7 @@ const initCollapsibleSections = () => {
       const isCollapsed = section.classList.contains('collapsed');
       toggle.setAttribute('aria-expanded', String(!isCollapsed));
       if (label) label.textContent = isCollapsed ? 'Expand' : 'Collapse';
-      if (icon) icon.textContent = isCollapsed ? '+' : 'â€“';
+      if (icon) icon.textContent = isCollapsed ? '+' : '\u2212';
       // Re-render news when its section expands so scroll window recalculates
       if (!isCollapsed && section.classList.contains('news-feed-section')) {
         renderNewsFeed();
@@ -4455,7 +4455,7 @@ const initBonusFactor = () => {
     const icon  = document.getElementById('bf-toggle-icon');
     if (body)  body.style.display  = bfCollapsed ? 'none' : '';
     if (label) label.textContent   = bfCollapsed ? 'Expand' : 'Collapse';
-    if (icon)  icon.textContent    = bfCollapsed ? '+' : '−';
+    if (icon)  icon.textContent    = bfCollapsed ? '+' : '\u2212';
   });
 
   // View toggle
@@ -4500,7 +4500,7 @@ const initBonusFactor = () => {
     const bfIco  = document.getElementById('bf-toggle-icon');
     if (bfBody) bfBody.style.display = '';
     if (bfLbl)  bfLbl.textContent    = 'Collapse';
-    if (bfIco)  bfIco.textContent    = '−';
+    if (bfIco)  bfIco.textContent    = '\u2212';
     updateBonusMapColors();
     renderBonusBreakdown();
     btn.classList.add('bf-active');
@@ -10552,7 +10552,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const isCollapsed = section.classList.contains('collapsed');
       toggle.setAttribute('aria-expanded', String(!isCollapsed));
       if (label) label.textContent = isCollapsed ? 'Expand' : 'Collapse';
-      if (icon) icon.textContent = isCollapsed ? '+' : 'â€“';
+      if (icon) icon.textContent = isCollapsed ? '+' : '\u2212';
     });
   });
 
