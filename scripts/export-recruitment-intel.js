@@ -14,6 +14,66 @@ const fs = require('fs');
 const path = require('path');
 
 const OUTPUT_DIR = process.env.LNI_OUTPUT_DIR || path.join(__dirname, '..', 'public', 'data');
+const WORKFORCE_REFRESH_DAYS = Number(process.env.WORKFORCE_REFRESH_DAYS || 7);
+
+const WORKFORCE_SOURCE_REGISTRY = [
+  {
+    id: 'hrsa-nchwa',
+    name: 'HRSA National Center for Health Workforce Analysis (NCHWA)',
+    category: 'federal',
+    priority: 'primary',
+    url: 'https://bhw.hrsa.gov/data-research/projecting-health-workforce-supply-demand'
+  },
+  {
+    id: 'hrsa-nssrn',
+    name: 'HRSA National Sample Survey of Registered Nurses (NSSRN)',
+    category: 'federal',
+    priority: 'primary',
+    url: 'https://bhw.hrsa.gov/data-research/access-data-tools/national-sample-survey-registered-nurses'
+  },
+  {
+    id: 'bls-rn',
+    name: 'BLS Occupational Employment and Wage Statistics (RN)',
+    category: 'federal',
+    priority: 'primary',
+    url: 'https://www.bls.gov/oes/current/oes291141.htm'
+  },
+  {
+    id: 'aacn-shortage',
+    name: 'AACN Nursing Shortage Fact Sheet',
+    category: 'association',
+    priority: 'primary',
+    url: 'https://www.aacnnursing.org/news-data/fact-sheets/nursing-shortage'
+  },
+  {
+    id: 'ncsbn-workforce',
+    name: 'NCSBN Workforce Study',
+    category: 'association',
+    priority: 'primary',
+    url: 'https://www.ncsbn.org/public-files/2024_ncsbn_workforce_study.pdf'
+  },
+  {
+    id: 'nursejournal-summary',
+    name: 'NurseJournal State Shortage Summary',
+    category: 'secondary',
+    priority: 'secondary',
+    url: 'https://nursejournal.org/resources/nursing-shortage-by-state/'
+  },
+  {
+    id: 'nightingale-summary',
+    name: 'Nightingale State Shortage Summary',
+    category: 'secondary',
+    priority: 'secondary',
+    url: 'https://nightingale.edu/blog/nursing-shortage-by-state/'
+  },
+  {
+    id: 'vivian-summary',
+    name: 'Vivian State Shortage Summary',
+    category: 'secondary',
+    priority: 'secondary',
+    url: 'https://www.vivian.com/community/industry-trends/nursing-shortage-by-state/'
+  }
+];
 
 // =============================================================================
 // PROPRIETARY: Nursing Salary & Market Data
@@ -94,6 +154,67 @@ const RELOCATION_FRICTION = {
   SD: 38, TN: 60, TX: 68, UT: 55, VT: 40, VA: 58, WA: 60, WV: 42, WI: 48, WY: 38
 };
 
+function readJsonSafe(filePath) {
+  if (!fs.existsSync(filePath)) return null;
+  try {
+    return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+  } catch {
+    return null;
+  }
+}
+
+function getResolvedSalaryData() {
+  const resolved = { ...NURSING_SALARY_DATA };
+  const strategicPath = path.join(OUTPUT_DIR, 'strategic.json');
+  const strategic = readJsonSafe(strategicPath);
+  const strategicSalary = strategic?.salaryData || {};
+
+  for (const [state, data] of Object.entries(strategicSalary)) {
+    if (!data || typeof data !== 'object') continue;
+    const fallback = resolved[state] || {};
+    const staffRN = Number(data.staffRN ?? fallback.staffRN ?? 0);
+    const staffHourly = Number(data.staffHourly ?? fallback.staffHourly ?? 0);
+    const travelWeekly = Number(data.travelWeekly ?? fallback.travelWeekly ?? 0);
+    const travelAnnual = Number(data.travelAnnual ?? fallback.travelAnnual ?? (travelWeekly * 52));
+    const shortage = data.shortage || fallback.shortage || 'balanced';
+    const projectedGap = Number(data.projectedGap ?? fallback.projectedGap ?? 0);
+
+    resolved[state] = {
+      ...fallback,
+      staffRN,
+      staffHourly,
+      travelWeekly,
+      travelAnnual,
+      shortage,
+      projectedGap
+    };
+  }
+
+  return {
+    salaryData: resolved,
+    strategicLastUpdated: strategic?.lastUpdated || null,
+    strategicVersion: strategic?.version || null,
+    strategicSources: Array.isArray(strategic?.sources) ? strategic.sources : []
+  };
+}
+
+function getWorkforceSourceSnapshot() {
+  const snapshotPath = path.join(OUTPUT_DIR, 'workforce-sources.json');
+  const snapshot = readJsonSafe(snapshotPath);
+  if (!snapshot) {
+    return {
+      fetchedAt: null,
+      refreshEveryDays: WORKFORCE_REFRESH_DAYS,
+      nextRefreshAt: null,
+      sources: WORKFORCE_SOURCE_REGISTRY.map((source) => ({
+        ...source,
+        status: 'not-fetched'
+      }))
+    };
+  }
+  return snapshot;
+}
+
 // =============================================================================
 // PROPRIETARY: Core Scoring Algorithms
 // =============================================================================
@@ -140,9 +261,9 @@ function buildStateProfile(state, noticeCount, minCount, maxCount) {
  * PROPRIETARY: Out-of-state recruitment scoring algorithm
  * This is the CORE competitive algorithm
  */
-function scoreOutOfStateTarget(homeState, targetState, noticeCount = 0) {
-  const homeData = NURSING_SALARY_DATA[homeState];
-  const targetData = NURSING_SALARY_DATA[targetState];
+function scoreOutOfStateTarget(homeState, targetState, noticeCount = 0, salaryData = NURSING_SALARY_DATA) {
+  const homeData = salaryData[homeState];
+  const targetData = salaryData[targetState];
 
   if (!homeData || !targetData) {
     return { score: 0, factors: {} };
@@ -216,8 +337,9 @@ function computeSignalConfidence(noticeCount, newsCount, majorSystemsCount) {
 // Export Generation
 // =============================================================================
 
-function generateRecruitmentIntel(noticesByState = {}) {
-  const states = Object.keys(NURSING_SALARY_DATA);
+function generateRecruitmentIntel(noticesByState = {}, options = {}) {
+  const salaryData = options.salaryData || NURSING_SALARY_DATA;
+  const states = Object.keys(salaryData);
   const noticeCounts = states.map(s => noticesByState[s] || 0);
   const minCount = Math.min(...noticeCounts);
   const maxCount = Math.max(...noticeCounts);
@@ -225,6 +347,18 @@ function generateRecruitmentIntel(noticesByState = {}) {
   const output = {
     lastUpdated: new Date().toISOString(),
     version: '2.0.0',
+    shortageSurplusModel: {
+      method: 'latest-fetched-sources',
+      refreshEveryDays: WORKFORCE_REFRESH_DAYS,
+      strategicVersion: options.strategicVersion || null,
+      strategicLastUpdated: options.strategicLastUpdated || null
+    },
+    shortageSources: options.shortageSources || {
+      fetchedAt: null,
+      refreshEveryDays: WORKFORCE_REFRESH_DAYS,
+      nextRefreshAt: null,
+      sources: WORKFORCE_SOURCE_REGISTRY
+    },
 
     // Pre-computed salary benchmarks (sanitized - no algorithms)
     salaryBenchmarks: {},
@@ -244,7 +378,7 @@ function generateRecruitmentIntel(noticesByState = {}) {
 
   // Generate salary benchmarks (expose data, not algorithm)
   for (const state of states) {
-    const data = NURSING_SALARY_DATA[state];
+    const data = salaryData[state];
     output.salaryBenchmarks[state] = {
       staffRN: data.staffRN,
       staffHourly: data.staffHourly,
@@ -270,7 +404,7 @@ function generateRecruitmentIntel(noticesByState = {}) {
       if (homeState === targetState) continue;
 
       const noticeCount = noticesByState[targetState] || 0;
-      const result = scoreOutOfStateTarget(homeState, targetState, noticeCount);
+      const result = scoreOutOfStateTarget(homeState, targetState, noticeCount, salaryData);
 
       output.recruitmentScores[homeState][targetState] = result.score;
       targetScores.push({ state: targetState, score: result.score });
@@ -318,7 +452,15 @@ async function main() {
     }
   }
 
-  const data = generateRecruitmentIntel(noticesByState);
+  const resolved = getResolvedSalaryData();
+  const sourceSnapshot = getWorkforceSourceSnapshot();
+
+  const data = generateRecruitmentIntel(noticesByState, {
+    salaryData: resolved.salaryData,
+    strategicVersion: resolved.strategicVersion,
+    strategicLastUpdated: resolved.strategicLastUpdated,
+    shortageSources: sourceSnapshot
+  });
 
   // Ensure output directory exists
   if (!fs.existsSync(OUTPUT_DIR)) {
@@ -333,6 +475,12 @@ async function main() {
   // Also write a minimal version for faster loading
   const minimalData = {
     lastUpdated: data.lastUpdated,
+    shortageSurplusModel: data.shortageSurplusModel,
+    shortageSources: {
+      fetchedAt: data.shortageSources?.fetchedAt || null,
+      refreshEveryDays: data.shortageSources?.refreshEveryDays || WORKFORCE_REFRESH_DAYS,
+      nextRefreshAt: data.shortageSources?.nextRefreshAt || null
+    },
     salaryBenchmarks: data.salaryBenchmarks,
     topTargets: data.topTargets
   };

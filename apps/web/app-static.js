@@ -4990,6 +4990,19 @@ const getMarketStatusSources = () => {
       sources.push(`${source.name || 'Source'}${source.url ? `: ${source.url}` : ''}`);
     }
   });
+
+  const workforceSources = Array.isArray(recruitmentIntel?.shortageSources?.sources)
+    ? recruitmentIntel.shortageSources.sources
+    : [];
+  workforceSources.forEach((source) => {
+    if (!source) return;
+    const label = source.name || source.id || 'Workforce source';
+    const freshness = source.lastModified || source.fetchedAt || 'freshness unknown';
+    const status = source.status || 'unknown';
+    const url = source.finalUrl || source.url || '';
+    sources.push(`${label} (${status}) - ${freshness}${url ? ` - ${url}` : ''}`);
+  });
+
   return Array.from(new Set(sources));
 };
 

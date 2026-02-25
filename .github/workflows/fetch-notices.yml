@@ -134,10 +134,17 @@ jobs:
       - name: Update target-state metro labor stats
         run: python scripts/update-target-metro-labor.py
 
+      - name: Refresh workforce source metadata (7-day cadence)
+        run: node scripts/update-workforce-sources.js
+        env:
+          LNI_OUTPUT_DIR: ${{ github.workspace }}/public/data
+          WORKFORCE_REFRESH_DAYS: 7
+
       - name: Run recruitment intel export script
         run: node scripts/export-recruitment-intel.js
         env:
           LNI_OUTPUT_DIR: ${{ github.workspace }}/public/data
+          WORKFORCE_REFRESH_DAYS: 7
 
       - name: Send Lightworker email alerts
         run: |
