@@ -3772,6 +3772,18 @@ const initHelpSection = () => {
   }
 
   setOpen(helpSection.classList.contains('open'));
+  const syncHelpHeight = () => {
+    if (helpSection.classList.contains('open') && helpContent) {
+      helpContent.style.maxHeight = `${helpContent.scrollHeight}px`;
+    }
+  };
+  if (helpSection.dataset.resizeBound !== 'true') {
+    window.addEventListener('resize', syncHelpHeight);
+    if (document.fonts?.ready) {
+      document.fonts.ready.then(syncHelpHeight);
+    }
+    helpSection.dataset.resizeBound = 'true';
+  }
 };
 
 // =============================================================================
@@ -10653,9 +10665,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Collapsible sections
   document.querySelectorAll('section[data-collapsible="true"]').forEach(section => {
     const toggle = section.querySelector('.section-toggle');
-    if (!toggle) return;
+    if (!toggle || toggle.dataset.boundToggle === 'true') return;
     const label = toggle.querySelector('.section-toggle-label');
     const icon = toggle.querySelector('.section-toggle-icon');
+    toggle.dataset.boundToggle = 'true';
     toggle.addEventListener('click', () => {
       section.classList.toggle('collapsed');
       const isCollapsed = section.classList.contains('collapsed');
