@@ -5557,7 +5557,7 @@ const openStrategicStateModal = (type, states, salaryData) => {
         <!-- Executive Dashboard Card -->
         <div class="strategic-card exec-dashboard full-width">
           <div class="strategic-card-header">
-            <h4><span class="card-icon">SB</span> Executive Dashboard</h4>
+            <h4>Executive Dashboard</h4>
             <span class="strategic-badge">Live snapshot</span>
           </div>
           <div class="exec-dashboard-grid">
@@ -5591,7 +5591,7 @@ const openStrategicStateModal = (type, states, salaryData) => {
         <!-- Executive Summary Card -->
         <div class="strategic-card executive-summary full-width">
           <div class="strategic-card-header">
-            <h4><span class="card-icon">ES</span> Executive Summary</h4>
+            <h4>Executive Summary</h4>
             <span class="strategic-badge critical">Q1 2026</span>
           </div>
 
@@ -5617,7 +5617,7 @@ const openStrategicStateModal = (type, states, salaryData) => {
         <div class="state-lists-container">
           <div class="state-list-section shortage interactive" data-strategic-state-group="shortage" role="button" tabindex="0" aria-label="Open shortage states module">
             <div class="state-list-header">
-              <span class="state-list-icon">!</span>
+              <span class="state-list-icon"></span>
               <span class="state-list-title">Shortage States (${shortageStatesList.length})</span>
             </div>
             <div class="state-pills">
@@ -5627,7 +5627,7 @@ const openStrategicStateModal = (type, states, salaryData) => {
           </div>
           <div class="state-list-section surplus interactive" data-strategic-state-group="surplus" role="button" tabindex="0" aria-label="Open surplus states module">
             <div class="state-list-header">
-              <span class="state-list-icon">OK</span>
+              <span class="state-list-icon"></span>
               <span class="state-list-title">Surplus States (${surplusStatesList.length})</span>
             </div>
             <div class="state-pills">
@@ -5638,7 +5638,7 @@ const openStrategicStateModal = (type, states, salaryData) => {
         </div>
 
         <div class="strategic-insight">
-          <div class="insight-icon">i</div>
+          <div class="insight-icon"></div>
           <div class="insight-content">
             <strong>Key Insight:</strong> The nursing workforce faces a critical shortage of approximately
             ${Math.abs(projections.projectedGap2030).toLocaleString()} RNs by 2030, driven by
@@ -5652,7 +5652,7 @@ const openStrategicStateModal = (type, states, salaryData) => {
         <!-- Signal Confidence Card -->
         <div class="strategic-card signal-confidence">
           <div class="strategic-card-header">
-            <h4><span class="card-icon">SIG</span> Signal Confidence</h4>
+            <h4>Signal Confidence</h4>
             <span class="strategic-badge ${homeConfidence.label.toLowerCase()}">${homeConfidence.label}</span>
           </div>
           <div class="confidence-grid">
@@ -5675,7 +5675,7 @@ const openStrategicStateModal = (type, states, salaryData) => {
         <!-- Competitive Pay Position Card -->
         <div class="strategic-card pay-positioning">
           <div class="strategic-card-header">
-            <h4><span class="card-icon">$</span> Competitive Pay Position</h4>
+            <h4>Competitive Pay Position</h4>
             <span class="strategic-badge">${payPositionLabel}</span>
           </div>
           <div class="pay-position-grid">
@@ -5699,7 +5699,7 @@ const openStrategicStateModal = (type, states, salaryData) => {
         <!-- Talent Supply Proxy Card -->
         <div class="strategic-card supply-proxy">
           <div class="strategic-card-header">
-            <h4><span class="card-icon">RN</span> Talent Supply Proxy</h4>
+            <h4>Talent Supply Proxy</h4>
             <span class="strategic-badge">${supplyLabel}</span>
           </div>
           <div class="supply-grid">
@@ -5723,7 +5723,7 @@ const openStrategicStateModal = (type, states, salaryData) => {
         <!-- Specialty Heat Score Card -->
         <div class="strategic-card specialty-heat">
           <div class="strategic-card-header">
-            <h4><span class="card-icon">HOT</span> Specialty Heat Scores</h4>
+            <h4>Specialty Heat Scores</h4>
             <span class="strategic-badge">Demand x Pay</span>
           </div>
           <ul class="heat-score-list">
@@ -5739,7 +5739,7 @@ const openStrategicStateModal = (type, states, salaryData) => {
         <!-- Salary Comparison Card -->
         <div class="strategic-card salary-comparison">
         <div class="strategic-card-header">
-          <h4><span class="card-icon">PAY</span> Compensation Comparison</h4>
+          <h4>Compensation Comparison</h4>
           <span class="strategic-badge">Top 15 States</span>
         </div>
         <p class="card-description">Staff RN vs Travel Nurse annual compensation by state</p>
@@ -5789,7 +5789,7 @@ const openStrategicStateModal = (type, states, salaryData) => {
       <!-- Specialty Pay Card -->
       <div class="strategic-card specialty-pay">
         <div class="strategic-card-header">
-          <h4><span class="card-icon">SP</span> Specialty Pay Rates</h4>
+          <h4>Specialty Pay Rates</h4>
           <span class="strategic-badge">2026 Rates</span>
         </div>
         <p class="card-description">Travel nurse compensation by specialty area</p>
@@ -5810,7 +5810,7 @@ const openStrategicStateModal = (type, states, salaryData) => {
       <!-- Specialty Targeting Card -->
       <div class="strategic-card specialty-signals">
         <div class="strategic-card-header">
-          <h4><span class="card-icon">SB</span> Specialty Targeting Signals</h4>
+          <h4>Specialty Targeting Signals</h4>
           <span class="strategic-badge">${specialtySignalStatus === 'ready' ? 'Live' : 'Auto refresh'}</span>
         </div>
         <p class="card-description">State-by-state supply and demand signals per specialty.</p>
@@ -5825,7 +5825,7 @@ const openStrategicStateModal = (type, states, salaryData) => {
       <!-- Recruitment Opportunities Card -->
       <div class="strategic-card opportunities">
         <div class="strategic-card-header">
-          <h4><span class="card-icon">GO</span> Recruitment Opportunities</h4>
+          <h4>Recruitment Opportunities</h4>
           <span class="strategic-badge opportunity">WARN Data</span>
         </div>
         <p class="card-description">States with layoffs in shortage markets</p>
@@ -5863,7 +5863,7 @@ const openStrategicStateModal = (type, states, salaryData) => {
       <!-- Risk Assessment Card -->
       <div class="strategic-card risk-assessment">
         <div class="strategic-card-header">
-          <h4><span class="card-icon">RISK</span> Market Risk Assessment</h4>
+          <h4>Market Risk Assessment</h4>
           <span class="strategic-badge warning">Monitor</span>
         </div>
         <p class="card-description">States with high layoff activity</p>
@@ -5897,7 +5897,7 @@ const openStrategicStateModal = (type, states, salaryData) => {
       <!-- Workforce Projections Card -->
       <div class="strategic-card projections full-width">
         <div class="strategic-card-header">
-          <h4><span class="card-icon">TREND</span> Workforce Supply vs Demand</h4>
+          <h4>Workforce Supply vs Demand</h4>
           <span class="strategic-badge">HRSA/BLS Data</span>
         </div>
         <div class="projection-grid">
@@ -5945,9 +5945,9 @@ const openStrategicStateModal = (type, states, salaryData) => {
           </div>
         </div>
         <div class="projection-facts">
-          <div class="fact"><span class="fact-icon">AGE</span> Median RN Age: ${projections.avgAge} years</div>
-          <div class="fact"><span class="fact-icon">RN</span> Annual Retirement: ${projections.retirementRate}%</div>
-          <div class="fact"><span class="fact-icon">ES</span> Job Growth: ${projections.growthRate}% through 2032</div>
+          <div class="fact"><span class="fact-icon"></span> Median RN Age: ${projections.avgAge} years</div>
+          <div class="fact"><span class="fact-icon"></span> Annual Retirement: ${projections.retirementRate}%</div>
+          <div class="fact"><span class="fact-icon"></span> Job Growth: ${projections.growthRate}% through 2032</div>
         </div>
       </div>
     </div>
