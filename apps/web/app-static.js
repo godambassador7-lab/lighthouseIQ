@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Nursing Layoff Radar - Static Frontend
  *
  * This version works with static JSON files hosted on GitHub Pages.
@@ -1640,7 +1640,7 @@ const renderMapFactors = () => {
         <div class="map-factor-card">
           <div class="map-factor-title">#${idx + 1} ${targetName} (${entry.state})</div>
           <div class="map-factor-meta">
-            <div class="factor-row"><strong>Market:</strong> Shortage: ${f.shortage} | WARN notices: ${f.noticeCount} | Region: ${f.region || 'n/a'}</div>
+            <div class="factor-row"><strong>Market:</strong> ${f.shortage === 'surplus' ? 'Surplus' : f.shortage === 'shortage' ? 'Shortage' : 'Balanced'} | WARN notices: ${f.noticeCount} | Region: ${f.region || 'n/a'}</div>
             <div class="factor-row"><strong>Salary:</strong> ${salaryNote} | ${adjustedSalaryNote}</div>
             <div class="factor-row"><strong>Cost of Living:</strong> ${colNote}</div>
             <div class="factor-row"><strong>Rural Hospitals:</strong> ${closureNote} | ${atRiskNote}</div>
@@ -1866,7 +1866,7 @@ const updateSalaryMapColors = () => {
   });
 };
 
-// ── Bonus Factor calculations ──────────────────────────────────────────────
+// -- Bonus Factor calculations ----------------------------------------------
 const computeProjectedForState = (stateAbbrev, salaryData) => {
   const relo = bonusScenario.relo || 0;
   const signOn = bonusScenario.signOn || 0;
@@ -1965,7 +1965,7 @@ const updateBonusMapColors = () => {
 
     let level;
     if (isDelta) {
-      // Split: negatives map to 0–4, positives to 5–9, zero to 5
+      // Split: negatives map to 0�4, positives to 5�9, zero to 5
       if (val < 0) {
         const negVals = values.filter(v => v < 0);
         const minNeg = Math.min(...negVals);
@@ -3533,7 +3533,7 @@ const initLightworker = () => {
       ALL_STATES.forEach(s => {
         const opt = document.createElement('option');
         opt.value = s;
-        opt.textContent = `${s} — ${STATE_NAMES[s] || s}`;
+        opt.textContent = `${s} � ${STATE_NAMES[s] || s}`;
         homeSelect.appendChild(opt);
       });
     }
@@ -4295,7 +4295,7 @@ const renderHospitalDetail = async (hospital) => {
   `;
 };
 
-// ── Bonus Factor State Breakdown ─────────────────────────────────────────────
+// -- Bonus Factor State Breakdown ---------------------------------------------
 const BF_COLORS_STANDARD = ['#e3f2fd','#d4e8fb','#bbdefb','#90caf9','#64b5f6','#42a5f5','#1e88e5','#1976d2','#1565c0','#0d47a1'];
 const BF_COLORS_DELTA    = ['#d8d8d8','#c4ccd4','#b0bdc8','#9db0bc','#8aa3b0','#42a5f5','#1e88e5','#1976d2','#1565c0','#0d47a1'];
 
@@ -4361,7 +4361,7 @@ const renderBonusBreakdown = () => {
     const homeRank = rows.findIndex(r => r.state === homeState) + 1;
     parts.push(`${STATE_NAMES[homeState]} home rank: #${homeRank}`);
   }
-  if (subtitleEl) subtitleEl.textContent = parts.join(' · ');
+  if (subtitleEl) subtitleEl.textContent = parts.join(' � ');
 
   tableWrap.innerHTML = `
     <table class="bf-breakdown-table">
@@ -4380,12 +4380,12 @@ const renderBonusBreakdown = () => {
           const isHome = row.state === homeState;
           const dot    = palette[getLevel(row)] ?? '#e3f2fd';
           const dv     = Number.isFinite(row.delta) ? row.delta : null;
-          const dStr   = dv !== null ? `${dv >= 0 ? '+' : ''}$${Math.round(dv).toLocaleString()}` : '—';
+          const dStr   = dv !== null ? `${dv >= 0 ? '+' : ''}$${Math.round(dv).toLocaleString()}` : '�';
           const dCls   = dv !== null && dv >= 0 ? 'bf-delta-positive' : 'bf-delta-negative';
           return `
             <tr class="${isHome ? 'bf-home-row' : ''}">
               <td>${i + 1}</td>
-              <td><span class="bf-color-dot" style="background:${dot};"></span>${escapeHtml(row.name)} (${row.state})${isHome ? ' · home' : ''}</td>
+              <td><span class="bf-color-dot" style="background:${dot};"></span>${escapeHtml(row.name)} (${row.state})${isHome ? ' � home' : ''}</td>
               <td>$${Math.round(row.base).toLocaleString()}</td>
               <td>+$${Math.round(row.packageAdd).toLocaleString()}</td>
               <td><strong>$${Math.round(row.projected).toLocaleString()}</strong></td>
@@ -4399,7 +4399,7 @@ const renderBonusBreakdown = () => {
   section.style.display = '';
 };
 
-// ── Bonus Factor ─────────────────────────────────────────────────────────────
+// -- Bonus Factor -------------------------------------------------------------
 const initBonusFactor = () => {
   const btn = document.getElementById('map-bonus-factor-btn');
   const modal = document.getElementById('bonus-factor-modal');
@@ -4410,7 +4410,7 @@ const initBonusFactor = () => {
   const homeStateSelect = document.getElementById('bf-home-state');
   if (homeStateSelect) {
     homeStateSelect.innerHTML =
-      '<option value="">Select state…</option>' +
+      '<option value="">Select state�</option>' +
       Object.entries(STATE_NAMES)
         .sort((a, b) => a[1].localeCompare(b[1]))
         .map(([code, name]) => `<option value="${code}">${name} (${code})</option>`)
@@ -4549,7 +4549,7 @@ const initHospitalSearch = () => {
     dropdownEl.innerHTML = matches.map((h, i) => `
       <div class="hospital-dropdown-item" data-idx="${i}">
         <div class="hdi-name">${escapeHtml(h.name)} <span style="font-weight:400;color:var(--muted);">(${escapeHtml(h.state)})</span></div>
-        <div class="hdi-meta">Rank #${h.rank} in state · Score: ${h.qualityScore || '--'}${h.system ? ' · ' + escapeHtml(h.system) : ''}</div>
+        <div class="hdi-meta">Rank #${h.rank} in state � Score: ${h.qualityScore || '--'}${h.system ? ' � ' + escapeHtml(h.system) : ''}</div>
       </div>
     `).join('');
     dropdownEl.style.display = 'block';
@@ -4574,7 +4574,7 @@ const initHospitalSearch = () => {
     const val = mapHospitalSearchInput.value.trim();
     if (val.length < 2) { hideDropdown(); return; }
     if (!hospitalRankingsData && dropdownEl) {
-      dropdownEl.innerHTML = '<div class="hospital-dropdown-loading">Loading hospital data…</div>';
+      dropdownEl.innerHTML = '<div class="hospital-dropdown-loading">Loading hospital data�</div>';
       dropdownEl.style.display = 'block';
     }
     debounceTimer = setTimeout(async () => {
@@ -6130,7 +6130,7 @@ const renderProgramsSchoolInsight = (schoolName, sourceState, targets) => {
     return;
   }
 
-  const showAllBtn = '<button type="button" class="programs-show-all">← Show all schools</button>';
+  const showAllBtn = '<button type="button" class="programs-show-all">? Show all schools</button>';
 
   if (!targets.length) {
     programsSchoolInsight.innerHTML = `<strong>${escapeHtml(schoolName)}</strong> (${escapeHtml(sourceState)}) has no destination signal available yet. ${showAllBtn}`;
@@ -10686,7 +10686,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Target mode fallback â€” only attach if initViewToggle didn't already
+  // Target mode fallback — only attach if initViewToggle didn't already
   const targetBtn = document.getElementById('map-target-mode-btn');
   if (targetBtn && !targetBtn.dataset.listenerAttached) {
     targetBtn.dataset.listenerAttached = 'true';
