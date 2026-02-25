@@ -10555,10 +10555,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Collapsible sections
   document.querySelectorAll('section[data-collapsible="true"]').forEach(section => {
     const toggle = section.querySelector('.section-toggle');
-    if (!toggle || toggle.dataset.boundToggle === 'true') return;
+    if (!toggle) return;
     const label = toggle.querySelector('.section-toggle-label');
     const icon = toggle.querySelector('.section-toggle-icon');
-    toggle.dataset.boundToggle = 'true';
     toggle.addEventListener('click', () => {
       section.classList.toggle('collapsed');
       const isCollapsed = section.classList.contains('collapsed');
