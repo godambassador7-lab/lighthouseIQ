@@ -4949,93 +4949,48 @@ const NURSING_SALARY_DATA = {
   WY: { staffRN: 84760, staffHourly: 41, travelWeekly: 2080, travelAnnual: 108160, shortage: 'shortage', projectedGap: -700 }
 };
 
-const WDBO_RN_ADEQUACY_2025 = {
-  AL: 114,
-  AK: 145,
-  AZ: 76,
-  AR: 84,
-  CA: 88,
-  CO: 80,
-  CT: 108,
-  DE: 107,
-  DC: 193,
-  FL: 92,
-  GA: 83,
-  HI: 134,
-  ID: 62,
-  IL: 105,
-  IN: 97,
-  IA: 79,
-  KS: 86,
-  KY: 81,
-  LA: 85,
-  ME: 86,
-  MD: 75,
-  MA: 124,
-  MI: 84,
-  MN: 110,
-  MS: 90,
-  MO: 83,
-  MT: 102,
-  NE: 86,
-  NV: 92,
-  NH: 85,
-  NJ: 92,
-  NM: 64,
-  NY: 100,
-  NC: 85,
-  ND: 125,
-  OH: 98,
-  OK: 69,
-  OR: 98,
-  PA: 83,
-  RI: 112,
-  SC: 72,
-  SD: 112,
-  TN: 84,
-  TX: 88,
-  UT: 99,
-  VT: 134,
-  VA: 70,
-  WA: 87,
-  WV: 81,
-  WI: 108,
-  WY: 199
-};
-
-const WDBO_MARKET_SOURCES = {
-  'WDBO (2025 nursing shortages)': 'https://www.wdbo.com/news/crisis-by-numbers-nursing-shortages-2025-by-state/TIU5D6ZD25NV3M36TJ3FYDPTIY/',
-  'Vivian HRSA adequacy (2025)': 'https://www.vivian.com/community/industry-trends/nursing-shortage-by-state/'
-};
-
-const getShortageScore = (status) => (status === 'surplus' ? 1 : status === 'shortage' ? -1 : 0);
-
-const getWdboAdequacy = (state) => WDBO_RN_ADEQUACY_2025[state];
-
-const getWdboShortageStatus = (state) => {
-  const adequacy = getWdboAdequacy(state);
-  if (adequacy === undefined || adequacy === null) return null;
-  if (adequacy > 100) return 'surplus';
-  if (adequacy < 100) return 'shortage';
+const getFetchedShortageStatus = (state, salaryData) => {
+  const explicit = salaryData?.[state]?.shortage;
+  if (explicit === 'surplus' || explicit === 'shortage' || explicit === 'balanced') {
+    return explicit;
+  }
+  const projectedGap = Number(salaryData?.[state]?.projectedGap ?? 0);
+  if (projectedGap > 0) return 'surplus';
+  if (projectedGap < 0) return 'shortage';
   return 'balanced';
 };
+
+const getLatestFetchedSalaryData = () => (
+  recruitmentIntel?.salaryBenchmarks || strategicData?.salaryData || {}
+);
 
 const getBlendedShortageStatus = (state, salaryData) => {
-  const base = salaryData?.[state]?.shortage ?? 'balanced';
-  const wdbo = getWdboShortageStatus(state);
-  if (!wdbo) return base;
-  const score = (getShortageScore(wdbo) * 2) + getShortageScore(base);
-  if (score > 0) return 'surplus';
-  if (score < 0) return 'shortage';
-  return 'balanced';
+  const effectiveSalaryData = (!salaryData || salaryData === NURSING_SALARY_DATA)
+    ? getLatestFetchedSalaryData()
+    : salaryData;
+  return getFetchedShortageStatus(state, effectiveSalaryData);
 };
 
-const getMarketStatusSources = (state) => {
+const getMarketStatusSources = () => {
   const sources = [];
-  if (getWdboShortageStatus(state)) {
-    sources.push(...Object.entries(WDBO_MARKET_SOURCES).map(([label, url]) => `${label}: ${url}`));
+  if (recruitmentIntel?.lastUpdated) {
+    sources.push(`Recruitment Intel (fetched): ${recruitmentIntel.lastUpdated}`);
   }
-  return sources;
+  if (strategicData?.lastUpdated) {
+    sources.push(`Strategic Dataset (fetched): ${strategicData.lastUpdated}`);
+  }
+  const strategicSources = Array.isArray(strategicData?.sources) ? strategicData.sources : [];
+  strategicSources.forEach((source) => {
+    if (!source) return;
+    if (typeof source === 'string') {
+      sources.push(source);
+      return;
+    }
+    if (source.name || source.url) {
+      sources.push(`${source.name || 'Source'}${source.url ? `: ${source.url}` : ''}`);
+    }
+  });
+  return Array.from(new Set(sources));
 };
 
 
@@ -5192,20 +5147,11 @@ const formatSourceFreshness = (isoDate) => {
   return `${formatDate(isoDate)} (${formatRelativeTime(isoDate)})`;
 };
 
-const getStaticYearAgeText = (year) => {
-  const currentYear = new Date().getFullYear();
-  const diff = Math.max(currentYear - Number(year), 0);
-  if (diff === 0) return `${year} snapshot (current year)`;
-  return `${year} snapshot (${diff} year${diff === 1 ? '' : 's'} old)`;
-};
-
 const getStrategicStateReason = (state, salaryData) => {
   const data = salaryData?.[state] || {};
   const projectedGap = Number(data.projectedGap ?? 0);
-  const baseStatus = data.shortage || 'balanced';
-  const wdboAdequacy = getWdboAdequacy(state);
-  const wdboStatus = getWdboShortageStatus(state);
-  const blended = getBlendedShortageStatus(state, salaryData);
+  const sourceStatus = data.shortage || 'inferred-from-projected-gap';
+  const marketStatus = getBlendedShortageStatus(state, salaryData);
 
   const whyBits = [];
   if (projectedGap > 0) {
@@ -5215,24 +5161,23 @@ const getStrategicStateReason = (state, salaryData) => {
   } else {
     whyBits.push('Projected RN gap is near zero.');
   }
-  if (wdboAdequacy !== undefined && wdboAdequacy !== null) {
-    whyBits.push(`HRSA adequacy proxy is ${wdboAdequacy}% (${wdboStatus || 'balanced'}).`);
-  }
-  if (baseStatus !== blended) {
-    whyBits.push(`Blended status adjusted from ${baseStatus} to ${blended} after external adequacy weighting.`);
+  if (sourceStatus !== 'inferred-from-projected-gap') {
+    whyBits.push(`Fetched status field marks this state as ${sourceStatus}.`);
   } else {
-    whyBits.push(`Baseline and blended models both classify this state as ${blended}.`);
+    whyBits.push('Status was inferred from projected gap because no explicit status field was present.');
+  }
+  if (sourceStatus !== marketStatus && sourceStatus !== 'inferred-from-projected-gap') {
+    whyBits.push(`Final status resolves to ${marketStatus} using fetched fallback rules.`);
   }
 
   return {
     why: whyBits.join(' '),
     metrics: [
       `Projected Gap: ${projectedGap >= 0 ? '+' : ''}${projectedGap.toLocaleString()}`,
-      `Baseline Model: ${baseStatus}`,
-      `Blended Model: ${blended}`,
+      `Source Status: ${sourceStatus}`,
+      `Final Status: ${marketStatus}`,
       `Staff RN Avg: $${Number(data.staffRN || 0).toLocaleString()}`,
-      `Travel Weekly: $${Number(data.travelWeekly || 0).toLocaleString()}`,
-      `HRSA Adequacy: ${wdboAdequacy === undefined || wdboAdequacy === null ? 'n/a' : `${wdboAdequacy}%`}`
+      `Travel Weekly: $${Number(data.travelWeekly || 0).toLocaleString()}`
     ]
   };
 };
@@ -5251,7 +5196,9 @@ const openStrategicStateModal = (type, states, salaryData) => {
   const strategicFreshness = strategicUpdated
     ? formatSourceFreshness(strategicUpdated)
     : 'Bundled fallback data (timestamp unavailable)';
-  const staticSnapshotFreshness = getStaticYearAgeText(2025);
+  const recruitmentFreshness = recruitmentIntel?.lastUpdated
+    ? formatSourceFreshness(recruitmentIntel.lastUpdated)
+    : 'Unavailable';
 
   titleEl.textContent = `${typeLabel} Module`;
   subtitleEl.textContent = `Critical rationale for each ${type} classification, source inputs, and data age.`;
@@ -5264,9 +5211,9 @@ const openStrategicStateModal = (type, states, salaryData) => {
       <span class="strategic-source-age">Freshness: ${escapeHtml(strategicFreshness)}</span>
     </div>
     <div class="strategic-source-row">
-      <span class="strategic-source-name">WDBO + Vivian HRSA adequacy proxy</span>
-      <span>Used to blend market status with external adequacy signal.</span>
-      <span class="strategic-source-age">Freshness: ${escapeHtml(staticSnapshotFreshness)}</span>
+      <span class="strategic-source-name">Recruitment Intel dataset</span>
+      <span>Used for latest fetched salary benchmarks and shortage/surplus status fields.</span>
+      <span class="strategic-source-age">Freshness: ${escapeHtml(recruitmentFreshness)}</span>
     </div>
   `;
 
@@ -6942,7 +6889,7 @@ const renderStateBeacon = async (state) => {
   if (noticeCount) chips.push(`WARN notices (major systems): ${noticeCount}`);
   if (confidence?.label) chips.push(`Signal confidence: ${confidence.label}`);
   if (payPosition) chips.push(`Pay position: ${payPosition}`);
-  if (marketStatus) chips.push(`Market: ${marketStatus} (WDBO weighted)`);
+  if (marketStatus) chips.push(`Market: ${marketStatus} (latest fetched)`);
 
   if (stateBeaconMeta) {
     stateBeaconMeta.innerHTML = chips.map((chip) => `<span class="state-beacon-chip">${escapeHtml(chip)}</span>`).join('');
@@ -10024,8 +9971,7 @@ const buildMasterExportData = async (state, progressCb) => {
   const topIndianaInstitutions = getTopInstitutionsForState(MASTER_EXPORT_HOME_STATE);
   const salaryData = strategicData?.salaryData || NURSING_SALARY_DATA;
   const marketStatus = getBlendedShortageStatus(state, salaryData);
-  const wdboAdequacy = getWdboAdequacy(state);
-  const marketSources = getMarketStatusSources(state);
+  const marketSources = getMarketStatusSources();
   const stateBeacon = buildStateBeaconExportWithHome(state, MASTER_EXPORT_HOME_STATE);
   const rawBeaconEntry = stateBeaconData?.states?.[state] ?? {};
   const nursingEducation = rawBeaconEntry.nursingEducation ?? null;
@@ -10045,7 +9991,6 @@ const buildMasterExportData = async (state, progressCb) => {
     rural,
     stateBeacon,
     marketStatus,
-    wdboAdequacy,
     marketSources,
     pipeline: enrichedEntry.pipeline || {},
     nursingEducation,
@@ -10093,10 +10038,7 @@ const buildMasterExportRows = (data) => {
   pushRow('Master Overview', 'Home State (Comparison)', STATE_NAMES[MASTER_EXPORT_HOME_STATE] || MASTER_EXPORT_HOME_STATE);
   pushRow('Master Overview', 'Metros', data.metroSummary.count);
   pushRow('Master Overview', 'Hospitals', data.metroSummary.totalHospitals);
-  pushRow('Master Overview', 'Market status (WDBO weighted)', data.marketStatus || 'balanced');
-  if (data.wdboAdequacy !== null && data.wdboAdequacy !== undefined) {
-    pushRow('Master Overview', 'WDBO adequacy (2025)', `${data.wdboAdequacy}%`);
-  }
+  pushRow('Master Overview', 'Market status (latest fetched)', data.marketStatus || 'balanced');
   pushRow('Master Overview', 'WARN notices (30d)', data.recentWarnNotices.length);
   pushRow('Master Overview', 'Rural closures (since 2010)', data.rural.summary.count);
   pushRow('Master Overview', 'Rural closures (recent)', data.rural.summary.recent);
