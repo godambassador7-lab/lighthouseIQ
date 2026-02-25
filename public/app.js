@@ -3750,7 +3750,7 @@ const initHelpSection = () => {
   const setOpen = (open) => {
     helpSection.classList.toggle('open', open);
     if (helpContent) {
-      helpContent.style.maxHeight = open ? `${helpContent.scrollHeight}px` : '0px';
+      helpContent.style.maxHeight = open ? '20000px' : '0px';
     }
     if (toggleIcon) toggleIcon.textContent = open ? '-' : '+';
     helpToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -3774,7 +3774,7 @@ const initHelpSection = () => {
   setOpen(helpSection.classList.contains('open'));
   const syncHelpHeight = () => {
     if (helpSection.classList.contains('open') && helpContent) {
-      helpContent.style.maxHeight = `${helpContent.scrollHeight}px`;
+      helpContent.style.maxHeight = '20000px';
     }
   };
   if (helpSection.dataset.resizeBound !== 'true') {
