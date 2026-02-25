@@ -3756,10 +3756,20 @@ const initHelpSection = () => {
     helpToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
   };
 
-  helpToggle.addEventListener('click', () => {
-    const isOpen = helpSection.classList.contains('open');
-    setOpen(!isOpen);
-  });
+  if (helpToggle.dataset.boundToggle !== 'true') {
+    helpToggle.addEventListener('click', () => {
+      const isOpen = helpSection.classList.contains('open');
+      setOpen(!isOpen);
+    });
+    helpToggle.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        const isOpen = helpSection.classList.contains('open');
+        setOpen(!isOpen);
+      }
+    });
+    helpToggle.dataset.boundToggle = 'true';
+  }
 
   setOpen(helpSection.classList.contains('open'));
 };
@@ -3770,10 +3780,11 @@ const initHelpSection = () => {
 const initCollapsibleSections = () => {
   document.querySelectorAll('section[data-collapsible="true"]').forEach(section => {
     const toggle = section.querySelector('.section-toggle');
-    if (!toggle) return;
+    if (!toggle || toggle.dataset.boundToggle === 'true') return;
     const label = toggle.querySelector('.section-toggle-label');
     const icon = toggle.querySelector('.section-toggle-icon');
 
+    toggle.dataset.boundToggle = 'true';
     toggle.addEventListener('click', () => {
       section.classList.toggle('collapsed');
       const isCollapsed = section.classList.contains('collapsed');

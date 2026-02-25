@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -17,7 +17,7 @@
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=4.5" />
+    <link rel="stylesheet" href="./styles.css?v=5.0" />
   </head>
   <body>
     <!-- Login Overlay -->
@@ -26,7 +26,7 @@
         <div class="login-logo">
           <img src="./LighthouseIQ-login.png" alt="LighthouseIQ" class="logo-img" />
         </div>
-        <p class="login-version">Version 4.2</p>
+        <p class="login-version">Version 5.0</p>
         <p class="login-subtitle">Enter your access code to continue</p>
         <form id="login-form">
           <div class="passcode-input-wrapper">
@@ -50,7 +50,7 @@
         </div>
         <div class="brand-copy">
           <h1>LighthouseIQ: Market Nursing Intelligence</h1>
-          <p class="version-tag">Version 4.2</p>
+          <p class="version-tag">Version 5.0</p>
         </div>
       </div>
       <div class="top-bar-actions">
@@ -231,10 +231,9 @@
         </div>
       </div>
     </section>
-
     <!-- Help Section -->
     <section class="help-section">
-      <div class="help-header" id="help-toggle">
+      <div class="help-header" id="help-toggle" role="button" tabindex="0" aria-expanded="false" aria-controls="help-content">
         <h3>How to Use This Dashboard</h3>
         <span class="help-toggle-icon">+</span>
       </div>
@@ -242,195 +241,172 @@
         <div class="help-grid">
           <div class="help-card">
             <h4>Signal Controls</h4>
-            <p>Filter the layoff notices to find what matters most to your recruiting efforts.</p>
+            <p>Filter the recruiter feed to the exact markets and profiles you want.</p>
             <dl class="help-list">
-              <dt>Region</dt>
-              <dd>Filter by US region (Northeast, Midwest, South, West). Selecting a region automatically updates the State dropdown to show only states within that region.</dd>
-              <dt>State</dt>
-              <dd>Filter by specific state. Shows all 50 states + DC. States with existing notices display their count in parentheses.</dd>
-              <dt>Healthcare org keyword</dt>
-              <dd>Search for specific healthcare organizations by name (e.g., "Ascension", "HCA", "Kaiser"). Partial matches are supported.</dd>
-              <dt>Since date</dt>
-              <dd>Show only notices filed on or after this date. Useful for finding recent layoff activity.</dd>
-              <dt>Minimum impact score</dt>
-              <dd>Filter by nursing impact score (0-100). Higher scores indicate stronger likelihood of nursing staff being affected.</dd>
-              <dt>Max results</dt>
-              <dd>Limit the number of results displayed (10-500). Default is 100.</dd>
+              <dt>Region + State(s)</dt>
+              <dd>Use Region for broad geography, then multi-select one or more states. Search, Select All, and Clear All are built in.</dd>
+              <dt>Nursing Specialty</dt>
+              <dd>Filter by specialty focus (for example ICU, OR, ED, Med-Surg) using the specialty multi-select.</dd>
+              <dt>Healthcare Org Keyword</dt>
+              <dd>Search employers by name with partial matches.</dd>
+              <dt>Since Date + Minimum Impact</dt>
+              <dd>Limit results to recent notices and stronger nursing-impact signals.</dd>
+              <dt>Max Results</dt>
+              <dd>Set a custom cap or leave blank to show all matching notices.</dd>
             </dl>
           </div>
           <div class="help-card">
             <h4>Action Buttons</h4>
             <dl class="help-list">
               <dt>Fetch Live Data</dt>
-              <dd>Pull the latest WARN notices directly from state databases. Use this to get the most current data.</dd>
+              <dd>Pull newest WARN data from connected sources.</dd>
               <dt>Refresh Results</dt>
-              <dd>Re-apply your current filters to the loaded data without fetching new notices.</dd>
+              <dd>Re-run your current filters on loaded data.</dd>
               <dt>Clear Filters</dt>
-              <dd>Reset all filters to their default values and show all available notices.</dd>
+              <dd>Reset all controls to defaults.</dd>
             </dl>
           </div>
           <div class="help-card">
             <h4>Custom Notices</h4>
-            <p>Manually track layoffs that may not appear in official WARN databases yet.</p>
+            <p>Add recruiter-relevant notices that may not be in WARN yet.</p>
             <dl class="help-list">
-              <dt>Employer Name</dt>
-              <dd>The name of the healthcare facility or organization (required).</dd>
-              <dt>State</dt>
-              <dd>The state where the layoff is occurring (required).</dd>
-              <dt>Affected Employees</dt>
-              <dd>Estimated number of employees affected by the layoff.</dd>
-              <dt>Notice/Layoff Dates</dt>
-              <dd>When the notice was filed and when layoffs are expected to occur.</dd>
+              <dt>Required Fields</dt>
+              <dd>Employer Name and State are required to save.</dd>
+              <dt>Optional Fields</dt>
+              <dd>Affected employees, notice date, layoff date, location, and notes provide richer context.</dd>
+              <dt>Use Case</dt>
+              <dd>Track internal intelligence and local leads alongside official notices.</dd>
             </dl>
           </div>
           <div class="help-card">
             <h4>Projects</h4>
-            <p>Organize notices into projects for tracking recruiting opportunities.</p>
+            <p>Group notices into actionable recruiting campaigns.</p>
             <dl class="help-list">
-              <dt>Create Project</dt>
-              <dd>Click "+ New Project" to create a named collection. Add a description and color tag for easy identification.</dd>
-              <dt>Save to Project</dt>
-              <dd>Click the folder icon on any notice card to save it to one of your projects.</dd>
-              <dt>View Project</dt>
-              <dd>Click on a project card to see all saved notices and manage the project.</dd>
-            </dl>
-          </div>
-            <div class="help-card">
-              <h4>Interactive Layoff Weather Map</h4>
-              <p>Visual overview of layoff activity across the United States with interactive state selection.</p>
-            <dl class="help-list">
-              <dt>Fog Intensity</dt>
-              <dd>Darker shading indicates higher layoff activity in that state. Green = low, yellow = moderate, red = high activity.</dd>
-              <dt>Hover</dt>
-              <dd>Hover over any state to see a tooltip with the state name and number of notices.</dd>
-              <dt>Click</dt>
-              <dd>Click a state to filter the notice feed by that state.</dd>
-              <dt>Right-Click</dt>
-              <dd>Right-click a state to set it as your Home State (glows golden). Right-click again to clear.</dd>
-                <dt>Double-Click</dt>
-                <dd>Double-click any state to open the State Beacon module for that state. If a Home State is set, it will be pre-selected.</dd>
-                <dt>Long-Press (2 sec)</dt>
-                <dd>Press and hold on your Home State for 2 seconds to highlight the top 5 recruiting target states (ranked 1–5 on the map).</dd>
-                <dt>View Toggle</dt>
-                <dd>Switch between Map View and Bar Chart View using the toggle buttons above the map.</dd>
-              <dt>Scope Toggle</dt>
-              <dd>Switch between Healthcare-only notices and All notices using the scope buttons.</dd>
-              </dl>
-            </div>
-          <div class="help-card">
-            <h4>Update Cadence</h4>
-            <p>How often key modules refresh so you know what is live vs. historical.</p>
-            <dl class="help-list">
-                <dt>Layoff Notices</dt>
-                <dd>Refreshed every 6 hours from state WARN sources.</dd>
-                <dt>Daily News Feed</dt>
-                <dd>Headlines refresh every 6 hours.</dd>
-                <dt>Strategic Salary Benchmarks</dt>
-                <dd>Home State salary benchmarks refresh every 7 days.</dd>
-              <dt>Nursing Programs</dt>
-              <dd>Updated when source catalogs publish changes.</dd>
+              <dt>Create</dt>
+              <dd>Use + New Project and add owner, description, and color tag.</dd>
+              <dt>Save Notices</dt>
+              <dd>Use the folder icon on any notice card to add it to a project.</dd>
+              <dt>Manage + Export</dt>
+              <dd>Open a project to review notices and export CSV or JSON.</dd>
             </dl>
           </div>
           <div class="help-card">
-            <h4>Relocation Scale</h4>
-            <p>Used in the Out-of-State Factors panel and target-state ranking.</p>
+            <h4>Daily News Feed</h4>
+            <p>Monitor market headlines that may impact recruiting outreach.</p>
             <dl class="help-list">
-              <dt>What it measures</dt>
-              <dd>Likelihood a state supplies relocating nurses (0–100 scale). Higher scores = stronger inbound RN migration signal.</dd>
-              <dt>Primary source</dt>
-              <dd>HRSA nurse migration destination shares (RN-focused).</dd>
-              <dt>Fallbacks</dt>
-              <dd>If RN data is missing, it falls back to clinical migration (LPN proxy) and then general population migration.</dd>
-              <dt>Blended score</dt>
-              <dd>When available, RN migration is blended with general migration (70/30) and then min-max scaled across states.</dd>
-              <dt>Refresh</dt>
-              <dd>Updated every 7 days.</dd>
+              <dt>Date Window</dt>
+              <dd>Switch between last 3, 7, 14, 30, or 90 days.</dd>
+              <dt>Closures Filter</dt>
+              <dd>Toggle Closures to focus on closure, layoff, and at-risk headlines.</dd>
+              <dt>Export</dt>
+              <dd>Copy filtered headlines and links to clipboard for quick sharing.</dd>
+              <dt>Show More</dt>
+              <dd>Expand the article list when more items are available.</dd>
             </dl>
           </div>
           <div class="help-card">
-            <h4>Notice Cards</h4>
-            <p>Each card in the Recruiter Signal Feed represents a WARN notice.</p>
+            <h4>Interactive Map and Tabs</h4>
+            <p>Switch context by dataset and visualize activity across states.</p>
             <dl class="help-list">
-              <dt>Impact Score Badge</dt>
-              <dd>Color-coded badge showing nursing impact likelihood. Green = low, yellow = medium, red = high.</dd>
-              <dt>Click to Expand</dt>
-              <dd>Click any notice card to see full details in the Notice Detail panel on the right.</dd>
-              <dt>Save Icon</dt>
-              <dd>Click the folder icon to add the notice to a project for tracking.</dd>
+              <dt>Tabs</dt>
+              <dd>Layoff Map, Rural Hospitals, and Salary each present different state intelligence views.</dd>
+              <dt>View Toggle</dt>
+              <dd>Switch between geographic map view and ranked bar chart view.</dd>
+              <dt>Scope</dt>
+              <dd>Use Healthcare vs All to control layoff-map signal scope.</dd>
+              <dt>State Interactions</dt>
+              <dd>Hover for details, click to filter, right-click to set Home State, double-click to open State Beacon, and long-press Home State to rank top targets.</dd>
+            </dl>
+          </div>
+          <div class="help-card">
+            <h4>Map Tools</h4>
+            <p>Use contextual controls for targeting and comparison workflows.</p>
+            <dl class="help-list">
+              <dt>Target Mode</dt>
+              <dd>Toggle target-state workflow controls on the map.</dd>
+              <dt>Home State / Target State Buttons</dt>
+              <dd>Open dedicated modules directly from map controls when available.</dd>
+              <dt>Factors Panel</dt>
+              <dd>Open Out of State Factors to compare relocation and migration signals.</dd>
+              <dt>Bonus Factor</dt>
+              <dd>Launch Offer Builder for compensation package analysis.</dd>
+              <dt>Hospital Search + Clear</dt>
+              <dd>Find facilities quickly and clear state selections in one click.</dd>
+            </dl>
+          </div>
+          <div class="help-card">
+            <h4>Premium Intelligence</h4>
+            <p>Prioritize outreach with signal summaries and recruiter calculators.</p>
+            <dl class="help-list">
+              <dt>Signal Panels</dt>
+              <dd>Review early-warning alerts, workforce risk heatmap, talent opportunity signals, and employer behavior watchlist.</dd>
+              <dt>Scenario Calculator</dt>
+              <dd>Estimate staffing displacement for a single facility using beds, setting, and planning horizon.</dd>
+              <dt>State Calibration</dt>
+              <dd>Compare recruiter state vs target RN state to generate talking points and objection handling.</dd>
+            </dl>
+          </div>
+          <div class="help-card">
+            <h4>Strategic Market Review</h4>
+            <p>Expand this section for executive-level market intelligence.</p>
+            <dl class="help-list">
+              <dt>What You Get</dt>
+              <dd>Salary benchmarks, workforce projections, and market context cards.</dd>
+              <dt>How to Use</dt>
+              <dd>Use outputs for planning discussions, leadership updates, and campaign prioritization.</dd>
             </dl>
           </div>
           <div class="help-card">
             <h4>Modules Menu</h4>
-            <p>Access specialized tools from the Modules dropdown in the top navigation bar.</p>
+            <p>Open deeper tools from the top-bar Modules menu.</p>
             <dl class="help-list">
               <dt>Accredited Nursing Programs</dt>
-              <dd>Search and filter accredited nursing programs by state, level (ADN, BSN, MSN), and accreditor (ACEN, CCNE, CNEA). Includes Nursys.com link for RN license verification.</dd>
-              <dt>State Beacon</dt>
-              <dd>Comprehensive state intelligence module for recruiters. View hospital rankings, market data, competition analysis, and candidate insights for any state.</dd>
-              <dt>Home State</dt>
-              <dd>Quick access to your designated home state's beacon data. Set your home state by right-clicking on the weather map.</dd>
+              <dd>Search by state, level, and accreditor with direct verification links.</dd>
+              <dt>State Beacon + Home State</dt>
+              <dd>Deep intelligence on facilities, recruiting conditions, and pitch guidance.</dd>
+              <dt>Target State + Master Export</dt>
+              <dd>Compare target markets and generate downloadable multi-sheet reports.</dd>
             </dl>
           </div>
           <div class="help-card">
-            <h4>State Beacon Module</h4>
-            <p>Deep-dive intelligence for recruiting in specific states. Access via Modules menu or double-click a state on the map.</p>
+            <h4>State Beacon and Target State</h4>
+            <p>Run detailed recruiter analysis for candidate conversations.</p>
             <dl class="help-list">
-              <dt>Facilities Tab</dt>
-              <dd>View Hospital Quality Rankings (Top 10 and Lowest 10 based on US News &amp; Newsweek scores), local news, and complete facility listings including hospitals and clinics.</dd>
-              <dt>Recruiting Tab</dt>
-              <dd>Access competition analysis, talent pipeline data (nursing programs, residencies), and candidate market insights organized by metro area.</dd>
-              <dt>Candidate Pitch Tab</dt>
-              <dd>Find talking points, pros/cons for relocation, local attractions, potential objections with responses, and export options (JSON/CSV).</dd>
-              <dt>Home &amp; Target State</dt>
-              <dd>Select your Home State and Target State at the top to customize insights for candidate conversations about relocation.</dd>
+              <dt>State Beacon Tabs</dt>
+              <dd>Use Facilities, Recruiting, and Candidate Pitch for market-to-message workflow.</dd>
+              <dt>Target State Explorer</dt>
+              <dd>Review metros, top facilities, feeder programs, and side-by-side comparisons.</dd>
+              <dt>Exports</dt>
+              <dd>Export selected or all metro results in CSV, Excel, or PDF formats.</dd>
             </dl>
           </div>
           <div class="help-card">
-            <h4>Target State Module</h4>
-            <p>Explore and compare target states for recruiting outreach from your home state.</p>
+            <h4>Master Export and Pipeline Insights</h4>
+            <p>Create a complete state package for recruiting strategy and execution.</p>
             <dl class="help-list">
-              <dt>Open Target State</dt>
-              <dd>Access via Modules &rarr; Target State, or long-press your Home State on the map to highlight the top 5 targets.</dd>
-              <dt>Metro Explorer</dt>
-              <dd>Browse major metro areas in the target state with nurse demand estimates, top facilities, and feeder nursing programs.</dd>
-              <dt>Comparison View</dt>
-              <dd>Side-by-side comparison of cost of living, compensation, licensure compacts, and quality-of-life factors between your home state and the target.</dd>
-              <dt>Out-of-State Factors</dt>
-              <dd>View relocation score, licensure reciprocity, and migration trend data that influence candidate willingness to relocate.</dd>
+              <dt>Included Data</dt>
+              <dd>WARN, metro intelligence, beacon data, rural risk signals, salary benchmarks, and outbound pipeline metrics.</dd>
+              <dt>Progress Tracking</dt>
+              <dd>Use the export progress bar to monitor generation status.</dd>
+              <dt>Pipeline Model</dt>
+              <dd>Candidate estimates combine migration, program output, and employment context for outbound targeting.</dd>
             </dl>
           </div>
           <div class="help-card">
-            <h4>Master Export</h4>
-            <p>Generate comprehensive reports combining all intelligence for a target state in one download.</p>
+            <h4>Data Cadence</h4>
+            <p>Know which modules are near real-time vs periodic refreshes.</p>
             <dl class="help-list">
-              <dt>Open Master Export</dt>
-              <dd>Access via Modules &rarr; Master Export. Select a target state and choose your export format.</dd>
-              <dt>Export Formats</dt>
-              <dd>Download as CSV (spreadsheet-ready), Excel (.xlsx with formatted sheets), or PDF (presentation-ready report).</dd>
-              <dt>What's Included</dt>
-              <dd>WARN notices, metro area data, state beacon intelligence, rural hospital listings, salary benchmarks, and outbound candidate pipeline insights.</dd>
-              <dt>Progress Bar</dt>
-              <dd>A live progress bar tracks each section as it compiles. The export button re-enables automatically when complete.</dd>
-            </dl>
-          </div>
-          <div class="help-card">
-            <h4>Outbound Insights &amp; Candidate Pipeline</h4>
-            <p>Indiana-to-target-state nurse migration intelligence powered by ACS and HRSA data.</p>
-            <dl class="help-list">
-              <dt>What It Shows</dt>
-              <dd>Estimated annual nurse migration from Indiana to a target state, broken down by metro area with feeder nursing programs.</dd>
-              <dt>Candidate Model</dt>
-              <dd>Quantitative model using grad output, brain-drain rate, relocation preference, and healthcare employment ratio to estimate the recruitable candidate pool.</dd>
-              <dt>Where It Appears</dt>
-              <dd>Visible in State Beacon &rarr; Recruiting tab for states with pipeline data (FL, KY, NY, MI, TX), and included in Master Export downloads.</dd>
-              <dt>Data Sources</dt>
-              <dd>U.S. Census ACS state-to-state migration, HRSA Area Health Resource Files, IPEDS nursing completions, and BLS OES healthcare employment.</dd>
+              <dt>Layoff Notices + News</dt>
+              <dd>Refreshed every 6 hours.</dd>
+              <dt>Strategic Salary and Relocation Signals</dt>
+              <dd>Refreshed on weekly cadence.</dd>
+              <dt>Program and Source Catalog Data</dt>
+              <dd>Updated when upstream catalogs publish new records.</dd>
             </dl>
           </div>
         </div>
       </div>
     </section>
-
     <!-- Projects Section -->
     <section class="projects-section collapsible-section collapsed" data-collapsible="true">
       <div class="section-header">
@@ -584,12 +560,12 @@
     <div id="bf-breakdown-section" class="bf-breakdown-section" style="display:none;">
       <div class="bf-breakdown-header">
         <div class="bf-breakdown-header-text">
-          <h4 class="bf-breakdown-title">Offer Builder — State Breakdown</h4>
+          <h4 class="bf-breakdown-title">Offer Builder â€” State Breakdown</h4>
           <p class="bf-breakdown-subtitle" id="bf-breakdown-subtitle"></p>
         </div>
         <button type="button" class="bf-breakdown-toggle" id="bf-breakdown-toggle">
           <span id="bf-toggle-label">Collapse</span>
-          <span class="bf-toggle-icon" id="bf-toggle-icon">−</span>
+          <span class="bf-toggle-icon" id="bf-toggle-icon">âˆ’</span>
         </button>
       </div>
       <div class="bf-breakdown-body" id="bf-breakdown-body">
@@ -679,7 +655,7 @@
       <div class="insight-row-half">
         <div class="insight-card">
           <h4>Scenario Calculator (Facility Only)</h4>
-          <p class="insight-subtitle">Facility-level estimate — not region-wide. Use for a single hospital or SNF.</p>
+          <p class="insight-subtitle">Facility-level estimate â€” not region-wide. Use for a single hospital or SNF.</p>
           <div class="forecast-grid">
             <label>
               Beds closed
@@ -873,7 +849,7 @@
                   <span class="beacon-select-label">From</span>
                   <select id="state-beacon-home" class="beacon-select"></select>
                 </div>
-                <span class="beacon-arrow">→</span>
+                <span class="beacon-arrow">â†’</span>
                 <div class="beacon-select-group">
                   <span class="beacon-select-label">To</span>
                   <select id="state-beacon-state" class="beacon-select"></select>
@@ -898,7 +874,7 @@
             <button type="button" class="beacon-filters-btn" id="beacon-filters-toggle">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M7 12h10M10 18h4"/></svg>
               Filters
-              <span class="beacon-filters-chevron">▼</span>
+              <span class="beacon-filters-chevron">â–¼</span>
             </button>
             <div class="beacon-quick-tags">
               <span class="beacon-tag" id="beacon-tag-specialty">General RN</span>
@@ -1179,7 +1155,7 @@
           <!-- Right Panel: Metro Details -->
           <div class="home-state-detail-panel" id="home-state-detail-panel">
             <div class="home-state-detail-placeholder" id="home-state-detail-placeholder">
-              <div class="placeholder-icon">🏥</div>
+              <div class="placeholder-icon">ðŸ¥</div>
               <h4>Select a Metro Area</h4>
               <p>Click on a city from the map to view detailed healthcare market information including hospitals, competition, and salary data.</p>
             </div>
@@ -1312,7 +1288,7 @@
           <!-- Right Panel: Metro Details -->
           <div class="target-state-detail-panel" id="target-state-detail-panel">
             <div class="target-state-detail-placeholder" id="target-state-detail-placeholder">
-              <div class="placeholder-icon">🎯</div>
+              <div class="placeholder-icon">ðŸŽ¯</div>
               <h4>Select a Metro Area</h4>
               <p id="target-state-placeholder-text">Click on a city from the map to view detailed healthcare market information including hospitals, competition, and salary data for Kentucky.</p>
             </div>
@@ -1374,12 +1350,12 @@
                 Export
               </button>
               <div class="save-dropdown export-dropdown-menu" id="target-state-export-menu">
-                <div class="save-dropdown-item" data-format="csv" data-scope="selected">CSV • Selected Metro</div>
-                <div class="save-dropdown-item" data-format="csv" data-scope="all">CSV • All Metros</div>
-                <div class="save-dropdown-item" data-format="excel" data-scope="selected">Excel • Selected Metro</div>
-                <div class="save-dropdown-item" data-format="excel" data-scope="all">Excel • All Metros</div>
-                <div class="save-dropdown-item" data-format="pdf" data-scope="selected">PDF • Selected Metro</div>
-                <div class="save-dropdown-item" data-format="pdf" data-scope="all">PDF • All Metros</div>
+                <div class="save-dropdown-item" data-format="csv" data-scope="selected">CSV â€¢ Selected Metro</div>
+                <div class="save-dropdown-item" data-format="csv" data-scope="all">CSV â€¢ All Metros</div>
+                <div class="save-dropdown-item" data-format="excel" data-scope="selected">Excel â€¢ Selected Metro</div>
+                <div class="save-dropdown-item" data-format="excel" data-scope="all">Excel â€¢ All Metros</div>
+                <div class="save-dropdown-item" data-format="pdf" data-scope="selected">PDF â€¢ Selected Metro</div>
+                <div class="save-dropdown-item" data-format="pdf" data-scope="all">PDF â€¢ All Metros</div>
               </div>
             </div>
           </div>
@@ -1455,7 +1431,7 @@
         </div>
       </div>
       <div class="footer-meta">
-        <span>© 2026 YGamify. All rights reserved.</span>
+        <span>Â© 2026 YGamify. All rights reserved.</span>
         <span class="footer-made-by">Made by YGamify</span>
       </div>
       <div class="footer-legal">
@@ -1501,7 +1477,7 @@
       </div>
     </footer>
 
-    <!-- Project Modals — placed at body level so z-index is not trapped by section stacking contexts -->
+    <!-- Project Modals â€” placed at body level so z-index is not trapped by section stacking contexts -->
     <!-- New Project Modal -->
     <div class="modal-overlay" id="project-modal">
       <div class="modal-card">
@@ -1575,7 +1551,7 @@
     <div class="modal-overlay" id="bonus-factor-modal">
       <div class="modal-card bf-modal-card">
         <div class="modal-header">
-          <h3>Bonus Factor — Offer Builder</h3>
+          <h3>Bonus Factor â€” Offer Builder</h3>
           <button class="modal-close" id="bf-modal-close">&times;</button>
         </div>
         <div class="modal-body">
@@ -1585,7 +1561,7 @@
             <div class="bf-row">
               <div class="bf-field bf-field-lg">
                 <label class="bf-label">Home State</label>
-                <select id="bf-home-state"><option value="">Select state…</option></select>
+                <select id="bf-home-state"><option value="">Select stateâ€¦</option></select>
               </div>
               <div class="bf-field bf-field-sm">
                 <label class="bf-label">Contract (mo)</label>
@@ -1613,7 +1589,7 @@
                   <input type="number" id="bf-signon" value="0" min="0" step="500" /></div>
               </div>
             </div>
-            <p class="bf-hint">Relo amortized over 12 months · Sign-on amortized over contract length</p>
+            <p class="bf-hint">Relo amortized over 12 months Â· Sign-on amortized over contract length</p>
           </div>
 
           <!-- Section 3: Differentials -->
@@ -1643,9 +1619,10 @@
       </div>
     </div>
 
-    <script src="./app.js?v=4.7"></script>
+    <script src="./app.js?v=5.0"></script>
   </body>
 </html>
+
 
 
 
