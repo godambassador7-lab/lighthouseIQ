@@ -9305,6 +9305,7 @@ const targetStateStatPrograms = document.getElementById('target-state-stat-progr
 const targetStateStatCompact = document.getElementById('target-state-stat-compact');
 const targetStateMetroMap = document.getElementById('target-state-metro-map');
 const targetStateDetailPlaceholder = document.getElementById('target-state-detail-placeholder');
+const targetStatePlaceholderText = document.getElementById('target-state-placeholder-text');
 const targetStateDetailContent = document.getElementById('target-state-detail-content');
 const targetStateMetroName = document.getElementById('target-state-metro-name');
 const targetStateMetroBadge = document.getElementById('target-state-metro-badge');
@@ -9324,12 +9325,13 @@ const renderTargetState = async (stateAbbrev = TARGET_STATE_DEFAULT) => {
 
   const entry = getBeaconEntry(stateAbbrev);
   const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === stateAbbrev);
-  const metroData = STATE_METRO_DATA[stateAbbrev] || STATE_METRO_DATA.IN;
+  const metroData = await getTargetStateMetroData(stateAbbrev);
   const metros = metroData?.metros || [];
 
   // Update header
   if (targetStateName) targetStateName.textContent = entry.name;
   if (targetStateAbbr) targetStateAbbr.textContent = stateAbbrev;
+  if (targetStatePlaceholderText) targetStatePlaceholderText.textContent = `Click on a city from the map to view detailed healthcare market information including hospitals, competition, and salary data for ${entry.name}.`;
 
   // Update stats
   const totalHospitals = metros.reduce((sum, m) => sum + (m.hospitals?.length || 0), 0);
@@ -9425,7 +9427,7 @@ const selectTargetStateMetro = (metro, stateAbbrev) => {
   }
 
   // Render salary data
-  const metroData = STATE_METRO_DATA[stateAbbrev] || STATE_METRO_DATA.IN || { salaryMeta: {} };
+  const metroData = targetStateMetroDataCache[stateAbbrev] || { salaryMeta: {} };
   const salaryMeta = metroData?.salaryMeta || {};
   const salary = metro.salary || {};
   const breakdown = Array.isArray(salary.breakdown)
