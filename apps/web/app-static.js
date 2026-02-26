@@ -1965,7 +1965,7 @@ const updateBonusMapColors = () => {
 
     let level;
     if (isDelta) {
-      // Split: negatives map to 0–4, positives to 5–9, zero to 5
+      // Split: negatives map to 0ï¿½4, positives to 5ï¿½9, zero to 5
       if (val < 0) {
         const negVals = values.filter(v => v < 0);
         const minNeg = Math.min(...negVals);
@@ -3533,7 +3533,7 @@ const initLightworker = () => {
       ALL_STATES.forEach(s => {
         const opt = document.createElement('option');
         opt.value = s;
-        opt.textContent = `${s} — ${STATE_NAMES[s] || s}`;
+        opt.textContent = `${s} ï¿½ ${STATE_NAMES[s] || s}`;
         homeSelect.appendChild(opt);
       });
     }
@@ -4373,7 +4373,7 @@ const renderBonusBreakdown = () => {
     const homeRank = rows.findIndex(r => r.state === homeState) + 1;
     parts.push(`${STATE_NAMES[homeState]} home rank: #${homeRank}`);
   }
-  if (subtitleEl) subtitleEl.textContent = parts.join(' · ');
+  if (subtitleEl) subtitleEl.textContent = parts.join(' ï¿½ ');
 
   tableWrap.innerHTML = `
     <table class="bf-breakdown-table">
@@ -4392,12 +4392,12 @@ const renderBonusBreakdown = () => {
           const isHome = row.state === homeState;
           const dot    = palette[getLevel(row)] ?? '#e3f2fd';
           const dv     = Number.isFinite(row.delta) ? row.delta : null;
-          const dStr   = dv !== null ? `${dv >= 0 ? '+' : ''}$${Math.round(dv).toLocaleString()}` : '—';
+          const dStr   = dv !== null ? `${dv >= 0 ? '+' : ''}$${Math.round(dv).toLocaleString()}` : 'ï¿½';
           const dCls   = dv !== null && dv >= 0 ? 'bf-delta-positive' : 'bf-delta-negative';
           return `
             <tr class="${isHome ? 'bf-home-row' : ''}">
               <td>${i + 1}</td>
-              <td><span class="bf-color-dot" style="background:${dot};"></span>${escapeHtml(row.name)} (${row.state})${isHome ? ' · home' : ''}</td>
+              <td><span class="bf-color-dot" style="background:${dot};"></span>${escapeHtml(row.name)} (${row.state})${isHome ? ' ï¿½ home' : ''}</td>
               <td>$${Math.round(row.base).toLocaleString()}</td>
               <td>+$${Math.round(row.packageAdd).toLocaleString()}</td>
               <td><strong>$${Math.round(row.projected).toLocaleString()}</strong></td>
@@ -4422,7 +4422,7 @@ const initBonusFactor = () => {
   const homeStateSelect = document.getElementById('bf-home-state');
   if (homeStateSelect) {
     homeStateSelect.innerHTML =
-      '<option value="">Select state…</option>' +
+      '<option value="">Select stateï¿½</option>' +
       Object.entries(STATE_NAMES)
         .sort((a, b) => a[1].localeCompare(b[1]))
         .map(([code, name]) => `<option value="${code}">${name} (${code})</option>`)
@@ -4561,7 +4561,7 @@ const initHospitalSearch = () => {
     dropdownEl.innerHTML = matches.map((h, i) => `
       <div class="hospital-dropdown-item" data-idx="${i}">
         <div class="hdi-name">${escapeHtml(h.name)} <span style="font-weight:400;color:var(--muted);">(${escapeHtml(h.state)})</span></div>
-        <div class="hdi-meta">Rank #${h.rank} in state · Score: ${h.qualityScore || '--'}${h.system ? ' · ' + escapeHtml(h.system) : ''}</div>
+        <div class="hdi-meta">Rank #${h.rank} in state ï¿½ Score: ${h.qualityScore || '--'}${h.system ? ' ï¿½ ' + escapeHtml(h.system) : ''}</div>
       </div>
     `).join('');
     dropdownEl.style.display = 'block';
@@ -4586,7 +4586,7 @@ const initHospitalSearch = () => {
     const val = mapHospitalSearchInput.value.trim();
     if (val.length < 2) { hideDropdown(); return; }
     if (!hospitalRankingsData && dropdownEl) {
-      dropdownEl.innerHTML = '<div class="hospital-dropdown-loading">Loading hospital data…</div>';
+      dropdownEl.innerHTML = '<div class="hospital-dropdown-loading">Loading hospital dataï¿½</div>';
       dropdownEl.style.display = 'block';
     }
     debounceTimer = setTimeout(async () => {
@@ -8727,6 +8727,7 @@ const STATE_METRO_DATA = {
   KY: KY_DETAILS.KY
 };
 
+const TARGET_STATE_TEMPLATE_STATE = 'IN';
 const targetStateMetroDataCache = {};
 
 const buildMetroRowsFromFetchedNotices = (stateAbbrev, notices) => {
@@ -9323,7 +9324,7 @@ const renderTargetState = async (stateAbbrev = TARGET_STATE_DEFAULT) => {
 
   const entry = getBeaconEntry(stateAbbrev);
   const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === stateAbbrev);
-  const metroData = await getTargetStateMetroData(stateAbbrev);
+  const metroData = STATE_METRO_DATA[stateAbbrev] || STATE_METRO_DATA.IN;
   const metros = metroData?.metros || [];
 
   // Update header
@@ -9424,7 +9425,7 @@ const selectTargetStateMetro = (metro, stateAbbrev) => {
   }
 
   // Render salary data
-  const metroData = targetStateMetroDataCache[stateAbbrev] || { salaryMeta: {} };
+  const metroData = STATE_METRO_DATA[stateAbbrev] || STATE_METRO_DATA.IN || { salaryMeta: {} };
   const salaryMeta = metroData?.salaryMeta || {};
   const salary = metro.salary || {};
   const breakdown = Array.isArray(salary.breakdown)
