@@ -8729,6 +8729,17 @@ const STATE_METRO_DATA = {
 
 const TARGET_STATE_TEMPLATE_STATE = 'IN';
 const targetStateMetroDataCache = {};
+let targetStateMetrosData = null;
+
+const loadTargetStateMetrosData = async () => {
+  if (targetStateMetrosData) return targetStateMetrosData;
+  try {
+    targetStateMetrosData = await fetchJson(`${DATA_BASE_URL}/target-state-metros.json?ts=${Date.now()}`);
+  } catch (err) {
+    targetStateMetrosData = null;
+  }
+  return targetStateMetrosData;
+};
 
 const buildMetroRowsFromFetchedNotices = (stateAbbrev, notices) => {
   const stateName = STATE_NAMES[stateAbbrev] || stateAbbrev;
@@ -8843,6 +8854,12 @@ const buildFetchedTargetStateMetroData = (stateAbbrev) => {
 };
 
 const getTargetStateMetroData = async (stateAbbrev) => {
+  const fetchedDataset = await loadTargetStateMetrosData();
+  const fetchedState = fetchedDataset?.states?.[stateAbbrev];
+  if (fetchedState?.metros?.length) {
+    return fetchedState;
+  }
+
   if (!hospitalRankingsLoaded) {
     await loadHospitalRankingsData();
   }

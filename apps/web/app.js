@@ -3799,6 +3799,17 @@ const buildHomeStateExportRows = (data) => {
 const targetStateMetroDataCache = {};
 const targetStateMetroDataLoadedAt = {};
 const TARGET_STATE_REFRESH_MS = STATE_BEACON_REFRESH_MS;
+let targetStateMetrosData = null;
+
+const loadTargetStateMetrosData = async () => {
+  if (targetStateMetrosData) return targetStateMetrosData;
+  try {
+    targetStateMetrosData = await fetchJson(`/data/target-state-metros.json?ts=${Date.now()}`);
+  } catch (err) {
+    targetStateMetrosData = null;
+  }
+  return targetStateMetrosData;
+};
 
 const loadTargetStateNotices = async (stateAbbrev) => {
   try {
@@ -3881,6 +3892,12 @@ const buildTargetStateMetroRows = (stateAbbrev, notices) => {
 };
 
 const getTargetStateMetroData = async (stateAbbrev) => {
+  const fetchedDataset = await loadTargetStateMetrosData();
+  const fetchedState = fetchedDataset?.states?.[stateAbbrev];
+  if (fetchedState?.metros?.length) {
+    return fetchedState;
+  }
+
   const now = Date.now();
   const cached = targetStateMetroDataCache[stateAbbrev];
   const cachedAt = targetStateMetroDataLoadedAt[stateAbbrev] || 0;
