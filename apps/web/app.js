@@ -3901,7 +3901,7 @@ const renderTargetState = async (stateAbbrev = TARGET_STATE_DEFAULT) => {
   const entry = getBeaconEntry(stateAbbrev);
   const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === stateAbbrev);
   const metroData = await getTargetStateMetroData(stateAbbrev);
-  const metros = metroData?.metros || [];
+  const metros = metroData?.metros?.length ? metroData.metros : buildTargetStateMetroRows(stateAbbrev, []);
 
   if (targetStateName) targetStateName.textContent = entry.name;
   if (targetStateAbbr) targetStateAbbr.textContent = stateAbbrev;
