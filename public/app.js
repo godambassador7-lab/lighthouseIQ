@@ -242,7 +242,7 @@ let programsRefreshPrompted = false;
 let stateBeaconData = null;
 let stateBeaconLoaded = false;
 let stateBeaconLoadedAt = 0;
-const STATE_BEACON_REFRESH_MS = 6 * 60 * 60 * 1000; // refresh beacon data every 6 hours
+const STATE_BEACON_REFRESH_MS = 30 * 60 * 1000; // refresh beacon data every 30 minutes
 let stateBeaconInputs = null;
 let stateNewsData = null;
 let stateNewsLoaded = false;
@@ -1965,7 +1965,7 @@ const updateBonusMapColors = () => {
 
     let level;
     if (isDelta) {
-      // Split: negatives map to 0-4, positives to 5-9, zero to 5
+      // Split: negatives map to 0ñ4, positives to 5ñ9, zero to 5
       if (val < 0) {
         const negVals = values.filter(v => v < 0);
         const minNeg = Math.min(...negVals);
@@ -2212,14 +2212,8 @@ const loadAllNotices = async () => {
   }
 };
 
-const loadStateNotices = async (state, forceRefresh = false) => {
-  if (!state) {
-    return [];
-  }
-  if (!forceRefresh && (stateNoticesCache.has(state) || stateNoticesLoading.has(state))) {
-    return stateNoticesCache.get(state) || [];
-  }
-  if (stateNoticesLoading.has(state)) {
+const loadStateNotices = async (state) => {
+  if (!state || stateNoticesCache.has(state) || stateNoticesLoading.has(state)) {
     return stateNoticesCache.get(state) || [];
   }
   stateNoticesLoading.add(state);
@@ -3539,7 +3533,7 @@ const initLightworker = () => {
       ALL_STATES.forEach(s => {
         const opt = document.createElement('option');
         opt.value = s;
-        opt.textContent = `${s} - ${STATE_NAMES[s] || s}`;
+        opt.textContent = `${s} ó ${STATE_NAMES[s] || s}`;
         homeSelect.appendChild(opt);
       });
     }
@@ -4379,7 +4373,7 @@ const renderBonusBreakdown = () => {
     const homeRank = rows.findIndex(r => r.state === homeState) + 1;
     parts.push(`${STATE_NAMES[homeState]} home rank: #${homeRank}`);
   }
-  if (subtitleEl) subtitleEl.textContent = parts.join(' | ');
+  if (subtitleEl) subtitleEl.textContent = parts.join(' ∑ ');
 
   tableWrap.innerHTML = `
     <table class="bf-breakdown-table">
@@ -4398,12 +4392,12 @@ const renderBonusBreakdown = () => {
           const isHome = row.state === homeState;
           const dot    = palette[getLevel(row)] ?? '#e3f2fd';
           const dv     = Number.isFinite(row.delta) ? row.delta : null;
-          const dStr   = dv !== null ? `${dv >= 0 ? '+' : ''}$${Math.round(dv).toLocaleString()}` : '--';
+          const dStr   = dv !== null ? `${dv >= 0 ? '+' : ''}$${Math.round(dv).toLocaleString()}` : 'ó';
           const dCls   = dv !== null && dv >= 0 ? 'bf-delta-positive' : 'bf-delta-negative';
           return `
             <tr class="${isHome ? 'bf-home-row' : ''}">
               <td>${i + 1}</td>
-              <td><span class="bf-color-dot" style="background:${dot};"></span>${escapeHtml(row.name)} (${row.state})${isHome ? ' | home' : ''}</td>
+              <td><span class="bf-color-dot" style="background:${dot};"></span>${escapeHtml(row.name)} (${row.state})${isHome ? ' ∑ home' : ''}</td>
               <td>$${Math.round(row.base).toLocaleString()}</td>
               <td>+$${Math.round(row.packageAdd).toLocaleString()}</td>
               <td><strong>$${Math.round(row.projected).toLocaleString()}</strong></td>
@@ -4428,7 +4422,7 @@ const initBonusFactor = () => {
   const homeStateSelect = document.getElementById('bf-home-state');
   if (homeStateSelect) {
     homeStateSelect.innerHTML =
-      '<option value="">Select state...</option>' +
+      '<option value="">Select stateÖ</option>' +
       Object.entries(STATE_NAMES)
         .sort((a, b) => a[1].localeCompare(b[1]))
         .map(([code, name]) => `<option value="${code}">${name} (${code})</option>`)
@@ -4567,7 +4561,7 @@ const initHospitalSearch = () => {
     dropdownEl.innerHTML = matches.map((h, i) => `
       <div class="hospital-dropdown-item" data-idx="${i}">
         <div class="hdi-name">${escapeHtml(h.name)} <span style="font-weight:400;color:var(--muted);">(${escapeHtml(h.state)})</span></div>
-        <div class="hdi-meta">Rank #${h.rank} in state ¬∑ Score: ${h.qualityScore || '--'}${h.system ? ' ¬∑ ' + escapeHtml(h.system) : ''}</div>
+        <div class="hdi-meta">Rank #${h.rank} in state ∑ Score: ${h.qualityScore || '--'}${h.system ? ' ∑ ' + escapeHtml(h.system) : ''}</div>
       </div>
     `).join('');
     dropdownEl.style.display = 'block';
@@ -4592,7 +4586,7 @@ const initHospitalSearch = () => {
     const val = mapHospitalSearchInput.value.trim();
     if (val.length < 2) { hideDropdown(); return; }
     if (!hospitalRankingsData && dropdownEl) {
-      dropdownEl.innerHTML = '<div class="hospital-dropdown-loading">Loading hospital data‚Ä¶</div>';
+      dropdownEl.innerHTML = '<div class="hospital-dropdown-loading">Loading hospital dataÖ</div>';
       dropdownEl.style.display = 'block';
     }
     debounceTimer = setTimeout(async () => {
@@ -6722,23 +6716,7 @@ const enrichBeaconEntry = (state, entry, notices, programsInState) => {
     .map((program) => normalizeProgram(program).name)
     .filter(Boolean)
     .slice(0, 8);
-  const indianaFeederSchools = state === 'CA'
-    ? getTopInstitutionsForState('IN', 3).map((entry) => entry.name).filter(Boolean)
-    : [];
-  const indianaFeederText = indianaFeederSchools.length
-    ? `Indiana feeder schools: ${indianaFeederSchools.join(', ')}`
-    : 'Indiana feeder schools: Indiana University, Purdue University, Ivy Tech Community College';
-  const candidateMetroFallback = buildFallbackCandidateMetroTable(notices, state, inferredMetros)
-    .map((row) => {
-      if (state !== 'CA') return row;
-      const feederSchools = String(row.feederSchools || '').trim();
-      if (!feederSchools) return { ...row, feederSchools: indianaFeederText };
-      if (/indiana feeder schools:/i.test(feederSchools)) return row;
-      return { ...row, feederSchools: `${feederSchools}; ${indianaFeederText}` };
-    });
-  const majorProgramsWithIndiana = state === 'CA' && indianaFeederSchools.length
-    ? Array.from(new Set([...majorProgramsFallback, ...indianaFeederSchools])).slice(0, 10)
-    : majorProgramsFallback;
+  const candidateMetroFallback = buildFallbackCandidateMetroTable(notices, state, inferredMetros);
 
   const competitionSystems = entry.competition?.systems?.length ? entry.competition.systems : inferredSystems;
   return {
@@ -6763,7 +6741,7 @@ const enrichBeaconEntry = (state, entry, notices, programsInState) => {
     },
     pipeline: {
       ...entry.pipeline,
-      majorPrograms: entry.pipeline?.majorPrograms?.length ? entry.pipeline.majorPrograms : majorProgramsWithIndiana,
+      majorPrograms: entry.pipeline?.majorPrograms?.length ? entry.pipeline.majorPrograms : majorProgramsFallback,
       residencies: entry.pipeline?.residencies?.length ? entry.pipeline.residencies : [
         'Nurse residency options vary by major health system.',
         'Onboarding timelines should be validated per facility.'
@@ -8750,8 +8728,6 @@ const STATE_METRO_DATA = {
 };
 
 const targetStateMetroDataCache = {};
-const targetStateMetroDataCacheLoadedAt = {};
-const TARGET_STATE_REFRESH_MS = STATE_BEACON_REFRESH_MS;
 
 const buildMetroRowsFromFetchedNotices = (stateAbbrev, notices) => {
   const stateName = STATE_NAMES[stateAbbrev] || stateAbbrev;
@@ -8866,20 +8842,18 @@ const buildFetchedTargetStateMetroData = (stateAbbrev) => {
 };
 
 const getTargetStateMetroData = async (stateAbbrev) => {
-  const now = Date.now();
-  const cached = targetStateMetroDataCache[stateAbbrev];
-  const cachedAt = targetStateMetroDataCacheLoadedAt[stateAbbrev] || 0;
-  const isFresh = cached && (now - cachedAt) < TARGET_STATE_REFRESH_MS;
-
-  if (isFresh) return cached;
-
-  if (!hospitalRankingsLoaded || (now - hospitalRankingsLoadedAt) >= STATE_BEACON_REFRESH_MS) {
-    await loadHospitalRankingsData((now - hospitalRankingsLoadedAt) >= STATE_BEACON_REFRESH_MS);
+  if (!hospitalRankingsLoaded) {
+    await loadHospitalRankingsData();
   }
-  await loadStateNotices(stateAbbrev, true);
-  await loadStateNotices(TARGET_STATE_TEMPLATE_STATE, true);
-  targetStateMetroDataCache[stateAbbrev] = buildFetchedTargetStateMetroData(stateAbbrev);
-  targetStateMetroDataCacheLoadedAt[stateAbbrev] = now;
+  if (!stateNoticesCache.has(stateAbbrev) && !allNoticesLoaded) {
+    await loadStateNotices(stateAbbrev);
+  }
+  if (!stateNoticesCache.has(TARGET_STATE_TEMPLATE_STATE) && !allNoticesLoaded) {
+    await loadStateNotices(TARGET_STATE_TEMPLATE_STATE);
+  }
+  if (!targetStateMetroDataCache[stateAbbrev]) {
+    targetStateMetroDataCache[stateAbbrev] = buildFetchedTargetStateMetroData(stateAbbrev);
+  }
   return targetStateMetroDataCache[stateAbbrev];
 };
 const TARGET_STATE_MONTHLY_LABOR_OVERRIDES = {
@@ -10729,7 +10703,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Target mode fallback √¢‚Ç¨‚Äù only attach if initViewToggle didn't already
+  // Target mode fallback ‚Äî only attach if initViewToggle didn't already
   const targetBtn = document.getElementById('map-target-mode-btn');
   if (targetBtn && !targetBtn.dataset.listenerAttached) {
     targetBtn.dataset.listenerAttached = 'true';
