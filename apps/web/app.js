@@ -3796,11 +3796,236 @@ const buildHomeStateExportRows = (data) => {
   return rows;
 };
 
-const buildTargetStateExport = (stateAbbrev, options = {}) => {
+const targetStateMetroDataCache = {};
+const targetStateMetroDataLoadedAt = {};
+const TARGET_STATE_REFRESH_MS = STATE_BEACON_REFRESH_MS;
+
+const loadTargetStateNotices = async (stateAbbrev) => {
+  try {
+    const response = await fetchJson(`/notices?state=${stateAbbrev}&limit=500`);
+    return Array.isArray(response?.notices) ? response.notices : [];
+  } catch (err) {
+    console.warn(`Target state notices unavailable for ${stateAbbrev}:`, err.message);
+    return [];
+  }
+};
+
+const buildTargetStateMetroRows = (stateAbbrev, notices) => {
+  const stateName = STATE_NAMES[stateAbbrev] || stateAbbrev;
+  const healthcare = (notices || []).filter((notice) => isHealthcareNotice(notice));
+  const byCity = groupBy(healthcare, (notice) => String(notice.city || '').trim() || stateName);
+  const entries = Array.from(byCity.entries())
+    .sort((a, b) => b[1].length - a[1].length)
+    .slice(0, 8);
+
+  if (!entries.length) {
+    return [{
+      name: `${stateName} Regional Hub`,
+      size: 'medium',
+      population: 'N/A',
+      competition: 'medium',
+      hospitals: [],
+      systems: [],
+      salary: { staffRN: '--', travelRN: '--', signOn: '--' },
+      factors: [{ text: `No recent healthcare notices found for ${stateName}.`, type: 'neutral' }]
+    }];
+  }
+
+  return entries.map(([city, items]) => {
+    const employerGroups = Array.from(
+      groupBy(items, (notice) => notice.employer_name || notice.employerName || 'Unknown employer').entries()
+    )
+      .map(([name, employerItems]) => ({
+        name,
+        notices: employerItems.length,
+        affected: employerItems.reduce((sum, n) => sum + Number(n.affectedCount || n.employees_affected || 0), 0),
+        system: employerItems.find((n) => n.parent_system)?.parent_system || name
+      }))
+      .sort((a, b) => b.affected - a.affected || b.notices - a.notices);
+
+    const hospitals = employerGroups.slice(0, 10).map((employer) => ({
+      name: employer.name,
+      system: employer.system,
+      score: '--',
+      beds: '--',
+      reviews: '--'
+    }));
+
+    const systems = Array.from(groupBy(employerGroups, (row) => row.system).entries())
+      .map(([name, rows]) => ({
+        name,
+        facilities: rows.length,
+        marketShare: `${Math.min(60, Math.max(8, rows.length * 8))}%`
+      }))
+      .sort((a, b) => b.facilities - a.facilities)
+      .slice(0, 6);
+
+    const competition = systems.length >= 4 ? 'high' : systems.length >= 2 ? 'medium' : 'low';
+    return {
+      name: city,
+      size: items.length >= 40 ? 'major' : items.length >= 16 ? 'medium' : 'small',
+      population: `${Math.max(120, items.length * 40)}K`,
+      competition,
+      hospitals,
+      systems,
+      salary: {
+        staffRN: 'Market-based',
+        travelRN: 'Market-based',
+        signOn: 'Varies by system'
+      },
+      factors: [
+        { text: `Derived from live WARN healthcare notices for ${stateName}`, type: 'positive' }
+      ]
+    };
+  });
+};
+
+const getTargetStateMetroData = async (stateAbbrev) => {
+  const now = Date.now();
+  const cached = targetStateMetroDataCache[stateAbbrev];
+  const cachedAt = targetStateMetroDataLoadedAt[stateAbbrev] || 0;
+  if (cached && (now - cachedAt) < TARGET_STATE_REFRESH_MS) return cached;
+
+  const notices = await loadTargetStateNotices(stateAbbrev);
+  const metros = buildTargetStateMetroRows(stateAbbrev, notices);
+  const data = { metros };
+  targetStateMetroDataCache[stateAbbrev] = data;
+  targetStateMetroDataLoadedAt[stateAbbrev] = now;
+  return data;
+};
+
+const renderTargetState = async (stateAbbrev = TARGET_STATE_DEFAULT) => {
+  await loadStateBeaconData();
+  await ensureProgramsDataForBeacon();
+
+  const entry = getBeaconEntry(stateAbbrev);
+  const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === stateAbbrev);
+  const metroData = await getTargetStateMetroData(stateAbbrev);
+  const metros = metroData?.metros || [];
+
+  if (targetStateName) targetStateName.textContent = entry.name;
+  if (targetStateAbbr) targetStateAbbr.textContent = stateAbbrev;
+
+  const totalHospitals = metros.reduce((sum, metro) => sum + (metro.hospitals?.length || 0), 0);
+  if (targetStateStatHospitals) targetStateStatHospitals.textContent = totalHospitals || '--';
+  if (targetStateStatMetros) targetStateStatMetros.textContent = metros.length || '--';
+  if (targetStateStatPrograms) targetStateStatPrograms.textContent = programsInState.length || '--';
+  if (targetStateStatCompact) targetStateStatCompact.textContent = entry.compact === null ? '--' : (entry.compact ? 'Yes' : 'No');
+  if (targetStatePlaceholderText) {
+    targetStatePlaceholderText.textContent = `Click on a city from the map to view detailed healthcare market information including hospitals, competition, and salary data for ${entry.name}.`;
+  }
+
+  if (targetStateMetroMap) {
+    targetStateMetroMap.innerHTML = metros.map((metro, idx) => `
+      <div class="metro-city-card" data-metro-index="${idx}">
+        <div class="metro-city-icon ${metro.size || 'small'}"></div>
+        <div class="metro-city-info">
+          <div class="metro-city-name">${escapeHtml(metro.name)}</div>
+          <div class="metro-city-meta">${escapeHtml(metro.population || 'N/A')} | ${metro.hospitals?.length || 0} hospitals</div>
+        </div>
+        <div class="metro-city-indicator ${metro.competition || 'medium'}"></div>
+      </div>
+    `).join('');
+
+    targetStateMetroMap.querySelectorAll('.metro-city-card').forEach((card) => {
+      card.addEventListener('click', () => {
+        const idx = Number(card.dataset.metroIndex || 0);
+        const metro = metros[idx];
+        if (!metro) return;
+        selectTargetStateMetro(metro);
+        targetStateMetroMap.querySelectorAll('.metro-city-card').forEach((c) => c.classList.remove('active'));
+        card.classList.add('active');
+      });
+    });
+  }
+
+  currentTargetStateMetro = null;
+  if (targetStateDetailPlaceholder) targetStateDetailPlaceholder.style.display = 'flex';
+  if (targetStateDetailContent) targetStateDetailContent.style.display = 'none';
+};
+
+const selectTargetStateMetro = (metro) => {
+  currentTargetStateMetro = metro;
+  if (targetStateDetailPlaceholder) targetStateDetailPlaceholder.style.display = 'none';
+  if (targetStateDetailContent) targetStateDetailContent.style.display = 'block';
+
+  if (targetStateMetroName) targetStateMetroName.textContent = metro.name;
+  if (targetStateMetroBadge) {
+    targetStateMetroBadge.textContent = metro.size === 'major' ? 'Major Metro' : (metro.size === 'medium' ? 'Regional Hub' : 'Local Market');
+  }
+
+  const hospitals = metro.hospitals || [];
+  if (targetStateHospitalCount) targetStateHospitalCount.textContent = `${hospitals.length} facilities`;
+  if (targetStateMetroHospitals) {
+    targetStateMetroHospitals.innerHTML = hospitals.map((h, idx) => `
+      <div class="hospital-card">
+        <div class="hospital-rank">${idx + 1}</div>
+        <div class="hospital-info">
+          <div class="hospital-name">${escapeHtml(h.name)}</div>
+          <div class="hospital-details">
+            <span>${escapeHtml(h.system || '--')}</span>
+            <span>${escapeHtml(String(h.beds ?? '--'))} beds</span>
+            <span>* ${escapeHtml(String(h.reviews ?? '--'))}</span>
+          </div>
+        </div>
+        <div class="hospital-score">
+          <span class="score-value">${escapeHtml(String(h.score ?? '--'))}</span>
+          <span class="score-label">Composite</span>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  const systems = metro.systems || [];
+  if (targetStateMetroCompetition) {
+    targetStateMetroCompetition.innerHTML = systems.map((s) => `
+      <div class="competition-card">
+        <div class="competition-name">${escapeHtml(s.name)}</div>
+        <div class="competition-details">${escapeHtml(String(s.facilities || 0))} facilities | ${escapeHtml(s.marketShare || '--')} market share</div>
+      </div>
+    `).join('');
+  }
+
+  if (targetStateMetroSalary) {
+    targetStateMetroSalary.innerHTML = `
+      <div class="salary-card">
+        <div class="salary-value">${escapeHtml(metro.salary?.staffRN || '--')}</div>
+        <div class="salary-label">Staff RN</div>
+      </div>
+      <div class="salary-card">
+        <div class="salary-value">${escapeHtml(metro.salary?.travelRN || '--')}</div>
+        <div class="salary-label">Travel RN</div>
+      </div>
+      <div class="salary-card">
+        <div class="salary-value">${escapeHtml(metro.salary?.signOn || '--')}</div>
+        <div class="salary-label">Sign-On</div>
+      </div>
+    `;
+  }
+
+  const factors = metro.factors || [];
+  if (targetStateMetroFactors) {
+    targetStateMetroFactors.innerHTML = factors.map((f) => `
+      <span class="factor-tag ${f.type || 'neutral'}">${escapeHtml(f.text)}</span>
+    `).join('');
+  }
+};
+
+const openTargetState = async () => {
+  const state = getMapTargetState() || targetStateSelect?.value || TARGET_STATE_DEFAULT;
+  if (targetStateSelect) targetStateSelect.value = state;
+  await renderTargetState(state);
+  targetStateModal?.classList.add('active');
+  closeModulesMenu();
+};
+
+const closeTargetState = () => targetStateModal?.classList.remove('active');
+
+const buildTargetStateExport = async (stateAbbrev, options = {}) => {
   const { scope = 'all' } = options;
   const entry = getBeaconEntry(stateAbbrev);
   const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === stateAbbrev);
-  const metroData = STATE_METRO_DATA[stateAbbrev] || STATE_METRO_DATA.KY;
+  const metroData = await getTargetStateMetroData(stateAbbrev);
   const metros = metroData?.metros || [];
   const totalHospitals = metros.reduce((sum, metro) => sum + (metro.hospitals?.length || 0), 0);
   const selectedMetro = scope === 'selected' ? currentTargetStateMetro : null;
@@ -3940,7 +4165,7 @@ const exportTargetState = async ({ format = 'csv', scope = 'all' } = {}) => {
   }
   await loadStateBeaconData();
   await ensureProgramsDataForBeacon();
-  const data = buildTargetStateExport(state, { scope });
+  const data = await buildTargetStateExport(state, { scope });
   const rows = buildTargetStateExportRows(data);
   const scopeLabel = scope === 'selected' ? 'selected-metro' : 'all-metros';
   const metroName = data.selectedMetro?.name
@@ -4132,7 +4357,7 @@ const buildMasterExportData = async (state, progressCb) => {
 
   const entry = getBeaconEntry(state);
   const enrichedEntry = enrichBeaconEntry(state, entry, getStateNotices(state), nursingPrograms.filter((program) => normalizeProgram(program).state === state));
-  const metroData = STATE_METRO_DATA[state] || STATE_METRO_DATA.KY || {};
+  const metroData = await getTargetStateMetroData(state);
   const metros = metroData?.metros || [];
   const totalHospitals = metros.reduce((sum, metro) => sum + (metro.hospitals?.length || 0), 0);
   const recentWarnNotices = await getRecentWarnNoticesForState(state);
@@ -4464,7 +4689,7 @@ const closeMasterExport = () => masterExportModal?.classList.remove('active');
 const updateMasterExportSummary = async () => {
   if (!masterExportStateSelect) return;
   const state = masterExportStateSelect.value;
-  const metroData = STATE_METRO_DATA[state] || STATE_METRO_DATA.KY || {};
+  const metroData = await getTargetStateMetroData(state);
   const metros = metroData?.metros || [];
   if (masterExportMetroCount) masterExportMetroCount.textContent = metros.length || '--';
   if (typeof loadRuralClosuresData === 'function') {
@@ -4731,6 +4956,17 @@ const initStateBeacon = () => {
     const scope = item.dataset.scope || 'all';
     targetStateExportMenu.classList.remove('active');
     exportTargetState({ format, scope });
+  });
+  openTargetStateBtn?.addEventListener('click', openTargetState);
+  targetStateCloseBtn?.addEventListener('click', closeTargetState);
+  targetStateCloseFooter?.addEventListener('click', closeTargetState);
+  targetStateSelect?.addEventListener('change', () => {
+    renderTargetState(targetStateSelect.value);
+  });
+  targetStateOpenBeacon?.addEventListener('click', () => {
+    const state = targetStateSelect?.value || TARGET_STATE_DEFAULT;
+    closeTargetState();
+    openStateBeacon(state);
   });
 };
 
