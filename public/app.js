@@ -3988,9 +3988,9 @@ const initViewToggle = () => {
 
   // Target state button - opens target state module
   mapTargetStateBtn?.addEventListener('click', () => {
-    const targetState = getMapTargetState();
-    if (!targetState) return;
-    openTargetState();
+    if (typeof openTargetState === 'function') {
+      openTargetState();
+    }
   });
 
   mapFactorsBtn?.addEventListener('click', () => {
@@ -9061,7 +9061,7 @@ const renderHomeState = async (stateAbbrev) => {
     homeStateMetroMap.innerHTML = metros.map((metro, idx) => `
       <div class="metro-city-card" data-metro-index="${idx}">
         <div class="metro-city-icon ${metro.size || 'small'}" title="${metro.size === 'major' ? 'High density metro' : metro.size === 'medium' ? 'Medium density metro' : 'Local density metro'}" aria-label="${metro.size === 'major' ? 'High density metro' : metro.size === 'medium' ? 'Medium density metro' : 'Local density metro'}">
-          <span class="metro-density-symbol">${metro.size === 'major' ? '+++' : metro.size === 'medium' ? '++' : '+'}</span>
+          <span class="metro-density-symbol">${metro.size === 'major' ? '&#127750;' : metro.size === 'medium' ? '&#127961;&#65039;' : '&#127960;&#65039;'}</span>
         </div>
         <div class="metro-city-info">
           <div class="metro-city-name">${escapeHtml(metro.name)}</div>
@@ -9342,7 +9342,7 @@ const renderTargetState = async (stateAbbrev = TARGET_STATE_DEFAULT) => {
     targetStateMetroMap.innerHTML = metros.map((metro, idx) => `
       <div class="metro-city-card" data-metro-index="${idx}">
         <div class="metro-city-icon ${metro.size || 'small'}" title="${metro.size === 'major' ? 'High density metro' : metro.size === 'medium' ? 'Medium density metro' : 'Local density metro'}" aria-label="${metro.size === 'major' ? 'High density metro' : metro.size === 'medium' ? 'Medium density metro' : 'Local density metro'}">
-          <span class="metro-density-symbol">${metro.size === 'major' ? '+++' : metro.size === 'medium' ? '++' : '+'}</span>
+          <span class="metro-density-symbol">${metro.size === 'major' ? '&#127750;' : metro.size === 'medium' ? '&#127961;&#65039;' : '&#127960;&#65039;'}</span>
         </div>
         <div class="metro-city-info">
           <div class="metro-city-name">${escapeHtml(metro.name)}</div>
@@ -9549,8 +9549,12 @@ const openTargetState = async () => {
   const state = getMapTargetState() || targetStateSelect?.value || TARGET_STATE_DEFAULT;
   // Sync the dropdown to reflect the active state
   if (targetStateSelect) targetStateSelect.value = state;
-  await renderTargetState(state);
   targetStateModal?.classList.add('active');
+  try {
+    await renderTargetState(state);
+  } catch (error) {
+    console.error('Target State render failed:', error);
+  }
 };
 
 const closeTargetState = () => targetStateModal?.classList.remove('active');
@@ -10710,6 +10714,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Target State open fallback bindings
+  const targetModuleBtn = document.getElementById('open-target-state');
+  if (targetModuleBtn && targetModuleBtn.dataset.boundOpenTargetState !== 'true') {
+    targetModuleBtn.dataset.boundOpenTargetState = 'true';
+    targetModuleBtn.addEventListener('click', () => {
+      if (typeof openTargetState === 'function') openTargetState();
+    });
+  }
+
+  const mapTargetOpenBtn = document.getElementById('map-target-state-btn');
+  if (mapTargetOpenBtn && mapTargetOpenBtn.dataset.boundOpenTargetState !== 'true') {
+    mapTargetOpenBtn.dataset.boundOpenTargetState = 'true';
+    mapTargetOpenBtn.addEventListener('click', () => {
+      if (typeof openTargetState === 'function') openTargetState();
+    });
+  }
   // Strategic Market Review toggle
   const strategicToggle = document.getElementById('strategic-toggle');
   const strategicSection = document.querySelector('.strategic-review-section');
