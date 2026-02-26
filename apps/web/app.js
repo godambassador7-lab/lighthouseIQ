@@ -179,13 +179,12 @@ const targetStateMetroFactors = document.getElementById('target-state-metro-fact
 
 let currentTargetStateMetro = null;
 const TARGET_STATE_DEFAULT = 'KY';
-const TARGET_STATE_OPTIONS = ['KY', 'IN', 'FL', 'IL', 'MI', 'NY', 'TX'];
 
 const getTargetStateSelection = () => {
   const preferred = stateBeaconStateSelect?.value
     || targetStateSelect?.value
     || TARGET_STATE_DEFAULT;
-  return TARGET_STATE_OPTIONS.includes(preferred) ? preferred : TARGET_STATE_DEFAULT;
+  return ALL_STATES.includes(preferred) ? preferred : TARGET_STATE_DEFAULT;
 };
 
 let currentNotices = [];
@@ -211,9 +210,12 @@ let programsModuleInitialized = false;
 let programsRefreshPrompted = false;
 let stateBeaconData = null;
 let stateBeaconLoaded = false;
+let stateBeaconLoadedAt = 0;
 let stateBeaconInputs = null;
 let stateNewsData = null;
 let stateNewsLoaded = false;
+let stateNewsLoadedAt = 0;
+const STATE_BEACON_REFRESH_MS = 6 * 60 * 60 * 1000; // refresh every 6 hours
 const STATE_BEACON_DEFAULT = 'FL';
 const STATE_BEACON_HOME_DEFAULT = 'IN';
 const STATE_BEACON_INPUTS_KEY = 'lni_state_beacon_inputs';
@@ -1477,6 +1479,7 @@ const STATE_NAMES = {
   OK: 'Oklahoma', OR: 'Oregon', PA: 'Pennsylvania', RI: 'Rhode Island', SC: 'South Carolina',
   SD: 'South Dakota', TN: 'Tennessee', TX: 'Texas', UT: 'Utah', VT: 'Vermont',
   VA: 'Virginia', WA: 'Washington', WV: 'West Virginia', WI: 'Wisconsin', WY: 'Wyoming',
+  PR: 'Puerto Rico',
   DC: 'District of Columbia'
 };
 
@@ -2063,12 +2066,12 @@ const initStateMultiSelect = () => {
   });
 };
 
-// All US states + DC for dropdowns
+// All US states + DC + PR for dropdowns
 const ALL_STATES = [
   'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'GA',
   'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD',
   'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ',
-  'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC',
+  'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'PR', 'RI', 'SC',
   'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
 ];
 
@@ -2939,22 +2942,38 @@ const initProgramsModule = () => {
 // ==================== END ACCREDITED PROGRAMS MODULE ====================
 
 // ==================== STATE BEACON MODULE ====================
-const loadStateBeaconData = async () => {
-  if (stateBeaconLoaded) return stateBeaconData;
-  // State Beacon is runtime-derived only; do not load static state dataset.
-  stateBeaconData = { lastUpdated: new Date().toISOString(), states: {} };
+const loadStateBeaconData = async (forceRefresh = false) => {
+  const now = Date.now();
+  if (stateBeaconLoaded && !forceRefresh && (now - stateBeaconLoadedAt) < STATE_BEACON_REFRESH_MS) {
+    return stateBeaconData;
+  }
+  try {
+    const data = await fetchJson(`/data/state-beacon.json?ts=${now}`);
+    stateBeaconData = {
+      lastUpdated: data?.lastUpdated || new Date(now).toISOString(),
+      states: data?.states || {}
+    };
+  } catch (err) {
+    console.warn('State Beacon baseline unavailable:', err.message);
+    stateBeaconData = { lastUpdated: new Date(now).toISOString(), states: {} };
+  }
   stateBeaconLoaded = true;
+  stateBeaconLoadedAt = now;
   return stateBeaconData;
 };
 
-const loadStateNewsData = async () => {
-  if (stateNewsLoaded) return stateNewsData;
+const loadStateNewsData = async (forceRefresh = false) => {
+  const now = Date.now();
+  if (stateNewsLoaded && !forceRefresh && (now - stateNewsLoadedAt) < STATE_BEACON_REFRESH_MS) {
+    return stateNewsData;
+  }
   try {
-    stateNewsData = await fetchJson(`/data/state-news.json?ts=${Date.now()}`);
+    stateNewsData = await fetchJson(`/data/state-news.json?ts=${now}`);
   } catch (err) {
     stateNewsData = null;
   }
   stateNewsLoaded = true;
+  stateNewsLoadedAt = now;
   return stateNewsData;
 };
 
@@ -3103,7 +3122,23 @@ const enrichBeaconEntry = (state, entry, notices, programsInState) => {
     .map((program) => normalizeProgram(program).name)
     .filter(Boolean)
     .slice(0, 8);
-  const candidateMetroFallback = buildFallbackCandidateMetroTable(notices, state, inferredMetros);
+  const indianaFeederSchools = state === 'CA'
+    ? getTopInstitutionsForState('IN', 3).map((entry) => entry.name).filter(Boolean)
+    : [];
+  const indianaFeederText = indianaFeederSchools.length
+    ? `Indiana feeder schools: ${indianaFeederSchools.join(', ')}`
+    : 'Indiana feeder schools: Indiana University, Purdue University, Ivy Tech Community College';
+  const candidateMetroFallback = buildFallbackCandidateMetroTable(notices, state, inferredMetros)
+    .map((row) => {
+      if (state !== 'CA') return row;
+      const feederSchools = String(row.feederSchools || '').trim();
+      if (!feederSchools) return { ...row, feederSchools: indianaFeederText };
+      if (/indiana feeder schools:/i.test(feederSchools)) return row;
+      return { ...row, feederSchools: `${feederSchools}; ${indianaFeederText}` };
+    });
+  const majorProgramsWithIndiana = state === 'CA' && indianaFeederSchools.length
+    ? Array.from(new Set([...majorProgramsFallback, ...indianaFeederSchools])).slice(0, 10)
+    : majorProgramsFallback;
 
   const competitionSystems = entry.competition?.systems?.length ? entry.competition.systems : inferredSystems;
   const merged = {
@@ -3128,7 +3163,7 @@ const enrichBeaconEntry = (state, entry, notices, programsInState) => {
     },
     pipeline: {
       ...entry.pipeline,
-      majorPrograms: entry.pipeline?.majorPrograms?.length ? entry.pipeline.majorPrograms : majorProgramsFallback,
+      majorPrograms: entry.pipeline?.majorPrograms?.length ? entry.pipeline.majorPrograms : majorProgramsWithIndiana,
       residencies: entry.pipeline?.residencies?.length ? entry.pipeline.residencies : [
         'Nurse residency options vary by major health system.',
         'Onboarding timelines should be validated per facility.'
