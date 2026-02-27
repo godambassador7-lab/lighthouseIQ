@@ -8729,6 +8729,29 @@ const STATE_METRO_DATA = {
 
 const TARGET_STATE_TEMPLATE_STATE = 'IN';
 const targetStateMetroDataCache = {};
+const homeStateMetroDataCache = {};
+let targetStateMetrosData = null;
+let metroLaborData = null;
+
+const loadTargetStateMetrosData = async () => {
+  if (targetStateMetrosData) return targetStateMetrosData;
+  try {
+    targetStateMetrosData = await fetchJson(`${DATA_BASE_URL}/target-state-metros.json?ts=${Date.now()}`);
+  } catch (err) {
+    targetStateMetrosData = null;
+  }
+  return targetStateMetrosData;
+};
+
+const loadMetroLaborData = async () => {
+  if (metroLaborData) return metroLaborData;
+  try {
+    metroLaborData = await fetchJson(`${DATA_BASE_URL}/metro-labor.json?ts=${Date.now()}`);
+  } catch (err) {
+    metroLaborData = null;
+  }
+  return metroLaborData;
+};
 
 const buildMetroRowsFromFetchedNotices = (stateAbbrev, notices) => {
   const stateName = STATE_NAMES[stateAbbrev] || stateAbbrev;
@@ -8843,18 +8866,45 @@ const buildFetchedTargetStateMetroData = (stateAbbrev) => {
 };
 
 const getTargetStateMetroData = async (stateAbbrev) => {
-  if (!hospitalRankingsLoaded) {
-    await loadHospitalRankingsData();
+  if (targetStateMetroDataCache[stateAbbrev]) {
+    return targetStateMetroDataCache[stateAbbrev];
   }
-  if (!stateNoticesCache.has(stateAbbrev) && !allNoticesLoaded) {
-    await loadStateNotices(stateAbbrev);
+
+  const fetchedDataset = await loadTargetStateMetrosData();
+  const fetchedState = fetchedDataset?.states?.[stateAbbrev];
+  let metroData = fetchedState?.metros?.length ? fetchedState : null;
+
+  if (!metroData) {
+    if (!hospitalRankingsLoaded) {
+      await loadHospitalRankingsData();
+    }
+    if (!stateNoticesCache.has(stateAbbrev) && !allNoticesLoaded) {
+      await loadStateNotices(stateAbbrev);
+    }
+    if (!stateNoticesCache.has(TARGET_STATE_TEMPLATE_STATE) && !allNoticesLoaded) {
+      await loadStateNotices(TARGET_STATE_TEMPLATE_STATE);
+    }
+    metroData = buildFetchedTargetStateMetroData(stateAbbrev);
   }
-  if (!stateNoticesCache.has(TARGET_STATE_TEMPLATE_STATE) && !allNoticesLoaded) {
-    await loadStateNotices(TARGET_STATE_TEMPLATE_STATE);
-  }
-  if (!targetStateMetroDataCache[stateAbbrev]) {
-    targetStateMetroDataCache[stateAbbrev] = buildFetchedTargetStateMetroData(stateAbbrev);
-  }
+
+  const laborDataset = await loadMetroLaborData();
+  const laborSalaryMeta = laborDataset?.states?.[stateAbbrev]
+    || TARGET_STATE_MONTHLY_LABOR_OVERRIDES[stateAbbrev]
+    || null;
+  const salaryMeta = laborSalaryMeta
+    ? {
+      ...(metroData.salaryMeta || {}),
+      ...laborSalaryMeta,
+      sources: Array.isArray(laborSalaryMeta.sources) && laborSalaryMeta.sources.length
+        ? laborSalaryMeta.sources
+        : TARGET_STATE_MONTHLY_LABOR_SOURCES
+    }
+    : (metroData.salaryMeta || {});
+
+  targetStateMetroDataCache[stateAbbrev] = {
+    ...metroData,
+    salaryMeta
+  };
   return targetStateMetroDataCache[stateAbbrev];
 };
 const TARGET_STATE_MONTHLY_LABOR_OVERRIDES = {
@@ -9043,7 +9093,11 @@ const renderHomeState = async (stateAbbrev) => {
 
   const entry = getBeaconEntry(stateAbbrev);
   const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === stateAbbrev);
-  const metroData = STATE_METRO_DATA[stateAbbrev] || STATE_METRO_DATA.IN;
+  const fetchedMetroData = await getTargetStateMetroData(stateAbbrev);
+  const metroData = fetchedMetroData?.metros?.length
+    ? fetchedMetroData
+    : (STATE_METRO_DATA[stateAbbrev] || STATE_METRO_DATA.IN);
+  homeStateMetroDataCache[stateAbbrev] = metroData;
   const metros = metroData?.metros || [];
 
   // Update header
@@ -9138,7 +9192,10 @@ const selectHomeStateMetro = (metro, stateAbbrev) => {
   }
 
   // Render salary data
-  const metroData = STATE_METRO_DATA[stateAbbrev] || STATE_METRO_DATA.IN;
+  const metroData = homeStateMetroDataCache[stateAbbrev]
+    || targetStateMetroDataCache[stateAbbrev]
+    || STATE_METRO_DATA[stateAbbrev]
+    || STATE_METRO_DATA.IN;
   const salaryMeta = metroData?.salaryMeta || {};
   const salary = metro.salary || {};
   const breakdown = Array.isArray(salary.breakdown)
@@ -9326,6 +9383,7 @@ const renderTargetState = async (stateAbbrev = TARGET_STATE_DEFAULT) => {
   const entry = getBeaconEntry(stateAbbrev);
   const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === stateAbbrev);
   const metroData = await getTargetStateMetroData(stateAbbrev);
+  targetStateMetroDataCache[stateAbbrev] = metroData || targetStateMetroDataCache[stateAbbrev];
   const metros = metroData?.metros || [];
 
   // Update header

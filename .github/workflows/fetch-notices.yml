@@ -131,6 +131,9 @@ jobs:
           BLS_DATA_DIR: ${{ github.workspace }}/apps/data/bls
         working-directory: core
 
+      - name: Build target-state metro dataset
+        run: node scripts/compile-target-state-metros.js
+
       - name: Update target-state metro labor stats
         run: python scripts/update-target-metro-labor.py
 
