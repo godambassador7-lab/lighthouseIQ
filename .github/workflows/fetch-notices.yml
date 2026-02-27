@@ -131,6 +131,11 @@ jobs:
           BLS_DATA_DIR: ${{ github.workspace }}/apps/data/bls
         working-directory: core
 
+      - name: Backfill hospital beds from CMS API
+        run: node scripts/backfill-hospital-beds.js
+        env:
+          CMS_BEDS_CSV_URL: ${{ secrets.CMS_BEDS_CSV_URL }}
+
       - name: Build target-state metro dataset
         run: node scripts/compile-target-state-metros.js
 

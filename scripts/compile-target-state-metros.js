@@ -3,6 +3,8 @@ const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
 const DATA_DIR = path.join(ROOT, 'public', 'data');
+const OVERRIDES_PATH = path.join(ROOT, 'scripts', 'data', 'hospital-rankings-overrides.json');
+const LEGACY_OVERRIDES_PATH = path.join(DATA_DIR, 'hospital-rankings-overrides.json');
 
 const readJson = (p) => JSON.parse(fs.readFileSync(p, 'utf8'));
 const writeJson = (p, obj) => fs.writeFileSync(p, JSON.stringify(obj, null, 2) + '\n', 'utf8');
@@ -15,6 +17,40 @@ const states = Object.keys(hospitalRankings.states || {}).sort();
 
 const normalize = (v) => String(v || '').toLowerCase().replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
 const toTitle = (v) => String(v || '').trim().replace(/\s+/g, ' ');
+const normalizeNameKey = (v) => String(v || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+const parseBeds = (v) => {
+  const n = Number(v);
+  return Number.isFinite(n) && n > 0 ? Math.round(n) : null;
+};
+
+const loadOverrides = () => {
+  const sourcePath = fs.existsSync(OVERRIDES_PATH)
+    ? OVERRIDES_PATH
+    : (fs.existsSync(LEGACY_OVERRIDES_PATH) ? LEGACY_OVERRIDES_PATH : null);
+  if (!sourcePath) return { states: {}, sourcePath: null };
+  try {
+    const raw = readJson(sourcePath);
+    return {
+      states: raw?.states && typeof raw.states === 'object' ? raw.states : {},
+      sourcePath
+    };
+  } catch {
+    return { states: {}, sourcePath };
+  }
+};
+
+const bedOverrides = loadOverrides();
+const bedOverridesByState = new Map();
+Object.entries(bedOverrides.states || {}).forEach(([state, rows]) => {
+  const map = new Map();
+  (Array.isArray(rows) ? rows : []).forEach((row) => {
+    const key = normalizeNameKey(row?.name);
+    const beds = parseBeds(row?.beds);
+    if (!key || beds === null) return;
+    map.set(key, beds);
+  });
+  bedOverridesByState.set(state, map);
+});
 
 const topInstitutionsByState = new Map();
 for (const state of states) {
@@ -39,6 +75,7 @@ const output = {
       'CMS Provider Data Catalog (hospital quality and provider datasets)',
       'CMS Hospital General Information / POS / Cost Report PUF (facility denominator + characteristics)',
       'Hospital ranking composite feed in this repository',
+      'Hospital ranking bed overrides (scripts/data/hospital-rankings-overrides.json when populated)',
       'WARN by-state feeds in this repository',
       'Nursing program feed in this repository',
       'County/ZIP to CBSA crosswalk strategy (for external pipeline enrichments)'
@@ -49,6 +86,18 @@ const output = {
     }
   },
   states: {}
+};
+
+const missingBedsReport = {
+  generatedAt: output.lastUpdated,
+  source: 'target-state-metros compiler',
+  overrideSourcePath: bedOverrides.sourcePath,
+  summary: {
+    unresolvedHospitals: 0,
+    statesWithMissingBeds: 0
+  },
+  byState: {},
+  hospitals: []
 };
 
 for (const state of states) {
@@ -78,13 +127,32 @@ for (const state of states) {
       .slice()
       .sort((a, b) => Number(b.compositeScore || b.baseScore || 0) - Number(a.compositeScore || a.baseScore || 0))
       .slice(0, 20)
-      .map((h) => ({
+      .map((h) => {
+        const overrideBeds = bedOverridesByState.get(state)?.get(normalizeNameKey(h.name));
+        const beds = parseBeds(h.beds) ?? overrideBeds ?? null;
+        return {
+          name: h.name,
+          system: h.system || h.name,
+          score: Number(h.compositeScore || h.baseScore || 0) || '--',
+          beds: beds ?? '--',
+          bedSource: beds !== null
+            ? (parseBeds(h.beds) !== null ? 'rankings' : 'override')
+            : 'missing',
+          reviews: h.sourceCount || '--'
+        };
+      });
+
+    hospitals.forEach((h) => {
+      if (h.beds !== '--') return;
+      missingBedsReport.hospitals.push({
+        state,
+        metro: metroName,
         name: h.name,
-        system: h.system || h.name,
-        score: Number(h.compositeScore || h.baseScore || 0) || '--',
-        beds: h.beds || '--',
-        reviews: h.sourceCount || '--'
-      }));
+        system: h.system,
+        score: h.score
+      });
+      missingBedsReport.byState[state] = (missingBedsReport.byState[state] || 0) + 1;
+    });
 
     const systemCounts = new Map();
     for (const h of hospitals) {
@@ -157,4 +225,9 @@ for (const state of states) {
 
 const outPath = path.join(DATA_DIR, 'target-state-metros.json');
 writeJson(outPath, output);
+missingBedsReport.summary.unresolvedHospitals = missingBedsReport.hospitals.length;
+missingBedsReport.summary.statesWithMissingBeds = Object.keys(missingBedsReport.byState).length;
+const missingBedsPath = path.join(DATA_DIR, 'missing-beds.json');
+writeJson(missingBedsPath, missingBedsReport);
 console.log(`Wrote ${outPath} with ${Object.keys(output.states).length} states.`);
+console.log(`Wrote ${missingBedsPath} with ${missingBedsReport.summary.unresolvedHospitals} unresolved hospitals.`);
