@@ -9174,7 +9174,7 @@ const selectHomeStateMetro = (metro, stateAbbrev) => {
         </div>
         <div class="hospital-score">
           <span class="score-value">${h.score}</span>
-          <span class="score-label">Score</span>
+          <span class="score-label">Composite Score</span>
         </div>
       </div>
     `).join('');
@@ -9467,7 +9467,7 @@ const selectTargetStateMetro = (metro, stateAbbrev) => {
         </div>
         <div class="hospital-score">
           <span class="score-value">${fetchedScoreMap.get(String(h.name || '').toLowerCase()) || h.score}</span>
-          <span class="score-label">Composite</span>
+          <span class="score-label">Composite Score</span>
         </div>
       </div>
     `).join('');

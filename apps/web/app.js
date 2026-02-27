@@ -3987,7 +3987,7 @@ const selectTargetStateMetro = (metro) => {
         </div>
         <div class="hospital-score">
           <span class="score-value">${escapeHtml(String(h.score ?? '--'))}</span>
-          <span class="score-label">Composite</span>
+          <span class="score-label">Composite Score</span>
         </div>
       </div>
     `).join('');
