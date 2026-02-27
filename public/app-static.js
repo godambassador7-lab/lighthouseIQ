@@ -6550,6 +6550,53 @@ const getHospitalRankingScore = (hospital) => {
   return Number.isFinite(score) ? score : 0;
 };
 
+const normalizeHospitalNameKey = (value) => String(value || '')
+  .toLowerCase()
+  .replace(/[^a-z0-9]/g, '');
+
+const parseHospitalBeds = (value) => {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : null;
+};
+
+const getStaticHospitalBedsMapForState = (stateAbbrev) => {
+  const metros = STATE_METRO_DATA?.[stateAbbrev]?.metros || [];
+  const map = new Map();
+  metros.forEach((metro) => {
+    (metro?.hospitals || []).forEach((hospital) => {
+      const key = normalizeHospitalNameKey(hospital?.name);
+      const beds = parseHospitalBeds(hospital?.beds);
+      if (key && beds !== null && !map.has(key)) {
+        map.set(key, beds);
+      }
+    });
+  });
+  return map;
+};
+
+const resolveTargetHospitalBeds = (stateAbbrev, hospital, fetchedBedsMap, staticBedsMap) => {
+  const directBeds = parseHospitalBeds(hospital?.beds);
+  if (directBeds !== null) return directBeds;
+
+  const key = normalizeHospitalNameKey(hospital?.name);
+  if (!key) return '--';
+
+  if (fetchedBedsMap?.has(key)) return fetchedBedsMap.get(key);
+  if (staticBedsMap?.has(key)) return staticBedsMap.get(key);
+
+  if (fetchedBedsMap) {
+    for (const [candidateKey, beds] of fetchedBedsMap.entries()) {
+      if (candidateKey.includes(key) || key.includes(candidateKey)) return beds;
+    }
+  }
+  if (staticBedsMap) {
+    for (const [candidateKey, beds] of staticBedsMap.entries()) {
+      if (candidateKey.includes(key) || key.includes(candidateKey)) return beds;
+    }
+  }
+  return '--';
+};
+
 const getFetchedHospitalRankingsForState = (state) => {
   const rankings = hospitalRankingsData?.states?.[state]?.hospitalRankings || [];
   return Array.isArray(rankings) ? rankings : [];
@@ -9452,16 +9499,27 @@ const selectTargetStateMetro = (metro, stateAbbrev) => {
       .filter((item) => item?.name)
       .map((item) => [String(item.name).toLowerCase(), getHospitalRankingScore(item)])
   );
+  const fetchedBedsMap = new Map(
+    fetchedRankings
+      .filter((item) => item?.name)
+      .map((item) => [normalizeHospitalNameKey(item.name), parseHospitalBeds(item?.beds)])
+      .filter(([, beds]) => beds !== null)
+  );
+  const staticBedsMap = getStaticHospitalBedsMapForState(stateAbbrev);
+  const displayHospitals = hospitals.map((hospital) => ({
+    ...hospital,
+    resolvedBeds: resolveTargetHospitalBeds(stateAbbrev, hospital, fetchedBedsMap, staticBedsMap)
+  }));
   if (targetStateHospitalCount) targetStateHospitalCount.textContent = `${hospitals.length} facilities`;
   if (targetStateMetroHospitals) {
-    targetStateMetroHospitals.innerHTML = hospitals.map((h, idx) => `
+    targetStateMetroHospitals.innerHTML = displayHospitals.map((h, idx) => `
       <div class="hospital-card">
         <div class="hospital-rank">${idx + 1}</div>
         <div class="hospital-info">
           <div class="hospital-name">${escapeHtml(h.name)}</div>
           <div class="hospital-details">
             <span>${escapeHtml(h.system)}</span>
-            <span>${h.beds} beds</span>
+            <span>${h.resolvedBeds} beds</span>
             <span>* ${h.reviews}</span>
           </div>
         </div>
