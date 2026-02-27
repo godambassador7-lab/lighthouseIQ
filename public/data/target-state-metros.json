@@ -1,11 +1,12 @@
 {
-  "lastUpdated": "2026-02-27T15:46:55.815Z",
+  "lastUpdated": "2026-02-27T18:09:59.121Z",
   "methodology": {
     "description": "Compiled metro intelligence for target-state module using fetched public datasets and metro aggregation.",
     "sources": [
       "CMS Provider Data Catalog (hospital quality and provider datasets)",
       "CMS Hospital General Information / POS / Cost Report PUF (facility denominator + characteristics)",
       "Hospital ranking composite feed in this repository",
+      "Hospital ranking bed overrides (scripts/data/hospital-rankings-overrides.json when populated)",
       "WARN by-state feeds in this repository",
       "Nursing program feed in this repository",
       "County/ZIP to CBSA crosswalk strategy (for external pipeline enrichments)"
@@ -17,7 +18,7 @@
   },
   "states": {
     "AK": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Anchorage",
@@ -30,6 +31,7 @@
               "system": "Alaska Regional Hospital",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -37,6 +39,7 @@
               "system": "Providence Alaska Medical Center",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -79,6 +82,7 @@
               "system": "Fairbanks Memorial Hospital",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -116,6 +120,7 @@
               "system": "Bartlett Regional Hospital",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -153,6 +158,7 @@
               "system": "Mat-Su Regional Medical Center",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -216,7 +222,7 @@
       }
     },
     "AL": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Birmingham",
@@ -229,6 +235,7 @@
               "system": "UAB Hospital",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -236,6 +243,7 @@
               "system": "St. Vincent's Birmingham",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -243,6 +251,7 @@
               "system": "Grandview Medical Center",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -250,6 +259,7 @@
               "system": "Ascension St. Vincent's East",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -302,6 +312,7 @@
               "system": "Mobile Infirmary",
               "score": 92,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -309,6 +320,7 @@
               "system": "USA Health University Hospital",
               "score": 91,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -316,6 +328,7 @@
               "system": "USA Health Providence Hospital",
               "score": 86,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -363,6 +376,7 @@
               "system": "Russell Medical Center",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -400,6 +414,7 @@
               "system": "Athens-Limestone Hospital",
               "score": 87,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -437,6 +452,7 @@
               "system": "Fayette Medical Center",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -474,6 +490,7 @@
               "system": "South Baldwin Regional Medical Center",
               "score": 93,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -511,6 +528,7 @@
               "system": "Huntsville Hospital",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -548,6 +566,7 @@
               "system": "Baptist Medical Center South",
               "score": 89,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -585,6 +604,7 @@
               "system": "East Alabama Medical Center",
               "score": 90,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -622,6 +642,7 @@
               "system": "Prattville Baptist Hospital",
               "score": 88,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -699,7 +720,7 @@
       }
     },
     "AR": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Little Rock",
@@ -712,6 +733,7 @@
               "system": "CHI St. Vincent Infirmary",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -719,6 +741,7 @@
               "system": "UAMS Medical Center",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -761,6 +784,7 @@
               "system": "Saline Memorial Hospital",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -798,6 +822,7 @@
               "system": "Johnson Regional Medical Center",
               "score": 89,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -835,6 +860,7 @@
               "system": "Baptist Health Medical Center - Conway",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -872,6 +898,7 @@
               "system": "Washington Regional Medical Center",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -909,6 +936,7 @@
               "system": "Mercy Hospital Fort Smith",
               "score": 91,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -946,6 +974,7 @@
               "system": "CHI St. Vincent Hospital Hot Springs",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -983,6 +1012,7 @@
               "system": "Nea Baptist Memorial Hospital",
               "score": 93,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -1020,6 +1050,7 @@
               "system": "Mercy Hospital Northwest Arkansas",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -1057,6 +1088,7 @@
               "system": "CHI St. Vincent North",
               "score": 92,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -1094,6 +1126,7 @@
               "system": "Northwest Medical Center - Springdale",
               "score": 90,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -1171,7 +1204,7 @@
       }
     },
     "AZ": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Phoenix",
@@ -1184,6 +1217,7 @@
               "system": "Mayo Clinic Hospital - Phoenix",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -1191,6 +1225,7 @@
               "system": "Dignity Health - St. Joseph's Hospital and Medical Center",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -1198,6 +1233,7 @@
               "system": "Banner - University Medical Center Phoenix",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -1205,6 +1241,7 @@
               "system": "Banner Estrella Medical Center",
               "score": 86,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -1257,6 +1294,7 @@
               "system": "HonorHealth Scottsdale Shea Medical Center",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -1264,6 +1302,7 @@
               "system": "HonorHealth - Scottsdale Thompson Peak Medical Center",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -1271,6 +1310,7 @@
               "system": "HonorHealth Scottsdale Osborn Medical Center",
               "score": 93,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -1318,6 +1358,7 @@
               "system": "Banner - University Medical Center Tucson",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -1325,6 +1366,7 @@
               "system": "Banner - University Medical Center South",
               "score": 90,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -1332,6 +1374,7 @@
               "system": "Tucson Medical Center",
               "score": 89,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -1379,6 +1422,7 @@
               "system": "Dignity Health - Mercy Gilbert Medical Center",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -1386,6 +1430,7 @@
               "system": "Banner Gateway Medical Center",
               "score": 91,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -1428,6 +1473,7 @@
               "system": "Chandler Regional Medical Center",
               "score": 88,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -1465,6 +1511,7 @@
               "system": "Flagstaff Medical Center",
               "score": 92,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -1502,6 +1549,7 @@
               "system": "Banner Thunderbird Medical Center",
               "score": 87,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -1579,7 +1627,7 @@
       }
     },
     "CA": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Los Angeles",
@@ -1592,6 +1640,7 @@
               "system": "Ronald Reagan UCLA Medical Center",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -1599,6 +1648,7 @@
               "system": "Keck Hospital of USC",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -1606,6 +1656,7 @@
               "system": "Cedars-Sinai Medical Center",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -1613,6 +1664,7 @@
               "system": "Kaiser Permanente Los Angeles Medical Center",
               "score": 83,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -1665,6 +1717,7 @@
               "system": "Jacobs Medical Center at UC San Diego Health",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -1672,6 +1725,7 @@
               "system": "Sharp Memorial Hospital",
               "score": 91,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -1679,6 +1733,7 @@
               "system": "Kaiser Permanente Zion Medical Center",
               "score": 79,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -1686,6 +1741,7 @@
               "system": "Scripps Mercy Hospital San Diego",
               "score": 70,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -1738,6 +1794,7 @@
               "system": "UCSF Medical Center",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -1745,6 +1802,7 @@
               "system": "California Pacific Medical Center",
               "score": 84,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -1752,6 +1810,7 @@
               "system": "Chinese Hospital - Main Campus",
               "score": 72,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -1759,6 +1818,7 @@
               "system": "Kaiser Permanente San Francisco Medical Center",
               "score": 60,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -1811,6 +1871,7 @@
               "system": "Scripps Memorial Hospital La Jolla",
               "score": 92,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -1818,6 +1879,7 @@
               "system": "Scripps Green Hospital",
               "score": 66,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -1860,6 +1922,7 @@
               "system": "UC Irvine Medical Center",
               "score": 93,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -1867,6 +1930,7 @@
               "system": "Providence St. Joseph Hospital Orange",
               "score": 60,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -1909,6 +1973,7 @@
               "system": "UCLA Health - Santa Monica Medical Center",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -1916,6 +1981,7 @@
               "system": "Providence Saint John's Health Center",
               "score": 75,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -1958,6 +2024,7 @@
               "system": "Torrance Memorial Medical Center",
               "score": 89,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -1965,6 +2032,7 @@
               "system": "Providence Little Company of Mary Medical Center Torrance",
               "score": 64,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -2007,6 +2075,7 @@
               "system": "Orange County - Anaheim Medical Center",
               "score": 60,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -2044,6 +2113,7 @@
               "system": "Kaiser Permanente Baldwin Park Medical Center",
               "score": 60,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -2081,6 +2151,7 @@
               "system": "Mills-Peninsula Medical Center",
               "score": 90,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -2118,6 +2189,7 @@
               "system": "Sharp Chula Vista Medical Center",
               "score": 73,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -2155,6 +2227,7 @@
               "system": "John Muir Medical Center - Concord Campus",
               "score": 74,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -2232,7 +2305,7 @@
       }
     },
     "CO": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Denver",
@@ -2245,6 +2318,7 @@
               "system": "Saint Joseph Hospital",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -2252,6 +2326,7 @@
               "system": "Denver Health Medical Center",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -2259,6 +2334,7 @@
               "system": "HCA HealthONE Presbyterian St. Luke’s",
               "score": 93,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -2266,6 +2342,7 @@
               "system": "AdventHealth Porter",
               "score": 91,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -2273,6 +2350,7 @@
               "system": "HCA HealthONE Rose Medical Center",
               "score": 87,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -2330,6 +2408,7 @@
               "system": "University of Colorado Hospital",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -2367,6 +2446,7 @@
               "system": "Foothills Hospital",
               "score": 92,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -2404,6 +2484,7 @@
               "system": "CommonSpirit - Penrose Hospital",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -2441,6 +2522,7 @@
               "system": "HCA HealthONE Swedish",
               "score": 90,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -2478,6 +2560,7 @@
               "system": "UCHealth Poudre Valley Hospital",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -2515,6 +2598,7 @@
               "system": "UCHealth Highlands Ranch Hospital",
               "score": 86,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -2552,6 +2636,7 @@
               "system": "Good Samaritan Medical Center",
               "score": 89,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -2589,6 +2674,7 @@
               "system": "UCHealth - Medical Center of The Rockies",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -2626,6 +2712,7 @@
               "system": "AdventHealth Parker",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -2663,6 +2750,7 @@
               "system": "Vail Health Hospital",
               "score": 88,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -2740,7 +2828,7 @@
       }
     },
     "CT": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Derby",
@@ -2753,6 +2841,7 @@
               "system": "Griffin Hospital",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -2790,6 +2879,7 @@
               "system": "UConn John Dempsey Hospital",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -2827,6 +2917,7 @@
               "system": "Hartford Hospital",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -2864,6 +2955,7 @@
               "system": "Midstate Medical Center",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -2901,6 +2993,7 @@
               "system": "Yale New Haven Hospital",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -2973,7 +3066,7 @@
       }
     },
     "DC": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "DC Regional",
@@ -3020,7 +3113,7 @@
       }
     },
     "DE": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Dover",
@@ -3033,6 +3126,7 @@
               "system": "Bayhealth Hospital, Kent Campus",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -3070,6 +3164,7 @@
               "system": "Beebe Medical Center",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -3107,6 +3202,7 @@
               "system": "Christiana Hospital",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -3144,6 +3240,7 @@
               "system": "TidalHealth Nanticoke",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -3181,6 +3278,7 @@
               "system": "ChristianaCare Wilmington Hospital",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -3253,7 +3351,7 @@
       }
     },
     "FL": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Jacksonville",
@@ -3266,6 +3364,7 @@
               "system": "Mayo Clinic - Jacksonville",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -3273,6 +3372,7 @@
               "system": "Baptist Medical Center Jacksonville",
               "score": 75,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -3315,6 +3415,7 @@
               "system": "Baptist Hospital of Miami",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -3322,6 +3423,7 @@
               "system": "West Kendall Baptist Hospital",
               "score": 73,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -3364,6 +3466,7 @@
               "system": "AdventHealth Orlando",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -3371,6 +3474,7 @@
               "system": "Orlando Health Orlando Regional Medical Center",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -3413,6 +3517,7 @@
               "system": "Tampa General Hospital",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -3420,6 +3525,7 @@
               "system": "St. Joseph's Hospital - BayCare",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -3462,6 +3568,7 @@
               "system": "Morton Plant Hospital",
               "score": 92,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -3499,6 +3606,7 @@
               "system": "AdventHealth Daytona Beach",
               "score": 80,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -3536,6 +3644,7 @@
               "system": "BayCare - Mease Dunedin Hospital",
               "score": 81,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -3573,6 +3682,7 @@
               "system": "Baptist Medical Center Nassau",
               "score": 86,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -3610,6 +3720,7 @@
               "system": "Lee Memorial Hospital",
               "score": 74,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -3647,6 +3758,7 @@
               "system": "UF Health Shands Hospital",
               "score": 91,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -3684,6 +3796,7 @@
               "system": "Baptist Medical Center Beaches",
               "score": 88,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -3721,6 +3834,7 @@
               "system": "Jupiter Medical Center",
               "score": 77,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -3798,7 +3912,7 @@
       }
     },
     "GA": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Atlanta",
@@ -3811,6 +3925,7 @@
               "system": "Emory University Hospital",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -3818,6 +3933,7 @@
               "system": "Northside Hospital Atlanta",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -3825,6 +3941,7 @@
               "system": "Emory Saint Joseph's Hospital",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -3832,6 +3949,7 @@
               "system": "Piedmont Atlanta Hospital",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -3839,6 +3957,7 @@
               "system": "Emory University Hospital Midtown",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -3880,7 +3999,7 @@
               "type": "positive"
             },
             {
-              "text": "1 healthcare WARN notices aligned to metro text",
+              "text": "2 healthcare WARN notices aligned to metro text",
               "type": "neutral"
             }
           ]
@@ -3896,6 +4015,7 @@
               "system": "Piedmont Athens Regional Medical Center",
               "score": 84,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -3917,8 +4037,8 @@
               "type": "positive"
             },
             {
-              "text": "0 healthcare WARN notices aligned to metro text",
-              "type": "positive"
+              "text": "2 healthcare WARN notices aligned to metro text",
+              "type": "neutral"
             }
           ]
         },
@@ -3933,6 +4053,7 @@
               "system": "Wellstar MCG Health Medical Center",
               "score": 83,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -3954,8 +4075,8 @@
               "type": "positive"
             },
             {
-              "text": "0 healthcare WARN notices aligned to metro text",
-              "type": "positive"
+              "text": "2 healthcare WARN notices aligned to metro text",
+              "type": "neutral"
             }
           ]
         },
@@ -3970,6 +4091,7 @@
               "system": "Northside Hospital-Cherokee",
               "score": 89,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -4007,6 +4129,7 @@
               "system": "Tanner Medical Center - Carrollton",
               "score": 82,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -4044,6 +4167,7 @@
               "system": "Northside Hospital Forsyth",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -4081,6 +4205,7 @@
               "system": "Emory Decatur Hospital",
               "score": 88,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -4118,6 +4243,7 @@
               "system": "Fairview Park Hospital",
               "score": 93,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -4155,6 +4281,7 @@
               "system": "Northeast Georgia Medical Center - Gainesville",
               "score": 87,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -4176,8 +4303,8 @@
               "type": "positive"
             },
             {
-              "text": "0 healthcare WARN notices aligned to metro text",
-              "type": "positive"
+              "text": "1 healthcare WARN notices aligned to metro text",
+              "type": "neutral"
             }
           ]
         },
@@ -4192,6 +4319,7 @@
               "system": "Wellstar Paulding Medical Center",
               "score": 91,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -4229,6 +4357,7 @@
               "system": "Emory Johns Creek Hospital",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -4266,6 +4395,7 @@
               "system": "Wellstar West Georgia Medical Center",
               "score": 86,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -4343,7 +4473,7 @@
       }
     },
     "HI": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Honolulu",
@@ -4356,6 +4486,7 @@
               "system": "Queen's Medical Center",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -4363,6 +4494,7 @@
               "system": "Straub Benioff Medical Center",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -4370,6 +4502,7 @@
               "system": "Kaiser Permanente Moanalua Medical Center",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -4417,6 +4550,7 @@
               "system": "Pali Momi Medical Center",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -4454,6 +4588,7 @@
               "system": "Adventist Health Castle",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -4516,7 +4651,7 @@
       }
     },
     "IA": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Des Moines",
@@ -4529,6 +4664,7 @@
               "system": "MercyOne Des Moines Medical Center",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -4536,6 +4672,7 @@
               "system": "Broadlawns Medical Center",
               "score": 92,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -4543,6 +4680,7 @@
               "system": "UnityPoint Health - Iowa Methodist Medical Center",
               "score": 88,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -4590,6 +4728,7 @@
               "system": "UnityPoint Health - St. Luke's Hospital",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -4597,6 +4736,7 @@
               "system": "Mercy Medical Center",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -4639,6 +4779,7 @@
               "system": "Methodist Jennie Edmundson Hospital",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -4646,6 +4787,7 @@
               "system": "CHI Health Mercy Council Bluffs",
               "score": 91,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -4688,6 +4830,7 @@
               "system": "Mary Greeley Medical Center",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -4725,6 +4868,7 @@
               "system": "UnityPoint Health Trinity",
               "score": 82,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -4762,6 +4906,7 @@
               "system": "St. Anthony Regional Hospital",
               "score": 86,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -4799,6 +4944,7 @@
               "system": "MercyOne Clinton Medical Center",
               "score": 84,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -4836,6 +4982,7 @@
               "system": "MercyOne Genesis Medical Center - Davenport",
               "score": 87,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -4873,6 +5020,7 @@
               "system": "MercyOne Dubuque Medical Center",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -4910,6 +5058,7 @@
               "system": "UI Health Care Medical Center",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -4947,6 +5096,7 @@
               "system": "MercyOne North Iowa Medical Center",
               "score": 93,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -4984,6 +5134,7 @@
               "system": "Orange City Area Health System",
               "score": 81,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -5061,7 +5212,7 @@
       }
     },
     "ID": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Boise",
@@ -5074,6 +5225,7 @@
               "system": "St. Luke's Boise Medical Center",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -5081,6 +5233,7 @@
               "system": "Saint Alphonsus Regional Medical Center",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -5123,6 +5276,7 @@
               "system": "St. Luke's Nampa Medical Center",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -5130,6 +5284,7 @@
               "system": "Saint Alphonsus Medical Center - Nampa",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -5172,6 +5327,7 @@
               "system": "West Valley Medical Center",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -5209,6 +5365,7 @@
               "system": "Portneuf Medical Center",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -5246,6 +5403,7 @@
               "system": "St. Luke's Magic Valley Medical Center",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -5318,7 +5476,7 @@
       }
     },
     "IL": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Chicago",
@@ -5331,6 +5489,7 @@
               "system": "Northwestern Memorial Hospital",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -5338,6 +5497,7 @@
               "system": "Rush University Medical Center",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -5345,6 +5505,7 @@
               "system": "University of Chicago Medical Center",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -5352,6 +5513,7 @@
               "system": "Advocate Illinois Masonic Medical Center",
               "score": 87,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -5359,6 +5521,7 @@
               "system": "University of Illinois Hospital",
               "score": 77,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -5416,6 +5579,7 @@
               "system": "Northwest Community Hospital",
               "score": 73,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -5453,6 +5617,7 @@
               "system": "Advocate Good Shepherd Hospital",
               "score": 88,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -5490,6 +5655,7 @@
               "system": "Memorial Hospital Belleville",
               "score": 79,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -5527,6 +5693,7 @@
               "system": "Northwestern Medicine Kishwaukee Hospital",
               "score": 81,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -5564,6 +5731,7 @@
               "system": "Advocate Good Samaritan Hospital",
               "score": 92,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -5601,6 +5769,7 @@
               "system": "Advocate Sherman Hospital",
               "score": 83,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -5638,6 +5807,7 @@
               "system": "Elmhurst Hospital",
               "score": 89,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -5675,6 +5845,7 @@
               "system": "Evanston Hospital",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -5712,6 +5883,7 @@
               "system": "Northwestern Medicine - Delnor Hospital",
               "score": 90,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -5749,6 +5921,7 @@
               "system": "UChicago Medicine AdventHealth Hinsdale",
               "score": 84,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -5786,6 +5959,7 @@
               "system": "UChicago Medicine AdventHealth La Grange",
               "score": 78,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -5863,7 +6037,7 @@
       }
     },
     "IN": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Indianapolis",
@@ -5876,6 +6050,7 @@
               "system": "Community Hospital East",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -5883,6 +6058,7 @@
               "system": "IU Health University Hospital",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -5890,6 +6066,7 @@
               "system": "Community Hospital North",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -5897,6 +6074,7 @@
               "system": "Ascension St. Vincent Hospital - Indianapolis",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -5904,6 +6082,7 @@
               "system": "Community Hospital South",
               "score": 89,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -5911,6 +6090,7 @@
               "system": "IU Health Methodist Hospital",
               "score": 82,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -5973,6 +6153,7 @@
               "system": "IU Health North Hospital",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -5980,6 +6161,7 @@
               "system": "Ascension St. Vincent Carmel",
               "score": 91,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -6022,6 +6204,7 @@
               "system": "IU Health Arnett Hospital",
               "score": 87,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -6029,6 +6212,7 @@
               "system": "Franciscan Health Lafayette",
               "score": 83,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -6071,6 +6255,7 @@
               "system": "IU Health West Hospital",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -6108,6 +6293,7 @@
               "system": "IU Health Bloomington Hospital",
               "score": 86,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -6145,6 +6331,7 @@
               "system": "Hendricks Regional Health",
               "score": 90,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -6182,6 +6369,7 @@
               "system": "Ascension St. Vincent Evansville",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -6219,6 +6407,7 @@
               "system": "Parkview Regional Medical Center",
               "score": 93,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -6256,6 +6445,7 @@
               "system": "Hancock Regional Hospital",
               "score": 92,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -6293,6 +6483,7 @@
               "system": "Deaconess Memorial Medical Center",
               "score": 84,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -6330,6 +6521,7 @@
               "system": "IU Health Ball Memorial Hospital",
               "score": 85,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -6367,6 +6559,7 @@
               "system": "Schneck Medical Center",
               "score": 81,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -6444,7 +6637,7 @@
       }
     },
     "KS": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Overland Park",
@@ -6457,6 +6650,7 @@
               "system": "Saint Luke's South Hospital",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -6464,6 +6658,7 @@
               "system": "Overland Park Regional Medical Center",
               "score": 93,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -6471,6 +6666,7 @@
               "system": "Menorah Medical Center",
               "score": 91,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -6518,6 +6714,7 @@
               "system": "University of Kansas Hospital",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -6525,6 +6722,7 @@
               "system": "Providence Medical Center, Kansas City",
               "score": 80,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -6567,6 +6765,7 @@
               "system": "Stormont Vail Hospital",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -6574,6 +6773,7 @@
               "system": "University of Kansas Health System - St. Francis Campus",
               "score": 92,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -6616,6 +6816,7 @@
               "system": "Wesley Medical Center",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -6623,6 +6824,7 @@
               "system": "Ascension Via Christi St. Francis",
               "score": 89,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -6665,6 +6867,7 @@
               "system": "Kansas Medical Center",
               "score": 85,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -6702,6 +6905,7 @@
               "system": "Mitchell County Hospital",
               "score": 81,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -6739,6 +6943,7 @@
               "system": "Citizens Medical Center",
               "score": 83,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -6776,6 +6981,7 @@
               "system": "Hays Medical Center",
               "score": 86,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -6813,6 +7019,7 @@
               "system": "Lawrence Memorial Hospital, Lawrence",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -6850,6 +7057,7 @@
               "system": "Saint John Hospital",
               "score": 84,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -6887,6 +7095,7 @@
               "system": "Ascension Via Christi Hospital Manhattan",
               "score": 90,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -6924,6 +7133,7 @@
               "system": "AdventHealth Shawnee Mission",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -7001,7 +7211,7 @@
       }
     },
     "KY": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Lexington",
@@ -7014,6 +7224,7 @@
               "system": "University of Kentucky - Albert B. Chandler Hospital",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -7021,6 +7232,7 @@
               "system": "Baptist Health Lexington",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -7063,6 +7275,7 @@
               "system": "Baptist Health Louisville",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -7070,6 +7283,7 @@
               "system": "Norton Hospital",
               "score": 93,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -7112,6 +7326,7 @@
               "system": "UK King's Daughters Medical Center",
               "score": 90,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -7149,6 +7364,7 @@
               "system": "St. Elizabeth Edgewood Hospital",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -7186,6 +7402,7 @@
               "system": "Baptist Health Hardin Memorial Hospital",
               "score": 92,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -7223,6 +7440,7 @@
               "system": "St. Elizabeth Ft. Thomas Hospital",
               "score": 86,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -7260,6 +7478,7 @@
               "system": "Owensboro Health Muhlenberg Community Hospital",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -7297,6 +7516,7 @@
               "system": "Baptist Health La Grange",
               "score": 89,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -7334,6 +7554,7 @@
               "system": "CHI Saint Joseph Health - Saint Joseph London",
               "score": 88,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -7371,6 +7592,7 @@
               "system": "St. Claire Regional Medical Center",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -7408,6 +7630,7 @@
               "system": "Owensboro Health Regional Hospital",
               "score": 87,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -7445,6 +7668,7 @@
               "system": "Baptist Health Paducah",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -7522,7 +7746,7 @@
       }
     },
     "LA": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "New Orleans",
@@ -7535,6 +7759,7 @@
               "system": "Ochsner Medical Center - New Orleans",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -7542,6 +7767,7 @@
               "system": "University Medical Center New Orleans",
               "score": 93,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -7549,6 +7775,7 @@
               "system": "Touro Infirmary",
               "score": 92,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -7556,6 +7783,7 @@
               "system": "East Jefferson General Hospital",
               "score": 91,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -7608,6 +7836,7 @@
               "system": "Our Lady of the Lake Regional Medical Center",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -7615,6 +7844,7 @@
               "system": "Ochsner Medical Center - Baton Rouge",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -7622,6 +7852,7 @@
               "system": "Baton Rouge General Medical Center",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -7669,6 +7900,7 @@
               "system": "Leonard J. Chabert Medical Center",
               "score": 87,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -7676,6 +7908,7 @@
               "system": "Terrebonne General Medical Center",
               "score": 81,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -7718,6 +7951,7 @@
               "system": "Ochsner Lafayette General Medical Center",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -7725,6 +7959,7 @@
               "system": "Our Lady of Lourdes Regional Medical Center",
               "score": 89,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -7767,6 +8002,7 @@
               "system": "Abbeville General Hospital",
               "score": 83,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -7804,6 +8040,7 @@
               "system": "St. Tammany Parish Hospital",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -7841,6 +8078,7 @@
               "system": "Ochsner Medical Center - Kenner",
               "score": 90,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -7878,6 +8116,7 @@
               "system": "Lake Charles Memorial Hospital",
               "score": 88,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -7915,6 +8154,7 @@
               "system": "West Jefferson Medical Center",
               "score": 85,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -7952,6 +8192,7 @@
               "system": "St. Francis Medical Center, Monroe, LA",
               "score": 82,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -7989,6 +8230,7 @@
               "system": "Opelousas General Health System - Main Campus",
               "score": 84,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -8026,6 +8268,7 @@
               "system": "Willis Knighton North",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -8103,7 +8346,7 @@
       }
     },
     "MA": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Boston",
@@ -8116,6 +8359,7 @@
               "system": "Massachusetts General Hospital",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -8123,6 +8367,7 @@
               "system": "Brigham and Women's Hospital",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -8130,6 +8375,7 @@
               "system": "Beth Israel Deaconess Medical Center",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -8137,6 +8383,7 @@
               "system": "Tufts Medical Center",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -8144,6 +8391,7 @@
               "system": "Brigham and Women's Faulkner Hospital",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -8151,6 +8399,7 @@
               "system": "Boston Medical Center",
               "score": 93,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -8213,6 +8462,7 @@
               "system": "Lahey Hospital and Medical Center",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -8250,6 +8500,7 @@
               "system": "Milford Regional Medical Center",
               "score": 91,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -8287,6 +8538,7 @@
               "system": "Newton-Wellesley Hospital",
               "score": 92,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -8324,6 +8576,7 @@
               "system": "Salem Hospital",
               "score": 90,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -8361,6 +8614,7 @@
               "system": "UMass Memorial Medical Center",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -8438,7 +8692,7 @@
       }
     },
     "MD": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Baltimore",
@@ -8451,6 +8705,7 @@
               "system": "The Johns Hopkins Hospital",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -8458,6 +8713,7 @@
               "system": "University of Maryland Medical Center (UMMC)",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -8465,6 +8721,7 @@
               "system": "Johns Hopkins Bayview Medical Center",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -8472,6 +8729,7 @@
               "system": "Mercy Medical Center - Baltimore",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -8479,6 +8737,7 @@
               "system": "MedStar Union Memorial Hospital",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -8486,6 +8745,7 @@
               "system": "Greater Baltimore Medical Center",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -8548,6 +8808,7 @@
               "system": "UM Baltimore Washington Medical Center",
               "score": 93,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -8585,6 +8846,7 @@
               "system": "University of Maryland St. Joseph Medical Center",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -8647,7 +8909,7 @@
       }
     },
     "ME": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Portland",
@@ -8660,6 +8922,7 @@
               "system": "Northern Light Mercy Hospital",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -8667,6 +8930,7 @@
               "system": "Maine Medical Center",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -8709,6 +8973,7 @@
               "system": "MaineGeneral Medical Center",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -8746,6 +9011,7 @@
               "system": "Northern Light Eastern Maine Medical Center",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -8783,6 +9049,7 @@
               "system": "Northern Maine Medical Center",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -8850,7 +9117,7 @@
       }
     },
     "MI": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Grand Rapids",
@@ -8863,6 +9130,7 @@
               "system": "Corewell Health Butterworth Hospital",
               "score": 91,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -8870,6 +9138,7 @@
               "system": "Trinity Health Grand Rapids Hospital",
               "score": 87,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -8912,6 +9181,7 @@
               "system": "Bronson Methodist Hospital",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -8919,6 +9189,7 @@
               "system": "Beacon Kalamazoo",
               "score": 86,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -8961,6 +9232,7 @@
               "system": "University of Michigan Health",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -8998,6 +9270,7 @@
               "system": "Chelsea Hospital",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -9035,6 +9308,7 @@
               "system": "Henry Ford Hospital",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -9072,6 +9346,7 @@
               "system": "Corewell Health Greenville Hospital",
               "score": 84,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -9109,6 +9384,7 @@
               "system": "Corewell Health Beaumont Grosse Pointe Hospital",
               "score": 92,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -9146,6 +9422,7 @@
               "system": "Holland Hospital",
               "score": 90,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -9183,6 +9460,7 @@
               "system": "University of Michigan Health-Sparrow",
               "score": 89,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -9220,6 +9498,7 @@
               "system": "UP Health System - Marquette",
               "score": 83,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -9257,6 +9536,7 @@
               "system": "MyMichigan Medical Center Midland",
               "score": 85,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -9278,7 +9558,7 @@
               "type": "positive"
             },
             {
-              "text": "2 healthcare WARN notices aligned to metro text",
+              "text": "1 healthcare WARN notices aligned to metro text",
               "type": "neutral"
             }
           ]
@@ -9294,6 +9574,7 @@
               "system": "Trinity Health Oakland Hospital",
               "score": 82,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -9371,7 +9652,7 @@
       }
     },
     "MN": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Minneapolis",
@@ -9384,6 +9665,7 @@
               "system": "M Health Fairview University of Minnesota Medical Center",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -9391,6 +9673,7 @@
               "system": "Abbott Northwestern Hospital",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -9398,6 +9681,7 @@
               "system": "Hennepin Healthcare",
               "score": 90,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -9445,6 +9729,7 @@
               "system": "Essentia Health St. Mary's Medical Center",
               "score": 93,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -9452,6 +9737,7 @@
               "system": "Essentia Health - Duluth",
               "score": 89,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -9494,6 +9780,7 @@
               "system": "Regions Hospital",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -9501,6 +9788,7 @@
               "system": "United Hospital",
               "score": 92,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -9543,6 +9831,7 @@
               "system": "Mayo Clinic Health System - Albert Lea and Austin",
               "score": 88,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -9580,6 +9869,7 @@
               "system": "Essentia Health St. Joseph's Medical Center",
               "score": 80,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -9617,6 +9907,7 @@
               "system": "M Health Fairview Ridges Hospital",
               "score": 86,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -9654,6 +9945,7 @@
               "system": "Mercy Hospital",
               "score": 87,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -9691,6 +9983,7 @@
               "system": "Essentia Health St. Mary's - Detroit Lakes",
               "score": 79,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -9728,6 +10021,7 @@
               "system": "M Health Fairview Southdale Hospital",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -9765,6 +10059,7 @@
               "system": "Mayo Clinic Health System - Mankato",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -9802,6 +10097,7 @@
               "system": "North Memorial Health – Maple Grove Hospital",
               "score": 83,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -9839,6 +10135,7 @@
               "system": "M Health Fairview St. John’s Hospital",
               "score": 84,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -9916,7 +10213,7 @@
       }
     },
     "MO": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "St. Louis",
@@ -9929,6 +10226,7 @@
               "system": "Barnes-Jewish Hospital",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -9936,6 +10234,7 @@
               "system": "Missouri Baptist Medical Center",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -9943,6 +10242,7 @@
               "system": "Mercy Hospital St. Louis",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -9950,6 +10250,7 @@
               "system": "Mercy Hospital South",
               "score": 83,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -10002,6 +10303,7 @@
               "system": "St. Luke's Hospital of Kansas City",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -10009,6 +10311,7 @@
               "system": "Saint Luke's North Hospital",
               "score": 90,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -10016,6 +10319,7 @@
               "system": "University Health Lakewood Medical Center",
               "score": 89,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -10063,6 +10367,7 @@
               "system": "University of Missouri Health Care - University Hospital",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -10070,6 +10375,7 @@
               "system": "Boone Hospital Center",
               "score": 92,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -10112,6 +10418,7 @@
               "system": "Mercy Hospital Springfield",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -10119,6 +10426,7 @@
               "system": "CoxHealth Medical Center South",
               "score": 85,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -10161,6 +10469,7 @@
               "system": "St. Luke's Hospital",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -10198,6 +10507,7 @@
               "system": "Barnes-Jewish West County Hospital",
               "score": 88,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -10235,6 +10545,7 @@
               "system": "SSM Health St. Mary's Hospital - Jefferson City",
               "score": 84,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -10272,6 +10583,7 @@
               "system": "Saint Luke's East Hospital",
               "score": 87,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -10309,6 +10621,7 @@
               "system": "North Kansas City Hospital",
               "score": 93,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -10346,6 +10659,7 @@
               "system": "Progress West Hospital",
               "score": 86,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -10383,6 +10697,7 @@
               "system": "Barnes-Jewish St. Peters Hospital",
               "score": 91,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -10460,7 +10775,7 @@
       }
     },
     "MS": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Jackson",
@@ -10473,6 +10788,7 @@
               "system": "St. Dominic-Jackson Memorial Hospital",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -10480,6 +10796,7 @@
               "system": "University of Mississippi Medical Center",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -10487,6 +10804,7 @@
               "system": "Mississippi Baptist Medical Center",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -10534,6 +10852,7 @@
               "system": "Baptist Anderson Regional Medical Center",
               "score": 92,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -10541,6 +10860,7 @@
               "system": "Ochsner Rush Medical Center",
               "score": 89,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -10583,6 +10903,7 @@
               "system": "North Mississippi Medical Center - Gilmore Amory",
               "score": 88,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -10620,6 +10941,7 @@
               "system": "Baptist Memorial Hospital Golden Triangle",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -10657,6 +10979,7 @@
               "system": "Magnolia Regional Health Center",
               "score": 91,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -10694,6 +11017,7 @@
               "system": "Memorial Hospital at Gulfport",
               "score": 90,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -10731,6 +11055,7 @@
               "system": "South Central Regional Medical Center",
               "score": 87,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -10768,6 +11093,7 @@
               "system": "Baptist Memorial Hospital-Union County",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -10805,6 +11131,7 @@
               "system": "Methodist Olive Branch Hospital",
               "score": 93,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -10842,6 +11169,7 @@
               "system": "Baptist Memorial Hospital-North Mississippi",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -10879,6 +11207,7 @@
               "system": "Singing River’s Pascagoula Hospital",
               "score": 86,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -10916,6 +11245,7 @@
               "system": "North Mississippi Medical Center",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -10993,7 +11323,7 @@
       }
     },
     "MT": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Billings",
@@ -11006,6 +11336,7 @@
               "system": "Billings Clinic Hospital",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -11013,6 +11344,7 @@
               "system": "St. Vincent Regional Hospital",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -11055,6 +11387,7 @@
               "system": "Providence St. Patrick Hospital",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -11062,6 +11395,7 @@
               "system": "Community Medical Center - Missoula",
               "score": 93,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -11104,6 +11438,7 @@
               "system": "Community Hospital of Anaconda",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -11141,6 +11476,7 @@
               "system": "Bozeman Health Deaconess Hospital",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -11178,6 +11514,7 @@
               "system": "Benefis East Campus",
               "score": 91,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -11215,6 +11552,7 @@
               "system": "St. Peters Hospital",
               "score": 92,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -11252,6 +11590,7 @@
               "system": "Holy Rosary Hospital",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -11289,6 +11628,7 @@
               "system": "Sidney Health Center",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -11366,7 +11706,7 @@
       }
     },
     "NC": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Charlotte",
@@ -11379,6 +11719,7 @@
               "system": "Atrium Health Carolinas Medical Center",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -11386,6 +11727,7 @@
               "system": "Novant Health Presbyterian Medical Center",
               "score": 92,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -11428,6 +11770,7 @@
               "system": "Duke University Hospital",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -11435,6 +11778,7 @@
               "system": "Duke Regional Hospital",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -11477,6 +11821,7 @@
               "system": "UNC REX Hospital",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -11484,6 +11829,7 @@
               "system": "WakeMed Raleigh Campus",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -11526,6 +11872,7 @@
               "system": "Forsyth Medical Center",
               "score": 88,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -11533,6 +11880,7 @@
               "system": "Atrium Health Wake Forest Baptist Medical Center",
               "score": 85,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -11575,6 +11923,7 @@
               "system": "WakeMed Cary Hospital",
               "score": 90,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -11612,6 +11961,7 @@
               "system": "UNC Medical Center",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -11649,6 +11999,7 @@
               "system": "Atrium Health Cabarrus",
               "score": 89,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -11686,6 +12037,7 @@
               "system": "The Moses H. Cone Memorial Hospital",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -11723,6 +12075,7 @@
               "system": "Atrium Health Lincoln",
               "score": 91,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -11760,6 +12113,7 @@
               "system": "Carteret Health Care",
               "score": 87,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -11797,6 +12151,7 @@
               "system": "CarolinaEast Medical Center",
               "score": 93,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -11834,6 +12189,7 @@
               "system": "FirstHealth Moore Regional Hospital",
               "score": 84,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -11911,7 +12267,7 @@
       }
     },
     "ND": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Bismarck",
@@ -11924,6 +12280,7 @@
               "system": "Sanford Medical Center Bismarck",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -11931,6 +12288,7 @@
               "system": "CHI St. Alexius Health Bismarck",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -11973,6 +12331,7 @@
               "system": "Sanford Broadway Medical Center",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -11980,6 +12339,7 @@
               "system": "Essentia Health - Fargo",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -12022,6 +12382,7 @@
               "system": "Altru Hospital",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -12059,6 +12420,7 @@
               "system": "SMP Health - St Aloisius",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -12096,6 +12458,7 @@
               "system": "Trinity Health St. Joseph’s Hospital",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -12168,7 +12531,7 @@
       }
     },
     "NE": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Omaha",
@@ -12181,6 +12544,7 @@
               "system": "Nebraska Medicine - Nebraska Medical Center",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -12188,6 +12552,7 @@
               "system": "Methodist Hospital",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -12195,6 +12560,7 @@
               "system": "CHI Health Creighton University Medical Center - Bergan Mercy",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -12202,6 +12568,7 @@
               "system": "CHI Health Immanuel",
               "score": 93,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -12209,6 +12576,7 @@
               "system": "CHI Health Lakeside",
               "score": 92,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -12266,6 +12634,7 @@
               "system": "Bryan Medical Center",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -12273,6 +12642,7 @@
               "system": "CHI Health St. Elizabeth",
               "score": 87,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -12315,6 +12685,7 @@
               "system": "Bellevue Medical Center",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -12352,6 +12723,7 @@
               "system": "Methodist Fremont Health",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -12389,6 +12761,7 @@
               "system": "CHI Health St. Francis",
               "score": 89,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -12426,6 +12799,7 @@
               "system": "Mary Lanning Healthcare",
               "score": 88,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -12463,6 +12837,7 @@
               "system": "CHI Health Good Samaritan",
               "score": 90,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -12500,6 +12875,7 @@
               "system": "Faith Regional Hospital Medicine",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -12537,6 +12913,7 @@
               "system": "CHI Health Midlands",
               "score": 91,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -12574,6 +12951,7 @@
               "system": "York General Hospital",
               "score": 86,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -12651,7 +13029,7 @@
       }
     },
     "NH": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Dover",
@@ -12664,6 +13042,7 @@
               "system": "Wentworth-Douglass Hospital",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -12701,6 +13080,7 @@
               "system": "Exeter Hospital",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -12738,6 +13118,7 @@
               "system": "Dartmouth-Hitchcock Medical Center",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -12775,6 +13156,7 @@
               "system": "Catholic Medical Center",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -12812,6 +13194,7 @@
               "system": "Portsmouth Regional Hospital",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -12849,6 +13232,7 @@
               "system": "Frisbie Memorial Hospital",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -12926,7 +13310,7 @@
       }
     },
     "NJ": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "New Brunswick",
@@ -12939,6 +13323,7 @@
               "system": "RWJBarnabas Health - Robert Wood Johnson University Hospital",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -12946,6 +13331,7 @@
               "system": "Saint Peter's University Hospital",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -12988,6 +13374,7 @@
               "system": "Cooper University Hospital",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -13025,6 +13412,7 @@
               "system": "Englewood Hospital and Medical Center",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -13062,6 +13450,7 @@
               "system": "Hackensack University Medical Center",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -13099,6 +13488,7 @@
               "system": "Monmouth Medical Center",
               "score": 92,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -13136,6 +13526,7 @@
               "system": "Morristown Medical Center",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -13173,6 +13564,7 @@
               "system": "The Valley Hospital",
               "score": 91,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -13210,6 +13602,7 @@
               "system": "Penn Medicine Princeton Medical Center",
               "score": 93,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -13247,6 +13640,7 @@
               "system": "Overlook Medical Center",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -13284,6 +13678,7 @@
               "system": "Holy Name Medical Center",
               "score": 90,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -13361,7 +13756,7 @@
       }
     },
     "NM": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Albuquerque",
@@ -13374,6 +13769,7 @@
               "system": "University of New Mexico Hospital",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -13381,6 +13777,7 @@
               "system": "Presbyterian Hospital",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -13388,6 +13785,7 @@
               "system": "Lovelace Medical Center",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -13435,6 +13833,7 @@
               "system": "Plains Regional Medical Center",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -13472,6 +13871,7 @@
               "system": "CHRISTUS St. Vincent Regional Medical Center",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -13509,6 +13909,7 @@
               "system": "Shiprock - Northern Navajo Medical Center",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -13576,7 +13977,7 @@
       }
     },
     "NV": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Las Vegas",
@@ -13589,6 +13990,7 @@
               "system": "Dignity Health - San Martín Hospital",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -13596,6 +13998,7 @@
               "system": "Southern Hills Hospital & Medical Center",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -13638,6 +14041,7 @@
               "system": "Saint Mary's Regional Medical Center",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -13645,6 +14049,7 @@
               "system": "Renown Regional Medical Center",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -13687,6 +14092,7 @@
               "system": "Dignity Health - Saint Rose Dominican Hospital - Siena Campus",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -13724,6 +14130,7 @@
               "system": "Northern Nevada Medical Center",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -13791,7 +14198,7 @@
       }
     },
     "NY": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "New York City",
@@ -13804,6 +14211,7 @@
               "system": "The Mount Sinai Hospital",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -13811,6 +14219,7 @@
               "system": "NYU Langone Hospitals - Tisch Hospital",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -13818,6 +14227,7 @@
               "system": "NewYork-Presbyterian Hospital - Columbia and Cornell",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -13825,6 +14235,7 @@
               "system": "Lenox Hill Hospital",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -13832,6 +14243,7 @@
               "system": "Mount Sinai Morningside & Mount Sinai West",
               "score": 86,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -13889,6 +14301,7 @@
               "system": "Northwell Health - Mather Hospital",
               "score": 93,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -13896,6 +14309,7 @@
               "system": "St. Charles Hospital",
               "score": 79,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -13938,6 +14352,7 @@
               "system": "St. Peter's Hospital - Albany",
               "score": 81,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -13975,6 +14390,7 @@
               "system": "South Shore University Hospital",
               "score": 71,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -14012,6 +14428,7 @@
               "system": "Montefiore Medical Center",
               "score": 91,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -14049,6 +14466,7 @@
               "system": "NYU Langone Hospital - Brooklyn",
               "score": 87,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -14086,6 +14504,7 @@
               "system": "NewYork-Presbyterian Hudson Valley Hospital",
               "score": 76,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -14123,6 +14542,7 @@
               "system": "Glen Cove Hospital",
               "score": 89,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -14160,6 +14580,7 @@
               "system": "Glens Falls Hospital",
               "score": 73,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -14197,6 +14618,7 @@
               "system": "Huntington Hospital",
               "score": 88,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -14234,6 +14656,7 @@
               "system": "North Shore University Hospital",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -14271,6 +14694,7 @@
               "system": "Northern Westchester Hospital",
               "score": 83,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -14348,7 +14772,7 @@
       }
     },
     "OH": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Cincinnati",
@@ -14361,6 +14785,7 @@
               "system": "Christ Hospital",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -14368,6 +14793,7 @@
               "system": "University of Cincinnati Medical Center",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -14375,6 +14801,7 @@
               "system": "Good Samaritan Hospital",
               "score": 92,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -14382,6 +14809,7 @@
               "system": "The Jewish Hospital - Mercy Health",
               "score": 80,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -14434,6 +14862,7 @@
               "system": "Cleveland Clinic",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -14441,6 +14870,7 @@
               "system": "University Hospitals Cleveland Medical Center",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -14448,6 +14878,7 @@
               "system": "Cleveland Clinic - Fairview Hospital",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -14455,6 +14886,7 @@
               "system": "MetroHealth Medical Center - Main Campus",
               "score": 89,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -14507,6 +14939,7 @@
               "system": "Cleveland Clinic - Akron General",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -14514,6 +14947,7 @@
               "system": "Summa Health System - Akron Campus",
               "score": 82,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -14556,6 +14990,7 @@
               "system": "Ohio State University - Wexner Medical Center",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -14563,6 +14998,7 @@
               "system": "OhioHealth Riverside Methodist Hospital",
               "score": 91,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -14605,6 +15041,7 @@
               "system": "ProMedica Toledo Hospital",
               "score": 88,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -14612,6 +15049,7 @@
               "system": "UToledo Health University of Toledo",
               "score": 83,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -14654,6 +15092,7 @@
               "system": "Alliance Community Hospital",
               "score": 73,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -14691,6 +15130,7 @@
               "system": "Cleveland Clinic - Avon Hospital",
               "score": 93,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -14728,6 +15168,7 @@
               "system": "Wood County Hospital",
               "score": 77,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -14765,6 +15206,7 @@
               "system": "Mercer County Community Hospital",
               "score": 76,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -14802,6 +15244,7 @@
               "system": "Western Reserve Hospital",
               "score": 74,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -14839,6 +15282,7 @@
               "system": "Miami Valley Hospital",
               "score": 87,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -14876,6 +15320,7 @@
               "system": "Blanchard Valley Hospital",
               "score": 78,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -14953,7 +15398,7 @@
       }
     },
     "OK": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Tulsa",
@@ -14966,6 +15411,7 @@
               "system": "Saint Francis Hospital",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -14973,6 +15419,7 @@
               "system": "Oklahoma State University Medical Center",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -14980,6 +15427,7 @@
               "system": "Saint Francis Hospital South",
               "score": 91,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -14987,6 +15435,7 @@
               "system": "Hillcrest Medical Center",
               "score": 87,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -14994,6 +15443,7 @@
               "system": "Ascension St. John Medical Center",
               "score": 82,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -15051,6 +15501,7 @@
               "system": "Mercy Hospital Oklahoma City",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -15058,6 +15509,7 @@
               "system": "INTEGRIS Health Southwest Medical Center",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -15065,6 +15517,7 @@
               "system": "INTEGRIS Health Baptist Medical Center",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -15072,6 +15525,7 @@
               "system": "SSM Health St. Anthony Hospital - Oklahoma City",
               "score": 90,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -15124,6 +15578,7 @@
               "system": "St. Mary's Regional Medical Center",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -15131,6 +15586,7 @@
               "system": "INTEGRIS Health Enid Hospital",
               "score": 84,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -15173,6 +15629,7 @@
               "system": "Chickasaw Nation Medical Center",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -15210,6 +15667,7 @@
               "system": "Mercy Hospital Ardmore",
               "score": 86,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -15247,6 +15705,7 @@
               "system": "Duncan Regional Hospital",
               "score": 89,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -15284,6 +15743,7 @@
               "system": "INTEGRIS Health Edmond Hospital",
               "score": 85,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -15321,6 +15781,7 @@
               "system": "INTEGRIS Health Grove Hospital",
               "score": 88,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -15358,6 +15819,7 @@
               "system": "Saint Francis Hospital Muskogee",
               "score": 81,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -15395,6 +15857,7 @@
               "system": "Norman Regional Hospital",
               "score": 92,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -15432,6 +15895,7 @@
               "system": "SSM Health St. Anthony Hospital - Shawnee",
               "score": 83,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -15469,6 +15933,7 @@
               "system": "Stillwater Medical Center",
               "score": 93,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -15546,7 +16011,7 @@
       }
     },
     "OR": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Portland",
@@ -15559,6 +16024,7 @@
               "system": "Providence Portland Medical Center",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -15566,6 +16032,7 @@
               "system": "OHSU Hospital",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -15573,6 +16040,7 @@
               "system": "Providence St. Vincent Medical Center",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -15580,6 +16048,7 @@
               "system": "Legacy Emanuel Medical Center",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -15587,6 +16056,7 @@
               "system": "Legacy Good Samaritan Medical Center",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -15594,6 +16064,7 @@
               "system": "Adventist Health Portland",
               "score": 93,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -15656,6 +16127,7 @@
               "system": "Kaiser Permanente Sunnyside Medical Center",
               "score": 92,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -15693,6 +16165,7 @@
               "system": "Kaiser Permanente Westside Medical Center",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -15730,6 +16203,7 @@
               "system": "Providence Medford Medical Center",
               "score": 91,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -15767,6 +16241,7 @@
               "system": "Salem Health Salem Hospital",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -15839,7 +16314,7 @@
       }
     },
     "PA": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Philadelphia",
@@ -15852,6 +16327,7 @@
               "system": "Jefferson Health - Thomas Jefferson University Hospital",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -15859,6 +16335,7 @@
               "system": "Hospital of the University of Pennsylvania",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -15866,6 +16343,7 @@
               "system": "Penn Presbyterian Medical Center",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -15873,6 +16351,7 @@
               "system": "Temple University Hospital",
               "score": 91,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -15880,6 +16359,7 @@
               "system": "Pennsylvania Hospital",
               "score": 85,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -15921,8 +16401,8 @@
               "type": "positive"
             },
             {
-              "text": "1 healthcare WARN notices aligned to metro text",
-              "type": "neutral"
+              "text": "0 healthcare WARN notices aligned to metro text",
+              "type": "positive"
             }
           ]
         },
@@ -15937,6 +16417,7 @@
               "system": "UPMC Presbyterian & Shadyside",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -15944,6 +16425,7 @@
               "system": "Allegheny General Hospital",
               "score": 79,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -15951,6 +16433,7 @@
               "system": "UPMC Passavant - McCandless",
               "score": 78,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -15958,6 +16441,7 @@
               "system": "UPMC St. Margaret",
               "score": 75,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -15965,6 +16449,7 @@
               "system": "West Penn Hospital",
               "score": 74,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -16006,8 +16491,8 @@
               "type": "positive"
             },
             {
-              "text": "1 healthcare WARN notices aligned to metro text",
-              "type": "neutral"
+              "text": "0 healthcare WARN notices aligned to metro text",
+              "type": "positive"
             }
           ]
         },
@@ -16022,6 +16507,7 @@
               "system": "Lehigh Valley Hospital–Cedar Crest",
               "score": 92,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -16059,6 +16545,7 @@
               "system": "St. Luke's University Hospital - Bethlehem Campus",
               "score": 88,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -16096,6 +16583,7 @@
               "system": "Main Line Health - Bryn Mawr Hospital",
               "score": 84,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -16133,6 +16621,7 @@
               "system": "Geisinger Medical Center",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -16170,6 +16659,7 @@
               "system": "Doylestown Hospital",
               "score": 87,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -16207,6 +16697,7 @@
               "system": "UPMC Hamot",
               "score": 77,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -16244,6 +16735,7 @@
               "system": "UPMC Harrisburg",
               "score": 89,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -16281,6 +16773,7 @@
               "system": "Penn State Health - Milton S. Hershey Medical Center",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -16318,6 +16811,7 @@
               "system": "Lancaster General Hospital",
               "score": 90,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -16355,6 +16849,7 @@
               "system": "Evangelical Community Hospital",
               "score": 81,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -16432,7 +16927,7 @@
       }
     },
     "PR": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "PR Regional",
@@ -16474,7 +16969,7 @@
       }
     },
     "RI": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Providence",
@@ -16487,6 +16982,7 @@
               "system": "Rhode Island Hospital - Brown University Health",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -16494,6 +16990,7 @@
               "system": "The Miriam Hospital",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -16536,6 +17033,7 @@
               "system": "Newport Hospital - Brown University Health",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -16573,6 +17071,7 @@
               "system": "South County Hospital",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -16610,6 +17109,7 @@
               "system": "Westerly Hospital",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -16674,7 +17174,7 @@
       }
     },
     "SC": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Charleston",
@@ -16687,6 +17187,7 @@
               "system": "MUSC Health - University Medical Center",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -16694,6 +17195,7 @@
               "system": "Roper Hospital",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -16701,6 +17203,7 @@
               "system": "Bon Secours St. Francis Hospital",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -16748,6 +17251,7 @@
               "system": "Prisma Health Greenville Memorial Hospital",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -16755,6 +17259,7 @@
               "system": "St. Francis Downtown",
               "score": 93,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -16797,6 +17302,7 @@
               "system": "East Cooper Medical Center",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -16804,6 +17310,7 @@
               "system": "Roper St. Francis Mount Pleasant Hospital",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -16846,6 +17353,7 @@
               "system": "Self Regional Medical Center",
               "score": 92,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -16883,6 +17391,7 @@
               "system": "Prisma Health Greer Memorial Hospital",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -16920,6 +17429,7 @@
               "system": "Lexington Medical Center",
               "score": 91,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -16997,7 +17507,7 @@
       }
     },
     "SD": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Sioux Falls",
@@ -17010,6 +17520,7 @@
               "system": "Sanford USD Medical Center",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -17017,6 +17528,7 @@
               "system": "Avera McKennan Hospital and University Health Center",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -17059,6 +17571,7 @@
               "system": "Avera St. Luke's Hospital",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -17096,6 +17609,7 @@
               "system": "Brookings Hospital",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -17133,6 +17647,7 @@
               "system": "Avera St. Mary's Hospital",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -17170,6 +17685,7 @@
               "system": "Monument Health Rapid City Hospital",
               "score": 93,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -17207,6 +17723,7 @@
               "system": "Prairie Lakes Hospital",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -17244,6 +17761,7 @@
               "system": "Avera Sacred Heart Hospital",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -17321,7 +17839,7 @@
       }
     },
     "TN": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Nashville",
@@ -17334,6 +17852,7 @@
               "system": "Vanderbilt University Medical Center",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -17341,6 +17860,7 @@
               "system": "Ascension Saint Thomas Hospital West",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -17348,6 +17868,7 @@
               "system": "TriStar Centennial Medical Center",
               "score": 85,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -17395,6 +17916,7 @@
               "system": "CHI Memorial Hospital Chattanooga",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -17402,6 +17924,7 @@
               "system": "Erlanger Community Health Center",
               "score": 84,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -17444,6 +17967,7 @@
               "system": "University of Tennessee Medical Center",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -17451,6 +17975,7 @@
               "system": "Fort Sanders Regional Medical Center",
               "score": 91,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -17493,6 +18018,7 @@
               "system": "Methodist University Hospital",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -17500,6 +18026,7 @@
               "system": "Baptist Memorial Hospital-Memphis",
               "score": 87,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -17542,6 +18069,7 @@
               "system": "Maury Regional Medical Center",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -17579,6 +18107,7 @@
               "system": "Williamson Medical Center",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -17616,6 +18145,7 @@
               "system": "Roane Medical Center",
               "score": 93,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -17653,6 +18183,7 @@
               "system": "Ascension Saint Thomas River Park Hospital",
               "score": 92,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -17690,6 +18221,7 @@
               "system": "Ascension Saint Thomas Rutherford Hospital",
               "score": 88,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -17727,6 +18259,7 @@
               "system": "Henry County Medical Center",
               "score": 86,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -17764,6 +18297,7 @@
               "system": "LeConte Medical Center",
               "score": 90,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -17801,6 +18335,7 @@
               "system": "Baptist Memorial Hospital-Union City",
               "score": 89,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -17878,7 +18413,7 @@
       }
     },
     "TX": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Dallas",
@@ -17891,6 +18426,7 @@
               "system": "UT Southwestern Medical Center",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -17898,6 +18434,7 @@
               "system": "Baylor University Medical Center",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -17905,6 +18442,7 @@
               "system": "Medical City Dallas Hospital",
               "score": 89,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -17912,6 +18450,7 @@
               "system": "Texas Health Presbyterian Hospital Dallas",
               "score": 76,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -17919,6 +18458,7 @@
               "system": "Methodist Dallas Medical Center",
               "score": 75,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -17926,6 +18466,7 @@
               "system": "Parkland Memorial Hospital",
               "score": 71,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -17988,6 +18529,7 @@
               "system": "Houston Methodist Hospital",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -17995,6 +18537,7 @@
               "system": "Memorial Hermann - Texas Medical Center",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -18002,6 +18545,7 @@
               "system": "Baylor St. Luke's Medical Center",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -18009,6 +18553,7 @@
               "system": "Houston Methodist Willowbrook Hospital",
               "score": 84,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -18016,6 +18561,7 @@
               "system": "Memorial Hermann - Memorial City Medical Center",
               "score": 67,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -18023,6 +18569,7 @@
               "system": "Memorial Hermann Greater Heights Hospital",
               "score": 60,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -18085,6 +18632,7 @@
               "system": "Texas Health Harris Methodist Hospital Southwest Fort Worth",
               "score": 81,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -18092,6 +18640,7 @@
               "system": "Baylor Scott & White All Saints Medical Center - Fort Worth",
               "score": 80,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -18099,6 +18648,7 @@
               "system": "Texas Health Harris Methodist Fort Worth",
               "score": 63,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -18106,6 +18656,7 @@
               "system": "Medical City Alliance Hospital",
               "score": 60,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -18113,6 +18664,7 @@
               "system": "Texas Health Harris Methodist Hospital Alliance",
               "score": 60,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -18170,6 +18722,7 @@
               "system": "St. David's Medical Center",
               "score": 92,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -18177,6 +18730,7 @@
               "system": "Ascension Seton Medical Center Austin",
               "score": 91,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -18184,6 +18738,7 @@
               "system": "Dell Seton Medical Center at The University of Texas",
               "score": 64,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -18231,6 +18786,7 @@
               "system": "University Hospital",
               "score": 72,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -18238,6 +18794,7 @@
               "system": "Baptist Medical Center",
               "score": 69,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -18245,6 +18802,7 @@
               "system": "Methodist Hospital",
               "score": 68,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -18292,6 +18850,7 @@
               "system": "Baylor Scott & White Medical Center - Frisco",
               "score": 87,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -18299,6 +18858,7 @@
               "system": "Baylor Scott & White Medical Center - Centennial",
               "score": 83,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -18341,6 +18901,7 @@
               "system": "Baylor Scott & White Medical Center - Plano",
               "score": 93,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -18348,6 +18909,7 @@
               "system": "Medical City Plano Hospital",
               "score": 66,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -18390,6 +18952,7 @@
               "system": "Houston Methodist Sugar Land Hospital",
               "score": 82,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -18397,6 +18960,7 @@
               "system": "Memorial Hermann Sugar Land Hospital",
               "score": 77,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -18439,6 +19003,7 @@
               "system": "Houston Methodist The Woodlands Hospital",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -18446,6 +19011,7 @@
               "system": "St. Luke's - The Woodlands Hospital",
               "score": 65,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -18488,6 +19054,7 @@
               "system": "Texas Health Presbyterian Hospital Allen",
               "score": 60,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -18525,6 +19092,7 @@
               "system": "UT Health Athens",
               "score": 60,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -18562,6 +19130,7 @@
               "system": "Baylor Scott & White Medical Center - College Station",
               "score": 79,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -18639,7 +19208,7 @@
       }
     },
     "UT": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Salt Lake City",
@@ -18652,6 +19221,7 @@
               "system": "University of Utah Hospital",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -18659,6 +19229,7 @@
               "system": "LDS Hospital",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -18701,6 +19272,7 @@
               "system": "Logan Regional Hospital",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -18738,6 +19310,7 @@
               "system": "Intermountain Medical Center",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -18775,6 +19348,7 @@
               "system": "McKay-Dee Hospital",
               "score": 93,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -18812,6 +19386,7 @@
               "system": "Utah Valley Hospital",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -18849,6 +19424,7 @@
               "system": "Alta View Hospital",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -18886,6 +19462,7 @@
               "system": "St. George Regional Hospital",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -18963,7 +19540,7 @@
       }
     },
     "VA": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Alexandria",
@@ -18976,6 +19553,7 @@
               "system": "Inova Mount Vernon Hospital",
               "score": 90,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -18983,6 +19561,7 @@
               "system": "Inova Alexandria Hospital",
               "score": 87,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -19025,6 +19604,7 @@
               "system": "UVA University Hospital",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -19032,6 +19612,7 @@
               "system": "Sentara Martha Jefferson Hospital",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -19074,6 +19655,7 @@
               "system": "Sentara Leigh Hospital",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -19081,6 +19663,7 @@
               "system": "Sentara Norfolk General Hospital",
               "score": 93,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -19123,6 +19706,7 @@
               "system": "VHC Health - Main Hospital",
               "score": 92,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -19160,6 +19744,7 @@
               "system": "Inova Fair Oaks Hospital",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -19197,6 +19782,7 @@
               "system": "Inova Fairfax Hospital",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -19234,6 +19820,7 @@
               "system": "Inova Loudoun Hospital",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -19271,6 +19858,7 @@
               "system": "VCU Medical Center",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -19308,6 +19896,7 @@
               "system": "Carilion Roanoke Memorial Hospital",
               "score": 88,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -19345,6 +19934,7 @@
               "system": "Sentara Obici Hospital",
               "score": 86,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -19382,6 +19972,7 @@
               "system": "Sentara Princess Anne Hospital",
               "score": 91,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -19419,6 +20010,7 @@
               "system": "Sentara Williamsburg Regional Medical Center",
               "score": 89,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -19496,7 +20088,7 @@
       }
     },
     "VT": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Barre",
@@ -19509,6 +20101,7 @@
               "system": "Central Vermont Medical Center",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -19546,6 +20139,7 @@
               "system": "Southwestern Vermont Medical Center",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -19583,6 +20177,7 @@
               "system": "The University of Vermont Medical Center",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -19620,6 +20215,7 @@
               "system": "Gifford Medical Center",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -19657,6 +20253,7 @@
               "system": "Rutland Regional Medical Center",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -19725,7 +20322,7 @@
       }
     },
     "WA": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Seattle",
@@ -19738,6 +20335,7 @@
               "system": "University of Washington Medical Center",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -19745,6 +20343,7 @@
               "system": "Virginia Mason Medical Center",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -19752,6 +20351,7 @@
               "system": "Swedish Medical Center - Swedish First Hill Campus",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -19759,6 +20359,7 @@
               "system": "Swedish Medical Center - Cherry Hill Campus",
               "score": 91,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -19811,6 +20412,7 @@
               "system": "Providence Sacred Heart Medical Center",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -19818,6 +20420,7 @@
               "system": "Multicare Deaconess Hospital",
               "score": 89,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -19860,6 +20463,7 @@
               "system": "Overlake Hospital Medical Center",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -19897,6 +20501,7 @@
               "system": "Providence Regional Medical Center Everett",
               "score": 92,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -19934,6 +20539,7 @@
               "system": "St. Anthony Hospital",
               "score": 86,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -19971,6 +20577,7 @@
               "system": "Swedish Issaquah Campus",
               "score": 88,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -20008,6 +20615,7 @@
               "system": "EvergreenHealth Medical Center",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -20045,6 +20653,7 @@
               "system": "Kadlec Regional Medical Center",
               "score": 93,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -20082,6 +20691,7 @@
               "system": "St. Joseph Medical Center",
               "score": 90,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -20119,6 +20729,7 @@
               "system": "Legacy Salmon Creek Medical Center",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -20156,6 +20767,7 @@
               "system": "Providence St. Mary Medical Center",
               "score": 87,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -20233,7 +20845,7 @@
       }
     },
     "WI": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Green Bay",
@@ -20246,6 +20858,7 @@
               "system": "Aurora BayCare Medical Center",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -20253,6 +20866,7 @@
               "system": "Bellin Hospital",
               "score": 93,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -20260,6 +20874,7 @@
               "system": "HSHS St. Vincent Hospital",
               "score": 89,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -20307,6 +20922,7 @@
               "system": "UW Health - University Hospital",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -20314,6 +20930,7 @@
               "system": "UnityPoint Health - Meriter Hospital",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -20321,6 +20938,7 @@
               "system": "SSM Health St. Mary's Hospital - Madison",
               "score": 92,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -20368,6 +20986,7 @@
               "system": "Mayo Clinic Health System - La Crosse",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -20375,6 +20994,7 @@
               "system": "Gundersen Lutheran Medical Center",
               "score": 91,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -20417,6 +21037,7 @@
               "system": "Froedtert Hospital",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -20424,6 +21045,7 @@
               "system": "Aurora St. Luke's Medical Center",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -20466,6 +21088,7 @@
               "system": "Mayo Clinic Health System in Eau Claire",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -20503,6 +21126,7 @@
               "system": "Aurora Medical Center - Grafton",
               "score": 90,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -20540,6 +21164,7 @@
               "system": "Mercyhealth Hospital and Trauma Center",
               "score": 81,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -20577,6 +21202,7 @@
               "system": "Marshfield Medical Center - Marshfield",
               "score": 88,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -20614,6 +21240,7 @@
               "system": "Aurora Medical Center Oshkosh",
               "score": 83,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -20651,6 +21278,7 @@
               "system": "Aurora Medical Center – Sheboygan County",
               "score": 82,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -20688,6 +21316,7 @@
               "system": "Door County Medical Center",
               "score": 85,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -20725,6 +21354,7 @@
               "system": "Aurora Medical Center - Summit",
               "score": 86,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -20802,7 +21432,7 @@
       }
     },
     "WV": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Huntington",
@@ -20815,6 +21445,7 @@
               "system": "St. Mary's Medical Center",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -20822,6 +21453,7 @@
               "system": "Cabell Huntington Hospital",
               "score": 95,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -20864,6 +21496,7 @@
               "system": "WVU Medicine - J.W. Ruby Memorial Hospital",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             },
             {
@@ -20871,6 +21504,7 @@
               "system": "Mon Health Medical Center",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -20913,6 +21547,7 @@
               "system": "United Hospital Center",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -20950,6 +21585,7 @@
               "system": "WVU Medicine - St. Joseph's Hospital",
               "score": 93,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -20987,6 +21623,7 @@
               "system": "Reynolds Memorial Hospital",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -21024,6 +21661,7 @@
               "system": "Logan Regional Medical Center",
               "score": 94,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -21101,7 +21739,7 @@
       }
     },
     "WY": {
-      "generatedAt": "2026-02-27T15:46:55.815Z",
+      "generatedAt": "2026-02-27T18:09:59.121Z",
       "metros": [
         {
           "name": "Cheyenne",
@@ -21114,6 +21752,7 @@
               "system": "Cheyenne Regional Medical Center",
               "score": 98,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -21151,6 +21790,7 @@
               "system": "St. John's Health",
               "score": 100,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -21188,6 +21828,7 @@
               "system": "Powell Valley Healthcare",
               "score": 96,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -21225,6 +21866,7 @@
               "system": "Memorial Hospital of Sweetwater County",
               "score": 97,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
@@ -21262,6 +21904,7 @@
               "system": "Sheridan Memorial Hospital",
               "score": 99,
               "beds": "--",
+              "bedSource": "missing",
               "reviews": 1
             }
           ],
