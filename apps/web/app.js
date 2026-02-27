@@ -3129,25 +3129,42 @@ const enrichBeaconEntry = (state, entry, notices, programsInState) => {
     .map((program) => normalizeProgram(program).name)
     .filter(Boolean)
     .slice(0, 8);
-  const indianaFeederSchools = state === 'CA'
-    ? getTopInstitutionsForState('IN', 3).map((entry) => entry.name).filter(Boolean)
-    : [];
+  const indianaFeederSchools = getTopInstitutionsForState('IN', 3).map((item) => item.name).filter(Boolean);
   const indianaFeederText = indianaFeederSchools.length
     ? `Indiana feeder schools: ${indianaFeederSchools.join(', ')}`
     : 'Indiana feeder schools: Indiana University, Purdue University, Ivy Tech Community College';
   const candidateMetroFallback = buildFallbackCandidateMetroTable(notices, state, inferredMetros)
     .map((row) => {
-      if (state !== 'CA') return row;
       const feederSchools = String(row.feederSchools || '').trim();
       if (!feederSchools) return { ...row, feederSchools: indianaFeederText };
       if (/indiana feeder schools:/i.test(feederSchools)) return row;
       return { ...row, feederSchools: `${feederSchools}; ${indianaFeederText}` };
     });
-  const majorProgramsWithIndiana = state === 'CA' && indianaFeederSchools.length
+  const majorProgramsWithIndiana = indianaFeederSchools.length
     ? Array.from(new Set([...majorProgramsFallback, ...indianaFeederSchools])).slice(0, 10)
     : majorProgramsFallback;
-
   const competitionSystems = entry.competition?.systems?.length ? entry.competition.systems : inferredSystems;
+  const candidateInsightsWithIndiana = (
+    entry.candidateInsights?.length ? entry.candidateInsights : [
+      { title: `${stateName} demand signal`, detail: `${healthcareNotices.length} healthcare notices in current dataset.` },
+      { title: 'Pipeline signal', detail: `${programsInState.length} nursing programs currently loaded.` },
+      { title: 'Competition signal', detail: `${competitionSystems.length} major systems identified for this market.` }
+    ]
+  );
+  if (indianaFeederSchools.length && !candidateInsightsWithIndiana.some((item) => /indiana feeder schools/i.test(String(item?.title || '')))) {
+    candidateInsightsWithIndiana.push({
+      title: 'Indiana feeder schools',
+      detail: `${indianaFeederSchools.join(', ')} funnel nurses to ${stateName} target metros.`
+    });
+  }
+  const candidateMetroWithIndiana = (entry.candidateMetroTable?.length ? entry.candidateMetroTable : candidateMetroFallback)
+    .map((row) => {
+      const feederSchools = String(row.feederSchools || '').trim();
+      if (!feederSchools) return { ...row, feederSchools: indianaFeederText };
+      if (/indiana feeder schools:/i.test(feederSchools)) return row;
+      return { ...row, feederSchools: `${feederSchools}; ${indianaFeederText}` };
+    });
+
   const merged = {
     ...entry,
     summary: {
@@ -3201,12 +3218,8 @@ const enrichBeaconEntry = (state, entry, notices, programsInState) => {
     hospitalRankings: entry.hospitalRankings?.length ? entry.hospitalRankings : rankingFallback,
     hospitalRegistry: entry.hospitalRegistry?.length ? entry.hospitalRegistry : hospitalRegistryFallback,
     clinicRegistry: entry.clinicRegistry?.length ? entry.clinicRegistry : clinicRegistryFallback,
-    candidateInsights: entry.candidateInsights?.length ? entry.candidateInsights : [
-      { title: `${stateName} demand signal`, detail: `${healthcareNotices.length} healthcare notices in current dataset.` },
-      { title: 'Pipeline signal', detail: `${programsInState.length} nursing programs currently loaded.` },
-      { title: 'Competition signal', detail: `${competitionSystems.length} major systems identified for this market.` }
-    ],
-    candidateMetroTable: entry.candidateMetroTable?.length ? entry.candidateMetroTable : candidateMetroFallback,
+    candidateInsights: candidateInsightsWithIndiana,
+    candidateMetroTable: candidateMetroWithIndiana,
     priorityMetros: entry.priorityMetros?.length ? entry.priorityMetros : inferredMetros,
     newsKeywords: entry.newsKeywords?.length ? entry.newsKeywords : [stateName, state, ...inferredMetros].filter(Boolean)
   };
