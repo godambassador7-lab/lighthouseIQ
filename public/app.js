@@ -145,6 +145,10 @@ const stateBeaconCandidates = document.getElementById('state-beacon-candidates')
 const stateBeaconCandidateTable = document.getElementById('state-beacon-candidate-table');
 const stateBeaconPros = document.getElementById('state-beacon-pros');
 const stateBeaconCons = document.getElementById('state-beacon-cons');
+const stateBeaconProsTitle = document.getElementById('state-beacon-pros-title');
+const stateBeaconConsTitle = document.getElementById('state-beacon-cons-title');
+const stateBeaconProsToggleTarget = document.getElementById('state-beacon-pros-toggle-target');
+const stateBeaconProsToggleHome = document.getElementById('state-beacon-pros-toggle-home');
 const stateBeaconAttractions = document.getElementById('state-beacon-attractions');
 const stateBeaconDrawbacks = document.getElementById('state-beacon-drawbacks');
 const stateBeaconSave = document.getElementById('state-beacon-save');
@@ -256,6 +260,9 @@ let ruralClosuresLoadedAt = 0;
 const RURAL_CLOSURES_REFRESH_MS = 30 * 60 * 1000;
 const STATE_BEACON_DEFAULT = 'FL';
 const STATE_BEACON_HOME_DEFAULT = 'IN';
+const STATE_BEACON_PROS_MODE_TARGET = 'target_vs_home';
+const STATE_BEACON_PROS_MODE_HOME = 'home_vs_target';
+let stateBeaconProsMode = STATE_BEACON_PROS_MODE_TARGET;
 const STATE_BEACON_INPUTS_KEY = 'lni_state_beacon_inputs';
 const STATE_BEACON_NOTES_KEY = 'lni_state_beacon_notes';
 const MAP_LONG_PRESS_MS = 2000;
@@ -6938,6 +6945,37 @@ const renderBeaconList = (container, items, formatter) => {
   container.innerHTML = items.map((item, idx) => formatter(item, idx)).join('');
 };
 
+const setStateBeaconProsMode = (mode) => {
+  stateBeaconProsMode = mode === STATE_BEACON_PROS_MODE_HOME
+    ? STATE_BEACON_PROS_MODE_HOME
+    : STATE_BEACON_PROS_MODE_TARGET;
+  stateBeaconProsToggleTarget?.classList.toggle('active', stateBeaconProsMode === STATE_BEACON_PROS_MODE_TARGET);
+  stateBeaconProsToggleHome?.classList.toggle('active', stateBeaconProsMode === STATE_BEACON_PROS_MODE_HOME);
+};
+
+const getStateBeaconProsConsPayload = (targetStateAbbrev, targetEntry, homeStateAbbrev) => {
+  const targetName = targetEntry?.name || STATE_NAMES[targetStateAbbrev] || targetStateAbbrev;
+  const resolvedHome = homeStateAbbrev || STATE_BEACON_HOME_DEFAULT;
+  const homeEntry = getBeaconEntry(resolvedHome);
+  const homeName = homeEntry?.name || STATE_NAMES[resolvedHome] || resolvedHome;
+
+  if (stateBeaconProsMode === STATE_BEACON_PROS_MODE_HOME) {
+    return {
+      pros: Array.isArray(homeEntry?.pros) ? homeEntry.pros : [],
+      cons: Array.isArray(homeEntry?.cons) ? homeEntry.cons : [],
+      prosTitle: `${homeName} Pros (vs ${targetName})`,
+      consTitle: `${homeName} Cons (vs ${targetName})`
+    };
+  }
+
+  return {
+    pros: Array.isArray(targetEntry?.pros) ? targetEntry.pros : [],
+    cons: Array.isArray(targetEntry?.cons) ? targetEntry.cons : [],
+    prosTitle: `${targetName} Pros (vs ${homeName})`,
+    consTitle: `${targetName} Cons (vs ${homeName})`
+  };
+};
+
 const buildHospitalRank = (notices, majorSystems = []) => {
   const grouped = [];
   const healthcareNotices = filterNoticesByMajorSystems(notices, majorSystems)
@@ -7159,14 +7197,18 @@ const renderStateBeacon = async (state) => {
     </a>
   `);
 
+  const activeHomeState = stateBeaconHomeSelect?.value || getStateBeaconInputs()?.homeState || STATE_BEACON_HOME_DEFAULT;
+  const prosCons = getStateBeaconProsConsPayload(state, entry, activeHomeState);
+  if (stateBeaconProsTitle) stateBeaconProsTitle.textContent = prosCons.prosTitle;
+  if (stateBeaconConsTitle) stateBeaconConsTitle.textContent = prosCons.consTitle;
   if (stateBeaconPros) {
-    stateBeaconPros.innerHTML = entry.pros.length
-      ? entry.pros.map((item) => `<li>${escapeHtml(item)}</li>`).join('')
+    stateBeaconPros.innerHTML = prosCons.pros.length
+      ? prosCons.pros.map((item) => `<li>${escapeHtml(item)}</li>`).join('')
       : '<li>No pros listed yet.</li>';
   }
   if (stateBeaconCons) {
-    stateBeaconCons.innerHTML = entry.cons.length
-      ? entry.cons.map((item) => `<li>${escapeHtml(item)}</li>`).join('')
+    stateBeaconCons.innerHTML = prosCons.cons.length
+      ? prosCons.cons.map((item) => `<li>${escapeHtml(item)}</li>`).join('')
       : '<li>No cons listed yet.</li>';
   }
 
@@ -7313,8 +7355,8 @@ const buildStateBeaconExport = (state) => {
     candidateInsights: entry.candidateInsights || [],
     candidateMetroTable: entry.candidateMetroTable || [],
     candidateModel: entry.candidateModel || null,
-    pros: entry.pros,
-    cons: entry.cons,
+    pros: getStateBeaconProsConsPayload(state, entry, inputs.homeState || STATE_BEACON_HOME_DEFAULT).pros,
+    cons: getStateBeaconProsConsPayload(state, entry, inputs.homeState || STATE_BEACON_HOME_DEFAULT).cons,
     attractions: exportNotes.attractions,
     drawbacks: exportNotes.drawbacks,
     talkingPoints,
@@ -10762,6 +10804,15 @@ const initStateBeacon = () => {
     saveStateBeaconNotes(notes);
   });
 
+  stateBeaconProsToggleTarget?.addEventListener('click', () => {
+    setStateBeaconProsMode(STATE_BEACON_PROS_MODE_TARGET);
+    renderStateBeacon(stateBeaconStateSelect.value);
+  });
+  stateBeaconProsToggleHome?.addEventListener('click', () => {
+    setStateBeaconProsMode(STATE_BEACON_PROS_MODE_HOME);
+    renderStateBeacon(stateBeaconStateSelect.value);
+  });
+
   stateBeaconExportJson?.addEventListener('click', exportStateBeaconJson);
   stateBeaconExportCsv?.addEventListener('click', exportStateBeaconCsv);
   stateBeaconExportExcel?.addEventListener('click', exportStateBeaconExcel);
@@ -10814,6 +10865,7 @@ const initStateBeacon = () => {
 
   // Initialize quick tags
   updateQuickTags();
+  setStateBeaconProsMode(stateBeaconProsMode);
 };
 
 // ==================== END STATE BEACON MODULE ====================

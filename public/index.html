@@ -1057,15 +1057,19 @@
               <div class="beacon-card">
                 <div class="beacon-card-header">
                   <h4>Why Move Here</h4>
+                  <div class="beacon-pros-toggle" role="group" aria-label="Pros and cons comparison mode">
+                    <button type="button" class="beacon-pros-toggle-btn active" id="state-beacon-pros-toggle-target">Target vs Home</button>
+                    <button type="button" class="beacon-pros-toggle-btn" id="state-beacon-pros-toggle-home">Home vs Target</button>
+                  </div>
                 </div>
                 <div class="beacon-card-body">
                   <div class="beacon-pros-cons">
                     <div class="beacon-pros">
-                      <h5>Pros</h5>
+                      <h5 id="state-beacon-pros-title">Pros</h5>
                       <ul id="state-beacon-pros"></ul>
                     </div>
                     <div class="beacon-cons">
-                      <h5>Cons</h5>
+                      <h5 id="state-beacon-cons-title">Cons</h5>
                       <ul id="state-beacon-cons"></ul>
                     </div>
                   </div>
