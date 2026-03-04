@@ -4052,6 +4052,75 @@ body.modal-open {
 }
 .strike-source-link:hover { text-decoration: underline; }
 
+.strike-item-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.strike-tips-toggle {
+  background: none;
+  border: 1px solid rgba(26,54,93,0.2);
+  border-radius: 6px;
+  font-size: 0.67rem;
+  color: var(--navy);
+  cursor: pointer;
+  padding: 3px 8px;
+  margin-top: 0.3rem;
+  white-space: nowrap;
+}
+.strike-tips-toggle:hover { background: rgba(26,54,93,0.06); }
+
+/* Strike Tips Panel */
+.strike-tips-panel {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed rgba(26,54,93,0.15);
+}
+.strike-tips {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.strike-tips-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ocean);
+  margin-bottom: 0.1rem;
+}
+.strike-tip-row {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  font-size: 0.77rem;
+  line-height: 1.45;
+}
+.strike-tip-icon { font-size: 1rem; flex-shrink: 0; }
+.strike-tip-row strong { display: block; font-size: 0.78rem; color: var(--navy); margin-bottom: 2px; }
+.strike-tip-row p { margin: 0; color: var(--muted); }
+.strike-tip-travel strong { color: #0369a1; }
+.strike-tip-nearby strong { color: #166534; }
+.strike-tip-permanent strong { color: #1e40af; }
+
+.strike-tip-specialties {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-top: 0.2rem;
+}
+.strike-tip-label { font-size: 0.72rem; color: var(--muted); }
+.strike-specialty-tag {
+  font-size: 0.68rem;
+  padding: 2px 7px;
+  background: rgba(14,165,233,0.1);
+  color: #0369a1;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
 .btn {
   border: none;
   padding: 12px 18px;

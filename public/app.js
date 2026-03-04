@@ -5160,6 +5160,118 @@ const ACTION_TYPE_LABELS = {
   unfair_labor_practice_strike: 'ULP Strike',
 };
 
+const buildStrikeTips = (s) => {
+  const status = s.status || 'resolved';
+  const workers = s.workers || 0;
+  const employer = escapeHtml(s.employer);
+  const state = s.state || '';
+
+  // Determine permanent recruit window based on start date
+  let windowNote = '';
+  if (s.startDate) {
+    try {
+      const start = new Date(s.startDate);
+      const window90 = new Date(start); window90.setDate(window90.getDate() + 90);
+      const window180 = new Date(start); window180.setDate(window180.getDate() + 180);
+      const fmt = d => d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+      windowNote = `${fmt(window90)} – ${fmt(window180)}`;
+    } catch (_) { /* ignore */ }
+  }
+
+  const specialties = ['Med/Surg', 'ICU', 'Telemetry', 'ER', 'OR'];
+
+  if (status === 'active') {
+    return `
+      <div class="strike-tips">
+        <div class="strike-tips-title">Recruiter Strategy</div>
+        <div class="strike-tip-row strike-tip-travel">
+          <span class="strike-tip-icon">✈</span>
+          <div>
+            <strong>Travel contracts: Active now</strong>
+            <p>Strike nurses earn $5K–$10K/week via specialized firms (US Nursing, Fastaff, Krucial). Don't try to recruit the striking nurses — they won't leave.</p>
+          </div>
+        </div>
+        <div class="strike-tip-row strike-tip-nearby">
+          <span class="strike-tip-icon">🏥</span>
+          <div>
+            <strong>Target nearby hospitals now</strong>
+            <p>Nurses at competing systems in ${state ? STATE_NAMES[state] || state : 'the same state'} are burning out from overflow patients. This is your best active window.</p>
+          </div>
+        </div>
+        <div class="strike-tip-row strike-tip-permanent">
+          <span class="strike-tip-icon">📅</span>
+          <div>
+            <strong>Permanent outreach window: ${windowNote || '90–180 days post-strike'}</strong>
+            <p>Post-contract attrition is highest 3–9 months after settlement. Contact ${employer} nurses then — many feel the new contract wasn't worth the fight.</p>
+          </div>
+        </div>
+        <div class="strike-tip-specialties">
+          <span class="strike-tip-label">High-opportunity specialties:</span>
+          ${specialties.map(sp => `<span class="strike-specialty-tag">${sp}</span>`).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  if (status === 'resolved') {
+    const now = new Date();
+    let postStrikePhase = '';
+    if (s.endDate) {
+      try {
+        const end = new Date(s.endDate);
+        const daysSince = Math.floor((now - end) / 86400000);
+        if (daysSince < 90) postStrikePhase = `${daysSince} days post-settlement — <strong>too early</strong> for most.`;
+        else if (daysSince < 270) postStrikePhase = `${daysSince} days post-settlement — <strong>prime window</strong>. Reach out now.`;
+        else postStrikePhase = `${daysSince} days post-settlement — attrition wave likely passed.`;
+      } catch (_) { /* ignore */ }
+    }
+    return `
+      <div class="strike-tips">
+        <div class="strike-tips-title">Recruiter Strategy</div>
+        <div class="strike-tip-row strike-tip-permanent">
+          <span class="strike-tip-icon">📅</span>
+          <div>
+            <strong>Post-strike attrition: ${postStrikePhase || windowNote || 'Monitor turnover'}</strong>
+            <p>Many nurses felt the contract wasn't worth the disruption. Systems typically lose 10–20% of nurses within 6 months. Now is the time to reach out to ${employer} nurses directly.</p>
+          </div>
+        </div>
+        <div class="strike-tip-row strike-tip-nearby">
+          <span class="strike-tip-icon">🏥</span>
+          <div>
+            <strong>Competing systems: secondary targets</strong>
+            <p>Nearby hospitals that absorbed overflow patients may still be experiencing burnout and higher turnover than normal.</p>
+          </div>
+        </div>
+        <div class="strike-tip-specialties">
+          <span class="strike-tip-label">Watch for turnover in:</span>
+          ${specialties.map(sp => `<span class="strike-specialty-tag">${sp}</span>`).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  // pending
+  return `
+    <div class="strike-tips">
+      <div class="strike-tips-title">Recruiter Strategy</div>
+      <div class="strike-tip-row strike-tip-travel">
+        <span class="strike-tip-icon">⚡</span>
+        <div>
+          <strong>Strike authorization filed — act early</strong>
+          <p>Pending strikes are the best time to line up travel nurses through strike staffing firms. Hospitals need confirmed headcount before day 1.</p>
+        </div>
+      </div>
+      <div class="strike-tip-row strike-tip-nearby">
+        <span class="strike-tip-icon">🏥</span>
+        <div>
+          <strong>Target nearby systems preemptively</strong>
+          <p>Nurses in neighboring facilities often consider moves when large nearby strikes escalate salaries and visibility.</p>
+        </div>
+      </div>
+    </div>
+  `;
+};
+
 const renderStrikeAlerts = (stateFilter = '') => {
   const strikeList = document.getElementById('strike-list');
   const strikeFooter = document.getElementById('strike-footer');
@@ -5183,41 +5295,57 @@ const renderStrikeAlerts = (stateFilter = '') => {
   if (strikeCountLabel) strikeCountLabel.textContent = `${filtered.length} actions · ${activeCount} active`;
   if (strikeFooter) strikeFooter.style.display = '';
 
-  strikeList.innerHTML = filtered.slice(0, 20).map(s => {
+  strikeList.innerHTML = filtered.slice(0, 20).map((s, idx) => {
     const statusClass = `strike-status-${s.status || 'resolved'}`;
     const statusLabel = STRIKE_STATUS_LABELS[s.status] || s.status || 'Unknown';
     const actionLabel = ACTION_TYPE_LABELS[s.actionType] || 'Strike';
-    const hcLabel = STRIKE_TYPE_LABELS[s.healthcareType] || 'Healthcare';
     const workers = s.workers ? s.workers.toLocaleString() : '--';
     const travelBadge = s.isTravelOpportunity
-      ? '<span class="strike-travel-badge">Travel Opportunity</span>'
+      ? '<span class="strike-travel-badge">Travel Opp</span>'
       : '';
     const location = [s.city, s.state].filter(Boolean).join(', ') || s.state || '--';
     const dateRange = s.endDate
-      ? `${s.startDate} – ${s.endDate}`
+      ? `${s.startDate} \u2013 ${s.endDate}`
       : s.startDate || 'Date unknown';
+    const tipsHtml = buildStrikeTips(s);
     return `
-      <div class="strike-item ${statusClass}">
-        <div class="strike-item-left">
-          <div class="strike-employer">${escapeHtml(s.employer)}</div>
-          <div class="strike-meta">
-            <span class="strike-location">${escapeHtml(location)}</span>
-            <span class="strike-dot">&middot;</span>
-            <span class="strike-workers">${workers} workers</span>
-            <span class="strike-dot">&middot;</span>
-            <span class="strike-union">${escapeHtml(s.union || '--')}</span>
+      <div class="strike-item ${statusClass}" data-strike-idx="${idx}">
+        <div class="strike-item-main">
+          <div class="strike-item-left">
+            <div class="strike-employer">${escapeHtml(s.employer)}</div>
+            <div class="strike-meta">
+              <span class="strike-location">${escapeHtml(location)}</span>
+              <span class="strike-dot">&middot;</span>
+              <span class="strike-workers">${workers} workers</span>
+              <span class="strike-dot">&middot;</span>
+              <span class="strike-union">${escapeHtml(s.union || '--')}</span>
+            </div>
+            <div class="strike-reason">${escapeHtml(s.reason || '')}</div>
           </div>
-          <div class="strike-reason">${escapeHtml(s.reason || '')}</div>
+          <div class="strike-item-right">
+            <span class="strike-badge ${statusClass}">${statusLabel}</span>
+            <span class="strike-type-badge">${actionLabel}</span>
+            ${travelBadge}
+            <div class="strike-date">${escapeHtml(dateRange)}</div>
+            <button class="strike-tips-toggle" type="button">Recruiter Tips &#9660;</button>
+          </div>
         </div>
-        <div class="strike-item-right">
-          <span class="strike-badge ${statusClass}">${statusLabel}</span>
-          <span class="strike-type-badge">${actionLabel}</span>
-          ${travelBadge}
-          <div class="strike-date">${escapeHtml(dateRange)}</div>
-        </div>
+        <div class="strike-tips-panel" style="display:none;">${tipsHtml}</div>
       </div>
     `;
   }).join('');
+
+  // Attach toggle listeners
+  strikeList.querySelectorAll('.strike-tips-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.strike-item');
+      const panel = item?.querySelector('.strike-tips-panel');
+      if (!panel) return;
+      const open = panel.style.display !== 'none';
+      panel.style.display = open ? 'none' : '';
+      btn.innerHTML = open ? 'Recruiter Tips &#9660;' : 'Recruiter Tips &#9650;';
+    });
+  });
 };
 
 const populateStrikeStateFilter = () => {
