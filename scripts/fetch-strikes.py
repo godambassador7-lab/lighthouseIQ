@@ -146,6 +146,22 @@ GOOGLE_NEWS_RSS_SOURCES = [
     ("google_news_nurses_vote_strike", "https://news.google.com/rss/search?q=nurses+vote+to+strike+hospital+when:30d&hl=en-US&gl=US&ceid=US:en"),
 ]
 
+SOURCE_CONFIDENCE_WEIGHTS = {
+    "cornell_ilr": 72,
+    "nurse_org": 75,
+    "nnu_rss": 70,
+    "nysna_rss": 70,
+    "massnurses_rss": 70,
+    "hpae_rss": 70,
+    "mnnurses_rss": 70,
+    "pasnap_rss": 70,
+    "seiu_rss": 66,
+    "google_news_nurse_strike": 45,
+    "google_news_healthcare_strike": 45,
+    "google_news_nurses_vote_strike": 45,
+    "curated": 62,
+}
+
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -858,8 +874,129 @@ def apply_verification_rules(strikes: list) -> list:
 
 
 # ---------------------------------------------------------------------------
-# Merge & deduplication
+# Merge, entity resolution, and confidence scoring
 # ---------------------------------------------------------------------------
+def normalize_employer_name(name: str) -> str:
+    text = clean_text(name).lower()
+    text = re.sub(r"[^\w\s]", " ", text)
+    stop = {
+        "hospital", "medical", "center", "health", "healthcare", "system",
+        "workers", "worker", "nurses", "nurse", "the", "of", "and", "for",
+    }
+    tokens = [t for t in text.split() if t and t not in stop]
+    return " ".join(tokens[:6]) if tokens else text
+
+
+def status_rank(status: str) -> int:
+    rank = {"active": 3, "pending": 2, "resolved": 1}
+    return rank.get((status or "").lower(), 0)
+
+
+def choose_status(statuses: list) -> str:
+    if not statuses:
+        return "pending"
+    uniq = {s for s in statuses if s}
+    if "active" in uniq:
+        return "active"
+    if "pending" in uniq:
+        return "pending"
+    return "resolved"
+
+
+def event_bucket_date(start_date: str) -> str:
+    dt = parse_iso_date(start_date or "")
+    return dt.strftime("%Y-%m") if dt else "unknown"
+
+
+def canonical_event_key(s: dict) -> str:
+    employer_key = normalize_employer_name(s.get("employer", ""))
+    state = (s.get("state") or "").upper() or "NA"
+    month = event_bucket_date(s.get("startDate") or "")
+    action = (s.get("actionType") or "strike").lower()
+    return f"{employer_key}|{state}|{month}|{action}"
+
+
+def source_weight(source: str) -> int:
+    return SOURCE_CONFIDENCE_WEIGHTS.get((source or "").lower(), 50)
+
+
+def confidence_label(score: int) -> str:
+    if score >= 80:
+        return "high"
+    if score >= 60:
+        return "medium"
+    return "low"
+
+
+def score_confidence(strike: dict) -> int:
+    sources = strike.get("corroboratedBy") or [strike.get("source")]
+    base = max(source_weight(s) for s in sources if s)
+    corroboration_bonus = min(20, max(0, len(set(sources)) - 1) * 8)
+    recency_bonus = 0
+    start_dt = parse_iso_date(strike.get("startDate") or "")
+    if start_dt:
+        age_days = (NOW_UTC - start_dt).days
+        if age_days <= 30:
+            recency_bonus = 10
+        elif age_days <= 90:
+            recency_bonus = 5
+    status_penalty = 0
+    if strike.get("status") == "pending":
+        status_penalty = -8
+    elif strike.get("status") == "resolved":
+        status_penalty = -15
+    score = base + corroboration_bonus + recency_bonus + status_penalty
+    return max(5, min(99, score))
+
+
+def consolidate_events(strikes: list) -> list:
+    groups = {}
+    for s in strikes:
+        key = canonical_event_key(s)
+        groups.setdefault(key, []).append(s)
+
+    consolidated = []
+    for _, items in groups.items():
+        if len(items) == 1:
+            one = dict(items[0])
+            one["corroboratedBy"] = [one.get("source")] if one.get("source") else []
+            one["sourceCount"] = len(one["corroboratedBy"])
+            one["confidenceScore"] = score_confidence(one)
+            one["confidenceLabel"] = confidence_label(one["confidenceScore"])
+            consolidated.append(one)
+            continue
+
+        items_sorted = sorted(
+            items,
+            key=lambda s: (
+                status_rank(s.get("status")),
+                source_weight(s.get("source")),
+                parse_workers(s.get("workers") or 0),
+            ),
+            reverse=True,
+        )
+        top = dict(items_sorted[0])
+        sources = sorted({(s.get("source") or "") for s in items if s.get("source")})
+        statuses = [s.get("status") for s in items]
+        notes = [clean_text(s.get("notes", "")) for s in items if s.get("notes")]
+        source_urls = [s.get("sourceUrl") for s in items if s.get("sourceUrl")]
+
+        top["status"] = choose_status(statuses)
+        top["workers"] = max(parse_workers(s.get("workers") or 0) for s in items)
+        top["source"] = top.get("source") or (sources[0] if sources else "")
+        top["sourceUrl"] = source_urls[0] if source_urls else top.get("sourceUrl", "")
+        top["corroboratedBy"] = sources
+        top["sourceCount"] = len(sources)
+        if notes:
+            top["notes"] = clean_text(" | ".join(dict.fromkeys(notes)))
+        top["isTravelOpportunity"] = bool((top.get("workers") or 0) >= 500 and top.get("status") in ("active", "pending"))
+        top["confidenceScore"] = score_confidence(top)
+        top["confidenceLabel"] = confidence_label(top["confidenceScore"])
+        consolidated.append(top)
+
+    return consolidated
+
+
 def dedup_key(s: dict) -> str:
     emp = re.sub(r"\s+", " ", (s.get("employer") or "").lower().strip())
     state = (s.get("state") or "").upper()
@@ -968,7 +1105,8 @@ def main():
     existing = load_existing()
     merged = merge_strikes(fetched, existing)
     verified = apply_verification_rules(merged)
-    all_strikes = sort_strikes(verified)
+    consolidated = consolidate_events(verified)
+    all_strikes = sort_strikes(consolidated)
 
     active = sum(1 for s in all_strikes if s.get("status") == "active")
     pending = sum(1 for s in all_strikes if s.get("status") == "pending")
