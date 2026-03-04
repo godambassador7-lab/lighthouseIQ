@@ -2355,12 +2355,14 @@ const loadInsights = async () => {
     renderHeatmap(geo);
     renderTalent(talent);
     renderEmployers(employers);
+    initStrikeAlerts();
   } catch (err) {
     console.error('Failed to load insights:', err);
     renderInsightFallback(alertsList, 'Insights unavailable.');
     renderInsightFallback(heatmapList, 'Insights unavailable.');
     renderInsightFallback(talentList, 'Insights unavailable.');
     renderInsightFallback(employerList, 'Insights unavailable.');
+    initStrikeAlerts(); // still try strike alerts independently
   }
 };
 
@@ -5124,6 +5126,122 @@ const loadRuralClosuresData = async (forceRefresh = false) => {
     return null;
   }
 };
+
+// =============================================================================
+// STRIKE ALERTS MODULE
+// =============================================================================
+
+let strikesData = null;
+let strikesLoaded = false;
+
+const loadStrikesData = async () => {
+  if (strikesLoaded) return strikesData;
+  try {
+    const r = await fetch(`${DATA_BASE_URL}/strikes.json?ts=${Date.now()}`);
+    if (!r.ok) throw new Error(`${r.status}`);
+    strikesData = await r.json();
+    strikesLoaded = true;
+    return strikesData;
+  } catch (err) {
+    console.warn('Strike data unavailable:', err.message);
+    strikesLoaded = true;
+    return null;
+  }
+};
+
+const STRIKE_STATUS_LABELS = { active: 'Active', pending: 'Pending', resolved: 'Resolved' };
+const STRIKE_TYPE_LABELS = {
+  hospital: 'Hospital', clinic: 'Clinic',
+  nursing_home: 'Skilled Nursing', homecare: 'Home Care',
+};
+const ACTION_TYPE_LABELS = {
+  strike: 'Strike', informational_picket: 'Picket',
+  work_stoppage: 'Stoppage', work_to_rule: 'Work-to-Rule',
+  unfair_labor_practice_strike: 'ULP Strike',
+};
+
+const renderStrikeAlerts = (stateFilter = '') => {
+  const strikeList = document.getElementById('strike-list');
+  const strikeFooter = document.getElementById('strike-footer');
+  const strikeLiveBadge = document.getElementById('strike-live-badge');
+  const strikeCountLabel = document.getElementById('strike-count-label');
+  if (!strikeList) return;
+
+  const allStrikes = strikesData?.strikes || [];
+  const filtered = stateFilter
+    ? allStrikes.filter(s => s.state === stateFilter)
+    : allStrikes;
+
+  if (!filtered.length) {
+    strikeList.innerHTML = `<div class="empty-state">${stateFilter ? `No strikes on record for ${stateFilter}.` : 'No strike data available.'}</div>`;
+    if (strikeFooter) strikeFooter.style.display = 'none';
+    return;
+  }
+
+  const activeCount = filtered.filter(s => s.status === 'active').length;
+  if (strikeLiveBadge) strikeLiveBadge.style.display = activeCount > 0 ? '' : 'none';
+  if (strikeCountLabel) strikeCountLabel.textContent = `${filtered.length} actions · ${activeCount} active`;
+  if (strikeFooter) strikeFooter.style.display = '';
+
+  strikeList.innerHTML = filtered.slice(0, 20).map(s => {
+    const statusClass = `strike-status-${s.status || 'resolved'}`;
+    const statusLabel = STRIKE_STATUS_LABELS[s.status] || s.status || 'Unknown';
+    const actionLabel = ACTION_TYPE_LABELS[s.actionType] || 'Strike';
+    const hcLabel = STRIKE_TYPE_LABELS[s.healthcareType] || 'Healthcare';
+    const workers = s.workers ? s.workers.toLocaleString() : '--';
+    const travelBadge = s.isTravelOpportunity
+      ? '<span class="strike-travel-badge">Travel Opportunity</span>'
+      : '';
+    const location = [s.city, s.state].filter(Boolean).join(', ') || s.state || '--';
+    const dateRange = s.endDate
+      ? `${s.startDate} – ${s.endDate}`
+      : s.startDate || 'Date unknown';
+    return `
+      <div class="strike-item ${statusClass}">
+        <div class="strike-item-left">
+          <div class="strike-employer">${escapeHtml(s.employer)}</div>
+          <div class="strike-meta">
+            <span class="strike-location">${escapeHtml(location)}</span>
+            <span class="strike-dot">&middot;</span>
+            <span class="strike-workers">${workers} workers</span>
+            <span class="strike-dot">&middot;</span>
+            <span class="strike-union">${escapeHtml(s.union || '--')}</span>
+          </div>
+          <div class="strike-reason">${escapeHtml(s.reason || '')}</div>
+        </div>
+        <div class="strike-item-right">
+          <span class="strike-badge ${statusClass}">${statusLabel}</span>
+          <span class="strike-type-badge">${actionLabel}</span>
+          ${travelBadge}
+          <div class="strike-date">${escapeHtml(dateRange)}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+};
+
+const populateStrikeStateFilter = () => {
+  const sel = document.getElementById('strike-state-filter');
+  if (!sel || !strikesData?.strikes?.length) return;
+  const states = [...new Set(strikesData.strikes.map(s => s.state).filter(Boolean))].sort();
+  states.forEach(st => {
+    const opt = document.createElement('option');
+    opt.value = st;
+    opt.textContent = `${STATE_NAMES[st] || st} (${st})`;
+    sel.appendChild(opt);
+  });
+  sel.addEventListener('change', () => renderStrikeAlerts(sel.value));
+};
+
+const initStrikeAlerts = async () => {
+  await loadStrikesData();
+  renderStrikeAlerts();
+  populateStrikeStateFilter();
+};
+
+// =============================================================================
+// END STRIKE ALERTS MODULE
+// =============================================================================
 
 // Travel nurse specialty pay (weekly rates)
 const SPECIALTY_PAY = {

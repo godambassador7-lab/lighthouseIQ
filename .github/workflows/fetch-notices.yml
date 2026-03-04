@@ -98,7 +98,12 @@ jobs:
         working-directory: core
 
       - name: Install relocation data dependencies
-        run: python -m pip install --upgrade pip openpyxl
+        run: python -m pip install --upgrade pip openpyxl requests beautifulsoup4
+
+      - name: Fetch healthcare strike alerts
+        run: python scripts/fetch-strikes.py
+        env:
+          LNI_OUTPUT_DIR: ${{ github.workspace }}/public/data
 
       - name: Update relocation data
         run: python scripts/update-relocation-data.py
