@@ -5272,20 +5272,17 @@ const buildStrikeTips = (s) => {
   `;
 };
 
-const renderStrikeAlerts = (stateFilter = '') => {
+const renderStrikeAlerts = (strikes = []) => {
   const strikeList = document.getElementById('strike-list');
   const strikeFooter = document.getElementById('strike-footer');
   const strikeLiveBadge = document.getElementById('strike-live-badge');
   const strikeCountLabel = document.getElementById('strike-count-label');
   if (!strikeList) return;
 
-  const allStrikes = strikesData?.strikes || [];
-  const filtered = stateFilter
-    ? allStrikes.filter(s => s.state === stateFilter)
-    : allStrikes;
+  const filtered = strikes;
 
   if (!filtered.length) {
-    strikeList.innerHTML = `<div class="empty-state">${stateFilter ? `No strikes on record for ${stateFilter}.` : 'No strike data available.'}</div>`;
+    strikeList.innerHTML = '<div class="empty-state">No strikes match the selected filters.</div>';
     if (strikeFooter) strikeFooter.style.display = 'none';
     return;
   }
@@ -5303,10 +5300,11 @@ const renderStrikeAlerts = (stateFilter = '') => {
     const travelBadge = s.isTravelOpportunity
       ? '<span class="strike-travel-badge">Travel Opp</span>'
       : '';
-    const location = [s.city, s.state].filter(Boolean).join(', ') || s.state || '--';
-    const dateRange = s.endDate
-      ? `${s.startDate} \u2013 ${s.endDate}`
-      : s.startDate || 'Date unknown';
+    const location = [s.city, s.state ? (STATE_NAMES[s.state] || s.state) : ''].filter(Boolean).join(', ') || '--';
+    const fmtDate = d => { try { return new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }); } catch (_) { return d; } };
+    const startFmt = s.startDate ? fmtDate(s.startDate) : 'Date unknown';
+    const endFmt = s.endDate ? fmtDate(s.endDate) : null;
+    const dateDisplay = endFmt ? `${startFmt} \u2013 ${endFmt}` : startFmt;
     const tipsHtml = buildStrikeTips(s);
     return `
       <div class="strike-item ${statusClass}" data-strike-idx="${idx}">
@@ -5326,7 +5324,7 @@ const renderStrikeAlerts = (stateFilter = '') => {
             <span class="strike-badge ${statusClass}">${statusLabel}</span>
             <span class="strike-type-badge">${actionLabel}</span>
             ${travelBadge}
-            <div class="strike-date">${escapeHtml(dateRange)}</div>
+            <div class="strike-date-prominent">${escapeHtml(dateDisplay)}</div>
             <button class="strike-tips-toggle" type="button">Recruiter Tips &#9660;</button>
           </div>
         </div>
@@ -5348,6 +5346,40 @@ const renderStrikeAlerts = (stateFilter = '') => {
   });
 };
 
+const getStrikeFilters = () => ({
+  state: document.getElementById('strike-state-filter')?.value || '',
+  date: document.getElementById('strike-date-filter')?.value || '',
+  status: document.getElementById('strike-status-filter')?.value || '',
+});
+
+const applyStrikeFilters = () => {
+  const { state, date, status } = getStrikeFilters();
+  const now = new Date();
+  const allStrikes = strikesData?.strikes || [];
+
+  const filtered = allStrikes.filter(s => {
+    if (state && s.state !== state) return false;
+    if (status && s.status !== status) return false;
+    if (date) {
+      const start = s.startDate ? new Date(s.startDate) : null;
+      if (!start) return date === '' ;
+      if (date === '6m') {
+        const cutoff = new Date(now); cutoff.setMonth(cutoff.getMonth() - 6);
+        if (start < cutoff) return false;
+      } else if (date === '12m') {
+        const cutoff = new Date(now); cutoff.setFullYear(cutoff.getFullYear() - 1);
+        if (start < cutoff) return false;
+      } else {
+        // year filter e.g. "2025"
+        if (String(start.getFullYear()) !== date) return false;
+      }
+    }
+    return true;
+  });
+
+  renderStrikeAlerts(filtered);
+};
+
 const populateStrikeStateFilter = () => {
   const sel = document.getElementById('strike-state-filter');
   if (!sel || !strikesData?.strikes?.length) return;
@@ -5358,12 +5390,14 @@ const populateStrikeStateFilter = () => {
     opt.textContent = `${STATE_NAMES[st] || st} (${st})`;
     sel.appendChild(opt);
   });
-  sel.addEventListener('change', () => renderStrikeAlerts(sel.value));
+  sel.addEventListener('change', applyStrikeFilters);
+  document.getElementById('strike-date-filter')?.addEventListener('change', applyStrikeFilters);
+  document.getElementById('strike-status-filter')?.addEventListener('change', applyStrikeFilters);
 };
 
 const initStrikeAlerts = async () => {
   await loadStrikesData();
-  renderStrikeAlerts();
+  renderStrikeAlerts(strikesData?.strikes || []);
   populateStrikeStateFilter();
 };
 
