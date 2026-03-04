@@ -741,79 +741,20 @@ const scoreFromCount = (state, invert = false) => {
   return clampScore(Math.round(value * 100) / 10);
 };
 
-const scoreFromStateMetric = (state, metricGetter, invert = false, defaultScore = 5) => {
-  const allValues = ALL_STATES
-    .map((abbr) => Number(metricGetter(abbr)))
-    .filter((value) => Number.isFinite(value));
-  if (!allValues.length) return defaultScore;
-  const minValue = Math.min(...allValues);
-  const maxValue = Math.max(...allValues);
-  if (maxValue <= minValue) return defaultScore;
-  const raw = Number(metricGetter(state));
-  if (!Number.isFinite(raw)) return defaultScore;
-  const ratio = (raw - minValue) / (maxValue - minValue);
-  const value = invert ? 1 - ratio : ratio;
-  return clampScore(Math.round(value * 100) / 10);
-};
-
-const getCalibrationSalaryData = () =>
-  recruitmentIntel?.salaryBenchmarks || strategicData?.salaryData || NURSING_SALARY_DATA || {};
-
-const getCalibrationStateProfiles = () => recruitmentIntel?.stateProfiles || {};
-
-const getCalibrationRelocationIndex = () =>
-  recruitmentIntel?.relocationIndex || relocationData?.relocationScale || {};
-
 const buildStateProfile = (state) => {
-  const fallbackStaffing = scoreFromCount(state, true);
-  const fallbackResources = scoreFromCount(state, false);
-  const fallbackGrowth = scoreFromCount(state, false);
-  const fetchedProfiles = getCalibrationStateProfiles();
-  const salaryData = getCalibrationSalaryData();
-  const relocationIndex = getCalibrationRelocationIndex();
-  const fetched = fetchedProfiles[state] || {};
-
-  const pay = scoreFromStateMetric(
-    state,
-    (abbr) => salaryData?.[abbr]?.staffRN,
-    false,
-    5
-  );
-  const relocationScore = scoreFromStateMetric(
-    state,
-    (abbr) => relocationIndex?.[abbr],
-    true,
-    5
-  );
-
-  const staffing = clampScore(Number(fetched.staffing ?? fallbackStaffing));
-  const leadership = clampScore(Number(fetched.leadership ?? (staffing * 0.85 + 1.2)));
-  const scheduling = clampScore(Number(fetched.scheduling ?? (staffing * 0.8 + 1)));
-  const safety = clampScore(Number(fetched.safety ?? (staffing * 0.7 + 2)));
-  const resources = clampScore(Number(fetched.resources ?? fallbackResources));
-  const growth = clampScore(Number(fetched.growth ?? fallbackGrowth));
-  const respect = clampScore(
-    Number(
-      fetched.respect ??
-      (
-        (leadership * 0.3) +
-        (safety * 0.3) +
-        (scheduling * 0.2) +
-        (staffing * 0.2) +
-        ((relocationScore - 5) * 0.2)
-      )
-    )
-  );
+  const staffing = scoreFromCount(state, true);
+  const resources = scoreFromCount(state, false);
+  const growth = scoreFromCount(state, false);
 
   return {
     staffing,
-    leadership,
-    scheduling,
-    pay,
-    safety,
+    leadership: clampScore(staffing * 0.85 + 1.2),
+    scheduling: clampScore(staffing * 0.8 + 1),
+    pay: 5,
+    safety: clampScore(staffing * 0.7 + 2),
     resources,
     growth,
-    respect
+    respect: 5
   };
 };
 
@@ -898,11 +839,6 @@ const initStateCalibration = () => {
   calibrationHome.addEventListener('change', updateStateCalibration);
   calibrationTarget.addEventListener('change', updateStateCalibration);
   updateStateCalibration();
-  Promise.allSettled([
-    loadRecruitmentIntel(),
-    loadStrategicData(),
-    loadRelocationData()
-  ]).then(() => updateStateCalibration());
 };
 
 const setStatus = (status, ok) => {
