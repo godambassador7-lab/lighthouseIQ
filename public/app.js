@@ -5159,6 +5159,54 @@ const ACTION_TYPE_LABELS = {
   work_stoppage: 'Stoppage', work_to_rule: 'Work-to-Rule',
   unfair_labor_practice_strike: 'ULP Strike',
 };
+const STRIKE_CONFIDENCE_SCORE_MIN = { low: 0, medium: 60, high: 80 };
+
+const getStrikeConfidenceLabel = (s) => {
+  if (s?.confidenceLabel) return String(s.confidenceLabel).toLowerCase();
+  const score = Number(s?.confidenceScore ?? 0);
+  if (score >= 80) return 'high';
+  if (score >= 60) return 'medium';
+  return 'low';
+};
+
+const isGoogleOnlyStrike = (s) => {
+  const sources = Array.isArray(s?.corroboratedBy) && s.corroboratedBy.length
+    ? s.corroboratedBy
+    : [s?.source].filter(Boolean);
+  return !!sources.length && sources.every((src) => String(src || '').startsWith('google_news_'));
+};
+
+const parseStrikeDate = (value) => {
+  if (!value) return null;
+  const dt = new Date(value);
+  return Number.isFinite(dt.getTime()) ? dt : null;
+};
+
+const isWithinDays = (value, days) => {
+  const dt = parseStrikeDate(value);
+  if (!dt) return false;
+  return dt.getTime() >= (Date.now() - (days * 86400000));
+};
+
+const isOperationalStrike = (s) => {
+  const status = s?.status || 'resolved';
+  const confidenceScore = Number(s?.confidenceScore ?? 0);
+  if (status === 'active') {
+    return confidenceScore >= 55 || !isGoogleOnlyStrike(s) || Number(s?.sourceCount ?? 1) > 1;
+  }
+  if (status === 'pending') {
+    return confidenceScore >= 55 && (isWithinDays(s?.startDate, 365) || Number(s?.sourceCount ?? 1) > 1);
+  }
+  return isWithinDays(s?.endDate || s?.startDate, 365) && confidenceScore >= 60;
+};
+
+const formatStrikeSources = (s) => {
+  const list = Array.isArray(s?.corroboratedBy) && s.corroboratedBy.length
+    ? s.corroboratedBy
+    : [s?.source].filter(Boolean);
+  if (!list.length) return 'Unknown';
+  return list.slice(0, 3).map((src) => String(src).replace(/_/g, ' ')).join(' + ');
+};
 
 const buildStrikeTips = (s) => {
   const status = s.status || 'resolved';
@@ -5287,24 +5335,31 @@ const renderStrikeAlerts = (strikes = []) => {
     return;
   }
 
-  const activeCount = filtered.filter(s => s.status === 'active').length;
+  const activeCount = filtered.filter((s) => s.status === 'active').length;
+  const operationalCount = filtered.filter((s) => isOperationalStrike(s)).length;
   if (strikeLiveBadge) strikeLiveBadge.style.display = activeCount > 0 ? '' : 'none';
-  if (strikeCountLabel) strikeCountLabel.textContent = `${filtered.length} actions · ${activeCount} active`;
+  if (strikeCountLabel) {
+    const updated = strikesData?.lastUpdated ? `Updated ${formatRelativeTime(strikesData.lastUpdated)}` : 'Update time unknown';
+    strikeCountLabel.textContent = `${filtered.length} shown | ${activeCount} active | ${operationalCount} operational | ${updated}`;
+  }
   if (strikeFooter) strikeFooter.style.display = '';
 
   strikeList.innerHTML = filtered.slice(0, 20).map((s, idx) => {
     const statusClass = `strike-status-${s.status || 'resolved'}`;
     const statusLabel = STRIKE_STATUS_LABELS[s.status] || s.status || 'Unknown';
     const actionLabel = ACTION_TYPE_LABELS[s.actionType] || 'Strike';
+    const confidenceLabel = getStrikeConfidenceLabel(s);
+    const confidenceScore = Number(s.confidenceScore ?? 0);
+    const sourceCount = Number(s.sourceCount ?? (Array.isArray(s.corroboratedBy) ? s.corroboratedBy.length : 1));
     const workers = s.workers ? s.workers.toLocaleString() : '--';
     const travelBadge = s.isTravelOpportunity
       ? '<span class="strike-travel-badge">Travel Opp</span>'
       : '';
     const location = [s.city, s.state ? (STATE_NAMES[s.state] || s.state) : ''].filter(Boolean).join(', ') || '--';
-    const fmtDate = d => { try { return new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }); } catch (_) { return d; } };
+    const fmtDate = (d) => { try { return new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }); } catch (_) { return d; } };
     const startFmt = s.startDate ? fmtDate(s.startDate) : 'Date unknown';
     const endFmt = s.endDate ? fmtDate(s.endDate) : null;
-    const dateDisplay = endFmt ? `${startFmt} \u2013 ${endFmt}` : startFmt;
+    const dateDisplay = endFmt ? `${startFmt} - ${endFmt}` : startFmt;
     const tipsHtml = buildStrikeTips(s);
     return `
       <div class="strike-item ${statusClass}" data-strike-idx="${idx}">
@@ -5319,6 +5374,13 @@ const renderStrikeAlerts = (strikes = []) => {
               <span class="strike-union">${escapeHtml(s.union || '--')}</span>
             </div>
             <div class="strike-reason">${escapeHtml(s.reason || '')}</div>
+            <div class="strike-quality-line">
+              <span class="strike-confidence strike-confidence-${escapeHtml(confidenceLabel)}">${escapeHtml(confidenceLabel.toUpperCase())} ${Number.isFinite(confidenceScore) ? `(${confidenceScore})` : ''}</span>
+              <span class="strike-dot">&middot;</span>
+              <span>${sourceCount} source${sourceCount === 1 ? '' : 's'}</span>
+              <span class="strike-dot">&middot;</span>
+              <span>${escapeHtml(formatStrikeSources(s))}</span>
+            </div>
           </div>
           <div class="strike-item-right">
             <span class="strike-badge ${statusClass}">${statusLabel}</span>
@@ -5333,8 +5395,7 @@ const renderStrikeAlerts = (strikes = []) => {
     `;
   }).join('');
 
-  // Attach toggle listeners
-  strikeList.querySelectorAll('.strike-tips-toggle').forEach(btn => {
+  strikeList.querySelectorAll('.strike-tips-toggle').forEach((btn) => {
     btn.addEventListener('click', () => {
       const item = btn.closest('.strike-item');
       const panel = item?.querySelector('.strike-tips-panel');
@@ -5350,19 +5411,26 @@ const getStrikeFilters = () => ({
   state: document.getElementById('strike-state-filter')?.value || '',
   date: document.getElementById('strike-date-filter')?.value || '',
   status: document.getElementById('strike-status-filter')?.value || '',
+  confidence: document.getElementById('strike-confidence-filter')?.value || '',
+  mode: document.getElementById('strike-mode-filter')?.value || 'operational',
 });
 
 const applyStrikeFilters = () => {
-  const { state, date, status } = getStrikeFilters();
+  const { state, date, status, confidence, mode } = getStrikeFilters();
   const now = new Date();
   const allStrikes = strikesData?.strikes || [];
 
-  const filtered = allStrikes.filter(s => {
+  const filtered = allStrikes.filter((s) => {
     if (state && s.state !== state) return false;
     if (status && s.status !== status) return false;
+    if (confidence) {
+      const minScore = STRIKE_CONFIDENCE_SCORE_MIN[confidence] ?? 0;
+      if (Number(s.confidenceScore ?? 0) < minScore) return false;
+    }
+    if (mode === 'operational' && !isOperationalStrike(s)) return false;
     if (date) {
       const start = s.startDate ? new Date(s.startDate) : null;
-      if (!start) return date === '' ;
+      if (!start) return date === '';
       if (date === '6m') {
         const cutoff = new Date(now); cutoff.setMonth(cutoff.getMonth() - 6);
         if (start < cutoff) return false;
@@ -5370,7 +5438,6 @@ const applyStrikeFilters = () => {
         const cutoff = new Date(now); cutoff.setFullYear(cutoff.getFullYear() - 1);
         if (start < cutoff) return false;
       } else {
-        // year filter e.g. "2025"
         if (String(start.getFullYear()) !== date) return false;
       }
     }
@@ -5383,8 +5450,8 @@ const applyStrikeFilters = () => {
 const populateStrikeStateFilter = () => {
   const sel = document.getElementById('strike-state-filter');
   if (!sel || !strikesData?.strikes?.length) return;
-  const states = [...new Set(strikesData.strikes.map(s => s.state).filter(Boolean))].sort();
-  states.forEach(st => {
+  const states = [...new Set(strikesData.strikes.map((s) => s.state).filter(Boolean))].sort();
+  states.forEach((st) => {
     const opt = document.createElement('option');
     opt.value = st;
     opt.textContent = `${STATE_NAMES[st] || st} (${st})`;
@@ -5393,12 +5460,14 @@ const populateStrikeStateFilter = () => {
   sel.addEventListener('change', applyStrikeFilters);
   document.getElementById('strike-date-filter')?.addEventListener('change', applyStrikeFilters);
   document.getElementById('strike-status-filter')?.addEventListener('change', applyStrikeFilters);
+  document.getElementById('strike-confidence-filter')?.addEventListener('change', applyStrikeFilters);
+  document.getElementById('strike-mode-filter')?.addEventListener('change', applyStrikeFilters);
 };
 
 const initStrikeAlerts = async () => {
   await loadStrikesData();
-  renderStrikeAlerts(strikesData?.strikes || []);
   populateStrikeStateFilter();
+  applyStrikeFilters();
 };
 
 // =============================================================================

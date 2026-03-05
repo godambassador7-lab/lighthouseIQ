@@ -56,6 +56,9 @@ TIMEOUT = 20
 
 # Degrade curated active entries if no reconfirmation.
 ACTIVE_STALE_DAYS = int(os.environ.get("STRIKE_ACTIVE_STALE_DAYS", "45"))
+GOOGLE_ONLY_STALE_DAYS = int(os.environ.get("STRIKE_GOOGLE_ONLY_STALE_DAYS", "120"))
+LOW_CONFIDENCE_RESOLVED_RETENTION_DAYS = int(os.environ.get("STRIKE_LOW_CONF_RESOLVED_RETENTION_DAYS", "730"))
+LOW_CONFIDENCE_THRESHOLD = int(os.environ.get("STRIKE_LOW_CONFIDENCE_THRESHOLD", "60"))
 
 # Healthcare NAICS prefixes (sector 62 = Health Care & Social Assistance)
 HEALTHCARE_NAICS = ("62",)
@@ -949,6 +952,19 @@ def score_confidence(strike: dict) -> int:
     return max(5, min(99, score))
 
 
+def strike_age_days(strike: dict):
+    start_dt = parse_iso_date(strike.get("startDate") or "")
+    if not start_dt:
+        return None
+    return (NOW_UTC - start_dt).days
+
+
+def google_only_signal(strike: dict) -> bool:
+    sources = strike.get("corroboratedBy") or [strike.get("source")]
+    src = [s for s in sources if s]
+    return bool(src) and all(s.startswith("google_news_") for s in src)
+
+
 def consolidate_events(strikes: list) -> list:
     groups = {}
     for s in strikes:
@@ -995,6 +1011,49 @@ def consolidate_events(strikes: list) -> list:
         consolidated.append(top)
 
     return consolidated
+
+
+def apply_quality_filters(strikes: list):
+    """
+    Remove stale low-signal entries so the alert feed remains actionable while
+    preserving comprehensive medium/high-confidence history.
+    """
+    dropped = {
+        "googleOnlyResolvedStale": 0,
+        "singleSourceLowConfidenceResolvedStale": 0,
+    }
+    filtered = []
+    for strike in strikes:
+        s = dict(strike)
+        age_days = strike_age_days(s)
+        status = (s.get("status") or "").lower()
+        confidence = int(s.get("confidenceScore") or 0)
+        source_count = int(s.get("sourceCount") or 1)
+        low_confidence = confidence < LOW_CONFIDENCE_THRESHOLD
+        is_google_only = google_only_signal(s)
+
+        if (
+            status == "resolved"
+            and is_google_only
+            and low_confidence
+            and age_days is not None
+            and age_days > GOOGLE_ONLY_STALE_DAYS
+        ):
+            dropped["googleOnlyResolvedStale"] += 1
+            continue
+
+        if (
+            status == "resolved"
+            and source_count <= 1
+            and low_confidence
+            and age_days is not None
+            and age_days > LOW_CONFIDENCE_RESOLVED_RETENTION_DAYS
+        ):
+            dropped["singleSourceLowConfidenceResolvedStale"] += 1
+            continue
+
+        filtered.append(s)
+    return filtered, dropped
 
 
 def dedup_key(s: dict) -> str:
@@ -1078,6 +1137,47 @@ def summarize_verification(strikes: list) -> dict:
     return summary
 
 
+def summarize_quality(strikes: list, dropped: dict) -> dict:
+    confidence = {"high": 0, "medium": 0, "low": 0}
+    status = {"active": 0, "pending": 0, "resolved": 0}
+    freshness = {"last30Days": 0, "last90Days": 0, "last365Days": 0, "older": 0, "undated": 0}
+    corroboration = {"multiSource": 0, "singleSource": 0}
+    operational = 0
+    for s in strikes:
+        label = (s.get("confidenceLabel") or "low").lower()
+        if label in confidence:
+            confidence[label] += 1
+        st = (s.get("status") or "resolved").lower()
+        if st in status:
+            status[st] += 1
+        source_count = int(s.get("sourceCount") or 1)
+        if source_count > 1:
+            corroboration["multiSource"] += 1
+        else:
+            corroboration["singleSource"] += 1
+        age_days = strike_age_days(s)
+        if age_days is None:
+            freshness["undated"] += 1
+        elif age_days <= 30:
+            freshness["last30Days"] += 1
+        elif age_days <= 90:
+            freshness["last90Days"] += 1
+        elif age_days <= 365:
+            freshness["last365Days"] += 1
+        else:
+            freshness["older"] += 1
+        if st in ("active", "pending") and int(s.get("confidenceScore") or 0) >= LOW_CONFIDENCE_THRESHOLD:
+            operational += 1
+    return {
+        "confidence": confidence,
+        "status": status,
+        "freshness": freshness,
+        "corroboration": corroboration,
+        "operationalCount": operational,
+        "droppedByQualityRule": dropped,
+    }
+
+
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
@@ -1106,7 +1206,8 @@ def main():
     merged = merge_strikes(fetched, existing)
     verified = apply_verification_rules(merged)
     consolidated = consolidate_events(verified)
-    all_strikes = sort_strikes(consolidated)
+    quality_filtered, quality_dropped = apply_quality_filters(consolidated)
+    all_strikes = sort_strikes(quality_filtered)
 
     active = sum(1 for s in all_strikes if s.get("status") == "active")
     pending = sum(1 for s in all_strikes if s.get("status") == "pending")
@@ -1117,6 +1218,12 @@ def main():
         "totalStrikes": len(all_strikes),
         "activeStrikes": active,
         "pendingStrikes": pending,
+        "operationalStrikes": sum(
+            1
+            for s in all_strikes
+            if s.get("status") in ("active", "pending")
+            and int(s.get("confidenceScore") or 0) >= LOW_CONFIDENCE_THRESHOLD
+        ),
         "sources": [
             "cornell_ilr", "aflcio", "nurse_org",
             "nnu_rss", "nysna_rss", "massnurses_rss", "hpae_rss", "mnnurses_rss", "pasnap_rss", "seiu_rss",
@@ -1125,6 +1232,7 @@ def main():
         ],
         "sourceHealth": SOURCE_HEALTH,
         "verificationSummary": verification_summary,
+        "qualityStats": summarize_quality(all_strikes, quality_dropped),
         "strikes": all_strikes,
     }
 
