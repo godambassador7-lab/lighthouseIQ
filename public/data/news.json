@@ -1,88 +1,88 @@
 {
-  "lastUpdated": "2026-03-10T18:59:39.710Z",
+  "lastUpdated": "2026-03-10T19:43:54.378Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 11,
-    "staleSources": 2,
-    "healthySources": 9,
+    "staleSources": 1,
+    "healthySources": 10,
     "sources": [
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 54,
+        "articleCount": 55,
         "latestPublishedAt": "2026-03-10T00:00:00.000Z",
-        "staleHours": 18,
+        "staleHours": 19,
         "status": "ok"
       },
       {
         "source": "Fierce Healthcare",
         "articleCount": 43,
         "latestPublishedAt": "2026-03-10T00:00:00.000Z",
-        "staleHours": 18,
+        "staleHours": 19,
         "status": "ok"
       },
       {
         "source": "STAT News",
         "articleCount": 39,
         "latestPublishedAt": "2026-03-10T00:00:00.000Z",
-        "staleHours": 18,
+        "staleHours": 19,
         "status": "ok"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 30,
         "latestPublishedAt": "2026-03-10T00:00:00.000Z",
-        "staleHours": 18,
+        "staleHours": 19,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 23,
         "latestPublishedAt": "2026-03-10T00:00:00.000Z",
-        "staleHours": 18,
+        "staleHours": 19,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 23,
         "latestPublishedAt": "2026-03-10T00:00:00.000Z",
-        "staleHours": 18,
+        "staleHours": 19,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
-        "articleCount": 20,
-        "latestPublishedAt": "2026-03-06T00:00:00.000Z",
-        "staleHours": 114,
-        "status": "stale"
+        "articleCount": 21,
+        "latestPublishedAt": "2026-03-10T00:00:00.000Z",
+        "staleHours": 19,
+        "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 19,
         "latestPublishedAt": "2026-03-09T00:00:00.000Z",
-        "staleHours": 42,
+        "staleHours": 43,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 8,
         "latestPublishedAt": "2026-03-10T00:00:00.000Z",
-        "staleHours": 18,
+        "staleHours": 19,
         "status": "ok"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 8,
         "latestPublishedAt": "2026-03-03T00:00:00.000Z",
-        "staleHours": 186,
+        "staleHours": 187,
         "status": "stale"
       },
       {
         "source": "Health Affairs",
         "articleCount": 5,
         "latestPublishedAt": "2026-03-10T00:00:00.000Z",
-        "staleHours": 18,
+        "staleHours": 19,
         "status": "ok"
       }
     ]
@@ -114,11 +114,11 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 70
+      "count": 71
     },
     "general_market": {
       "label": "General Market",
-      "count": 125
+      "count": 126
     }
   },
   "quality": {
@@ -132,7 +132,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 93,
+        "actual": 95,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -142,7 +142,7 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 2,
+        "actual": 1,
         "pass": true
       }
     }
@@ -218,6 +218,18 @@
       "publishedAt": "2026-03-10",
       "category": "general_market",
       "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Early Alert: Flexible Cryoprobe Issue from Erbe USA",
+      "summary": "Erbe Cryoprobes may rupture during activation, leading to potential hearing loss, tinnitus, injury, or burns",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-flexible-cryoprobe-issue-erbe-usa",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-03-10",
+      "category": "general_market",
+      "relevance": 98,
       "categoryLabel": "General Market"
     },
     {
@@ -317,6 +329,15 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "Cedars-Sinai expands virtual second opinions",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/digital-health/cedars-sinai-expands-virtual-second-opinions/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-10",
+      "summary": "Los Angeles-based Cedars-Sinai has expanded its Virtual Second Opinions program to patients in 39 states. More than 150 Cedars-Sinai specialists participate in the program, giving patients access to specialized expertise across more than 600 conditions.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
       "title": "3 forces reshaping organizations in 2026: McKinsey",
       "url": "https://www.beckershospitalreview.com/hospital-management-administration/3-forces-reshaping-organizations-in-2026-mckinsey/",
       "source": "Becker's Hospital Review",
@@ -394,15 +415,6 @@
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-03-10",
       "summary": "Anthem Blue Cross of California is bringing its controversial out-of-network penalty policy to California on June 1, a move that has already drawn legislative backlash in the insurer&#8217;s home state of Indiana. Under the policy, participating hospitals and facilities in California must ensure that physicians providing services in inpatient or outpatient, facility-based settings are in-network [&#8230;] The post Elevance to expand 10% out-of-network penalty policy into California appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "FDA looks to further ease biosimilar approvals",
-      "url": "https://www.beckershospitalreview.com/pharmacy/fda-looks-to-further-ease-biosimilar-approvals/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-10",
-      "summary": "A March 9 draft guidance from the FDA proposes an allowance for biosimilar sponsors to use clinical data from outside the U.S.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
@@ -585,6 +597,15 @@
       "summary": "A federal judge said a 2024 methodology update that adjusted the weighting of safety measures inputted for nonparticipating hospitals was \"deceptive and unfair\" under Florida law. Leapfrog plans to appeal, but said it will be making broader changes in ratings releases to come.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "FDA looks to further ease biosimilar approvals",
+      "url": "https://www.beckershospitalreview.com/pharmacy/fda-looks-to-further-ease-biosimilar-approvals/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-10",
+      "summary": "A March 9 draft guidance from the FDA proposes an allowance for biosimilar sponsors to use clinical data from outside the U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
     },
     {
       "title": "Massachusetts VA hospital launches geriatric NP residency",
