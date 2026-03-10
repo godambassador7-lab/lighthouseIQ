@@ -1,88 +1,88 @@
 {
-  "lastUpdated": "2026-03-10T07:47:59.672Z",
+  "lastUpdated": "2026-03-10T08:52:16.297Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 11,
-    "staleSources": 3,
-    "healthySources": 8,
+    "staleSources": 2,
+    "healthySources": 9,
     "sources": [
       {
         "source": "Fierce Healthcare",
         "articleCount": 37,
         "latestPublishedAt": "2026-03-10T00:00:00.000Z",
-        "staleHours": 7,
+        "staleHours": 8,
+        "status": "ok"
+      },
+      {
+        "source": "STAT News",
+        "articleCount": 28,
+        "latestPublishedAt": "2026-03-10T00:00:00.000Z",
+        "staleHours": 8,
         "status": "ok"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 28,
         "latestPublishedAt": "2026-03-09T00:00:00.000Z",
-        "staleHours": 31,
+        "staleHours": 32,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
         "articleCount": 26,
         "latestPublishedAt": "2026-03-10T00:00:00.000Z",
-        "staleHours": 7,
-        "status": "ok"
-      },
-      {
-        "source": "STAT News",
-        "articleCount": 26,
-        "latestPublishedAt": "2026-03-09T00:00:00.000Z",
-        "staleHours": 31,
+        "staleHours": 8,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
-        "articleCount": 20,
-        "latestPublishedAt": "2026-03-09T00:00:00.000Z",
-        "staleHours": 31,
+        "articleCount": 23,
+        "latestPublishedAt": "2026-03-10T00:00:00.000Z",
+        "staleHours": 8,
+        "status": "ok"
+      },
+      {
+        "source": "Federal Register - HHS",
+        "articleCount": 23,
+        "latestPublishedAt": "2026-03-10T00:00:00.000Z",
+        "staleHours": 8,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 20,
         "latestPublishedAt": "2026-03-06T00:00:00.000Z",
-        "staleHours": 103,
+        "staleHours": 104,
         "status": "stale"
-      },
-      {
-        "source": "Federal Register - HHS",
-        "articleCount": 18,
-        "latestPublishedAt": "2026-03-09T00:00:00.000Z",
-        "staleHours": 31,
-        "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
-        "articleCount": 15,
-        "latestPublishedAt": "2026-03-05T00:00:00.000Z",
-        "staleHours": 127,
-        "status": "stale"
+        "articleCount": 19,
+        "latestPublishedAt": "2026-03-09T00:00:00.000Z",
+        "staleHours": 32,
+        "status": "ok"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 8,
         "latestPublishedAt": "2026-03-03T00:00:00.000Z",
-        "staleHours": 175,
+        "staleHours": 176,
         "status": "stale"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 6,
         "latestPublishedAt": "2026-03-09T00:00:00.000Z",
-        "staleHours": 31,
+        "staleHours": 32,
         "status": "ok"
       },
       {
         "source": "Health Affairs",
         "articleCount": 5,
         "latestPublishedAt": "2026-03-10T00:00:00.000Z",
-        "staleHours": 7,
+        "staleHours": 8,
         "status": "ok"
       }
     ]
@@ -102,7 +102,7 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 29
+      "count": 32
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -114,18 +114,16 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 55
+      "count": 56
     },
     "general_market": {
       "label": "General Market",
-      "count": 92
+      "count": 102
     }
   },
   "quality": {
-    "status": "warning",
-    "failedChecks": [
-      "maxStaleSources"
-    ],
+    "status": "pass",
+    "failedChecks": [],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -134,7 +132,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 30,
+        "actual": 44,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -144,12 +142,156 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 3,
-        "pass": false
+        "actual": 2,
+        "pass": true
       }
     }
   },
   "articles": [
+    {
+      "title": "Agency Information Collection Activities: Proposed Collection; Comment Request",
+      "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information (including each proposed extension or reinstatement of an existing collection of information) and to allow 60 days for public comment on the proposed action. Interested persons are invited to send comments regarding our burden estimates or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
+      "url": "https://www.federalregister.gov/documents/2026/03/10/2026-04605/agency-information-collection-activities-proposed-collection-comment-request",
+      "source": "Federal Register - CMS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_cms",
+      "publishedAt": "2026-03-10",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Medicare and Medicaid Programs: Application From the American Association for Accreditation of Ambulatory Surgery Facilities for Continued CMS-Approval of its Rural Health Clinic (RHC) Accreditation Program",
+      "summary": "This notice announces our decision to approve the American Association for Accreditation of Ambulatory Surgery Facilities, DBA QUAD A, for continued recognition as a national accrediting organization for rural health clinics that wish to participate in the Medicare or Medicaid programs.",
+      "url": "https://www.federalregister.gov/documents/2026/03/10/2026-04595/medicare-and-medicaid-programs-application-from-the-american-association-for-accreditation-of",
+      "source": "Federal Register - CMS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_cms",
+      "publishedAt": "2026-03-10",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Medicare Program; Request for Renewal of Deeming Authority of the National Committee for Quality Assurance (NCQA) for Medicare Advantage Health Maintenance Organizations and Preferred Provider Organizations",
+      "summary": "This notice announces that the Centers for Medicare & Medicaid Services is considering granting approval of the National Committee for Quality Assurance's renewal application for Medicare Advantage \"deeming authority\" of Health Maintenance Organizations and Preferred Provider Organizations to continue participation in the Medicare program.",
+      "url": "https://www.federalregister.gov/documents/2026/03/10/2026-04593/medicare-program-request-for-renewal-of-deeming-authority-of-the-national-committee-for-quality",
+      "source": "Federal Register - CMS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_cms",
+      "publishedAt": "2026-03-10",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "New and Revised Draft Q&As on Biosimilar Development and the Biologics Price Competition and Innovation Act; Draft Guidance for Industry; Availability",
+      "summary": "The Food and Drug Administration (FDA, Agency, or we) is announcing the availability of a revised draft guidance for industry entitled \"New and Revised Draft Q&As on Biosimilar Development and the BPCI Act (Revision 4).\" The question and answer (Q&A) format is intended to inform prospective applicants and facilitate the development of proposed biosimilar products and proposed interchangeable biosimilar products, as well as describe FDA's proposed interpretation of certain statutory requirements related to the abbreviated licensure pathway for biological products added by the Biologics Price Competition and Innovation Act of 2009 (BPCI Act). This draft guidance revises and replaces the draft guidance for industry entitled \"New and Revised Draft Q&As on Biosimilar Development and the BPCI Act (Revision 3)\" issued September 17, 2021 to provide certain revisions to Q&As I.8, I.10, and I.19, which have been withdrawn from the final guidance entitled \"Questions and Answers on Biosimilar Development and the BPCI Act\" issued September 20, 2021.",
+      "url": "https://www.federalregister.gov/documents/2026/03/10/2026-04664/new-and-revised-draft-qandas-on-biosimilar-development-and-the-biologics-price-competition-and",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-03-10",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Proposed Collection: 30-Day Comment Request; The Clinical Trials Reporting Program (CTRP) Database (NCI); Correction",
+      "summary": "The Department of Health and Human Services, National Institutes of Health published a Notice in the Federal Register on February 25, 2026. That notice requires a correction in the SUPPLEMENTARY INFORMATION section.",
+      "url": "https://www.federalregister.gov/documents/2026/03/10/2026-04635/proposed-collection-30-day-comment-request-the-clinical-trials-reporting-program-ctrp-database-nci",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-03-10",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Submission for Office of Management and Budget Review; Title Central Authority Payment Service (New Collection)",
+      "summary": "The Office of Child Support Enforcement (OCSE), Administration of Children and Families (ACF), U.S. Department of Health and Human Services, is requesting the Office of Management and Budget to approve a new information collection, Central Authority Payment Service (CAP). Participating state child support agencies (CSAs)and foreign authorities will use CAP to send or receive child support payments electronically.",
+      "url": "https://www.federalregister.gov/documents/2026/03/10/2026-04594/submission-for-office-of-management-and-budget-review-title-central-authority-payment-service-new",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-03-10",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Determination of Regulatory Review Period for Purposes of Patent Extension; AURORA EV-ICD",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/03/10/C1-2026-02383/determination-of-regulatory-review-period-for-purposes-of-patent-extension-aurora-ev-icd",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-03-10",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Center for Scientific Review; Amended Notice of Meeting",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/03/10/2026-04690/center-for-scientific-review-amended-notice-of-meeting",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-03-10",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Center for Scientific Review; Cancellation of Meeting",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/03/10/2026-04647/center-for-scientific-review-cancellation-of-meeting",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-03-10",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Center for Scientific Review; Notice of Closed Meetings",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/03/10/2026-04644/center-for-scientific-review-notice-of-closed-meetings",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-03-10",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "National Institute on Aging; Notice of Meeting",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/03/10/2026-04597/national-institute-on-aging-notice-of-meeting",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-03-10",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "National Institute of Diabetes and Digestive and Kidney Diseases; Amended Notice of Meeting",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/03/10/2026-04596/national-institute-of-diabetes-and-digestive-and-kidney-diseases-amended-notice-of-meeting",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-03-10",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
     {
       "title": "COOs&#8217; role gains complexity amid outpatient care shift",
       "url": "https://www.beckershospitalreview.com/strategy/coos-role-gains-complexity-amid-outpatient-care-shift/",
@@ -158,6 +300,24 @@
       "summary": "As technology advances and care shifts toward outpatient, virtual and community-based settings, the role of the COO is also evolving. For leaders in this position, that means new skill sets and a broader range of focuses, from managing hospital operations to coordinating complex, widely distributed networks of care.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Removing race from kidney function algorithm helped more Black patients access transplants",
+      "url": "https://www.statnews.com/2026/03/10/kidney-transplants-black-americans-race-based-test-discarded/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-03-10",
+      "summary": "Removing race from the eGFR had a big impact, resulting in 5.3 more kidney transplants per 1000 Black candidates.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Opinion: STAT+: The Himsification of medicine",
+      "url": "https://www.statnews.com/2026/03/10/hims-preventive-care-doctors-view/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-03-10",
+      "summary": "Welcome to the Himsification of medicine.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
     },
     {
       "title": "Leapfrog ordered to remove safety grade for 5 Tenet hospitals",
@@ -496,33 +656,21 @@
       "title": "Aspen Global Inc. c/o Lachman Consultant Services, Inc., et al.; Withdrawal of Approval of 46 New Drug Applications",
       "summary": "The Food and Drug Administration (FDA or Agency) is withdrawing approval of 46 new drug applications (NDAs) from multiple applicants. The applicants notified the Agency in writing that the drug products were no longer marketed and requested that the approval of the applications be withdrawn.",
       "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04546/aspen-global-inc-co-lachman-consultant-services-inc-et-al-withdrawal-of-approval-of-46-new-drug",
-      "source": "Federal Register - HHS",
+      "source": "Federal Register - FDA",
       "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
+      "sourceId": "federal_register_fda",
       "publishedAt": "2026-03-09",
       "category": "general_market",
       "relevance": 100,
       "categoryLabel": "General Market"
     },
     {
-      "title": "Government-Owned Inventions; Availability for Licensing",
-      "summary": "The National Institute of Allergy and Infectious Diseases (NIAID), an institute of the National Institutes of Health (NIH), Department of Health and Human Services (HHS), is giving notice of the invention listed below, which is owned by an agency of the U.S. Government and is available for licensing to achieve expeditious commercialization of results of federally funded research and development. Foreign patent applications are filed on selected inventions to extend market coverage for companies and may also be available for licensing.",
-      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04532/government-owned-inventions-availability-for-licensing",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-09",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
       "title": "Oncologic Drugs Advisory Committee; Notice of Meeting; Establishment of a Public Docket; Request for Comments-New Drug Application 220359, for Camizestrant Tablets; Supplemental New Drug Application (sNDA) 218197/S-004, for Truqap (Capivasertib) Tablets",
       "summary": "The Food and Drug Administration (FDA) announces a forthcoming public advisory committee meeting of the Oncologic Drugs Advisory Committee (the Committee). The general function of the Committee is to provide advice and recommendations to FDA on regulatory issues. The meeting will be open to the public. FDA is establishing a docket for public comment on this document.",
       "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04497/oncologic-drugs-advisory-committee-notice-of-meeting-establishment-of-a-public-docket-request-for",
-      "source": "Federal Register - HHS",
+      "source": "Federal Register - FDA",
       "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
+      "sourceId": "federal_register_fda",
       "publishedAt": "2026-03-09",
       "category": "general_market",
       "relevance": 100,
@@ -577,42 +725,6 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "Agency Forms Undergoing Paperwork Reduction Act Review",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04560/agency-forms-undergoing-paperwork-reduction-act-review",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-09",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Agency Information Collection Activities: Submission to OMB for Review and Approval; Public Comment Request; HRSA Ryan White HIV/AIDS Program Part F National AIDS Education and Training Center Program Activities, OMB No. 0906-XXXX-New",
-      "summary": "In compliance with the Paperwork Reduction Act of 1995, HRSA submitted an Information Collection Request (ICR) to the Office of Management and Budget (OMB) for review and approval. Comments submitted during the first public review of this ICR will be provided to OMB. OMB will accept further comments from the public during the review and approval period. OMB may act on HRSA's ICR only after the 30-day comment period for this notice has closed.",
-      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04535/agency-information-collection-activities-submission-to-omb-for-review-and-approval-public-comment",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-09",
-      "category": "ai_tech",
-      "relevance": 96,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Center for Scientific Review; Notice of Closed Meetings",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04512/center-for-scientific-review-notice-of-closed-meetings",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-09",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
       "title": "UNH 8-K filing - UnitedHealth Group Incorporated",
       "summary": "UnitedHealth Group Incorporated filed 8-K with the SEC.",
       "url": "https://www.sec.gov/Archives/edgar/data/731766/000073176626000067/unh-20260309.htm",
@@ -646,6 +758,54 @@
       "publishedAt": "2026-03-09",
       "category": "general_market",
       "relevance": 85,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Government-Owned Inventions; Availability for Licensing",
+      "summary": "The National Institute of Allergy and Infectious Diseases (NIAID), an institute of the National Institutes of Health (NIH), Department of Health and Human Services (HHS), is giving notice of the invention listed below, which is owned by an agency of the U.S. Government and is available for licensing to achieve expeditious commercialization of results of federally funded research and development. Foreign patent applications are filed on selected inventions to extend market coverage for companies and may also be available for licensing.",
+      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04532/government-owned-inventions-availability-for-licensing",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-03-09",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Agency Forms Undergoing Paperwork Reduction Act Review",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04560/agency-forms-undergoing-paperwork-reduction-act-review",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-03-09",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Agency Information Collection Activities: Submission to OMB for Review and Approval; Public Comment Request; HRSA Ryan White HIV/AIDS Program Part F National AIDS Education and Training Center Program Activities, OMB No. 0906-XXXX-New",
+      "summary": "In compliance with the Paperwork Reduction Act of 1995, HRSA submitted an Information Collection Request (ICR) to the Office of Management and Budget (OMB) for review and approval. Comments submitted during the first public review of this ICR will be provided to OMB. OMB will accept further comments from the public during the review and approval period. OMB may act on HRSA's ICR only after the 30-day comment period for this notice has closed.",
+      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04535/agency-information-collection-activities-submission-to-omb-for-review-and-approval-public-comment",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-03-09",
+      "category": "ai_tech",
+      "relevance": 96,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Center for Scientific Review; Notice of Closed Meetings",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04512/center-for-scientific-review-notice-of-closed-meetings",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-03-09",
+      "category": "general_market",
+      "relevance": 96,
       "categoryLabel": "General Market"
     },
     {
@@ -1021,6 +1181,42 @@
       "categoryLabel": "Policy & Reimbursement"
     },
     {
+      "title": "Determination of Regulatory Review Period for Purposes of Patent Extension; ENSACOVE",
+      "summary": "The Food and Drug Administration (FDA or the Agency) has determined the regulatory review period for ENSACOVE and is publishing this notice of that determination as required by law. FDA has made the determination because of the submission of an application to the Director of the U.S. Patent and Trademark Office (USPTO), Department of Commerce, for the extension of a patent which claims that human drug product.",
+      "url": "https://www.federalregister.gov/documents/2026/03/06/2026-04491/determination-of-regulatory-review-period-for-purposes-of-patent-extension-ensacove",
+      "source": "Federal Register - FDA",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_fda",
+      "publishedAt": "2026-03-06",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Developing Specifications for In-Home Disposal Systems for Opioid Analgesics Dispensed in an Outpatient Setting; Establishment of a Public Docket; Request for Comments",
+      "summary": "The Food and Drug Administration (FDA, the Agency, or we) is announcing the establishment of a docket to solicit public comment on what specifications for in-home disposal systems, if application holders are required to make them available under the Opioid Analgesic Risk Evaluation and Mitigation Strategy, would be necessary to show that these systems may mitigate the serious risks of abuse or overdose involving these medications.",
+      "url": "https://www.federalregister.gov/documents/2026/03/06/2026-04479/developing-specifications-for-in-home-disposal-systems-for-opioid-analgesics-dispensed-in-an",
+      "source": "Federal Register - FDA",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_fda",
+      "publishedAt": "2026-03-06",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Wound and Burn Dressing Recall: Integra LifeSciences Removes Certain MediHoney and CVS Wound and Burn Products",
+      "summary": "Integra is removing certain Wound and Burn Dressing products that may have breached sterile barriers.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/wound-and-burn-dressing-recall-integra-lifesciences-removes-certain-medihoney-and-cvs-wound-and-burn",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-03-06",
+      "category": "ai_tech",
+      "relevance": 98,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
       "title": "Designated Placement Requirements Under Titles IV-E and IV-B for LGBTQI+ Children; Rescission",
       "summary": "The Administration for Children and Families (ACF) proposes to remove the requirements issued in the final rule Designated Placement Requirements Under Titles IV-E and IV-B for LGBTQI+ Children (89 FR 34818) that was published on April 30, 2024. The final rule required title IV-E/IV-B agencies to ensure that a Designated Placement is available for all children who self-identify with an alternative sexual orientation or self-identify as something other than their sex in foster care who request or would benefit from such a placement. On June 13, 2025, the U.S. District Court for the Eastern District of Texas vacated the final rule in its entirety, State of Texas v. United States Department of Health & Human Services, 770 F. Supp. 3d 940 (E.D. Tex. 2025), concluding that the final rule exceeded the Department of Health and Human Services' statutory authority and conflicted with the text of title IV-E. As a result of the court's decision, the final rule is no longer in effect or enforceable, and to ensure clarity for the public and regulated entities, ACF proposes to remove the provisions from the Code of Federal Regulations.",
       "url": "https://www.federalregister.gov/documents/2026/03/06/2026-04515/designated-placement-requirements-under-titles-iv-e-and-iv-b-for-lgbtqi-children-rescission",
@@ -1042,42 +1238,6 @@
       "publishedAt": "2026-03-06",
       "category": "ai_tech",
       "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Determination of Regulatory Review Period for Purposes of Patent Extension; ENSACOVE",
-      "summary": "The Food and Drug Administration (FDA or the Agency) has determined the regulatory review period for ENSACOVE and is publishing this notice of that determination as required by law. FDA has made the determination because of the submission of an application to the Director of the U.S. Patent and Trademark Office (USPTO), Department of Commerce, for the extension of a patent which claims that human drug product.",
-      "url": "https://www.federalregister.gov/documents/2026/03/06/2026-04491/determination-of-regulatory-review-period-for-purposes-of-patent-extension-ensacove",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-06",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Developing Specifications for In-Home Disposal Systems for Opioid Analgesics Dispensed in an Outpatient Setting; Establishment of a Public Docket; Request for Comments",
-      "summary": "The Food and Drug Administration (FDA, the Agency, or we) is announcing the establishment of a docket to solicit public comment on what specifications for in-home disposal systems, if application holders are required to make them available under the Opioid Analgesic Risk Evaluation and Mitigation Strategy, would be necessary to show that these systems may mitigate the serious risks of abuse or overdose involving these medications.",
-      "url": "https://www.federalregister.gov/documents/2026/03/06/2026-04479/developing-specifications-for-in-home-disposal-systems-for-opioid-analgesics-dispensed-in-an",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-06",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Wound and Burn Dressing Recall: Integra LifeSciences Removes Certain MediHoney and CVS Wound and Burn Products",
-      "summary": "Integra is removing certain Wound and Burn Dressing products that may have breached sterile barriers.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/wound-and-burn-dressing-recall-integra-lifesciences-removes-certain-medihoney-and-cvs-wound-and-burn",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-03-06",
-      "category": "ai_tech",
-      "relevance": 98,
       "categoryLabel": "AI & Digital Tech"
     },
     {
@@ -1687,30 +1847,6 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Determination of Regulatory Review Period for Purposes of Patent Extension; MERIT MEDICAL WRAPSODY",
-      "summary": "The Food and Drug Administration (FDA or the Agency) has determined the regulatory review period for MERIT MEDICAL WRAPSODY and is publishing this notice of that determination as required by law. FDA has made the determination because of the submission of applications to the Director of the U.S. Patent and Trademark Office (USPTO), Department of Commerce, for the extension of a patent which claims that medical device.",
-      "url": "https://www.federalregister.gov/documents/2026/02/26/2026-03853/determination-of-regulatory-review-period-for-purposes-of-patent-extension-merit-medical-wrapsody",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-02-26",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Determination of Regulatory Review Period for Purposes of Patent Extension; TEVIMBRA",
-      "summary": "The Food and Drug Administration (FDA or the Agency) has determined the regulatory review period for TEVIMBRA and is publishing this notice of that determination as required by law. FDA has made the determination because of the submission of an application to the Director of the U.S. Patent and Trademark Office (USPTO), Department of Commerce, for the extension of a patent which claims that human biological product.",
-      "url": "https://www.federalregister.gov/documents/2026/02/26/2026-03851/determination-of-regulatory-review-period-for-purposes-of-patent-extension-tevimbra",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-02-26",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
       "title": "Tucson nurses to hold rally for safe staffing and patient advocacy",
       "summary": "Registered nurses at Carondelet St. Mary’s Hospital in Tucson, Ariz., will gather for a rally on Friday, Feb. 27, to demand that management prioritize safe patient care standards in all hospital units. The nurses have been sounding the alarm about increasingly unsafe conditions at the hospital over the past three months.",
       "url": "https://www.nationalnursesunited.org/press/tucson-nurses-to-hold-rally-for-safe-staffing-and-patient-advocacy",
@@ -1757,6 +1893,30 @@
       "category": "general_market",
       "relevance": 85,
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "Determination of Regulatory Review Period for Purposes of Patent Extension; MERIT MEDICAL WRAPSODY",
+      "summary": "The Food and Drug Administration (FDA or the Agency) has determined the regulatory review period for MERIT MEDICAL WRAPSODY and is publishing this notice of that determination as required by law. FDA has made the determination because of the submission of applications to the Director of the U.S. Patent and Trademark Office (USPTO), Department of Commerce, for the extension of a patent which claims that medical device.",
+      "url": "https://www.federalregister.gov/documents/2026/02/26/2026-03853/determination-of-regulatory-review-period-for-purposes-of-patent-extension-merit-medical-wrapsody",
+      "source": "Federal Register - FDA",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_fda",
+      "publishedAt": "2026-02-26",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Determination of Regulatory Review Period for Purposes of Patent Extension; TEVIMBRA",
+      "summary": "The Food and Drug Administration (FDA or the Agency) has determined the regulatory review period for TEVIMBRA and is publishing this notice of that determination as required by law. FDA has made the determination because of the submission of an application to the Director of the U.S. Patent and Trademark Office (USPTO), Department of Commerce, for the extension of a patent which claims that human biological product.",
+      "url": "https://www.federalregister.gov/documents/2026/02/26/2026-03851/determination-of-regulatory-review-period-for-purposes-of-patent-extension-tevimbra",
+      "source": "Federal Register - FDA",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_fda",
+      "publishedAt": "2026-02-26",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "Managed Care",
@@ -2071,6 +2231,18 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "Electronic Homecare Bed Correction: Medline Updates Use Instructions for Homecare Beds",
+      "summary": "Medline updates use instructions for Electronic Homecare Beds due to risk of electrical fires and entrapment.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/electronic-homecare-bed-correction-medline-updates-use-instructions-homecare-beds",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-02-13",
+      "category": "capacity_expansion",
+      "relevance": 100,
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
       "title": "Agency Information Collection Activities: Submission for OMB Review; Comment Request",
       "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension or reinstatement of an existing collection of information, and to allow a second opportunity for public comment on the notice. Interested persons are invited to send comments regarding the burden estimate or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
       "url": "https://www.federalregister.gov/documents/2026/02/13/2026-02967/agency-information-collection-activities-submission-for-omb-review-comment-request",
@@ -2093,18 +2265,6 @@
       "category": "policy_reimbursement",
       "relevance": 100,
       "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Electronic Homecare Bed Correction: Medline Updates Use Instructions for Homecare Beds",
-      "summary": "Medline updates use instructions for Electronic Homecare Beds due to risk of electrical fires and entrapment.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/electronic-homecare-bed-correction-medline-updates-use-instructions-homecare-beds",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-02-13",
-      "category": "capacity_expansion",
-      "relevance": 100,
-      "categoryLabel": "Capacity & Expansion"
     },
     {
       "title": "Assemblymember Ash Kalra, California Nurses Association reintroduce CalCare legislation",
