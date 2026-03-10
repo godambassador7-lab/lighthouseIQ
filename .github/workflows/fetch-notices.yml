@@ -125,6 +125,13 @@ jobs:
           LNI_OUTPUT_DIR: ${{ github.workspace }}/public/data
         working-directory: core
 
+      - name: Fetch US healthcare primary-source supplemental news
+        run: node scripts/fetch-us-health-news.js
+        env:
+          US_NEWS_MAX_PER_SOURCE: 20
+          US_NEWS_TIMEOUT_MS: 15000
+          US_NEWS_USER_AGENT: LighthouseIQ/1.0 (contact: ygamify.help@gmail.com)
+
       - name: Merge news with historical articles
         run: node scripts/merge-news.js
 

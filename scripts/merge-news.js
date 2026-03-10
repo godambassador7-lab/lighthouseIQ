@@ -15,6 +15,7 @@ const path = require('path');
 const DATA_DIR = path.join(process.cwd(), 'public', 'data');
 const NEWS_PATH = path.join(DATA_DIR, 'news.json');
 const EXISTING_PATH = path.join(DATA_DIR, 'news-existing.json');
+const US_EXTRA_PATH = path.join(DATA_DIR, 'news-us-extra.json');
 const MAX_ARTICLES = 500;
 const MAX_AGE_DAYS = 90;
 const SOURCE_STALE_HOURS = 72;
@@ -240,12 +241,14 @@ console.log('=== Merge News Articles ===');
 
 const freshArticles = loadJSON(NEWS_PATH);
 const existingArticles = loadJSON(EXISTING_PATH);
+const usExtraArticles = loadJSON(US_EXTRA_PATH);
 
 console.log(`Fresh articles: ${freshArticles.length}`);
 console.log(`Existing articles: ${existingArticles.length}`);
+console.log(`US supplemental articles: ${usExtraArticles.length}`);
 
 // Fresh first so they win on dedup collision
-let merged = [...freshArticles, ...existingArticles];
+let merged = [...usExtraArticles, ...freshArticles, ...existingArticles];
 merged = deduplicateArticles(merged);
 console.log(`After dedup: ${merged.length}`);
 
@@ -270,6 +273,7 @@ const quality = buildQualityChecks(merged, sourceHealth, categoryCoverage);
 
 const output = {
   lastUpdated: new Date().toISOString(),
+  scope: 'US healthcare',
   retentionDays: MAX_AGE_DAYS,
   maxArticles: MAX_ARTICLES,
   sourceHealth,

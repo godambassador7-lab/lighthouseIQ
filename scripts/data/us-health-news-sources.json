@@ -1,0 +1,167 @@
+{
+  "version": "1.0.0",
+  "scope": "US healthcare only",
+  "sources": [
+    {
+      "id": "federal_register_cms",
+      "name": "Federal Register - CMS",
+      "type": "federal_register",
+      "url": "https://www.federalregister.gov/api/v1/documents.json?conditions%5Bagencies%5D%5B%5D=centers-for-medicare-medicaid-services&order=newest&per_page=25",
+      "priority": 100,
+      "category": "policy_reimbursement"
+    },
+    {
+      "id": "federal_register_hhs",
+      "name": "Federal Register - HHS",
+      "type": "federal_register",
+      "url": "https://www.federalregister.gov/api/v1/documents.json?conditions%5Bagencies%5D%5B%5D=health-and-human-services-department&order=newest&per_page=25",
+      "priority": 96,
+      "category": "policy_reimbursement"
+    },
+    {
+      "id": "federal_register_fda",
+      "name": "Federal Register - FDA",
+      "type": "federal_register",
+      "url": "https://www.federalregister.gov/api/v1/documents.json?conditions%5Bagencies%5D%5B%5D=food-and-drug-administration&order=newest&per_page=25",
+      "priority": 95,
+      "category": "quality_safety"
+    },
+    {
+      "id": "fda_medwatch_rss",
+      "name": "FDA MedWatch RSS",
+      "type": "rss",
+      "url": "https://www.fda.gov/about-fda/contact-fda/stay-informed/rss-feeds/medwatch/rss.xml",
+      "priority": 98,
+      "category": "quality_safety"
+    },
+    {
+      "id": "doj_antitrust_news",
+      "name": "DOJ Antitrust News",
+      "type": "html",
+      "url": "https://www.justice.gov/atr/news-releases",
+      "priority": 94,
+      "category": "mergers_mna"
+    },
+    {
+      "id": "ftc_press_releases",
+      "name": "FTC Press Releases",
+      "type": "html",
+      "url": "https://www.ftc.gov/news-events/news/press-releases",
+      "priority": 93,
+      "category": "mergers_mna"
+    },
+    {
+      "id": "hhs_oig_news",
+      "name": "HHS OIG News",
+      "type": "html",
+      "url": "https://oig.hhs.gov/news-events/news/",
+      "priority": 92,
+      "category": "quality_safety"
+    },
+    {
+      "id": "cms_newsroom",
+      "name": "CMS Newsroom",
+      "type": "html",
+      "url": "https://www.cms.gov/newsroom",
+      "priority": 92,
+      "category": "policy_reimbursement"
+    },
+    {
+      "id": "fda_newsroom",
+      "name": "FDA Newsroom",
+      "type": "html",
+      "url": "https://www.fda.gov/news-events/fda-newsroom/press-announcements",
+      "priority": 91,
+      "category": "quality_safety"
+    },
+    {
+      "id": "cdc_media",
+      "name": "CDC Media",
+      "type": "html",
+      "url": "https://www.cdc.gov/media/index.html",
+      "priority": 90,
+      "category": "quality_safety"
+    },
+    {
+      "id": "hhs_news",
+      "name": "HHS News",
+      "type": "html",
+      "url": "https://www.hhs.gov/about/news/index.html",
+      "priority": 90,
+      "category": "policy_reimbursement"
+    },
+    {
+      "id": "aha_news",
+      "name": "AHA News",
+      "type": "html",
+      "url": "https://www.aha.org/news",
+      "priority": 86,
+      "category": "policy_reimbursement"
+    },
+    {
+      "id": "nnu_rss",
+      "name": "National Nurses United RSS",
+      "type": "rss",
+      "url": "https://www.nationalnursesunited.org/rss.xml",
+      "priority": 90,
+      "category": "labor_unions"
+    },
+    {
+      "id": "nysna_rss",
+      "name": "NYSNA RSS",
+      "type": "rss",
+      "url": "https://www.nysna.org/rss.xml",
+      "priority": 88,
+      "category": "labor_unions"
+    },
+    {
+      "id": "seiu_rss",
+      "name": "SEIU RSS",
+      "type": "rss",
+      "url": "https://www.seiu.org/feed",
+      "priority": 84,
+      "category": "labor_unions"
+    },
+    {
+      "id": "hca_newsroom",
+      "name": "HCA Newsroom",
+      "type": "html",
+      "url": "https://hcahealthcare.com/about/newsroom/",
+      "priority": 84,
+      "category": "capacity_expansion"
+    },
+    {
+      "id": "tenet_newsroom",
+      "name": "Tenet Newsroom",
+      "type": "html",
+      "url": "https://www.tenethealth.com/newsroom",
+      "priority": 82,
+      "category": "capacity_expansion"
+    },
+    {
+      "id": "sec_healthcare_filings",
+      "name": "SEC Healthcare Filings",
+      "type": "sec_filings",
+      "url": "https://www.sec.gov/submissions/",
+      "priority": 85,
+      "category": "policy_reimbursement",
+      "companies": [
+        { "symbol": "UNH", "cik": "0000731766", "name": "UnitedHealth Group Incorporated" },
+        { "symbol": "ELV", "cik": "0001156039", "name": "Elevance Health, Inc." },
+        { "symbol": "CI", "cik": "0001739940", "name": "The Cigna Group" },
+        { "symbol": "CVS", "cik": "0000064803", "name": "CVS Health Corporation" },
+        { "symbol": "HUM", "cik": "0000049071", "name": "Humana Inc." },
+        { "symbol": "CNC", "cik": "0001071739", "name": "Centene Corporation" },
+        { "symbol": "HCA", "cik": "0000860730", "name": "HCA Healthcare, Inc." },
+        { "symbol": "THC", "cik": "0000701374", "name": "Tenet Healthcare Corporation" },
+        { "symbol": "UHS", "cik": "0000352915", "name": "Universal Health Services, Inc." }
+      ]
+    }
+  ],
+  "healthcareKeywords": [
+    "hospital", "health", "healthcare", "nurse", "nursing", "medicare", "medicaid",
+    "cms", "hhs", "fda", "cdc", "clinic", "provider", "payer", "pharmacy",
+    "patient", "medical", "care", "telehealth", "340b", "reimbursement", "strike",
+    "layoff", "closure", "merger", "acquisition", "antitrust", "quality", "safety"
+  ]
+}

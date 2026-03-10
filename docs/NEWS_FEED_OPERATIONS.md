@@ -15,6 +15,19 @@ Run this every Monday:
 - `npm run news:quality` writes `public/data/news-quality.json`.
 - `npm run news:quality:strict` fails if thresholds are not met.
 
+## US-Only Primary Source Pipeline
+
+- Source manifest: `scripts/data/us-health-news-sources.json`
+- Supplemental fetch: `npm run news:fetch:us`
+- Merge order in pipeline:
+  1. private core `export-news.js`
+  2. `fetch-us-health-news.js` (US primary sources)
+  3. `merge-news.js` (dedupe + retention + telemetry)
+
+Notes:
+- Keep this feed US-only. Do not add international sources to this manifest.
+- Keep SEC user-agent/contact set in workflow env.
+
 ## Source Expansion Plan (Private Core)
 
 Implement in `lighthouse-core` `export-news.js`:
