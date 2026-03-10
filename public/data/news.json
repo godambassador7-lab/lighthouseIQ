@@ -1,17 +1,25 @@
 {
-  "lastUpdated": "2026-03-10T06:18:33.289Z",
+  "lastUpdated": "2026-03-10T06:30:58.404Z",
+  "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
-    "totalSources": 5,
-    "staleSources": 0,
-    "healthySources": 5,
+    "totalSources": 11,
+    "staleSources": 3,
+    "healthySources": 8,
     "sources": [
       {
         "source": "Fierce Healthcare",
         "articleCount": 37,
         "latestPublishedAt": "2026-03-10T00:00:00.000Z",
         "staleHours": 6,
+        "status": "ok"
+      },
+      {
+        "source": "SEC Healthcare Filings",
+        "articleCount": 28,
+        "latestPublishedAt": "2026-03-09T00:00:00.000Z",
+        "staleHours": 30,
         "status": "ok"
       },
       {
@@ -27,6 +35,41 @@
         "latestPublishedAt": "2026-03-09T00:00:00.000Z",
         "staleHours": 30,
         "status": "ok"
+      },
+      {
+        "source": "Federal Register - CMS",
+        "articleCount": 20,
+        "latestPublishedAt": "2026-03-09T00:00:00.000Z",
+        "staleHours": 30,
+        "status": "ok"
+      },
+      {
+        "source": "FDA MedWatch RSS",
+        "articleCount": 20,
+        "latestPublishedAt": "2026-03-06T00:00:00.000Z",
+        "staleHours": 102,
+        "status": "stale"
+      },
+      {
+        "source": "Federal Register - HHS",
+        "articleCount": 18,
+        "latestPublishedAt": "2026-03-09T00:00:00.000Z",
+        "staleHours": 30,
+        "status": "ok"
+      },
+      {
+        "source": "Federal Register - FDA",
+        "articleCount": 15,
+        "latestPublishedAt": "2026-03-05T00:00:00.000Z",
+        "staleHours": 126,
+        "status": "stale"
+      },
+      {
+        "source": "National Nurses United RSS",
+        "articleCount": 8,
+        "latestPublishedAt": "2026-03-03T00:00:00.000Z",
+        "staleHours": 174,
+        "status": "stale"
       },
       {
         "source": "Healthcare Dive",
@@ -47,47 +90,47 @@
   "categoryCoverage": {
     "closures_layoffs": {
       "label": "Closures & Layoffs",
-      "count": 1
+      "count": 2
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 11
+      "count": 12
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 0
+      "count": 4
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 10
+      "count": 29
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 2
+      "count": 7
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
-      "count": 4
+      "count": 8
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 28
+      "count": 55
     },
     "general_market": {
       "label": "General Market",
-      "count": 44
+      "count": 92
     }
   },
   "quality": {
     "status": "warning",
     "failedChecks": [
-      "minUniqueSources"
+      "maxStaleSources"
     ],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
-        "actual": 5,
-        "pass": false
+        "actual": 11,
+        "pass": true
       },
       "minArticles24h": {
         "threshold": 20,
@@ -96,13 +139,13 @@
       },
       "minRequiredCategoriesCovered": {
         "threshold": 4,
-        "actual": 6,
+        "actual": 7,
         "pass": true
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 0,
-        "pass": true
+        "actual": 3,
+        "pass": false
       }
     }
   },
@@ -376,6 +419,234 @@
       "summary": "Health Affairs, Volume 45, Issue 3, Page 251-260, March 2026.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Medicare and Medicaid Programs; Announcement of Applications From 12 Hospitals Requesting Waivers for Organ Procurement Service Area",
+      "summary": "This notice acknowledges the receipt of applications from 12 hospitals that have requested a waiver of statutory requirements that would otherwise require the hospitals to enter into an agreement with their designated organ procurement organization (OPO). This notice requests comments from OPOs and the general public for our consideration in determining whether we should grant the requested waivers.",
+      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04544/medicare-and-medicaid-programs-announcement-of-applications-from-12-hospitals-requesting-waivers-for",
+      "source": "Federal Register - CMS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_cms",
+      "publishedAt": "2026-03-09",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Agency Information Collection Activities: Submission for OMB Review; Comment Request",
+      "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension or reinstatement of an existing collection of information, and to allow a second opportunity for public comment on the notice. Interested persons are invited to send comments regarding the burden estimate or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
+      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04518/agency-information-collection-activities-submission-for-omb-review-comment-request",
+      "source": "Federal Register - CMS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_cms",
+      "publishedAt": "2026-03-09",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Responding to FDA Form 483 Observations at the Conclusion of a Drug CGMP Inspection: Draft Guidance for Industry; Availability",
+      "summary": "The Food and Drug Administration (FDA, Agency, or we) is announcing the availability of a draft guidance for industry entitled \"Responding to FDA Form 483 Observations at the Conclusion of a Drug CGMP Inspection.\" This guidance is intended for foreign and domestic human and animal drug manufacturing establishments inspected by FDA whose drugs are regulated by the Center for Drug Evaluation and Research (CDER), the Center for Biologics Evaluation and Research (CBER), and the Center for Veterinary Medicine (CVM). The purpose of this guidance is to assist manufacturers who choose to respond to FDA when they receive an FDA Form 483 Inspectional Observations (FDA 483) at the conclusion of a drug inspection to assess conformity with current good manufacturing practice (CGMP) requirements.",
+      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04578/responding-to-fda-form-483-observations-at-the-conclusion-of-a-drug-cgmp-inspection-draft-guidance",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-03-09",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Proposed Data Collection Submitted for Public Comment and Recommendations",
+      "summary": "The Centers for Disease Control and Prevention (CDC), as part of its continuing effort to reduce public burden and maximize the utility of government information, invites the general public and other federal agencies the opportunity to comment on a continuing information collection, as required by the Paperwork Reduction Act of 1995. This notice invites comment on a proposed information collection project titled Generic Information Collection Request for Cognitive Testing and Pilot Testing for the National Center for Chronic Disease Prevention and Health Promotion. This Generic Clearance is designed to support methodological studies that improve information quality and the efficiency of information collection.",
+      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04569/proposed-data-collection-submitted-for-public-comment-and-recommendations",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-03-09",
+      "category": "quality_safety",
+      "relevance": 100,
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "Proposed Data Collection Submitted for Public Comment and Recommendations",
+      "summary": "The Centers for Disease Control and Prevention (CDC), as part of its continuing effort to reduce public burden and maximize the utility of government information, invites the opportunity for the public and other federal agencies to comment on a continuing information collection, as required by the Paperwork Reduction Act of 1995. This notice invites comment on a proposed information collection project titled Developmental/Methodological Projects to Improve the National Health and Nutrition Examination Survey and Related Programs. The goal of these projects is to evaluate proposed survey designs, content, methods, and alternative approaches to activities such as outreach, screening, participant recruitment/retention, data collection, or other survey activities for NHANES or NCHS-wide projects.",
+      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04566/proposed-data-collection-submitted-for-public-comment-and-recommendations",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-03-09",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Proposed Data Collection Submitted for Public Comment and Recommendations",
+      "summary": "The Centers for Disease Control and Prevention (CDC), as part of its continuing effort to reduce public burden and maximize the utility of government information, invites the general public and other federal agencies the opportunity to comment on a continuing information collection, as required by the Paperwork Reduction Act of 1995. This notice invites comment on a proposed information collection project titled the Collaborating Center for Questionnaire Design and Evaluation Research (CCQDER). This Generic Clearance request encompasses general questionnaire development, pre-testing, and measurement-error reduction activities to be carried out in 2026-2029.",
+      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04562/proposed-data-collection-submitted-for-public-comment-and-recommendations",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-03-09",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Aspen Global Inc. c/o Lachman Consultant Services, Inc., et al.; Withdrawal of Approval of 46 New Drug Applications",
+      "summary": "The Food and Drug Administration (FDA or Agency) is withdrawing approval of 46 new drug applications (NDAs) from multiple applicants. The applicants notified the Agency in writing that the drug products were no longer marketed and requested that the approval of the applications be withdrawn.",
+      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04546/aspen-global-inc-co-lachman-consultant-services-inc-et-al-withdrawal-of-approval-of-46-new-drug",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-03-09",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Government-Owned Inventions; Availability for Licensing",
+      "summary": "The National Institute of Allergy and Infectious Diseases (NIAID), an institute of the National Institutes of Health (NIH), Department of Health and Human Services (HHS), is giving notice of the invention listed below, which is owned by an agency of the U.S. Government and is available for licensing to achieve expeditious commercialization of results of federally funded research and development. Foreign patent applications are filed on selected inventions to extend market coverage for companies and may also be available for licensing.",
+      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04532/government-owned-inventions-availability-for-licensing",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-03-09",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Oncologic Drugs Advisory Committee; Notice of Meeting; Establishment of a Public Docket; Request for Comments-New Drug Application 220359, for Camizestrant Tablets; Supplemental New Drug Application (sNDA) 218197/S-004, for Truqap (Capivasertib) Tablets",
+      "summary": "The Food and Drug Administration (FDA) announces a forthcoming public advisory committee meeting of the Oncologic Drugs Advisory Committee (the Committee). The general function of the Committee is to provide advice and recommendations to FDA on regulatory issues. The meeting will be open to the public. FDA is establishing a docket for public comment on this document.",
+      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04497/oncologic-drugs-advisory-committee-notice-of-meeting-establishment-of-a-public-docket-request-for",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-03-09",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Agency Forms Undergoing Paperwork Reduction Act Review",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04568/agency-forms-undergoing-paperwork-reduction-act-review",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-03-09",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Agency Forms Undergoing Paperwork Reduction Act Review",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04565/agency-forms-undergoing-paperwork-reduction-act-review",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-03-09",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Agency Forms Undergoing Paperwork Reduction Act Review",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04564/agency-forms-undergoing-paperwork-reduction-act-review",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-03-09",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Agency Forms Undergoing Paperwork Reduction Act Review",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04561/agency-forms-undergoing-paperwork-reduction-act-review",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-03-09",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Agency Forms Undergoing Paperwork Reduction Act Review",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04560/agency-forms-undergoing-paperwork-reduction-act-review",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-03-09",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Agency Information Collection Activities: Submission to OMB for Review and Approval; Public Comment Request; HRSA Ryan White HIV/AIDS Program Part F National AIDS Education and Training Center Program Activities, OMB No. 0906-XXXX-New",
+      "summary": "In compliance with the Paperwork Reduction Act of 1995, HRSA submitted an Information Collection Request (ICR) to the Office of Management and Budget (OMB) for review and approval. Comments submitted during the first public review of this ICR will be provided to OMB. OMB will accept further comments from the public during the review and approval period. OMB may act on HRSA's ICR only after the 30-day comment period for this notice has closed.",
+      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04535/agency-information-collection-activities-submission-to-omb-for-review-and-approval-public-comment",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-03-09",
+      "category": "ai_tech",
+      "relevance": 96,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Center for Scientific Review; Notice of Closed Meetings",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04512/center-for-scientific-review-notice-of-closed-meetings",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-03-09",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "UNH 8-K filing - UnitedHealth Group Incorporated",
+      "summary": "UnitedHealth Group Incorporated filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/731766/000073176626000067/unh-20260309.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-03-09",
+      "category": "general_market",
+      "relevance": 90,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "UHS 8-K filing - Universal Health Services, Inc.",
+      "summary": "Universal Health Services, Inc. filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/352915/000119312526097674/uhs-20260309.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-03-09",
+      "category": "general_market",
+      "relevance": 90,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "HUM 8-K filing - Humana Inc.",
+      "summary": "Humana Inc. filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/49071/000162828026016031/hum-20260305.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-03-09",
+      "category": "general_market",
+      "relevance": 85,
+      "categoryLabel": "General Market"
     },
     {
       "title": "Children&#8217;s National chief external affairs officer to retire",
@@ -738,6 +1009,78 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "Patient Protection and Affordable Care Act, HHS Notice of Benefit and Payment Parameters for 2027; and Basic Health Program; Correction",
+      "summary": "This document corrects technical errors in the proposed rule that appeared in the February 11, 2026, Federal Register titled \"Patient Protection and Affordable Care Act, HHS Notice of Benefit and Payment Parameters for 2027; and Basic Health Program.\"",
+      "url": "https://www.federalregister.gov/documents/2026/03/06/2026-04467/patient-protection-and-affordable-care-act-hhs-notice-of-benefit-and-payment-parameters-for-2027-and",
+      "source": "Federal Register - CMS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_cms",
+      "publishedAt": "2026-03-06",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Designated Placement Requirements Under Titles IV-E and IV-B for LGBTQI+ Children; Rescission",
+      "summary": "The Administration for Children and Families (ACF) proposes to remove the requirements issued in the final rule Designated Placement Requirements Under Titles IV-E and IV-B for LGBTQI+ Children (89 FR 34818) that was published on April 30, 2024. The final rule required title IV-E/IV-B agencies to ensure that a Designated Placement is available for all children who self-identify with an alternative sexual orientation or self-identify as something other than their sex in foster care who request or would benefit from such a placement. On June 13, 2025, the U.S. District Court for the Eastern District of Texas vacated the final rule in its entirety, State of Texas v. United States Department of Health & Human Services, 770 F. Supp. 3d 940 (E.D. Tex. 2025), concluding that the final rule exceeded the Department of Health and Human Services' statutory authority and conflicted with the text of title IV-E. As a result of the court's decision, the final rule is no longer in effect or enforceable, and to ensure clarity for the public and regulated entities, ACF proposes to remove the provisions from the Code of Federal Regulations.",
+      "url": "https://www.federalregister.gov/documents/2026/03/06/2026-04515/designated-placement-requirements-under-titles-iv-e-and-iv-b-for-lgbtqi-children-rescission",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-03-06",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Agency Information Collection Activities: Submission to the Office of Management and Budget (OMB) for Review and Approval; Public Comment Request; Standardized Work Plan Form for Use with Applications to the Bureau of Health Workforce Research and Training Grants and Cooperative Agreements, OMB No. 0906-0049-Revision",
+      "summary": "In compliance with the requirement for opportunity for public comment on proposed data collection projects of the Paperwork Reduction Act of 1995, HRSA announces plans to submit an Information Collection Request (ICR), described below, to OMB. Prior to submitting the ICR to OMB, HRSA seeks comments from the public regarding the burden estimate, below, or any other aspect of the ICR.",
+      "url": "https://www.federalregister.gov/documents/2026/03/06/2026-04493/agency-information-collection-activities-submission-to-the-office-of-management-and-budget-omb-for",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-03-06",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Determination of Regulatory Review Period for Purposes of Patent Extension; ENSACOVE",
+      "summary": "The Food and Drug Administration (FDA or the Agency) has determined the regulatory review period for ENSACOVE and is publishing this notice of that determination as required by law. FDA has made the determination because of the submission of an application to the Director of the U.S. Patent and Trademark Office (USPTO), Department of Commerce, for the extension of a patent which claims that human drug product.",
+      "url": "https://www.federalregister.gov/documents/2026/03/06/2026-04491/determination-of-regulatory-review-period-for-purposes-of-patent-extension-ensacove",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-03-06",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Developing Specifications for In-Home Disposal Systems for Opioid Analgesics Dispensed in an Outpatient Setting; Establishment of a Public Docket; Request for Comments",
+      "summary": "The Food and Drug Administration (FDA, the Agency, or we) is announcing the establishment of a docket to solicit public comment on what specifications for in-home disposal systems, if application holders are required to make them available under the Opioid Analgesic Risk Evaluation and Mitigation Strategy, would be necessary to show that these systems may mitigate the serious risks of abuse or overdose involving these medications.",
+      "url": "https://www.federalregister.gov/documents/2026/03/06/2026-04479/developing-specifications-for-in-home-disposal-systems-for-opioid-analgesics-dispensed-in-an",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-03-06",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Wound and Burn Dressing Recall: Integra LifeSciences Removes Certain MediHoney and CVS Wound and Burn Products",
+      "summary": "Integra is removing certain Wound and Burn Dressing products that may have breached sterile barriers.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/wound-and-burn-dressing-recall-integra-lifesciences-removes-certain-medihoney-and-cvs-wound-and-burn",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-03-06",
+      "category": "ai_tech",
+      "relevance": 98,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
       "title": "Care New England hospital taps new COO",
       "url": "https://www.beckershospitalreview.com/hospital-executive-moves/care-new-england-hospital-taps-new-coo/",
       "source": "Becker's Hospital Review",
@@ -972,6 +1315,42 @@
       "categoryLabel": "Policy & Reimbursement"
     },
     {
+      "title": "Revising the National Drug Code Format and Drug Label Barcode Requirements",
+      "summary": "The Food and Drug Administration (FDA, the Agency, or we) is issuing a final rule to standardize the format of the National Drug Code (NDC). Under this final rule, all FDA-assigned NDCs will be required to be 12 digits in length with 3 distinct segments and 1 uniform format. The first segment is a 6-digit labeler code, the second segment is a 4-digit product code, and the third segment is a 2-digit package code. Additionally, we are revising the drug product barcode label requirements to permit the use of other data carriers that meet the standards of this final rule.",
+      "url": "https://www.federalregister.gov/documents/2026/03/05/2026-04368/revising-the-national-drug-code-format-and-drug-label-barcode-requirements",
+      "source": "Federal Register - FDA",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_fda",
+      "publishedAt": "2026-03-05",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Catheter Recall: Medline Industries Removes Reprocessed Electrophysiology and Ultrasound Catheters",
+      "summary": "Certain reprocessed catheters may contain residual particulates that could cause infection, embolism, or thrombosis.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/catheter-recall-medline-industries-removes-reprocessed-electrophysiology-and-ultrasound-catheters",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-03-05",
+      "category": "quality_safety",
+      "relevance": 98,
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "Catheter Recall Expansion: Medline Industries Removes Reprocessed Electrophysiology and Ultrasound Catheters",
+      "summary": "Certain reprocessed catheters may contain residual particulates that could cause infection, embolism, or thrombosis",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/catheter-recall-expansion-medline-industries-removes-reprocessed-electrophysiology-and-ultrasound",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-03-05",
+      "category": "quality_safety",
+      "relevance": 98,
+      "categoryLabel": "Quality & Safety"
+    },
+    {
       "title": "‘We would be going out of business if we didn’t’: 4 leaders on converting to rural emergency hospitals",
       "url": "https://www.beckershospitalreview.com/finance/we-would-be-going-out-of-business-if-we-didnt-4-leaders-on-converting-to-rural-emergency-hospitals/",
       "source": "Becker's Hospital Review",
@@ -1006,6 +1385,978 @@
       "summary": "Three health systems have raised their minimum wage in 2026 as part of broader workplace investments. The moves come as health system leaders intensify their focus on retention and engagement.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "New Clinical Investigation Exclusivity (3-Year Exclusivity) for Drug Products: Questions and Answers; Draft Guidance for Industry; Availability; Agency Information Collection Activities; Proposed Collection; Comment Request",
+      "summary": "The Food and Drug Administration (FDA, Agency, or we) is announcing the availability of a draft guidance for industry entitled \"New Clinical Investigation Exclusivity (3-Year Exclusivity) for Drug Products: Questions and Answers.\" This draft guidance is intended to assist applicants requesting New Clinical Investigation exclusivity (also referred to as 3-year exclusivity) for a new drug application (NDA) or NDA supplement. The guidance discusses the statutory and regulatory criteria for eligibility for 3-year exclusivity and provides recommendations on the content and format of requests for 3-year exclusivity in the form of questions and answers (Q&As). FDA intends to update this draft guidance document to include additional Q&As as appropriate.",
+      "url": "https://www.federalregister.gov/documents/2026/03/04/2026-04291/new-clinical-investigation-exclusivity-3-year-exclusivity-for-drug-products-questions-and-answers",
+      "source": "Federal Register - FDA",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_fda",
+      "publishedAt": "2026-03-04",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Ecoflora Cares; Filing of Color Additive Petition",
+      "summary": "The Food and Drug Administration (FDA or we) is announcing that we have filed a petition, submitted by Ecoflora Cares, c/o Exponent, Inc., proposing that we amend our color additive regulations to provide for the safe use of jagua (genipin-glycine) blue as a color additive in pet foods at levels consistent with good manufacturing practice.",
+      "url": "https://www.federalregister.gov/documents/2026/03/04/2026-04288/ecoflora-cares-filing-of-color-additive-petition",
+      "source": "Federal Register - FDA",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_fda",
+      "publishedAt": "2026-03-04",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Kemin Industries, Inc.; Filing of Food Additive Petition (Animal Use)",
+      "summary": "The Food and Drug Administration (FDA or we) is announcing that we have filed a food additive petition, submitted by Kemin Industries, Inc., proposing that we amend our food additive regulations to provide for the safe use of chromium propionate as a source of chromium in food for layer and breeding chickens.",
+      "url": "https://www.federalregister.gov/documents/2026/03/04/2026-04284/kemin-industries-inc-filing-of-food-additive-petition-animal-use",
+      "source": "Federal Register - FDA",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_fda",
+      "publishedAt": "2026-03-04",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "M14 General Principles on Planning, Designing, Analyzing, and Reporting of Non-Interventional Studies That Utilize Real-World Data for Safety Assessment of Medicines; International Council for Harmonisation; Guidance for Industry; Availability",
+      "summary": "The Food and Drug Administration (FDA or Agency) is announcing the availability of a final guidance for industry entitled \"General Principles on Planning, Designing, Analyzing, and Reporting of Non- interventional Studies That Utilize Real-World Data for Safety Assessment of Medicines.\" The guidance was prepared under the auspices of the International Council for Harmonisation of Technical Requirements for Pharmaceuticals for Human Use (ICH). The guidance outlines general principles on planning, designing, analyzing, and reporting non-interventional studies that utilize real-world data for safety assessment of medicines (i.e., drugs, vaccines, and other biological products). The recommendations in this guidance, while focused on safety, are applicable to non-interventional studies assessing effectiveness and are aligned and complementary with the FDA's other guidances on the generation real world evidence. The guidance includes recommendations and high-level best practices for the conduct of these studies, including articulating the research question, selecting appropriate data sources, defining key variables, addressing potential biases and confounding, conducting analyses, reporting, and submission. The guidance is intended to streamline the development and regulatory assessment of postmarketing non-interventional safety studies that include real-world data. The guidance replaces the draft guidance \"M14 General Principles on Plan, Design, and Analysis of Pharmacoepidemiological Studies that Utilize Real-World Data for Safety Assessment of Medicines\" issued in July 2024. FDA is also announcing the withdrawal of the guidance entitled \"Best Practices for Conducting and Reporting Pharmacoepidemiologic Safety Studies Using Electronic Healthcare Data Sets,\" published May 2013.",
+      "url": "https://www.federalregister.gov/documents/2026/03/04/2026-04253/m14-general-principles-on-planning-designing-analyzing-and-reporting-of-non-interventional-studies",
+      "source": "Federal Register - FDA",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_fda",
+      "publishedAt": "2026-03-04",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "E2D(R1) Postapproval Safety Data: Definitions and Standards for Management and Reporting of Individual Case Safety Reports; International Council for Harmonisation; Guidance for Industry; Availability",
+      "summary": "The Food and Drug Administration (FDA or Agency) is announcing the availability of a final guidance for industry entitled \"E2D(R1) Postapproval Safety Data: Definitions and Standards for Management and Reporting of Individual Case Safety Reports.\" The guidance was prepared under the auspices of the International Council for Harmonisation of Technical Requirements for Pharmaceuticals for Human Use (ICH). The guidance updates the 2003 guidance titled \"E2D Post- Approval Safety Data Management: Definitions and Standards for Expedited Reporting,\" by clarifying the use of new or increasingly used data sources (e.g., social media, market research programs, patient support programs). This final guidance clarifies the use of new postapproval safety sources and update terminology and standards for postapproval adverse event reporting. The guidance replaces the draft guidance \"E2D(R1) Post-Approval Safety Data: Definitions and Standards for Management and Reporting of Individual Case Safety Reports\" issued on March 14, 2024, and the final guidance issued September 15, 2003.",
+      "url": "https://www.federalregister.gov/documents/2026/03/04/2026-04252/e2dr1-postapproval-safety-data-definitions-and-standards-for-management-and-reporting-of-individual",
+      "source": "Federal Register - FDA",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_fda",
+      "publishedAt": "2026-03-04",
+      "category": "quality_safety",
+      "relevance": 100,
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "Update: FDA Encourages the Public to Follow Established Choking Rescue Protocols - FDA Safety Communication",
+      "summary": "These choking rescue protocols include abdominal thrusts (also called the “Heimlich” maneuver) for children and adults but not anti-choking devices.",
+      "url": "http://www.fda.gov/medical-devices/safety-communications/update-fda-encourages-public-follow-established-choking-rescue-protocols-fda-safety-communication",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-03-04",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Recommendations on Scale-Up and Postapproval Changes Guidances for Industry; Request for Comments",
+      "summary": "The Food and Drug Administration (FDA, the Agency, or we) is announcing the opening of a public docket to solicit information and comments on the Agency's series of guidances for industry on scale-up and postapproval changes (SUPAC) for specific dosage forms. Specifically, we are seeking comment on the following guidances for industry: \"Immediate Release Solid Oral Dosage Forms Scale-Up and Postapproval Changes: Chemistry, Manufacturing, and Controls, In Vitro Dissolution Testing, and In Vivo Bioequivalence Documentation\" (SUPAC- IR); \"SUPAC-IR Questions and Answers about SUPAC-IR Guidance\" (SUPAC- IR Q&A); \"Nonsterile Semisolid Dosage Forms Scale-Up and Postapproval Changes: Chemistry, Manufacturing, and Controls; In Vitro Release Testing and In Vivo Bioequivalence Documentation\" (SUPAC-SS); \"SUPAC- MR: Modified Release Solid Oral Dosage Forms Scale-Up and Postapproval Changes: Chemistry, Manufacturing, and Controls; In Vitro Dissolution Testing and In Vivo Bioequivalence Documentation\" (SUPAC-MR); and \"SUPAC: Manufacturing Equipment Addendum\" (SUPAC-MEA). The Agency is seeking public information and comment on the continued utility of and suggestions for potential revisions to the recommendations in these guidances.",
+      "url": "https://www.federalregister.gov/documents/2026/03/03/2026-04196/recommendations-on-scale-up-and-postapproval-changes-guidances-for-industry-request-for-comments",
+      "source": "Federal Register - FDA",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_fda",
+      "publishedAt": "2026-03-03",
+      "category": "capacity_expansion",
+      "relevance": 100,
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "Nurses union endorses the Make Billionaires Pay Their Fair Share Act",
+      "summary": "National Nurses United is proud to endorse the Make Billionaires Pay Their Fair Share Act led by Sen. Bernie Sanders (Vt.) and Rep. Ro Khanna (Calif.). This legislation begins to right the wrongs of our corrupt tax code, which has allowed the rich and corporations to hoard exorbitant amounts of wealth while the working class, whose labor creates that wealth, is forced to decide between paying for housing and food or prescription medications and health insurance.",
+      "url": "https://www.nationalnursesunited.org/press/nurses-union-endorses-the-make-billionaires-pay-their-fair-share-act",
+      "source": "National Nurses United RSS",
+      "sourceType": "rss",
+      "sourceId": "nnu_rss",
+      "publishedAt": "2026-03-03",
+      "category": "labor_unions",
+      "relevance": 100,
+      "categoryLabel": "Labor & Unions"
+    },
+    {
+      "title": "CI 8-K filing - The Cigna Group",
+      "summary": "The Cigna Group filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1739940/000114036126007450/ef20066976_8k.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-03-03",
+      "category": "general_market",
+      "relevance": 85,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Agency Information Collection Activities: Submission for OMB Review; Comment Request",
+      "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension or reinstatement of an existing collection of information, and to allow a second opportunity for public comment on the notice. Interested persons are invited to send comments regarding the burden estimate or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
+      "url": "https://www.federalregister.gov/documents/2026/03/02/2026-04133/agency-information-collection-activities-submission-for-omb-review-comment-request",
+      "source": "Federal Register - CMS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_cms",
+      "publishedAt": "2026-03-02",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Agency Information Collection Activities: Submission for OMB Review; Comment Request",
+      "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension or reinstatement of an existing collection of information, and to allow a second opportunity for public comment on the notice. Interested persons are invited to send comments regarding the burden estimate or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
+      "url": "https://www.federalregister.gov/documents/2026/03/02/2026-04004/agency-information-collection-activities-submission-for-omb-review-comment-request",
+      "source": "Federal Register - CMS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_cms",
+      "publishedAt": "2026-03-02",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "UNH 8-K filing - UnitedHealth Group Incorporated",
+      "summary": "UnitedHealth Group Incorporated filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/731766/000073176626000064/unh-20260224.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-03-02",
+      "category": "general_market",
+      "relevance": 90,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "UNH 10-K filing - UnitedHealth Group Incorporated",
+      "summary": "UnitedHealth Group Incorporated filed 10-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/731766/000073176626000062/unh-20251231.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-03-02",
+      "category": "general_market",
+      "relevance": 90,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "ELV 8-K filing - Elevance Health, Inc.",
+      "summary": "Elevance Health, Inc. filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1156039/000115603926000022/elv-20260302.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-03-02",
+      "category": "general_market",
+      "relevance": 90,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "HUM 8-K filing - Humana Inc.",
+      "summary": "Humana Inc. filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/49071/000004907126000011/hum-20260302.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-03-02",
+      "category": "general_market",
+      "relevance": 85,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Medicare, Medicaid, and Children's Health Insurance Programs: Announcement of Nationwide Temporary Moratoria on Enrollment of Durable Medical Equipment, Prosthetics, Orthotics, and Supplies (DMEPOS) Supplier Medical Supply Companies",
+      "summary": "This notice announces the imposition of a 6-month nationwide moratorium on the Medicare enrollment of DMEPOS supplier medical supply companies.",
+      "url": "https://www.federalregister.gov/documents/2026/02/27/2026-03971/medicare-medicaid-and-childrens-health-insurance-programs-announcement-of-nationwide-temporary",
+      "source": "Federal Register - CMS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_cms",
+      "publishedAt": "2026-02-27",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Request for Information (RFI) Related to Comprehensive Regulations To Uncover Suspicious Healthcare (CRUSH)",
+      "summary": "This request for information (RFI) solicits stakeholder feedback on potential regulatory changes that might be included in a potential upcoming CRUSH proposed rule, as well as other programmatic changes that could be implemented to make CMS more effective in crushing fraud to protect taxpayer dollars and the Americans we serve.",
+      "url": "https://www.federalregister.gov/documents/2026/02/27/2026-03968/request-for-information-rfi-related-to-comprehensive-regulations-to-uncover-suspicious-healthcare",
+      "source": "Federal Register - CMS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_cms",
+      "publishedAt": "2026-02-27",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Product-Specific Guidances; Draft and Revised Draft Guidances for Industry; Availability",
+      "summary": "The Food and Drug Administration (FDA, Agency, or we) is announcing the availability of additional draft and revised draft product-specific guidances. The draft guidances provide product-specific recommendations on, among other things, the design of bioequivalence (BE) studies to support abbreviated new drug applications (ANDAs). In the Federal Register of June 11, 2010, FDA announced the availability of a guidance for industry entitled \"Bioequivalence Recommendations for Specific Products\" that explained the process that would be used to make product-specific guidances available to the public on FDA's website. The draft guidances identified in this notice were developed using the process described in that guidance.",
+      "url": "https://www.federalregister.gov/documents/2026/02/27/2026-03963/product-specific-guidances-draft-and-revised-draft-guidances-for-industry-availability",
+      "source": "Federal Register - FDA",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_fda",
+      "publishedAt": "2026-02-27",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Fiscal Year 2026 Generic Drug Science and Research Initiatives Workshop; Public Workshop; Request for Comments",
+      "summary": "The Food and Drug Administration (FDA or the Agency) is announcing the following public workshop entitled \"Fiscal Year 2026 Generic Drug Science and Research Initiatives Workshop.\" The purpose of the public workshop is to provide an overview of the status of science and research initiatives for generic drugs and an opportunity for public input on these initiatives. FDA is seeking this input from a variety of interested parties--industry, academia, patient advocates, professional societies, and other interested parties--as it fulfills its commitment under the Generic Drug User Fee Amendments of 2022 (GDUFA III) to develop an annual list of science and research initiatives specific to generic drugs. FDA will take the information it obtains from the public workshop into account in developing its fiscal year (FY) 2027 Generic Drug User Fee Amendments (GDUFA) science and research initiatives.",
+      "url": "https://www.federalregister.gov/documents/2026/02/27/2026-03961/fiscal-year-2026-generic-drug-science-and-research-initiatives-workshop-public-workshop-request-for",
+      "source": "Federal Register - FDA",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_fda",
+      "publishedAt": "2026-02-27",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Issuance of Priority Review Voucher; Rare Pediatric Disease Product; ZYCUBO (Copper Histidinate)",
+      "summary": "The Food and Drug Administration (FDA) is announcing the issuance of a priority review voucher to the sponsor of a rare pediatric disease product application. The Federal Food, Drug, and Cosmetic Act (FD&C Act) authorizes FDA to award priority review vouchers to sponsors of approved rare pediatric disease product applications that meet certain criteria. FDA is required to publish notice of the award of the priority review voucher. FDA has determined that ZYCUBO (copper histidinate), approved January 12, 2026, manufactured by Sentynl Therapeutics Inc., meets the criteria for a priority review voucher.",
+      "url": "https://www.federalregister.gov/documents/2026/02/27/2026-03925/issuance-of-priority-review-voucher-rare-pediatric-disease-product-zycubo-copper-histidinate",
+      "source": "Federal Register - FDA",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_fda",
+      "publishedAt": "2026-02-27",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "International Drug Scheduling; Convention on Psychotropic Substances; Single Convention on Narcotic Drugs; Scheduling Recommendations; N-Pyrrolidino Isotonitazene; N-Desethyl Etonitazene; Coca Leaf; MDMB-FUBINACA; Request for Comments",
+      "summary": "The Food and Drug Administration (FDA or Agency) is providing interested persons with the opportunity to submit written comments concerning recommendations to impose international manufacturing and distributing restrictions on certain drug substances, under international drug control treaties. The comments received in response to this notice will be considered in preparing the United States' position on these proposals for a meeting of the United Nations Commission on Narcotic Drugs (CND) in Vienna, Austria, in March 9-13, 2026. This notice is issued under the Controlled Substances Act (CSA).",
+      "url": "https://www.federalregister.gov/documents/2026/02/27/2026-03914/international-drug-scheduling-convention-on-psychotropic-substances-single-convention-on-narcotic",
+      "source": "Federal Register - FDA",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_fda",
+      "publishedAt": "2026-02-27",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "CI 8-K filing - The Cigna Group",
+      "summary": "The Cigna Group filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1739940/000114036126007049/ef20066640_8k.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-02-27",
+      "category": "general_market",
+      "relevance": 85,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Agency Information Collection Activities: Submission for OMB Review; Comment Request",
+      "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension or reinstatement of an existing collection of information, and to allow a second opportunity for public comment on the notice. Interested persons are invited to send comments regarding the burden estimate or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
+      "url": "https://www.federalregister.gov/documents/2026/02/26/2026-03810/agency-information-collection-activities-submission-for-omb-review-comment-request",
+      "source": "Federal Register - CMS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_cms",
+      "publishedAt": "2026-02-26",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Agency Information Collection Activities; Proposed Collection; Comment Request; Investigational Device Exemptions Reports and Records",
+      "summary": "The Food and Drug Administration (FDA) is announcing that a proposed collection of information has been submitted to the Office of Management and Budget (OMB) for review and clearance under the Paperwork Reduction Act of 1995.",
+      "url": "https://www.federalregister.gov/documents/2026/02/26/2026-03857/agency-information-collection-activities-proposed-collection-comment-request-investigational-device",
+      "source": "Federal Register - FDA",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_fda",
+      "publishedAt": "2026-02-26",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Determination of Regulatory Review Period for Purposes of Patent Extension; LIMFLOW SYSTEM",
+      "summary": "The Food and Drug Administration (FDA or the Agency) has determined the regulatory review period for LIMFLOW SYSTEM and is publishing this notice of that determination as required by law. FDA has made the determination because of the submission of applications to the Director of the U.S. Patent and Trademark Office (USPTO), Department of Commerce, for the extension of a patent which claims that medical device.",
+      "url": "https://www.federalregister.gov/documents/2026/02/26/2026-03855/determination-of-regulatory-review-period-for-purposes-of-patent-extension-limflow-system",
+      "source": "Federal Register - FDA",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_fda",
+      "publishedAt": "2026-02-26",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Determination of Regulatory Review Period for Purposes of Patent Extension; MERIT MEDICAL WRAPSODY",
+      "summary": "The Food and Drug Administration (FDA or the Agency) has determined the regulatory review period for MERIT MEDICAL WRAPSODY and is publishing this notice of that determination as required by law. FDA has made the determination because of the submission of applications to the Director of the U.S. Patent and Trademark Office (USPTO), Department of Commerce, for the extension of a patent which claims that medical device.",
+      "url": "https://www.federalregister.gov/documents/2026/02/26/2026-03853/determination-of-regulatory-review-period-for-purposes-of-patent-extension-merit-medical-wrapsody",
+      "source": "Federal Register - FDA",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_fda",
+      "publishedAt": "2026-02-26",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Determination of Regulatory Review Period for Purposes of Patent Extension; TEVIMBRA",
+      "summary": "The Food and Drug Administration (FDA or the Agency) has determined the regulatory review period for TEVIMBRA and is publishing this notice of that determination as required by law. FDA has made the determination because of the submission of an application to the Director of the U.S. Patent and Trademark Office (USPTO), Department of Commerce, for the extension of a patent which claims that human biological product.",
+      "url": "https://www.federalregister.gov/documents/2026/02/26/2026-03851/determination-of-regulatory-review-period-for-purposes-of-patent-extension-tevimbra",
+      "source": "Federal Register - FDA",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_fda",
+      "publishedAt": "2026-02-26",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Tucson nurses to hold rally for safe staffing and patient advocacy",
+      "summary": "Registered nurses at Carondelet St. Mary’s Hospital in Tucson, Ariz., will gather for a rally on Friday, Feb. 27, to demand that management prioritize safe patient care standards in all hospital units. The nurses have been sounding the alarm about increasingly unsafe conditions at the hospital over the past three months.",
+      "url": "https://www.nationalnursesunited.org/press/tucson-nurses-to-hold-rally-for-safe-staffing-and-patient-advocacy",
+      "source": "National Nurses United RSS",
+      "sourceType": "rss",
+      "sourceId": "nnu_rss",
+      "publishedAt": "2026-02-26",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "ELV 8-K filing - Elevance Health, Inc.",
+      "summary": "Elevance Health, Inc. filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1156039/000115603926000019/elv-20260226.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-02-26",
+      "category": "general_market",
+      "relevance": 90,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "UHS 8-K filing - Universal Health Services, Inc.",
+      "summary": "Universal Health Services, Inc. filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/352915/000119312526073545/uhs-20260225.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-02-26",
+      "category": "general_market",
+      "relevance": 90,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "CI 10-K filing - The Cigna Group",
+      "summary": "The Cigna Group filed 10-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1739940/000173994026000006/ci-20251231.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-02-26",
+      "category": "general_market",
+      "relevance": 85,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Managed Care",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/02/25/2026-03779/managed-care",
+      "source": "Federal Register - CMS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_cms",
+      "publishedAt": "2026-02-25",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Infusion Pump Software Correction: Fresenius Kabi Issues Correction for Ivenix Large Volume Pump Software",
+      "summary": "Fresenius Kabi is correcting Ivenix LVP software due to anomalies that could cause serious patient harm or death",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/infusion-pump-software-correction-fresenius-kabi-issues-correction-ivenix-large-volume-pump-software",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-02-25",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "HCA 8-K filing - HCA Healthcare, Inc.",
+      "summary": "HCA Healthcare, Inc. filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/860730/000119312526071880/d945112d8k.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-02-25",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Stent Recall: Boston Scientific Removes Certain AXIOS Stents and Electrocautery-Enhanced Delivery Systems",
+      "summary": "Boston Scientific is removing certain stents and delivery systems due to issues with deployment and expansion.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/stent-recall-boston-scientific-removes-certain-axios-stents-and-electrocautery-enhanced-delivery",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-02-25",
+      "category": "capacity_expansion",
+      "relevance": 98,
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "Early Alert: Heart Pump Purge Cassette Issue from Abiomed",
+      "summary": "Impella Generation 1 Purge Cassettes have an increased risk of purge leaks. Purge leaks can lead to low pump pressure and pump stops",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-heart-pump-purge-cassette-issue-abiomed",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-02-25",
+      "category": "general_market",
+      "relevance": 98,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "UNH 8-K filing - UnitedHealth Group Incorporated",
+      "summary": "UnitedHealth Group Incorporated filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/731766/000073176626000046/unh-20260223.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-02-25",
+      "category": "general_market",
+      "relevance": 90,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "UHS 10-K filing - Universal Health Services, Inc.",
+      "summary": "Universal Health Services, Inc. filed 10-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/352915/000119312526071676/uhs-20251231.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-02-25",
+      "category": "general_market",
+      "relevance": 90,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Medicare Program; Hospital Outpatient Prospective Payment and Ambulatory Surgical Center Payment Systems; Quality Reporting Programs; Overall Hospital Quality Star Rating; Hospital Price Transparency; and Notice of Closure of a Teaching Hospital and Opportunity To Apply for Available Slots; Correction",
+      "summary": "This document corrects technical errors in the final rule with comment period that appeared in the November 25, 2025 issue of the Federal Register titled \"Medicare Program: Hospital Outpatient Prospective Payment and Ambulatory Surgical Center Payment Systems; Quality Reporting Programs; Overall Hospital Quality Star Rating; Hospital Price Transparency; and Notice of Closure of a Teaching Hospital and Opportunity To Apply for Available Slots\" (hereinafter referred to as the \"CY 2026 OPPS/ASC final rule with comment period\"). The effective date of the CY 2026 OPPS/ASC final rule with comment period was January 1, 2026.",
+      "url": "https://www.federalregister.gov/documents/2026/02/23/2026-03578/medicare-program-hospital-outpatient-prospective-payment-and-ambulatory-surgical-center-payment",
+      "source": "Federal Register - CMS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_cms",
+      "publishedAt": "2026-02-23",
+      "category": "closures_layoffs",
+      "relevance": 100,
+      "categoryLabel": "Closures & Layoffs"
+    },
+    {
+      "title": "Agency Information Collection Activities: Submission for OMB Review; Comment Request",
+      "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA) federal agencies are also required to publish notice in the Federal Register concerning each proposed collection of information before the agency's request is submitted to OMB for approval.",
+      "url": "https://www.federalregister.gov/documents/2026/02/23/2026-03542/agency-information-collection-activities-submission-for-omb-review-comment-request",
+      "source": "Federal Register - CMS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_cms",
+      "publishedAt": "2026-02-23",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Medicare and Medicaid Programs; Quarterly Listing of Program Issuances-October Through December 2025",
+      "summary": "This quarterly notice lists Centers for Medicare & Medicaid Services (CMS) manual instructions, substantive and interpretive regulations, and other Federal Register notices that were published in the 3-month period, relating to the Medicare and Medicaid programs and other programs administered by CMS.",
+      "url": "https://www.federalregister.gov/documents/2026/02/23/2026-03437/medicare-and-medicaid-programs-quarterly-listing-of-program-issuances-october-through-december-2025",
+      "source": "Federal Register - CMS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_cms",
+      "publishedAt": "2026-02-23",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Insufflation Unit Recall: Olympus Removes High Flow Insufflation Units",
+      "summary": "Olympus is removing certain High Flow Insufflation Unit models due to software issues that may lead to overpressure events.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/insufflation-unit-recall-olympus-removes-high-flow-insufflation-units",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-02-23",
+      "category": "ai_tech",
+      "relevance": 98,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "CNC 8-K filing - Centene Corporation",
+      "summary": "Centene Corporation filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1071739/000107173926000052/cnc-20260223.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-02-23",
+      "category": "general_market",
+      "relevance": 85,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Medicare and Medicaid Programs; Announcement of Application From a Hospital Requesting Waiver for Organ Procurement Service Area (Hugh Chatham Memorial Hospital, Inc.)",
+      "summary": "This notice acknowledges the receipt of an application from a hospital that has requested a waiver of statutory requirements that would otherwise require the hospital to enter into an agreement with its designated organ procurement organization (OPO). This notice requests comments from OPOs and the general public for our consideration in determining whether we should grant the requested waiver.",
+      "url": "https://www.federalregister.gov/documents/2026/02/19/2026-03278/medicare-and-medicaid-programs-announcement-of-application-from-a-hospital-requesting-waiver-for",
+      "source": "Federal Register - CMS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_cms",
+      "publishedAt": "2026-02-19",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Medicare and Medicaid Programs; Announcement of Application From a Hospital Requesting Waiver for Organ Procurement Service Area (Lexington Medical Center)",
+      "summary": "This notice acknowledges the receipt of an application from a hospital that has requested a waiver of statutory requirements that would otherwise require the hospital to enter into an agreement with its designated organ procurement organization (OPO). This notice requests comments from OPOs and the general public for our consideration in determining whether we should grant the requested waiver.",
+      "url": "https://www.federalregister.gov/documents/2026/02/19/2026-03277/medicare-and-medicaid-programs-announcement-of-application-from-a-hospital-requesting-waiver-for",
+      "source": "Federal Register - CMS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_cms",
+      "publishedAt": "2026-02-19",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "RNs who held one-day strike now locked out by MarinHealth",
+      "summary": "Registered nurses at MarinHealth Medical Center in Greenbrae, California, condemn management for proceeding with a two-day lockout following the RNs’ one-day strike at their hospital on February 18.",
+      "url": "https://www.nationalnursesunited.org/press/rns-who-held-one-day-strike-now-locked-out-by-marinhealth",
+      "source": "National Nurses United RSS",
+      "sourceType": "rss",
+      "sourceId": "nnu_rss",
+      "publishedAt": "2026-02-19",
+      "category": "labor_unions",
+      "relevance": 100,
+      "categoryLabel": "Labor & Unions"
+    },
+    {
+      "title": "Nurses put Tri-City Medical Center on “RED ALERT” status",
+      "summary": "National Nurses United is sounding a “RED ALERT” warning to hundreds of communities nationwide that face a drastic reduction in quantity and quality of health care services as a result of H.R. 1, the Republican bill passed last year. Nurses condemn these cuts to health care funding and denounce the funnelling of this money into ICE and Customs and Border Patrol.",
+      "url": "https://www.nationalnursesunited.org/press/nurses-put-tri-city-medical-center-on-red-alert-status",
+      "source": "National Nurses United RSS",
+      "sourceType": "rss",
+      "sourceId": "nnu_rss",
+      "publishedAt": "2026-02-19",
+      "category": "quality_safety",
+      "relevance": 100,
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "HUM 10-K filing - Humana Inc.",
+      "summary": "Humana Inc. filed 10-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/49071/000004907126000009/hum-20251231.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-02-19",
+      "category": "general_market",
+      "relevance": 85,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Medicare and Medicaid Programs; Announcement of Application From a Hospital Requesting Waiver for Organ Procurement Service Area (Alleghany County Memorial Hospital, Inc.)",
+      "summary": "This notice acknowledges the receipt of an application from a hospital that has requested a waiver of statutory requirements that would otherwise require the hospital to enter into an agreement with its designated organ procurement organization (OPO). This notice requests comments from OPOs and the general public for our consideration in determining whether we should grant the requested waiver.",
+      "url": "https://www.federalregister.gov/documents/2026/02/18/2026-03119/medicare-and-medicaid-programs-announcement-of-application-from-a-hospital-requesting-waiver-for",
+      "source": "Federal Register - CMS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_cms",
+      "publishedAt": "2026-02-18",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Agency Information Collection Activities: Submission for OMB Review; Comment Request",
+      "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension or reinstatement of an existing collection of information, and to allow a second opportunity for public comment on the notice. Interested persons are invited to send comments regarding the burden estimate or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
+      "url": "https://www.federalregister.gov/documents/2026/02/18/2026-03118/agency-information-collection-activities-submission-for-omb-review-comment-request",
+      "source": "Federal Register - CMS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_cms",
+      "publishedAt": "2026-02-18",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Medicare and Medicaid Programs; Announcement of Application From a Hospital Requesting Waiver for Organ Procurement Service Area (WRMC Hospital Operating Corporation)",
+      "summary": "This notice acknowledges the receipt of an application from a hospital that has requested a waiver of statutory requirements that would otherwise require the hospital to enter into an agreement with its designated organ procurement organization (OPO). This notice requests comments from OPOs and the general public for our consideration in determining whether we should grant the requested waiver.",
+      "url": "https://www.federalregister.gov/documents/2026/02/18/2026-03111/medicare-and-medicaid-programs-announcement-of-application-from-a-hospital-requesting-waiver-for",
+      "source": "Federal Register - CMS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_cms",
+      "publishedAt": "2026-02-18",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Medicare and Medicaid Programs; Announcement of Application From a Hospital Requesting Waiver for Organ Procurement Service Area (High Point Regional Health)",
+      "summary": "This notice acknowledges the receipt of an application from a hospital that has requested a waiver of statutory requirements that would otherwise require the hospital to enter into an agreement with its designated organ procurement organization (OPO). This notice requests comments from OPOs and the general public for our consideration in determining whether we should grant the requested waiver.",
+      "url": "https://www.federalregister.gov/documents/2026/02/18/2026-03110/medicare-and-medicaid-programs-announcement-of-application-from-a-hospital-requesting-waiver-for",
+      "source": "Federal Register - CMS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_cms",
+      "publishedAt": "2026-02-18",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Early Alert: Trividia Health Issues Correction for TRUE METRIX Blood Glucose Monitoring Systems",
+      "summary": "Trividia recommends that device users who receive an E-5 error code and are experiencing symptoms of high glucose should seek medical care immediately",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-trividia-health-issues-correction-true-metrix-blood-glucose-monitoring-systems",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-02-17",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Contra Costa Health nurses demand County Board of Supervisors prevent drastic budget cuts, stop imminent cuts to services",
+      "summary": "RNs will hold a picket outside the Contra Costa Regional Medical Center in Martinez, Calif., on Thursday, Feb. 19, to demand hospital and county leaders move funding to save our health system, maintain services, and reverse the dangerous dismantling of the enhanced care management program.",
+      "url": "https://www.nationalnursesunited.org/press/contra-costa-health-nurses-demand-county-board-of-supervisors-prevent-drastic-budget-cuts",
+      "source": "National Nurses United RSS",
+      "sourceType": "rss",
+      "sourceId": "nnu_rss",
+      "publishedAt": "2026-02-17",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "St. Joseph Health nurses to hold rally for patient safety",
+      "summary": "RNs from St. Joseph Health in Brazos Valley, Texas, will hold a rally on Thursday, Feb. 19, as they prepare for upcoming negotiations for their first contract since forming a union last December. Nurses say safe staffing, workplace safety, and a strong voice for bedside nurses will be their top priorities as they start negotiations.",
+      "url": "https://www.nationalnursesunited.org/press/st-joseph-health-nurses-to-hold-rally-for-patient-safety",
+      "source": "National Nurses United RSS",
+      "sourceType": "rss",
+      "sourceId": "nnu_rss",
+      "publishedAt": "2026-02-17",
+      "category": "labor_unions",
+      "relevance": 100,
+      "categoryLabel": "Labor & Unions"
+    },
+    {
+      "title": "USC Keck and Norris nurses to start strike on Feb. 19",
+      "summary": "Nurses at USC Keck Hospital and Norris Cancer Center in Los Angeles, Calif. will begin a seven-day strike on Thursday, Feb. 19 over USC’s proposal to restructure employee health care plans, potentially overloading an already strained network, leading to longer wait times and delayed care for both employees and existing patients.",
+      "url": "https://www.nationalnursesunited.org/press/usc-keck-and-norris-nurses-to-start-strike-on-feb-19",
+      "source": "National Nurses United RSS",
+      "sourceType": "rss",
+      "sourceId": "nnu_rss",
+      "publishedAt": "2026-02-17",
+      "category": "labor_unions",
+      "relevance": 100,
+      "categoryLabel": "Labor & Unions"
+    },
+    {
+      "title": "CNC 10-K filing - Centene Corporation",
+      "summary": "Centene Corporation filed 10-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1071739/000107173926000049/cnc-20251231.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-02-17",
+      "category": "general_market",
+      "relevance": 85,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Agency Information Collection Activities: Submission for OMB Review; Comment Request",
+      "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension or reinstatement of an existing collection of information, and to allow a second opportunity for public comment on the notice. Interested persons are invited to send comments regarding the burden estimate or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
+      "url": "https://www.federalregister.gov/documents/2026/02/13/2026-02967/agency-information-collection-activities-submission-for-omb-review-comment-request",
+      "source": "Federal Register - CMS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_cms",
+      "publishedAt": "2026-02-13",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Agency Information Collection Activities: Submission for OMB Review; Comment Request",
+      "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA) federal agencies are also required to publish notice in the Federal Register concerning each proposed collection of information before the agency's request is submitted to OMB for approval.",
+      "url": "https://www.federalregister.gov/documents/2026/02/13/2026-02966/agency-information-collection-activities-submission-for-omb-review-comment-request",
+      "source": "Federal Register - CMS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_cms",
+      "publishedAt": "2026-02-13",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Electronic Homecare Bed Correction: Medline Updates Use Instructions for Homecare Beds",
+      "summary": "Medline updates use instructions for Electronic Homecare Beds due to risk of electrical fires and entrapment.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/electronic-homecare-bed-correction-medline-updates-use-instructions-homecare-beds",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-02-13",
+      "category": "capacity_expansion",
+      "relevance": 100,
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "Assemblymember Ash Kalra, California Nurses Association reintroduce CalCare legislation",
+      "summary": "Act. AB 1900, also known as CalCare, would enact a comprehensive framework for a single-payer health care coverage system in California at a time when California voters are ready to champion transformational changes in health care.",
+      "url": "https://www.nationalnursesunited.org/press/assemblymember-ash-kalra-california-nurses-association-reintroduce-calcare-legislation",
+      "source": "National Nurses United RSS",
+      "sourceType": "rss",
+      "sourceId": "nnu_rss",
+      "publishedAt": "2026-02-12",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Emergency Response Safety Kit Recall: Airlife Removes Certain Broselow Pediatric Emergency Rainbow Tapes and Broselow ALS Organizers",
+      "summary": "AirLife is removing Broselow Rainbow Tapes due to incorrectly printed medication dosing information.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/emergency-response-safety-kit-recall-airlife-removes-certain-broselow-pediatric-emergency-rainbow",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-02-11",
+      "category": "mergers_mna",
+      "relevance": 100,
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "HUM 8-K filing - Humana Inc.",
+      "summary": "Humana Inc. filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/49071/000004907126000005/hum-20260211.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-02-11",
+      "category": "general_market",
+      "relevance": 85,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "HCA 10-K filing - HCA Healthcare, Inc.",
+      "summary": "HCA Healthcare, Inc. filed 10-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/860730/000119312526044769/hca-20251231.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-02-10",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "CVS 10-K filing - CVS Health Corporation",
+      "summary": "CVS Health Corporation filed 10-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/64803/000006480326000010/cvs-20251231.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-02-10",
+      "category": "general_market",
+      "relevance": 90,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "CVS 8-K filing - CVS Health Corporation",
+      "summary": "CVS Health Corporation filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/64803/000006480326000009/cvs-20260210.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-02-10",
+      "category": "general_market",
+      "relevance": 90,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Trividia Health, Inc. Initiates Labeling Correction for all TRUE METRIX® Blood Glucose Monitoring Systems",
+      "summary": "FT. LAUDERDALE, FL) – February 6, 2026 – Trividia Health, Inc., announced today that it is initiating a labeling correction which requires a modification of the Owner’s Booklets/System Instructions for Use for all TRUE METRIX, TRUE METRIX AIR, TRUE METRIX GO, and TRUE METRIX PRO Blood Glucose Monit",
+      "url": "http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/trividia-health-inc-initiates-labeling-correction-all-true-metrixr-blood-glucose-monitoring-systems",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-02-06",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "ELV 10-K filing - Elevance Health, Inc.",
+      "summary": "Elevance Health, Inc. filed 10-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1156039/000115603926000013/elv-20251231.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-02-06",
+      "category": "general_market",
+      "relevance": 90,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "CNC 8-K filing - Centene Corporation",
+      "summary": "Centene Corporation filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1071739/000107173926000031/cnc-20260206.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-02-06",
+      "category": "general_market",
+      "relevance": 85,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Glucose Monitor Sensor Recall: Abbott Diabetes Care Removes Certain FreeStyle Libre 3 and FreeStyle Libre 3 Plus Sensors",
+      "summary": "Certain Abbott Diabetes Care Continuous Glucose Monitor sensors may incorrect or lower than actual glucose readings",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/glucose-monitor-sensor-recall-abbott-diabetes-care-removes-certain-freestyle-libre-3-and-freestyle",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-02-05",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Detachable Coil System Recall: J&J MedTech/CERENOVUS Inc. Remove CEREPAK Detachable Coil System",
+      "summary": "MedTech/CERENOVUS is removing CEREPAK Detachable Coil Systems due to a higher than expected failure to detach rate",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/detachable-coil-system-recall-jj-medtechcerenovus-inc-remove-cerepak-detachable-coil-system",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-02-05",
+      "category": "ai_tech",
+      "relevance": 98,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "CI 8-K filing - The Cigna Group",
+      "summary": "The Cigna Group filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1739940/000114036126003768/ef20064751_8k.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-02-05",
+      "category": "general_market",
+      "relevance": 85,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Risk of False Positive Lead Test Results with Certain Capillary Blood Collection Tubes Used with Magellan Diagnostics LeadCare Testing Systems – FDA Safety Communication",
+      "summary": "FDA is alerting health care providers and lab staff of reports of false positives when using certain Micro Capillary Blood Collection tubes with the LeadCare Testing Systems.",
+      "url": "http://www.fda.gov/medical-devices/safety-communications/risk-false-positive-lead-test-results-certain-capillary-blood-collection-tubes-used-magellan",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-02-03",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Early Alert: Heart Pump Issue from Abiomed",
+      "summary": "The differential pressure sensor in certain Impella devices may malfunction and cause sensor values to drift.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-heart-pump-issue-abiomed",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-02-03",
+      "category": "ai_tech",
+      "relevance": 98,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "ELV 8-K filing - Elevance Health, Inc.",
+      "summary": "Elevance Health, Inc. filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1156039/000115603926000006/elv-20260128.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-01-28",
+      "category": "general_market",
+      "relevance": 90,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "HCA 8-K filing - HCA Healthcare, Inc.",
+      "summary": "HCA Healthcare, Inc. filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/860730/000119312526023323/hca-20260127.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-01-27",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Olympus Expands Voluntary Recall for ViziShot 2 FLEX (19G) EBUS -TBNA Needles",
+      "summary": "CENTER VALLEY, Pa., (January 16, 2026) — Olympus Corporation has announced the expansion of a previous global medical device removal action for ViziShot 2 FLEX (19G) EBUS -TBNA needles (“ViziShot 2 FLEX”) after receiving and investigating complaints of device components ejecting or detaching during",
+      "url": "http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/olympus-expands-voluntary-recall-vizishot-2-flex-19g-ebus-tbna-needles",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-01-16",
+      "category": "capacity_expansion",
+      "relevance": 100,
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "Anesthesia Kit Recall: Medline Removes Anesthesia Circuits and Anesthesia Circuit Kits",
+      "summary": "Medline is removing certain anesthesia circuit kits due to cracks and leaks in the tubing.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/anesthesia-kit-recall-medline-removes-anesthesia-circuits-and-anesthesia-circuit-kits",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-01-16",
+      "category": "ai_tech",
+      "relevance": 98,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Anesthetic Vaporizer Recall: Draeger Removes Vapor 2000 and Vapor 3000 Vaporizers",
+      "summary": "Draeger is removing certain Vapor 2000 and Vapor 3000 Vaporizers due to impurities found within a component.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/anesthetic-vaporizer-recall-draeger-removes-vapor-2000-and-vapor-3000-vaporizers",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-01-16",
+      "category": "ai_tech",
+      "relevance": 98,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Abbott Initiates Medical Device Correction for Certain FreeStyle Libre® 3 and FreeStyle Libre 3 Plus Sensors in the U.S.",
+      "summary": "ABBOTT PARK, Ill., Nov. 24, 2025 — Abbott has initiated a medical device correction for certain FreeStyle Libre 3 and FreeStyle Libre 3 Plus sensors in the United States after internal testing determined that some sensors may provide incorrect low glucose readings.",
+      "url": "http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/abbott-initiates-medical-device-correction-certain-freestyle-librer-3-and-freestyle-libre-3-plus",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-01-15",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "UHS 8-K filing - Universal Health Services, Inc.",
+      "summary": "Universal Health Services, Inc. filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/352915/000119312525337662/uhs-20251230.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2025-12-31",
+      "category": "general_market",
+      "relevance": 90,
+      "categoryLabel": "General Market"
     }
   ]
 }
