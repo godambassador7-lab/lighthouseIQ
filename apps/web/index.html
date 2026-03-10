@@ -397,7 +397,7 @@
             <p>Know which modules are near real-time vs periodic refreshes.</p>
             <dl class="help-list">
               <dt>Layoff Notices + News</dt>
-              <dd>Refreshed every 6 hours.</dd>
+              <dd>Refreshed every hour.</dd>
               <dt>Strategic Salary and Relocation Signals</dt>
               <dd>Refreshed on weekly cadence.</dd>
               <dt>Program and Source Catalog Data</dt>
@@ -438,7 +438,7 @@
       <div class="section-header">
         <div class="section-header-text">
           <h3>Daily News Feed</h3>
-          <p>Hospital &amp; nursing industry headlines refreshed every 6 hours.</p>
+          <p>Hospital &amp; nursing industry headlines refreshed hourly.</p>
         </div>
         <button class="section-toggle" type="button" aria-expanded="false">
           <span class="section-toggle-label">Expand</span>
@@ -455,8 +455,25 @@
             <option value="30">Last month</option>
             <option value="90">Last 3 months</option>
           </select>
+          <label for="news-category-filter">Topic:</label>
+          <select id="news-category-filter" class="news-date-filter">
+            <option value="all" selected>All topics</option>
+            <option value="closures_layoffs">Closures &amp; Layoffs</option>
+            <option value="mergers_mna">Mergers &amp; M&amp;A</option>
+            <option value="labor_unions">Labor &amp; Unions</option>
+            <option value="policy_reimbursement">Policy &amp; Reimbursement</option>
+            <option value="quality_safety">Quality &amp; Safety</option>
+            <option value="capacity_expansion">Capacity &amp; Expansion</option>
+            <option value="ai_tech">AI &amp; Digital Tech</option>
+            <option value="general_market">General Market</option>
+          </select>
           <button type="button" class="news-closures-btn" id="news-closures-toggle" title="Show only closure, layoff &amp; at-risk articles" onclick="if(typeof toggleNewsClosures==='function')toggleNewsClosures(this)">Closures</button>
           <button type="button" class="news-export-btn" id="news-export-btn" title="Copy filtered headlines &amp; links to clipboard" onclick="if(typeof exportNewsFeed==='function')exportNewsFeed(this)">Export</button>
+        </div>
+        <div class="news-feed-health" id="news-feed-health" role="status" aria-live="polite"></div>
+        <div class="news-feed-metrics">
+          <div class="news-category-coverage" id="news-category-coverage"></div>
+          <div class="news-source-health" id="news-source-health"></div>
         </div>
         <div class="news-feed-list" id="news-feed-list">
           <div class="empty-state">Loading news...</div>
@@ -1542,7 +1559,7 @@
     <footer class="site-footer">
       <div class="footer-top">
         <p class="footer-status">
-          Data status: Powered by state layoff feeds. Data updated every 6 hours. Score is directional, not a guarantee.
+          Data status: Powered by state layoff feeds. Data updated every hour. Score is directional, not a guarantee.
         </p>
         <div class="footer-actions">
           <a class="footer-link" href="mailto:ygamify.help@gmail.com?subject=LighthouseIQ%20Support%20Ticket">

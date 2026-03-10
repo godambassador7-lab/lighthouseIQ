@@ -2,9 +2,9 @@ name: Fetch WARN Notices
 # Trigger: 2026-02-02
 
 on:
-  # Run every 6 hours
+  # Run hourly for fresher market coverage.
   schedule:
-    - cron: '0 */6 * * *'
+    - cron: '0 * * * *'
   # Allow manual trigger
   workflow_dispatch:
     inputs:
@@ -128,6 +128,9 @@ jobs:
       - name: Merge news with historical articles
         run: node scripts/merge-news.js
 
+      - name: Build news quality report
+        run: node scripts/check-news-quality.js
+
       - name: Run state beacon export script
         run: node dist/scripts/export-state-beacon.js
         env:
@@ -135,6 +138,9 @@ jobs:
           BLS_API_KEY: ${{ secrets.BLS_API_KEY }}
           BLS_DATA_DIR: ${{ github.workspace }}/apps/data/bls
         working-directory: core
+
+      - name: Filter state-news local market noise
+        run: node scripts/filter-state-news.js
 
       - name: Backfill hospital beds from CMS API
         run: node scripts/backfill-hospital-beds.js

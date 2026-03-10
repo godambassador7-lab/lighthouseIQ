@@ -60,7 +60,7 @@ Default passcode: `IUH126`
 - **Multi-State Filtering** - Select multiple states
 - **Project Management** - Organize notices into projects
 - **Export** - Download as CSV or JSON
-- **Auto-Refresh** - Data updated every 6 hours
+- **Auto-Refresh** - Data updated every hour
 
 ## Quick Start
 
@@ -97,7 +97,7 @@ Edit `.github/workflows/fetch-notices.yml`:
 
 ```yaml
 schedule:
-  - cron: '0 */6 * * *'  # Every 6 hours (default)
+  - cron: '0 * * * *'    # Every hour (default)
   - cron: '0 */12 * * *' # Every 12 hours
   - cron: '0 0 * * *'    # Daily at midnight
 ```
@@ -134,3 +134,5 @@ nursing-layoff-radar/
 ## License
 
 All rights reserved.
+
+

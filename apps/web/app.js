@@ -5352,7 +5352,21 @@ const initMapToggle = () => {
 // =============================================================================
 let newsArticles = [];
 let newsClosuresOnly = false;
+let newsFeedLastUpdated = null;
+let newsSourceHealth = [];
+let newsCategoryCoverage = {};
 const NEWS_WINDOW_COUNT = 5;
+const NEWS_MIN_SOURCE_TARGET = 8;
+const NEWS_CATEGORY_LABELS = {
+  closures_layoffs: 'Closures',
+  mergers_mna: 'M&A',
+  labor_unions: 'Labor',
+  policy_reimbursement: 'Policy',
+  quality_safety: 'Quality',
+  capacity_expansion: 'Capacity',
+  ai_tech: 'AI',
+  general_market: 'General'
+};
 
 const NEWS_CLOSURE_KEYWORDS = [
   'closure', 'closing', 'shut down', 'shutting down', 'shuttered',
@@ -5371,7 +5385,7 @@ const matchesClosureKeywords = (article) => {
 };
 
 const getSourceBadgeClass = (source) => {
-  const s = source.toLowerCase();
+  const s = String(source || '').toLowerCase();
   if (s.includes('becker')) return 'beckers';
   if (s.includes('stat')) return 'stat-news';
   if (s.includes('healthcare dive')) return 'healthcare-dive';
@@ -5380,14 +5394,91 @@ const getSourceBadgeClass = (source) => {
   return 'default';
 };
 
+const parseNewsDate = (value) => {
+  if (!value) return null;
+  if (value instanceof Date) return Number.isNaN(value.getTime()) ? null : value;
+  if (typeof value === 'number') {
+    const numeric = new Date(value);
+    return Number.isNaN(numeric.getTime()) ? null : numeric;
+  }
+  const raw = String(value).trim();
+  if (!raw) return null;
+  try {
+    return raw.includes('T') ? new Date(raw) : new Date(`${raw}T00:00:00`);
+  } catch {
+    return null;
+  }
+};
+
 const formatNewsDate = (dateStr) => {
   if (!dateStr) return '';
   try {
-    const d = new Date(dateStr + 'T00:00:00');
+    const d = parseNewsDate(dateStr) || new Date(dateStr);
     return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   } catch {
     return dateStr;
   }
+};
+
+const getNewsFeedHealth = () => {
+  if (!newsArticles.length) {
+    return {
+      level: 'danger',
+      message: 'No news articles loaded yet.'
+    };
+  }
+
+  const uniqueSources = new Set(
+    newsArticles
+      .map((article) => String(article?.source || '').trim())
+      .filter(Boolean)
+  );
+
+  const articleDates = newsArticles
+    .map((article) => parseNewsDate(article?.publishedAt || article?.date))
+    .filter((d) => d && !Number.isNaN(d.getTime()));
+  const latestArticle = articleDates.length
+    ? new Date(Math.max(...articleDates.map((d) => d.getTime())))
+    : null;
+
+  const referenceDate = parseNewsDate(newsFeedLastUpdated) || latestArticle;
+  const ageHours = referenceDate
+    ? Math.floor((Date.now() - referenceDate.getTime()) / (1000 * 60 * 60))
+    : null;
+
+  const stale = ageHours !== null && ageHours > 24;
+  const criticallyStale = ageHours !== null && ageHours > 48;
+  const limitedSources = uniqueSources.size < NEWS_MIN_SOURCE_TARGET;
+  const level = criticallyStale ? 'danger' : (stale || limitedSources ? 'warning' : 'good');
+
+  const freshnessLabel = ageHours === null
+    ? 'refresh age unavailable'
+    : `last refreshed ${ageHours}h ago`;
+
+  const detailBits = [
+    `${newsArticles.length} articles`,
+    `${uniqueSources.size} sources`,
+    latestArticle ? `latest article ${formatNewsDate(latestArticle.toISOString())}` : null
+  ].filter(Boolean);
+
+  const warningBits = [];
+  if (stale) warningBits.push('feed refresh is stale');
+  if (limitedSources) warningBits.push(`source diversity is limited (target ${NEWS_MIN_SOURCE_TARGET}+)`);
+
+  const message = warningBits.length
+    ? `Feed health: ${warningBits.join(' and ')} (${freshnessLabel}; ${detailBits.join(' | ')}).`
+    : `Feed health: good (${freshnessLabel}; ${detailBits.join(' | ')}).`;
+
+  return { level, message };
+};
+
+const renderNewsFeedHealth = () => {
+  const el = document.getElementById('news-feed-health');
+  if (!el) return;
+  const { level, message } = getNewsFeedHealth();
+  el.classList.remove('is-good', 'is-warning', 'is-danger');
+  el.classList.add(level === 'danger' ? 'is-danger' : level === 'warning' ? 'is-warning' : 'is-good');
+  el.textContent = message;
 };
 
 const getNewsDateFilter = () => {
@@ -5395,19 +5486,61 @@ const getNewsDateFilter = () => {
   return filter ? parseInt(filter.value, 10) || 3 : 3;
 };
 
+const getNewsCategoryFilter = () => {
+  const filter = document.getElementById('news-category-filter');
+  return filter ? String(filter.value || 'all') : 'all';
+};
+
 const filterNewsByDate = (articles, days) => {
   const now = new Date();
   now.setHours(0, 0, 0, 0);
   const cutoff = new Date(now.getTime() - (days - 1) * 24 * 60 * 60 * 1000);
   return articles.filter(article => {
-    if (!article.publishedAt) return true;
-    try {
-      const articleDate = new Date(article.publishedAt + 'T00:00:00');
-      return articleDate >= cutoff;
-    } catch {
-      return true;
-    }
+    const articleDate = parseNewsDate(article.publishedAt || article.date);
+    if (!articleDate || Number.isNaN(articleDate.getTime())) return true;
+    return articleDate >= cutoff;
   });
+};
+
+const filterNewsByCategory = (articles, categoryKey) => {
+  if (!categoryKey || categoryKey === 'all') return articles;
+  return articles.filter((article) => String(article?.category || 'general_market') === categoryKey);
+};
+
+const renderNewsCoverageMetrics = () => {
+  const categoryEl = document.getElementById('news-category-coverage');
+  const sourceEl = document.getElementById('news-source-health');
+  if (!categoryEl || !sourceEl) return;
+
+  const coverage = newsCategoryCoverage && typeof newsCategoryCoverage === 'object'
+    ? newsCategoryCoverage
+    : {};
+
+  const categoryRows = Object.entries(coverage)
+    .map(([key, value]) => ({
+      key,
+      label: value?.label || NEWS_CATEGORY_LABELS[key] || key,
+      count: Number(value?.count || 0)
+    }))
+    .sort((a, b) => b.count - a.count);
+
+  categoryEl.innerHTML = categoryRows.length
+    ? categoryRows.slice(0, 8).map((row) => `
+      <span class="news-category-chip">${escapeHtml(row.label)}: ${row.count}</span>
+    `).join('')
+    : '<span class="news-category-chip">No category coverage data</span>';
+
+  const sourceRows = Array.isArray(newsSourceHealth) ? newsSourceHealth : [];
+  sourceEl.innerHTML = sourceRows.length
+    ? sourceRows.slice(0, 8).map((row) => `
+      <div class="news-source-card">
+        <div class="news-source-name">${escapeHtml(row.source || 'Unknown')}</div>
+        <div class="news-source-meta ${row.status === 'stale' ? 'stale' : ''}">
+          ${Number(row.articleCount || 0)} articles${Number.isFinite(Number(row.staleHours)) ? ` | ${Number(row.staleHours)}h` : ''}
+        </div>
+      </div>
+    `).join('')
+    : '<div class="news-source-card"><div class="news-source-name">No source health data</div><div class="news-source-meta">Will populate on next export.</div></div>';
 };
 
 const renderNewsFeed = () => {
@@ -5415,7 +5548,9 @@ const renderNewsFeed = () => {
   if (!list) return;
 
   const days = getNewsDateFilter();
+  const categoryKey = getNewsCategoryFilter();
   let filtered = filterNewsByDate(newsArticles, days);
+  filtered = filterNewsByCategory(filtered, categoryKey);
   if (newsClosuresOnly) {
     filtered = filtered.filter(matchesClosureKeywords);
   }
@@ -5425,6 +5560,8 @@ const renderNewsFeed = () => {
     list.innerHTML = `<div class="empty-state">No ${label}news articles in the last ${days} days.</div>`;
     list.style.maxHeight = '';
     list.classList.remove('news-feed-windowed');
+    renderNewsCoverageMetrics();
+    renderNewsFeedHealth();
     return;
   }
 
@@ -5462,11 +5599,16 @@ const renderNewsFeed = () => {
     list.style.maxHeight = `${Math.ceil(height)}px`;
     list.classList.add('news-feed-windowed');
   });
+
+  renderNewsCoverageMetrics();
+  renderNewsFeedHealth();
 };
 
 const getFilteredNewsArticles = () => {
   const days = getNewsDateFilter();
+  const categoryKey = getNewsCategoryFilter();
   let filtered = filterNewsByDate(newsArticles, days);
+  filtered = filterNewsByCategory(filtered, categoryKey);
   if (newsClosuresOnly) {
     filtered = filtered.filter(matchesClosureKeywords);
   }
@@ -5494,13 +5636,21 @@ window.exportNewsFeed = async function(btn) {
 
 const loadNews = async () => {
   try {
-    const data = await fetchJson('/data/news.json');
+    const data = await fetchJson(`/data/news.json?ts=${Date.now()}`);
     newsArticles = data.articles ?? [];
+    newsFeedLastUpdated = data.lastUpdated || null;
+    newsSourceHealth = data?.sourceHealth?.sources ?? [];
+    newsCategoryCoverage = data?.categoryCoverage ?? {};
     renderNewsFeed();
   } catch (err) {
     console.warn('News feed not available:', err.message);
     const list = document.getElementById('news-feed-list');
     if (list) list.innerHTML = '<div class="empty-state">News feed unavailable.</div>';
+    newsArticles = [];
+    newsSourceHealth = [];
+    newsCategoryCoverage = {};
+    renderNewsCoverageMetrics();
+    renderNewsFeedHealth();
   }
 };
 
@@ -5539,9 +5689,13 @@ function showNewsToast(message) {
 };
 
 const initNewsFeed = () => {
-  const filter = document.getElementById('news-date-filter');
-  if (filter) {
-    filter.addEventListener('change', renderNewsFeed);
+  const dateFilter = document.getElementById('news-date-filter');
+  if (dateFilter) {
+    dateFilter.addEventListener('change', renderNewsFeed);
+  }
+  const categoryFilter = document.getElementById('news-category-filter');
+  if (categoryFilter) {
+    categoryFilter.addEventListener('change', renderNewsFeed);
   }
   // Closures & Export buttons use inline onclick handlers (see HTML)
 };
