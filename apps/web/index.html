@@ -484,6 +484,102 @@
       </div>
     </section>
 
+    <!-- Talent Command Center -->
+    <section class="talent-command-section collapsible-section collapsed" data-collapsible="true">
+      <div class="section-header">
+        <div class="section-header-text">
+          <h3>Talent Command Center</h3>
+          <p>Signal-to-hire operating system for healthcare talent acquisition teams.</p>
+        </div>
+        <button class="section-toggle" type="button" aria-expanded="false">
+          <span class="section-toggle-label">Expand</span>
+          <span class="section-toggle-icon">+</span>
+        </button>
+      </div>
+      <div class="talent-command-container">
+        <div class="talent-rhythm-card">
+          <h4>Weekly Recruiter Rhythm</h4>
+          <div class="talent-rhythm-grid" id="ta-weekly-rhythm"></div>
+        </div>
+
+        <div class="talent-kpi-card">
+          <div class="talent-kpi-header">
+            <h4>Funnel KPI Scorecard</h4>
+            <button type="button" class="btn ghost small" id="ta-reset-metrics">Reset</button>
+          </div>
+          <div class="talent-kpi-form" id="ta-kpi-form">
+            <label>Outreach sent <input type="number" id="ta-input-outreach" min="0" value="0" /></label>
+            <label>Responses <input type="number" id="ta-input-responses" min="0" value="0" /></label>
+            <label>Screens <input type="number" id="ta-input-screens" min="0" value="0" /></label>
+            <label>Offers <input type="number" id="ta-input-offers" min="0" value="0" /></label>
+            <label>Offers accepted <input type="number" id="ta-input-accepted" min="0" value="0" /></label>
+            <label>Hires <input type="number" id="ta-input-hires" min="0" value="0" /></label>
+            <label>Recruiting spend ($) <input type="number" id="ta-input-spend" min="0" value="0" /></label>
+            <label>Agency spend avoided ($) <input type="number" id="ta-input-agency-saved" min="0" value="0" /></label>
+          </div>
+          <div class="talent-kpi-grid">
+            <div class="talent-kpi-item"><span>Signal-to-Action SLA</span><strong id="ta-kpi-sla">0%</strong></div>
+            <div class="talent-kpi-item"><span>Response Rate</span><strong id="ta-kpi-response">0%</strong></div>
+            <div class="talent-kpi-item"><span>Screen Rate</span><strong id="ta-kpi-screen">0%</strong></div>
+            <div class="talent-kpi-item"><span>Offer Acceptance</span><strong id="ta-kpi-acceptance">0%</strong></div>
+            <div class="talent-kpi-item"><span>Cost per Hire</span><strong id="ta-kpi-cost">$0</strong></div>
+            <div class="talent-kpi-item"><span>Agency Spend Avoided</span><strong id="ta-kpi-agency">$0</strong></div>
+          </div>
+        </div>
+
+        <div class="talent-actions-card">
+          <div class="talent-actions-header">
+            <h4>Signal-Driven Action Queue</h4>
+            <div class="talent-actions-controls">
+              <input type="text" id="ta-owner-filter" placeholder="Owner filter (optional)" />
+              <select id="ta-specialty-filter">
+                <option value="">All specialties</option>
+                <option value="ICU">ICU</option>
+                <option value="OR">OR</option>
+                <option value="ED">ED</option>
+                <option value="Med-Surg">Med-Surg</option>
+                <option value="L&D">L&amp;D</option>
+                <option value="Behavioral Health">Behavioral Health</option>
+              </select>
+            </div>
+          </div>
+          <div class="talent-actions-list" id="ta-action-list"></div>
+        </div>
+
+        <div class="talent-campaign-card">
+          <h4>Campaign Builder</h4>
+          <div class="talent-campaign-controls">
+            <label>
+              Signal Type
+              <select id="ta-campaign-signal">
+                <option value="closure">Closure / Layoff</option>
+                <option value="strike">Strike / Labor Action</option>
+                <option value="expansion">Expansion / New Capacity</option>
+                <option value="merger">Merger / Acquisition</option>
+              </select>
+            </label>
+            <label>
+              Focus Specialty
+              <select id="ta-campaign-specialty">
+                <option value="ICU">ICU</option>
+                <option value="OR">OR</option>
+                <option value="ED">ED</option>
+                <option value="Med-Surg">Med-Surg</option>
+                <option value="L&D">L&amp;D</option>
+                <option value="Behavioral Health">Behavioral Health</option>
+              </select>
+            </label>
+          </div>
+          <textarea id="ta-campaign-template" rows="6" readonly></textarea>
+        </div>
+
+        <div class="talent-rollout-card">
+          <h4>30-60-90 Rollout Tracker</h4>
+          <div class="talent-rollout-list" id="ta-rollout-list"></div>
+        </div>
+      </div>
+    </section>
+
     <section class="weather-map-section">
       <div class="section-header">
         <div class="section-header-text">

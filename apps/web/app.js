@@ -48,6 +48,29 @@ const forecastBeds = document.getElementById('forecast-beds');
 const forecastSetting = document.getElementById('forecast-setting');
 const forecastHorizon = document.getElementById('forecast-horizon');
 const forecastOutput = document.getElementById('forecast-output');
+const taWeeklyRhythm = document.getElementById('ta-weekly-rhythm');
+const taResetMetricsBtn = document.getElementById('ta-reset-metrics');
+const taInputOutreach = document.getElementById('ta-input-outreach');
+const taInputResponses = document.getElementById('ta-input-responses');
+const taInputScreens = document.getElementById('ta-input-screens');
+const taInputOffers = document.getElementById('ta-input-offers');
+const taInputAccepted = document.getElementById('ta-input-accepted');
+const taInputHires = document.getElementById('ta-input-hires');
+const taInputSpend = document.getElementById('ta-input-spend');
+const taInputAgencySaved = document.getElementById('ta-input-agency-saved');
+const taKpiSla = document.getElementById('ta-kpi-sla');
+const taKpiResponse = document.getElementById('ta-kpi-response');
+const taKpiScreen = document.getElementById('ta-kpi-screen');
+const taKpiAcceptance = document.getElementById('ta-kpi-acceptance');
+const taKpiCost = document.getElementById('ta-kpi-cost');
+const taKpiAgency = document.getElementById('ta-kpi-agency');
+const taOwnerFilter = document.getElementById('ta-owner-filter');
+const taSpecialtyFilter = document.getElementById('ta-specialty-filter');
+const taActionList = document.getElementById('ta-action-list');
+const taCampaignSignal = document.getElementById('ta-campaign-signal');
+const taCampaignSpecialty = document.getElementById('ta-campaign-specialty');
+const taCampaignTemplate = document.getElementById('ta-campaign-template');
+const taRolloutList = document.getElementById('ta-rollout-list');
 
 // Custom notice form elements
 const customNoticeForm = document.getElementById('custom-notice-form');
@@ -232,6 +255,21 @@ const MAP_TARGET_STATE_KEY = 'lighthouseiq_map_target_state';
 let lastNoticeWindowCount = 0;
 let noticeWindowRaf = null;
 let isMapTargetMode = false;
+const TA_METRICS_KEY = 'lni_ta_metrics_v1';
+const TA_ACTIONS_KEY = 'lni_ta_actions_v1';
+const TA_ROLLOUT_KEY = 'lni_ta_rollout_v1';
+let taMetrics = {
+  outreach: 0,
+  responses: 0,
+  screens: 0,
+  offers: 0,
+  accepted: 0,
+  hires: 0,
+  spend: 0,
+  agencySaved: 0
+};
+let taActions = [];
+let taRolloutState = {};
 
 const REQUIRED_PROGRAM_ACCREDITORS = ['CCNE', 'ACEN', 'CNEA'];
 
@@ -1065,6 +1103,7 @@ const renderNotices = (notices) => {
   if (!visibleNotices.length) {
     noticeList.innerHTML = `<div class="empty-state">No notices match these filters yet.</div>`;
     refreshNoticeListWindow(0);
+    refreshTalentCommandCenter();
     return;
   }
 
@@ -1149,6 +1188,7 @@ const renderNotices = (notices) => {
   });
 
   refreshNoticeListWindow(visibleNotices.length);
+  refreshTalentCommandCenter();
 };
 
 // Close dropdowns when clicking elsewhere
@@ -5642,6 +5682,7 @@ const loadNews = async () => {
     newsSourceHealth = data?.sourceHealth?.sources ?? [];
     newsCategoryCoverage = data?.categoryCoverage ?? {};
     renderNewsFeed();
+    refreshTalentCommandCenter();
   } catch (err) {
     console.warn('News feed not available:', err.message);
     const list = document.getElementById('news-feed-list');
@@ -5651,6 +5692,7 @@ const loadNews = async () => {
     newsCategoryCoverage = {};
     renderNewsCoverageMetrics();
     renderNewsFeedHealth();
+    refreshTalentCommandCenter();
   }
 };
 
@@ -5700,6 +5742,274 @@ const initNewsFeed = () => {
   // Closures & Export buttons use inline onclick handlers (see HTML)
 };
 
+// =============================================================================
+// Talent Command Center
+// =============================================================================
+const TA_WEEKLY_RHYTHM = [
+  { day: 'Monday', task: 'Prioritize top markets and specialties.' },
+  { day: 'Tuesday', task: 'Build outreach campaigns by signal type.' },
+  { day: 'Wednesday', task: 'Run outreach sprint + referral pushes.' },
+  { day: 'Thursday', task: 'Review pipeline bottlenecks and rebalance.' },
+  { day: 'Friday', task: 'Leadership KPI and ROI review.' }
+];
+
+const TA_ROLLOUT_PHASES = [
+  { id: '30-instrumentation', phase: 'Days 0-30', task: 'Enable action queue ownership and 24h SLA tracking.' },
+  { id: '60-conversion', phase: 'Days 31-60', task: 'Tune outreach templates and increase response/screen rates.' },
+  { id: '90-automation', phase: 'Days 61-90', task: 'Automate top-priority actions from market signals.' }
+];
+
+const TA_CAMPAIGN_TEMPLATES = {
+  closure: ({ specialty }) => `Subject: Immediate ${specialty} roles with stable teams and structured onboarding\n\nHi {{first_name}},\nWe saw recent workforce transitions in your market and wanted to share current ${specialty} opportunities with strong onboarding support, schedule flexibility, and transparent compensation.\n\nOpen to a 10-minute call this week?\n\n- {{recruiter_name}}`,
+  strike: ({ specialty }) => `Subject: ${specialty} opportunities with continuity-focused teams\n\nHi {{first_name}},\nGiven labor volatility in your market, we are hiring ${specialty} clinicians into teams with protected staffing plans and clear leadership support.\n\nIf timing is right, I can share openings and shift options today.\n\n- {{recruiter_name}}`,
+  expansion: ({ specialty }) => `Subject: New care capacity opening - ${specialty} hiring now\n\nHi {{first_name}},\nA major service-line expansion is underway and we are scaling ${specialty} coverage across day/night shifts. This is a strong entry point for long-term growth and advancement.\n\nCan we connect this week?\n\n- {{recruiter_name}}`,
+  merger: ({ specialty }) => `Subject: Post-merger ${specialty} hiring with transition support\n\nHi {{first_name}},\nAs local systems consolidate, we are placing ${specialty} clinicians into stable teams with transition coaching and clear role alignment.\n\nHappy to share current openings if you are exploring options.\n\n- {{recruiter_name}}`
+};
+
+const parseNum = (value) => {
+  const n = Number(value);
+  return Number.isFinite(n) ? Math.max(0, n) : 0;
+};
+
+const pct = (num, den) => den > 0 ? `${Math.round((num / den) * 100)}%` : '0%';
+
+const loadTalentCommandState = () => {
+  try {
+    const m = JSON.parse(localStorage.getItem(TA_METRICS_KEY) || 'null');
+    if (m && typeof m === 'object') taMetrics = { ...taMetrics, ...m };
+  } catch {}
+  try {
+    const a = JSON.parse(localStorage.getItem(TA_ACTIONS_KEY) || '[]');
+    if (Array.isArray(a)) taActions = a;
+  } catch {}
+  try {
+    const r = JSON.parse(localStorage.getItem(TA_ROLLOUT_KEY) || '{}');
+    if (r && typeof r === 'object') taRolloutState = r;
+  } catch {}
+};
+
+const saveTalentMetrics = () => localStorage.setItem(TA_METRICS_KEY, JSON.stringify(taMetrics));
+const saveTalentActions = () => localStorage.setItem(TA_ACTIONS_KEY, JSON.stringify(taActions));
+const saveTalentRollout = () => localStorage.setItem(TA_ROLLOUT_KEY, JSON.stringify(taRolloutState));
+
+const getTalentSignals = () => {
+  const healthcare = (currentNotices || []).filter((notice) => isHealthcareNotice(notice));
+  const byState = Array.from(groupBy(healthcare, (notice) => notice.state || 'NA').entries())
+    .map(([state, rows]) => ({
+      state,
+      count: rows.length,
+      affected: rows.reduce((sum, row) => sum + Number(row.affected_workers || row.affected || 0), 0)
+    }))
+    .sort((a, b) => b.affected - a.affected || b.count - a.count)
+    .slice(0, 5);
+  return { byState };
+};
+
+const seedTalentActions = () => {
+  if (taActions.length) return;
+  const { byState } = getTalentSignals();
+  const seeded = [];
+  byState.slice(0, 3).forEach((row, idx) => {
+    seeded.push({
+      id: `ta-${Date.now()}-${idx}`,
+      title: `Launch targeted outreach in ${STATE_NAMES[row.state] || row.state}`,
+      detail: `${row.count} healthcare notices and ${row.affected.toLocaleString()} affected workers detected.`,
+      priority: idx === 0 ? 'critical' : 'high',
+      owner: '',
+      specialty: idx % 2 === 0 ? 'ICU' : 'Med-Surg',
+      signalType: 'closure',
+      status: 'open',
+      createdAt: new Date().toISOString(),
+      dueAt: new Date(Date.now() + (24 + idx * 12) * 60 * 60 * 1000).toISOString(),
+      completedAt: null
+    });
+  });
+  taActions = seeded;
+  saveTalentActions();
+};
+
+const renderTalentRhythm = () => {
+  if (!taWeeklyRhythm) return;
+  taWeeklyRhythm.innerHTML = TA_WEEKLY_RHYTHM.map((item) => `
+    <div class="talent-rhythm-item">
+      <div class="talent-rhythm-day">${item.day}</div>
+      <div class="talent-rhythm-task">${item.task}</div>
+    </div>
+  `).join('');
+};
+
+const readTalentMetricInputs = () => {
+  taMetrics.outreach = parseNum(taInputOutreach?.value);
+  taMetrics.responses = parseNum(taInputResponses?.value);
+  taMetrics.screens = parseNum(taInputScreens?.value);
+  taMetrics.offers = parseNum(taInputOffers?.value);
+  taMetrics.accepted = parseNum(taInputAccepted?.value);
+  taMetrics.hires = parseNum(taInputHires?.value);
+  taMetrics.spend = parseNum(taInputSpend?.value);
+  taMetrics.agencySaved = parseNum(taInputAgencySaved?.value);
+  saveTalentMetrics();
+};
+
+const syncTalentMetricInputs = () => {
+  if (taInputOutreach) taInputOutreach.value = String(taMetrics.outreach || 0);
+  if (taInputResponses) taInputResponses.value = String(taMetrics.responses || 0);
+  if (taInputScreens) taInputScreens.value = String(taMetrics.screens || 0);
+  if (taInputOffers) taInputOffers.value = String(taMetrics.offers || 0);
+  if (taInputAccepted) taInputAccepted.value = String(taMetrics.accepted || 0);
+  if (taInputHires) taInputHires.value = String(taMetrics.hires || 0);
+  if (taInputSpend) taInputSpend.value = String(taMetrics.spend || 0);
+  if (taInputAgencySaved) taInputAgencySaved.value = String(taMetrics.agencySaved || 0);
+};
+
+const renderTalentKpis = () => {
+  const highPriority = taActions.filter((action) => action.priority === 'critical' || action.priority === 'high');
+  const completedFast = highPriority.filter((action) => {
+    if (!action.completedAt) return false;
+    const created = new Date(action.createdAt).getTime();
+    const completed = new Date(action.completedAt).getTime();
+    if (!Number.isFinite(created) || !Number.isFinite(completed)) return false;
+    return (completed - created) <= (24 * 60 * 60 * 1000);
+  });
+
+  if (taKpiSla) taKpiSla.textContent = pct(completedFast.length, highPriority.length || 1);
+  if (taKpiResponse) taKpiResponse.textContent = pct(taMetrics.responses, taMetrics.outreach || 1);
+  if (taKpiScreen) taKpiScreen.textContent = pct(taMetrics.screens, taMetrics.responses || 1);
+  if (taKpiAcceptance) taKpiAcceptance.textContent = pct(taMetrics.accepted, taMetrics.offers || 1);
+  if (taKpiCost) taKpiCost.textContent = taMetrics.hires > 0 ? `$${Math.round(taMetrics.spend / taMetrics.hires).toLocaleString()}` : '$0';
+  if (taKpiAgency) taKpiAgency.textContent = `$${Math.round(taMetrics.agencySaved || 0).toLocaleString()}`;
+};
+
+const renderTalentActions = () => {
+  if (!taActionList) return;
+  const ownerFilter = String(taOwnerFilter?.value || '').trim().toLowerCase();
+  const specialtyFilter = String(taSpecialtyFilter?.value || '').trim();
+  const filtered = taActions.filter((action) => {
+    if (ownerFilter && !String(action.owner || '').toLowerCase().includes(ownerFilter)) return false;
+    if (specialtyFilter && String(action.specialty || '') !== specialtyFilter) return false;
+    return true;
+  });
+
+  if (!filtered.length) {
+    taActionList.innerHTML = '<div class="empty-state">No actions match your filters.</div>';
+    return;
+  }
+
+  taActionList.innerHTML = filtered.map((action) => `
+    <div class="ta-action-row">
+      <div class="ta-action-top">
+        <div class="ta-action-title">${escapeHtml(action.title || 'Untitled action')}</div>
+        <span class="ta-priority ${escapeHtml(action.priority || 'medium')}">${escapeHtml(action.priority || 'medium')}</span>
+      </div>
+      <div class="ta-action-meta">${escapeHtml(action.detail || '')}</div>
+      <div class="ta-action-meta">
+        Owner: ${escapeHtml(action.owner || 'Unassigned')} | Specialty: ${escapeHtml(action.specialty || '--')} |
+        Due: ${escapeHtml(formatDate(action.dueAt))}
+      </div>
+      <div class="ta-action-buttons">
+        <button type="button" data-ta-action="done" data-ta-id="${escapeHtml(action.id)}">Mark Done</button>
+        <button type="button" data-ta-action="reopen" data-ta-id="${escapeHtml(action.id)}">Reopen</button>
+        <button type="button" data-ta-action="assign-me" data-ta-id="${escapeHtml(action.id)}">Assign Owner Filter</button>
+      </div>
+    </div>
+  `).join('');
+
+  taActionList.querySelectorAll('button[data-ta-action]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-ta-id');
+      const action = btn.getAttribute('data-ta-action');
+      const target = taActions.find((row) => row.id === id);
+      if (!target) return;
+      if (action === 'done') {
+        target.status = 'done';
+        target.completedAt = new Date().toISOString();
+      } else if (action === 'reopen') {
+        target.status = 'open';
+        target.completedAt = null;
+      } else if (action === 'assign-me') {
+        const owner = String(taOwnerFilter?.value || '').trim();
+        if (owner) target.owner = owner;
+      }
+      saveTalentActions();
+      renderTalentActions();
+      renderTalentKpis();
+    });
+  });
+};
+
+const renderTalentCampaignTemplate = () => {
+  if (!taCampaignTemplate) return;
+  const signalType = String(taCampaignSignal?.value || 'closure');
+  const specialty = String(taCampaignSpecialty?.value || 'ICU');
+  const builder = TA_CAMPAIGN_TEMPLATES[signalType] || TA_CAMPAIGN_TEMPLATES.closure;
+  taCampaignTemplate.value = builder({ specialty });
+};
+
+const renderTalentRollout = () => {
+  if (!taRolloutList) return;
+  taRolloutList.innerHTML = TA_ROLLOUT_PHASES.map((item) => `
+    <label class="ta-rollout-item">
+      <input type="checkbox" data-ta-rollout="${escapeHtml(item.id)}" ${taRolloutState[item.id] ? 'checked' : ''} />
+      <div>
+        <div class="ta-rollout-phase">${item.phase}</div>
+        <div class="ta-rollout-task">${item.task}</div>
+      </div>
+    </label>
+  `).join('');
+
+  taRolloutList.querySelectorAll('input[data-ta-rollout]').forEach((input) => {
+    input.addEventListener('change', () => {
+      const id = input.getAttribute('data-ta-rollout');
+      taRolloutState[id] = input.checked;
+      saveTalentRollout();
+    });
+  });
+};
+
+const refreshTalentCommandCenter = () => {
+  if (!taActionList) return;
+  seedTalentActions();
+  renderTalentKpis();
+  renderTalentActions();
+  renderTalentCampaignTemplate();
+  renderTalentRollout();
+};
+
+const initTalentCommandCenter = () => {
+  if (!taActionList) return;
+  loadTalentCommandState();
+  syncTalentMetricInputs();
+  renderTalentRhythm();
+  renderTalentRollout();
+  renderTalentCampaignTemplate();
+
+  [
+    taInputOutreach, taInputResponses, taInputScreens, taInputOffers,
+    taInputAccepted, taInputHires, taInputSpend, taInputAgencySaved
+  ].forEach((input) => {
+    input?.addEventListener('input', () => {
+      readTalentMetricInputs();
+      renderTalentKpis();
+    });
+  });
+
+  taResetMetricsBtn?.addEventListener('click', () => {
+    taMetrics = {
+      outreach: 0, responses: 0, screens: 0, offers: 0,
+      accepted: 0, hires: 0, spend: 0, agencySaved: 0
+    };
+    saveTalentMetrics();
+    syncTalentMetricInputs();
+    renderTalentKpis();
+  });
+
+  taOwnerFilter?.addEventListener('input', renderTalentActions);
+  taSpecialtyFilter?.addEventListener('change', renderTalentActions);
+  taCampaignSignal?.addEventListener('change', renderTalentCampaignTemplate);
+  taCampaignSpecialty?.addEventListener('change', renderTalentCampaignTemplate);
+
+  refreshTalentCommandCenter();
+};
+
 // Initialize app (called after login)
 const initApp = () => {
   mapScope = 'healthcare';
@@ -5719,6 +6029,7 @@ const initApp = () => {
   safeInit(initStateBeacon, 'stateBeacon');
   safeInit(initMasterExport, 'masterExport');
   safeInit(initNewsFeed, 'newsFeed');
+  safeInit(initTalentCommandCenter, 'talentCommandCenter');
   loadHealth();
   loadStatesWithMap();
   loadInsights();
