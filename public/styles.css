@@ -4862,6 +4862,292 @@ input[type="range"] {
   background: rgba(49, 130, 206, 0.04);
 }
 
+/* =============================================================================
+   Talent Command Center
+   ============================================================================= */
+.talent-command-section {
+  padding: 2rem clamp(20px, 5vw, 60px);
+  position: relative;
+  z-index: 1;
+}
+
+.talent-command-container {
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.talent-rhythm-card,
+.talent-kpi-card,
+.talent-actions-card,
+.talent-campaign-card,
+.talent-rollout-card {
+  border: 1px solid rgba(26, 54, 93, 0.12);
+  border-radius: 10px;
+  background: #fff;
+  padding: 12px;
+}
+
+.talent-rhythm-card { grid-column: span 12; }
+.talent-kpi-card { grid-column: span 6; }
+.talent-actions-card { grid-column: span 6; }
+.talent-campaign-card { grid-column: span 7; }
+.talent-rollout-card { grid-column: span 5; }
+
+.talent-rhythm-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 8px;
+}
+
+.talent-rhythm-item {
+  border: 1px solid rgba(26, 54, 93, 0.12);
+  border-radius: 8px;
+  padding: 8px;
+  background: rgba(26, 54, 93, 0.03);
+}
+
+.talent-rhythm-day {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.talent-rhythm-task {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--navy);
+  font-weight: 600;
+}
+
+.talent-kpi-header,
+.talent-actions-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.talent-kpi-form {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.talent-kpi-form label {
+  display: grid;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.talent-kpi-form input {
+  border: 1px solid rgba(26, 54, 93, 0.15);
+  border-radius: 6px;
+  padding: 6px 8px;
+}
+
+.talent-kpi-grid {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.talent-kpi-item {
+  border: 1px solid rgba(26, 54, 93, 0.12);
+  border-radius: 8px;
+  background: rgba(26, 54, 93, 0.04);
+  padding: 8px;
+  display: grid;
+  gap: 4px;
+}
+
+.talent-kpi-item span {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.talent-kpi-item strong {
+  font-size: 16px;
+  color: var(--navy);
+}
+
+.talent-actions-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.talent-actions-controls input,
+.talent-actions-controls select,
+.talent-campaign-controls select,
+.talent-campaign-controls input,
+#ta-campaign-template {
+  border: 1px solid rgba(26, 54, 93, 0.15);
+  border-radius: 6px;
+  padding: 6px 8px;
+}
+
+.talent-actions-list {
+  display: grid;
+  gap: 8px;
+  max-height: 360px;
+  overflow: auto;
+}
+
+.ta-action-row {
+  border: 1px solid rgba(26, 54, 93, 0.12);
+  border-radius: 8px;
+  padding: 8px;
+  background: #fff;
+}
+
+.ta-action-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ta-action-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.ta-action-meta {
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.ta-priority {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
+.ta-priority.critical {
+  background: rgba(220, 38, 38, 0.12);
+  color: #b91c1c;
+}
+
+.ta-priority.high {
+  background: rgba(217, 119, 6, 0.12);
+  color: #b45309;
+}
+
+.ta-priority.medium {
+  background: rgba(37, 99, 235, 0.12);
+  color: #1d4ed8;
+}
+
+.ta-action-buttons {
+  margin-top: 8px;
+  display: flex;
+  gap: 6px;
+}
+
+.ta-action-buttons button {
+  border: 1px solid rgba(26, 54, 93, 0.15);
+  background: #fff;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.ta-action-buttons button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.talent-campaign-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.talent-campaign-controls label {
+  display: grid;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+#ta-campaign-template {
+  width: 100%;
+  resize: vertical;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 12px;
+  line-height: 1.45;
+  background: rgba(26, 54, 93, 0.03);
+  color: var(--navy);
+}
+
+.talent-rollout-list {
+  display: grid;
+  gap: 8px;
+}
+
+.ta-rollout-item {
+  border: 1px solid rgba(26, 54, 93, 0.12);
+  border-radius: 8px;
+  padding: 8px;
+  background: rgba(26, 54, 93, 0.03);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.ta-rollout-item input[type="checkbox"] {
+  margin-top: 2px;
+}
+
+.ta-rollout-phase {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ta-rollout-task {
+  font-size: 12px;
+  color: var(--navy);
+  font-weight: 600;
+}
+
+@media (max-width: 1100px) {
+  .talent-kpi-card,
+  .talent-actions-card,
+  .talent-campaign-card,
+  .talent-rollout-card {
+    grid-column: span 12;
+  }
+  .talent-kpi-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .talent-kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 .news-card-body {
   min-width: 0;
 }
