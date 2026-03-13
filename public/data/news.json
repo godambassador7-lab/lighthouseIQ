@@ -1,88 +1,81 @@
 {
-  "lastUpdated": "2026-03-13T15:50:36.973Z",
+  "lastUpdated": "2026-03-13T16:46:48.245Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
-    "totalSources": 11,
-    "staleSources": 3,
+    "totalSources": 10,
+    "staleSources": 2,
     "healthySources": 8,
     "sources": [
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 181,
+        "articleCount": 184,
         "latestPublishedAt": "2026-03-13T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 16,
         "status": "ok"
       },
       {
         "source": "Fierce Healthcare",
-        "articleCount": 137,
+        "articleCount": 138,
         "latestPublishedAt": "2026-03-13T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 16,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 70,
+        "articleCount": 71,
         "latestPublishedAt": "2026-03-13T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 16,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 40,
         "latestPublishedAt": "2026-03-13T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 16,
         "status": "ok"
       },
       {
         "source": "Health Affairs",
         "articleCount": 20,
         "latestPublishedAt": "2026-03-13T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 16,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 17,
         "latestPublishedAt": "2026-03-13T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 16,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
-        "articleCount": 15,
+        "articleCount": 13,
         "latestPublishedAt": "2026-03-11T00:00:00.000Z",
-        "staleHours": 63,
+        "staleHours": 64,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 8,
         "latestPublishedAt": "2026-03-12T00:00:00.000Z",
-        "staleHours": 39,
+        "staleHours": 40,
         "status": "ok"
       },
       {
         "source": "SEC Healthcare Filings",
-        "articleCount": 6,
+        "articleCount": 5,
         "latestPublishedAt": "2026-03-10T00:00:00.000Z",
-        "staleHours": 87,
+        "staleHours": 88,
         "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
-        "articleCount": 5,
+        "articleCount": 4,
         "latestPublishedAt": "2026-03-10T00:00:00.000Z",
-        "staleHours": 87,
-        "status": "stale"
-      },
-      {
-        "source": "National Nurses United RSS",
-        "articleCount": 1,
-        "latestPublishedAt": "2026-03-03T00:00:00.000Z",
-        "staleHours": 255,
+        "staleHours": 88,
         "status": "stale"
       }
     ]
@@ -94,11 +87,11 @@
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 32
+      "count": 33
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 5
+      "count": 4
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
@@ -110,11 +103,11 @@
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
-      "count": 15
+      "count": 14
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 157
+      "count": 158
     },
     "general_market": {
       "label": "General Market",
@@ -122,19 +115,17 @@
     }
   },
   "quality": {
-    "status": "warning",
-    "failedChecks": [
-      "maxStaleSources"
-    ],
+    "status": "pass",
+    "failedChecks": [],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
-        "actual": 11,
+        "actual": 10,
         "pass": true
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 68,
+        "actual": 73,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -144,8 +135,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 3,
-        "pass": false
+        "actual": 2,
+        "pass": true
       }
     }
   },
@@ -283,6 +274,33 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "The AI Adverse Event Problem Nobody Is Talking About",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/the-ai-adverse-event-problem-nobody-is-talking-about/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-13",
+      "summary": "The guide wire felt wrong. My hands, trained over two decades and thousands of procedures, sensed a resistance the navigation screen denied.",
+      "category": "quality_safety",
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "BayCare plans freestanding ED in former CVS",
+      "url": "https://www.beckershospitalreview.com/capital/baycare-plans-freestanding-ed-in-former-cvs/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-13",
+      "summary": "Clearwater, Fla.-based BayCare Health System filed plans with the City of Tampa to renovate a former CVS pharmacy into a freestanding emergency department, Tampa Bay Business &#38; Wealth reported March 12.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "17 women making moves in healthcare",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/9-women-making-moves-in-healthcare-3/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-13",
+      "summary": "Several women have recently stepped into new executive roles at hospitals and health systems — including through promotions, new appointments or planned retirements. While women hold most entry-level positions in healthcare, they made up just 35% of C-suite leaders in 2024, an increase from 29% in 2020.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "The latest on Lurie Children&#8217;s proposed Downers Grove hospital",
       "url": "https://www.beckershospitalreview.com/capital/the-latest-on-lurie-childrens-proposed-downers-grove-hospital/",
       "source": "Becker's Hospital Review",
@@ -346,29 +364,11 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "MaineHealth expands its free CNA training program",
-      "url": "https://www.beckershospitalreview.com/quality/nursing/mainehealth-expands-its-free-cna-training-program/",
-      "source": "Becker's Hospital Review",
+      "title": "STAT+: Up and down the ladder: The latest comings and goings",
+      "url": "https://www.statnews.com/pharmalot/2026/03/13/pharma-biotech-jobs-sandoz-merck-abbvie-lundbeck/?utm_campaign=rss",
+      "source": "STAT News",
       "publishedAt": "2026-03-13",
-      "summary": "MaineHealth is piloting a career navigator services program to aid participants in its free certified nursing assistant training. The pilot, which was launched at Maine Medical Center Portland, will help CNAs explore growth opportunities, assist with transitions between specialties and support long-term career plans, a system spokesperson told Becker&#8217;s.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "What happens after patients stop GLP-1s?",
-      "url": "https://www.beckershospitalreview.com/glp-1s/what-happens-after-patients-stop-glp-1s/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-13",
-      "summary": "Discontinuing GLP-1 treatment does not always cause significant weight gain, as many patients transition to other obesity or diabetes treatments, according to a Cleveland Clinic study published March 12 in Diabetes, Obesity and Metabolism.&#160; One year after discontinuation, 19.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "The week in hospital M&#038;A",
-      "url": "https://www.beckershospitalreview.com/hospital-transactions-and-valuation/the-week-in-hospital-ma-19/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-13",
-      "summary": "From an Arkansas system reaching an agreement to add its 13th hospital to Prospect Medical Holdings offloading its final Crozer Health hospital, here are four hospital M&#38;A moves that Becker&#8217;s reported during the week of March 9: 1. The Tallahassee City Commission approved the transfer of city-owned Tallahassee (Fla.",
+      "summary": "From new hires to departures, promotions and transfers, here are the latest comings and goings in the pharmaceutical industry.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
@@ -472,6 +472,15 @@
       "categoryLabel": "Policy & Reimbursement"
     },
     {
+      "title": "Industry Voices—Fast answers, fragile data: the trust problem in AI-driven healthcare analytics",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/industry-voices-fast-answers-fragile-data-trust-problem-ai-driven",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-13",
+      "summary": "AI can find your metric in seconds. The question is whether your organization has done the work to ensure that the metric is defined, current, owned and trusted.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
       "title": "At HIMSS26, Dr. Oz, CMS officials push agentic AI adoption. Are Medicare beneficiaries ready?",
       "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/himss26-dr-oz-cms-officials-push-agentic-ai-adoption",
       "source": "Fierce Healthcare",
@@ -533,6 +542,33 @@
       "summary": "Microsoft debuted Copilot Health on Thursday as an AI assistant for consumers that can review medical records, interpret test results and offer personalized health guidance.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "MaineHealth expands its free CNA training program",
+      "url": "https://www.beckershospitalreview.com/quality/nursing/mainehealth-expands-its-free-cna-training-program/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-13",
+      "summary": "MaineHealth is piloting a career navigator services program to aid participants in its free certified nursing assistant training. The pilot, which was launched at Maine Medical Center Portland, will help CNAs explore growth opportunities, assist with transitions between specialties and support long-term career plans, a system spokesperson told Becker&#8217;s.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "What happens after patients stop GLP-1s?",
+      "url": "https://www.beckershospitalreview.com/glp-1s/what-happens-after-patients-stop-glp-1s/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-13",
+      "summary": "Discontinuing GLP-1 treatment does not always cause significant weight gain, as many patients transition to other obesity or diabetes treatments, according to a Cleveland Clinic study published March 12 in Diabetes, Obesity and Metabolism.&#160; One year after discontinuation, 19.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "The week in hospital M&#038;A",
+      "url": "https://www.beckershospitalreview.com/hospital-transactions-and-valuation/the-week-in-hospital-ma-19/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-13",
+      "summary": "From an Arkansas system reaching an agreement to add its 13th hospital to Prospect Medical Holdings offloading its final Crozer Health hospital, here are four hospital M&#38;A moves that Becker&#8217;s reported during the week of March 9: 1. The Tallahassee City Commission approved the transfer of city-owned Tallahassee (Fla.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
     },
     {
       "title": "HIMSS26: HHS officials offer updates on interoperability efforts, information blocking enforcement",
@@ -4814,66 +4850,6 @@
       "category": "ai_tech",
       "relevance": 100,
       "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "E2D(R1) Postapproval Safety Data: Definitions and Standards for Management and Reporting of Individual Case Safety Reports; International Council for Harmonisation; Guidance for Industry; Availability",
-      "summary": "The Food and Drug Administration (FDA or Agency) is announcing the availability of a final guidance for industry entitled \"E2D(R1) Postapproval Safety Data: Definitions and Standards for Management and Reporting of Individual Case Safety Reports.\" The guidance was prepared under the auspices of the International Council for Harmonisation of Technical Requirements for Pharmaceuticals for Human Use (ICH). The guidance updates the 2003 guidance titled \"E2D Post- Approval Safety Data Management: Definitions and Standards for Expedited Reporting,\" by clarifying the use of new or increasingly used data sources (e.g., social media, market research programs, patient support programs). This final guidance clarifies the use of new postapproval safety sources and update terminology and standards for postapproval adverse event reporting. The guidance replaces the draft guidance \"E2D(R1) Post-Approval Safety Data: Definitions and Standards for Management and Reporting of Individual Case Safety Reports\" issued on March 14, 2024, and the final guidance issued September 15, 2003.",
-      "url": "https://www.federalregister.gov/documents/2026/03/04/2026-04252/e2dr1-postapproval-safety-data-definitions-and-standards-for-management-and-reporting-of-individual",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-03-04",
-      "category": "quality_safety",
-      "relevance": 100,
-      "categoryLabel": "Quality & Safety"
-    },
-    {
-      "title": "Update: FDA Encourages the Public to Follow Established Choking Rescue Protocols - FDA Safety Communication",
-      "summary": "These choking rescue protocols include abdominal thrusts (also called the “Heimlich” maneuver) for children and adults but not anti-choking devices.",
-      "url": "http://www.fda.gov/medical-devices/safety-communications/update-fda-encourages-public-follow-established-choking-rescue-protocols-fda-safety-communication",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-03-04",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Nurses union endorses the Make Billionaires Pay Their Fair Share Act",
-      "summary": "National Nurses United is proud to endorse the Make Billionaires Pay Their Fair Share Act led by Sen. Bernie Sanders (Vt.) and Rep. Ro Khanna (Calif.). This legislation begins to right the wrongs of our corrupt tax code, which has allowed the rich and corporations to hoard exorbitant amounts of wealth while the working class, whose labor creates that wealth, is forced to decide between paying for housing and food or prescription medications and health insurance.",
-      "url": "https://www.nationalnursesunited.org/press/nurses-union-endorses-the-make-billionaires-pay-their-fair-share-act",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "2026-03-03",
-      "category": "labor_unions",
-      "relevance": 100,
-      "categoryLabel": "Labor & Unions"
-    },
-    {
-      "title": "CI 8-K filing - The Cigna Group",
-      "summary": "The Cigna Group filed 8-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/1739940/000114036126007450/ef20066976_8k.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-03-03",
-      "category": "general_market",
-      "relevance": 85,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Recommendations on Scale-Up and Postapproval Changes Guidances for Industry; Request for Comments",
-      "summary": "The Food and Drug Administration (FDA, the Agency, or we) is announcing the opening of a public docket to solicit information and comments on the Agency's series of guidances for industry on scale-up and postapproval changes (SUPAC) for specific dosage forms. Specifically, we are seeking comment on the following guidances for industry: \"Immediate Release Solid Oral Dosage Forms Scale-Up and Postapproval Changes: Chemistry, Manufacturing, and Controls, In Vitro Dissolution Testing, and In Vivo Bioequivalence Documentation\" (SUPAC- IR); \"SUPAC-IR Questions and Answers about SUPAC-IR Guidance\" (SUPAC- IR Q&A); \"Nonsterile Semisolid Dosage Forms Scale-Up and Postapproval Changes: Chemistry, Manufacturing, and Controls; In Vitro Release Testing and In Vivo Bioequivalence Documentation\" (SUPAC-SS); \"SUPAC- MR: Modified Release Solid Oral Dosage Forms Scale-Up and Postapproval Changes: Chemistry, Manufacturing, and Controls; In Vitro Dissolution Testing and In Vivo Bioequivalence Documentation\" (SUPAC-MR); and \"SUPAC: Manufacturing Equipment Addendum\" (SUPAC-MEA). The Agency is seeking public information and comment on the continued utility of and suggestions for potential revisions to the recommendations in these guidances.",
-      "url": "https://www.federalregister.gov/documents/2026/03/03/2026-04196/recommendations-on-scale-up-and-postapproval-changes-guidances-for-industry-request-for-comments",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-03-03",
-      "category": "capacity_expansion",
-      "relevance": 100,
-      "categoryLabel": "Capacity & Expansion"
     }
   ]
 }
