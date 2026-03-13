@@ -1,88 +1,88 @@
 {
-  "lastUpdated": "2026-03-12T23:35:52.693Z",
+  "lastUpdated": "2026-03-13T02:19:17.138Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 11,
-    "staleSources": 2,
-    "healthySources": 9,
+    "staleSources": 4,
+    "healthySources": 7,
     "sources": [
       {
         "source": "Becker's Hospital Review",
         "articleCount": 166,
         "latestPublishedAt": "2026-03-12T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 26,
         "status": "ok"
       },
       {
         "source": "Fierce Healthcare",
-        "articleCount": 111,
-        "latestPublishedAt": "2026-03-12T00:00:00.000Z",
-        "staleHours": 23,
+        "articleCount": 136,
+        "latestPublishedAt": "2026-03-13T00:00:00.000Z",
+        "staleHours": 2,
         "status": "ok"
       },
       {
         "source": "STAT News",
         "articleCount": 61,
         "latestPublishedAt": "2026-03-12T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 26,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 32,
         "latestPublishedAt": "2026-03-12T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 26,
         "status": "ok"
       },
       {
-        "source": "SEC Healthcare Filings",
-        "articleCount": 29,
-        "latestPublishedAt": "2026-03-10T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
-      },
-      {
-        "source": "Federal Register - CMS",
-        "articleCount": 25,
-        "latestPublishedAt": "2026-03-12T00:00:00.000Z",
-        "staleHours": 23,
+        "source": "Health Affairs",
+        "articleCount": 20,
+        "latestPublishedAt": "2026-03-13T00:00:00.000Z",
+        "staleHours": 2,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 20,
         "latestPublishedAt": "2026-03-09T00:00:00.000Z",
-        "staleHours": 95,
+        "staleHours": 98,
         "status": "stale"
       },
       {
-        "source": "FDA MedWatch RSS",
+        "source": "Federal Register - CMS",
+        "articleCount": 19,
+        "latestPublishedAt": "2026-03-12T00:00:00.000Z",
+        "staleHours": 26,
+        "status": "ok"
+      },
+      {
+        "source": "SEC Healthcare Filings",
         "articleCount": 18,
         "latestPublishedAt": "2026-03-10T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 74,
+        "status": "stale"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 15,
         "latestPublishedAt": "2026-03-12T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 26,
         "status": "ok"
       },
       {
-        "source": "Health Affairs",
-        "articleCount": 15,
-        "latestPublishedAt": "2026-03-12T00:00:00.000Z",
-        "staleHours": 23,
-        "status": "ok"
+        "source": "FDA MedWatch RSS",
+        "articleCount": 9,
+        "latestPublishedAt": "2026-03-10T00:00:00.000Z",
+        "staleHours": 74,
+        "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
-        "articleCount": 8,
+        "articleCount": 4,
         "latestPublishedAt": "2026-03-03T00:00:00.000Z",
-        "staleHours": 239,
+        "staleHours": 242,
         "status": "stale"
       }
     ]
@@ -90,15 +90,15 @@
   "categoryCoverage": {
     "closures_layoffs": {
       "label": "Closures & Layoffs",
-      "count": 8
+      "count": 9
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 30
+      "count": 31
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 8
+      "count": 6
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
@@ -106,24 +106,26 @@
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 18
+      "count": 19
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
-      "count": 18
+      "count": 16
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 140
+      "count": 149
     },
     "general_market": {
       "label": "General Market",
-      "count": 211
+      "count": 203
     }
   },
   "quality": {
-    "status": "pass",
-    "failedChecks": [],
+    "status": "warning",
+    "failedChecks": [
+      "maxStaleSources"
+    ],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -132,7 +134,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 114,
+        "actual": 30,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -142,12 +144,282 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 2,
-        "pass": true
+        "actual": 4,
+        "pass": false
       }
     }
   },
   "articles": [
+    {
+      "title": "Report on doctor's sexual abuse spurs promises of structural change at Columbia. Survivors say it isn't enough",
+      "url": "https://www.fiercehealthcare.com/providers/report-doctors-sexual-abuse-spurs-promises-structural-change-columbia-survivors-say-it",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-13",
+      "summary": "An independent review commissioned by the university and its medical center confirmed institutional failures that permitted more than 1,000 patients to be abused. Policy changes, new procedures and leadership transitions outlined alongside its release fell flat among some survivors.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "AMA: Physicians' use of AI doubled from 2023 to 2026",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/ama-physicians-use-ai-doubled-2023-2026",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-13",
+      "summary": "A survey fielded earlier this year found 81% of doctors use AI in a professional context, with an average of 2.3 use cases per physician.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Gallup poll: One in three Americans cutting back on daily expenses to pay for healthcare",
+      "url": "https://www.fiercehealthcare.com/finance/gallup-poll-one-three-americans-cutting-back-daily-expenses-pay-healthcare",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-13",
+      "summary": "Healthcare affordability remains a significant challenge, with a third of respondents to a new Gallup poll saying they had to cut back on daily living expenses to afford care.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Fierce Healthcare Fundraising Tracker '26: AI for HR startup Carefam launches; Sage raises $65M to support senior care",
+      "url": "https://www.fiercehealthcare.com/health-tech/fierce-healthcare-fundraising-tracker-26",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-13",
+      "summary": "Keep up with all the venture capital dollars being funneled into the health tech and digital health industries.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "New Medicaid-focused doula provider Malama launches with $9.2M",
+      "url": "https://www.fiercehealthcare.com/providers/new-medicaid-focused-doula-provider-malama-launches-92m",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-13",
+      "summary": "Malama, which means “to nurture” in Hawaiian, was built to address inequities and high-risk pregnancies by shifting from episodic to continuous care.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Microsoft unveils Copilot Health as an AI health companion for consumers",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/microsoft-unveils-copilot-health-ai-health-companion-consumers",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-13",
+      "summary": "Microsoft debuted Copilot Health on Thursday as an AI assistant for consumers that can review medical records, interpret test results and offer personalized health guidance.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "HIMSS26: HHS officials offer updates on interoperability efforts, information blocking enforcement",
+      "url": "https://www.fiercehealthcare.com/health-tech/himss26-hhs-officials-offer-updates-interoperability-efforts-information-blocking",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-13",
+      "summary": "LAS VEGAS—The CMS added enhanced login options on Medicare.gov—CLEAR, ID.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Despite insurers' expense pains, Tenet Healthcare is securing healthy commercial rates through 2027",
+      "url": "https://www.fiercehealthcare.com/providers/despite-insurers-expense-pains-tenet-healthcare-seeing-healthy-commercial-rate-growth",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-13",
+      "summary": "CEO Saum Sutaria, M.D.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "UPDATED: Stryker hit by international cyberattack linked to pro-Iran group",
+      "url": "https://www.fiercehealthcare.com/medtech/stryker-hit-international-cyberattack-linked-pro-iran-group",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-13",
+      "summary": "Stryker has fallen victim to a global cyberattack, with many enterprise systems having data remotely wiped and leaving employees unable to log in.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Aetna to pay $117.7M to settle Medicare Advantage upcoding allegations: DOJ",
+      "url": "https://www.fiercehealthcare.com/payers/aetna-pay-1177m-settle-medicare-advantage-false-claims-case-doj",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-13",
+      "summary": "Aetna has agreed to pay $117.7 million to settle allegations that it submitted false or inaccurate diagnoses to juice Medicare Advantage payments.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "AHA: Hospitals' total expenses rose by 7.5% in 2025",
+      "url": "https://www.fiercehealthcare.com/providers/aha-hospitals-total-expenses-rose-75-2025",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-13",
+      "summary": "Increases in workforce, supply and drug spending joined volume jumps and greater acuity to grow hospitals' spending in 2025, whereas pricing increased at a slower pace, the hospital lobbying group said in a new analysis of industrywide benchmark data.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "The Fierce Healthcare team on the Fierce 15 of 2026",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/fierce-healthcare-team-fierce-15-2026",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-13",
+      "summary": "The Fierce Healthcare team breaks down the Fierce 15 of 2026, highlighting the companies using AI, new business models and bold ideas to tackle healthcare’s biggest pain points.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Joint Economic Committee report: Medicare Advantage overpayments drive up Part B premiums",
+      "url": "https://www.fiercehealthcare.com/regulatory/joint-economic-committee-report-medicare-advantage-overpayments-drive-part-b-premiums",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-13",
+      "summary": "Overpayments in Medicare Advantage are likely driving up Part B premiums for seniors, according to a new study from Congress' Joint Economic Committee.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Driving the news at HIMSS26: Verily, Samsung ink collaboration; Meditech's latest AI solutions",
+      "url": "https://www.fiercehealthcare.com/health-tech/driving-news-himss26-verily-samsung-ink-collaboration-meditechs-latest-ai-solutions",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-13",
+      "summary": "Get caught up with the latest news from the 2026 Healthcare Information and Management Systems Society Global Health Conference &amp; Exhibition with this quick news recap.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Here's where hospital markets are the most concentrated",
+      "url": "https://www.fiercehealthcare.com/providers/heres-where-hospital-markets-are-most-concentrated",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-13",
+      "summary": "A market analysis tool unveiled this week by Yale University’s recently launched Health Care Affordability Lab offers historical visualizations of hospital market concentration as well as the competitive impact of dealmaking old and new.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "A look at how CVS is leaning on 'agentic twins' in developing consumer tech",
+      "url": "https://www.fiercehealthcare.com/payers/look-how-cvs-leaning-agentic-twins-developing-consumer-tech",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-13",
+      "summary": "CVS Health is making investments in digital health and patient engagement tech across the enterprise, and it's teaming up with Simile to lean on \"agentic twins\" to test and pilot new programs.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "NYU Stern report calls for private equity reforms to safeguard quality of care",
+      "url": "https://www.fiercehealthcare.com/finance/nyu-stern-report-private-equitys-impact-quality-care",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-13",
+      "summary": "Though PE provides capital and strategic expertise, the report acknowledged, and should not necessarily be eliminated from healthcare, reforms are crucial amid bankruptcies and breakdowns in care.",
+      "category": "closures_layoffs",
+      "categoryLabel": "Closures & Layoffs"
+    },
+    {
+      "title": "AI-fueled misdiagnoses, rural care barriers are 2026's top patient safety threats: ECRI",
+      "url": "https://www.fiercehealthcare.com/providers/ai-fueled-misdiagnoses-rural-care-barriers-are-2026s-top-patient-safety-threats-ecri",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-13",
+      "summary": "An annual ranking of top concerns from the healthcare safety group highlighted studies on AI's diagnostic shortcomings and rural communities' dwindling access to care, among a broad range of other issues.",
+      "category": "quality_safety",
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "Centene's stock falls as CEO London outlines ongoing ACA headwinds",
+      "url": "https://www.fiercehealthcare.com/payers/centenes-stock-falls-ceo-london-outlines-ongoing-aca-headwinds",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-13",
+      "summary": "Centene's stock took a nosedive on Tuesday as the company's top brass offered further color on the marketplace headwinds battering its performance.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Carrum Health teams up with Virta Health on a comprehensive weight loss solution",
+      "url": "https://www.fiercehealthcare.com/providers/carrum-health-teams-virta-health-weight-loss-solutions",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-13",
+      "summary": "Virta offers nutrition coaching and GLP-1s, while Carrum provides surgeries for weight management. Now, members can be referred and coordinated between the two, depending on their needs.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Healthcare Dealmakers—Hims & Hers goes international with Eucalyptus purchase, Humana's CenterWell buys MaxHealth and more",
+      "url": "https://www.fiercehealthcare.com/finance/healthcare-dealmakers-hims-hers-goes-international-eucalyptus-purchase-humanas-centerwell",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-13",
+      "summary": "CHS' hospital divestitures continue, patient monitoring medtech Masimo agrees to $9.9 billion buyout and more mergers and acquisitions from the month of February.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "HIMSS26: Epic expands AI roadmap, previews Factory to build and orchestrate AI agents",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/himss26-epic-expands-ai-roadmap-previews-factory-build-and-orchestrate-ai",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-13",
+      "summary": "LAS VEGAS—At the 2026 HIMSS Global Health Conference &amp; Exhibition, which kicked off Monday, Epic teased its future AI road map with new features across clinical, patient-facing and operational workflows.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "HIMSS26: Samsung, b.well partner to 'kill the clipboard,' aligning with a key CMS goal",
+      "url": "https://www.fiercehealthcare.com/digital-health/samsung-bwell-connected-health-partner-kill-clipboard-key-cms",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-13",
+      "summary": "LAS VEGAS—Samsung Electronics and digital health company b.well Connected Health are working together to toss out the traditional patient clipboard and replace it with smartphones.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Leapfrog ordered to remove safety grades for 5 Tenet hospitals",
+      "url": "https://www.fiercehealthcare.com/providers/leapfrog-ordered-remove-safety-grade-5-tenet-hospitals",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-13",
+      "summary": "A federal judge said a 2024 methodology update that adjusted the weighting of safety measures inputted for nonparticipating hospitals was \"deceptive and unfair\" under Florida law. Leapfrog plans to appeal, but said it will be making broader changes in ratings releases to come.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Chutes & Ladders—Providence CFO retiring in June; Beth Israel Lahey Health CEO, president to step down",
+      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-13",
+      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Health Care Workforce, Medicare, And More",
+      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2026.00203?af=R",
+      "source": "Health Affairs",
+      "publishedAt": "2026-03-13",
+      "summary": "Health Affairs, Volume 45, Issue 3, Page 237-237, March 2026.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Practice Pattern Changes After Adoption Of Diagnostic AI Tool Used In Conjunction With Cardiac Imaging",
+      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2025.00929?af=R",
+      "source": "Health Affairs",
+      "publishedAt": "2026-03-13",
+      "summary": "Health Affairs, Volume 45, Issue 3, Page 238-245, March 2026.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Majority Of Family Physicians Still Choose To Practice In The State Where They Were Trained",
+      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2025.01003?af=R",
+      "source": "Health Affairs",
+      "publishedAt": "2026-03-13",
+      "summary": "Health Affairs, Volume 45, Issue 3, Page 246-250, March 2026.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Primary Care Physician Trends: Dissatisfaction, Stress, And Burnout In The US And 9 Comparator Countries, 2012–22",
+      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2025.00880?af=R",
+      "source": "Health Affairs",
+      "publishedAt": "2026-03-13",
+      "summary": "Health Affairs, Volume 45, Issue 3, Page 251-260, March 2026.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Private Equity Acquisition Of Primary Care Practices: Modest Growth In Clinicians Offset By Increased Clinician Exits",
+      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2025.01159?af=R",
+      "source": "Health Affairs",
+      "publishedAt": "2026-03-13",
+      "summary": "Health Affairs, Volume 45, Issue 3, Page 261-268, March 2026.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
     {
       "title": "Medicare and Medicaid Programs; CY 2026 Payment Policies Under the Physician Fee Schedule and Other Changes to Part B Payment and Coverage Policies; Medicare Shared Savings Program Requirements; and Medicare Prescription Drug Inflation Rebate Program; Correction",
       "summary": "This document corrects typographical and technical errors in the final rule that appeared in the November 5, 2025 Federal Register titled \"Medicare and Medicaid Programs; CY 2026 Payment Policies Under the Physician Fee Schedule and Other Changes to Part B Payment and Coverage Policies; Medicare Shared Savings Program Requirements; and Medicare Prescription Drug Inflation Rebate Program\" (hereinafter referred to as the CY 2026 PFS final rule), specifying finalized changes to the Medicare physician fee schedule (PFS) that is applicable for calendar year (CY) 2026, and other changes to Medicare Part B payment policies.",
@@ -4683,366 +4955,6 @@
       "category": "quality_safety",
       "relevance": 100,
       "categoryLabel": "Quality & Safety"
-    },
-    {
-      "title": "HUM 10-K filing - Humana Inc.",
-      "summary": "Humana Inc. filed 10-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/49071/000004907126000009/hum-20251231.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-02-19",
-      "category": "general_market",
-      "relevance": 85,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Medicare and Medicaid Programs; Announcement of Application From a Hospital Requesting Waiver for Organ Procurement Service Area (Alleghany County Memorial Hospital, Inc.)",
-      "summary": "This notice acknowledges the receipt of an application from a hospital that has requested a waiver of statutory requirements that would otherwise require the hospital to enter into an agreement with its designated organ procurement organization (OPO). This notice requests comments from OPOs and the general public for our consideration in determining whether we should grant the requested waiver.",
-      "url": "https://www.federalregister.gov/documents/2026/02/18/2026-03119/medicare-and-medicaid-programs-announcement-of-application-from-a-hospital-requesting-waiver-for",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-02-18",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Agency Information Collection Activities: Submission for OMB Review; Comment Request",
-      "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension or reinstatement of an existing collection of information, and to allow a second opportunity for public comment on the notice. Interested persons are invited to send comments regarding the burden estimate or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
-      "url": "https://www.federalregister.gov/documents/2026/02/18/2026-03118/agency-information-collection-activities-submission-for-omb-review-comment-request",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-02-18",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Medicare and Medicaid Programs; Announcement of Application From a Hospital Requesting Waiver for Organ Procurement Service Area (WRMC Hospital Operating Corporation)",
-      "summary": "This notice acknowledges the receipt of an application from a hospital that has requested a waiver of statutory requirements that would otherwise require the hospital to enter into an agreement with its designated organ procurement organization (OPO). This notice requests comments from OPOs and the general public for our consideration in determining whether we should grant the requested waiver.",
-      "url": "https://www.federalregister.gov/documents/2026/02/18/2026-03111/medicare-and-medicaid-programs-announcement-of-application-from-a-hospital-requesting-waiver-for",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-02-18",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Medicare and Medicaid Programs; Announcement of Application From a Hospital Requesting Waiver for Organ Procurement Service Area (High Point Regional Health)",
-      "summary": "This notice acknowledges the receipt of an application from a hospital that has requested a waiver of statutory requirements that would otherwise require the hospital to enter into an agreement with its designated organ procurement organization (OPO). This notice requests comments from OPOs and the general public for our consideration in determining whether we should grant the requested waiver.",
-      "url": "https://www.federalregister.gov/documents/2026/02/18/2026-03110/medicare-and-medicaid-programs-announcement-of-application-from-a-hospital-requesting-waiver-for",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-02-18",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Early Alert: Trividia Health Issues Correction for TRUE METRIX Blood Glucose Monitoring Systems",
-      "summary": "Trividia recommends that device users who receive an E-5 error code and are experiencing symptoms of high glucose should seek medical care immediately",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-trividia-health-issues-correction-true-metrix-blood-glucose-monitoring-systems",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-02-17",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Contra Costa Health nurses demand County Board of Supervisors prevent drastic budget cuts, stop imminent cuts to services",
-      "summary": "RNs will hold a picket outside the Contra Costa Regional Medical Center in Martinez, Calif., on Thursday, Feb. 19, to demand hospital and county leaders move funding to save our health system, maintain services, and reverse the dangerous dismantling of the enhanced care management program.",
-      "url": "https://www.nationalnursesunited.org/press/contra-costa-health-nurses-demand-county-board-of-supervisors-prevent-drastic-budget-cuts",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "2026-02-17",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "St. Joseph Health nurses to hold rally for patient safety",
-      "summary": "RNs from St. Joseph Health in Brazos Valley, Texas, will hold a rally on Thursday, Feb. 19, as they prepare for upcoming negotiations for their first contract since forming a union last December. Nurses say safe staffing, workplace safety, and a strong voice for bedside nurses will be their top priorities as they start negotiations.",
-      "url": "https://www.nationalnursesunited.org/press/st-joseph-health-nurses-to-hold-rally-for-patient-safety",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "2026-02-17",
-      "category": "labor_unions",
-      "relevance": 100,
-      "categoryLabel": "Labor & Unions"
-    },
-    {
-      "title": "USC Keck and Norris nurses to start strike on Feb. 19",
-      "summary": "Nurses at USC Keck Hospital and Norris Cancer Center in Los Angeles, Calif. will begin a seven-day strike on Thursday, Feb. 19 over USC’s proposal to restructure employee health care plans, potentially overloading an already strained network, leading to longer wait times and delayed care for both employees and existing patients.",
-      "url": "https://www.nationalnursesunited.org/press/usc-keck-and-norris-nurses-to-start-strike-on-feb-19",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "2026-02-17",
-      "category": "labor_unions",
-      "relevance": 100,
-      "categoryLabel": "Labor & Unions"
-    },
-    {
-      "title": "CNC 10-K filing - Centene Corporation",
-      "summary": "Centene Corporation filed 10-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/1071739/000107173926000049/cnc-20251231.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-02-17",
-      "category": "general_market",
-      "relevance": 85,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Electronic Homecare Bed Correction: Medline Updates Use Instructions for Homecare Beds",
-      "summary": "Medline updates use instructions for Electronic Homecare Beds due to risk of electrical fires and entrapment.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/electronic-homecare-bed-correction-medline-updates-use-instructions-homecare-beds",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-02-13",
-      "category": "capacity_expansion",
-      "relevance": 100,
-      "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "Agency Information Collection Activities: Submission for OMB Review; Comment Request",
-      "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension or reinstatement of an existing collection of information, and to allow a second opportunity for public comment on the notice. Interested persons are invited to send comments regarding the burden estimate or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
-      "url": "https://www.federalregister.gov/documents/2026/02/13/2026-02967/agency-information-collection-activities-submission-for-omb-review-comment-request",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-02-13",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Agency Information Collection Activities: Submission for OMB Review; Comment Request",
-      "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA) federal agencies are also required to publish notice in the Federal Register concerning each proposed collection of information before the agency's request is submitted to OMB for approval.",
-      "url": "https://www.federalregister.gov/documents/2026/02/13/2026-02966/agency-information-collection-activities-submission-for-omb-review-comment-request",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-02-13",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Assemblymember Ash Kalra, California Nurses Association reintroduce CalCare legislation",
-      "summary": "Act. AB 1900, also known as CalCare, would enact a comprehensive framework for a single-payer health care coverage system in California at a time when California voters are ready to champion transformational changes in health care.",
-      "url": "https://www.nationalnursesunited.org/press/assemblymember-ash-kalra-california-nurses-association-reintroduce-calcare-legislation",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "2026-02-12",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Emergency Response Safety Kit Recall: Airlife Removes Certain Broselow Pediatric Emergency Rainbow Tapes and Broselow ALS Organizers",
-      "summary": "AirLife is removing Broselow Rainbow Tapes due to incorrectly printed medication dosing information.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/emergency-response-safety-kit-recall-airlife-removes-certain-broselow-pediatric-emergency-rainbow",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-02-11",
-      "category": "mergers_mna",
-      "relevance": 100,
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "HUM 8-K filing - Humana Inc.",
-      "summary": "Humana Inc. filed 8-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/49071/000004907126000005/hum-20260211.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-02-11",
-      "category": "general_market",
-      "relevance": 85,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "HCA 10-K filing - HCA Healthcare, Inc.",
-      "summary": "HCA Healthcare, Inc. filed 10-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/860730/000119312526044769/hca-20251231.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-02-10",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "CVS 10-K filing - CVS Health Corporation",
-      "summary": "CVS Health Corporation filed 10-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/64803/000006480326000010/cvs-20251231.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-02-10",
-      "category": "general_market",
-      "relevance": 90,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "CVS 8-K filing - CVS Health Corporation",
-      "summary": "CVS Health Corporation filed 8-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/64803/000006480326000009/cvs-20260210.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-02-10",
-      "category": "general_market",
-      "relevance": 90,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Trividia Health, Inc. Initiates Labeling Correction for all TRUE METRIX® Blood Glucose Monitoring Systems",
-      "summary": "FT. LAUDERDALE, FL) – February 6, 2026 – Trividia Health, Inc., announced today that it is initiating a labeling correction which requires a modification of the Owner’s Booklets/System Instructions for Use for all TRUE METRIX, TRUE METRIX AIR, TRUE METRIX GO, and TRUE METRIX PRO Blood Glucose Monit",
-      "url": "http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/trividia-health-inc-initiates-labeling-correction-all-true-metrixr-blood-glucose-monitoring-systems",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-02-06",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "ELV 10-K filing - Elevance Health, Inc.",
-      "summary": "Elevance Health, Inc. filed 10-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/1156039/000115603926000013/elv-20251231.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-02-06",
-      "category": "general_market",
-      "relevance": 90,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "CNC 8-K filing - Centene Corporation",
-      "summary": "Centene Corporation filed 8-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/1071739/000107173926000031/cnc-20260206.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-02-06",
-      "category": "general_market",
-      "relevance": 85,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Glucose Monitor Sensor Recall: Abbott Diabetes Care Removes Certain FreeStyle Libre 3 and FreeStyle Libre 3 Plus Sensors",
-      "summary": "Certain Abbott Diabetes Care Continuous Glucose Monitor sensors may incorrect or lower than actual glucose readings",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/glucose-monitor-sensor-recall-abbott-diabetes-care-removes-certain-freestyle-libre-3-and-freestyle",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-02-05",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Detachable Coil System Recall: J&J MedTech/CERENOVUS Inc. Remove CEREPAK Detachable Coil System",
-      "summary": "MedTech/CERENOVUS is removing CEREPAK Detachable Coil Systems due to a higher than expected failure to detach rate",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/detachable-coil-system-recall-jj-medtechcerenovus-inc-remove-cerepak-detachable-coil-system",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-02-05",
-      "category": "ai_tech",
-      "relevance": 98,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "CI 8-K filing - The Cigna Group",
-      "summary": "The Cigna Group filed 8-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/1739940/000114036126003768/ef20064751_8k.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-02-05",
-      "category": "general_market",
-      "relevance": 85,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Risk of False Positive Lead Test Results with Certain Capillary Blood Collection Tubes Used with Magellan Diagnostics LeadCare Testing Systems – FDA Safety Communication",
-      "summary": "FDA is alerting health care providers and lab staff of reports of false positives when using certain Micro Capillary Blood Collection tubes with the LeadCare Testing Systems.",
-      "url": "http://www.fda.gov/medical-devices/safety-communications/risk-false-positive-lead-test-results-certain-capillary-blood-collection-tubes-used-magellan",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-02-03",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Early Alert: Heart Pump Issue from Abiomed",
-      "summary": "The differential pressure sensor in certain Impella devices may malfunction and cause sensor values to drift.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-heart-pump-issue-abiomed",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-02-03",
-      "category": "ai_tech",
-      "relevance": 98,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "ELV 8-K filing - Elevance Health, Inc.",
-      "summary": "Elevance Health, Inc. filed 8-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/1156039/000115603926000006/elv-20260128.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-01-28",
-      "category": "general_market",
-      "relevance": 90,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "HCA 8-K filing - HCA Healthcare, Inc.",
-      "summary": "HCA Healthcare, Inc. filed 8-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/860730/000119312526023323/hca-20260127.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-01-27",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Olympus Expands Voluntary Recall for ViziShot 2 FLEX (19G) EBUS -TBNA Needles",
-      "summary": "CENTER VALLEY, Pa., (January 16, 2026) — Olympus Corporation has announced the expansion of a previous global medical device removal action for ViziShot 2 FLEX (19G) EBUS -TBNA needles (“ViziShot 2 FLEX”) after receiving and investigating complaints of device components ejecting or detaching during",
-      "url": "http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/olympus-expands-voluntary-recall-vizishot-2-flex-19g-ebus-tbna-needles",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-01-16",
-      "category": "capacity_expansion",
-      "relevance": 100,
-      "categoryLabel": "Capacity & Expansion"
     }
   ]
 }
