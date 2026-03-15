@@ -1,93 +1,93 @@
 {
-  "lastUpdated": "2026-03-14T23:34:55.828Z",
+  "lastUpdated": "2026-03-15T02:42:38.047Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 1,
-    "healthySources": 9,
+    "staleSources": 3,
+    "healthySources": 7,
     "sources": [
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 200,
+        "articleCount": 190,
         "latestPublishedAt": "2026-03-13T00:00:00.000Z",
-        "staleHours": 47,
+        "staleHours": 50,
         "status": "ok"
       },
       {
         "source": "Fierce Healthcare",
-        "articleCount": 153,
-        "latestPublishedAt": "2026-03-14T00:00:00.000Z",
-        "staleHours": 23,
+        "articleCount": 178,
+        "latestPublishedAt": "2026-03-15T00:00:00.000Z",
+        "staleHours": 2,
         "status": "ok"
       },
       {
         "source": "STAT News",
         "articleCount": 47,
         "latestPublishedAt": "2026-03-13T00:00:00.000Z",
-        "staleHours": 47,
+        "staleHours": 50,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
-        "articleCount": 44,
+        "articleCount": 33,
         "latestPublishedAt": "2026-03-16T00:00:00.000Z",
-        "staleHours": -25,
+        "staleHours": -22,
         "status": "ok"
       },
       {
         "source": "Health Affairs",
-        "articleCount": 24,
-        "latestPublishedAt": "2026-03-14T00:00:00.000Z",
-        "staleHours": 23,
+        "articleCount": 28,
+        "latestPublishedAt": "2026-03-15T00:00:00.000Z",
+        "staleHours": 2,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 11,
         "latestPublishedAt": "2026-03-13T00:00:00.000Z",
-        "staleHours": 47,
+        "staleHours": 50,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
-        "articleCount": 7,
+        "articleCount": 5,
         "latestPublishedAt": "2026-03-12T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 74,
+        "status": "stale"
       },
       {
         "source": "Federal Register - FDA",
-        "articleCount": 7,
+        "articleCount": 4,
         "latestPublishedAt": "2026-03-12T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
-      },
-      {
-        "source": "SEC Healthcare Filings",
-        "articleCount": 5,
-        "latestPublishedAt": "2026-03-10T00:00:00.000Z",
-        "staleHours": 119,
+        "staleHours": 74,
         "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 2,
         "latestPublishedAt": "2026-03-13T00:00:00.000Z",
-        "staleHours": 47,
+        "staleHours": 50,
         "status": "ok"
+      },
+      {
+        "source": "SEC Healthcare Filings",
+        "articleCount": 2,
+        "latestPublishedAt": "2026-03-10T00:00:00.000Z",
+        "staleHours": 122,
+        "status": "stale"
       }
     ]
   },
   "categoryCoverage": {
     "closures_layoffs": {
       "label": "Closures & Layoffs",
-      "count": 8
+      "count": 9
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 31
+      "count": 33
     },
     "labor_unions": {
       "label": "Labor & Unions",
@@ -95,7 +95,7 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 69
+      "count": 73
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -103,20 +103,22 @@
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
-      "count": 15
+      "count": 13
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 160
+      "count": 169
     },
     "general_market": {
       "label": "General Market",
-      "count": 194
+      "count": 180
     }
   },
   "quality": {
-    "status": "pass",
-    "failedChecks": [],
+    "status": "warning",
+    "failedChecks": [
+      "maxStaleSources"
+    ],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -135,8 +137,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 1,
-        "pass": true
+        "actual": 3,
+        "pass": false
       }
     }
   },
@@ -224,6 +226,276 @@
       "category": "general_market",
       "relevance": 96,
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "Amazon launches health AI agent on its website, expands free virtual care to 200M Prime members",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/amazon-launches-health-ai-assistant-its-website-expands-free-virtual-care",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-15",
+      "summary": "Amazon’s new Health AI agent can help users understand their medical records, give personalized health insights and connect users to licensed healthcare professionals.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Industry Voices—Fast answers, fragile data: the trust problem in AI-driven healthcare analytics",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/industry-voices-fast-answers-fragile-data-trust-problem-ai-driven",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-15",
+      "summary": "AI can find your metric in seconds. The question is whether your organization has done the work to ensure that the metric is defined, current, owned and trusted.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "The feds will overpay Medicare Advantage plans by $76B this year, MedPAC estimates",
+      "url": "https://www.fiercehealthcare.com/regulatory/feds-will-overpay-medicare-advantage-plans-76b-year-medpac-estimates",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-15",
+      "summary": "Alongside the scrutiny of Medicare Advantage, the independent advisory group recommended Congress blunt an upcoming pay cut for clinicians and stay the course on annual increases for hospitals.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "At HIMSS26, Dr. Oz, CMS officials push agentic AI adoption. Are Medicare beneficiaries ready?",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/himss26-dr-oz-cms-officials-push-agentic-ai-adoption",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-15",
+      "summary": "LAS VEGAS—As agentic AI hits the mainstream—and messaging coming out this week demonstrates that it has—federal healthcare leaders are fully on board with moving quickly to put AI agents in the hands of patients.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Report on doctor's sexual abuse spurs promises of structural change at Columbia. Survivors say it isn't enough",
+      "url": "https://www.fiercehealthcare.com/providers/report-doctors-sexual-abuse-spurs-promises-structural-change-columbia-survivors-say-it",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-15",
+      "summary": "An independent review commissioned by the university and its medical center confirmed institutional failures that permitted more than 1,000 patients to be abused. Policy changes, new procedures and leadership transitions outlined alongside its release fell flat among some survivors.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "AMA: Physicians' use of AI doubled from 2023 to 2026",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/ama-physicians-use-ai-doubled-2023-2026",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-15",
+      "summary": "A survey fielded earlier this year found 81% of doctors use AI in a professional context, with an average of 2.3 use cases per physician.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Gallup poll: One in three Americans cutting back on daily expenses to pay for healthcare",
+      "url": "https://www.fiercehealthcare.com/finance/gallup-poll-one-three-americans-cutting-back-daily-expenses-pay-healthcare",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-15",
+      "summary": "Healthcare affordability remains a significant challenge, with a third of respondents to a new Gallup poll saying they had to cut back on daily living expenses to afford care.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Fierce Healthcare Fundraising Tracker '26: AI for HR startup Carefam launches; Sage raises $65M to support senior care",
+      "url": "https://www.fiercehealthcare.com/health-tech/fierce-healthcare-fundraising-tracker-26",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-15",
+      "summary": "Keep up with all the venture capital dollars being funneled into the health tech and digital health industries.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "New Medicaid-focused doula provider Malama launches with $9.2M",
+      "url": "https://www.fiercehealthcare.com/providers/new-medicaid-focused-doula-provider-malama-launches-92m",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-15",
+      "summary": "Malama, which means “to nurture” in Hawaiian, was built to address inequities and high-risk pregnancies by shifting from episodic to continuous care.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Microsoft unveils Copilot Health as an AI health companion for consumers",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/microsoft-unveils-copilot-health-ai-health-companion-consumers",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-15",
+      "summary": "Microsoft debuted Copilot Health on Thursday as an AI assistant for consumers that can review medical records, interpret test results and offer personalized health guidance.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "HIMSS26: HHS officials offer updates on interoperability efforts, information blocking enforcement",
+      "url": "https://www.fiercehealthcare.com/health-tech/himss26-hhs-officials-offer-updates-interoperability-efforts-information-blocking",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-15",
+      "summary": "LAS VEGAS—The CMS added enhanced login options on Medicare.gov—CLEAR, ID.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Despite insurers' expense pains, Tenet Healthcare is securing healthy commercial rates through 2027",
+      "url": "https://www.fiercehealthcare.com/providers/despite-insurers-expense-pains-tenet-healthcare-seeing-healthy-commercial-rate-growth",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-15",
+      "summary": "CEO Saum Sutaria, M.D.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "UPDATED: Stryker hit by international cyberattack linked to pro-Iran group",
+      "url": "https://www.fiercehealthcare.com/medtech/stryker-hit-international-cyberattack-linked-pro-iran-group",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-15",
+      "summary": "Stryker has fallen victim to a global cyberattack, with many enterprise systems having data remotely wiped and leaving employees unable to log in.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Aetna to pay $117.7M to settle Medicare Advantage upcoding allegations: DOJ",
+      "url": "https://www.fiercehealthcare.com/payers/aetna-pay-1177m-settle-medicare-advantage-false-claims-case-doj",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-15",
+      "summary": "Aetna has agreed to pay $117.7 million to settle allegations that it submitted false or inaccurate diagnoses to juice Medicare Advantage payments.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "AHA: Hospitals' total expenses rose by 7.5% in 2025",
+      "url": "https://www.fiercehealthcare.com/providers/aha-hospitals-total-expenses-rose-75-2025",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-15",
+      "summary": "Increases in workforce, supply and drug spending joined volume jumps and greater acuity to grow hospitals' spending in 2025, whereas pricing increased at a slower pace, the hospital lobbying group said in a new analysis of industrywide benchmark data.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "The Fierce Healthcare team on the Fierce 15 of 2026",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/fierce-healthcare-team-fierce-15-2026",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-15",
+      "summary": "The Fierce Healthcare team breaks down the Fierce 15 of 2026, highlighting the companies using AI, new business models and bold ideas to tackle healthcare’s biggest pain points.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Joint Economic Committee report: Medicare Advantage overpayments drive up Part B premiums",
+      "url": "https://www.fiercehealthcare.com/regulatory/joint-economic-committee-report-medicare-advantage-overpayments-drive-part-b-premiums",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-15",
+      "summary": "Overpayments in Medicare Advantage are likely driving up Part B premiums for seniors, according to a new study from Congress' Joint Economic Committee.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Driving the news at HIMSS26: Verily, Samsung ink collaboration; Meditech's latest AI solutions",
+      "url": "https://www.fiercehealthcare.com/health-tech/driving-news-himss26-verily-samsung-ink-collaboration-meditechs-latest-ai-solutions",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-15",
+      "summary": "Get caught up with the latest news from the 2026 Healthcare Information and Management Systems Society Global Health Conference &amp; Exhibition with this quick news recap.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Here's where hospital markets are the most concentrated",
+      "url": "https://www.fiercehealthcare.com/providers/heres-where-hospital-markets-are-most-concentrated",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-15",
+      "summary": "A market analysis tool unveiled this week by Yale University’s recently launched Health Care Affordability Lab offers historical visualizations of hospital market concentration as well as the competitive impact of dealmaking old and new.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "A look at how CVS is leaning on 'agentic twins' in developing consumer tech",
+      "url": "https://www.fiercehealthcare.com/payers/look-how-cvs-leaning-agentic-twins-developing-consumer-tech",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-15",
+      "summary": "CVS Health is making investments in digital health and patient engagement tech across the enterprise, and it's teaming up with Simile to lean on \"agentic twins\" to test and pilot new programs.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "NYU Stern report calls for private equity reforms to safeguard quality of care",
+      "url": "https://www.fiercehealthcare.com/finance/nyu-stern-report-private-equitys-impact-quality-care",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-15",
+      "summary": "Though PE provides capital and strategic expertise, the report acknowledged, and should not necessarily be eliminated from healthcare, reforms are crucial amid bankruptcies and breakdowns in care.",
+      "category": "closures_layoffs",
+      "categoryLabel": "Closures & Layoffs"
+    },
+    {
+      "title": "AI-fueled misdiagnoses, rural care barriers are 2026's top patient safety threats: ECRI",
+      "url": "https://www.fiercehealthcare.com/providers/ai-fueled-misdiagnoses-rural-care-barriers-are-2026s-top-patient-safety-threats-ecri",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-15",
+      "summary": "An annual ranking of top concerns from the healthcare safety group highlighted studies on AI's diagnostic shortcomings and rural communities' dwindling access to care, among a broad range of other issues.",
+      "category": "quality_safety",
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "Centene's stock falls as CEO London outlines ongoing ACA headwinds",
+      "url": "https://www.fiercehealthcare.com/payers/centenes-stock-falls-ceo-london-outlines-ongoing-aca-headwinds",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-15",
+      "summary": "Centene's stock took a nosedive on Tuesday as the company's top brass offered further color on the marketplace headwinds battering its performance.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Carrum Health teams up with Virta Health on a comprehensive weight loss solution",
+      "url": "https://www.fiercehealthcare.com/providers/carrum-health-teams-virta-health-weight-loss-solutions",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-15",
+      "summary": "Virta offers nutrition coaching and GLP-1s, while Carrum provides surgeries for weight management. Now, members can be referred and coordinated between the two, depending on their needs.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Healthcare Dealmakers—Hims & Hers goes international with Eucalyptus purchase, Humana's CenterWell buys MaxHealth and more",
+      "url": "https://www.fiercehealthcare.com/finance/healthcare-dealmakers-hims-hers-goes-international-eucalyptus-purchase-humanas-centerwell",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-15",
+      "summary": "CHS' hospital divestitures continue, patient monitoring medtech Masimo agrees to $9.9 billion buyout and more mergers and acquisitions from the month of February.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Health Care Workforce, Medicare, And More",
+      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2026.00203?af=R",
+      "source": "Health Affairs",
+      "publishedAt": "2026-03-15",
+      "summary": "Health Affairs, Volume 45, Issue 3, Page 237-237, March 2026.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Practice Pattern Changes After Adoption Of Diagnostic AI Tool Used In Conjunction With Cardiac Imaging",
+      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2025.00929?af=R",
+      "source": "Health Affairs",
+      "publishedAt": "2026-03-15",
+      "summary": "Health Affairs, Volume 45, Issue 3, Page 238-245, March 2026.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Majority Of Family Physicians Still Choose To Practice In The State Where They Were Trained",
+      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2025.01003?af=R",
+      "source": "Health Affairs",
+      "publishedAt": "2026-03-15",
+      "summary": "Health Affairs, Volume 45, Issue 3, Page 246-250, March 2026.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Primary Care Physician Trends: Dissatisfaction, Stress, And Burnout In The US And 9 Comparator Countries, 2012–22",
+      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2025.00880?af=R",
+      "source": "Health Affairs",
+      "publishedAt": "2026-03-15",
+      "summary": "Health Affairs, Volume 45, Issue 3, Page 251-260, March 2026.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Private Equity Acquisition Of Primary Care Practices: Modest Growth In Clinicians Offset By Increased Clinician Exits",
+      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2025.01159?af=R",
+      "source": "Health Affairs",
+      "publishedAt": "2026-03-15",
+      "summary": "Health Affairs, Volume 45, Issue 3, Page 261-268, March 2026.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
     },
     {
       "title": "Amazon launches health AI agent on its website, expands free virtual care to 200M Prime members",
@@ -4508,333 +4780,6 @@
       "summary": "Health Affairs, Volume 45, Issue 3, Page 246-250, March 2026.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Primary Care Physician Trends: Dissatisfaction, Stress, And Burnout In The US And 9 Comparator Countries, 2012–22",
-      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2025.00880?af=R",
-      "source": "Health Affairs",
-      "publishedAt": "2026-03-10",
-      "summary": "Health Affairs, Volume 45, Issue 3, Page 251-260, March 2026.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Medicare and Medicaid Programs; Announcement of Applications From 12 Hospitals Requesting Waivers for Organ Procurement Service Area",
-      "summary": "This notice acknowledges the receipt of applications from 12 hospitals that have requested a waiver of statutory requirements that would otherwise require the hospitals to enter into an agreement with their designated organ procurement organization (OPO). This notice requests comments from OPOs and the general public for our consideration in determining whether we should grant the requested waivers.",
-      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04544/medicare-and-medicaid-programs-announcement-of-applications-from-12-hospitals-requesting-waivers-for",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-03-09",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Agency Information Collection Activities: Submission for OMB Review; Comment Request",
-      "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension or reinstatement of an existing collection of information, and to allow a second opportunity for public comment on the notice. Interested persons are invited to send comments regarding the burden estimate or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
-      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04518/agency-information-collection-activities-submission-for-omb-review-comment-request",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-03-09",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Responding to FDA Form 483 Observations at the Conclusion of a Drug CGMP Inspection: Draft Guidance for Industry; Availability",
-      "summary": "The Food and Drug Administration (FDA, Agency, or we) is announcing the availability of a draft guidance for industry entitled \"Responding to FDA Form 483 Observations at the Conclusion of a Drug CGMP Inspection.\" This guidance is intended for foreign and domestic human and animal drug manufacturing establishments inspected by FDA whose drugs are regulated by the Center for Drug Evaluation and Research (CDER), the Center for Biologics Evaluation and Research (CBER), and the Center for Veterinary Medicine (CVM). The purpose of this guidance is to assist manufacturers who choose to respond to FDA when they receive an FDA Form 483 Inspectional Observations (FDA 483) at the conclusion of a drug inspection to assess conformity with current good manufacturing practice (CGMP) requirements.",
-      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04578/responding-to-fda-form-483-observations-at-the-conclusion-of-a-drug-cgmp-inspection-draft-guidance",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-03-09",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Aspen Global Inc. c/o Lachman Consultant Services, Inc., et al.; Withdrawal of Approval of 46 New Drug Applications",
-      "summary": "The Food and Drug Administration (FDA or Agency) is withdrawing approval of 46 new drug applications (NDAs) from multiple applicants. The applicants notified the Agency in writing that the drug products were no longer marketed and requested that the approval of the applications be withdrawn.",
-      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04546/aspen-global-inc-co-lachman-consultant-services-inc-et-al-withdrawal-of-approval-of-46-new-drug",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-03-09",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Oncologic Drugs Advisory Committee; Notice of Meeting; Establishment of a Public Docket; Request for Comments-New Drug Application 220359, for Camizestrant Tablets; Supplemental New Drug Application (sNDA) 218197/S-004, for Truqap (Capivasertib) Tablets",
-      "summary": "The Food and Drug Administration (FDA) announces a forthcoming public advisory committee meeting of the Oncologic Drugs Advisory Committee (the Committee). The general function of the Committee is to provide advice and recommendations to FDA on regulatory issues. The meeting will be open to the public. FDA is establishing a docket for public comment on this document.",
-      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04497/oncologic-drugs-advisory-committee-notice-of-meeting-establishment-of-a-public-docket-request-for",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-03-09",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "UNH 8-K filing - UnitedHealth Group Incorporated",
-      "summary": "UnitedHealth Group Incorporated filed 8-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/731766/000073176626000067/unh-20260309.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-03-09",
-      "category": "general_market",
-      "relevance": 90,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "UHS 8-K filing - Universal Health Services, Inc.",
-      "summary": "Universal Health Services, Inc. filed 8-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/352915/000119312526097674/uhs-20260309.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-03-09",
-      "category": "general_market",
-      "relevance": 90,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "HUM 8-K filing - Humana Inc.",
-      "summary": "Humana Inc. filed 8-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/49071/000162828026016031/hum-20260305.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-03-09",
-      "category": "general_market",
-      "relevance": 85,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Proposed Data Collection Submitted for Public Comment and Recommendations",
-      "summary": "The Centers for Disease Control and Prevention (CDC), as part of its continuing effort to reduce public burden and maximize the utility of government information, invites the general public and other federal agencies the opportunity to comment on a continuing information collection, as required by the Paperwork Reduction Act of 1995. This notice invites comment on a proposed information collection project titled Generic Information Collection Request for Cognitive Testing and Pilot Testing for the National Center for Chronic Disease Prevention and Health Promotion. This Generic Clearance is designed to support methodological studies that improve information quality and the efficiency of information collection.",
-      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04569/proposed-data-collection-submitted-for-public-comment-and-recommendations",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-09",
-      "category": "quality_safety",
-      "relevance": 100,
-      "categoryLabel": "Quality & Safety"
-    },
-    {
-      "title": "Agency Forms Undergoing Paperwork Reduction Act Review",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04568/agency-forms-undergoing-paperwork-reduction-act-review",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-09",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Proposed Data Collection Submitted for Public Comment and Recommendations",
-      "summary": "The Centers for Disease Control and Prevention (CDC), as part of its continuing effort to reduce public burden and maximize the utility of government information, invites the opportunity for the public and other federal agencies to comment on a continuing information collection, as required by the Paperwork Reduction Act of 1995. This notice invites comment on a proposed information collection project titled Developmental/Methodological Projects to Improve the National Health and Nutrition Examination Survey and Related Programs. The goal of these projects is to evaluate proposed survey designs, content, methods, and alternative approaches to activities such as outreach, screening, participant recruitment/retention, data collection, or other survey activities for NHANES or NCHS-wide projects.",
-      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04566/proposed-data-collection-submitted-for-public-comment-and-recommendations",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-09",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Proposed Data Collection Submitted for Public Comment and Recommendations",
-      "summary": "The Centers for Disease Control and Prevention (CDC), as part of its continuing effort to reduce public burden and maximize the utility of government information, invites the general public and other federal agencies the opportunity to comment on a continuing information collection, as required by the Paperwork Reduction Act of 1995. This notice invites comment on a proposed information collection project titled the Collaborating Center for Questionnaire Design and Evaluation Research (CCQDER). This Generic Clearance request encompasses general questionnaire development, pre-testing, and measurement-error reduction activities to be carried out in 2026-2029.",
-      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04562/proposed-data-collection-submitted-for-public-comment-and-recommendations",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-09",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Agency Forms Undergoing Paperwork Reduction Act Review",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04565/agency-forms-undergoing-paperwork-reduction-act-review",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-09",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Agency Forms Undergoing Paperwork Reduction Act Review",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04564/agency-forms-undergoing-paperwork-reduction-act-review",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-09",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Agency Forms Undergoing Paperwork Reduction Act Review",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04561/agency-forms-undergoing-paperwork-reduction-act-review",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-09",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Government-Owned Inventions; Availability for Licensing",
-      "summary": "The National Institute of Allergy and Infectious Diseases (NIAID), an institute of the National Institutes of Health (NIH), Department of Health and Human Services (HHS), is giving notice of the invention listed below, which is owned by an agency of the U.S. Government and is available for licensing to achieve expeditious commercialization of results of federally funded research and development. Foreign patent applications are filed on selected inventions to extend market coverage for companies and may also be available for licensing.",
-      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04532/government-owned-inventions-availability-for-licensing",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-09",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Agency Forms Undergoing Paperwork Reduction Act Review",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04560/agency-forms-undergoing-paperwork-reduction-act-review",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-09",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Agency Information Collection Activities: Submission to OMB for Review and Approval; Public Comment Request; HRSA Ryan White HIV/AIDS Program Part F National AIDS Education and Training Center Program Activities, OMB No. 0906-XXXX-New",
-      "summary": "In compliance with the Paperwork Reduction Act of 1995, HRSA submitted an Information Collection Request (ICR) to the Office of Management and Budget (OMB) for review and approval. Comments submitted during the first public review of this ICR will be provided to OMB. OMB will accept further comments from the public during the review and approval period. OMB may act on HRSA's ICR only after the 30-day comment period for this notice has closed.",
-      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04535/agency-information-collection-activities-submission-to-omb-for-review-and-approval-public-comment",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-09",
-      "category": "ai_tech",
-      "relevance": 96,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Center for Scientific Review; Notice of Closed Meetings",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/03/09/2026-04512/center-for-scientific-review-notice-of-closed-meetings",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-09",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Children&#8217;s National chief external affairs officer to retire",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/childrens-national-chief-external-affairs-officer-to-retire/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-09",
-      "summary": "DeAnn Marshall, executive vice president and chief external affairs officer at Washington, D.C.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Providence CFO to retire after 10 years with health system",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/providence-cfo-to-retire-after-10-years-with-health-system/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-09",
-      "summary": "Providence Executive Vice President and CFO Greg Hoffman will retire in June after more than 10 years with the health system, including the past five as CFO.&#160; Mr.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Illinois hospital launches obstetric hospitalist program",
-      "url": "https://www.beckershospitalreview.com/quality/hospital-physician-relationships/illinois-hospital-launches-obstetric-hospitalist-program/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-09",
-      "summary": "Kankakee, Ill.-based Riverside Healthcare is opening an obstetric hospitalist program.",
-      "category": "capacity_expansion",
-      "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "New Mexico hospital names OR head",
-      "url": "https://www.beckershospitalreview.com/or/new-mexico-hospital-names-or-head/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-09",
-      "summary": "Silver City, N.M.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Virginia hospital to build inpatient rehab unit",
-      "url": "https://www.beckershospitalreview.com/post-acute/virginia-hospital-to-build-inpatient-rehab-unit/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-09",
-      "summary": "Henrico, Va.-based Select Specialty Hospital is planning to build an inpatient medical rehabilitation unit, Richmond BizSense reported March 9.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Judge orders Leapfrog to remove grades for 5 Florida hospitals",
-      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/judge-orders-leapfrog-to-remove-grades-for-5-florida-hospitals/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-09",
-      "summary": "A federal judge ruled March 6 in favor of five Florida hospitals that filed a lawsuit against The Leapfrog Group nearly a year ago, which claimed the organization&#8217;s &#8220;D&#8221; and &#8220;F&#8221; safety scores unfairly damaged the hospitals&#8217; reputations.&#160; The judge has ordered Leapfrog to disclose to all entities that paid to license its fall 2024, [&#8230;] The post Judge orders Leapfrog to remove grades for 5 Florida hospitals appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Jefferson Health finds 9% of new patients choosing virtual primary care",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/telehealth/jefferson-health-finds-9-of-new-patients-choosing-virtual-primary-care/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-09",
-      "summary": "Jefferson Health in Philadelphia launched a virtual primary care program in late 2024 to address one of healthcare’s biggest access challenges: a shortage of primary care appointments. Less than two years later, the model has become one of the health system’s fastest-growing access points, adding 300 to 500 new patients each month and drawing in [&#8230;] The post Jefferson Health finds 9% of new patients choosing virtual primary care appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Samaritan opens $225M Washington hospital",
-      "url": "https://www.beckershospitalreview.com/capital/samaritan-opens-225m-washington-hospital/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-09",
-      "summary": "Moses Lake, Wash.-based Samaritan opened a $225 million hospital in Moses Lake on March 7.",
-      "category": "capacity_expansion",
-      "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "Integris Health to close childcare centers, citing $1M annual losses",
-      "url": "https://www.beckershospitalreview.com/finance/integris-to-close-childcare-centers-citing-1m-annual-losses/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-09",
-      "summary": "Oklahoma City-based Integris Health will close its Children&#8217;s Place childcare centers and Fun &#38; Fit programs at two hospitals in August due to financial losses, a spokesperson confirmed to Becker&#8217;s March 9. Oklahoma City-based Integris Health will close childcare centers and Fun &#38; Fit programs at two hospitals in August due to financial losses, a [&#8230;] The post Integris Health to close childcare centers, citing $1M annual losses appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "10 drugs poised to be global best-sellers in 2030",
-      "url": "https://www.beckershospitalreview.com/pharmacy/10-drugs-poised-to-be-global-best-sellers-in-2030/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-09",
-      "summary": "Eli Lilly&#8217;s Mounjaro is projected to be the best-selling drug in the world in 2030, according to Statista data shared March 9 with Becker&#8217;s.&#160; Statista is a global data company that provides market insights for 170 industries, including pharmaceuticals.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
     }
   ]
 }
