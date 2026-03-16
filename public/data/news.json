@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-03-16T15:08:13.246Z",
+  "lastUpdated": "2026-03-16T17:09:44.642Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 4,
-    "healthySources": 6,
+    "staleSources": 3,
+    "healthySources": 7,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 184,
+        "articleCount": 182,
         "latestPublishedAt": "2026-03-16T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 17,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 175,
+        "articleCount": 174,
         "latestPublishedAt": "2026-03-16T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 17,
         "status": "ok"
       },
       {
         "source": "STAT News",
         "articleCount": 52,
         "latestPublishedAt": "2026-03-16T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 17,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 33,
         "latestPublishedAt": "2026-03-16T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 17,
         "status": "ok"
       },
       {
         "source": "Health Affairs",
         "articleCount": 30,
         "latestPublishedAt": "2026-03-16T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 17,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
-        "articleCount": 13,
+        "articleCount": 15,
         "latestPublishedAt": "2026-03-16T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 17,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 5,
         "latestPublishedAt": "2026-03-12T00:00:00.000Z",
-        "staleHours": 111,
+        "staleHours": 113,
         "status": "stale"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 4,
         "latestPublishedAt": "2026-03-12T00:00:00.000Z",
-        "staleHours": 111,
+        "staleHours": 113,
         "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
-        "articleCount": 2,
-        "latestPublishedAt": "2026-03-13T00:00:00.000Z",
-        "staleHours": 87,
-        "status": "stale"
+        "articleCount": 3,
+        "latestPublishedAt": "2026-03-16T00:00:00.000Z",
+        "staleHours": 17,
+        "status": "ok"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 2,
         "latestPublishedAt": "2026-03-10T00:00:00.000Z",
-        "staleHours": 159,
+        "staleHours": 161,
         "status": "stale"
       }
     ]
@@ -87,15 +87,15 @@
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 29
+      "count": 27
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 5
+      "count": 4
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 79
+      "count": 78
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -107,11 +107,11 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 171
+      "count": 173
     },
     "general_market": {
       "label": "General Market",
-      "count": 177
+      "count": 179
     }
   },
   "quality": {
@@ -127,7 +127,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 53,
+        "actual": 69,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -137,7 +137,7 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 4,
+        "actual": 3,
         "pass": false
       }
     }
@@ -178,6 +178,18 @@
       "category": "general_market",
       "relevance": 100,
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "Convenience Kit Needle Recall: Integra LifeSciences Removes Tuohy Needle",
+      "summary": "Integra LifeSciences is removing certain lots of Microsensor and Cerelink ICP Kits with potential corrosion stains on the included Tuohy Needle.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/convenience-kit-needle-recall-integra-lifesciences-removes-tuohy-needle",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-03-16",
+      "category": "ai_tech",
+      "relevance": 98,
+      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "Center For Scientific Review; Notice of Closed Meetings",
@@ -226,6 +238,105 @@
       "category": "general_market",
       "relevance": 96,
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "Tallahassee Memorial seeks court order to remove patient months after discharge",
+      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/tallahassee-memorial-seeks-court-order-to-remove-patient-months-after-discharge/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-16",
+      "summary": "Tallahassee (Fla.) Memorial HealthCare is seeking a temporary injunction to remove a former patient who has remained in an inpatient room for about five months since being discharged, the Tallahassee Democrat reported March 15.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Clinicians divided amid growing demand for unproven autism drug",
+      "url": "https://www.beckershospitalreview.com/pharmacy/clinicians-divided-amid-growing-demand-for-unproven-autism-drug/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-16",
+      "summary": "Clinicians are divided amid a growing demand for an unproven autism drug and wanting to preserve their patient-physician relationships, NPR reported March 16. Last fall, a federal press conference touted a new, unproven, treatment for autism: leucovorin.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "UVA Health CIO flags tech debt, IT restructuring as early priorities",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/digital-health/uva-health-cio-flags-tech-debt-it-restructuring-as-early-priorities/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-16",
+      "summary": "Six weeks into his new role, UVA Health CIO Sonney Sapra says the Charlottesville, Va.-based academic health system must address foundational technology challenges, including technical debt, before accelerating more advanced digital innovation.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "EPA revises sterilizer rule to protect medical supply chain",
+      "url": "https://www.beckershospitalreview.com/supply-chain/epa-revises-sterilizer-rule-to-protect-medical-supply-chain/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-16",
+      "summary": "The Environmental Protection Agency has proposed changes to commercial sterilizer regulations that would roll back key provisions of a 2024 emissions rule, citing risks to the domestic medical supply chain. The rule applies to commercial sterilization facilities that use ethylene oxide, a gas used to sterilize 50% of all medical devices in the U.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Medline breaks ground on distribution center",
+      "url": "https://www.beckershospitalreview.com/supply-chain/medline-breaks-ground-on-distribution-center/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-16",
+      "summary": "Medline has begun construction on a 1.2 million-square-foot distribution center in Midlothian, Texas, marking the company&#8217;s first major operational initiative since going public in December.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "US-Iran conflict threatens generic drug supply",
+      "url": "https://www.beckershospitalreview.com/pharmacy/us-iran-conflict-threatens-generic-drug-supply/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-16",
+      "summary": "Tensions in the Strait of Hormuz are raising alarms about the stability of global pharmaceutical supply chains, with potential implications for the U.S.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Winter storm disrupts care in 2 states",
+      "url": "https://www.beckershospitalreview.com/care-coordination/winter-storm-disrupts-care-in-2-states/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-16",
+      "summary": "Several major health systems across Wisconsin and Michigan have closed outpatient clinics and are rescheduling elective procedures as a winter storm system moves through the region. A snowstorm that began March 15 brought blizzard-like conditions to much of the Upper Midwest.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Measles case rate slows in South Carolina, rises in other states: 5 updates",
+      "url": "https://www.beckershospitalreview.com/quality/public-health/measles-case-rate-slows-in-south-carolina-rises-in-other-states-5-updates/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-16",
+      "summary": "The rate of new measles cases is slowing in South Carolina, the hardest-hit state this year, but the U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "5 things to know about Medicaid drug spending: KFF",
+      "url": "https://www.beckershospitalreview.com/pharmacy/5-things-to-know-about-medicaid-drug-spending-kff/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-16",
+      "summary": "Medicaid spending on outpatient prescription drugs has climbed sharply in recent years even as utilization remained relatively flat and enrollment declined. A March 12 report from KFF outlines the key drivers of the increase and the early impact of new federal efforts to curb drug costs.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Bariatric surgery volumes continue falling amid GLP-1 boom",
+      "url": "https://www.beckershospitalreview.com/glp-1s/bariatric-surgery-volumes-continue-falling-amid-glp-1-boom/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-16",
+      "summary": "Since late 2022, rising uptake of GLP-1 medications for obesity has coincided with a decline in bariatric surgeries, according to a growing body of research. A study published March 4 in JAMA Surgery found the swelling popularity of GLP-1 drugs for obesity, such as Wegovy and Zepbound, is not slowing — unlike bariatric surgery volumes.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: A brain-computer interface allowed people with paralysis to type with their minds",
+      "url": "https://www.statnews.com/2026/03/16/brain-computer-interface/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-03-16",
+      "summary": "Two people with paralysis were able to type using a brain-computer interface that decodes attempted finger movement, a new study showed.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "STAT+: Two more drugmakers join TrumpRx",
@@ -291,8 +402,17 @@
       "categoryLabel": "Quality & Safety"
     },
     {
-      "title": "Healthcare tech inovation: Lessons from HIMSS 2026",
-      "url": "https://www.healthcaredive.com/spons/healthcare-tech-inovation-lessons-from-himss-2026/814592/",
+      "title": "GuardDog Telehealth admits to improper record sharing in Epic court case",
+      "url": "https://www.healthcaredive.com/news/guarddog-telehealth-admits-improper-record-sharing-epic-court-case/814715/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-03-16",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Healthcare tech innovation: Lessons from HIMSS 2026",
+      "url": "https://www.healthcaredive.com/spons/healthcare-tech-innovation-lessons-from-himss-2026/814592/",
       "source": "Healthcare Dive",
       "publishedAt": "2026-03-16",
       "summary": "<p>At HIMSS 2026, AWS took the stage with Jupiter Medical Center and Rady Children's Health. Read the key lessons from last week's Views from the Top Session.",
@@ -309,6 +429,15 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "CMS opens grant applications for MAHA ELEVATE lifestyle medicine model",
+      "url": "https://www.fiercehealthcare.com/regulatory/cms-unveils-new-model-aimed-functional-lifestyle-medicine",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-16",
+      "summary": "The Trump administration has unveiled a new payment model that could extend Medicare coverage to functional or lifestyle medicine providers.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
       "title": "Healthcare's night shift workers 'systematically' feel less safe, supported than peers: Press Ganey",
       "url": "https://www.fiercehealthcare.com/providers/healthcares-night-shift-workers-systematically-feel-less-safe-supported-peers-press-ganey",
       "source": "Fierce Healthcare",
@@ -318,11 +447,11 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "Reimagining Prior Authorization: Increasing Transparency for Stakeholders",
-      "url": "https://www.fiercehealthcare.com/sponsored/reimagining-prior-authorization-increasing-transparency-stakeholders",
+      "title": "How employers can take control of rising pharmacy costs",
+      "url": "https://www.fiercehealthcare.com/sponsored/how-employers-can-take-control-rising-pharmacy-costs",
       "source": "Fierce Healthcare",
       "publishedAt": "2026-03-16",
-      "summary": "Prior authorization (PA)—where healthcare access, costs, and patient experience meet—has long been considered by many as a necessary evil in the effort to rein in U.S.",
+      "summary": "Discover strategies to manage GLP-1 and specialty drug spending without hurting member experience.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
@@ -336,22 +465,22 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "How employers can take control of rising pharmacy costs",
-      "url": "https://www.fiercehealthcare.com/sponsored/how-employers-can-take-control-rising-pharmacy-costs",
+      "title": "Reimagining Prior Authorization: Increasing Transparency for Stakeholders",
+      "url": "https://www.fiercehealthcare.com/sponsored/reimagining-prior-authorization-increasing-transparency-stakeholders",
       "source": "Fierce Healthcare",
       "publishedAt": "2026-03-16",
-      "summary": "Discover strategies to manage GLP-1 and specialty drug spending without hurting member experience.",
+      "summary": "Prior authorization (PA)—where healthcare access, costs, and patient experience meet—has long been considered by many as a necessary evil in the effort to rein in U.S.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
     {
-      "title": "Chutes & Ladders—Retirements for Vanderbilt Health CEO, Providence CFO",
-      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
+      "title": "Driving the news at HIMSS26: Innovaccer tackles medical coding with AI; Amwell founder’s newest venture",
+      "url": "https://www.fiercehealthcare.com/health-tech/driving-news-himss26-verily-samsung-ink-collaboration-meditechs-latest-ai-solutions",
       "source": "Fierce Healthcare",
       "publishedAt": "2026-03-16",
-      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
+      "summary": "Get caught up with the latest news from the 2026 Healthcare Information and Management Systems Society Global Health Conference &amp; Exhibition with this quick news recap.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "Amazon launches health AI agent on its website, expands free virtual care to 200M Prime members",
@@ -363,6 +492,15 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
+      "title": "Chutes & Ladders—Retirements for Vanderbilt Health CEO, Providence CFO",
+      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-16",
+      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "Industry Voices—Fast answers, fragile data: the trust problem in AI-driven healthcare analytics",
       "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/industry-voices-fast-answers-fragile-data-trust-problem-ai-driven",
       "source": "Fierce Healthcare",
@@ -370,6 +508,15 @@
       "summary": "AI can find your metric in seconds. The question is whether your organization has done the work to ensure that the metric is defined, current, owned and trusted.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Healthcare tech inovation: Lessons from HIMSS 2026",
+      "url": "https://www.healthcaredive.com/spons/healthcare-tech-inovation-lessons-from-himss-2026/814592/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-03-16",
+      "summary": "<p>At HIMSS 2026, AWS took the stage with Jupiter Medical Center and Rady Children's Health. Read the key lessons from last week's Views from the Top Session.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
     },
     {
       "title": "The feds will overpay Medicare Advantage plans by $76B this year, MedPAC estimates",
@@ -4636,150 +4783,6 @@
       "summary": "McKinsey&#8217;s &#8220;State of Organizations 2026&#8221; report highlights several disruptions affecting organizations globally, including challenges hospital and health system leaders are grappling with. The report is based on survey responses collected from June to September from more than 10,000 senior executives across 15 countries and 17 industries.",
       "category": "general_market",
       "categoryLabel": "General Market"
-    },
-    {
-      "title": "Epic sued over claims MyChart fragments patient medical records",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/epic-sued-over-claims-mychart-fragments-patient-medical-records/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-10",
-      "summary": "A disability advocacy organization and two individuals have filed a class-action lawsuit against Epic, alleging the EHR vendor uses its dominant market position to block interoperability and make it difficult for patients to access their medical records. The lawsuit, filed March 9 in the U.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Covenant HealthCare, Henry Ford Health launch neuroscience partnership",
-      "url": "https://www.beckershospitalreview.com/quality/covenant-healthcare-henry-ford-health-launch-neuroscience-partnership/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-10",
-      "summary": "Saginaw, Mich.-based Covenant HealthCare and Detroit-based Henry Ford Health have launched a clinical affiliation to expand access to complex neurological care in Saginaw, effective April 1.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "STAT+: Novo Nordisk is warned by the FDA for failing to report side effects tied to GLP-1 drugs",
-      "url": "https://www.statnews.com/pharmalot/2026/03/10/novo-failed-report-side-effects-fda-wegovy-ozempic/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-03-10",
-      "summary": "It's the third time in recent weeks that the FDA has admonished Novo Nordisk for different practices.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Healthcare Dealmakers—Hims & Hers goes international with Eucalyptus purchase, Humana's CenterWell buys MaxHealth and more",
-      "url": "https://www.fiercehealthcare.com/finance/healthcare-dealmakers-hims-hers-goes-international-eucalyptus-purchase-humanas-centerwell",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-10",
-      "summary": "CHS' hospital divestitures continue, patient monitoring medtech Masimo agrees to $9.9 billion buyout and more mergers and acquisitions from the month of February.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "HIMSS26: Epic expands AI road map, previews Factory to build and orchestrate AI agents",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/himss26-epic-expands-ai-roadmap-previews-factory-build-and-orchestrate-ai",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-10",
-      "summary": "LAS VEGAS—At the 2026 HIMSS Global Health Conference &amp; Exhibition, which kicked off Monday, Epic teased its future AI road map with new features across clinical, patient-facing and operational workflows.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "HIMSS26: Samsung, b.well partner to 'kill the clipboard,' aligning with a key CMS goal",
-      "url": "https://www.fiercehealthcare.com/digital-health/samsung-bwell-connected-health-partner-kill-clipboard-key-cms",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-10",
-      "summary": "LAS VEGAS—Samsung Electronics and digital health company b.well Connected Health are working together to toss out the traditional patient clipboard and replace it with smartphones.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Private equity invested $1 trillion in healthcare in 10 years: Report",
-      "url": "https://www.beckershospitalreview.com/finance/private-equity-invested-1t-in-healthcare-in-10-years-report/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-10",
-      "summary": "Private equity firms have become a major force in healthcare, investing more than $1 trillion over the last ten years, according to a recent report from New York University’s Stern Center for Business and Human Rights. The report, published March 10 and authored by Michael Goldhaber, examines how private equity&#8217;s investments have impacted patient care, [&#8230;] The post Private equity invested $1 trillion in healthcare in 10 years: Report appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Nurses propose staffing ratios at UPMC hospital",
-      "url": "https://www.beckershospitalreview.com/hr/nurses-propose-staffing-ratios-at-upmc-hospital/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-10",
-      "summary": "Less than one year after unionizing, nurses and advanced practitioners at UPMC Magee-Womens Hospital in Pittsburgh are proposing national nurse staffing standards as part of their first contract negotiations with UPMC. SEIU Healthcare Pennsylvania members presented the proposals to Pittsburgh-based UPMC on March 10.",
-      "category": "labor_unions",
-      "categoryLabel": "Labor & Unions"
-    },
-    {
-      "title": "Idaho lawmakers introduce Medicaid expansion repeal bill",
-      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/idaho-lawmakers-introduce-medicaid-expansion-repeal-bill/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-10",
-      "summary": "Idaho Republican state lawmakers have introduced a bill to repeal Medicaid expansion, the Idaho Capital Sun reported March 9.&#160; Four things to know:&#160; 1.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Cancer drug pulled from US market",
-      "url": "https://www.beckershospitalreview.com/pharmacy/cancer-drug-pulled-from-us-market/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-10",
-      "summary": "Ipsen, a Paris-based drugmaker, is removing its cancer drug Tazverik (tazemetostat) from the U.S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Federal agency urges greater HHS transparency in high-risk pathogen research",
-      "url": "https://www.beckershospitalreview.com/quality/public-health/federal-agency-urges-greater-hhs-transparency-in-high-risk-pathogen-research/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-10",
-      "summary": "The Government Accountability Office is calling on HHS to increase transparency in how it assesses and mitigates risk related to high-risk pathogen research.&#160; In a report released Feb.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Elevance to expand 10% out-of-network penalty policy into California",
-      "url": "https://www.beckershospitalreview.com/finance/elevance-to-expand-10-out-of-network-penalty-policy-into-california/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-10",
-      "summary": "Anthem Blue Cross of California is bringing its controversial out-of-network penalty policy to California on June 1, a move that has already drawn legislative backlash in the insurer&#8217;s home state of Indiana. Under the policy, participating hospitals and facilities in California must ensure that physicians providing services in inpatient or outpatient, facility-based settings are in-network [&#8230;] The post Elevance to expand 10% out-of-network penalty policy into California appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Leapfrog ordered to remove safety grade for 5 Tenet hospitals",
-      "url": "https://www.fiercehealthcare.com/providers/leapfrog-ordered-remove-safety-grade-5-tenet-hospitals",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-10",
-      "summary": "A federal judge said a 2024 methodology update that adjusted the weighting of safety measures inputted for nonparticipating hospitals was \"deceptive and unfair\" under Florida law. Leapfrog plans to appeal, but said it will be making broader changes in ratings releases to come.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "FDA looks to further ease biosimilar approvals",
-      "url": "https://www.beckershospitalreview.com/pharmacy/fda-looks-to-further-ease-biosimilar-approvals/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-10",
-      "summary": "A March 9 draft guidance from the FDA proposes an allowance for biosimilar sponsors to use clinical data from outside the U.S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Massachusetts VA hospital launches geriatric NP residency",
-      "url": "https://www.beckershospitalreview.com/post-acute/massachusetts-va-hospital-launches-geriatric-np-residency/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-10",
-      "summary": "VA Bedford (Mass.) Healthcare System is launching a geriatrics and extended care nurse practitioner residency program.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "HCA Healthcare CIO: Why ‘operational quiet’ is critical for digital transformation",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/digital-health/hca-healthcare-cio-why-operational-quiet-is-critical-for-digital-transformation/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-10",
-      "summary": "Chad Wasserman, senior vice president and CIO of Nashville, Tenn.-based HCA Healthcare, said operational stability is essential for scaling AI and digital innovation across large health systems.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
     }
   ]
 }
