@@ -1,81 +1,74 @@
 {
-  "lastUpdated": "2026-03-16T21:46:58.639Z",
+  "lastUpdated": "2026-03-16T22:40:41.253Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
-    "totalSources": 10,
-    "staleSources": 3,
+    "totalSources": 9,
+    "staleSources": 2,
     "healthySources": 7,
     "sources": [
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 187,
+        "articleCount": 194,
         "latestPublishedAt": "2026-03-16T00:00:00.000Z",
-        "staleHours": 21,
+        "staleHours": 22,
         "status": "ok"
       },
       {
         "source": "Fierce Healthcare",
-        "articleCount": 179,
+        "articleCount": 180,
         "latestPublishedAt": "2026-03-16T00:00:00.000Z",
-        "staleHours": 21,
+        "staleHours": 22,
         "status": "ok"
       },
       {
         "source": "STAT News",
         "articleCount": 43,
         "latestPublishedAt": "2026-03-16T00:00:00.000Z",
-        "staleHours": 21,
-        "status": "ok"
-      },
-      {
-        "source": "Federal Register - HHS",
-        "articleCount": 32,
-        "latestPublishedAt": "2026-03-16T00:00:00.000Z",
-        "staleHours": 21,
+        "staleHours": 22,
         "status": "ok"
       },
       {
         "source": "Health Affairs",
         "articleCount": 30,
         "latestPublishedAt": "2026-03-16T00:00:00.000Z",
-        "staleHours": 21,
+        "staleHours": 22,
+        "status": "ok"
+      },
+      {
+        "source": "Federal Register - HHS",
+        "articleCount": 26,
+        "latestPublishedAt": "2026-03-16T00:00:00.000Z",
+        "staleHours": 22,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 14,
         "latestPublishedAt": "2026-03-16T00:00:00.000Z",
-        "staleHours": 21,
+        "staleHours": 22,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 5,
         "latestPublishedAt": "2026-03-12T00:00:00.000Z",
-        "staleHours": 117,
+        "staleHours": 118,
         "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 4,
         "latestPublishedAt": "2026-03-16T00:00:00.000Z",
-        "staleHours": 21,
+        "staleHours": 22,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 4,
         "latestPublishedAt": "2026-03-12T00:00:00.000Z",
-        "staleHours": 117,
-        "status": "stale"
-      },
-      {
-        "source": "SEC Healthcare Filings",
-        "articleCount": 2,
-        "latestPublishedAt": "2026-03-10T00:00:00.000Z",
-        "staleHours": 165,
+        "staleHours": 118,
         "status": "stale"
       }
     ]
@@ -87,7 +80,7 @@
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 30
+      "count": 31
     },
     "labor_unions": {
       "label": "Labor & Unions",
@@ -95,7 +88,7 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 77
+      "count": 78
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -107,27 +100,25 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 171
+      "count": 173
     },
     "general_market": {
       "label": "General Market",
-      "count": 180
+      "count": 176
     }
   },
   "quality": {
-    "status": "warning",
-    "failedChecks": [
-      "maxStaleSources"
-    ],
+    "status": "pass",
+    "failedChecks": [],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
-        "actual": 10,
+        "actual": 9,
         "pass": true
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 104,
+        "actual": 112,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -137,8 +128,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 3,
-        "pass": false
+        "actual": 2,
+        "pass": true
       }
     }
   },
@@ -252,6 +243,69 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "Details emerge on Mission Hospital&#8217;s immediate jeopardy response: 8 things to know",
+      "url": "https://www.beckershospitalreview.com/quality/patient-safety-outcomes/details-emerge-on-mission-hospitals-immediate-jeopardy-response-8-things-to-know/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-16",
+      "summary": "After receiving its third immediate jeopardy designation in less than two years, Asheville, N.C.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "CDC panel advises tracking COVID-19 vaccine injuries",
+      "url": "https://www.beckershospitalreview.com/quality/public-health/cdc-panel-advises-tracking-covid-19-vaccine-injuries/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-16",
+      "summary": "The Advisory Committee on Immunization Practices’ COVID-19 Immunization Workgroup has proposed three federal actions to address post-acute COVID-19 vaccination syndrome, or PACVS, a condition characterized by multisystem symptoms that persist for 12 or more weeks after vaccination, The New York Times reported March 15. In a Feb.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Leapfrog limits hospital grades to survey participants after court ruling",
+      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/leapfrog-restricts-hospital-grades-to-participation-after-ruling/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-16",
+      "summary": "After a federal judge ordered The Leapfrog Group to remove safety grades it assigned to five Florida hospitals, Leapfrog told Becker&#8217;s March 16 it has pulled several grades for U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Court blocks HHS changes to childhood vaccine schedule",
+      "url": "https://www.beckershospitalreview.com/quality/public-health/court-blocks-hhs-changes-to-childhood-vaccine-schedule/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-16",
+      "summary": "A federal judge on March 16 blocked efforts by HHS Secretary Robert F. Kennedy Jr.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Nvidia expands healthcare AI models",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/nvidia-expands-healthcare-ai-models/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-16",
+      "summary": "Nvidia is expanding its open AI model ecosystem to support healthcare and life sciences use cases, including drug discovery and biomedical research. The effort includes continued development of the company’s BioNeMo and Clara model families, which support applications such as biological research, molecular modeling and medical imaging, according to a March 16 news release.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Cleveland Clinic chief investment officer to exit after 10 years",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/cleveland-clinic-chief-investment-officer-to-exit-after-10-years/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-16",
+      "summary": "Stefan Strein, Cleveland Clinic&#8217;s vice president and chief investment officer for more than 10 years, will depart from the organization on April 10, a health system spokesperson confirmed to Becker&#8217;s. Mr.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Telehealth helps breast cancer patients adhere to treatment: Study",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/telehealth/telehealth-helps-breast-cancer-patients-adhere-to-treatment-study/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-16",
+      "summary": "Telehealth use is associated with higher adherence to endocrine therapy among women with breast cancer, according to a study in the Journal of Cancer Survivorship. Researchers from Athens-based University of Georgia analyzed claims data from the Merative MarketScan database, examining more than 1,100 commercially insured women under age 65 who were diagnosed with nonmetastatic breast [&#8230;] The post Telehealth helps breast cancer patients adhere to treatment: Study appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
       "title": "Top 20 hospitals ranked by community benefit spending: Lown Institute",
       "url": "https://www.beckershospitalreview.com/finance/top-20-hospitals-ranked-by-community-benefit-spending-lown-institute/",
       "source": "Becker's Hospital Review",
@@ -275,69 +329,6 @@
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-03-16",
       "summary": "Northwestern Medicine and Techstars have selected five startups for the 2026 class of their healthcare accelerator program. The early-stage companies will participate in a 13-week, mentorship-driven program hosted at Northwestern Medicine&#8217;s Mansueto Innovation Institute in Chicago, according to a March 16 news release from the health system.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "FDA clears RSV shot for younger at-risk adults",
-      "url": "https://www.beckershospitalreview.com/pharmacy/fda-clears-rsv-shot-for-younger-at-risk-adults/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-16",
-      "summary": "The FDA has cleared GSK&#8217;s respiratory syncytial virus vaccine for use in adults ages 18 to 49 who are at increased risk for severe disease. The vaccine, Arexvy, was originally approved in 2023 for use in adults 60 and older.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "VA&#8217;s chief technology, AI officer to depart",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/vas-chief-technology-ai-officer-to-depart/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-16",
-      "summary": "Charles Worthington, chief technology and AI officer of the U.S.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Fitch downgrades Missouri system&#8217;s credit rating",
-      "url": "https://www.beckershospitalreview.com/finance/fitch-downgrades-missouri-systems-credit-rating/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-16",
-      "summary": "Hannibal (Mo.) Regional Healthcare System&#8217;s rating was downgraded to &#8220;BB+&#8221; from &#8220;BBB-&#8221; by Fitch.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "1 CFO&#8217;s unconventional path from rental cars to healthcare",
-      "url": "https://www.beckershospitalreview.com/finance/1-cfos-unconventional-path-from-rental-cars-to-healthcare/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-16",
-      "summary": "Jason Hinkle&#8217;s path to CFO of Deaconess Illinois, a member of Evansville, Ind.-based Deaconess Health System, might look a little less traditional than other journeys to the healthcare finance C-suite, but the route helped him become the leader he is today – literally.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "How CEOs &#8216;thread the needle&#8217; to integrate new hospitals",
-      "url": "https://www.beckershospitalreview.com/hospital-management-administration/375794/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-16",
-      "summary": "As health system acquisition activity crawls back toward pre-pandemic levels, CEOs are turning their focus to what comes next: integrating newly acquired hospitals without disrupting care, culture or community trust. As large systems continue to grow — with 10 hospital mergers and acquisitions completed so far in 2026 — leaders say the first year after [&#8230;] The post How CEOs &#8216;thread the needle&#8217; to integrate new hospitals appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "NYC Health + Hospitals names chief nurse of Bronx hospitals",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/nyc-health-hospitals-names-chief-nurse-of-bronx-hospitals/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-16",
-      "summary": "Angela Carter, DNP, has been named chief nursing officer of NYC Health + Hospitals&#8217; Jacobi and North Central Bronx hospital campuses in the Bronx borough of New York City.&#160; In the role, Dr.",
-      "category": "capacity_expansion",
-      "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "Orthopedic surgeon calls for removal of prior auth red tape",
-      "url": "https://www.beckershospitalreview.com/orthopedics/orthopedic-surgeon-calls-for-removal-of-prior-auth-red-tape/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-16",
-      "summary": "The current prior authorization system in orthopedics leads to unnecessary denials and delays that could be improved with a level of standardization, according to this orthopedic surgeon.&#160; A new communication system for prior authorizations could allow for insurance companies to inform surgeons and patients what is still needed in real-time, which would lessen the chance [&#8230;] The post Orthopedic surgeon calls for removal of prior auth red tape appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
@@ -495,6 +486,15 @@
       "categoryLabel": "Policy & Reimbursement"
     },
     {
+      "title": "Prime Healthcare, BCBSIL stare down June 1 deadline for new network contract",
+      "url": "https://www.fiercehealthcare.com/providers/prime-healthcare-bcbsil-stare-down-june-1-deadline-new-network-contract",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-16",
+      "summary": "Prime Healthcare, a newcomer to the Illinois market, recently sought to reassure many of its patients after they received a notice that its hospitals and physicians may no longer be in their network.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "UnitedHealthcare expands doula benefit to employers nationwide",
       "url": "https://www.fiercehealthcare.com/payers/unitedhealthcare-expands-doula-benefit-employers-nationwide",
       "source": "Fierce Healthcare",
@@ -511,6 +511,69 @@
       "summary": "The Trump administration has unveiled a new payment model that could extend Medicare coverage to functional or lifestyle medicine providers.",
       "category": "policy_reimbursement",
       "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "FDA clears RSV shot for younger at-risk adults",
+      "url": "https://www.beckershospitalreview.com/pharmacy/fda-clears-rsv-shot-for-younger-at-risk-adults/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-16",
+      "summary": "The FDA has cleared GSK&#8217;s respiratory syncytial virus vaccine for use in adults ages 18 to 49 who are at increased risk for severe disease. The vaccine, Arexvy, was originally approved in 2023 for use in adults 60 and older.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "VA&#8217;s chief technology, AI officer to depart",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/vas-chief-technology-ai-officer-to-depart/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-16",
+      "summary": "Charles Worthington, chief technology and AI officer of the U.S.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Fitch downgrades Missouri system&#8217;s credit rating",
+      "url": "https://www.beckershospitalreview.com/finance/fitch-downgrades-missouri-systems-credit-rating/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-16",
+      "summary": "Hannibal (Mo.) Regional Healthcare System&#8217;s rating was downgraded to &#8220;BB+&#8221; from &#8220;BBB-&#8221; by Fitch.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "1 CFO&#8217;s unconventional path from rental cars to healthcare",
+      "url": "https://www.beckershospitalreview.com/finance/1-cfos-unconventional-path-from-rental-cars-to-healthcare/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-16",
+      "summary": "Jason Hinkle&#8217;s path to CFO of Deaconess Illinois, a member of Evansville, Ind.-based Deaconess Health System, might look a little less traditional than other journeys to the healthcare finance C-suite, but the route helped him become the leader he is today – literally.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "How CEOs &#8216;thread the needle&#8217; to integrate new hospitals",
+      "url": "https://www.beckershospitalreview.com/hospital-management-administration/375794/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-16",
+      "summary": "As health system acquisition activity crawls back toward pre-pandemic levels, CEOs are turning their focus to what comes next: integrating newly acquired hospitals without disrupting care, culture or community trust. As large systems continue to grow — with 10 hospital mergers and acquisitions completed so far in 2026 — leaders say the first year after [&#8230;] The post How CEOs &#8216;thread the needle&#8217; to integrate new hospitals appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "NYC Health + Hospitals names chief nurse of Bronx hospitals",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/nyc-health-hospitals-names-chief-nurse-of-bronx-hospitals/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-16",
+      "summary": "Angela Carter, DNP, has been named chief nursing officer of NYC Health + Hospitals&#8217; Jacobi and North Central Bronx hospital campuses in the Bronx borough of New York City.&#160; In the role, Dr.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "Orthopedic surgeon calls for removal of prior auth red tape",
+      "url": "https://www.beckershospitalreview.com/orthopedics/orthopedic-surgeon-calls-for-removal-of-prior-auth-red-tape/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-16",
+      "summary": "The current prior authorization system in orthopedics leads to unnecessary denials and delays that could be improved with a level of standardization, according to this orthopedic surgeon.&#160; A new communication system for prior authorizations could allow for insurance companies to inform surgeons and patients what is still needed in real-time, which would lessen the chance [&#8230;] The post Orthopedic surgeon calls for removal of prior auth red tape appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
     },
     {
       "title": "Healthcare's night shift workers 'systematically' feel less safe, supported than peers: Press Ganey",
@@ -4686,102 +4749,6 @@
       "publishedAt": "2026-03-10",
       "category": "general_market",
       "relevance": 95,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "ELV 8-K filing - Elevance Health, Inc.",
-      "summary": "Elevance Health, Inc. filed 8-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/1156039/000115603926000024/elv-20260310.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-03-10",
-      "category": "general_market",
-      "relevance": 90,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "CNC 8-K filing - Centene Corporation",
-      "summary": "Centene Corporation filed 8-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/1071739/000107173926000056/cnc-20260310.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-03-10",
-      "category": "general_market",
-      "relevance": 85,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Proposed Collection: 30-Day Comment Request; The Clinical Trials Reporting Program (CTRP) Database (NCI); Correction",
-      "summary": "The Department of Health and Human Services, National Institutes of Health published a Notice in the Federal Register on February 25, 2026. That notice requires a correction in the SUPPLEMENTARY INFORMATION section.",
-      "url": "https://www.federalregister.gov/documents/2026/03/10/2026-04635/proposed-collection-30-day-comment-request-the-clinical-trials-reporting-program-ctrp-database-nci",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-10",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Center for Scientific Review; Amended Notice of Meeting",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/03/10/2026-04690/center-for-scientific-review-amended-notice-of-meeting",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-10",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Center for Scientific Review; Cancellation of Meeting",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/03/10/2026-04647/center-for-scientific-review-cancellation-of-meeting",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-10",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Center for Scientific Review; Notice of Closed Meetings",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/03/10/2026-04644/center-for-scientific-review-notice-of-closed-meetings",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-10",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "National Institute on Aging; Notice of Meeting",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/03/10/2026-04597/national-institute-on-aging-notice-of-meeting",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-10",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Submission for Office of Management and Budget Review; Title Central Authority Payment Service (New Collection)",
-      "summary": "The Office of Child Support Enforcement (OCSE), Administration of Children and Families (ACF), U.S. Department of Health and Human Services, is requesting the Office of Management and Budget to approve a new information collection, Central Authority Payment Service (CAP). Participating state child support agencies (CSAs)and foreign authorities will use CAP to send or receive child support payments electronically.",
-      "url": "https://www.federalregister.gov/documents/2026/03/10/2026-04594/submission-for-office-of-management-and-budget-review-title-central-authority-payment-service-new",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-10",
-      "category": "general_market",
-      "relevance": 100,
       "categoryLabel": "General Market"
     }
   ]
