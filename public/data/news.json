@@ -1,82 +1,89 @@
 {
-  "lastUpdated": "2026-03-19T19:07:04.055Z",
+  "lastUpdated": "2026-03-19T20:45:51.068Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
-    "totalSources": 10,
+    "totalSources": 11,
     "staleSources": 1,
-    "healthySources": 9,
+    "healthySources": 10,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 180,
+        "articleCount": 183,
         "latestPublishedAt": "2026-03-19T00:00:00.000Z",
-        "staleHours": 19,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 163,
+        "articleCount": 172,
         "latestPublishedAt": "2026-03-19T00:00:00.000Z",
-        "staleHours": 19,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "STAT News",
         "articleCount": 55,
         "latestPublishedAt": "2026-03-19T00:00:00.000Z",
-        "staleHours": 19,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
-        "articleCount": 42,
+        "articleCount": 36,
         "latestPublishedAt": "2026-03-19T00:00:00.000Z",
-        "staleHours": 19,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "Health Affairs",
-        "articleCount": 30,
+        "articleCount": 29,
         "latestPublishedAt": "2026-03-19T00:00:00.000Z",
-        "staleHours": 19,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 12,
         "latestPublishedAt": "2026-03-19T00:00:00.000Z",
-        "staleHours": 19,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
-        "articleCount": 6,
+        "articleCount": 5,
         "latestPublishedAt": "2026-03-18T00:00:00.000Z",
-        "staleHours": 43,
+        "staleHours": 44,
         "status": "ok"
-      },
-      {
-        "source": "Federal Register - FDA",
-        "articleCount": 6,
-        "latestPublishedAt": "2026-03-16T00:00:00.000Z",
-        "staleHours": 91,
-        "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 4,
         "latestPublishedAt": "2026-03-18T00:00:00.000Z",
-        "staleHours": 43,
+        "staleHours": 44,
         "status": "ok"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 2,
         "latestPublishedAt": "2026-03-19T00:00:00.000Z",
-        "staleHours": 19,
+        "staleHours": 20,
         "status": "ok"
+      },
+      {
+        "source": "SEC Healthcare Filings",
+        "articleCount": 1,
+        "latestPublishedAt": "2026-03-19T00:00:00.000Z",
+        "staleHours": 20,
+        "status": "ok"
+      },
+      {
+        "source": "Federal Register - FDA",
+        "articleCount": 1,
+        "latestPublishedAt": "2026-03-16T00:00:00.000Z",
+        "staleHours": 92,
+        "status": "stale"
       }
     ]
   },
@@ -87,11 +94,11 @@
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 37
+      "count": 38
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 6
+      "count": 7
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
@@ -99,15 +106,15 @@
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 13
+      "count": 12
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
-      "count": 9
+      "count": 10
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 174
+      "count": 172
     },
     "general_market": {
       "label": "General Market",
@@ -120,12 +127,12 @@
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
-        "actual": 10,
+        "actual": 11,
         "pass": true
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 93,
+        "actual": 106,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -214,92 +221,104 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "CVS 8-K filing - CVS Health Corporation",
+      "summary": "CVS Health Corporation filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/64803/000006480326000017/cvs-20260318.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-03-19",
+      "category": "general_market",
+      "relevance": 90,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Baylor Scott &#038; White Health taps foundation president",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/baylor-scott-white-health-taps-foundation-president/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-19",
+      "summary": "Dallas-based Baylor Scott &#38; White Health has named Adam Baggs president of Baylor Scott &#38; White All Saints Health Foundation. Mr.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "2 health systems, telehealth companies urge Michigan to stay in compact",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/telehealth/2-health-systems-telehealth-companies-urge-michigan-to-stay-in-compact/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-19",
+      "summary": "Two health systems have joined several companies in urging the state of Michigan to continue its participation in the Interstate Medical Licensure Compact. Brentwood, Tenn.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "UCHealth backs Verily in $300M funding round",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/digital-health/uchealth-backs-verily-in-300m-funding-round/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-19",
+      "summary": "Verily has raised $300 million in a new investment round and is restructuring its ownership as it looks to advance its precision health strategy. The Dallas-based company said the funding round was led by Series X Capital, with participation from Alphabet, Aurora, Colo.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "New York expands Northwell&#8217;s hospital gun violence prevention initiative",
+      "url": "https://www.beckershospitalreview.com/quality/patient-safety-outcomes/new-york-expands-northwells-hospital-gun-violence-prevention-initiative/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-19",
+      "summary": "New York state has launched a pilot program to integrate firearm access and injury risk screening into emergency department visits. The initiative, supported by a $1.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "How Sutter, Allina finances compare pre-merger",
+      "url": "https://www.beckershospitalreview.com/finance/how-sutter-allina-finances-compare-pre-merger/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-19",
+      "summary": "Sacramento, Calif.-based Sutter Health and Minneapolis-based Allina Health signed a letter of intent March 17 to form a 39-hospital system spanning California, Minnesota and Wisconsin.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Dartmouth hospital CFO details 340B designation risk, system partnership",
+      "url": "https://www.beckershospitalreview.com/finance/dartmouth-hospital-cfo-details-340b-designation-risk-system-partnership/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-19",
+      "summary": "Todd Roberts, CFO of Cheshire Medical Center in Keene, N.H.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "2 groups of New Jersey healthcare workers vote to unionize",
+      "url": "https://www.beckershospitalreview.com/hr/2-groups-of-new-jersey-healthcare-workers-vote-to-unionize/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-19",
+      "summary": "Healthcare workers at Samaritan Healthcare &#38; Hospice in Mount Laurel, N.J.",
+      "category": "labor_unions",
+      "categoryLabel": "Labor & Unions"
+    },
+    {
+      "title": "UHS CEO: Talkspace deal builds 1st national &#8216;end-to-end&#8217; behavioral model",
+      "url": "https://www.beckershospitalreview.com/strategy/uhs-ceo-talkspace-deal-builds-1st-national-end-to-end-behavioral-model/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-19",
+      "summary": "King of Prussia, Pa.-based Universal Health Services is continuing to execute its growth strategy, with a focus on outpatient and behavioral health expansion, President and CEO Marc D.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "Senate Democrats lay out health insurance reform agenda — and put industry on notice",
+      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/senate-democrats-lay-out-health-insurance-reform-agenda-and-put-industry-on-notice/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-19",
+      "summary": "Twelve Democratic senators signed a March 19 letter detailing their plan for health insurance reforms. The letter said Senate Finance Committee Democratic staff will design policies to elevate affordability, break down barriers to accessing insurance and rein in insurance companies.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
       "title": "Eli Lilly&#8217;s 3rd-generation GLP-1 reduces weight, A1C: Study",
       "url": "https://www.beckershospitalreview.com/glp-1s/eli-lillys-3rd-generation-glp-1-reduces-weight-a1c-study/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-03-19",
       "summary": "The highest dose of Eli Lilly&#8217;s investigational drug, retatrutide, helped adults with Type 2 diabetes lower their A1Cs about 2% and shed an average 33.3 pounds, or 15.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "ECU Health gets green light for $138M expansion",
-      "url": "https://www.beckershospitalreview.com/capital/ecu-health-gets-green-light-for-138m-expansion/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-19",
-      "summary": "Greenville, N.C.",
-      "category": "capacity_expansion",
-      "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "Hospital ads increase ED visits, Medicare spending: Penn study",
-      "url": "https://www.beckershospitalreview.com/digital-marketing/hospital-ads-increase-ed-visits-medicare-spending-penn-study/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-19",
-      "summary": "Increased spending on hospital advertisements is linked to a rise in emergency department visits and Medicare spending, according to research at Philadelphia-based University of Pennsylvania. For a 10% increase in a regional market’s hospital ads (about 150 more ad impressions), the rate of hospital use increased by nine admissions per 100,000 beneficiaries, per the National [&#8230;] The post Hospital ads increase ED visits, Medicare spending: Penn study appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "University of Missouri System names marketing chief",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/university-of-missouri-system-names-marketing-chief/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-19",
-      "summary": "Jody Mitori has been named chief marketing and communications officer for Columbia, Mo.-based University of Missouri System, which includes MU Health Care.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "UCLA Health approved for orthopedic project",
-      "url": "https://www.beckershospitalreview.com/orthopedics/ucla-health-approved-for-orthopedic-project/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-19",
-      "summary": "The UC Board of Regents approved a UCLA Health project to convert a Los Angeles area building into an office building including a sports medicine facility and ASC, the&#160;Daily Bruin&#160;reported March 18. The $298.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Providence explores sale of health plan",
-      "url": "https://www.beckershospitalreview.com/hospital-transactions-and-valuation/providence-explores-sale-of-health-plan/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-19",
-      "summary": "Renton, Wash.-based Providence is exploring strategic options for its insurance arm, Providence Health Plan, including a potential sale, the system said in a March 19 news release shared with Becker&#8217;s.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Critical access hospital builds Epic hub for rural providers",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/critical-access-hospital-builds-epic-hub-for-rural-providers/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-19",
-      "summary": "Aspen Valley Health, a critical access hospital in Colorado, is taking on a role typically reserved for large health systems: serving as an Epic host for other rural providers through the vendor&#8217;s Community Connect program. The strategy aims to give small, independent organizations access to enterprise EHR infrastructure and shared services without requiring system affiliation, [&#8230;] The post Critical access hospital builds Epic hub for rural providers appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Fitch upgrades Tenet&#8217;s credit rating",
-      "url": "https://www.beckershospitalreview.com/finance/fitch-upgrades-tenets-credit-rating-2/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-19",
-      "summary": "Dallas-based Tenet Healthcare&#8217;s credit rating was upgraded to &#8220;BB&#8221; from &#8220;BB-&#8221; by Fitch. The rating reflects the for-profit system&#8217;s improved competitive position, including double-digit revenue growth in its high-margin ambulatory segment, Fitch said in its March 18 report.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "How concierge programs can strengthen revenue, retention and patient satisfaction",
-      "url": "https://www.beckershospitalreview.com/workforce/how-concierge-programs-can-strengthen-revenue-retention-and-patient-satisfaction/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-19",
-      "summary": "Health systems and medical groups are navigating a challenging environment marked by declining reimbursements, rising operational costs and growing physician burnout. At the same time, patient expectations continue to evolve.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "B. Braun sharpens focus on pharma, medtech partnerships with rebrand",
-      "url": "https://www.beckershospitalreview.com/supply-chain/b-braun-sharpens-focus-on-pharma-medtech-partnerships-with-rebrand/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-19",
-      "summary": "Medical devicemaker B. Braun has renamed its OEM division B.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
@@ -448,6 +467,33 @@
       "categoryLabel": "Mergers & M&A"
     },
     {
+      "title": "Providence mulling sale of its health plan amid financial pressures",
+      "url": "https://www.fiercehealthcare.com/payers/providence-mulling-sale-its-health-plan-amid-financial-pressure",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-19",
+      "summary": "Providence announced Thursday that it is \"exploring strategic options\" for its health plan, including a possible sale.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Women's health sector could grow to $600B industry by 2030: PwC report",
+      "url": "https://www.fiercehealthcare.com/providers/womens-health-sector-could-grow-600b-industry-2030-new-report-says",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-19",
+      "summary": "The current global market for the women’s health sector is estimated to be between $430 billion and $440 billion, which could grow 6% to 8% by 2030.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Hospital operations begin 2026 with depressed margins amid low volumes, high labor spend",
+      "url": "https://www.fiercehealthcare.com/providers/hospital-operations-begin-2026-depressed-margins-amid-low-volumes-high-labor-spend",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-19",
+      "summary": "A tough start to the new year includes a continuation of 2025's rise of bad debt, prompting a warning from Kaufman Hall for hospitals to be strategic about their spending going forward.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "Male preconception startup Upstream announces donor-matching platform",
       "url": "https://www.fiercehealthcare.com/digital-health/male-preconception-startup-upstream-launches-donor-matching-preseed",
       "source": "Fierce Healthcare",
@@ -455,6 +501,87 @@
       "summary": "PreSeed does not store or distribute sperm, but rather partners with licensed clinics, sperm agencies and legal professionals to help pair intended parents with the right donor.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "ECU Health gets green light for $138M expansion",
+      "url": "https://www.beckershospitalreview.com/capital/ecu-health-gets-green-light-for-138m-expansion/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-19",
+      "summary": "Greenville, N.C.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "Hospital ads increase ED visits, Medicare spending: Penn study",
+      "url": "https://www.beckershospitalreview.com/digital-marketing/hospital-ads-increase-ed-visits-medicare-spending-penn-study/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-19",
+      "summary": "Increased spending on hospital advertisements is linked to a rise in emergency department visits and Medicare spending, according to research at Philadelphia-based University of Pennsylvania. For a 10% increase in a regional market’s hospital ads (about 150 more ad impressions), the rate of hospital use increased by nine admissions per 100,000 beneficiaries, per the National [&#8230;] The post Hospital ads increase ED visits, Medicare spending: Penn study appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "University of Missouri System names marketing chief",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/university-of-missouri-system-names-marketing-chief/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-19",
+      "summary": "Jody Mitori has been named chief marketing and communications officer for Columbia, Mo.-based University of Missouri System, which includes MU Health Care.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "UCLA Health approved for orthopedic project",
+      "url": "https://www.beckershospitalreview.com/orthopedics/ucla-health-approved-for-orthopedic-project/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-19",
+      "summary": "The UC Board of Regents approved a UCLA Health project to convert a Los Angeles area building into an office building including a sports medicine facility and ASC, the&#160;Daily Bruin&#160;reported March 18. The $298.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Providence explores sale of health plan",
+      "url": "https://www.beckershospitalreview.com/hospital-transactions-and-valuation/providence-explores-sale-of-health-plan/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-19",
+      "summary": "Renton, Wash.-based Providence is exploring strategic options for its insurance arm, Providence Health Plan, including a potential sale, the system said in a March 19 news release shared with Becker&#8217;s.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Critical access hospital builds Epic hub for rural providers",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/critical-access-hospital-builds-epic-hub-for-rural-providers/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-19",
+      "summary": "Aspen Valley Health, a critical access hospital in Colorado, is taking on a role typically reserved for large health systems: serving as an Epic host for other rural providers through the vendor&#8217;s Community Connect program. The strategy aims to give small, independent organizations access to enterprise EHR infrastructure and shared services without requiring system affiliation, [&#8230;] The post Critical access hospital builds Epic hub for rural providers appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Fitch upgrades Tenet&#8217;s credit rating",
+      "url": "https://www.beckershospitalreview.com/finance/fitch-upgrades-tenets-credit-rating-2/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-19",
+      "summary": "Dallas-based Tenet Healthcare&#8217;s credit rating was upgraded to &#8220;BB&#8221; from &#8220;BB-&#8221; by Fitch. The rating reflects the for-profit system&#8217;s improved competitive position, including double-digit revenue growth in its high-margin ambulatory segment, Fitch said in its March 18 report.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "How concierge programs can strengthen revenue, retention and patient satisfaction",
+      "url": "https://www.beckershospitalreview.com/workforce/how-concierge-programs-can-strengthen-revenue-retention-and-patient-satisfaction/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-19",
+      "summary": "Health systems and medical groups are navigating a challenging environment marked by declining reimbursements, rising operational costs and growing physician burnout. At the same time, patient expectations continue to evolve.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "B. Braun sharpens focus on pharma, medtech partnerships with rebrand",
+      "url": "https://www.beckershospitalreview.com/supply-chain/b-braun-sharpens-focus-on-pharma-medtech-partnerships-with-rebrand/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-19",
+      "summary": "Medical devicemaker B. Braun has renamed its OEM division B.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
     },
     {
       "title": "Democratic senators detail plans to take on 'Big Insurance'",
@@ -4667,159 +4794,6 @@
       "summary": "Health Affairs, Volume 45, Issue 3, Page 251-260, March 2026.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Private Equity Acquisition Of Primary Care Practices: Modest Growth In Clinicians Offset By Increased Clinician Exits",
-      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2025.01159?af=R",
-      "source": "Health Affairs",
-      "publishedAt": "2026-03-14",
-      "summary": "Health Affairs, Volume 45, Issue 3, Page 261-268, March 2026.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Agency Information Collection Activities; Proposed Collection; Comment Request; Animal Food and Egg Regulatory Program Standards",
-      "summary": "The Food and Drug Administration (FDA) is announcing that a proposed collection of information has been submitted to the Office of Management and Budget (OMB) for review and clearance under the Paperwork Reduction Act of 1995.",
-      "url": "https://www.federalregister.gov/documents/2026/03/13/2026-04940/agency-information-collection-activities-proposed-collection-comment-request-animal-food-and-egg",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-03-13",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Agency Information Collection Activities; Submission for Office of Management and Budget Review; Comment Request; Mammography Standards Quality Act Requirements",
-      "summary": "The Food and Drug Administration (FDA) is announcing that a proposed collection of information has been submitted to the Office of Management and Budget (OMB) for review and clearance under the Paperwork Reduction Act of 1995.",
-      "url": "https://www.federalregister.gov/documents/2026/03/13/2026-04939/agency-information-collection-activities-submission-for-office-of-management-and-budget-review",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-03-13",
-      "category": "quality_safety",
-      "relevance": 100,
-      "categoryLabel": "Quality & Safety"
-    },
-    {
-      "title": "Agency Information Collection Activities; Proposed Collection; Comment Request; Investigational New Drug Application Requirements",
-      "summary": "The Food and Drug Administration (FDA or Agency) is announcing an opportunity for public comment on the proposed collection of certain information by the Agency. Under the Paperwork Reduction Act of 1995 (PRA), Federal Agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension of an existing collection of information, and to allow 60 days for public comment in response to the notice. This notice solicits comments on information collection associated with investigational new drugs and investigational new drug applications.",
-      "url": "https://www.federalregister.gov/documents/2026/03/13/2026-04938/agency-information-collection-activities-proposed-collection-comment-request-investigational-new",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-03-13",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Medical Devices With Indications Associated With Weight Loss-Premarket Considerations; Guidance for Industry and Food and Drug Administration Staff; Availability",
-      "summary": "The Food and Drug Administration (FDA or Agency) is announcing the availability of a final guidance entitled \"Medical Devices with Indications Associated with Weight Loss--Premarket Considerations.\" This guidance document provides recommendations regarding non-clinical testing and clinical study design for medical devices with indications for use associated with weight loss to support premarket submissions. The guidance also includes discussion on how FDA considers the benefit-risk analysis to support such indications.",
-      "url": "https://www.federalregister.gov/documents/2026/03/13/2026-04918/medical-devices-with-indications-associated-with-weight-loss-premarket-considerations-guidance-for",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-03-13",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Notice of Approval of Product Under Voucher: Rare Pediatric Disease Priority Review Voucher; EYLEA HD (aflibercept)",
-      "summary": "The Food and Drug Administration (FDA) is announcing the issuance of approval of a product redeeming a priority review voucher. The Federal Food, Drug, and Cosmetic Act (FD&C Act) authorizes FDA to award priority review vouchers to sponsors of approved rare pediatric disease product applications that meet certain criteria. FDA is required to publish notice of the issuance of priority review vouchers as well as the approval of products redeeming a priority review voucher. FDA has determined that the supplemental application (Supplement-10) for EYLEA HD (aflibercept), approved November 19, 2025, meets the criteria for redeeming a priority review voucher.",
-      "url": "https://www.federalregister.gov/documents/2026/03/13/2026-04888/notice-of-approval-of-product-under-voucher-rare-pediatric-disease-priority-review-voucher-eylea-hd",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-03-13",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Insulet Initiates Voluntary Medical Device Correction for Certain Omnipod® 5 Pods in the U.S.",
-      "summary": "ACTON, Mass.--(BUSINESS WIRE)-- Insulet Corporation (NASDAQ: PODD) (“Insulet” or the “Company”) today initiated a voluntary Medical Device Correction for specific lots of Omnipod® 5 Pods after identifying a manufacturing issue through its ongoing product monitoring. This action applies to specific i",
-      "url": "http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/insulet-initiates-voluntary-medical-device-correction-certain-omnipodr-5-pods-us",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-03-13",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Findings of Research Misconduct",
-      "summary": "Findings of research misconduct have been made against Chen- Yeh \"George\" Ke, Ph.D. (Respondent), former postdoctoral fellow, Department of Cell, Development and Regenerative Biology, Icahn School of Medicine at Mount Sinai. Dr. Ke engaged in research misconduct under 42 CFR part 93 in research included in one (1) draft manuscript and two (2) National Institutes of Health (NIH) Research Performance Progress Reports, specifically R01 DE022363-07 and R01 DE022363-08 submitted to the National Institute of Dental and Craniofacial Research (NIDCR), NIH. The questioned research was supported by U.S. Public Health Service (PHS) funds, specifically NIDCR, NIH, grant R01 DE022363-06A1. Administrative actions, including supervision for a period of three (3) years, were implemented and are detailed below.",
-      "url": "https://www.federalregister.gov/documents/2026/03/13/2026-04984/findings-of-research-misconduct",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-13",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Mandatory Guidelines for Federal Workplace Drug Testing Programs-Authorized Testing Panels",
-      "summary": "HHS herein publishes the panels of Schedule I and II drugs and biomarkers authorized for testing in federal workplace drug testing programs. The Department has made no revisions to the current drug testing panels for both urine and oral fluid and current required nomenclature for laboratory and Medical Review Officer Reports, effective July 7, 2025.",
-      "url": "https://www.federalregister.gov/documents/2026/03/13/2026-04981/mandatory-guidelines-for-federal-workplace-drug-testing-programs-authorized-testing-panels",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-13",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Agency Information Collection Activities: Proposed Collection; Comment Request",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/03/13/2026-04982/agency-information-collection-activities-proposed-collection-comment-request",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-13",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Proposed Collection: 30-Day Comment Request; Generic Clearance for the Collection of Qualitative Feedback on Agency Service Delivery (NCI)",
-      "summary": "In compliance with the requirement of the Paperwork Reduction Act of 1995 to provide an opportunity for public comment on proposed data collection projects, the National Institutes of Health, National Cancer Institute (NCI) will publish periodic summaries of proposed projects to be submitted to the Office of Management and Budget (OMB) for review and approval.",
-      "url": "https://www.federalregister.gov/documents/2026/03/13/2026-04979/proposed-collection-30-day-comment-request-generic-clearance-for-the-collection-of-qualitative",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-13",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Submission for Office of Management and Budget Review; Generic Program-Specific Performance Progress Report",
-      "summary": "This notice describes the proposal to extend data collection under the Administration for Children and Families (ACF) Generic Program-Specific Performance Progress Report (PPR) (0970-0490). This overarching generic currently allows ACF program offices to collect performance and progress data from recipients and sub-recipients who receive funding from ACF under a grant or cooperative agreement. This generic mechanism provides the opportunity for ACF program offices to tailor requests for performance and progress data to specific funding recipients. There are no proposed changes to the purpose or use of the overarching generic. Burden estimates have been reduced to reflect current priorities to minimize reporting burden.",
-      "url": "https://www.federalregister.gov/documents/2026/03/13/2026-04968/submission-for-office-of-management-and-budget-review-generic-program-specific-performance-progress",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-13",
-      "category": "ai_tech",
-      "relevance": 96,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Agency Information Collection Activities: Submission to OMB for Review and Approval; Public Comment Request; The Maternal, Infant, and Early Childhood Home Visiting Program Performance Measurement Information System",
-      "summary": "In compliance with the Paperwork Reduction Act of 1995, HRSA submitted an Information Collection Request (ICR) to the Office of Management and Budget (OMB) for review and approval. Comments submitted during the first public review of this ICR will be provided to OMB. OMB will accept further comments from the public during the review and approval period. OMB may act on HRSA's ICR only after the 30-day comment period for this notice has closed.",
-      "url": "https://www.federalregister.gov/documents/2026/03/13/2026-04900/agency-information-collection-activities-submission-to-omb-for-review-and-approval-public-comment",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-13",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
     }
   ]
 }
