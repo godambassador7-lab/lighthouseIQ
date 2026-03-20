@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-20T07:54:47.202Z",
+  "lastUpdated": "2026-03-20T08:47:16.909Z",
   "version": "2026-Q1",
   "sources": [
     {
@@ -574,14 +574,14 @@
     }
   },
   "specialtySignals": {
-    "lastUpdated": "2026-03-20T07:54:47.202Z",
-    "status": "ready",
+    "lastUpdated": "2026-03-20T08:47:16.909Z",
+    "status": "pending",
     "sources": [
       {
         "name": "BLS Public API",
         "url": "https://api.bls.gov/publicAPI/v2/timeseries/data/",
         "type": "supply",
-        "enabled": true
+        "enabled": false
       },
       {
         "name": "RN Salary Proxy (BLS/Vivian)",
@@ -626,68 +626,7 @@
         "enabled": false
       }
     ],
-    "cards": [
-      {
-        "specialty": "Nurse Practitioner",
-        "specialtyKey": "NP",
-        "source": "BLS Public API (RN proxy)",
-        "metric": "supply",
-        "topState": {
-          "state": "CA",
-          "value": 326720
-        },
-        "bottomState": {
-          "state": "AK",
-          "value": 7040
-        },
-        "tip": "Proxy based on BLS RN employment distribution. Nurse Practitioner counts are not specialty-specific yet."
-      },
-      {
-        "specialty": "Clinical Nurse Specialist",
-        "specialtyKey": "CNS",
-        "source": "BLS Public API (RN proxy)",
-        "metric": "supply",
-        "topState": {
-          "state": "CA",
-          "value": 326720
-        },
-        "bottomState": {
-          "state": "AK",
-          "value": 7040
-        },
-        "tip": "Proxy based on BLS RN employment distribution. Clinical Nurse Specialist counts are not specialty-specific yet."
-      },
-      {
-        "specialty": "Nurse Anesthetist (CRNA)",
-        "specialtyKey": "CRNA",
-        "source": "BLS Public API (RN proxy)",
-        "metric": "supply",
-        "topState": {
-          "state": "CA",
-          "value": 326720
-        },
-        "bottomState": {
-          "state": "AK",
-          "value": 7040
-        },
-        "tip": "Proxy based on BLS RN employment distribution. Nurse Anesthetist (CRNA) counts are not specialty-specific yet."
-      },
-      {
-        "specialty": "Certified Nurse Midwife",
-        "specialtyKey": "CNM",
-        "source": "BLS Public API (RN proxy)",
-        "metric": "supply",
-        "topState": {
-          "state": "CA",
-          "value": 326720
-        },
-        "bottomState": {
-          "state": "AK",
-          "value": 7040
-        },
-        "tip": "Proxy based on BLS RN employment distribution. Certified Nurse Midwife counts are not specialty-specific yet."
-      }
-    ]
+    "cards": []
   },
   "workforceProjections": {
     "currentYear": 2026,
