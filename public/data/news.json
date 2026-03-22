@@ -1,89 +1,89 @@
 {
-  "lastUpdated": "2026-03-21T23:31:47.397Z",
+  "lastUpdated": "2026-03-22T02:33:39.646Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 11,
-    "staleSources": 2,
-    "healthySources": 9,
+    "staleSources": 4,
+    "healthySources": 7,
     "sources": [
       {
         "source": "Becker's Hospital Review",
         "articleCount": 189,
         "latestPublishedAt": "2026-03-20T00:00:00.000Z",
-        "staleHours": 47,
+        "staleHours": 50,
         "status": "ok"
       },
       {
         "source": "Fierce Healthcare",
-        "articleCount": 154,
-        "latestPublishedAt": "2026-03-21T00:00:00.000Z",
-        "staleHours": 23,
+        "articleCount": 162,
+        "latestPublishedAt": "2026-03-22T00:00:00.000Z",
+        "staleHours": 2,
         "status": "ok"
       },
       {
         "source": "STAT News",
         "articleCount": 67,
         "latestPublishedAt": "2026-03-20T00:00:00.000Z",
-        "staleHours": 47,
+        "staleHours": 50,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
-        "articleCount": 39,
+        "articleCount": 34,
         "latestPublishedAt": "2026-03-23T00:00:00.000Z",
-        "staleHours": -25,
+        "staleHours": -22,
         "status": "ok"
       },
       {
         "source": "Health Affairs",
         "articleCount": 23,
-        "latestPublishedAt": "2026-03-21T00:00:00.000Z",
-        "staleHours": 23,
+        "latestPublishedAt": "2026-03-22T00:00:00.000Z",
+        "staleHours": 2,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 9,
         "latestPublishedAt": "2026-03-20T00:00:00.000Z",
-        "staleHours": 47,
+        "staleHours": 50,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
-        "articleCount": 6,
+        "articleCount": 4,
         "latestPublishedAt": "2026-03-20T00:00:00.000Z",
-        "staleHours": 47,
+        "staleHours": 50,
         "status": "ok"
-      },
-      {
-        "source": "Federal Register - FDA",
-        "articleCount": 5,
-        "latestPublishedAt": "2026-03-18T00:00:00.000Z",
-        "staleHours": 95,
-        "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 4,
         "latestPublishedAt": "2026-03-18T00:00:00.000Z",
-        "staleHours": 95,
+        "staleHours": 98,
+        "status": "stale"
+      },
+      {
+        "source": "Federal Register - FDA",
+        "articleCount": 4,
+        "latestPublishedAt": "2026-03-18T00:00:00.000Z",
+        "staleHours": 98,
         "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 3,
         "latestPublishedAt": "2026-03-19T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 74,
+        "status": "stale"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 1,
         "latestPublishedAt": "2026-03-19T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 74,
+        "status": "stale"
       }
     ]
   },
@@ -94,15 +94,15 @@
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 42
+      "count": 45
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 13
+      "count": 14
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 63
+      "count": 62
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -118,12 +118,14 @@
     },
     "general_market": {
       "label": "General Market",
-      "count": 202
+      "count": 199
     }
   },
   "quality": {
-    "status": "pass",
-    "failedChecks": [],
+    "status": "warning",
+    "failedChecks": [
+      "maxStaleSources"
+    ],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -142,8 +144,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 2,
-        "pass": true
+        "actual": 4,
+        "pass": false
       }
     }
   },
@@ -195,6 +197,276 @@
       "category": "policy_reimbursement",
       "relevance": 100,
       "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "CMS final rule aims to ax the fax machine, phase out paper mailing",
+      "url": "https://www.fiercehealthcare.com/regulatory/cms-proposed-rule-aims-ax-fax-machine-phase-out-paper-mailing",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-22",
+      "summary": "CMS finalized a rule that aims to phase out fax machines and paper mailings for healthcare claims documentation.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "PCMA urges Labor Department to rescind PBM transparency rule as Congress passed reforms",
+      "url": "https://www.fiercehealthcare.com/regulatory/labor-department-proposes-rule-force-greater-pbm-transparency",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-22",
+      "summary": "The Department of Labor has issued a proposed rule that aims to inject additional transparency in pharmacy benefit manager relationships.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "HHS 'declaration' to restrict gender-affirming care for minors struck down by judge",
+      "url": "https://www.fiercehealthcare.com/regulatory/hhs-moves-cut-federal-funding-hospitals-over-gender-affirming-care-minors",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-22",
+      "summary": "A federal judge has dealt a blow to the Trump administration's push to restrict gender-affirming care for minors.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Industry Voices—Stop buying AI tools, start designing AI architecture",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/industry-voices-stop-buying-ai-tools-start-designing-ai-architecture",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-22",
+      "summary": "Health system and payer leaders must rethink how they evaluate, procure and govern AI across their organizations by moving beyond point‑solution evaluation toward intentional system design.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "KFF: ACA plan enrollees report rising costs for 2026 coverage",
+      "url": "https://www.fiercehealthcare.com/payers/kff-aca-plan-enrollees-report-rising-costs-2026-coverage",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-22",
+      "summary": "Following the expiry of enhanced subsidies for Affordable Care Act plans at the beginning of this year, many enrollees in marketplace coverage are seeing a significant rise in their costs, according to a new survey.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Verily banks $300M to accelerate AI road map, transitions to independent company",
+      "url": "https://www.fiercehealthcare.com/health-tech/verily-banks-300m-accelerate-ai-roadmap-transitions-independent-company",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-22",
+      "summary": "Verily raised a $300 million investment round to accelerate its work in artificial intelligence and precision health as it also moves out from under the corporate umbrella of Alphabet.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "10K Corewell Health nurses vote to authorize labor strike",
+      "url": "https://www.fiercehealthcare.com/providers/10000-corewell-health-nurses-vote-authorize-strike",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-22",
+      "summary": "The registered nurses span nine of the system's hospitals in the eastern part of Michigan and have been pushing for their first labor contract since last year.",
+      "category": "labor_unions",
+      "categoryLabel": "Labor & Unions"
+    },
+    {
+      "title": "Providence mulling sale of its health plan amid financial pressures",
+      "url": "https://www.fiercehealthcare.com/payers/providence-mulling-sale-its-health-plan-amid-financial-pressure",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-22",
+      "summary": "Providence announced Thursday that it is \"exploring strategic options\" for its health plan, including a possible sale.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Women's health sector could grow to $600B industry by 2030: PwC report",
+      "url": "https://www.fiercehealthcare.com/providers/womens-health-sector-could-grow-600b-industry-2030-new-report-says",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-22",
+      "summary": "The current global market for the women’s health sector is estimated to be between $430 billion and $440 billion, which could grow 6% to 8% by 2030.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Fierce Healthcare Fundraising Tracker '26: Health Universe nabs $6M; Conduit Health streamlines DME",
+      "url": "https://www.fiercehealthcare.com/health-tech/fierce-healthcare-fundraising-tracker-26",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-22",
+      "summary": "Keep up with all the venture capital dollars being funneled into the health tech and digital health industries.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Hospital operations begin 2026 with depressed margins amid low volumes, high labor spend",
+      "url": "https://www.fiercehealthcare.com/providers/hospital-operations-begin-2026-depressed-margins-amid-low-volumes-high-labor-spend",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-22",
+      "summary": "A tough start to the new year includes a continuation of 2025's rise of bad debt, prompting a warning from Kaufman Hall for hospitals to be strategic about their spending going forward.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Male preconception startup Upstream announces donor-matching platform",
+      "url": "https://www.fiercehealthcare.com/digital-health/male-preconception-startup-upstream-launches-donor-matching-preseed",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-22",
+      "summary": "PreSeed does not store or distribute sperm but, rather, partners with licensed clinics, sperm agencies and legal professionals to help pair intended parents with the right donor.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Democratic senators detail plans to take on 'Big Insurance'",
+      "url": "https://www.fiercehealthcare.com/regulatory/democratic-senators-detail-plans-take-big-insurance",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-22",
+      "summary": "Leading Senate Democrats are outlining their own healthcare policy priorities as they look to develop plans that could counter changes proposed by the Trump administration and included in the One Big Beautiful Bill Act.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Turquoise Health raises $40M to power healthcare contracts, payments",
+      "url": "https://www.fiercehealthcare.com/health-tech/turquoise-health-raises-40m-power-healthcare-contracts-payments",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-22",
+      "summary": "Turquoise will use the funding to accelerate product development, increase its workforce and assist with additional go-to-market efforts.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Chutes & Ladders—Grady Health System CEO to retire, successor named; Former CMMI chief joins Humata Health's board",
+      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-22",
+      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "A look at Highmark's specialty pharmacy partnership with Free Market Health",
+      "url": "https://www.fiercehealthcare.com/payers/look-highmarks-specialty-pharmacy-partnership-free-market-health",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-22",
+      "summary": "Highmark is offering a look at where it's seeing success in a specialty pharmacy partnership with Free Market Health.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "To tackle healthcare costs, representatives weigh curbs on provider consolidation",
+      "url": "https://www.fiercehealthcare.com/providers/tackle-healthcare-costs-representatives-weigh-curbs-provider-consolidation",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-22",
+      "summary": "A House Energy and Commerce subcommittee hearing saw legislators questioning provider association leaders on the drivers and impacts of provider consolidation, as well as other policy issues like physician reimbursement and Medicaid cuts.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Payers, hospitals pan CMS' plan to bring non-network plans to ACA exchanges",
+      "url": "https://www.fiercehealthcare.com/payers/payers-hospitals-pan-cms-plan-bring-non-network-plans-aca-exchanges",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-22",
+      "summary": "Leading associations representing insurers and hospitals crossed the aisle to pen a joint rebuke of an approach floated by the administration for plan year 2027.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Inside the economics of emergency medicine",
+      "url": "https://www.fiercehealthcare.com/providers/inside-economics-emergency-medicine",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-22",
+      "summary": "In this episode of \"Podnosis,\" Fierce Healthcare and Life Sciences Editor-in-Chief Ayla Ellison talks with Tony Cirillo, M.D.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Optum Real and Suki build out collaboration to tackle payment challenges as R1 teams with AI scribe Heidi",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/optum-real-and-suki-build-out-collaboration-r1-teams-heidi-link-ai-scribe",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-22",
+      "summary": "Suki is collaborating with Optum Real to align clinical documentation and revenue cycle workflows. AT HIMSS 2026, AI scribe Heidi unveiled a revenue cycle management partnership with R1.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Highmark, Blue KC affiliation set to close March 31",
+      "url": "https://www.fiercehealthcare.com/payers/highmark-blue-cross-kc-announce-affiliation-plans",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-22",
+      "summary": "Highmark and Blue Cross and Blue Shield Kansas City have announced plans to affiliate.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Moody's: Insurers' 2026 outlook is negative as cost pressures continue to batter industry",
+      "url": "https://www.fiercehealthcare.com/payers/moodys-insurers-2026-outlook-negative-cost-pressures-continue-batter-industry",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-22",
+      "summary": "The health insurance industry's credit outlook for the year remains negative as medical costs continue to rise, according to a new report from Moody's Ratings.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Allina Health to join Sutter Health in $26B proposed transaction",
+      "url": "https://www.fiercehealthcare.com/providers/allina-health-join-sutter-health-26b-proposed-merger",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-22",
+      "summary": "The cross-regional proposed deal would create a 39-hospital nonprofit system and is expected to close before the end of the year, pending a definitive agreement and regulatory approvals.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Bipartisan bill introduced to exempt healthcare workers from $100K H-1B visa fee",
+      "url": "https://www.fiercehealthcare.com/providers/bipartisan-bill-introduced-exempt-healthcare-workers-100000-h-1b-visa-fee",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-22",
+      "summary": "Introduced Tuesday, the Physicians and the Healthcare Workforce Act is endorsed by a slew of provider and hospital associations.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Maven Clinic expands AI capabilities with genAI agent built on OpenAI, Google LLMs",
+      "url": "https://www.fiercehealthcare.com/health-tech/maven-clinic-expands-ai-capabilities-generative-ai-openai-google",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-22",
+      "summary": "The closed LLM model rolling out this month draws on a Maven member’s history, goals, benefits coverage and integrated data to answer patient questions and surface insights to providers.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Health Care Workforce, Medicare, And More",
+      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2026.00203?af=R",
+      "source": "Health Affairs",
+      "publishedAt": "2026-03-22",
+      "summary": "Health Affairs, Volume 45, Issue 3, Page 237-237, March 2026.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Practice Pattern Changes After Adoption Of Diagnostic AI Tool Used In Conjunction With Cardiac Imaging",
+      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2025.00929?af=R",
+      "source": "Health Affairs",
+      "publishedAt": "2026-03-22",
+      "summary": "Health Affairs, Volume 45, Issue 3, Page 238-245, March 2026.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Majority Of Family Physicians Still Choose To Practice In The State Where They Were Trained",
+      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2025.01003?af=R",
+      "source": "Health Affairs",
+      "publishedAt": "2026-03-22",
+      "summary": "Health Affairs, Volume 45, Issue 3, Page 246-250, March 2026.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Primary Care Physician Trends: Dissatisfaction, Stress, And Burnout In The US And 9 Comparator Countries, 2012–22",
+      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2025.00880?af=R",
+      "source": "Health Affairs",
+      "publishedAt": "2026-03-22",
+      "summary": "Health Affairs, Volume 45, Issue 3, Page 251-260, March 2026.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Private Equity Acquisition Of Primary Care Practices: Modest Growth In Clinicians Offset By Increased Clinician Exits",
+      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2025.01159?af=R",
+      "source": "Health Affairs",
+      "publishedAt": "2026-03-22",
+      "summary": "Health Affairs, Volume 45, Issue 3, Page 261-268, March 2026.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
     },
     {
       "title": "CMS final rule aims to ax the fax machine, phase out paper mailing",
@@ -4527,300 +4799,6 @@
       "summary": "AI in payment integrity fails without the right data foundation. Learn why structure—not algorithms—drives lasting impact.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "How employers can take control of rising pharmacy costs",
-      "url": "https://www.fiercehealthcare.com/sponsored/how-employers-can-take-control-rising-pharmacy-costs",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-17",
-      "summary": "Discover strategies to manage GLP-1 and specialty drug spending without hurting member experience.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Driving the news at HIMSS26: Innovaccer tackles medical coding with AI; Amwell founder’s newest venture",
-      "url": "https://www.fiercehealthcare.com/health-tech/driving-news-himss26-verily-samsung-ink-collaboration-meditechs-latest-ai-solutions",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-17",
-      "summary": "Get caught up with the latest news from the 2026 Healthcare Information and Management Systems Society Global Health Conference &amp; Exhibition with this quick news recap.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Amazon launches health AI agent on its website, expands free virtual care to 200M Prime members",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/amazon-launches-health-ai-assistant-its-website-expands-free-virtual-care",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-17",
-      "summary": "Amazon’s new Health AI agent can help users understand their medical records, give personalized health insights and connect users to licensed healthcare professionals.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Chutes & Ladders—Retirements for Vanderbilt Health CEO, Providence CFO",
-      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-17",
-      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Industry Voices—Fast answers, fragile data: the trust problem in AI-driven healthcare analytics",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/industry-voices-fast-answers-fragile-data-trust-problem-ai-driven",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-17",
-      "summary": "AI can find your metric in seconds. The question is whether your organization has done the work to ensure that the metric is defined, current, owned and trusted.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "The feds will overpay Medicare Advantage plans by $76B this year, MedPAC estimates",
-      "url": "https://www.fiercehealthcare.com/regulatory/feds-will-overpay-medicare-advantage-plans-76b-year-medpac-estimates",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-17",
-      "summary": "Alongside the scrutiny of Medicare Advantage, the independent advisory group recommended Congress blunt an upcoming pay cut for clinicians and stay the course on annual increases for hospitals.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "At HIMSS26, Dr. Oz, CMS officials push agentic AI adoption. Are Medicare beneficiaries ready?",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/himss26-dr-oz-cms-officials-push-agentic-ai-adoption",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-17",
-      "summary": "LAS VEGAS—As agentic AI hits the mainstream—and messaging coming out this week demonstrates that it has—federal healthcare leaders are fully on board with moving quickly to put AI agents in the hands of patients.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Report on doctor's sexual abuse spurs promises of structural change at Columbia. Survivors say it isn't enough",
-      "url": "https://www.fiercehealthcare.com/providers/report-doctors-sexual-abuse-spurs-promises-structural-change-columbia-survivors-say-it",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-17",
-      "summary": "An independent review commissioned by the university and its medical center confirmed institutional failures that permitted more than 1,000 patients to be abused. Policy changes, new procedures and leadership transitions outlined alongside its release fell flat among some survivors.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "AMA: Physicians' use of AI doubled from 2023 to 2026",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/ama-physicians-use-ai-doubled-2023-2026",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-17",
-      "summary": "A survey fielded earlier this year found 81% of doctors use AI in a professional context, with an average of 2.3 use cases per physician.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Gallup poll: 1 in 3 Americans cutting back on daily expenses to pay for healthcare",
-      "url": "https://www.fiercehealthcare.com/finance/gallup-poll-one-three-americans-cutting-back-daily-expenses-pay-healthcare",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-17",
-      "summary": "Healthcare affordability remains a significant challenge, with a third of respondents to a new Gallup poll saying they had to cut back on daily living expenses to afford care.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Fierce Healthcare Fundraising Tracker '26: AI for HR startup Carefam launches; Sage raises $65M to support senior care",
-      "url": "https://www.fiercehealthcare.com/health-tech/fierce-healthcare-fundraising-tracker-26",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-17",
-      "summary": "Keep up with all the venture capital dollars being funneled into the health tech and digital health industries.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "New Medicaid-focused doula provider Malama launches with $9.2M",
-      "url": "https://www.fiercehealthcare.com/providers/new-medicaid-focused-doula-provider-malama-launches-92m",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-17",
-      "summary": "Malama, which means “to nurture” in Hawaiian, was built to address inequities and high-risk pregnancies by shifting from episodic to continuous care.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Microsoft unveils Copilot Health as an AI health companion for consumers",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/microsoft-unveils-copilot-health-ai-health-companion-consumers",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-17",
-      "summary": "Microsoft debuted Copilot Health on Thursday as an AI assistant for consumers that can review medical records, interpret test results and offer personalized health guidance.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "HIMSS26: HHS officials offer updates on interoperability efforts, information blocking enforcement",
-      "url": "https://www.fiercehealthcare.com/health-tech/himss26-hhs-officials-offer-updates-interoperability-efforts-information-blocking",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-17",
-      "summary": "LAS VEGAS—The CMS added enhanced login options on Medicare.gov—CLEAR, ID.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Despite insurers' expense pains, Tenet Healthcare is securing healthy commercial rates through 2027",
-      "url": "https://www.fiercehealthcare.com/providers/despite-insurers-expense-pains-tenet-healthcare-seeing-healthy-commercial-rate-growth",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-17",
-      "summary": "CEO Saum Sutaria, M.D.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "UPDATED: Stryker hit by international cyberattack linked to pro-Iran group",
-      "url": "https://www.fiercehealthcare.com/medtech/stryker-hit-international-cyberattack-linked-pro-iran-group",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-17",
-      "summary": "Stryker has fallen victim to a global cyberattack, with many enterprise systems having data remotely wiped and leaving employees unable to log in.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Aetna to pay $117.7M to settle Medicare Advantage upcoding allegations: DOJ",
-      "url": "https://www.fiercehealthcare.com/payers/aetna-pay-1177m-settle-medicare-advantage-false-claims-case-doj",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-17",
-      "summary": "Aetna has agreed to pay $117.7 million to settle allegations that it submitted false or inaccurate diagnoses to juice Medicare Advantage payments.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Health Care Workforce, Medicare, And More",
-      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2026.00203?af=R",
-      "source": "Health Affairs",
-      "publishedAt": "2026-03-17",
-      "summary": "Health Affairs, Volume 45, Issue 3, Page 237-237, March 2026.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Practice Pattern Changes After Adoption Of Diagnostic AI Tool Used In Conjunction With Cardiac Imaging",
-      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2025.00929?af=R",
-      "source": "Health Affairs",
-      "publishedAt": "2026-03-17",
-      "summary": "Health Affairs, Volume 45, Issue 3, Page 238-245, March 2026.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Majority Of Family Physicians Still Choose To Practice In The State Where They Were Trained",
-      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2025.01003?af=R",
-      "source": "Health Affairs",
-      "publishedAt": "2026-03-17",
-      "summary": "Health Affairs, Volume 45, Issue 3, Page 246-250, March 2026.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Primary Care Physician Trends: Dissatisfaction, Stress, And Burnout In The US And 9 Comparator Countries, 2012–22",
-      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2025.00880?af=R",
-      "source": "Health Affairs",
-      "publishedAt": "2026-03-17",
-      "summary": "Health Affairs, Volume 45, Issue 3, Page 251-260, March 2026.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Private Equity Acquisition Of Primary Care Practices: Modest Growth In Clinicians Offset By Increased Clinician Exits",
-      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2025.01159?af=R",
-      "source": "Health Affairs",
-      "publishedAt": "2026-03-17",
-      "summary": "Health Affairs, Volume 45, Issue 3, Page 261-268, March 2026.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "General and Plastic Surgery Devices: Restricted Sale, Distribution, and Use of Sunlamp Products; Withdrawal of Proposed Rule",
-      "summary": "The Food and Drug Administration (FDA) is announcing the withdrawal of the proposed rule titled \"General and Plastic Surgery Devices: Restricted Sale, Distribution, and Use of Sunlamp Products,\" which published in the Federal Register of December 22, 2015. FDA is taking this action because it no longer intends to finalize the proposed rule.",
-      "url": "https://www.federalregister.gov/documents/2026/03/16/2026-05103/general-and-plastic-surgery-devices-restricted-sale-distribution-and-use-of-sunlamp-products",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-03-16",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Convenience Kit Needle Recall: Integra LifeSciences Removes Tuohy Needle",
-      "summary": "Integra LifeSciences is removing certain lots of Microsensor and Cerelink ICP Kits with potential corrosion stains on the included Tuohy Needle.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/convenience-kit-needle-recall-integra-lifesciences-removes-tuohy-needle",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-03-16",
-      "category": "ai_tech",
-      "relevance": 98,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Dialysis Tubing Set Correction: Vantive Updates Use Instructions for Prismaflex and Oxiris Sets",
-      "summary": "Prismaflex Set deaeration chambers may dislodge from the Prismaflex Control Unit during use.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/dialysis-tubing-set-correction-vantive-updates-use-instructions-prismaflex-and-oxiris-sets",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-03-16",
-      "category": "general_market",
-      "relevance": 98,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Agency Information Collection Activities: Submission to OMB for Review and Approval; Public Comment Request; Health Workforce Connector, OMB No. 0906-0031 Revision",
-      "summary": "In compliance with the Paperwork Reduction Act of 1995, HRSA submitted an Information Collection Request (ICR) to the Office of Management and Budget (OMB) for review and approval. Comments submitted during the first public review of this ICR will be provided to OMB. OMB will accept further comments from the public during the review and approval period. OMB may act on HRSA's ICR only after the 30-day comment period for this notice has closed.",
-      "url": "https://www.federalregister.gov/documents/2026/03/16/2026-05104/agency-information-collection-activities-submission-to-omb-for-review-and-approval-public-comment",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-16",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Office of the Director, National Institutes of Health; Notice of Meeting",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/03/16/2026-05068/office-of-the-director-national-institutes-of-health-notice-of-meeting",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-16",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Center For Scientific Review; Notice of Closed Meetings",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/03/16/2026-05106/center-for-scientific-review-notice-of-closed-meetings",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-16",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Center for Scientific Review; Notice of Closed Meetings",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/03/16/2026-05070/center-for-scientific-review-notice-of-closed-meetings",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-16",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Center For Scientific Review; Notice of Closed Meetings",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/03/16/2026-04989/center-for-scientific-review-notice-of-closed-meetings",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-16",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
     }
   ]
 }
