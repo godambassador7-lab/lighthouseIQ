@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-03-24T20:49:04.218Z",
+  "lastUpdated": "2026-03-24T21:44:32.204Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 3,
-    "healthySources": 7,
+    "staleSources": 2,
+    "healthySources": 8,
     "sources": [
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 185,
+        "articleCount": 193,
         "latestPublishedAt": "2026-03-24T00:00:00.000Z",
-        "staleHours": 20,
+        "staleHours": 21,
         "status": "ok"
       },
       {
         "source": "Fierce Healthcare",
-        "articleCount": 182,
+        "articleCount": 173,
         "latestPublishedAt": "2026-03-24T00:00:00.000Z",
-        "staleHours": 20,
+        "staleHours": 21,
         "status": "ok"
       },
       {
         "source": "STAT News",
         "articleCount": 65,
         "latestPublishedAt": "2026-03-24T00:00:00.000Z",
-        "staleHours": 20,
+        "staleHours": 21,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 25,
         "latestPublishedAt": "2026-03-24T00:00:00.000Z",
-        "staleHours": 20,
+        "staleHours": 21,
         "status": "ok"
       },
       {
         "source": "Health Affairs",
         "articleCount": 23,
         "latestPublishedAt": "2026-03-24T00:00:00.000Z",
-        "staleHours": 20,
+        "staleHours": 21,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 13,
         "latestPublishedAt": "2026-03-24T00:00:00.000Z",
-        "staleHours": 20,
+        "staleHours": 21,
         "status": "ok"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 3,
         "latestPublishedAt": "2026-03-24T00:00:00.000Z",
-        "staleHours": 20,
+        "staleHours": 21,
+        "status": "ok"
+      },
+      {
+        "source": "SEC Healthcare Filings",
+        "articleCount": 2,
+        "latestPublishedAt": "2026-03-24T00:00:00.000Z",
+        "staleHours": 21,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 2,
         "latestPublishedAt": "2026-03-19T00:00:00.000Z",
-        "staleHours": 140,
+        "staleHours": 141,
         "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 1,
         "latestPublishedAt": "2026-03-20T00:00:00.000Z",
-        "staleHours": 116,
-        "status": "stale"
-      },
-      {
-        "source": "SEC Healthcare Filings",
-        "articleCount": 1,
-        "latestPublishedAt": "2026-03-19T00:00:00.000Z",
-        "staleHours": 140,
+        "staleHours": 117,
         "status": "stale"
       }
     ]
@@ -87,7 +87,7 @@
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 42
+      "count": 41
     },
     "labor_unions": {
       "label": "Labor & Unions",
@@ -95,7 +95,7 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 62
+      "count": 60
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -107,7 +107,7 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 160
+      "count": 163
     },
     "general_market": {
       "label": "General Market",
@@ -115,10 +115,8 @@
     }
   },
   "quality": {
-    "status": "warning",
-    "failedChecks": [
-      "maxStaleSources"
-    ],
+    "status": "pass",
+    "failedChecks": [],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -127,7 +125,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 104,
+        "actual": 113,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -137,8 +135,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 3,
-        "pass": false
+        "actual": 2,
+        "pass": true
       }
     }
   },
@@ -324,6 +322,90 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "CNC 8-K filing - Centene Corporation",
+      "summary": "Centene Corporation filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1071739/000107173926000070/cnc-20260318.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-03-24",
+      "category": "general_market",
+      "relevance": 85,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "136 hospitals with 5+ Magnet designations",
+      "url": "https://www.beckershospitalreview.com/quality/136-hospitals-with-5-magnet-designations/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-24",
+      "summary": "Approximately 2% of the nation’s 6,093 hospitals have achieved Magnet designation at least five times, according to data from the American Nurses Credentialing Center. The ANCC has recognized 657 hospitals worldwide for nursing excellence, and 136 of them have been designated and redesignated five or more times.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "UF Health taps new vice president of RCM business support",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/uf-health-taps-new-vice-president-of-rcm-business-support/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-24",
+      "summary": "Peter Thompson has been named vice president of revenue cycle management business support for Gainesville, Fla.-based UF Health, according to a March 24 LinkedIn post.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "57% of health systems rank AI as top tech priority: Report",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/57-of-health-systems-rank-ai-as-top-tech-priority-report/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-24",
+      "summary": "Health system executives are prioritizing AI, patient experience and growth initiatives as they navigate expected declines in capital investment, a March 24 report from Sage Growth Partners found. The report examines health IT purchasing plans for 2026 and 2027 based on a survey of 101 hospital and health system C-suite leaders.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Children&#8217;s Mercy names chief application officer",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/childrens-mercy-names-chief-application-officer/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-24",
+      "summary": "Shari Cooley, MSN, RN, has been named senior director and chief application officer at Kansas City, Mo.-based Children&#8217;s Mercy.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Aspirus hospital nurses OK labor contract",
+      "url": "https://www.beckershospitalreview.com/hr/aspirus-hospital-nurses-ok-labor-contract/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-24",
+      "summary": "Nurses at Aspirus Lake View Hospital in Two Harbors, Minn., have ratified a labor contract.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Trinity Health, Health Gorilla sued over alleged data breach",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/cybersecurity/trinity-health-health-gorilla-sued-over-alleged-data-breach/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-24",
+      "summary": "A patient has filed a proposed class-action lawsuit against Trinity Health and Health Gorilla, alleging a data breach tied to a third-party data-sharing network may have affected about 300,000 individuals and exposed sensitive information. The complaint, filed March 20 in the U.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Highmark Health posts $674M operating loss in 2025",
+      "url": "https://www.beckershospitalreview.com/finance/highmark-health-posts-674m-operating-loss-in-2025/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-24",
+      "summary": "Pittsburgh-based Highmark Health reported a $674 million operating loss in 2025, reflecting continued insurance headwinds despite improved performance at its hospital division. Highmark — which operates health plans, health system Allegheny Health Network and several other businesses — reported a net loss of $175 million for the 12 months ended Dec.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "What’s working and what’s not in orthopedic AI",
+      "url": "https://www.beckershospitalreview.com/orthopedics/whats-working-and-whats-not-in-orthopedic-ai/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-24",
+      "summary": "Up to this point, AI in orthopedics has been a bit of a mix bag. While there have been positives, unrefined and rushed programs have created delays and inaccuracies.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
       "title": "21 hospitals, health systems raising workers&#8217; pay",
       "url": "https://www.beckershospitalreview.com/compensation-issues/21-hospitals-health-systems-raising-workers-pay/",
       "source": "Becker's Hospital Review",
@@ -340,78 +422,6 @@
       "summary": "Medicare Advantage now covers about 55% of eligible beneficiaries (about 35 million people) and costs the federal government a projected $76 billion more in 2026 than traditional fee-for-service Medicare would, according to a March report by the Medicare Payment Advisory Commission.&#160; So when The University of Pennsylvania&#8217;s Leonard Davis Institute of Health Economics convened a [&#8230;] The post The Medicare Advantage paradox: Who benefits most?",
       "category": "policy_reimbursement",
       "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Michigan county erases $6M in medical debt for 6,300 residents",
-      "url": "https://www.beckershospitalreview.com/finance/michigan-county-erases-6m-in-medical-debt-for-6300-residents/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-24",
-      "summary": "Oakland County, Mich., has eliminated more than $6 million in medical debt for about 6,300 residents through its partnership with national nonprofit Undue Medical Debt.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "$300M Advocate hospital in Chicago gets green light",
-      "url": "https://www.beckershospitalreview.com/capital/300m-advocate-hospital-in-chicago-gets-green-light/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-24",
-      "summary": "Downers Grove, Ill.-based Advocate Health Care has received the Chicago Plan Commission&#8217;s approval for its new, $300 million hospital and care investment on the city&#8217;s South side.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Kaiser contracts ratified for 31,000 workers",
-      "url": "https://www.beckershospitalreview.com/hr/kaiser-contracts-ratified-for-31000-workers/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-24",
-      "summary": "Members of the United Nurses Associations of California/Union of Health Care Professionals have ratified labor contracts covering about 31,000 registered nurses and healthcare professionals at Kaiser Permanente facilities in California and Hawaii. The agreements were approved by an overwhelming majority after about a year of bargaining, according to a March 20 union news release shared [&#8230;] The post Kaiser contracts ratified for 31,000 workers appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "labor_unions",
-      "categoryLabel": "Labor & Unions"
-    },
-    {
-      "title": "CMS approves Minnesota’s Medicaid corrective action plan",
-      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/cms-approves-minnesotas-medicaid-corrective-action-plan/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-24",
-      "summary": "CMS approved Minnesota&#8217;s plan to tackle Medicaid integrity concerns, according to a March 19 letter to the state&#8217;s Medicaid director. In January, CMS informed Minnesota of &#8220;several deficiencies&#8221; in the state&#8217;s Dec.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Houston Methodist hospital plans $104M expansion 1 year after opening",
-      "url": "https://www.beckershospitalreview.com/capital/houston-methodist-hospital-plans-104m-expansion-1-year-after-opening/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-24",
-      "summary": "Houston Methodist Cypress (Texas) Hospital has shared plans for a $104 million expansion — almost exactly one year after opening its doors.&#160; The hospital, which is part of Houston Methodist, was a $685 million project when it opened as the system&#8217;s ninth facility in March 2025.",
-      "category": "capacity_expansion",
-      "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "UAMS raises minimum wage",
-      "url": "https://www.beckershospitalreview.com/compensation-issues/uams-raises-minimum-wage/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-24",
-      "summary": "Little Rock-based University of Arkansas for Medical Sciences will raise its minimum wage from $15 to $16 per hour, effective April 12. The increase will affect about 1,800 employees across 75 positions, UAMS Chancellor C.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "26 profitable health systems in 2025",
-      "url": "https://www.beckershospitalreview.com/finance/23-profitable-health-systems-in-2025/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-24",
-      "summary": "Despite persistent workforce pressures, rising drug costs and ongoing payer headwinds, a number of large health systems delivered strong financial results in 2025. Several posted record operating income, while others turned around losses from prior years or absorbed major mergers and acquisitions without sacrificing profitability.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Conifer inks RCM outsourcing deal with Healthcare Systems of America",
-      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/conifer-inks-rcm-outsourcing-deal-with-healthcare-systems-of-america/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-24",
-      "summary": "Fort Lauderdale, Fla.-based Healthcare Systems of America has struck a revenue cycle outsourcing partnership with Conifer Health Solutions.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
     },
     {
       "title": "Opinion: We’re launching a new CMS pilot program to help children with complex conditions",
@@ -592,6 +602,78 @@
       "summary": "Thirty-two percent of respondents in Rock Health’s 2025 Consumer Adoption of Digital Health Survey reported using AI chatbots to find health information, up from 16% the year prior.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Michigan county erases $6M in medical debt for 6,300 residents",
+      "url": "https://www.beckershospitalreview.com/finance/michigan-county-erases-6m-in-medical-debt-for-6300-residents/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-24",
+      "summary": "Oakland County, Mich., has eliminated more than $6 million in medical debt for about 6,300 residents through its partnership with national nonprofit Undue Medical Debt.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "$300M Advocate hospital in Chicago gets green light",
+      "url": "https://www.beckershospitalreview.com/capital/300m-advocate-hospital-in-chicago-gets-green-light/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-24",
+      "summary": "Downers Grove, Ill.-based Advocate Health Care has received the Chicago Plan Commission&#8217;s approval for its new, $300 million hospital and care investment on the city&#8217;s South side.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Kaiser contracts ratified for 31,000 workers",
+      "url": "https://www.beckershospitalreview.com/hr/kaiser-contracts-ratified-for-31000-workers/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-24",
+      "summary": "Members of the United Nurses Associations of California/Union of Health Care Professionals have ratified labor contracts covering about 31,000 registered nurses and healthcare professionals at Kaiser Permanente facilities in California and Hawaii. The agreements were approved by an overwhelming majority after about a year of bargaining, according to a March 20 union news release shared [&#8230;] The post Kaiser contracts ratified for 31,000 workers appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "labor_unions",
+      "categoryLabel": "Labor & Unions"
+    },
+    {
+      "title": "CMS approves Minnesota’s Medicaid corrective action plan",
+      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/cms-approves-minnesotas-medicaid-corrective-action-plan/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-24",
+      "summary": "CMS approved Minnesota&#8217;s plan to tackle Medicaid integrity concerns, according to a March 19 letter to the state&#8217;s Medicaid director. In January, CMS informed Minnesota of &#8220;several deficiencies&#8221; in the state&#8217;s Dec.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Houston Methodist hospital plans $104M expansion 1 year after opening",
+      "url": "https://www.beckershospitalreview.com/capital/houston-methodist-hospital-plans-104m-expansion-1-year-after-opening/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-24",
+      "summary": "Houston Methodist Cypress (Texas) Hospital has shared plans for a $104 million expansion — almost exactly one year after opening its doors.&#160; The hospital, which is part of Houston Methodist, was a $685 million project when it opened as the system&#8217;s ninth facility in March 2025.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "UAMS raises minimum wage",
+      "url": "https://www.beckershospitalreview.com/compensation-issues/uams-raises-minimum-wage/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-24",
+      "summary": "Little Rock-based University of Arkansas for Medical Sciences will raise its minimum wage from $15 to $16 per hour, effective April 12. The increase will affect about 1,800 employees across 75 positions, UAMS Chancellor C.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "26 profitable health systems in 2025",
+      "url": "https://www.beckershospitalreview.com/finance/23-profitable-health-systems-in-2025/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-24",
+      "summary": "Despite persistent workforce pressures, rising drug costs and ongoing payer headwinds, a number of large health systems delivered strong financial results in 2025. Several posted record operating income, while others turned around losses from prior years or absorbed major mergers and acquisitions without sacrificing profitability.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Conifer inks RCM outsourcing deal with Healthcare Systems of America",
+      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/conifer-inks-rcm-outsourcing-deal-with-healthcare-systems-of-america/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-24",
+      "summary": "Fort Lauderdale, Fla.-based Healthcare Systems of America has struck a revenue cycle outsourcing partnership with Conifer Health Solutions.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
     },
     {
       "title": "Nemours Children&#8217;s names regional president",
@@ -4655,87 +4737,6 @@
       "source": "Fierce Healthcare",
       "publishedAt": "2026-03-19",
       "summary": "Conference panelists discussed the potential and pitfalls of online platforms that serve as communities for patients and docs.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Hospitals increased oncology biosimilars use and secured greater margins along the way",
-      "url": "https://www.fiercehealthcare.com/finance/hospitals-increased-oncology-biosimilars-use-and-secured-greater-margins-along-way",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-19",
-      "summary": "A JAMA study outlines biosimilar acquisition costs that fell faster than reimbursement decreases over a five-year window, a period in which hospitals ramped up their use of the products.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Judge pumps brakes on RFK Jr.'s vaccine overhaul, targeting ACIP and CDC schedule revamp",
-      "url": "https://www.fiercehealthcare.com/pharma/judge-pumps-brakes-rfk-jrs-vaccine-overhaul-targeting-acip-and-cdc-schedule-revamp",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-19",
-      "summary": "A federal judge in Boston blocked significant parts of the HHS' vaccination agenda and effectively stopped an upcoming vaccines advisory panel from meeting later this week as originally scheduled.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Prime Healthcare, BCBSIL stare down June 1 deadline for new network contract",
-      "url": "https://www.fiercehealthcare.com/providers/prime-healthcare-bcbsil-stare-down-june-1-deadline-new-network-contract",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-19",
-      "summary": "Prime Healthcare, a newcomer to the Illinois market, recently sought to reassure many of its patients after they received a notice that its hospitals and physicians may no longer be in their network.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "UnitedHealthcare expands doula benefit to employers nationwide",
-      "url": "https://www.fiercehealthcare.com/payers/unitedhealthcare-expands-doula-benefit-employers-nationwide",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-19",
-      "summary": "UnitedHealthcare is expanding its doula benefit to employer plans nationwide, the insurance giant announced Monday.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "CMS opens grant applications for MAHA ELEVATE lifestyle medicine model",
-      "url": "https://www.fiercehealthcare.com/regulatory/cms-unveils-new-model-aimed-functional-lifestyle-medicine",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-19",
-      "summary": "The Trump administration has unveiled a new payment model that could extend Medicare coverage to functional or lifestyle medicine providers.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Healthcare's night shift workers 'systematically' feel less safe, supported than peers: Press Ganey",
-      "url": "https://www.fiercehealthcare.com/providers/healthcares-night-shift-workers-systematically-feel-less-safe-supported-peers-press-ganey",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-19",
-      "summary": "Night shift employees are 17% less likely to believe their organization cares about their safety, according to Press Ganey data.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "AI in Payment Integrity: Why the Foundation Matters More Than the Algorithm",
-      "url": "https://www.fiercehealthcare.com/sponsored/ai-payment-integrity-why-foundation-matters-more-algorithm",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-19",
-      "summary": "AI in payment integrity fails without the right data foundation. Learn why structure—not algorithms—drives lasting impact.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Reimagining Prior Authorization: Increasing Transparency for Stakeholders",
-      "url": "https://www.fiercehealthcare.com/sponsored/reimagining-prior-authorization-increasing-transparency-stakeholders",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-19",
-      "summary": "Prior authorization (PA)—where healthcare access, costs, and patient experience meet—has long been considered by many as a necessary evil in the effort to rein in U.S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "How employers can take control of rising pharmacy costs",
-      "url": "https://www.fiercehealthcare.com/sponsored/how-employers-can-take-control-rising-pharmacy-costs",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-19",
-      "summary": "Discover strategies to manage GLP-1 and specialty drug spending without hurting member experience.",
       "category": "general_market",
       "categoryLabel": "General Market"
     }
