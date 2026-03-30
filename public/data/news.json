@@ -1,88 +1,88 @@
 {
-  "lastUpdated": "2026-03-30T20:54:37.568Z",
+  "lastUpdated": "2026-03-30T21:47:47.166Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 11,
-    "staleSources": 5,
-    "healthySources": 6,
+    "staleSources": 4,
+    "healthySources": 7,
     "sources": [
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 177,
+        "articleCount": 185,
         "latestPublishedAt": "2026-03-30T00:00:00.000Z",
-        "staleHours": 20,
+        "staleHours": 21,
         "status": "ok"
       },
       {
         "source": "Fierce Healthcare",
         "articleCount": 169,
         "latestPublishedAt": "2026-03-30T00:00:00.000Z",
-        "staleHours": 20,
+        "staleHours": 21,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 63,
+        "articleCount": 54,
         "latestPublishedAt": "2026-03-30T00:00:00.000Z",
-        "staleHours": 20,
+        "staleHours": 21,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 38,
         "latestPublishedAt": "2026-03-30T00:00:00.000Z",
-        "staleHours": 20,
+        "staleHours": 21,
         "status": "ok"
       },
       {
         "source": "Health Affairs",
         "articleCount": 27,
         "latestPublishedAt": "2026-03-30T00:00:00.000Z",
-        "staleHours": 20,
+        "staleHours": 21,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 14,
         "latestPublishedAt": "2026-03-30T00:00:00.000Z",
-        "staleHours": 20,
+        "staleHours": 21,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 3,
         "latestPublishedAt": "2026-03-27T00:00:00.000Z",
-        "staleHours": 92,
+        "staleHours": 93,
         "status": "stale"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 3,
         "latestPublishedAt": "2026-03-25T00:00:00.000Z",
-        "staleHours": 140,
+        "staleHours": 141,
         "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 3,
         "latestPublishedAt": "2026-03-25T00:00:00.000Z",
-        "staleHours": 140,
+        "staleHours": 141,
         "status": "stale"
+      },
+      {
+        "source": "SEC Healthcare Filings",
+        "articleCount": 2,
+        "latestPublishedAt": "2026-03-30T00:00:00.000Z",
+        "staleHours": 21,
+        "status": "ok"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 2,
         "latestPublishedAt": "2026-03-26T00:00:00.000Z",
-        "staleHours": 116,
-        "status": "stale"
-      },
-      {
-        "source": "SEC Healthcare Filings",
-        "articleCount": 1,
-        "latestPublishedAt": "2026-03-24T00:00:00.000Z",
-        "staleHours": 164,
+        "staleHours": 117,
         "status": "stale"
       }
     ]
@@ -90,19 +90,19 @@
   "categoryCoverage": {
     "closures_layoffs": {
       "label": "Closures & Layoffs",
-      "count": 11
+      "count": 12
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 33
+      "count": 32
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 2
+      "count": 1
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 58
+      "count": 57
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -114,11 +114,11 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 163
+      "count": 162
     },
     "general_market": {
       "label": "General Market",
-      "count": 215
+      "count": 218
     }
   },
   "quality": {
@@ -134,7 +134,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 93,
+        "actual": 102,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -144,7 +144,7 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 5,
+        "actual": 4,
         "pass": false
       }
     }
@@ -247,8 +247,83 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "6 Tenet hospitals ratify labor deal covering nearly 3,000 nurses",
-      "url": "https://www.beckershospitalreview.com/hr/6-tenet-hospitals-ratify-labor-deal-covering-nearly-3000-nurses/",
+      "title": "UHS 8-K filing - Universal Health Services, Inc.",
+      "summary": "Universal Health Services, Inc. filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/352915/000119312526131809/uhs-20260326.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-03-30",
+      "category": "general_market",
+      "relevance": 90,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "The groups among whom mammography rates are falling: Study",
+      "url": "https://www.beckershospitalreview.com/radiology/the-groups-among-whom-mammography-rates-are-falling-study/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-30",
+      "summary": "Mammography use among U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "CVS Health to open more stores than it closes in 2026",
+      "url": "https://www.beckershospitalreview.com/pharmacy/cvs-health-to-open-more-stores-than-it-closes-in-2026/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-30",
+      "summary": "CVS Health plans to open more pharmacies than it closes in 2026, signaling a shift after several years of store reductions, Bloomberg reported March 30. The company expects to open about 60 stores this year, including nearly 20 smaller, pharmacy-only locations, while closing a few dozen sites, spokesperson Amy Thibault said.",
+      "category": "closures_layoffs",
+      "categoryLabel": "Closures & Layoffs"
+    },
+    {
+      "title": "CMS signals tougher expectations for hospital nutrition services: 5 notes",
+      "url": "https://www.beckershospitalreview.com/hospital-management-administration/cms-signals-tougher-expectations-for-hospital-nutrition-services-5-notes/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-30",
+      "summary": "CMS is calling on hospitals to ensure their patient food and nutrition services align with the latest federal dietary standards. CMS outlined its recommendations in a March 30 memo, emphasizing that food is a critical component of care delivery.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Memorial Regional, Joe DiMaggio Children’s name CFO",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/memorial-regional-joe-dimaggio-childrens-name-cfo/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-30",
+      "summary": "Katherine Wong has been named CFO of Memorial Regional Hospital and Joe DiMaggio Children’s Hospital, both in Hollywood, Fla. Ms.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "12 Big Tech health system partnerships",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/digital-health/12-big-tech-health-system-partnerships-3/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-30",
+      "summary": "Health systems are turning to Big Tech for help with healthcare&#8217;s digital transformation. But the relationship goes both ways.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Beth Israel Lahey hospital president to retire; successor named",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/beth-israel-lahey-hospital-president-to-retire-successor-named/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-30",
+      "summary": "Jonathan Lind has been appointed president of Beth Israel Deaconess Hospital-Plymouth (Mass.), effective May 4.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Kaiser Permanente’s $9.3B net income draws scrutiny: 6 things to know",
+      "url": "https://www.beckershospitalreview.com/finance/kaiser-permanentes-9-3b-net-income-draws-scrutiny-six-things-to-know/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-30",
+      "summary": "Oakland, Calif.-based Kaiser Permanente recorded a net income of $9.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Labor deal ratified by nearly 3,000 nurses at 6 Tenet hospitals",
+      "url": "https://www.beckershospitalreview.com/hr/labor-deal-ratified-by-nearly-3000-nurses-at-6-tenet-hospitals/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-03-30",
       "summary": "Registered nurses at six Tenet Healthcare facilities in California have ratified a new three-year labor contract. The agreement was approved March 26 with 93% support across the facilities, according to a March 27 news release from the California Nurses Association.",
@@ -272,69 +347,6 @@
       "summary": "Retail and e-commerce giants are rapidly expanding their presence in pharmacy services, prompting new concerns among hospital and health system leaders about losing ground in patient access and workforce recruitment. Amazon, for example, is significantly scaling its pharmacy footprint.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Southcoast Health creates 12-officer force to combat workplace violence",
-      "url": "https://www.beckershospitalreview.com/workforce/southcoast-health-creates-12-officer-force-to-combat-workplace-violence/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-30",
-      "summary": "New Bedford, Mass.-based Southcoast Health has created an in-house police department within its division of police and public safety, the system confirmed in a statement shared with Becker&#8217;s.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Payers’ prior authorization denial rates go public: 5 notes",
-      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/payers-prior-authorization-denial-rates-go-public-5-notes/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-30",
-      "summary": "For the first time, payers must publicly post data on how often they deny prior authorization requests, how quickly they process them and how often denials are overturned on appeal. The first reports are due March 31 under a rule CMS finalized in 2024.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Texas Health Resources CEO to retire, successor named",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/texas-health-resources-ceo-to-retire-successor-named/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-30",
-      "summary": "Barclay Berdan, CEO of Arlington-based Texas Health Resources, will retire in September after four decades with the health system. During his tenure, Mr.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "ACA enrollment at 23.1 million in 2026",
-      "url": "https://www.beckershospitalreview.com/finance/aca-enrollment-at-23-1-million-in-2026/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-30",
-      "summary": "ACA enrollment reached 23.1 million in 2026, a 5% decrease from 2025, CMS reported March 27.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Pennsylvania hospital cited for restraining patient with pepper spray",
-      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/pennsylvania-hospital-cited-for-restraining-patient-with-pepper-spray/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-30",
-      "summary": "The Pennsylvania Department of Health cited Allentown, Pa.-based Lehigh Valley Hospital–Cedar Crest for using pepper spray to restrain a combative patient, The Morning Call reported March 30.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Patients who need interpreters have 27% longer wait times: Study",
-      "url": "https://www.beckershospitalreview.com/patient-experience/patients-who-need-interpreters-have-27-longer-wait-times-study/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-30",
-      "summary": "Patients who need an interpreter wait longer to be evaluated by a physician in the emergency department, and only 68% of those who needed an interpreter were correctly identified, a recent study found.&#160; The study, published in The American Journal of Emergency Medicine, analyzed 47,038 encounters at two affiliated emergency departments with similar triage processes [&#8230;] The post Patients who need interpreters have 27% longer wait times: Study appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "ChristianaCare to build $75M rehab hospital",
-      "url": "https://www.beckershospitalreview.com/capital/christianacare-to-build-75m-rehab-hospital/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-30",
-      "summary": "The Delaware Health Resources Board has approved Newark, Del.-based ChristianaCare to build a $75 million, 73-bed freestanding acute inpatient rehabilitation hospital in Newark.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
     },
     {
       "title": "STAT+: Doctors Without Borders calls Gilead &#8216;unconscionable&#8217; for refusing to sell HIV prevention drug to organization",
@@ -515,6 +527,78 @@
       "summary": "The administration's official numbers on the 2026 Open Enrollment Period outlined drops in new customers and automatic re-enrollment, the latter of which CMS said stemmed from its crackdown on improper enrollments. Average monthly premiums also increased across the board as bronze-tier plans rose in prominence.",
       "category": "policy_reimbursement",
       "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "6 Tenet hospitals ratify labor deal covering nearly 3,000 nurses",
+      "url": "https://www.beckershospitalreview.com/hr/6-tenet-hospitals-ratify-labor-deal-covering-nearly-3000-nurses/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-30",
+      "summary": "Registered nurses at six Tenet Healthcare facilities in California have ratified a new three-year labor contract. The agreement was approved March 26 with 93% support across the facilities, according to a March 27 news release from the California Nurses Association.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Southcoast Health creates 12-officer force to combat workplace violence",
+      "url": "https://www.beckershospitalreview.com/workforce/southcoast-health-creates-12-officer-force-to-combat-workplace-violence/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-30",
+      "summary": "New Bedford, Mass.-based Southcoast Health has created an in-house police department within its division of police and public safety, the system confirmed in a statement shared with Becker&#8217;s.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Payers’ prior authorization denial rates go public: 5 notes",
+      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/payers-prior-authorization-denial-rates-go-public-5-notes/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-30",
+      "summary": "For the first time, payers must publicly post data on how often they deny prior authorization requests, how quickly they process them and how often denials are overturned on appeal. The first reports are due March 31 under a rule CMS finalized in 2024.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Texas Health Resources CEO to retire, successor named",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/texas-health-resources-ceo-to-retire-successor-named/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-30",
+      "summary": "Barclay Berdan, CEO of Arlington-based Texas Health Resources, will retire in September after four decades with the health system. During his tenure, Mr.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "ACA enrollment at 23.1 million in 2026",
+      "url": "https://www.beckershospitalreview.com/finance/aca-enrollment-at-23-1-million-in-2026/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-30",
+      "summary": "ACA enrollment reached 23.1 million in 2026, a 5% decrease from 2025, CMS reported March 27.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Pennsylvania hospital cited for restraining patient with pepper spray",
+      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/pennsylvania-hospital-cited-for-restraining-patient-with-pepper-spray/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-30",
+      "summary": "The Pennsylvania Department of Health cited Allentown, Pa.-based Lehigh Valley Hospital–Cedar Crest for using pepper spray to restrain a combative patient, The Morning Call reported March 30.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Patients who need interpreters have 27% longer wait times: Study",
+      "url": "https://www.beckershospitalreview.com/patient-experience/patients-who-need-interpreters-have-27-longer-wait-times-study/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-30",
+      "summary": "Patients who need an interpreter wait longer to be evaluated by a physician in the emergency department, and only 68% of those who needed an interpreter were correctly identified, a recent study found.&#160; The study, published in The American Journal of Emergency Medicine, analyzed 47,038 encounters at two affiliated emergency departments with similar triage processes [&#8230;] The post Patients who need interpreters have 27% longer wait times: Study appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "ChristianaCare to build $75M rehab hospital",
+      "url": "https://www.beckershospitalreview.com/capital/christianacare-to-build-75m-rehab-hospital/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-30",
+      "summary": "The Delaware Health Resources Board has approved Newark, Del.-based ChristianaCare to build a $75 million, 73-bed freestanding acute inpatient rehabilitation hospital in Newark.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
     },
     {
       "title": "Payer-provider collaboration is only as strong as the payment process behind it",
@@ -4716,87 +4800,6 @@
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-03-24",
       "summary": "Pittsburgh-based Highmark Health reported a $674 million operating loss in 2025, reflecting continued insurance headwinds despite improved performance at its hospital division. Highmark — which operates health plans, health system Allegheny Health Network and several other businesses — reported a net loss of $175 million for the 12 months ended Dec.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Opinion: We’re launching a new CMS pilot program to help children with complex conditions",
-      "url": "https://www.statnews.com/2026/03/24/cms-aspire-innovation-model-announcement/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-03-24",
-      "summary": "CMS wants “to turn this shoddy patchwork of care into a seamless tapestry,” write CMS Administrator Mehmet Oz and Center for Medicare and Medicaid Innovation Director Abe Sutton.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "STAT+: FTC strikes proposed deal with CVS over charges its PBM manipulated insulin prices, impeded access",
-      "url": "https://www.statnews.com/pharmalot/2026/03/24/ftc-proposed-deal-cvs-pbm-manipulated-insulin-prices/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-03-24",
-      "summary": "The FTC said the settlement will save Americans up to $7 billion in out-of-pocket costs over 10 years.",
-      "category": "labor_unions",
-      "categoryLabel": "Labor & Unions"
-    },
-    {
-      "title": "STAT+: Drug company penalties for paying kickbacks to doctors failed to dent bottom lines, analysis finds",
-      "url": "https://www.statnews.com/pharmalot/2026/03/24/pharma-doctor-kickback-penalties-dwarfed-by-sales-revenue/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-03-24",
-      "summary": "Drugmakers that were penalized for kickbacks paid only 2.2% of their U.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: FDA slams Soon-Shiong and ImmunityBio for making &#8216;false and misleading&#8217; claims about a drug",
-      "url": "https://www.statnews.com/pharmalot/2026/03/24/fda-slams-soon-shiong-immunitybio-false-misleading-claims/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-03-24",
-      "summary": "Patrick Soon-Shiong, a controversial figure in the biotech industry, was accused by the FDA of making 'false and misleading' claims about a cancer treatment.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: How will Trump handle the CDC and ACIP?",
-      "url": "https://www.statnews.com/2026/03/24/who-will-run-cdc-acip-appeal-decision-trump-rfk-jr/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-03-24",
-      "summary": "Trump's decisions serve as a test of how much sway RFK Jr.'s MAHA movement still has in the White House.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Can you spot a deepfake X-ray? Neither can your radiologist",
-      "url": "https://www.statnews.com/2026/03/24/radiologists-cant-detect-deepfake-xrays/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-03-24",
-      "summary": "Deepfake images can mislead viewers, upend elections, and instigate violence. They can also, researchers say, disrupt medical care.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Buzzy AI doctor startup raises funds, will meet FDA",
-      "url": "https://www.statnews.com/2026/03/24/ai-doctor-startup-raises-funds-health-tech/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-03-24",
-      "summary": "In this edition of STAT Health Tech: AI doctor startup raises fresh capital, and what Medicare chief Chris Klomp said at STAT Summit.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "STAT+: Gilead to acquire immunology biotech, offers lifeline to Galapagos",
-      "url": "https://www.statnews.com/2026/03/24/gilead-ouro-galapagos-merck-quotient-ibd-readout-newsletter/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-03-24",
-      "summary": "In today's Readout newsletter: Gilead to acquire an immunology biotech and Merck partners with Flagship company on IBD targets. Plus: Do you have what it takes to be CBER director?",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "STAT+: Pharmalittle: We&#8217;re reading about a Trump drug pricing flaw, a Gilead deal, and more",
-      "url": "https://www.statnews.com/pharmalot/2026/03/24/trump-drug-pricing-flaw-gilead-buys-ouro/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-03-24",
-      "summary": "Comments from a top Trump administration health official add to signs of a major flaw in the president’s most-favored nation drug pricing plans",
       "category": "general_market",
       "categoryLabel": "General Market"
     }
