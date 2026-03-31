@@ -1,89 +1,89 @@
 {
-  "lastUpdated": "2026-03-31T15:11:04.434Z",
+  "lastUpdated": "2026-03-31T17:05:40.902Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 11,
-    "staleSources": 3,
-    "healthySources": 8,
+    "staleSources": 2,
+    "healthySources": 9,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 174,
+        "articleCount": 173,
         "latestPublishedAt": "2026-03-31T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 17,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 171,
+        "articleCount": 167,
         "latestPublishedAt": "2026-03-31T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 17,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 70,
+        "articleCount": 72,
         "latestPublishedAt": "2026-03-31T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 17,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 33,
         "latestPublishedAt": "2026-03-31T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 17,
         "status": "ok"
       },
       {
         "source": "Health Affairs",
         "articleCount": 28,
         "latestPublishedAt": "2026-03-31T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 17,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
-        "articleCount": 14,
-        "latestPublishedAt": "2026-03-30T00:00:00.000Z",
-        "staleHours": 39,
+        "articleCount": 16,
+        "latestPublishedAt": "2026-03-31T00:00:00.000Z",
+        "staleHours": 17,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 4,
         "latestPublishedAt": "2026-03-31T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 17,
+        "status": "ok"
+      },
+      {
+        "source": "National Nurses United RSS",
+        "articleCount": 2,
+        "latestPublishedAt": "2026-03-31T00:00:00.000Z",
+        "staleHours": 17,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 2,
         "latestPublishedAt": "2026-03-26T00:00:00.000Z",
-        "staleHours": 135,
+        "staleHours": 137,
         "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 2,
         "latestPublishedAt": "2026-03-25T00:00:00.000Z",
-        "staleHours": 159,
+        "staleHours": 161,
         "status": "stale"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 1,
         "latestPublishedAt": "2026-03-30T00:00:00.000Z",
-        "staleHours": 39,
+        "staleHours": 41,
         "status": "ok"
-      },
-      {
-        "source": "National Nurses United RSS",
-        "articleCount": 1,
-        "latestPublishedAt": "2026-03-26T00:00:00.000Z",
-        "staleHours": 135,
-        "status": "stale"
       }
     ]
   },
@@ -102,11 +102,11 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 58
+      "count": 60
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 14
+      "count": 15
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
@@ -118,14 +118,12 @@
     },
     "general_market": {
       "label": "General Market",
-      "count": 221
+      "count": 218
     }
   },
   "quality": {
-    "status": "warning",
-    "failedChecks": [
-      "maxStaleSources"
-    ],
+    "status": "pass",
+    "failedChecks": [],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -134,7 +132,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 70,
+        "actual": 83,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -144,8 +142,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 3,
-        "pass": false
+        "actual": 2,
+        "pass": true
       }
     }
   },
@@ -211,6 +209,18 @@
       "categoryLabel": "Mergers & M&A"
     },
     {
+      "title": "Nurses to hold vigil today following deadly shooting at VA clinic in Georgia",
+      "summary": "Registered nurses at Joseph Maxwell Cleland Atlanta VA Medical Center in Decatur, Ga., will hold a vigil today following the deadly shooting earlier this month at a Georgia VA clinic that left a social worker and the suspected gunman, a VA patient, dead.",
+      "url": "https://www.nationalnursesunited.org/press/nurses-to-hold-vigil-today-following-deadly-shooting-at-va-clinic-in-georgia",
+      "source": "National Nurses United RSS",
+      "sourceType": "rss",
+      "sourceId": "nnu_rss",
+      "publishedAt": "2026-03-31",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "Center for Scientific Review; Notice of Closed Meetings",
       "summary": "",
       "url": "https://www.federalregister.gov/documents/2026/03/31/2026-06226/center-for-scientific-review-notice-of-closed-meetings",
@@ -259,11 +269,65 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Republicans eye healthcare cuts to fund Iran war: Report",
+      "title": "6 best VA hospitals for patient experience",
+      "url": "https://www.beckershospitalreview.com/patient-experience/6-best-va-hospitals-for-patient-experience/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-31",
+      "summary": "The Department of Veterans Affairs recognized six VA hospitals for delivering exceptional, Veteran-centered care in 2025. The Veterans Health Administration&#8217;s Patient Experience (PX) Awards honor top-performing health systems and medical centers for &#8220;building trust, improving access and consistently providing outstanding patient experiences,&#8221; according to a March 30 VA news release.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Hospitals push back on CMS supply rule",
+      "url": "https://www.beckershospitalreview.com/supply-chain/hospitals-push-back-on-cms-supply-rule/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-31",
+      "summary": "America’s Essential Hospitals is urging CMS to revise proposed requirements tied to domestic sourcing of medical supplies, citing administrative burden and financial strain. The group said the policy — which would track whether hospitals meet thresholds for U.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "14 steps for hospitals to take on AI in diagnostics: ECRI",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/14-steps-for-hospitals-to-take-on-ai-in-diagnostics-ecri/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-31",
+      "summary": "Artificial intelligence can support, but should not replace, clinical decision-making, ECRI and the Institute for Safe Medication Practices said in its latest annual ranking on patient safety concerns. In the report, &#8220;navigating the AI diagnostic dilemma&#8221; was named the No.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Patient-centered care cannot exist without robust support for goal concordant care",
+      "url": "https://www.beckershospitalreview.com/quality/patient-centered-care-cannot-exist-without-robust-support-for-goal-concordant-care/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-31",
+      "summary": "While patient-centered care has been widely recognized as integral to high-quality care for over a quarter of a century, hospitals and health systems are missing the mark when goal concordant care (GCC) is compartmentalized as important only when a cure is no longer possible. A recent study published in Cancer uncovered significant misalignment between treatment [&#8230;] The post Patient-centered care cannot exist without robust support for goal concordant care appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "quality_safety",
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "FDA approves higher-dose treatment for muscle disease",
+      "url": "https://www.beckershospitalreview.com/pharmacy/fda-approves-higher-dose-treatment-for-muscle-disease/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-31",
+      "summary": "The FDA has approved a higher-dose regimen of Spinraza for spinal muscular atrophy, providing a new treatment option for patients. The regimen includes 50 milligram per 5 milliliter and 28 milligram per 5 milliliter doses and is designed to deliver higher drug concentrations during both loading and maintenance phases, according to a March 30 news [&#8230;] The post FDA approves higher-dose treatment for muscle disease appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "BayCare to launch solid organ transplant program",
+      "url": "https://www.beckershospitalreview.com/care-coordination/baycare-to-launch-solid-organ-transplant-program/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-31",
+      "summary": "Clearwater, Fla.-based BayCare Health System will develop a solid organ transplant program at Tampa-based St.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Republicans eye further healthcare cuts: Report",
       "url": "https://www.beckershospitalreview.com/finance/republicans-eye-healthcare-cuts-to-fund-iran-war-report/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-03-31",
-      "summary": "Republicans are weighing new healthcare spending cuts as part of a broader effort to fund a budget package that could include up to $200 billion for the Iran war and immigration enforcement, according to a March 30 report from Axios.&#160; The early stage discussions mark a potential revival of contentious healthcare policy changes with significant [&#8230;] The post Republicans eye healthcare cuts to fund Iran war: Report appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "summary": "Republicans are weighing new healthcare spending cuts as part of a broader effort to fund a budget package that could include up to $200 billion for the Iran war and immigration enforcement, according to a March 30 report from Axios.&#160; The early stage discussions mark a potential revival of contentious healthcare policy changes with significant [&#8230;] The post Republicans eye further healthcare cuts: Report appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
@@ -295,61 +359,16 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Geisinger opens new retail pharmacy",
-      "url": "https://www.beckershospitalreview.com/pharmacy/geisinger-opens-new-retail-pharmacy/",
-      "source": "Becker's Hospital Review",
+      "title": "STAT+: HHS changes the U.S. health IT office’s name, and its purview",
+      "url": "https://www.statnews.com/2026/03/31/hhs-reorganizes-health-it-regulation-office-astp-onc/?utm_campaign=rss",
+      "source": "STAT News",
       "publishedAt": "2026-03-31",
-      "summary": "Danville, Pa.-based Geisinger has opened a retail pharmacy at its Buckhorn, Pa.",
-      "category": "capacity_expansion",
-      "categoryLabel": "Capacity & Expansion"
+      "summary": "The Trump administration is changing the name of the federal health IT office back to the Office of the National Coordinator.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
     },
     {
-      "title": "Cleveland Clinic lands $50M grant to boost access",
-      "url": "https://www.beckershospitalreview.com/capital/cleveland-clinic-lands-50m-grant-to-boost-access/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-31",
-      "summary": "Cleveland Clinic has received a $50 million grant from the Jack, Joseph and Morton Mandel Supporting Foundation to launch its Community Bridge to Care Initiative. Three things to know: 1.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Mayo Clinic joins $575M investment in wearables company Whoop",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/digital-health/mayo-clinic-joins-575m-investment-in-wearables-company-whoop/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-31",
-      "summary": "Rochester, Minn.-based Mayo Clinic is among the investors in a $525 million series G funding round for wearables company Whoop.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Mercy to use noninvasive tech for liver tumors",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/innovation/mercy-to-use-noninvasive-tech-for-liver-tumors/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-31",
-      "summary": "Mercy Hospital St. Louis is adding a noninvasive technology that directs sound waves to destroy liver tumors.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "The new AI blitz for health systems",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/the-new-ai-blitz-for-health-systems/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-31",
-      "summary": "The first wave of AI in health systems was ambient documentation — microphones in exam rooms, notes written by machines. That story has been told.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Mount Sinai inks 1st enterprise deal with OpenEvidence",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/mount-sinai-inks-1st-enterprise-deal-with-openevidence/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-31",
-      "summary": "New York City-based Mount Sinai Health System has signed an agreement to incorporate a clinical decision-support platform from OpenEvidence into its Epic EHR. The collaboration marks the AI company&#8217;s first enterprise deal with a health system.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: Baby KJ scientists hit road bump in quest to scale custom gene editor",
+      "title": "STAT+: Baby KJ scientists hit speed bump in quest to scale custom gene editor",
       "url": "https://www.statnews.com/2026/03/31/baby-kj-gene-editing-fda-rules-pose-expansion-hurdle/?utm_campaign=rss",
       "source": "STAT News",
       "publishedAt": "2026-03-31",
@@ -484,11 +503,110 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "HHS reverses Biden-era tech reorganization, returns ONC name",
+      "url": "https://www.healthcaredive.com/news/hhs-reverses-biden-technology-reorganization-onc/816221/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-03-31",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Elevance fills slew of mid-level leadership positions",
+      "url": "https://www.healthcaredive.com/news/elevance-mid-level-executive-appointments-carelon-health-benefits/816192/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-03-31",
+      "summary": "<p>The company has been overhauling its executive bench as it attempts to bolster flagging insurance profits and capitalize on growth in Carelon, including through six new appointments on Tuesday.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Ensemble partners with Cohere to build first RCM-native large language model",
+      "url": "https://www.fiercehealthcare.com/health-tech/ensemble-partners-cohere-build-first-rcm-native-large-language-model",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-03-31",
+      "summary": "Artificial intelligence in the revenue cycle management space is heating up as companies look to leverage the technology to reduce denials and make financial workflows more efficient.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
       "title": "Chutes & Ladders—Texas Health Resources CEO to retire, successor named; New NIH chief of staff",
       "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
       "source": "Fierce Healthcare",
       "publishedAt": "2026-03-31",
       "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Republicans eye healthcare cuts to fund Iran war: Report",
+      "url": "https://www.beckershospitalreview.com/finance/republicans-eye-healthcare-cuts-to-fund-iran-war-report/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-31",
+      "summary": "Republicans are weighing new healthcare spending cuts as part of a broader effort to fund a budget package that could include up to $200 billion for the Iran war and immigration enforcement, according to a March 30 report from Axios.&#160; The early stage discussions mark a potential revival of contentious healthcare policy changes with significant [&#8230;] The post Republicans eye healthcare cuts to fund Iran war: Report appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Geisinger opens new retail pharmacy",
+      "url": "https://www.beckershospitalreview.com/pharmacy/geisinger-opens-new-retail-pharmacy/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-31",
+      "summary": "Danville, Pa.-based Geisinger has opened a retail pharmacy at its Buckhorn, Pa.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "Cleveland Clinic lands $50M grant to boost access",
+      "url": "https://www.beckershospitalreview.com/capital/cleveland-clinic-lands-50m-grant-to-boost-access/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-31",
+      "summary": "Cleveland Clinic has received a $50 million grant from the Jack, Joseph and Morton Mandel Supporting Foundation to launch its Community Bridge to Care Initiative. Three things to know: 1.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Mayo Clinic joins $575M investment in wearables company Whoop",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/digital-health/mayo-clinic-joins-575m-investment-in-wearables-company-whoop/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-31",
+      "summary": "Rochester, Minn.-based Mayo Clinic is among the investors in a $525 million series G funding round for wearables company Whoop.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Mercy to use noninvasive tech for liver tumors",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/innovation/mercy-to-use-noninvasive-tech-for-liver-tumors/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-31",
+      "summary": "Mercy Hospital St. Louis is adding a noninvasive technology that directs sound waves to destroy liver tumors.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "The new AI blitz for health systems",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/the-new-ai-blitz-for-health-systems/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-31",
+      "summary": "The first wave of AI in health systems was ambient documentation — microphones in exam rooms, notes written by machines. That story has been told.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Mount Sinai inks 1st enterprise deal with OpenEvidence",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/mount-sinai-inks-1st-enterprise-deal-with-openevidence/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-03-31",
+      "summary": "New York City-based Mount Sinai Health System has signed an agreement to incorporate a clinical decision-support platform from OpenEvidence into its Epic EHR. The collaboration marks the AI company&#8217;s first enterprise deal with a health system.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "STAT+: Baby KJ scientists hit road bump in quest to scale custom gene editor",
+      "url": "https://www.statnews.com/2026/03/31/baby-kj-gene-editing-fda-rules-pose-expansion-hurdle/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-03-31",
+      "summary": "The scientists who treated Baby KJ say the FDA's strict standards will make it much harder to create bespoke gene editing for others.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
@@ -4659,123 +4777,6 @@
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-03-25",
       "summary": "David Zaas, MD, has been named CEO of Durham, N.C.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Why FMOL Health was early to adopt Epic&#8217;s AI scribe",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/why-fmol-health-was-early-to-adopt-epics-ai-scribe/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-25",
-      "summary": "Baton Rouge, La.-based FMOL Health was an early adopter of Epic&#8217;s new AI scribe after finding the application accurate and cost-effective and working with the EHR vendor to make improvements, a leader told Becker&#8217;s.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Promotion, pay and longevity: How Mayo Clinic, Northwell and Stryker became healthcare&#8217;s career standouts",
-      "url": "https://www.beckershospitalreview.com/workforce/promotion-pay-and-longevity-how-mayo-clinic-northwell-and-stryker-became-healthcares-career-standouts/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-25",
-      "summary": "Mayo Clinic, Northwell Health and Stryker stand apart in healthcare for delivering consistently strong career outcomes, from early advancement to long-term retention and pay, according to the 2026 &#8220;Where You Work Matters&#8221; list. The three organizations are among just 22 U.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Optimists, pessimists and realists — 12 pharmacy leaders on the future",
-      "url": "https://www.beckershospitalreview.com/pharmacy/optimists-pessimists-and-realists-12-pharmacy-leaders-on-the-future/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-25",
-      "summary": "Pharmacy is under pressure from every direction — shrinking reimbursements, 340B headwinds, rising drug costs, and a workforce stretched thin. And yet the pharmacy leaders living inside that pressure are not sounding the alarm.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "21 revenue cycle executive moves in 2026",
-      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/21-revenue-cycle-executive-moves-in-2026/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-25",
-      "summary": "From Ohio State University Wexner Medical Center naming a chief revenue officer to Erlanger Health System naming a senior vice president of revenue cycle, here are 21 revenue cycle executive moves Becker&#8217;s reported in 2026. 1.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "The one-person unicorn in healthcare IT is coming",
-      "url": "https://www.beckershospitalreview.com/strategy/the-one-person-unicorn-in-healthcare-it-is-coming/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-25",
-      "summary": "AI is collapsing the cost of building, operating, and scaling software companies. In healthcare IT, that means the next major vendor may not be a 10,000-employee incumbent, but an ultra-lean AI-powered company that solves one mission-critical problem better, faster, and with far less overhead.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "The headwinds are real — so is the hope: 96 healthcare leaders on the road ahead",
-      "url": "https://www.beckershospitalreview.com/strategy/the-headwinds-are-real-so-is-the-hope-96-healthcare-leaders-on-the-road-ahead/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-25",
-      "summary": "The American healthcare system has never lacked for challenges, but the current moment feels different in both scale and urgency. Staffing shortages have moved from chronic annoyance to structural crisis.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "FDA issues alert on dialysis tubing sets",
-      "url": "https://www.beckershospitalreview.com/supply-chain/fda-issues-alert-on-dialysis-tubing-sets/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-25",
-      "summary": "The FDA has issued an alert regarding two lines of hemodialysis tubing sets from B. Braun Medical following an urgent medical device correction sent to customers by the manufacturer.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "CVS to open 1st pharmacy-only location in Chicago",
-      "url": "https://www.beckershospitalreview.com/pharmacy/cvs-to-open-1st-pharmacy-only-location-in-chicago/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-25",
-      "summary": "CVS Pharmacy will open its first pharmacy-only location in Chicago on March 30. The store, located at 2628 W.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Virginia hospital boosts workplace safety reporting 245% with 3 strategic shifts",
-      "url": "https://www.beckershospitalreview.com/quality/patient-safety-outcomes/virginia-hospital-boosts-workplace-safety-reporting-245-with-3-strategic-shifts/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-25",
-      "summary": "Newport, Va.-based Riverside Regional Medical Center implemented a behavioral response team after identifying gaps in workplace violence prevention, increasing reporting by 245% from 2024 to 2025 and enabling real-time intervention for escalating behavioral health situations.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Qualified Health locks in $125M in fresh funding to scale enterprise AI at health systems",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/qualified-health-locks-125m-fresh-funding-scale-ai-health-systems",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-25",
-      "summary": "Qualified Health, a startup that works with health systems to evaluate and adopt artificial intelligence technology, raised $125 million in fresh funding to scale up its business.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "CVS Caremark, FTC reach settlement in insulin pricing case",
-      "url": "https://www.fiercehealthcare.com/payers/cvs-caremark-ftc-reach-settlement-insulin-pricing-case",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-25",
-      "summary": "CVS Health's Caremark has become the second of the \"Big Three\" pharmacy benefit manager to reach a settlement with the Federal Trade Commission in a lawsuit over insulin pricing.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "32% of adults turn to AI for health advice: KFF",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/32-of-adults-turn-to-ai-for-health-advice-kff/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-25",
-      "summary": "About 32% of U.S.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "The &#8216;leaky pipeline&#8217; in pediatric concussion care: Study",
-      "url": "https://www.beckershospitalreview.com/quality/patient-safety-outcomes/the-leaky-pipeline-in-pediatric-concussion-care-study/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-25",
-      "summary": "Researchers at Children&#8217;s Hospital of Philadelphia recently uncovered what they called a &#8220;leaky pipeline&#8221; of follow-up care for children with head trauma. An analysis using CHOP&#8217;s Minds Matter Registry — the nation&#8217;s largest pediatric concussion registry — showed disparities across sequential follow-up care stages, according to a March 25 hospital news release.",
       "category": "general_market",
       "categoryLabel": "General Market"
     }
