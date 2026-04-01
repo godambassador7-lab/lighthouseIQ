@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-01T19:16:04.155Z",
+  "lastUpdated": "2026-04-01T20:53:45.527Z",
   "scope": "US healthcare",
   "sourceManifestVersion": "1.0.0",
   "sourceHealth": [
@@ -111,9 +111,10 @@
       "source": "NYSNA RSS",
       "id": "nysna_rss",
       "type": "rss",
-      "ok": true,
-      "status": 200,
-      "records": 12
+      "ok": false,
+      "status": 0,
+      "records": 0,
+      "error": "fetch failed"
     },
     {
       "source": "SEIU RSS",
@@ -128,9 +129,8 @@
       "id": "hca_newsroom",
       "type": "html",
       "ok": false,
-      "status": 0,
-      "records": 0,
-      "error": "This operation was aborted"
+      "status": 404,
+      "records": 0
     },
     {
       "source": "Tenet Newsroom",
@@ -1822,39 +1822,6 @@
       "relevance": 100
     },
     {
-      "title": "Save Healthcare Services",
-      "summary": "",
-      "url": "https://www.nysna.org/campaigns/save-healthcare-services",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 100
-    },
-    {
-      "title": "NYSNA Nurses at WMC-HealthAlliance Hospital Ratify Strong Contract Agreement that Protects Nurse and Patient Safety",
-      "summary": "",
-      "url": "https://www.nysna.org/press/nysna-nurses-wmc-healthalliance-hospital-ratify-strong-contract-agreement-protects-nurse-and",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "quality_safety",
-      "relevance": 100
-    },
-    {
-      "title": "Brooklyn Hospital Center Nurses Fight and Win to Restore Their Health Benefits",
-      "summary": "",
-      "url": "https://www.nysna.org/news/brooklyn-hospital-center-nurses-fight-and-win-restore-their-health-benefits",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 100
-    },
-    {
       "title": "Vulnerability Disclosure",
       "summary": "",
       "url": "https://www.justice.gov/jmd/vulnerability-disclosure-policy",
@@ -1918,50 +1885,6 @@
       "sourceId": "ftc_press_releases",
       "publishedAt": "",
       "category": "mergers_mna",
-      "relevance": 98
-    },
-    {
-      "title": "NYSNA Nurses at Elizabethtown Overwhelmingly Ratify Contract Agreement that Delivers Good Health Benefits for Nurses",
-      "summary": "",
-      "url": "https://www.nysna.org/press/nysna-nurses-elizabethtown-overwhelmingly-ratify-contract-agreement-delivers-good-health",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 98
-    },
-    {
-      "title": "Nurses Help Secure Critical Funding for North Country Hospitals",
-      "summary": "",
-      "url": "https://www.nysna.org/news/nurses-help-secure-critical-funding-north-country-hospitals",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 98
-    },
-    {
-      "title": "NYSNA Nurses at St. Joseph&#039;s Medical Center Speak Out for Safe Staffing and a Fair Contract",
-      "summary": "",
-      "url": "https://www.nysna.org/press/nysna-nurses-st-josephs-medical-center-speak-out-safe-staffing-and-fair-contract",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "ai_tech",
-      "relevance": 98
-    },
-    {
-      "title": "TODAY: NYSNA Nurses at St. Joseph&#039;s Medical Center Speak Out for Safe Staffing and a Fair Contract",
-      "summary": "",
-      "url": "https://www.nysna.org/press/today-nysna-nurses-st-josephs-medical-center-speak-out-safe-staffing-and-fair-contract",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "ai_tech",
       "relevance": 98
     },
     {
@@ -2174,6 +2097,17 @@
       "relevance": 96
     },
     {
+      "title": "AHA podcast: How Rehab Hospitals Can Ease Acute Care Overload",
+      "summary": "",
+      "url": "https://www.aha.org/news/headline/2026-04-01-aha-podcast-how-rehab-hospitals-can-ease-acute-care-overload",
+      "source": "AHA News",
+      "sourceType": "html",
+      "sourceId": "aha_news",
+      "publishedAt": "",
+      "category": "policy_reimbursement",
+      "relevance": 96
+    },
+    {
       "title": "CMS memo reiterates nutrition service obligations for hospitals in light of updated dietary guidelines",
       "summary": "",
       "url": "https://www.aha.org/news/headline/2026-03-31-cms-memo-reiterates-nutrition-service-obligations-hospitals-light-updated-dietary-guidelines",
@@ -2226,17 +2160,6 @@
       "sourceId": "aha_news",
       "publishedAt": "",
       "category": "policy_reimbursement",
-      "relevance": 96
-    },
-    {
-      "title": "FDA issues early alert for certain dialysis devices from B. Braun Medical",
-      "summary": "",
-      "url": "https://www.aha.org/news/headline/2026-03-25-fda-issues-early-alert-certain-dialysis-devices-b-braun-medical",
-      "source": "AHA News",
-      "sourceType": "html",
-      "sourceId": "aha_news",
-      "publishedAt": "",
-      "category": "ai_tech",
       "relevance": 96
     },
     {
@@ -2438,39 +2361,6 @@
       "relevance": 93
     },
     {
-      "title": "Journal of the New York State Nurses Association",
-      "summary": "",
-      "url": "https://www.nysna.org/nursing-resources/journal-new-york-state-nurses-association",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 93
-    },
-    {
-      "title": "Statewide Peer Assistance for Nurses",
-      "summary": "",
-      "url": "https://www.statewidepeerassistance.org/",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 93
-    },
-    {
-      "title": "Health Equity and Social Justice",
-      "summary": "",
-      "url": "https://www.nysna.org/campaigns/health-equity-and-social-justice",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 93
-    },
-    {
       "title": "Read more about Exchange Coverage Remains Near Record High as 23.1 Million Enroll in 2026, Reflecting Continued Strength and Stability",
       "summary": "",
       "url": "https://www.cms.gov/newsroom/press-releases/exchange-coverage-remains-near-record-high-23-1-million-enroll-2026-reflecting-continued-strength",
@@ -2579,28 +2469,6 @@
       "publishedAt": "",
       "category": "ai_tech",
       "relevance": 90
-    },
-    {
-      "title": "NYSNA Update: March 27, 2026",
-      "summary": "",
-      "url": "https://www.nysna.org/news/nysna-update-march-27-2026",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 88
-    },
-    {
-      "title": "See All Photos and Videos",
-      "summary": "",
-      "url": "https://www.nysna.org/news/gallery",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 88
     }
   ]
 }
