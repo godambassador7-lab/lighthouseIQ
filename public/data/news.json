@@ -1,81 +1,88 @@
 {
-  "lastUpdated": "2026-04-01T20:53:45.589Z",
+  "lastUpdated": "2026-04-01T21:48:01.809Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
-    "totalSources": 10,
+    "totalSources": 11,
     "staleSources": 0,
-    "healthySources": 10,
+    "healthySources": 11,
     "sources": [
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 178,
+        "articleCount": 188,
         "latestPublishedAt": "2026-04-01T00:00:00.000Z",
-        "staleHours": 20,
+        "staleHours": 21,
         "status": "ok"
       },
       {
         "source": "Fierce Healthcare",
-        "articleCount": 173,
+        "articleCount": 170,
         "latestPublishedAt": "2026-04-01T00:00:00.000Z",
-        "staleHours": 20,
+        "staleHours": 21,
         "status": "ok"
       },
       {
         "source": "STAT News",
         "articleCount": 60,
         "latestPublishedAt": "2026-04-01T00:00:00.000Z",
-        "staleHours": 20,
+        "staleHours": 21,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
-        "articleCount": 34,
+        "articleCount": 33,
         "latestPublishedAt": "2026-04-01T00:00:00.000Z",
-        "staleHours": 20,
+        "staleHours": 21,
         "status": "ok"
       },
       {
         "source": "Health Affairs",
-        "articleCount": 29,
+        "articleCount": 25,
         "latestPublishedAt": "2026-04-01T00:00:00.000Z",
-        "staleHours": 20,
+        "staleHours": 21,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 17,
         "latestPublishedAt": "2026-04-01T00:00:00.000Z",
-        "staleHours": 20,
+        "staleHours": 21,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
-        "articleCount": 3,
+        "articleCount": 2,
         "latestPublishedAt": "2026-03-31T00:00:00.000Z",
-        "staleHours": 44,
+        "staleHours": 45,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
-        "articleCount": 3,
+        "articleCount": 2,
         "latestPublishedAt": "2026-03-30T00:00:00.000Z",
-        "staleHours": 68,
+        "staleHours": 69,
+        "status": "ok"
+      },
+      {
+        "source": "FDA MedWatch RSS",
+        "articleCount": 1,
+        "latestPublishedAt": "2026-04-01T00:00:00.000Z",
+        "staleHours": 21,
         "status": "ok"
       },
       {
         "source": "National Nurses United RSS",
-        "articleCount": 2,
+        "articleCount": 1,
         "latestPublishedAt": "2026-03-31T00:00:00.000Z",
-        "staleHours": 44,
+        "staleHours": 45,
         "status": "ok"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 1,
         "latestPublishedAt": "2026-03-30T00:00:00.000Z",
-        "staleHours": 68,
+        "staleHours": 69,
         "status": "ok"
       }
     ]
@@ -95,7 +102,7 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 63
+      "count": 61
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -103,15 +110,15 @@
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
-      "count": 10
+      "count": 11
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 165
+      "count": 164
     },
     "general_market": {
       "label": "General Market",
-      "count": 205
+      "count": 207
     }
   },
   "quality": {
@@ -120,12 +127,12 @@
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
-        "actual": 10,
+        "actual": 11,
         "pass": true
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 105,
+        "actual": 117,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -238,6 +245,18 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
+      "title": "Aphreseller (Buy-herbal.com) Issues Voluntary Nationwide Recall of Kian Pee Wan Capsules Due the Presence of Undeclared Dexamethasone and Cyproheptadine",
+      "summary": "FOR IMMEDIATE RELEASE – 03/30/2026 - Flushing, New York, Aphreseller (Ebay seller ID), Buy-herbal.com is recalling all lots of Kian Pee Wan capsules to the consumer level. FDA analysis has found that the product contains the undeclared drug ingredients dexamethasone and cyproheptadine. Products cont",
+      "url": "http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/aphreseller-buy-herbalcom-issues-voluntary-nationwide-recall-kian-pee-wan-capsules-due-presence",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-04-01",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
       "title": "Submission for Office of Management and Budget Review; Generic Clearance for Reviewer Recruitment Forms",
       "summary": "The Administration for Children and Families (ACF) proposes to extend approval of the existing overarching generic clearance for Reviewer Recruitment Forms (Office of Management and Budget (OMB) #: 0970-0477). No changes are proposed to the terms of the overarching generic. Burden estimates have been updated.",
       "url": "https://www.federalregister.gov/documents/2026/04/01/2026-06278/submission-for-office-of-management-and-budget-review-generic-clearance-for-reviewer-recruitment",
@@ -262,94 +281,94 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "Johns Hopkins, telemedicine group partner on improving care access",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/telehealth/johns-hopkins-telemedicine-group-partner-on-improving-care-access/",
+      "title": "Upstate New York WMCHealth nurses OK 3-year labor contract",
+      "url": "https://www.beckershospitalreview.com/hr/upstate-new-york-wmchealth-nurses-ok-3-year-labor-contract/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-04-01",
-      "summary": "The American Telemedicine Association and Johns Hopkins Medicine in Baltimore have launched a three-year initiative to address barriers to interstate telehealth access. The effort, known as the Licensure Innovation for Telehealth Transformation initiative, aims to educate policymakers and the public on federal approaches to expanding telehealth access while maintaining state licensure authority, according to a [&#8230;] The post Johns Hopkins, telemedicine group partner on improving care access appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "summary": "On March 30, members of the New York State Nurses Association at Westchester Medical Center-HealthAlliance Hospital in Kingston, N.Y.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "HCA Houston Healthcare hospital taps new CFO",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/hca-houston-healthcare-hospital-taps-new-cfo/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-01",
+      "summary": "Francis Tezanos was named CFO of HCA Houston Healthcare Tomball (Texas) on Jan. 12, according to a news release shared with Becker&#8217;s.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "How the $100K H-1B visa fee will affect hospitals: AHA",
+      "url": "https://www.beckershospitalreview.com/workforce/how-the-100k-h-1b-visa-fee-will-affect-hospitals-aha/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-01",
+      "summary": "As thousands of internationally trained healthcare workers are stuck in visa limbo, a new $100,000 fee for H-1B visa petitions could further destabilize the workforce, the American Hospital Association said in an article on its website. In September, President Donald Trump signed an executive order requiring employers to pay a $100,000 petition fee for H-1B [&#8230;] The post How the $100K H-1B visa fee will affect hospitals: AHA appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Iowa hospital CEO to retire",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/iowa-hospital-ceo-to-retire-6/",
+      "title": "19 health systems dropping Medicare Advantage plans &#124; 2026",
+      "url": "https://www.beckershospitalreview.com/finance/16-health-systems-dropping-medicare-advantage-plans-2026/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-04-01",
-      "summary": "Danette Kramer plans to retire as CEO of Regional Medical Center in Manchester, Iowa, at the end of 2026. Ms.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
+      "summary": "Hospitals and health systems continue to sever ties with certain Medicare Advantage plans in 2026, citing persistent frustrations with prior authorization denials and slow reimbursement from insurers. MA now covers more than half of the nation&#8217;s older adults, making these contract terminations increasingly consequential for patient access.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
     },
     {
-      "title": "HCA Florida hospital names CEO",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/hca-florida-hospital-names-ceo-8/",
+      "title": "Minnesota health system considers EHR switch",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/minnesota-health-system-considers-ehr-switch/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-04-01",
-      "summary": "HCA Florida Raulerson Hospital in Okeechobee has named Alex Masmela, BSN, RN, as its new CEO, effective March 30. Mr.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "43.5% of family physicians report burnout as turnover risk rises",
-      "url": "https://www.beckershospitalreview.com/workforce/43-5-of-family-physicians-report-burnout-as-turnover-risk-rises/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-01",
-      "summary": "Nearly half of U.S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "FDA approves Eli Lilly&#8217;s GLP-1 pill for weight loss",
-      "url": "https://www.beckershospitalreview.com/glp-1s/fda-approves-eli-lillys-glp-1-pill-for-weight-loss/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-01",
-      "summary": "The FDA on April 1 approved Eli Lilly&#8217;s daily GLP-1 pill, Foundayo, making it the U.S.",
+      "summary": "Grand Marais, Minn.-based North Shore Health is examining whether to swap EHR vendors, WTIP reported.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "CMS requests ACOs apply for LEAD model",
-      "url": "https://www.beckershospitalreview.com/finance/cms-requests-acos-apply-for-lead-model/",
+      "title": "Meta gets into health wearables with AI glasses",
+      "url": "https://www.beckershospitalreview.com/disruptors/meta-gets-into-health-wearables-with-ai-glasses/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-04-01",
-      "summary": "CMS issued a request for applications March 31 for its long-term enhanced ACO design model. The model&#8217;s performance period will span one decade — the longest CMS has tested — and run from Jan.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
+      "summary": "Meta is entering the health wearables market with AI glasses designed to keep tabs on what you eat. The Meta AI glasses are now available for people with prescription lenses and come with hands-free food tracking as part of a software update.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Henry Ford Health adds medical group",
-      "url": "https://www.beckershospitalreview.com/hospital-transactions-and-valuation/henry-ford-health-adds-medical-group/",
+      "title": "Patients have better AI than hospitals — is that a bad thing?",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/patients-have-better-ai-than-hospitals-is-that-a-bad-thing/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-04-01",
-      "summary": "Detroit-based Henry Ford Health has added Cornerstone Medical Group to its Henry Ford Medical Group, effective April 1. More than 80 Cornerstone physicians and advanced practice providers will join the existing 3,400 physicians, researchers and advanced practice providers within Henry Ford Medical Group, according to an April 1 health system news release.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
+      "summary": "Dr. ChatGPT has replaced Dr.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "CMS pilot allows hemp products in care plans: 5 notes",
-      "url": "https://www.beckershospitalreview.com/quality/patient-safety-outcomes/cms-pilot-allows-hemp-products-in-care-plans-5-notes/",
+      "title": "UT Southwestern, Children&#8217;s Health land $100M gift for Dallas pediatric campus",
+      "url": "https://www.beckershospitalreview.com/finance/ut-southwestern-childrens-health-land-100m-gift-for-dallas-pediatric-campus/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-04-01",
-      "summary": "CMS is piloting a new program that permits some clinicians to offer certain hemp-derived products to Medicare patients as part of their care plans. The new Substance Access Beneficiary Engagement Incentive is part of CMS&#8217; Innovation Center model-testing framework, designed to evaluate whether hemp-derived products can improve patient outcomes when integrated into coordinated, clinician-led care [&#8230;] The post CMS pilot allows hemp products in care plans: 5 notes appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Closed Illinois hospital owner eyes July reopening",
-      "url": "https://www.beckershospitalreview.com/finance/closed-illinois-hospital-owner-eyes-july-reopening/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-01",
-      "summary": "Resilience Healthcare CEO Manoj Prasad, MD, PhD, said that he hopes to reopen the system&#8217;s West Suburban Medical Center in Oak Park, Ill., by July, CBS News Chicago reported from an April 1 news conference.",
+      "summary": "Dallas-based UT Southwestern Medical Center and Children&#8217;s Health received a $100 million gift from The Stephens Greth Foundation to support their $5 billion joint pediatric campus. The campus, which is projected to open in 2031, is under construction across from UT Southwestern&#8217;s William P.",
       "category": "capacity_expansion",
       "categoryLabel": "Capacity & Expansion"
     },
     {
-      "title": "North Dakota expands medical cache to stabilize supply chain",
-      "url": "https://www.beckershospitalreview.com/supply-chain/north-dakota-expands-medical-cache-to-stabilize-supply-chain/",
+      "title": "UToledo Health scales ambient AI in Epic",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/utoledo-health-scales-ambient-ai-in-epic/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-04-01",
-      "summary": "North Dakota has expanded its centralized medical cache to support emergency preparedness and healthcare continuity across the state. State officials said the cache includes 80,000 square feet of climate-controlled warehouse space and is staffed by four full-time employees, according to North Dakota&#8217;s director of public health preparedness, who was interviewed for a March 31 blog [&#8230;] The post North Dakota expands medical cache to stabilize supply chain appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
+      "summary": "University of Toledo Health in Ohio is expanding use of an ambient AI clinical documentation tool within its Epic EHR following a pilot. After an eight-week evaluation, the health system reported a 29% reduction in time to chart closure and a decrease in documentation backlog — from more than 400 open charts to fewer than [&#8230;] The post UToledo Health scales ambient AI in Epic appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Methodist taps leader for 2 Nebraska hospitals",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/methodist-taps-leader-for-2-nebraska-hospitals/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-01",
+      "summary": "Julie Murray has been appointed executive vice president of Methodist Hospital and Methodist Women’s Hospital in Omaha, Neb., effective April 1.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
     },
     {
       "title": "STAT+: Large AI scribe study finds modest time savings, inconsistent use",
@@ -514,6 +533,15 @@
       "categoryLabel": "Closures & Layoffs"
     },
     {
+      "title": "A look at AMA's Joy in Medicine program amid steady physician burnout rates",
+      "url": "https://www.fiercehealthcare.com/providers/look-amas-joy-medicine-program-physician-burnout-remains-high",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-01",
+      "summary": "The AMA’s voluntary program is meant to serve as a guide to health systems looking to assess and address their institutions’ levels of burnout, with about 1,800 organizations participating to date.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "Hospital groups call on Congress to refine long-term care hospital payments",
       "url": "https://www.fiercehealthcare.com/providers/hospital-groups-call-congress-refine-long-term-care-hospital-payments",
       "source": "Fierce Healthcare",
@@ -521,6 +549,96 @@
       "summary": "A policy paper released this week by four hospital lobbying associations calls for legislation to adjust payment criteria, diagnosis-related groups and other areas of the long-term care hospital prospective payment system.",
       "category": "general_market",
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "Johns Hopkins, telemedicine group partner on improving care access",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/telehealth/johns-hopkins-telemedicine-group-partner-on-improving-care-access/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-01",
+      "summary": "The American Telemedicine Association and Johns Hopkins Medicine in Baltimore have launched a three-year initiative to address barriers to interstate telehealth access. The effort, known as the Licensure Innovation for Telehealth Transformation initiative, aims to educate policymakers and the public on federal approaches to expanding telehealth access while maintaining state licensure authority, according to a [&#8230;] The post Johns Hopkins, telemedicine group partner on improving care access appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Iowa hospital CEO to retire",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/iowa-hospital-ceo-to-retire-6/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-01",
+      "summary": "Danette Kramer plans to retire as CEO of Regional Medical Center in Manchester, Iowa, at the end of 2026. Ms.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "HCA Florida hospital names CEO",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/hca-florida-hospital-names-ceo-8/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-01",
+      "summary": "HCA Florida Raulerson Hospital in Okeechobee has named Alex Masmela, BSN, RN, as its new CEO, effective March 30. Mr.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "43.5% of family physicians report burnout as turnover risk rises",
+      "url": "https://www.beckershospitalreview.com/workforce/43-5-of-family-physicians-report-burnout-as-turnover-risk-rises/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-01",
+      "summary": "Nearly half of U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "FDA approves Eli Lilly&#8217;s GLP-1 pill for weight loss",
+      "url": "https://www.beckershospitalreview.com/glp-1s/fda-approves-eli-lillys-glp-1-pill-for-weight-loss/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-01",
+      "summary": "The FDA on April 1 approved Eli Lilly&#8217;s daily GLP-1 pill, Foundayo, making it the U.S.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "CMS requests ACOs apply for LEAD model",
+      "url": "https://www.beckershospitalreview.com/finance/cms-requests-acos-apply-for-lead-model/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-01",
+      "summary": "CMS issued a request for applications March 31 for its long-term enhanced ACO design model. The model&#8217;s performance period will span one decade — the longest CMS has tested — and run from Jan.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Henry Ford Health adds medical group",
+      "url": "https://www.beckershospitalreview.com/hospital-transactions-and-valuation/henry-ford-health-adds-medical-group/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-01",
+      "summary": "Detroit-based Henry Ford Health has added Cornerstone Medical Group to its Henry Ford Medical Group, effective April 1. More than 80 Cornerstone physicians and advanced practice providers will join the existing 3,400 physicians, researchers and advanced practice providers within Henry Ford Medical Group, according to an April 1 health system news release.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "CMS pilot allows hemp products in care plans: 5 notes",
+      "url": "https://www.beckershospitalreview.com/quality/patient-safety-outcomes/cms-pilot-allows-hemp-products-in-care-plans-5-notes/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-01",
+      "summary": "CMS is piloting a new program that permits some clinicians to offer certain hemp-derived products to Medicare patients as part of their care plans. The new Substance Access Beneficiary Engagement Incentive is part of CMS&#8217; Innovation Center model-testing framework, designed to evaluate whether hemp-derived products can improve patient outcomes when integrated into coordinated, clinician-led care [&#8230;] The post CMS pilot allows hemp products in care plans: 5 notes appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Closed Illinois hospital owner eyes July reopening",
+      "url": "https://www.beckershospitalreview.com/finance/closed-illinois-hospital-owner-eyes-july-reopening/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-01",
+      "summary": "Resilience Healthcare CEO Manoj Prasad, MD, PhD, said that he hopes to reopen the system&#8217;s West Suburban Medical Center in Oak Park, Ill., by July, CBS News Chicago reported from an April 1 news conference.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "North Dakota expands medical cache to stabilize supply chain",
+      "url": "https://www.beckershospitalreview.com/supply-chain/north-dakota-expands-medical-cache-to-stabilize-supply-chain/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-01",
+      "summary": "North Dakota has expanded its centralized medical cache to support emergency preparedness and healthcare continuity across the state. State officials said the cache includes 80,000 square feet of climate-controlled warehouse space and is staffed by four full-time employees, according to North Dakota&#8217;s director of public health preparedness, who was interviewed for a March 31 blog [&#8230;] The post North Dakota expands medical cache to stabilize supply chain appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
     },
     {
       "title": "Community Health Systems closes $459M hospital sale to Huntsville Hospital Health System",
@@ -4649,126 +4767,6 @@
       "summary": "EyeSouth Partners' retina specialists will join Cencora's Retina Consultants of America, a management services organization that already boasts the country's largest network of retina centers.",
       "category": "general_market",
       "categoryLabel": "General Market"
-    },
-    {
-      "title": "A look at how Optum Rx is using AI to address pharmacy fraud, waste and abuse",
-      "url": "https://www.fiercehealthcare.com/payers/look-how-optum-rx-using-ai-address-pharmacy-fraud-waste-and-abuse",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-27",
-      "summary": "Optum Rx is leaning on AI as it looks to address costly fraud, waste and abuse in the pharmacy space.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Fierce Healthcare Fundraising Tracker '26: Doctronic picks up $40M; Latent Health closes $80M series A",
-      "url": "https://www.fiercehealthcare.com/health-tech/fierce-healthcare-fundraising-tracker-26",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-27",
-      "summary": "Keep up with all the venture capital dollars being funneled into the health tech and digital health industries.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "NIH grant cuts hit women, early-career scientists the hardest: analysis",
-      "url": "https://www.fiercehealthcare.com/research/nih-grant-cuts-hit-women-early-career-scientists-hardest-analysis-finds",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-27",
-      "summary": "Last year’s funding cuts at the National Institutes of Health disproportionately impacted women and early-career researchers, according to a new analysis, raising questions about what the future of the scientific workforce will look like.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Chutes & Ladders—Cigna Healthcare names CMO; Grady Health System CEO to retire",
-      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-27",
-      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Health Care Workforce, Medicare, And More",
-      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2026.00203?af=R",
-      "source": "Health Affairs",
-      "publishedAt": "2026-03-27",
-      "summary": "Health Affairs, Volume 45, Issue 3, Page 237-237, March 2026.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Practice Pattern Changes After Adoption Of Diagnostic AI Tool Used In Conjunction With Cardiac Imaging",
-      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2025.00929?af=R",
-      "source": "Health Affairs",
-      "publishedAt": "2026-03-27",
-      "summary": "Health Affairs, Volume 45, Issue 3, Page 238-245, March 2026.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Majority Of Family Physicians Still Choose To Practice In The State Where They Were Trained",
-      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2025.01003?af=R",
-      "source": "Health Affairs",
-      "publishedAt": "2026-03-27",
-      "summary": "Health Affairs, Volume 45, Issue 3, Page 246-250, March 2026.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Primary Care Physician Trends: Dissatisfaction, Stress, And Burnout In The US And 9 Comparator Countries, 2012–22",
-      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2025.00880?af=R",
-      "source": "Health Affairs",
-      "publishedAt": "2026-03-27",
-      "summary": "Health Affairs, Volume 45, Issue 3, Page 251-260, March 2026.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Agency Information Collection Activities: Submission for OMB Review; Comment Request",
-      "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension or reinstatement of an existing collection of information, and to allow a second opportunity for public comment on the notice. Interested persons are invited to send comments regarding the burden estimate or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
-      "url": "https://www.federalregister.gov/documents/2026/03/26/2026-05915/agency-information-collection-activities-submission-for-omb-review-comment-request",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-03-26",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Elite Laboratories, Inc., et al.; Withdrawal of Approval of 72 Abbreviated New Drug Applications; Correction",
-      "summary": "The Food and Drug Administration (FDA) is correcting a notice that appeared in the Federal Register on September 24, 2025 (90 FR 183), appearing on page 45942 in FR Doc. 2025-18453. The document announced the withdrawal of approval of 72 abbreviated new drug applications (ANDAs) from multiple applicants, withdrawn as of October 23, 2025. The document indicated that FDA was withdrawing approval of the ANDA 070631 for valproic acid, capsule, 250 milligrams, held by Upsher-Smith Laboratories, LLC, 6701 Evenstad Dr., Maple Grove, MN 55369. Before FDA withdrew the approval of this ANDA, Upsher-Smith Laboratories, LLC, 6701 Evenstad Dr., Maple Grove, MN 55369, informed FDA that they did not want the approval of the ANDA withdrawn. Because Upsher-Smith Laboratories, LLC, timely requested that approval of the ANDA not be withdrawn, the approval is still in effect. This notice corrects this error.",
-      "url": "https://www.federalregister.gov/documents/2026/03/26/2026-05913/elite-laboratories-inc-et-al-withdrawal-of-approval-of-72-abbreviated-new-drug-applications",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-03-26",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "National Nurses United endorses Matt Little for Minnesota’s 2nd District",
-      "summary": "National Nurses United announced its endorsement of Matt Little for Minnesota’s 2nd Congressional District. Throughout his decades of service as an elected official and attorney, Little has proven how to lead with care and compassion. He has consistently fought for the health care system we need and deserve – one that provides care free at the point of service, like Medicare for All.",
-      "url": "https://www.nationalnursesunited.org/press/national-nurses-united-endorses-matt-little-for-minnesotas-2nd-district",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "2026-03-26",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Submission for OMB Review; Annual Report on Temporary Assistance for Needy Families Programs and State Maintenance-of-Effort Programs-ACF-204 (Annual TANF and MOE Report)",
-      "summary": "The Administration for Children and Families (ACF) is requesting a 3-year extension of the ACF-204: Annual Temporary Assistance for Needy Families (TANF) and State Maintenance-of-Effort (MOE) Report (Office of Management and Budget #0970-0248, expiration March 31, 2026). There are no substantive changes requested to the form, but instructions have been updated, and burden estimates adjusted.",
-      "url": "https://www.federalregister.gov/documents/2026/03/26/2026-05855/submission-for-omb-review-annual-report-on-temporary-assistance-for-needy-families-programs-and",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-26",
-      "category": "ai_tech",
-      "relevance": 96,
-      "categoryLabel": "AI & Digital Tech"
     }
   ]
 }
