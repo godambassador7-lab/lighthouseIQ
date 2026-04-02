@@ -1,89 +1,89 @@
 {
-  "lastUpdated": "2026-04-01T23:42:19.415Z",
+  "lastUpdated": "2026-04-02T02:36:27.219Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 11,
-    "staleSources": 0,
-    "healthySources": 11,
+    "staleSources": 2,
+    "healthySources": 9,
     "sources": [
       {
-        "source": "Becker's Hospital Review",
-        "articleCount": 190,
-        "latestPublishedAt": "2026-04-01T00:00:00.000Z",
-        "staleHours": 23,
+        "source": "Fierce Healthcare",
+        "articleCount": 178,
+        "latestPublishedAt": "2026-04-02T00:00:00.000Z",
+        "staleHours": 2,
         "status": "ok"
       },
       {
-        "source": "Fierce Healthcare",
-        "articleCount": 167,
+        "source": "Becker's Hospital Review",
+        "articleCount": 175,
         "latestPublishedAt": "2026-04-01T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 26,
         "status": "ok"
       },
       {
         "source": "STAT News",
         "articleCount": 61,
-        "latestPublishedAt": "2026-04-01T00:00:00.000Z",
-        "staleHours": 23,
+        "latestPublishedAt": "2026-04-02T00:00:00.000Z",
+        "staleHours": 2,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 33,
         "latestPublishedAt": "2026-04-01T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 26,
         "status": "ok"
       },
       {
         "source": "Health Affairs",
-        "articleCount": 25,
-        "latestPublishedAt": "2026-04-01T00:00:00.000Z",
-        "staleHours": 23,
+        "articleCount": 29,
+        "latestPublishedAt": "2026-04-02T00:00:00.000Z",
+        "staleHours": 2,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 17,
         "latestPublishedAt": "2026-04-01T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 26,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 2,
         "latestPublishedAt": "2026-03-31T00:00:00.000Z",
-        "staleHours": 47,
+        "staleHours": 50,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 2,
         "latestPublishedAt": "2026-03-30T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 74,
+        "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 1,
         "latestPublishedAt": "2026-04-01T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 26,
         "status": "ok"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 1,
         "latestPublishedAt": "2026-03-31T00:00:00.000Z",
-        "staleHours": 47,
+        "staleHours": 50,
         "status": "ok"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 1,
         "latestPublishedAt": "2026-03-30T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 74,
+        "status": "stale"
       }
     ]
   },
@@ -102,7 +102,7 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 61
+      "count": 65
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -110,15 +110,15 @@
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
-      "count": 11
+      "count": 12
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 164
+      "count": 162
     },
     "general_market": {
       "label": "General Market",
-      "count": 208
+      "count": 205
     }
   },
   "quality": {
@@ -132,7 +132,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 121,
+        "actual": 30,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -142,12 +142,282 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 0,
+        "actual": 2,
         "pass": true
       }
     }
   },
   "articles": [
+    {
+      "title": "STAT+: Trump administration prepares 100% tariffs on some imported drugs",
+      "url": "https://www.statnews.com/2026/04/01/trump-section-232-tariffs-imported-brand-drugs/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-04-02",
+      "summary": "The White House is readying a 100% tax on some imported medicines, a draft order shows.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Elevance Health 'ghost network' class action lawsuit allowed to proceed",
+      "url": "https://www.fiercehealthcare.com/payers/blue-cross-plan-accused-perpetrated-fraud-ghost-network-class-action-lawsuit",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-02",
+      "summary": "Anthem Blue Cross Blue Shield of New York and Carelon Behavioral Health are making it hard for members to receive care from mental health professionals due to poorly run provider directories, or ghost networks, lawsuits claim.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "131 hospitals sue HHS over 2023 rule on Disproportionate Share Hospital calculation",
+      "url": "https://www.fiercehealthcare.com/providers/131-hospitals-sue-hhs-over-2023-rule-disproportionate-share-hospital-calculation",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-02",
+      "summary": "The Monday filing in a federal court is the latest in a string of legal spats over the formula floated nearly two decades ago and later struck down.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "A look at AMA's Joy in Medicine program amid steady physician burnout rates",
+      "url": "https://www.fiercehealthcare.com/providers/look-amas-joy-medicine-program-physician-burnout-remains-high",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-02",
+      "summary": "The AMA’s voluntary program is meant to serve as a guide to health systems looking to assess and address their institutions’ levels of burnout, with about 1,800 organizations participating to date.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Hospital groups call on Congress to refine long-term care hospital payments",
+      "url": "https://www.fiercehealthcare.com/providers/hospital-groups-call-congress-refine-long-term-care-hospital-payments",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-02",
+      "summary": "A policy paper released this week by four hospital lobbying associations calls for legislation to adjust payment criteria, diagnosis-related groups and other areas of the long-term care hospital prospective payment system.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Community Health Systems closes $459M hospital sale to Huntsville Hospital Health System",
+      "url": "https://www.fiercehealthcare.com/providers/chs-signs-450m-hospital-sale-huntsville-hospital-health-system",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-02",
+      "summary": "The deal for 180-bed Crestwood Medical Center, adds a fifteenth hospital to the northern Alabama-based nonprofit system, which outlined its initial integration and investment priorities for the facility.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Bipartisan bill introduced to stabilize physicians' year-to-year pay changes",
+      "url": "https://www.fiercehealthcare.com/providers/bipartisan-bill-introduced-stabilize-physicians-year-year-pay-changes",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-02",
+      "summary": "The Provider Reimbursement Stability Act would give CMS more flexibility to adjust physician payments, cap year-to-year reductions and require updates to how practice expenses are calculated.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Clinicians are burnt out. Peer support can help",
+      "url": "https://www.fiercehealthcare.com/providers/clinicians-are-burnt-out-peer-support-can-help",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-02",
+      "summary": "Burnout among clinicians surged during the pandemic and remains stubbornly high, with new data showing half of surgeons are affected. In this episode of \"Podnosis,\" we unpack what’s driving the trend and how peer support programs are helping address it.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "CVS Health opens pharmacy-only locations as it rightsizes store footprint",
+      "url": "https://www.fiercehealthcare.com/providers/cvs-health-opens-pharmacy-only-locations-it-rightsizes-store-footprint",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-02",
+      "summary": "CVS Health plans to open 20 pharmacy-only locations this year as part of its healthcare-focused strategy.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "Whoop raises $575M series G, Abbott comes on board amid hiring spree",
+      "url": "https://www.fiercehealthcare.com/medtech/whoop-raises-575m-series-g-abbott-comes-board-amid-hiring-spree",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-02",
+      "summary": "Whoop is whooping it up with a massive $575 million raise amid a strong start to the year for the fitness wearable.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "UnitedHealthcare launches Avery, a generative AI companion for members",
+      "url": "https://www.fiercehealthcare.com/payers/unitedhealthcare-launches-avery-generative-ai-companion-members",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-02",
+      "summary": "The platform, dubbed Avery, allows UnitedHealthcare members to seek information on coverage, benefits, appointment scheduling, claim approval status and more.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Uninsured patients drive nearly 40% of healthcare collections: Cedar survey",
+      "url": "https://www.fiercehealthcare.com/finance/uninsured-patients-drive-nearly-40-healthcare-collections-cedar-survey",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-02",
+      "summary": "Thirty percent of respondents said payment options are unaffordable, with one in four indicating difficulty covering medical bills.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "HHS urges hospitals to align patient menus with updated dietary guidance",
+      "url": "https://www.fiercehealthcare.com/providers/hhs-urges-hospitals-align-patient-menus-updated-dietary-guidance",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-02",
+      "summary": "A new memo reminds hospitals of their nutritional responsibilities as participants in the Medicare program and points to recently updated dietary guidelines as a model.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Chutes & Ladders—Elevance names Health Benefits, Carelon leaders; CareFirst BCBS unveils new CEO",
+      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-02",
+      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Hartford HealthCare, K Health launch PatientGPT, new AI tool to help patients find health information",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/hartford-healthcare-k-health-launch-patientgpt-new-ai-tool-help-patients",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-02",
+      "summary": "PatientGPT allows users to ask health questions, identify possible medication interactions and more. It’s currently being rolled out to a limited number of adult patients in the Hartford HealthCare system.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Ensemble partners with Cohere to build first RCM-native large language model",
+      "url": "https://www.fiercehealthcare.com/health-tech/ensemble-partners-cohere-build-first-rcm-native-large-language-model",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-02",
+      "summary": "Artificial intelligence in the revenue cycle management space is heating up as companies look to leverage the technology to reduce denials and make financial workflows more efficient.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Mental health provider platform Headway acquires team behind AI company Tezi",
+      "url": "https://www.fiercehealthcare.com/health-tech/mental-health-provider-platform-headway-acquires-team-behind-ai-company-tezi",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-02",
+      "summary": "The acquisition seeks to ensure AI “is developed responsibly” while improving the experience for patients and providers alike, the announcement said.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Employer telehealth company eMed raises $200M at $2B valuation",
+      "url": "https://www.fiercehealthcare.com/health-tech/employer-telehealth-company-emed-raises-200m-2b-valuation",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-02",
+      "summary": "eMed pocketed $200 million in funding to build out its AI agentic platform and offer new models for employers, including programs for GLP-1 medications.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "States pay Deloitte, others millions to comply with Trump law to cut Medicaid rolls",
+      "url": "https://www.fiercehealthcare.com/regulatory/states-pay-deloitte-others-millions-comply-trump-law-cut-medicaid-rolls",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-02",
+      "summary": "States are paying contractors such as Deloitte, Accenture, and Optum millions of dollars to help them comply with the One Big Beautiful Bill Act — a law that will strip safety-net health and food benefits from millions.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "CMS: This year's open enrollment brought fewer signups, higher premiums",
+      "url": "https://www.fiercehealthcare.com/payers/cms-years-open-enrollment-brought-fewer-signups-higher-premiums-fewer-silver-sign-ups",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-02",
+      "summary": "The administration's official numbers on the 2026 Open Enrollment Period outlined drops in new customers and automatic re-enrollment, the latter of which CMS said stemmed from its crackdown on improper enrollments. Average monthly premiums also increased across the board as bronze-tier plans rose in prominence.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Nonprofit Electronic Frontier Foundation sues CMS over AI prior authorization demonstration",
+      "url": "https://www.fiercehealthcare.com/regulatory/nonprofit-electronic-frontier-foundation-sues-cms-over-ai-prior-authorization",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-02",
+      "summary": "The nonprofit filed a Freedom of Information Act lawsuit against CMS seeking the disclosure of records pertaining to the WISeR Model.",
+      "category": "closures_layoffs",
+      "categoryLabel": "Closures & Layoffs"
+    },
+    {
+      "title": "Nearly half of US hospital markets entirely controlled by 1 or 2 health systems: KFF",
+      "url": "https://www.fiercehealthcare.com/providers/nearly-half-us-hospital-markets-entirely-controlled-1-or-2-health-systems-kff",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-02",
+      "summary": "A recent analysis adds to warnings of limited competition in much of the country's hospital markets, a likely factor in heightened healthcare prices.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Payer-provider collaboration is only as strong as the payment process behind it",
+      "url": "https://www.fiercehealthcare.com/sponsored/payer-provider-collaboration-only-strong-payment-process-behind-it",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-02",
+      "summary": "For years, healthcare leaders have emphasized the importance of payer-provider collaboration. As margins tighten, regulatory expectations evolve and value-based arrangements expand, alignment between stakeholders is increasingly viewed as essential to delivering high-quality, affordable care.",
+      "category": "quality_safety",
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "Providence trims 2025 operating loss to $132M, notches second consecutive quarter of gains",
+      "url": "https://www.fiercehealthcare.com/providers/providence-trims-2025-operating-loss-132m-notches-second-consecutive-quarter-gains",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-02",
+      "summary": "The 51-hospital nonprofit, now 5,000 employees lighter, said the past year's restructuring efforts have set a path toward operating sustainability.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Oral GLP-1s, COVID preventatives: 3 more drugs in the pipeline, Optum says payers should watch",
+      "url": "https://www.fiercehealthcare.com/payers/oral-glp-1s-covid-preventatives-3-more-drugs-pipeline-optum-says-payers-should-watch",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-02",
+      "summary": "A new oral GLP-1 therapy and the first preventive option for COVID-19 are among the pipeline drugs that payers and plan sponsors should be watching this spring, according to a new report.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Advocate Health to launch ‘nation’s largest’ hospital drone delivery program in Zipline partnership",
+      "url": "https://www.fiercehealthcare.com/health-tech/advocate-health-launch-nations-largest-hospital-drone-delivery-program-zipline",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-02",
+      "summary": "The drone delivery program will launch in three of Advocate Health’s markets in 2027: Charlotte, N.C.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Health Care Workforce, Medicare, And More",
+      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2026.00203?af=R",
+      "source": "Health Affairs",
+      "publishedAt": "2026-04-02",
+      "summary": "Health Affairs, Volume 45, Issue 3, Page 237-237, March 2026.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Practice Pattern Changes After Adoption Of Diagnostic AI Tool Used In Conjunction With Cardiac Imaging",
+      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2025.00929?af=R",
+      "source": "Health Affairs",
+      "publishedAt": "2026-04-02",
+      "summary": "Health Affairs, Volume 45, Issue 3, Page 238-245, March 2026.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Majority Of Family Physicians Still Choose To Practice In The State Where They Were Trained",
+      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2025.01003?af=R",
+      "source": "Health Affairs",
+      "publishedAt": "2026-04-02",
+      "summary": "Health Affairs, Volume 45, Issue 3, Page 246-250, March 2026.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Primary Care Physician Trends: Dissatisfaction, Stress, And Burnout In The US And 9 Comparator Countries, 2012–22",
+      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2025.00880?af=R",
+      "source": "Health Affairs",
+      "publishedAt": "2026-04-02",
+      "summary": "Health Affairs, Volume 45, Issue 3, Page 251-260, March 2026.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
     {
       "title": "Proposed Collection: 30-Day Comment Request; NCI Genomic Data Commons (GDC) Data Submission Request Form (National Cancer Institute)",
       "summary": "In compliance with the requirement of the Paperwork Reduction Act of 1995 to provide an opportunity for public comment on proposed data collection projects, the National Institutes of Health, National Cancer Institute (NCI) will publish periodic summaries of proposed projects to be submitted to the Office of Management and Budget (OMB) for review and approval.",
@@ -4497,276 +4767,6 @@
       "summary": "In a lawsuit filed Thursday, the Justice Department argues that New York's largest hospital system wields its market power in violation of the Sherman Act. The nonprofit says the case is without merit and that it has been cooperating with the department's inquiries into the matter.",
       "category": "general_market",
       "categoryLabel": "General Market"
-    },
-    {
-      "title": "FDA approves 1st weekly basal insulin for Type 2 diabetes",
-      "url": "https://www.beckershospitalreview.com/pharmacy/fda-approves-1st-weekly-basal-insulin-for-type-2-diabetes/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-27",
-      "summary": "The FDA has approved Novo Nordisk&#8217;s Awiqli (insulin icodec-abae), making it the first once-weekly basal insulin available in the U.S.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "FDA approves 1st gene therapy for pediatric immune disorder",
-      "url": "https://www.beckershospitalreview.com/pharmacy/fda-approves-1st-gene-therapy-for-pediatric-immune-disorder/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-27",
-      "summary": "The FDA has granted accelerated approval to Kresladi (marnetegragene autotemcel), the first gene therapy for severe leukocyte adhesion deficiency Type 1, a rare pediatric immune disorder. Kresladi is indicated for pediatric patients with the condition caused by biallelic ITGB2 variants who lack a matched sibling donor for stem cell transplant, according to a March 26 [&#8230;] The post FDA approves 1st gene therapy for pediatric immune disorder appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "13 potential benefits of GLP-1s: Report",
-      "url": "https://www.beckershospitalreview.com/glp-1s/13-potential-benefits-of-glp-1s-report/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-27",
-      "summary": "GLP-1 medications like Ozempic, Wegovy, Mounjaro and Zepbound are FDA-approved for diabetes and weight loss, but growing evidence suggests their effects may extend beyond blood sugar and body fat, according to a March 27 analysis by The Washington Post. Researchers have identified 13 areas where GLP-1 drugs show proven, promising or theoretical benefits — including [&#8230;] The post 13 potential benefits of GLP-1s: Report appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Trump admin delays nomination for new CDC director past deadline",
-      "url": "https://www.fiercehealthcare.com/providers/trump-admin-delays-nomination-new-cdc-director-past-deadline",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-27",
-      "summary": "Jay Bhattacharya, M.D.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "10 systems seeking radiology leaders",
-      "url": "https://www.beckershospitalreview.com/radiology/10-systems-seeking-radiology-leaders-2/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-27",
-      "summary": "From section chiefs to medical information officers, here are 10 systems seeking radiology leaders: The post 10 systems seeking radiology leaders appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "10 systems seeking supply chain leaders",
-      "url": "https://www.beckershospitalreview.com/supply-chain/10-systems-seeking-supply-chain-leaders-9/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-27",
-      "summary": "As hospitals redefine the role of supply chain leaders to focus on enterprise strategy, digital transformation and resilience, health systems across the country are hiring for senior-level supply chain positions. The jobs reflect a growing shift in expectations, from traditional procurement toward broader responsibilities in value-based care, system integration and analytics-driven operations.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Northwestern Medicine upgrades mobile stroke unit",
-      "url": "https://www.beckershospitalreview.com/radiology/northwestern-medicine-upgrades-mobile-stroke-unit/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-27",
-      "summary": "Northwestern Medicine Central DuPage Hospital in Winfield, Ill., has upgraded its mobile stroke unit to enhance prehospital stroke care in 20 west suburban Chicago communities.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Arkansas hospital taps CFO",
-      "url": "https://www.beckershospitalreview.com/finance/arkansas-hospital-taps-cfo/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-27",
-      "summary": "Hope-based Southwest Arkansas Regional Medical Center has named Dean Otey CFO. Mr.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "6 maternity service closures in 2026",
-      "url": "https://www.beckershospitalreview.com/rural-health/rural-workforce/3-maternity-closures-in-3-weeks/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-27",
-      "summary": "The wave of maternity service closures has shown no signs of slowing down in 2026. As hospitals continue to grapple with persistent financial pressures, staffing shortages and falling birth rates, more facilities weigh ending labor and delivery services.",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "UCLA Health creates leadership role for AI innovation",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/ucla-health-creates-leadership-role-for-ai-innovation/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-27",
-      "summary": "Los Angeles-based UCLA Health has appointed Katherine Andriole, PhD, as the first associate dean for health AI strategy and innovation at the David Geffen School of Medicine, effective March 26. Dr.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "The AI agent problem on the horizon for healthcare",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/the-ai-agent-problem-on-the-horizon-for-healthcare/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-27",
-      "summary": "Most health system AI conversations are still focused on the first wave: which tools to adopt, which workflows to automate, which vendors to evaluate. Nasim Afsar, chief AI and analytics officer at City of Hope, is already thinking about the second wave — and the mess it could make.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "West Virginia hospital to end OB delivery services",
-      "url": "https://www.beckershospitalreview.com/finance/west-virginia-hospital-to-end-ob-delivery-services/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-27",
-      "summary": "Mon Health Stonewall Jackson Memorial Hospital in Weston, W.Va.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "4 ways GLP-1s are changing care patterns, patient behavior",
-      "url": "https://www.beckershospitalreview.com/glp-1s/4-ways-glp-1s-are-changing-care-patterns-patient-behavior/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-27",
-      "summary": "Use of GLP-1 receptor agonists — including drugs such as Wegovy, Ozempic, Mounjaro and Zepbound — continues to reshape treatment patterns for obesity, diabetes and beyond. Several March studies and surveys highlight how these medications are shifting patient behavior, influencing surgical volumes, and raising new clinical and access considerations.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "1st Jesuit medical school advances with $2M gift",
-      "url": "https://www.beckershospitalreview.com/quality/hospital-physician-relationships/1st-jesuit-medical-school-advances-with-2m-gift/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-27",
-      "summary": "Cincinnati-based Xavier University is on track to open the world&#8217;s first Jesuit osteopathic medical school in fall 2027. The university received a $2 million gift from alumnus Gary and Connie Sharpe to support the proposed college of osteopathic medicine and its college of nursing.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "NYC Health + Hospitals rolls out AI tool to boost maternal safety",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/nyc-health-hospitals-rolls-out-ai-tool-to-boost-maternal-safety/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-27",
-      "summary": "New York City-based NYC Health + Hospitals has launched a $2.75 million initiative to strengthen maternal-fetal care using PeriWatch Vigilance, an early warning and clinical decision support tool.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "California hospital&#8217;s finances improve, cash position remains &#8216;dire&#8217;",
-      "url": "https://www.beckershospitalreview.com/finance/california-hospitals-finances-improve-cash-position-remains-dire/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-27",
-      "summary": "Watsonville (Calif.) Community Hospital has started 2026 on solid financial ground following a &#8220;significant loss&#8221; in 2025 due to multiple factors.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Gen Z nurses prioritize schedule flexibility, need more manager interactions to avoid turnover",
-      "url": "https://www.fiercehealthcare.com/providers/gen-z-nurses-prioritize-schedule-flexibility-need-more-manager-interactions-avoid",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-27",
-      "summary": "Nurses under 30 are now the second-largest demographic in the workforce, and growing. A new analysis of nearly 100,000 registered nurse positions and behaviors outlines how managers can bolster these young nurses' engagement.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Clasp, loan-linked hiring tool for employers, clinches $20M to expand amid federal loan caps",
-      "url": "https://www.fiercehealthcare.com/finance/clasp-loan-linked-hiring-tool-employers-clinches-20m-expand",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-27",
-      "summary": "With student loan repayments being a significant monthly expense for medical students, Clasp aims to reduce turnover through loan-linked hiring, inspired by the military’s early commitment model.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "OpenEvidence rolls out AI medical coding feature",
-      "url": "https://www.fiercehealthcare.com/health-tech/openevidence-rolls-out-ai-medical-coding-feature",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-27",
-      "summary": "OpenEvidence released an artificial intelligence-powered medical coding feature embedded in its clinical AI assistant.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "NIH restrictions on research partnerships with foreign institutions significantly impacted 1 in 4 U.S. scientists",
-      "url": "https://www.statnews.com/2026/03/27/nih-funding-national-researcher-survey-foreign-subaward-ban-impact/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-03-27",
-      "summary": "In a survey of NIH-funded scientists, 25% said their research had been impacted a great deal or a fair amount by a move away from foreign subawards.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "RWJF: Between 5M and 10M people could lose Medicaid coverage in 2028 under work requirements",
-      "url": "https://www.fiercehealthcare.com/regulatory/rwjf-between-5m-and-10m-people-could-lose-medicaid-coverage-2028-under-work-requirements",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-27",
-      "summary": "As many as 10 million people could lose Medicaid coverage in 2028 following the rollout of new work requirements established under H.R.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "CMS reveals new Medicaid model that supports coordination for children with complex needs",
-      "url": "https://www.fiercehealthcare.com/regulatory/cms-reveals-new-medicaid-model-supports-coordination-children-complex-needs",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-27",
-      "summary": "The Trump administration has revealed a new payment model that aims to support care management for children in Medicaid with complex medical or behavioral health needs.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "The evolving state of exome and genome sequencing",
-      "url": "https://www.fiercehealthcare.com/health-tech/evolving-state-exome-and-genome-sequencing",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-27",
-      "summary": "Rare diseases can take years to diagnose, but advances in genome sequencing are beginning to change that. In this episode of \"Podnosis,\" GeneDx CEO Katherine Stueland joins Anastassia Gliadkovskaya to discuss how the technology is evolving, where it is making an impact today and what it will take to deliver earlier answers at scale.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Study: Nearly 1 in 5 pediatric hospital deaths involve sepsis",
-      "url": "https://www.fiercehealthcare.com/providers/study-nearly-1-5-pediatric-hospital-deaths-involve-sepsis",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-27",
-      "summary": "An updated national estimate of non-neonatal sepsis incidence and mortality outlined more than 18,000 annual hospitalizations and 1,800 hospital deaths.",
-      "category": "quality_safety",
-      "categoryLabel": "Quality & Safety"
-    },
-    {
-      "title": "Qualified Health locks in $125M in fresh funding to scale enterprise AI at health systems",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/qualified-health-locks-125m-fresh-funding-scale-ai-health-systems",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-27",
-      "summary": "Qualified Health, a startup that works with health systems to evaluate and adopt artificial intelligence technology, raised $125 million in fresh funding to scale up its business.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "CVS Caremark, FTC reach settlement in insulin pricing case",
-      "url": "https://www.fiercehealthcare.com/payers/cvs-caremark-ftc-reach-settlement-insulin-pricing-case",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-27",
-      "summary": "CVS Health's Caremark has become the second of the \"Big Three\" pharmacy benefit manager to reach a settlement with the Federal Trade Commission in a lawsuit over insulin pricing.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "PeaceHealth sued over plans to tap out-of-state staffer ApolloMD for Oregon EDs",
-      "url": "https://www.fiercehealthcare.com/providers/peacehealth-sued-over-plans-tap-out-state-staffer-apollomd-oregon-eds",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-27",
-      "summary": "An emergency physician group the nonprofit had previously contracted with filed a lawsuit to block the change, an early challenge to Oregon's recent statute restricting corporate medicine.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Fewer patients traveled for abortions in 2025 as telehealth care increased, report finds",
-      "url": "https://www.fiercehealthcare.com/telehealth/fewer-patients-traveled-abortions-2025-telehealth-care-increased-guttmacher",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-27",
-      "summary": "An estimated 1.126 million abortions were provided across the U.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Highmark reports $175M net loss for 2025 as financial headwinds batter health plan",
-      "url": "https://www.fiercehealthcare.com/payers/highmark-reports-175m-net-loss-2025-financial-headwinds-batter-health-plan",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-27",
-      "summary": "Highmark posted a $175 million net loss in 2025 as its insurance arm weathered cost pressures straining the insurance industry nationwide.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "AI chatbot use for health information up 16% from 2024: Rock Health survey",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/ai-chatbot-use-health-information-16-2024-rock-health-survey",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-27",
-      "summary": "Thirty-two percent of respondents in Rock Health’s 2025 Consumer Adoption of Digital Health Survey reported using AI chatbots to find health information, up from 16% the year prior.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
     }
   ]
 }
