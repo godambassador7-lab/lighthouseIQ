@@ -1,23 +1,23 @@
 {
-  "lastUpdated": "2026-04-06T16:04:07.714Z",
+  "lastUpdated": "2026-04-06T16:57:33.255Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
-    "totalSources": 10,
-    "staleSources": 3,
+    "totalSources": 9,
+    "staleSources": 2,
     "healthySources": 7,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 178,
+        "articleCount": 180,
         "latestPublishedAt": "2026-04-06T00:00:00.000Z",
         "staleHours": 16,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 163,
+        "articleCount": 168,
         "latestPublishedAt": "2026-04-06T00:00:00.000Z",
         "staleHours": 16,
         "status": "ok"
@@ -31,7 +31,7 @@
       },
       {
         "source": "Federal Register - HHS",
-        "articleCount": 34,
+        "articleCount": 30,
         "latestPublishedAt": "2026-04-06T00:00:00.000Z",
         "staleHours": 16,
         "status": "ok"
@@ -44,18 +44,18 @@
         "status": "ok"
       },
       {
-        "source": "Federal Register - FDA",
-        "articleCount": 15,
-        "latestPublishedAt": "2026-04-03T00:00:00.000Z",
-        "staleHours": 88,
-        "status": "stale"
-      },
-      {
         "source": "Healthcare Dive",
         "articleCount": 14,
         "latestPublishedAt": "2026-04-06T00:00:00.000Z",
         "staleHours": 16,
         "status": "ok"
+      },
+      {
+        "source": "Federal Register - FDA",
+        "articleCount": 13,
+        "latestPublishedAt": "2026-04-03T00:00:00.000Z",
+        "staleHours": 88,
+        "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
@@ -69,13 +69,6 @@
         "articleCount": 3,
         "latestPublishedAt": "2026-04-03T00:00:00.000Z",
         "staleHours": 88,
-        "status": "stale"
-      },
-      {
-        "source": "National Nurses United RSS",
-        "articleCount": 1,
-        "latestPublishedAt": "2026-03-31T00:00:00.000Z",
-        "staleHours": 160,
         "status": "stale"
       }
     ]
@@ -95,11 +88,11 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 89
+      "count": 91
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 6
+      "count": 5
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
@@ -107,7 +100,7 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 172
+      "count": 171
     },
     "general_market": {
       "label": "General Market",
@@ -115,19 +108,17 @@
     }
   },
   "quality": {
-    "status": "warning",
-    "failedChecks": [
-      "maxStaleSources"
-    ],
+    "status": "pass",
+    "failedChecks": [],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
-        "actual": 10,
+        "actual": 9,
         "pass": true
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 81,
+        "actual": 88,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -137,8 +128,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 3,
-        "pass": false
+        "actual": 2,
+        "pass": true
       }
     }
   },
@@ -372,6 +363,51 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
+      "title": "Geisinger receives $1.25M gift to support initiatives at 2 hospitals",
+      "url": "https://www.beckershospitalreview.com/capital/geisinger-receives-1-25m-gift-to-support-initiatives-at-2-hospitals/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-06",
+      "summary": "Danville, Pa.-based Geisinger has received a $1.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Former Tenet nursing leader joins Endeavor Health",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/former-tenet-nursing-leader-joins-endeavor-health/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-06",
+      "summary": "After serving in an interim chief nursing officer role for two Tenet Healthcare hospitals, Shawn O&#8217;Connor, DNP, RN, has joined Evanston, Ill.-based Endeavor Health.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "10 hospitals, health systems looking for CFOs",
+      "url": "https://www.beckershospitalreview.com/finance/10-hospitals-health-systems-looking-for-cfos-3/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-06",
+      "summary": "Here are 10 hospitals and health systems that are seeking CFOs and assistant CFOs in recent job listings. 1.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "3 million in rural counties lose MA coverage: Report",
+      "url": "https://www.beckershospitalreview.com/post-acute/3-million-in-rural-counties-lose-ma-coverage-report/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-06",
+      "summary": "Almost 3 million older Americans were dropped from Medicare Advantage plans after insurance carriers pulled out of their counties, according to a recent analysis. The analysis, published in JAMA, analyzed the impacts of insurers dropping MA plans in 2026.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "$500M in Utah Medicaid funds used for SNF admin fees: Report",
+      "url": "https://www.beckershospitalreview.com/post-acute/500m-in-utah-medicaid-funds-used-for-snf-admin-fees-report/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-06",
+      "summary": "Nearly $500 million in Utah Medicaid funds meant for patient care was used on administrative fees, The Salt Lake Tribune reported April 4. The state auditor report highlighted gaps with a Skilled Nursing Facility Upper Payment Limit Medicaid program that allowed states to make supplemental payments to some nursing facilities up to the Medicare rate.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
       "title": "CDC clears path for 2nd vaccine advisory panel overhaul",
       "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/cdc-clears-path-for-2nd-vaccine-advisory-panel-overhaul/",
       "source": "Becker's Hospital Review",
@@ -415,51 +451,6 @@
       "summary": "Cancer groups have begun responding to the Trump administration&#8217;s proposed $15.8 billion cut to HHS included in the fiscal year 2027 budget.",
       "category": "policy_reimbursement",
       "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "13,910 Alabama hospital patients caught in debt collector data breach",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/cybersecurity/13910-alabama-hospital-patients-caught-in-debt-collector-data-breach/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-06",
-      "summary": "Jackson (Ala.) Hospital is notifying 13,910 individuals that their data may have been breached in a cybersecurity incident involving a debt collector.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "PA gender pay gap by state",
-      "url": "https://www.beckershospitalreview.com/compensation-issues/pa-gender-pay-gap-by-state/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-06",
-      "summary": "Across the U.S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Kansas system to phase out pediatric ICU services",
-      "url": "https://www.beckershospitalreview.com/finance/kansas-system-to-phase-out-pediatric-icu-services/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-06",
-      "summary": "Kansas City, Kan.-based The University of Kansas Health System will discontinue pediatric ICU services amid low patient volumes and increased demand for inpatient beds from newborns and adults.",
-      "category": "capacity_expansion",
-      "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "Elevance to expand out-of-network penalty policy to New York",
-      "url": "https://www.beckershospitalreview.com/finance/elevance-to-expand-out-of-network-penalty-policy-to-new-york/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-06",
-      "summary": "Elevance Health is bringing its out-of-network provider penalty policy to New York on July 1, continuing a state-by-state expansion that has drawn legislative backlash and opposition from hospitals and physician groups. Under the policy, in-network facilities in New York that use out-of-network providers to treat Anthem commercial members in inpatient or outpatient settings may face [&#8230;] The post Elevance to expand out-of-network penalty policy to New York appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "capacity_expansion",
-      "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "Hartford HealthCare&#8217;s strategic shift to on-demand care",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/telehealth/hartford-healthcares-strategic-shift-to-on-demand-care/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-06",
-      "summary": "Jeffrey Cohen, MD, has spent four decades in healthcare. For much of that time, describing patients as consumers was heresy.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
     },
     {
       "title": "STAT+: A key Medicare Advantage announcement is due today",
@@ -588,6 +579,15 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "Ambience Healthcare launches Chart Chat, an EHR-integrated AI copilot for nurses",
+      "url": "https://www.fiercehealthcare.com/providers/ambience-healthcare-launches-chart-chat-first-ehr-integrated-ai-copilot-nurses",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-06",
+      "summary": "Nurses using the tool during its pilot at Cleveland Clinic say it is “helping them build a richer, more confident understanding” of patients, Ambience Healthcare Head of Product Tanha Kabir told Fierce Healthcare.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
       "title": "Chutes & Ladders—Centene taps new insurance execs; Elevance names health benefits, Carelon leaders",
       "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
       "source": "Fierce Healthcare",
@@ -595,6 +595,15 @@
       "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
       "category": "general_market",
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "Anthropic acquires stealth AI startup Coefficient Bio in $400M deal: reports",
+      "url": "https://www.fiercehealthcare.com/biotech/anthropic-acquires-stealth-ai-startup-coefficient-bio-400m-deal",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-06",
+      "summary": "AI powerhouse Anthropic is continuing its push into the healthcare arena with the acquisition of previously stealth AI startup Coefficient Bio in a $400 million stock deal, according to reporting from The Information and Eric Newcomer.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
     },
     {
       "title": "Why Medicaid Program Integrity Is a Team Sport",
@@ -622,6 +631,51 @@
       "summary": "When alerts, calls, and tasks compete for attention, patient care can suffer. See how pharmacies are reclaiming focus and improving outcomes.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "13,910 Alabama hospital patients caught in debt collector data breach",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/cybersecurity/13910-alabama-hospital-patients-caught-in-debt-collector-data-breach/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-06",
+      "summary": "Jackson (Ala.) Hospital is notifying 13,910 individuals that their data may have been breached in a cybersecurity incident involving a debt collector.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "PA gender pay gap by state",
+      "url": "https://www.beckershospitalreview.com/compensation-issues/pa-gender-pay-gap-by-state/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-06",
+      "summary": "Across the U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Kansas system to phase out pediatric ICU services",
+      "url": "https://www.beckershospitalreview.com/finance/kansas-system-to-phase-out-pediatric-icu-services/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-06",
+      "summary": "Kansas City, Kan.-based The University of Kansas Health System will discontinue pediatric ICU services amid low patient volumes and increased demand for inpatient beds from newborns and adults.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "Elevance to expand out-of-network penalty policy to New York",
+      "url": "https://www.beckershospitalreview.com/finance/elevance-to-expand-out-of-network-penalty-policy-to-new-york/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-06",
+      "summary": "Elevance Health is bringing its out-of-network provider penalty policy to New York on July 1, continuing a state-by-state expansion that has drawn legislative backlash and opposition from hospitals and physician groups. Under the policy, in-network facilities in New York that use out-of-network providers to treat Anthem commercial members in inpatient or outpatient settings may face [&#8230;] The post Elevance to expand out-of-network penalty policy to New York appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "Hartford HealthCare&#8217;s strategic shift to on-demand care",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/telehealth/hartford-healthcares-strategic-shift-to-on-demand-care/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-06",
+      "summary": "Jeffrey Cohen, MD, has spent four decades in healthcare. For much of that time, describing patients as consumers was heresy.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
     },
     {
       "title": "White House floats 12.5% budget cut for HHS in FY2027, reiterates reorganization plan",
@@ -4753,90 +4807,6 @@
       "category": "policy_reimbursement",
       "relevance": 100,
       "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Notice of Decision on a Hearing Request Regarding a Proposal To Refuse To Approve a New Drug Application for TRADIPITANT Capsules",
-      "summary": "The Food and Drug Administration (FDA) is announcing the availability of its decision on a request for a hearing regarding the proposal of FDA's Center for Drug Evaluation and Research (CDER) to refuse to approve a new drug application (NDA) 218489, submitted by Vanda Pharmaceuticals, Inc. (Vanda), for TRADIPITANT capsules (85 mg) with the proposed indication for \"the treatment of [symptoms of] or [nausea in] in gastroparesis\" (\"symptoms of gastroparesis\"). The decision is available in the docket identified by the number in brackets in the heading of this document.",
-      "url": "https://www.federalregister.gov/documents/2026/03/31/2026-06187/notice-of-decision-on-a-hearing-request-regarding-a-proposal-to-refuse-to-approve-a-new-drug",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-03-31",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Advancing the Use of Digital Health Technologies in Clinical Investigations for Drugs and Biological Products; Request for Information and Comments",
-      "summary": "Digital health technologies (DHTs) used for remote data acquisition are playing a growing role in health care and offer important opportunities in clinical research. As outlined in the sixth reauthorization of the Prescription Drug User Fee Act (PDUFA VII) included as part of the FDA User Fee Reauthorization Act of 2022, the Center for Drug Evaluation and Research (CDER) and the Center for Biologics Evaluation and Research (CBER) have committed to supporting the use of DHTs in drug and biological product development. To inform potential FDA activities in this area, CDER and CBER are requesting information to better understand the opportunities and challenges sponsors and other interested parties face in making innovative use of DHTs in clinical investigations of drugs and biological products.",
-      "url": "https://www.federalregister.gov/documents/2026/03/31/2026-06184/advancing-the-use-of-digital-health-technologies-in-clinical-investigations-for-drugs-and-biological",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-03-31",
-      "category": "mergers_mna",
-      "relevance": 100,
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Nurses to hold vigil today following deadly shooting at VA clinic in Georgia",
-      "summary": "Registered nurses at Joseph Maxwell Cleland Atlanta VA Medical Center in Decatur, Ga., will hold a vigil today following the deadly shooting earlier this month at a Georgia VA clinic that left a social worker and the suspected gunman, a VA patient, dead.",
-      "url": "https://www.nationalnursesunited.org/press/nurses-to-hold-vigil-today-following-deadly-shooting-at-va-clinic-in-georgia",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "2026-03-31",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Center for Scientific Review; Notice of Closed Meetings",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/03/31/2026-06226/center-for-scientific-review-notice-of-closed-meetings",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-31",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Agency Information Collection Activities: Proposed Collection; Comment Request",
-      "summary": "This notice announces the intention of the Agency for Healthcare Research and Quality (AHRQ) to request that the Office of Management and Budget (OMB) approve the revision of the currently approved information collection project \"Medical Expenditure Panel Survey--Household Component, OMB No. 0935-0118.\" This information collection was previously published in the Federal Register on December 30, 2025, and allowed 60 days for public comment. The purpose of this notice is to allow an additional 30 days for public comment. During the 60-day comment period, AHRQ received three comments. One commenter expressed support for the collection. Another supported inclusion of sleep-related questions and suggested additional items; AHRQ will consider these for future inclusion. A third commenter supported MEPS but raised concerns about removal of questions on sexual orientation and gender identity, birth control counseling, the ESAQ, and the DCS. AHRQ notes that sexual orientation and gender identity questions were removed pursuant to Executive Order 14168. AHRQ continues to propose removal of the birth control counseling question due to space constraints and other priorities. The ESAQ was a one-time, externally funded supplement and will be released as planned. AHRQ also continues to propose removal of the current DCS due to cost, outdated content, and data quality concerns, while considering future updates or alternative modules.",
-      "url": "https://www.federalregister.gov/documents/2026/03/31/2026-06193/agency-information-collection-activities-proposed-collection-comment-request",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-31",
-      "category": "quality_safety",
-      "relevance": 100,
-      "categoryLabel": "Quality & Safety"
-    },
-    {
-      "title": "Agency Information Collection Activities: Proposed Collection: Public Comment Request; Information Collection Request Title: Black Lung Clinics Program Performance Measures, OMB No. 0915-0292-Revision",
-      "summary": "In compliance with the requirement for opportunity for public comment on proposed data collection projects of the Paperwork Reduction Act of 1995, HRSA announces plans to submit an Information Collection Request (ICR), described below, to the Office of Management and Budget (OMB). Prior to submitting the ICR to OMB, HRSA seeks comments from the public regarding the burden estimate, below, or any other aspect of the ICR.",
-      "url": "https://www.federalregister.gov/documents/2026/03/31/2026-06188/agency-information-collection-activities-proposed-collection-public-comment-request-information",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-31",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Submission for OMB Review; TANF Financial Report, ACF-196T",
-      "summary": "The Administration for Children and Families (ACF) is requesting a 3-year extension of the Temporary Assistance for Needy Families (TANF) Financial Report, Form ACF-196T (Office of Management and Budget (OMB) #: 0970-0345, expiration date: March 31, 2026. ACF is not proposing updates to the form but is proposing significant updates to streamline and improve the instructions. While the substance of the instructions remains the same, they are easier to read, with review time reduced by an estimated 33 percent.",
-      "url": "https://www.federalregister.gov/documents/2026/03/31/2026-06179/submission-for-omb-review-tanf-financial-report-acf-196t",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-03-31",
-      "category": "ai_tech",
-      "relevance": 96,
-      "categoryLabel": "AI & Digital Tech"
     }
   ]
 }
