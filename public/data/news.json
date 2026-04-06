@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-04-05T23:46:57.675Z",
+  "lastUpdated": "2026-04-06T02:46:56.701Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 1,
-    "healthySources": 9,
+    "staleSources": 6,
+    "healthySources": 4,
     "sources": [
       {
-        "source": "Becker's Hospital Review",
-        "articleCount": 186,
-        "latestPublishedAt": "2026-04-03T00:00:00.000Z",
-        "staleHours": 71,
+        "source": "Fierce Healthcare",
+        "articleCount": 174,
+        "latestPublishedAt": "2026-04-06T00:00:00.000Z",
+        "staleHours": 2,
         "status": "ok"
       },
       {
-        "source": "Fierce Healthcare",
-        "articleCount": 153,
-        "latestPublishedAt": "2026-04-05T00:00:00.000Z",
-        "staleHours": 23,
-        "status": "ok"
+        "source": "Becker's Hospital Review",
+        "articleCount": 160,
+        "latestPublishedAt": "2026-04-03T00:00:00.000Z",
+        "staleHours": 74,
+        "status": "stale"
       },
       {
         "source": "STAT News",
         "articleCount": 58,
         "latestPublishedAt": "2026-04-03T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 74,
+        "status": "stale"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 36,
         "latestPublishedAt": "2026-04-06T00:00:00.000Z",
-        "staleHours": -1,
+        "staleHours": 2,
         "status": "ok"
       },
       {
         "source": "Health Affairs",
-        "articleCount": 24,
-        "latestPublishedAt": "2026-04-05T00:00:00.000Z",
-        "staleHours": 23,
+        "articleCount": 29,
+        "latestPublishedAt": "2026-04-06T00:00:00.000Z",
+        "staleHours": 2,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 15,
         "latestPublishedAt": "2026-04-03T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 74,
+        "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 12,
         "latestPublishedAt": "2026-04-06T00:00:00.000Z",
-        "staleHours": -1,
+        "staleHours": 2,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 12,
         "latestPublishedAt": "2026-04-03T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 74,
+        "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 3,
         "latestPublishedAt": "2026-04-03T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 74,
+        "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 1,
         "latestPublishedAt": "2026-03-31T00:00:00.000Z",
-        "staleHours": 143,
+        "staleHours": 146,
         "status": "stale"
       }
     ]
@@ -87,36 +87,38 @@
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 20
+      "count": 21
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 5
+      "count": 6
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 81
+      "count": 85
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 7
+      "count": 6
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
-      "count": 12
+      "count": 13
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 172
+      "count": 179
     },
     "general_market": {
       "label": "General Market",
-      "count": 197
+      "count": 184
     }
   },
   "quality": {
-    "status": "pass",
-    "failedChecks": [],
+    "status": "warning",
+    "failedChecks": [
+      "maxStaleSources"
+    ],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -135,8 +137,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 1,
-        "pass": true
+        "actual": 6,
+        "pass": false
       }
     }
   },
@@ -368,6 +370,276 @@
       "category": "ai_tech",
       "relevance": 96,
       "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "White House floats 12.5% budget cut for HHS in FY2027, reiterates reorganization plan",
+      "url": "https://www.fiercehealthcare.com/providers/white-house-floats-125-budget-cut-hhs-fy2027-reiterates-reorganization-plan",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-06",
+      "summary": "The requested budget cut is about half of what the administration asked, and was denied, last year. However, plans for reorganizing agencies under an Administration for a Healthy America persist, as do calls to eliminate various programs and centers the White house ideologically opposes.",
+      "category": "labor_unions",
+      "categoryLabel": "Labor & Unions"
+    },
+    {
+      "title": "Blue Shield of California’s virtual-first plan continues to show lower costs, increased access for members",
+      "url": "https://www.fiercehealthcare.com/payers/blue-shield-californias-virtual-blue-plan-continues-show-lower-costs-increased-access",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-06",
+      "summary": "The program, which was first launched in 2023 in collaboration with Accolade and TeleMed2U, has more than 150,000 members to date.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Industry Voices—Hospitals are fueling AI innovation, should they own a piece of it?",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/industry-voices-hospitals-are-fueling-ai-innovation-should-they-own-piece",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-06",
+      "summary": "As hospital workflows, clinician expertise and rich clinical data increasingly fuel the performance and market value of vendors’ AI tools, providers face a critical question: how can they share in that upside while protecting patients, preserving trust, and avoiding new forms of liability?",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "CMS locks in MA star ratings overhaul, bumps proposed special enrollment window for provider terminations",
+      "url": "https://www.fiercehealthcare.com/payers/cms-locks-ma-star-ratings-overhaul-bumps-proposed-special-enrollment-window-provider",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-06",
+      "summary": "CMS said the changes to star ratings will encourage high performance across all enrollees while removing \"duplicative and burdensome\" requirements for plans and providers.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Novo Nordisk launches discounted subscription program for Wegovy through telehealth providers",
+      "url": "https://www.fiercehealthcare.com/telehealth/novo-nordisk-launches-first-and-only-wegovy-subscription-program",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-06",
+      "summary": "The GLP-1 subscription program is available to eligible self-pay patients through select telehealth providers, including Ro, WeightWatchers and Him &amp; Hers.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "GAO audit outlining CMMI's limited model scale-ups draws more Republican scrutiny",
+      "url": "https://www.fiercehealthcare.com/payers/gao-audit-outlining-cmmis-limited-model-scale-ups-draws-more-republican-scrutiny",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-06",
+      "summary": "Between 2011 and 2024, the Centers for Medicare and Medicaid Innovation Center had scaled just four of the 70 models it tested. Combined with a prior account of billions in additional spending due to its pilots, the Republican head of the House Budget Committee said the center's output has been a failure.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Fierce Healthcare Fundraising Tracker '26: Autism VC AIF closes second fund; Doctronic picks up $40M",
+      "url": "https://www.fiercehealthcare.com/health-tech/fierce-healthcare-fundraising-tracker-26",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-06",
+      "summary": "Keep up with all the venture capital dollars being funneled into the health tech and digital health industries.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Lawmakers introduce bipartisan legislation to help struggling rural hospitals stay open",
+      "url": "https://www.fiercehealthcare.com/regulatory/lawmakers-introduce-bipartisan-legislation-help-struggling-rural-hospitals-stay-open",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-06",
+      "summary": "The Save Struggling Hospitals Act, introduced by legislators in the Senate and House of Representatives, would restore a CMS wage index policy for low-wage hospitals.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Corti releases agentic model for medical coding, says it outperforms OpenAI, Anthropic",
+      "url": "https://www.fiercehealthcare.com/health-tech/cortis-new-agentic-model-medical-coding-outperforms-openai-and-others",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-06",
+      "summary": "Symphony for Medical Coding outperforms models from OpenAI, Anthropic, Amazon, Oracle and Google by over 25% in clinical accuracy benchmarks. It was evaluated on two widely used benchmarks and validated on real-world data.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "4 out of 10 family physicians report feelings of burnout, Weill Cornell Medicine study finds",
+      "url": "https://www.fiercehealthcare.com/providers/435-family-physicians-report-feelings-burnout-weill-cornell",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-06",
+      "summary": "Researchers analyzed nearly 20,000 family physician American Board of Family Medicine survey responses from 2016 to 2020.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Despite better cash flow, providers missed out on more revenue in 2025 due to increased payer denials",
+      "url": "https://www.fiercehealthcare.com/finance/despite-better-cash-flow-providers-missed-out-more-revenue-2025-due-increased-payer-denials",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-06",
+      "summary": "A review of over 2,300 hospitals' revenue cycle data outlines year-to-year improvements in accounts receivable but a roughly 25% jump in net revenue leakage.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Family building platform Sunfish launches AI-powered egg freezing program with cost guarantee",
+      "url": "https://www.fiercehealthcare.com/health-tech/family-building-platform-sunfish-launches-ai-powered-egg-freezing",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-06",
+      "summary": "Based on a patient’s biodata, Sunfish’s proprietary algorithm predicts the optimal amount of matured eggs that should be frozen as well as the cost of the cycle, or money back guaranteed.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Elevance Health 'ghost network' class action lawsuit allowed to proceed",
+      "url": "https://www.fiercehealthcare.com/payers/blue-cross-plan-accused-perpetrated-fraud-ghost-network-class-action-lawsuit",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-06",
+      "summary": "Anthem Blue Cross Blue Shield of New York and Carelon Behavioral Health are making it hard for members to receive care from mental health professionals due to poorly run provider directories, or ghost networks, lawsuits claim.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Memorial Hermann Health System, Blue Cross Blue Shield of Texas fail to reach contract deal",
+      "url": "https://www.fiercehealthcare.com/payers/memorial-hermann-health-system-blue-cross-blue-shield-texas-fail-reach-contract-deal",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-06",
+      "summary": "Houston-based Memorial Hermann Health System is no longer in network with Blue Cross Blue Shield of Texas after the two sides could not agree to terms by an April 1 deadline.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Johns Hopkins Medicine, American Telemedicine Association launch cross-state telehealth initiative",
+      "url": "https://www.fiercehealthcare.com/telehealth/johns-hopkins-medicine-american-telemedicine-association-launch-cross-state-telehealth",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-06",
+      "summary": "The collaboration, dubbed the LIFFT initiative, aims to educate the public and lawmakers on the need for improved telehealth access nationwide.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Intuition Robotics secures Medicaid coverage for social AI robot ElliQ in Washington State",
+      "url": "https://www.fiercehealthcare.com/health-tech/intuition-robotics-secures-medicaid-coverage-social-ai-robot-elliq-washington-state",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-06",
+      "summary": "Washington authorized a statewide reimbursement code for the company's ElliQ companion robot, making it possible for eligible beneficiaries to receive the technology as part of their in-home care services.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "131 hospitals sue HHS over 2023 rule on Disproportionate Share Hospital calculation",
+      "url": "https://www.fiercehealthcare.com/providers/131-hospitals-sue-hhs-over-2023-rule-disproportionate-share-hospital-calculation",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-06",
+      "summary": "The Monday filing in a federal court is the latest in a string of legal spats over the formula floated nearly two decades ago and later struck down.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "A look at AMA's Joy in Medicine program amid steady physician burnout rates",
+      "url": "https://www.fiercehealthcare.com/providers/look-amas-joy-medicine-program-physician-burnout-remains-high",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-06",
+      "summary": "The AMA’s voluntary program is meant to serve as a guide to health systems looking to assess and address their institutions’ levels of burnout, with about 1,800 organizations participating to date.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Hospital groups call on Congress to refine long-term care hospital payments",
+      "url": "https://www.fiercehealthcare.com/providers/hospital-groups-call-congress-refine-long-term-care-hospital-payments",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-06",
+      "summary": "A policy paper released this week by four hospital lobbying associations calls for legislation to adjust payment criteria, diagnosis-related groups and other areas of the long-term care hospital prospective payment system.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Community Health Systems closes $459M hospital sale to Huntsville Hospital Health System",
+      "url": "https://www.fiercehealthcare.com/providers/chs-signs-450m-hospital-sale-huntsville-hospital-health-system",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-06",
+      "summary": "The deal for 180-bed Crestwood Medical Center, adds a fifteenth hospital to the northern Alabama-based nonprofit system, which outlined its initial integration and investment priorities for the facility.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Bipartisan bill introduced to stabilize physicians' year-to-year pay changes",
+      "url": "https://www.fiercehealthcare.com/providers/bipartisan-bill-introduced-stabilize-physicians-year-year-pay-changes",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-06",
+      "summary": "The Provider Reimbursement Stability Act would give CMS more flexibility to adjust physician payments, cap year-to-year reductions and require updates to how practice expenses are calculated.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Clinicians are burnt out. Peer support can help",
+      "url": "https://www.fiercehealthcare.com/providers/clinicians-are-burnt-out-peer-support-can-help",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-06",
+      "summary": "Burnout among clinicians surged during the pandemic and remains stubbornly high, with new data showing half of surgeons are affected. In this episode of \"Podnosis,\" we unpack what’s driving the trend and how peer support programs are helping address it.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "CVS Health opens pharmacy-only locations as it rightsizes store footprint",
+      "url": "https://www.fiercehealthcare.com/providers/cvs-health-opens-pharmacy-only-locations-it-rightsizes-store-footprint",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-06",
+      "summary": "CVS Health plans to open 20 pharmacy-only locations this year as part of its healthcare-focused strategy.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "Whoop raises $575M series G, Abbott comes on board amid hiring spree",
+      "url": "https://www.fiercehealthcare.com/medtech/whoop-raises-575m-series-g-abbott-comes-board-amid-hiring-spree",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-06",
+      "summary": "Whoop is whooping it up with a massive $575 million raise amid a strong start to the year for the fitness wearable.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "UnitedHealthcare launches Avery, a generative AI companion for members",
+      "url": "https://www.fiercehealthcare.com/payers/unitedhealthcare-launches-avery-generative-ai-companion-members",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-06",
+      "summary": "The platform, dubbed Avery, allows UnitedHealthcare members to seek information on coverage, benefits, appointment scheduling, claim approval status and more.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Health Care Workforce, Medicare, And More",
+      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2026.00203?af=R",
+      "source": "Health Affairs",
+      "publishedAt": "2026-04-06",
+      "summary": "Health Affairs, Volume 45, Issue 3, Page 237-237, March 2026.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Practice Pattern Changes After Adoption Of Diagnostic AI Tool Used In Conjunction With Cardiac Imaging",
+      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2025.00929?af=R",
+      "source": "Health Affairs",
+      "publishedAt": "2026-04-06",
+      "summary": "Health Affairs, Volume 45, Issue 3, Page 238-245, March 2026.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Majority Of Family Physicians Still Choose To Practice In The State Where They Were Trained",
+      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2025.01003?af=R",
+      "source": "Health Affairs",
+      "publishedAt": "2026-04-06",
+      "summary": "Health Affairs, Volume 45, Issue 3, Page 246-250, March 2026.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Primary Care Physician Trends: Dissatisfaction, Stress, And Burnout In The US And 9 Comparator Countries, 2012–22",
+      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2025.00880?af=R",
+      "source": "Health Affairs",
+      "publishedAt": "2026-04-06",
+      "summary": "Health Affairs, Volume 45, Issue 3, Page 251-260, March 2026.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Private Equity Acquisition Of Primary Care Practices: Modest Growth In Clinicians Offset By Increased Clinician Exits",
+      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2025.01159?af=R",
+      "source": "Health Affairs",
+      "publishedAt": "2026-04-06",
+      "summary": "Health Affairs, Volume 45, Issue 3, Page 261-268, March 2026.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
     },
     {
       "title": "White House floats 12.5% budget cut for HHS in FY2027, reiterates reorganization plan",
@@ -4571,276 +4843,6 @@
       "summary": "Thirty percent of respondents said payment options are unaffordable, with one in four indicating difficulty covering medical bills.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Dartmouth hospital taps new COO",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/dartmouth-hospital-taps-new-coo/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-31",
-      "summary": "Steven Finnegan has been named COO of New London (N.H.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Moody&#8217;s upgrades UK King’s Daughters&#8217; credit rating",
-      "url": "https://www.beckershospitalreview.com/finance/moodys-upgrades-uk-kings-daughters-credit-rating/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-31",
-      "summary": "Ashland, Ky.-based UK King’s Daughters credit rating was upgraded to &#8220;A2&#8221; from &#8220;A3&#8221; by Moody&#8217;s.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Atlantic Health Taps Artera’s AI Agents to Close Gaps in Colonoscopy Care",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/atlantic-health-taps-arteras-ai-agents-to-close-gaps-in-colonoscopy-care/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-31",
-      "summary": "Colorectal cancer remains a formidable challenge in American healthcare, projected to claim over 55,000 lives in 20261. While early-stage detection boasts a survival rate exceeding 90 percent2, a significant barrier persists: nearly one-third of eligible adults remain unscreened3.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "New Jersey hospital CEO to resign",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/new-jersey-hospital-ceo-to-resign/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-31",
-      "summary": "Thomas Scott, president and CEO of CentraState Healthcare System in Freehold, N.J.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Where HSA policy stands: 4 notes",
-      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/where-hsa-policy-stands-4-notes/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-31",
-      "summary": "Health savings accounts have become one of the more active areas of federal health policy over the past year, with GOP lawmakers pushing to expand eligibility and use the tax-advantaged accounts as a vehicle for broader consumer-driven healthcare reform.&#160; Four notes on where HSA policy stands: 1.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Tenet taps controller, principal accounting officer from LifePoint",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/tenet-taps-controller-principal-accounting-officer-from-lifepoint/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-31",
-      "summary": "Dallas-based Tenet Healthcare has named J. Michael Grooms senior vice president and controller, effective April 6, and principal accounting officer effective May 1, according to a March 30 filing with the Securities and Exchange Commission.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "58 hospital and health system chief digital officers to know &#124; 2026",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/58-hospital-and-health-system-chief-digital-officers-to-know-2026/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-31",
-      "summary": "Becker&#8217;s is proud to recognize the chief digital officers who are driving transformation in modern medicine. As technology reshapes how care is delivered, accessed and experienced, these executives are adopting new tools and fundamentally reimagining what healthcare can look like.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "HHS urges hospitals to align patient menus with updated dietary guidance",
-      "url": "https://www.fiercehealthcare.com/providers/hhs-urges-hospitals-align-patient-menus-updated-dietary-guidance",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-31",
-      "summary": "A new memo reminds hospitals of their nutritional responsibilities as participants in the Medicare program and points to recently updated dietary guidelines as a model.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Only 44% of SUD treatment facilities accept older patients on Medicare: HHS report",
-      "url": "https://www.beckershospitalreview.com/post-acute/only-44-of-sud-treatment-facilities-accept-older-patients-on-medicare-hhs-report/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-31",
-      "summary": "About two-thirds of mental health and substance use disorder treatment facilities, also known as “mixed” facilities, accepted older patients through Medicare, compared to 44% of SUD treatment-only facilities, creating access challenges for those who rely on the program, according to a March brief from the HHS’ Office of Behavioral Health, Disability and Aging Policy. The analysis, “Availability of Care [&#8230;] The post Only 44% of SUD treatment facilities accept older patients on Medicare: HHS report appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Dayton Children&#8217;s names new CEO",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/dayton-childrens-names-new-ceo/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-31",
-      "summary": "Dayton (Ohio) Children’s Hospital has named Robert Steele, MD, as president and CEO, effective July 1. Dr.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "University Hospitals swings from loss to 2.6% margin in 2025",
-      "url": "https://www.beckershospitalreview.com/finance/university-hospitals-swings-from-loss-to-2-6-margin-in-2025/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-31",
-      "summary": "Cleveland-based University Hospitals recorded an operating income of $191.8 million (2.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Mark Cuban backs bill to break up vertically integrated insurers",
-      "url": "https://www.beckershospitalreview.com/finance/mark-cuban-backs-bill-to-break-up-big-insurers/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-31",
-      "summary": "Cost Plus Drugs&#8217; Mark Cuban recently voiced his support for the &#8220;Break Up Big Medicine Act,&#8221; introduced by Sens. Elizabeth Warren, D-Mass.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "7 health systems make 2026 CIO 100 list",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/digital-health/7-health-systems-make-2026-cio-100-list/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-31",
-      "summary": "Seven health systems have been named to Foundry&#8217;s CIO 100 list for 2026. The finalists, which will be honored in August, &#8220;demonstrate excellence in using technology to deliver outcomes such as operational efficiency, innovation, business value, and long-term competitiveness,&#8221; according to a March 30 news release from the marketing company.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Sutter Health 1st to adopt Epic&#8217;s AI chatbot for patients",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/sutter-health-1st-to-adopt-epics-ai-chatbot-for-patients/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-31",
-      "summary": "Sacramento, Calif.-based Sutter Health has become the first health system to go live with Epic&#8217;s Emmie, an AI chatbot for patients.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Former OSF HealthCare CEO Kevin Schoeplein dies",
-      "url": "https://www.beckershospitalreview.com/hospital-management-administration/former-osf-healthcare-ceo-kevin-schoeplein-dies/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-31",
-      "summary": "Kevin Schoeplein, who served as CEO of Peoria, Ill.-based OSF HealthCare from 2011 to 2017 and spent nearly four decades with the system, died March 27.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Chutes & Ladders—Elevance names Health Benefits, Carelon leaders; CareFirst BCBS unveils new CEO",
-      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-31",
-      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "More US workers struggling than thriving for first time: Gallup",
-      "url": "https://www.beckershospitalreview.com/workforce/more-us-workers-struggling-than-thriving-for-first-time-gallup/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-31",
-      "summary": "More U.S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "6 best VA hospitals for patient experience",
-      "url": "https://www.beckershospitalreview.com/patient-experience/6-best-va-hospitals-for-patient-experience/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-31",
-      "summary": "The Department of Veterans Affairs recognized six VA hospitals for delivering exceptional, Veteran-centered care in 2025. The Veterans Health Administration&#8217;s Patient Experience (PX) Awards honor top-performing health systems and medical centers for &#8220;building trust, improving access and consistently providing outstanding patient experiences,&#8221; according to a March 30 VA news release.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Hospitals push back on CMS supply rule",
-      "url": "https://www.beckershospitalreview.com/supply-chain/hospitals-push-back-on-cms-supply-rule/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-31",
-      "summary": "America’s Essential Hospitals is urging CMS to revise proposed requirements tied to domestic sourcing of medical supplies, citing administrative burden and financial strain. The group said the policy — which would track whether hospitals meet thresholds for U.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "14 steps for hospitals to take on AI in diagnostics: ECRI",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/14-steps-for-hospitals-to-take-on-ai-in-diagnostics-ecri/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-31",
-      "summary": "Artificial intelligence can support, but should not replace, clinical decision-making, ECRI and the Institute for Safe Medication Practices said in its latest annual ranking on patient safety concerns. In the report, &#8220;navigating the AI diagnostic dilemma&#8221; was named the No.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Patient-centered care cannot exist without robust support for goal concordant care",
-      "url": "https://www.beckershospitalreview.com/quality/patient-centered-care-cannot-exist-without-robust-support-for-goal-concordant-care/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-31",
-      "summary": "While patient-centered care has been widely recognized as integral to high-quality care for over a quarter of a century, hospitals and health systems are missing the mark when goal concordant care (GCC) is compartmentalized as important only when a cure is no longer possible. A recent study published in Cancer uncovered significant misalignment between treatment [&#8230;] The post Patient-centered care cannot exist without robust support for goal concordant care appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "quality_safety",
-      "categoryLabel": "Quality & Safety"
-    },
-    {
-      "title": "FDA approves higher-dose treatment for muscle disease",
-      "url": "https://www.beckershospitalreview.com/pharmacy/fda-approves-higher-dose-treatment-for-muscle-disease/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-31",
-      "summary": "The FDA has approved a higher-dose regimen of Spinraza for spinal muscular atrophy, providing a new treatment option for patients. The regimen includes 50 milligram per 5 milliliter and 28 milligram per 5 milliliter doses and is designed to deliver higher drug concentrations during both loading and maintenance phases, according to a March 30 news [&#8230;] The post FDA approves higher-dose treatment for muscle disease appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "BayCare to launch solid organ transplant program",
-      "url": "https://www.beckershospitalreview.com/care-coordination/baycare-to-launch-solid-organ-transplant-program/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-31",
-      "summary": "Clearwater, Fla.-based BayCare Health System will develop a solid organ transplant program at Tampa-based St.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Republicans eye further healthcare cuts: Report",
-      "url": "https://www.beckershospitalreview.com/finance/republicans-eye-healthcare-cuts-to-fund-iran-war-report/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-31",
-      "summary": "Republicans are weighing new healthcare spending cuts as part of a broader effort to fund a budget package that could include up to $200 billion for the Iran war and immigration enforcement, according to a March 30 report from Axios.&#160; The early stage discussions mark a potential revival of contentious healthcare policy changes with significant [&#8230;] The post Republicans eye further healthcare cuts: Report appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Ensemble partners with Cohere to build first RCM-native large language model",
-      "url": "https://www.fiercehealthcare.com/health-tech/ensemble-partners-cohere-build-first-rcm-native-large-language-model",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-31",
-      "summary": "Artificial intelligence in the revenue cycle management space is heating up as companies look to leverage the technology to reduce denials and make financial workflows more efficient.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Memorial Sloan Kettering posts $48M operating loss in 2025",
-      "url": "https://www.beckershospitalreview.com/finance/memorial-sloan-kettering-posts-48m-operating-loss-in-2025/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-31",
-      "summary": "New York City-based Memorial Sloan Kettering Cancer Center recorded an operating loss of $47.9 million (-0.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Hospital groups call for long-term care hospital reforms",
-      "url": "https://www.beckershospitalreview.com/post-acute/hospital-groups-call-for-long-term-care-hospital-reforms/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-31",
-      "summary": "Organizations representing thousands of U.S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Beebe Healthcare launches new governance structure: 3 notes",
-      "url": "https://www.beckershospitalreview.com/hospital-management-administration/beebe-healthcare-launches-new-governance-structure-3-notes/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-31",
-      "summary": "Lewes, Del.-based Beebe Healthcare has adopted a new governance structure and leadership model aimed at strengthening systemwide alignment and oversight.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Chutes & Ladders—Texas Health Resources CEO to retire, successor named; New NIH chief of staff",
-      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-03-31",
-      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Republicans eye healthcare cuts to fund Iran war: Report",
-      "url": "https://www.beckershospitalreview.com/finance/republicans-eye-healthcare-cuts-to-fund-iran-war-report/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-03-31",
-      "summary": "Republicans are weighing new healthcare spending cuts as part of a broader effort to fund a budget package that could include up to $200 billion for the Iran war and immigration enforcement, according to a March 30 report from Axios.&#160; The early stage discussions mark a potential revival of contentious healthcare policy changes with significant [&#8230;] The post Republicans eye healthcare cuts to fund Iran war: Report appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
     }
   ]
 }
