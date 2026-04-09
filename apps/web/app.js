@@ -3980,6 +3980,115 @@ const loadTargetStateNotices = async (stateAbbrev) => {
   }
 };
 
+const parseHourlyAverageFromRange = (value) => {
+  const text = String(value || '');
+  const range = text.match(/\$?\s*(\d+(?:\.\d+)?)\s*-\s*\$?\s*(\d+(?:\.\d+)?)\s*\/?\s*hr/i);
+  if (range) {
+    const low = Number(range[1]);
+    const high = Number(range[2]);
+    if (Number.isFinite(low) && Number.isFinite(high) && high >= low) {
+      return `$${((low + high) / 2).toFixed(2)}/hr`;
+    }
+  }
+  const single = text.match(/\$?\s*(\d+(?:\.\d+)?)\s*\/?\s*hr/i);
+  if (single) {
+    const hourly = Number(single[1]);
+    if (Number.isFinite(hourly)) {
+      return `$${hourly.toFixed(2)}/hr`;
+    }
+  }
+  return null;
+};
+
+const parseHourlyValue = (value) => {
+  const text = String(value || '');
+  const m = text.match(/\$?\s*(\d+(?:\.\d+)?)\s*\/?\s*hr/i);
+  if (!m) return null;
+  const n = Number(m[1]);
+  return Number.isFinite(n) ? n : null;
+};
+
+const deriveStaffRangeFromHourly = (hourly) => {
+  const low = Math.max(20, Math.round((hourly - 4) * 100) / 100);
+  const high = Math.max(low, Math.round((hourly + 4) * 100) / 100);
+  return `$${low.toFixed(2)}-$${high.toFixed(2)}/hr`;
+};
+
+const deriveTravelRangeFromHourly = (hourly) => {
+  const low = Math.max(1200, Math.round(hourly * 36));
+  const high = Math.max(low, Math.round(hourly * 42));
+  return `$${low}-${high}/wk`;
+};
+
+const parseStateBenchmarkHourly = (stateSalaryMeta = null) => {
+  const rows = Array.isArray(stateSalaryMeta?.breakdown) ? stateSalaryMeta.breakdown : [];
+  for (const row of rows) {
+    const n = parseHourlyValue(row?.value);
+    if (Number.isFinite(n)) return n;
+    const avgFromRange = parseHourlyAverageFromRange(row?.value);
+    const avgN = parseHourlyValue(avgFromRange);
+    if (Number.isFinite(avgN)) return avgN;
+  }
+  return 40;
+};
+
+const normalizeTargetMetroSalary = (metro = {}, stateSalaryMeta = null) => {
+  const salary = (metro && typeof metro.salary === 'object' && metro.salary !== null) ? metro.salary : {};
+  const benchmarkHourly = parseStateBenchmarkHourly(stateSalaryMeta);
+  const staffRNRaw = salary.staffRN || '';
+  const travelRNRaw = salary.travelRN || '';
+  const staffRN = staffRNRaw && !/market-based/i.test(staffRNRaw)
+    ? staffRNRaw
+    : deriveStaffRangeFromHourly(benchmarkHourly);
+  const travelRN = travelRNRaw && !/market-based/i.test(travelRNRaw)
+    ? travelRNRaw
+    : deriveTravelRangeFromHourly(benchmarkHourly);
+  const signOn = salary.signOn || 'Varies by system';
+  const averageWage = salary.averageWage
+    || parseHourlyAverageFromRange(staffRN)
+    || parseHourlyAverageFromRange(stateSalaryMeta?.breakdown?.[0]?.value)
+    || `$${benchmarkHourly.toFixed(2)}/hr`;
+
+  const breakdown = Array.isArray(salary.breakdown) && salary.breakdown.length
+    ? salary.breakdown
+    : [
+        { label: 'Average wage (est.)', value: averageWage, note: 'Derived from available Staff RN range' },
+        { label: 'Staff RN range', value: staffRN, note: 'Metro target-state benchmark' },
+        { label: 'Travel RN range', value: travelRN, note: 'Weekly travel market estimate' }
+      ];
+
+  const systems = Array.isArray(salary.systems) ? salary.systems : [];
+  const sources = Array.isArray(salary.sources) && salary.sources.length
+    ? salary.sources
+    : (Array.isArray(stateSalaryMeta?.sources) ? stateSalaryMeta.sources : []);
+
+  return {
+    ...salary,
+    staffRN,
+    travelRN,
+    signOn,
+    averageWage,
+    breakdown,
+    systems,
+    sources,
+    updatedAt: salary.updatedAt || stateSalaryMeta?.updatedAt || null,
+    updateEveryDays: Number(salary.updateEveryDays || stateSalaryMeta?.updateEveryDays || 7)
+  };
+};
+
+const normalizeTargetMetro = (metro = {}, stateSalaryMeta = null) => ({
+  name: String(metro.name || 'Regional Hub'),
+  size: metro.size || 'small',
+  population: metro.population || 'N/A',
+  competition: metro.competition || 'medium',
+  hospitals: Array.isArray(metro.hospitals) ? metro.hospitals : [],
+  systems: Array.isArray(metro.systems) ? metro.systems : [],
+  salary: normalizeTargetMetroSalary(metro, stateSalaryMeta),
+  factors: Array.isArray(metro.factors) && metro.factors.length
+    ? metro.factors
+    : [{ text: 'Metro detail generated from available data sources.', type: 'neutral' }]
+});
+
 const buildTargetStateMetroRows = (stateAbbrev, notices) => {
   const stateName = STATE_NAMES[stateAbbrev] || stateAbbrev;
   const healthcare = (notices || []).filter((notice) => isHealthcareNotice(notice));
@@ -3996,7 +4105,13 @@ const buildTargetStateMetroRows = (stateAbbrev, notices) => {
       competition: 'medium',
       hospitals: [],
       systems: [],
-      salary: { staffRN: '--', travelRN: '--', signOn: '--' },
+      salary: {
+        staffRN: '--',
+        travelRN: '--',
+        signOn: '--',
+        averageWage: '--',
+        breakdown: [{ label: 'Average wage (est.)', value: '--', note: 'No metro wage benchmark available yet.' }]
+      },
       factors: [{ text: `No recent healthcare notices found for ${stateName}.`, type: 'neutral' }]
     }];
   }
@@ -4041,7 +4156,12 @@ const buildTargetStateMetroRows = (stateAbbrev, notices) => {
       salary: {
         staffRN: 'Market-based',
         travelRN: 'Market-based',
-        signOn: 'Varies by system'
+        signOn: 'Varies by system',
+        averageWage: 'Market-based',
+        breakdown: [
+          { label: 'Average wage (est.)', value: 'Market-based', note: 'Live WARN-derived fallback profile' },
+          { label: 'Staff RN range', value: 'Market-based', note: 'Range unavailable in fallback data' }
+        ]
       },
       factors: [
         { text: `Derived from live WARN healthcare notices for ${stateName}`, type: 'positive' }
@@ -4054,7 +4174,11 @@ const getTargetStateMetroData = async (stateAbbrev) => {
   const fetchedDataset = await loadTargetStateMetrosData();
   const fetchedState = fetchedDataset?.states?.[stateAbbrev];
   if (fetchedState?.metros?.length) {
-    return fetchedState;
+    const stateSalaryMeta = fetchedState?.salaryMeta || null;
+    return {
+      ...fetchedState,
+      metros: fetchedState.metros.map((metro) => normalizeTargetMetro(metro, stateSalaryMeta))
+    };
   }
 
   const now = Date.now();
@@ -4064,7 +4188,7 @@ const getTargetStateMetroData = async (stateAbbrev) => {
 
   const notices = await loadTargetStateNotices(stateAbbrev);
   const metros = buildTargetStateMetroRows(stateAbbrev, notices);
-  const data = { metros };
+  const data = { metros: metros.map((metro) => normalizeTargetMetro(metro, null)) };
   targetStateMetroDataCache[stateAbbrev] = data;
   targetStateMetroDataLoadedAt[stateAbbrev] = now;
   return data;
@@ -4108,7 +4232,7 @@ const renderTargetState = async (stateAbbrev = TARGET_STATE_DEFAULT) => {
         const idx = Number(card.dataset.metroIndex || 0);
         const metro = metros[idx];
         if (!metro) return;
-        selectTargetStateMetro(metro);
+        selectTargetStateMetro(metro, stateAbbrev);
         targetStateMetroMap.querySelectorAll('.metro-city-card').forEach((c) => c.classList.remove('active'));
         card.classList.add('active');
       });
@@ -4120,7 +4244,7 @@ const renderTargetState = async (stateAbbrev = TARGET_STATE_DEFAULT) => {
   if (targetStateDetailContent) targetStateDetailContent.style.display = 'none';
 };
 
-const selectTargetStateMetro = (metro) => {
+const selectTargetStateMetro = (metro, stateAbbrev) => {
   currentTargetStateMetro = metro;
   if (targetStateDetailPlaceholder) targetStateDetailPlaceholder.style.display = 'none';
   if (targetStateDetailContent) targetStateDetailContent.style.display = 'block';
@@ -4162,20 +4286,70 @@ const selectTargetStateMetro = (metro) => {
     `).join('');
   }
 
+  const metroData = targetStateMetroDataCache[stateAbbrev] || { salaryMeta: {} };
+  const salaryMeta = metroData?.salaryMeta || {};
+  const salary = normalizeTargetMetroSalary(metro, salaryMeta);
+  const breakdown = Array.isArray(salary.breakdown) ? salary.breakdown : [];
+  const salarySystems = Array.isArray(salary.systems) ? salary.systems : [];
+  const sources = Array.isArray(salary.sources) ? salary.sources : [];
   if (targetStateMetroSalary) {
+    const breakdownHtml = breakdown.length ? `
+      <div class="salary-breakdown">
+        <div class="salary-breakdown-title">Estimated salary breakdown</div>
+        <div class="salary-breakdown-section">
+          <div class="salary-breakdown-grid">
+            ${breakdown.map((item) => `
+              <div class="salary-breakdown-item">
+                <div class="salary-breakdown-label">${escapeHtml(item.label || '--')}</div>
+                <div class="salary-breakdown-value">${escapeHtml(item.value || '--')}</div>
+                ${item.note ? `<div class="salary-breakdown-note">${escapeHtml(item.note)}</div>` : ''}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+        ${salarySystems.length ? `
+          <div class="salary-breakdown-section">
+            <div class="salary-breakdown-subtitle">Major systems (est.)</div>
+            <div class="salary-system-grid">
+              ${salarySystems.map((item) => `
+                <div class="salary-system-item">
+                  <div class="salary-system-name">${escapeHtml(item.name || '--')}</div>
+                  <div class="salary-system-value">${escapeHtml(item.value || '--')}</div>
+                  ${item.source ? `<div class="salary-system-source">${escapeHtml(item.source)}</div>` : ''}
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        ` : ''}
+        ${sources.length ? `
+          <div class="salary-breakdown-sources">
+            <span class="salary-breakdown-sources-label">Sources:</span>
+            ${sources.map((src, idx) => `
+              <a href="${escapeHtml(src.url || '#')}" target="_blank" rel="noopener noreferrer">${escapeHtml(src.name || 'Source')}</a>${idx < sources.length - 1 ? '<span class="source-sep">|</span>' : ''}
+            `).join('')}
+          </div>
+        ` : ''}
+      </div>
+    ` : '';
+
     targetStateMetroSalary.innerHTML = `
       <div class="salary-card">
-        <div class="salary-value">${escapeHtml(metro.salary?.staffRN || '--')}</div>
+        <div class="salary-value">${escapeHtml(salary.averageWage || '--')}</div>
+        <div class="salary-label">Average Wage</div>
+      </div>
+      <div class="salary-card">
+        <div class="salary-value">${escapeHtml(salary.staffRN || '--')}</div>
         <div class="salary-label">Staff RN</div>
       </div>
       <div class="salary-card">
-        <div class="salary-value">${escapeHtml(metro.salary?.travelRN || '--')}</div>
+        <div class="salary-value">${escapeHtml(salary.travelRN || '--')}</div>
         <div class="salary-label">Travel RN</div>
       </div>
       <div class="salary-card">
-        <div class="salary-value">${escapeHtml(metro.salary?.signOn || '--')}</div>
+        <div class="salary-value">${escapeHtml(salary.signOn || '--')}</div>
         <div class="salary-label">Sign-On</div>
       </div>
+      ${breakdownHtml}
     `;
   }
 
