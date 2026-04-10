@@ -1,82 +1,89 @@
 {
-  "lastUpdated": "2026-04-10T19:55:50.108Z",
+  "lastUpdated": "2026-04-10T20:46:04.184Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
-    "totalSources": 9,
+    "totalSources": 10,
     "staleSources": 1,
-    "healthySources": 8,
+    "healthySources": 9,
     "sources": [
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 207,
+        "articleCount": 206,
         "latestPublishedAt": "2026-04-10T00:00:00.000Z",
-        "staleHours": 19,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "Fierce Healthcare",
         "articleCount": 131,
         "latestPublishedAt": "2026-04-10T00:00:00.000Z",
-        "staleHours": 19,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "STAT News",
         "articleCount": 68,
         "latestPublishedAt": "2026-04-10T00:00:00.000Z",
-        "staleHours": 19,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 34,
         "latestPublishedAt": "2026-04-10T00:00:00.000Z",
-        "staleHours": 19,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "Health Affairs",
         "articleCount": 20,
         "latestPublishedAt": "2026-04-10T00:00:00.000Z",
-        "staleHours": 19,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 18,
         "latestPublishedAt": "2026-04-10T00:00:00.000Z",
-        "staleHours": 19,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 14,
         "latestPublishedAt": "2026-04-10T00:00:00.000Z",
-        "staleHours": 19,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 4,
         "latestPublishedAt": "2026-04-10T00:00:00.000Z",
-        "staleHours": 19,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 4,
         "latestPublishedAt": "2026-04-07T00:00:00.000Z",
-        "staleHours": 91,
+        "staleHours": 92,
         "status": "stale"
+      },
+      {
+        "source": "SEC Healthcare Filings",
+        "articleCount": 1,
+        "latestPublishedAt": "2026-04-10T00:00:00.000Z",
+        "staleHours": 20,
+        "status": "ok"
       }
     ]
   },
   "categoryCoverage": {
     "closures_layoffs": {
       "label": "Closures & Layoffs",
-      "count": 9
+      "count": 10
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
@@ -88,11 +95,11 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 67
+      "count": 68
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 8
+      "count": 7
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
@@ -100,7 +107,7 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 173
+      "count": 172
     },
     "general_market": {
       "label": "General Market",
@@ -113,12 +120,12 @@
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
-        "actual": 9,
+        "actual": 10,
         "pass": true
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 92,
+        "actual": 99,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -255,8 +262,56 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "38 recent hospital, health system executive moves",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/38-recent-hospital-health-system-executive-moves-2/",
+      "title": "HUM 8-K filing - Humana Inc.",
+      "summary": "Humana Inc. filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/49071/000004907126000013/hum-20260410.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-04-10",
+      "category": "general_market",
+      "relevance": 85,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Prospect left malpractice claims unfunded: Report",
+      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/prospect-left-malpractice-claims-unfunded-report/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-10",
+      "summary": "Los Angeles-based Prospect Medical Holdings, a private equity-backed hospital chain that filed for bankruptcy in 2025, promised malpractice coverage to its hospitals and employed physicians but set aside no money to pay claims — leaving hundreds of patients with potentially no path to compensation, ProPublica reported April 9.&#160; Seven things to know:&#160; 1.",
+      "category": "closures_layoffs",
+      "categoryLabel": "Closures & Layoffs"
+    },
+    {
+      "title": "Eli Lilly&#8217;s oral GLP-1 now available at Amazon, GoodRx: 3 notes for hospitals",
+      "url": "https://www.beckershospitalreview.com/glp-1s/eli-lillys-oral-glp-1-now-available-at-amazon-goodrx-3-notes-for-hospitals/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-10",
+      "summary": "The world&#8217;s two main GLP-1 drug manufacturers, Eli Lilly and Novo Nordisk, are taking different approaches with rolling out their recently approved GLP-1 pills for weight loss.&#160; Two oral GLP-1s, two very different commercial strategies.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "UHS’ CEO-to-worker pay ratio over the past 5 years",
+      "url": "https://www.beckershospitalreview.com/compensation-issues/uhs-ceo-to-worker-pay-ratio-over-the-past-5-years-2/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-10",
+      "summary": "King of Prussia, Pa.-based Universal Health Services CEO and President Marc Miller was paid between 221 and 309 times more than the median annual salary for an employee at the health system between 2021 and 2025, according to proxy statements filed with the Securities and Exchange Commission.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "What healthcare IT leaders see coming by 2036",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/innovation/what-healthcare-it-leaders-see-coming-by-2036/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-10",
+      "summary": "By 2036, healthcare IT will likely be unlike anything we see today — not because of a single breakthrough technology, but because of how deeply digital tools are embedded into care delivery. Across health systems, chief medical and nursing informatics leaders describe a future shaped by ambient intelligence, predictive analytics and automation.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "39 recent hospital, health system executive moves",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/39-recent-hospital-health-system-executive-moves-2/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-04-10",
       "summary": "Hospitals and health systems began 2026 with a flurry of executive moves. Since Jan.",
@@ -307,42 +362,6 @@
       "summary": "Drug shortages in the U.S.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "PeaceHealth Oregon chief executive on administrative leave",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/peacehealth-oregon-chief-executive-on-administrative-leave/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-10",
-      "summary": "Jim McGovern, MD, chief executive of the PeaceHealth Oregon Region, is on administrative leave pending a full review of concerns related to the scope of his administrative functions, the health system said in a statement shared with Becker&#8217;s. Vancouver, Wash.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "3 Medline moves to know",
-      "url": "https://www.beckershospitalreview.com/supply-chain/3-medline-moves-to-know/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-10",
-      "summary": "Medline, a medical supply manufacturer and distributor that went public in December, is expanding its footprint through new partnerships, technology investments and infrastructure growth, while managing several product recalls. As the company manages recalls of blood culture kits, medical convenience kits and reprocessed catheters, it is also expanding collaborations with U.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "C-section rates at decade high, fertility at record low: 4 CDC findings",
-      "url": "https://www.beckershospitalreview.com/quality/public-health/c-section-rates-at-decade-high-fertility-at-record-low-4-cdc-findings/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-10",
-      "summary": "Cesarean section rates continued to rise in 2025, reaching a decade-high, while the nation&#8217;s fertility rate hit its lowest point in at least 25 years, new CDC data shows. The agency&#8217;s National Center for Health Statistics released provisional data on U.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "We don&#8217;t just need more nurses. We need more leaders to train them.",
-      "url": "https://www.beckershospitalreview.com/quality/nursing/we-dont-just-need-more-nurses-we-need-more-leaders-to-train-them/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-10",
-      "summary": "With the United States facing an estimated deficit of more than 250,000 registered nurses by 2028, the nursing shortage is seemingly hard to escape right now: It is dominating headlines, part of policy debates and seen in the lived experiences of anyone who has waited for hours in an understaffed emergency room. But for all [&#8230;] The post We don&#8217;t just need more nurses.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
     },
     {
       "title": "GAO report shows gap between scale of illegal vapes and enforcement",
@@ -453,6 +472,15 @@
       "categoryLabel": "Policy & Reimbursement"
     },
     {
+      "title": "HHS, after legal setback, updates ACIP charter to put more emphasis on vaccine safety",
+      "url": "https://www.fiercehealthcare.com/pharma/hhs-after-legal-setback-updates-acip-charter-put-more-emphasis-vaccine-safety",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-10",
+      "summary": "HHS secretary Robert F. Kennedy Jr.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
       "title": "Hospital M&A roars back to life in Q1 2026; Operating performances fray in February",
       "url": "https://www.fiercehealthcare.com/providers/hospital-ma-roars-back-life-q1-2026-operating-performances-fray-february",
       "source": "Fierce Healthcare",
@@ -514,6 +542,51 @@
       "summary": "Humana is teaming up with digital health company b.well Connected Health to make it easier for members to access their health data across multiple providers, health plans, pharmacies and digital health apps.",
       "category": "policy_reimbursement",
       "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "38 recent hospital, health system executive moves",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/38-recent-hospital-health-system-executive-moves-2/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-10",
+      "summary": "Hospitals and health systems began 2026 with a flurry of executive moves. Since Jan.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "PeaceHealth Oregon chief executive on administrative leave",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/peacehealth-oregon-chief-executive-on-administrative-leave/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-10",
+      "summary": "Jim McGovern, MD, chief executive of the PeaceHealth Oregon Region, is on administrative leave pending a full review of concerns related to the scope of his administrative functions, the health system said in a statement shared with Becker&#8217;s. Vancouver, Wash.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "3 Medline moves to know",
+      "url": "https://www.beckershospitalreview.com/supply-chain/3-medline-moves-to-know/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-10",
+      "summary": "Medline, a medical supply manufacturer and distributor that went public in December, is expanding its footprint through new partnerships, technology investments and infrastructure growth, while managing several product recalls. As the company manages recalls of blood culture kits, medical convenience kits and reprocessed catheters, it is also expanding collaborations with U.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "C-section rates at decade high, fertility at record low: 4 CDC findings",
+      "url": "https://www.beckershospitalreview.com/quality/public-health/c-section-rates-at-decade-high-fertility-at-record-low-4-cdc-findings/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-10",
+      "summary": "Cesarean section rates continued to rise in 2025, reaching a decade-high, while the nation&#8217;s fertility rate hit its lowest point in at least 25 years, new CDC data shows. The agency&#8217;s National Center for Health Statistics released provisional data on U.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "We don&#8217;t just need more nurses. We need more leaders to train them.",
+      "url": "https://www.beckershospitalreview.com/quality/nursing/we-dont-just-need-more-nurses-we-need-more-leaders-to-train-them/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-10",
+      "summary": "With the United States facing an estimated deficit of more than 250,000 registered nurses by 2028, the nursing shortage is seemingly hard to escape right now: It is dominating headlines, part of policy debates and seen in the lived experiences of anyone who has waited for hours in an understaffed emergency room. But for all [&#8230;] The post We don&#8217;t just need more nurses.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
     },
     {
       "title": "Advocate Health improves to 4% operating margin, $4.6B bottom line across 2025",
@@ -4738,69 +4811,6 @@
       "summary": "AI powerhouse Anthropic is continuing its push into the healthcare arena with the acquisition of previously stealth AI startup Coefficient Bio in a $400 million stock deal, according to reporting from The Information and Eric Newcomer.",
       "category": "mergers_mna",
       "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Overcoming Pharmacy Distractions that Hinder Patient Care",
-      "url": "https://www.fiercehealthcare.com/sponsored/overcoming-pharmacy-distractions-hinder-patient-care",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-06",
-      "summary": "When alerts, calls, and tasks compete for attention, patient care can suffer. See how pharmacies are reclaiming focus and improving outcomes.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Iowa AG files lawsuit against Change Healthcare over 2024 data breach",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/cybersecurity/iowa-ag-files-lawsuit-against-change-healthcare-over-2024-data-breach/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-06",
-      "summary": "Iowa Attorney General Brenna Bird has filed a lawsuit against Change Healthcare, alleging the company violated state consumer protection and data security laws in connection with a 2024 data breach that affected nearly 2.2 million Iowa residents.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "216 active drug shortages: How 1 health system is managing",
-      "url": "https://www.beckershospitalreview.com/pharmacy/216-active-drug-shortages-how-1-health-system-is-managing/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-06",
-      "summary": "Drug shortages remain a thorn in the side of hospital pharmacy leaders nationwide, but one health system has found the right combination of tools&#160; to manage them. The American Society of Health-System Pharmacists reported 216 active drug shortages in early 2026, up slightly from the previous quarter.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "PBM formulary exclusions top 600 drugs amid pricing shift",
-      "url": "https://www.beckershospitalreview.com/pharmacy/pbm-formulary-exclusions-top-600-drugs-amid-pricing-shift/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-06",
-      "summary": "The three largest pharmacy benefit managers — Caremark, Express Scripts and Optum Rx — each excluded more than 600 drugs from their 2026 formularies, reflecting shifts in drug pricing models that are beginning to challenge traditional formulary strategies, according to an April 6 report from the Drug Channels Institute. Exclusions remain a central tool for [&#8230;] The post PBM formulary exclusions top 600 drugs amid pricing shift appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "FDA flags 2 Abiomed heart pump recalls tied to injuries",
-      "url": "https://www.beckershospitalreview.com/supply-chain/fda-flags-2-abiomed-heart-pump-recalls-tied-to-injuries/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-06",
-      "summary": "Abiomed has issued two recalls affecting Impella heart pump systems and related components due to device performance issues and patient safety risks. The first action involves a correction to Impella RP with SmartAssist and Impella RP Flex with SmartAssist devices after the company identified a potential malfunction in the differential pressure sensor, according to an [&#8230;] The post FDA flags 2 Abiomed heart pump recalls tied to injuries appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "quality_safety",
-      "categoryLabel": "Quality & Safety"
-    },
-    {
-      "title": "Geisinger receives $1.25M gift to support initiatives at 2 hospitals",
-      "url": "https://www.beckershospitalreview.com/capital/geisinger-receives-1-25m-gift-to-support-initiatives-at-2-hospitals/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-06",
-      "summary": "Danville, Pa.-based Geisinger has received a $1.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Former Tenet nursing leader joins Endeavor Health",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/former-tenet-nursing-leader-joins-endeavor-health/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-06",
-      "summary": "After serving in an interim chief nursing officer role for two Tenet Healthcare hospitals, Shawn O&#8217;Connor, DNP, RN, has joined Evanston, Ill.-based Endeavor Health.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
     }
   ]
 }
