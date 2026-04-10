@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-10T19:02:17.066Z",
+  "lastUpdated": "2026-04-10T19:55:50.108Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
@@ -10,14 +10,14 @@
     "sources": [
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 206,
+        "articleCount": 207,
         "latestPublishedAt": "2026-04-10T00:00:00.000Z",
         "staleHours": 19,
         "status": "ok"
       },
       {
         "source": "Fierce Healthcare",
-        "articleCount": 133,
+        "articleCount": 131,
         "latestPublishedAt": "2026-04-10T00:00:00.000Z",
         "staleHours": 19,
         "status": "ok"
@@ -58,18 +58,18 @@
         "status": "ok"
       },
       {
+        "source": "FDA MedWatch RSS",
+        "articleCount": 4,
+        "latestPublishedAt": "2026-04-10T00:00:00.000Z",
+        "staleHours": 19,
+        "status": "ok"
+      },
+      {
         "source": "Federal Register - FDA",
         "articleCount": 4,
         "latestPublishedAt": "2026-04-07T00:00:00.000Z",
         "staleHours": 91,
         "status": "stale"
-      },
-      {
-        "source": "FDA MedWatch RSS",
-        "articleCount": 3,
-        "latestPublishedAt": "2026-04-09T00:00:00.000Z",
-        "staleHours": 43,
-        "status": "ok"
       }
     ]
   },
@@ -88,11 +88,11 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 72
+      "count": 67
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 7
+      "count": 8
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
@@ -100,11 +100,11 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 170
+      "count": 173
     },
     "general_market": {
       "label": "General Market",
-      "count": 185
+      "count": 186
     }
   },
   "quality": {
@@ -118,7 +118,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 83,
+        "actual": 92,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -219,6 +219,18 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
+      "title": "Early Alert: Convenience Kit Issue from AVID Medical",
+      "summary": "The adaptor on Namic RA syringes may unwind during use. The resulting loose connection or disconnection may lead to infection, blood loss, or air embolism.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-convenience-kit-issue-avid-medical",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-04-10",
+      "category": "quality_safety",
+      "relevance": 100,
+      "categoryLabel": "Quality & Safety"
+    },
+    {
       "title": "Center for Scientific Review; Notice of Closed Meetings",
       "summary": "",
       "url": "https://www.federalregister.gov/documents/2026/04/10/2026-06981/center-for-scientific-review-notice-of-closed-meetings",
@@ -243,6 +255,78 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "38 recent hospital, health system executive moves",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/38-recent-hospital-health-system-executive-moves-2/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-10",
+      "summary": "Hospitals and health systems began 2026 with a flurry of executive moves. Since Jan.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "11 things to know about the uninsured population: KFF",
+      "url": "https://www.beckershospitalreview.com/finance/11-things-to-know-about-the-uninsured-population-kff/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-10",
+      "summary": "In 2024, the uninsured rate grew for the first time since 2019, according to an April 9&#160;KFF&#160;issue brief. KFF&#160;reviewed data on uninsured trends and demographics in recent years, focusing on individuals under 65 years old.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Providence names Bon Secours Mercy Health executive chief mission officer",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/providence-names-bon-secours-mercy-health-executive-chief-mission-officer/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-10",
+      "summary": "Stephen Taluja was appointed chief mission officer of Renton, Wash.-based Providence, effective June 29.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "VA going live with Oracle Health EHR",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/innovation/va-going-live-with-oracle-health-ehr/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-10",
+      "summary": "The U.S.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Pharma company withdraws FDA application amid White House autism treatment push",
+      "url": "https://www.beckershospitalreview.com/pharmacy/pharma-company-withdraws-fda-application-amid-white-house-autism-treatment-push/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-10",
+      "summary": "GSK, a biopharmaceutical company, has withdrawn its application to the FDA for leucovorin calcium tablets, months after the White House&#160;promoted&#160;the drug as a potential treatment for autism-related symptoms,&#160;The Wall Street Journal&#160;reported April 10.&#160; The FDA approved leucovorin last month to treat cerebral folate deficiency, marking the first FDA-approved treatment for the rare genetic condition.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "USP flags 100 vulnerable drugs in US supply chain",
+      "url": "https://www.beckershospitalreview.com/pharmacy/usp-flags-100-vulnerable-drugs-in-us-supply-chain/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-10",
+      "summary": "Drug shortages in the U.S.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "PeaceHealth Oregon chief executive on administrative leave",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/peacehealth-oregon-chief-executive-on-administrative-leave/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-10",
+      "summary": "Jim McGovern, MD, chief executive of the PeaceHealth Oregon Region, is on administrative leave pending a full review of concerns related to the scope of his administrative functions, the health system said in a statement shared with Becker&#8217;s. Vancouver, Wash.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "3 Medline moves to know",
+      "url": "https://www.beckershospitalreview.com/supply-chain/3-medline-moves-to-know/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-10",
+      "summary": "Medline, a medical supply manufacturer and distributor that went public in December, is expanding its footprint through new partnerships, technology investments and infrastructure growth, while managing several product recalls. As the company manages recalls of blood culture kits, medical convenience kits and reprocessed catheters, it is also expanding collaborations with U.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "C-section rates at decade high, fertility at record low: 4 CDC findings",
       "url": "https://www.beckershospitalreview.com/quality/public-health/c-section-rates-at-decade-high-fertility-at-record-low-4-cdc-findings/",
       "source": "Becker's Hospital Review",
@@ -259,78 +343,6 @@
       "summary": "With the United States facing an estimated deficit of more than 250,000 registered nurses by 2028, the nursing shortage is seemingly hard to escape right now: It is dominating headlines, part of policy debates and seen in the lived experiences of anyone who has waited for hours in an understaffed emergency room. But for all [&#8230;] The post We don&#8217;t just need more nurses.",
       "category": "mergers_mna",
       "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "IU Health CEO’s &#8216;what-not-to-do&#8217; takeaways from ‘The Pitt’",
-      "url": "https://www.beckershospitalreview.com/hospital-management-administration/iu-health-ceos-what-not-to-do-takeaways-from-the-pitt/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-10",
-      "summary": "A roughly 30-second clip of a hospital CEO on &#8220;The Pitt&#8221; left Dennis Murphy, president and CEO of Indianapolis-based Indiana University Health, with two key takeaways on what leaders should avoid. During the medical drama&#8217;s second season, hospital CEO Trent Norris enters the emergency department to inform staff of a cyberattack and subsequent systems shutdown, [&#8230;] The post IU Health CEO’s &#8216;what-not-to-do&#8217; takeaways from ‘The Pitt’ appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Closing the gaps: How connected technology is reshaping specialty medication access",
-      "url": "https://www.beckershospitalreview.com/pharmacy/closing-the-gaps-how-connected-technology-is-reshaping-specialty-medication-access/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-10",
-      "summary": "Health systems and specialty practices are under increasing pressure to accelerate patient access to therapies. Fragmented workflows, disconnected systems and administrative work continue to slow that process.",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "How Mount Sinai is transforming its revenue cycle",
-      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/how-mount-sinai-is-transforming-its-revenue-cycle/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-10",
-      "summary": "In 2025, Debra Jaeger, MSN, RN, was hired as New York City-based Mount Sinai&#8217;s first chief revenue officer, tasked with unifying the system&#8217;s fragmented revenue cycle. The role was designed to elevate Mount Sinai’s revenue cycle into a center of excellence, aligning it more closely with the system’s clinical and research reputation, Ms.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Hospital revenue cycle teams evolve as AI &#8216;arms race&#8217; heats up",
-      "url": "https://www.beckershospitalreview.com/finance/hospital-revenue-cycle-teams-shift-as-ai-arms-race-heats-up/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-10",
-      "summary": "The revenue cycle has always been a battleground between payers and providers, but AI is raising the stakes in ways that hospital finance leaders say are becoming increasingly difficult to absorb.&#160; Payers are automating denials faster than ever.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Texas Children’s gets $5M gift for behavioral health services",
-      "url": "https://www.beckershospitalreview.com/capital/texas-childrens-gets-5m-gift-for-behavioral-health-services/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-10",
-      "summary": "Texas Children&#8217;s in Houston has received a $5 million estate gift from philanthropist Barbara LeGrange, who passed away in March, to expand mental healthcare for children and adolescents across the region. Ms.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "10 metros with highest, lowest healthcare spending per person",
-      "url": "https://www.beckershospitalreview.com/rankings-and-ratings/10-metros-with-highest-lowest-healthcare-spending-per-person/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-10",
-      "summary": "Per-person healthcare spending among people with employer-sponsored insurance averaged $6,711 nationally in 2022, though this figure varies significantly by geography, according to an April 9 report from the Health Care Cost Institute. To compile the report, the nonprofit research institute analyzed spending data across 269 individual metro areas in 45 states, examining the price, use [&#8230;] The post 10 metros with highest, lowest healthcare spending per person appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "PeaceHealth hospital gets $10M gift for new ED, pavilion",
-      "url": "https://www.beckershospitalreview.com/capital/peacehealth-hospital-gets-10m-gift-for-new-ed-pavilion/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-10",
-      "summary": "PeaceHealth St. Joseph Medical Center in Bellingham, Wash.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Premier Health names new chief digital information officer",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/premier-health-names-new-chief-digital-information-officer/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-10",
-      "summary": "Margaret Lozovatsky, MD, has been named chief digital information officer at Premier Health, based in Dayton, Ohio, effective May 4. Dr.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
     },
     {
       "title": "GAO report shows gap between scale of illegal vapes and enforcement",
@@ -441,15 +453,6 @@
       "categoryLabel": "Policy & Reimbursement"
     },
     {
-      "title": "Fierce Healthcare Layoff Tracker—Mississippi hospital cuts nearly fifth of its workforce; UCI Health laying off 1% of workforce",
-      "url": "https://www.fiercehealthcare.com/finance/fierce-healthcare-layoff-tracker-2026-job-cuts-eliminations-health-systems-hospitals",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-10",
-      "summary": "Stick with this tracker for the latest layoff and workforce updates from across healthcare.",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
       "title": "Hospital M&A roars back to life in Q1 2026; Operating performances fray in February",
       "url": "https://www.fiercehealthcare.com/providers/hospital-ma-roars-back-life-q1-2026-operating-performances-fray-february",
       "source": "Fierce Healthcare",
@@ -457,6 +460,15 @@
       "summary": "The first quarter of 2026 extended a recovery from last year's dealmaking slowdown with 22 newly announced transactions, largely fueled by divestitures. Meanwhile, February benchmarking data outlined persistent operating pressures and soft volumes.",
       "category": "mergers_mna",
       "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Fierce Healthcare Layoff Tracker—Mississippi hospital cuts nearly fifth of its workforce; UCI Health laying off 1% of workforce",
+      "url": "https://www.fiercehealthcare.com/finance/fierce-healthcare-layoff-tracker-2026-job-cuts-eliminations-health-systems-hospitals",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-10",
+      "summary": "Stick with this tracker for the latest layoff and workforce updates from across healthcare.",
+      "category": "closures_layoffs",
+      "categoryLabel": "Closures & Layoffs"
     },
     {
       "title": "Medicare navigation company Chapter banks $100M series E funding round",
@@ -511,6 +523,78 @@
       "summary": "The nation's third-largest nonprofit health system grew its total revenue by nearly 12%, with operating income gains logged across each of its business units.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "IU Health CEO’s &#8216;what-not-to-do&#8217; takeaways from ‘The Pitt’",
+      "url": "https://www.beckershospitalreview.com/hospital-management-administration/iu-health-ceos-what-not-to-do-takeaways-from-the-pitt/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-10",
+      "summary": "A roughly 30-second clip of a hospital CEO on &#8220;The Pitt&#8221; left Dennis Murphy, president and CEO of Indianapolis-based Indiana University Health, with two key takeaways on what leaders should avoid. During the medical drama&#8217;s second season, hospital CEO Trent Norris enters the emergency department to inform staff of a cyberattack and subsequent systems shutdown, [&#8230;] The post IU Health CEO’s &#8216;what-not-to-do&#8217; takeaways from ‘The Pitt’ appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Closing the gaps: How connected technology is reshaping specialty medication access",
+      "url": "https://www.beckershospitalreview.com/pharmacy/closing-the-gaps-how-connected-technology-is-reshaping-specialty-medication-access/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-10",
+      "summary": "Health systems and specialty practices are under increasing pressure to accelerate patient access to therapies. Fragmented workflows, disconnected systems and administrative work continue to slow that process.",
+      "category": "closures_layoffs",
+      "categoryLabel": "Closures & Layoffs"
+    },
+    {
+      "title": "How Mount Sinai is transforming its revenue cycle",
+      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/how-mount-sinai-is-transforming-its-revenue-cycle/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-10",
+      "summary": "In 2025, Debra Jaeger, MSN, RN, was hired as New York City-based Mount Sinai&#8217;s first chief revenue officer, tasked with unifying the system&#8217;s fragmented revenue cycle. The role was designed to elevate Mount Sinai’s revenue cycle into a center of excellence, aligning it more closely with the system’s clinical and research reputation, Ms.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Hospital revenue cycle teams evolve as AI &#8216;arms race&#8217; heats up",
+      "url": "https://www.beckershospitalreview.com/finance/hospital-revenue-cycle-teams-shift-as-ai-arms-race-heats-up/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-10",
+      "summary": "The revenue cycle has always been a battleground between payers and providers, but AI is raising the stakes in ways that hospital finance leaders say are becoming increasingly difficult to absorb.&#160; Payers are automating denials faster than ever.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Texas Children’s gets $5M gift for behavioral health services",
+      "url": "https://www.beckershospitalreview.com/capital/texas-childrens-gets-5m-gift-for-behavioral-health-services/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-10",
+      "summary": "Texas Children&#8217;s in Houston has received a $5 million estate gift from philanthropist Barbara LeGrange, who passed away in March, to expand mental healthcare for children and adolescents across the region. Ms.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "10 metros with highest, lowest healthcare spending per person",
+      "url": "https://www.beckershospitalreview.com/rankings-and-ratings/10-metros-with-highest-lowest-healthcare-spending-per-person/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-10",
+      "summary": "Per-person healthcare spending among people with employer-sponsored insurance averaged $6,711 nationally in 2022, though this figure varies significantly by geography, according to an April 9 report from the Health Care Cost Institute. To compile the report, the nonprofit research institute analyzed spending data across 269 individual metro areas in 45 states, examining the price, use [&#8230;] The post 10 metros with highest, lowest healthcare spending per person appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "PeaceHealth hospital gets $10M gift for new ED, pavilion",
+      "url": "https://www.beckershospitalreview.com/capital/peacehealth-hospital-gets-10m-gift-for-new-ed-pavilion/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-10",
+      "summary": "PeaceHealth St. Joseph Medical Center in Bellingham, Wash.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Premier Health names new chief digital information officer",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/premier-health-names-new-chief-digital-information-officer/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-10",
+      "summary": "Margaret Lozovatsky, MD, has been named chief digital information officer at Premier Health, based in Dayton, Ohio, effective May 4. Dr.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
     },
     {
       "title": "HCA Florida hospital plans $200M tower",
@@ -4715,87 +4799,6 @@
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-04-06",
       "summary": "After serving in an interim chief nursing officer role for two Tenet Healthcare hospitals, Shawn O&#8217;Connor, DNP, RN, has joined Evanston, Ill.-based Endeavor Health.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Prior authorization: Today’s innovators speak out",
-      "url": "https://www.fiercehealthcare.com/sponsored/prior-authorization-todays-innovators-speak-out",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-06",
-      "summary": "Across the session, speakers returned to one idea: the challenge is not prior authorization alone, but the fragmented, manual experience surrounding it. Here’s what they had to say.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "10 hospitals, health systems looking for CFOs",
-      "url": "https://www.beckershospitalreview.com/finance/10-hospitals-health-systems-looking-for-cfos-3/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-06",
-      "summary": "Here are 10 hospitals and health systems that are seeking CFOs and assistant CFOs in recent job listings. 1.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "3 million in rural counties lose MA coverage: Report",
-      "url": "https://www.beckershospitalreview.com/post-acute/3-million-in-rural-counties-lose-ma-coverage-report/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-06",
-      "summary": "Almost 3 million older Americans were dropped from Medicare Advantage plans after insurance carriers pulled out of their counties, according to a recent analysis. The analysis, published in JAMA, analyzed the impacts of insurers dropping MA plans in 2026.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "$500M in Utah Medicaid funds used for SNF admin fees: Report",
-      "url": "https://www.beckershospitalreview.com/post-acute/500m-in-utah-medicaid-funds-used-for-snf-admin-fees-report/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-06",
-      "summary": "Nearly $500 million in Utah Medicaid funds meant for patient care was used on administrative fees, The Salt Lake Tribune reported April 4. The state auditor report highlighted gaps with a Skilled Nursing Facility Upper Payment Limit Medicaid program that allowed states to make supplemental payments to some nursing facilities up to the Medicare rate.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "CDC clears path for 2nd vaccine advisory panel overhaul",
-      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/cdc-clears-path-for-2nd-vaccine-advisory-panel-overhaul/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-06",
-      "summary": "Three weeks after a federal judge voided recent decisions by a CDC vaccine advisory panel, the agency changed the committee&#8217;s appointment process to place nominations under the purview of HHS chief, Robert F. Kennedy Jr.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "21 health system IT leadership moves",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/7-health-system-it-leadership-moves/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-06",
-      "summary": "Health systems are strengthening their technology leadership benches, appointing new executives to lead areas like cybersecurity, innovation, digital platforms and enterprise systems. Here are the latest health IT leadership moves at hospitals and health systems, as reported by Becker’s since January: Editor&#8217;s note: This article was updated April 6.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "The ROI Hidden in Plain Sight: What Health Executives Need to Know About Vascular Surgery",
-      "url": "https://www.beckershospitalreview.com/strategy/the-roi-hidden-in-plain-sight-what-health-executives-need-to-know-about-vascular-surgery/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-06",
-      "summary": "As health care systems grapple with rising costs, workforce shortages, and shifting reimbursement models, one crucial specialty is often overlooked despite its impact on quality and financial performance. Vascular surgery is the only specialty trained to treat the full spectrum of vascular diseases and is essential for health systems to support safety and efficiency, generate [&#8230;] The post The ROI Hidden in Plain Sight: What Health Executives Need to Know About Vascular Surgery appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Why Medicaid Program Integrity Is a Team Sport",
-      "url": "https://www.fiercehealthcare.com/sponsored/why-medicaid-program-integrity-team-sport",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-06",
-      "summary": "As Medicaid grows, integrity can’t sit in silos. A team-based approach helps detect issues earlier, reduce costs, and protect care access.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Medical City Healthcare taps new regional vice president of HR",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/medical-city-healthcare-taps-new-regional-vice-president-of-hr/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-06",
-      "summary": "Andy Leveque has been named regional vice president of human resources for Dallas-based Medical City Healthcare, effective April 2026. Medical City Healthcare is part of Nashville, Tenn.",
       "category": "general_market",
       "categoryLabel": "General Market"
     }
