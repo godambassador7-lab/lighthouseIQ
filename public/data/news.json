@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-04-14T13:54:02.653Z",
+  "lastUpdated": "2026-04-14T15:20:26.545Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 3,
-    "healthySources": 7,
+    "staleSources": 2,
+    "healthySources": 8,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 188,
+        "articleCount": 186,
         "latestPublishedAt": "2026-04-14T00:00:00.000Z",
-        "staleHours": 13,
+        "staleHours": 15,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 166,
+        "articleCount": 164,
         "latestPublishedAt": "2026-04-14T00:00:00.000Z",
-        "staleHours": 13,
+        "staleHours": 15,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 62,
+        "articleCount": 63,
         "latestPublishedAt": "2026-04-14T00:00:00.000Z",
-        "staleHours": 13,
+        "staleHours": 15,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 29,
         "latestPublishedAt": "2026-04-14T00:00:00.000Z",
-        "staleHours": 13,
+        "staleHours": 15,
         "status": "ok"
       },
       {
         "source": "Health Affairs",
         "articleCount": 28,
         "latestPublishedAt": "2026-04-14T00:00:00.000Z",
-        "staleHours": 13,
+        "staleHours": 15,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
-        "articleCount": 14,
-        "latestPublishedAt": "2026-04-13T00:00:00.000Z",
-        "staleHours": 37,
+        "articleCount": 16,
+        "latestPublishedAt": "2026-04-14T00:00:00.000Z",
+        "staleHours": 15,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 6,
         "latestPublishedAt": "2026-04-14T00:00:00.000Z",
-        "staleHours": 13,
+        "staleHours": 15,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
-        "articleCount": 4,
-        "latestPublishedAt": "2026-04-10T00:00:00.000Z",
-        "staleHours": 109,
-        "status": "stale"
+        "articleCount": 5,
+        "latestPublishedAt": "2026-04-14T00:00:00.000Z",
+        "staleHours": 15,
+        "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 2,
         "latestPublishedAt": "2026-04-10T00:00:00.000Z",
-        "staleHours": 109,
+        "staleHours": 111,
         "status": "stale"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 1,
         "latestPublishedAt": "2026-04-10T00:00:00.000Z",
-        "staleHours": 109,
+        "staleHours": 111,
         "status": "stale"
       }
     ]
@@ -83,11 +83,11 @@
   "categoryCoverage": {
     "closures_layoffs": {
       "label": "Closures & Layoffs",
-      "count": 17
+      "count": 18
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 37
+      "count": 34
     },
     "labor_unions": {
       "label": "Labor & Unions",
@@ -95,30 +95,28 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 78
+      "count": 79
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 6
+      "count": 7
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
-      "count": 11
+      "count": 10
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 180
+      "count": 177
     },
     "general_market": {
       "label": "General Market",
-      "count": 164
+      "count": 168
     }
   },
   "quality": {
-    "status": "warning",
-    "failedChecks": [
-      "maxStaleSources"
-    ],
+    "status": "pass",
+    "failedChecks": [],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -127,7 +125,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 60,
+        "actual": 74,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -137,8 +135,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 3,
-        "pass": false
+        "actual": 2,
+        "pass": true
       }
     }
   },
@@ -216,6 +214,18 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "Dialysis Catheter Recall: Merit Medical Removes 16F Dual-Valved Splittable Sheath Introducer",
+      "summary": "The Merit 16F Dual-Valved Splittable Sheath Introducer may not split as intended. This may cause bleeding, embolization, or loss of vessel for future access.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/dialysis-catheter-recall-merit-medical-removes-16f-dual-valved-splittable-sheath-introducer",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-04-14",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "Agency Forms Undergoing Paperwork Reduction Act Review",
       "summary": "",
       "url": "https://www.federalregister.gov/documents/2026/04/14/2026-07207/agency-forms-undergoing-paperwork-reduction-act-review",
@@ -262,6 +272,276 @@
       "category": "general_market",
       "relevance": 96,
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "Viewpoint: Safeguarding care in rural Missouri demands a new approach",
+      "url": "https://www.beckershospitalreview.com/rural-health/policy-regulation/viewpoint-safeguarding-care-in-rural-missouri-demands-a-new-approach/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-14",
+      "summary": "Missouri lawmakers are right to treat the collapse of rural healthcare as an urgent crisis. Nearly half of the state’s remaining rural hospitals are at risk of closure, and many communities already know what it means to lose emergency rooms, labor and delivery services and timely stroke care.",
+      "category": "closures_layoffs",
+      "categoryLabel": "Closures & Layoffs"
+    },
+    {
+      "title": "43 states have mental health insurance disparities: 4 trends",
+      "url": "https://www.beckershospitalreview.com/quality/patient-safety-outcomes/43-states-have-mental-health-insurance-disparities-4-trends/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-14",
+      "summary": "The Mental Health Parity Index found 43 states have disparities in access to in-network mental health care and substance use disorder treatment. The tool — created by the American Medical Association, the American Psychological Foundation, The Kennedy Forum, Third Horizon and the Ballmer Group —&#160; is an interactive, open-access platform that analyzes payer data to [&#8230;] The post 43 states have mental health insurance disparities: 4 trends appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "R1 RCM launches AI tools for AR recovery, denials",
+      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/r1-rcm-launches-ai-tools-for-ar-recovery-denials/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-14",
+      "summary": "R1 RCM has introduced two new AI-powered tools through its Phare Operating System.&#160; The revenue cycle management company launched Phare OS in October, designed to deploy agentic and labor tools across the revenue cycle to improve throughput, reduce cost to collect and boost yield.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Pharmacy leaders weigh experience over NAPLEX scores",
+      "url": "https://www.beckershospitalreview.com/pharmacy/pharmacy-leaders-weigh-experience-over-naplex-scores/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-14",
+      "summary": "Hospital and health system leaders say they are placing greater emphasis on real-world experience, clinical judgment and cultural fit when evaluating pharmacist candidates, while standardized exam scores play a minimal role in hiring decisions. The North American Pharmacist Licensure Examination, or NAPLEX, is required for pharmacist licensure in the U.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "UHS-owned Nevada hospital taps COO",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/uhs-owned-nevada-hospital-taps-coo/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-14",
+      "summary": "Sparks-based Northern Nevada Medical Center has named Antony Sebastian COO, according to an April 13 LinkedIn post.&#160; Mr.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "4th state recognizes PAs as &#8216;physician associates&#8217;",
+      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/4th-state-recognizes-pas-as-physician-associates/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-14",
+      "summary": "Iowa has become the fourth state to legally change the &#8220;physician assistant&#8221; job title to &#8220;physician associate.&#8221; On April 9, Iowa Gov.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "This Keck hospital cut nitrous oxide from the OR: How it&#8217;s going",
+      "url": "https://www.beckershospitalreview.com/or/this-keck-hospital-cut-nitrous-oxide-from-the-or-how-its-going/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-14",
+      "summary": "Three years ago, Los Angeles-based Keck Medicine of USC became the first hospital to fully discontinue using nitrous oxide in its operating room, and it has never looked back. Nitrous oxide, more commonly known as laughing gas, is a greenhouse gas roughly 300 times more potent than carbon dioxide.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Lawsuit claims Dartmouth executive was fired for raising supply chain safety concerns",
+      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/lawsuit-claims-dartmouth-executive-was-fired-for-raising-supply-chain-safety-concerns/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-14",
+      "summary": "The former chief quality and value officer of Lebanon, N.H.",
+      "category": "quality_safety",
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "CFOs as strategists: How finance leaders are rewriting their role",
+      "url": "https://www.beckershospitalreview.com/finance/cfos-as-strategists-how-finance-leaders-are-rewriting-their-role/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-14",
+      "summary": "Today&#8217;s modern hospital and health system CFO has evolved from the behind-the-desk, numbers-cruncher role of even 10 to 20 years ago. Finance leaders must now don strategic hats to help balance competing pressures like thinning margins, rising labor costs and reimbursement headwinds to protect their organizations competitively while staying true to their mission.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "White House considers physician for FDA vaccine director",
+      "url": "https://www.beckershospitalreview.com/quality/public-health/white-house-considers-physician-for-fda-vaccine-director/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-14",
+      "summary": "The Trump administration is considering appointing Houman Hemmati, MD, PhD, to lead the FDA’s Center for Biologics Evaluation and Research, The Washington Post reported April 14. Dr.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: FDA pressures drugmakers to report trial results",
+      "url": "https://www.statnews.com/2026/04/14/biotech-news-fda-pressures-drugmakers-to-report-trial-results/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-04-14",
+      "summary": "Ben Sasse on enrolling in Rev Med's drug trial, more ADC investment, and other biotech news from The Readout",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Hospitals offer chatbots to fight off ChatGPT",
+      "url": "https://www.statnews.com/2026/04/14/hospitals-offer-chatbots-chatgpt-health-tech/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-04-14",
+      "summary": "In this edition of STAT Health Tech: Hospitals offer their own chatbots, Medicare's ACCESS pilot, and an update Utah's 'AI doctor' experiment.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "STAT+: Pharmalittle: We&#8217;re reading about an FDA push for trial transparency, a Novo-OpenAI deal, and more",
+      "url": "https://www.statnews.com/pharmalot/2026/04/14/fda-push-clinical-trial-transparency-novo-nordisk-openai-deal/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-04-14",
+      "summary": "The FDA told more than 2,200 companies and researchers that they are required to report clinical trial results, or they may face fines",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "A fluoride shortage for some U.S. water systems",
+      "url": "https://www.statnews.com/2026/04/14/health-news-fluoride-shortage-for-some-us-water-systems/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-04-14",
+      "summary": "An experimental Medicare program, how family dynamics affect brain recovery, and other health news from Morning Rounds",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "For Ben Sasse, Revolution Medicines’ pancreatic cancer trial felt like his best, only option",
+      "url": "https://www.statnews.com/2026/04/14/ben-sasse-revolution-medicines-daraxonrasib-clinical-trial/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-04-14",
+      "summary": "Former Sen. Ben Sasse gives a glimpse of what it's like to be a participant in an tough but promising new drug for pancreatic cancer.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "A top WHO official confronts Iran war fallout, and weighs bid for an even bigger role",
+      "url": "https://www.statnews.com/2026/04/14/next-who-director-general-candidate-qa-with-hanan-balkhy/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-04-14",
+      "summary": "The director of WHO's Eastern Mediterranean region is weighing whether to run to be the next director-general at a time of tumult over Iran and beyond.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Dana-Farber CEO talks untangling from Mass General Brigham and building new cancer hospital",
+      "url": "https://www.statnews.com/2026/04/14/dana-farber-cancer-hospital-benjamin-ebert-mass-general-brigham/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-04-14",
+      "summary": "Dana-Farber CEO Benjamin Ebert has no shortage of ideas and vision for the cancer institute as it untangles from Mass General Brigham and builds a new hospital.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "Opinion: My brother can’t access a just-approved breakthrough drug for his rare disease",
+      "url": "https://www.statnews.com/2026/04/14/hunter-syndrome-avlayah-age-based-approvals/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-04-14",
+      "summary": "Rare disease clinical trials, policy discussions, and advocacy initiatives often leave adults behind.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Maryland state affordability board sets its first price cap for a medicine",
+      "url": "https://www.statnews.com/pharmalot/2026/04/13/maryland-affordability-board-sets-first-price-cap-diabetes-medicine/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-04-14",
+      "summary": "The board will now oversee a process to lower the cost of the type 2 diabetes medicine Jardiance by January 2027.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Tenet CIO to retire at year end",
+      "url": "https://www.healthcaredive.com/news/tenet-chief-information-officer-cio-paola-arbour-retires/817343/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-04-14",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "CMS accepts more than 150 providers, digital health firms for ACCESS model",
+      "url": "https://www.healthcaredive.com/news/150-healthcare-organizations-approved-access-model-cms/817426/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-04-14",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "WebMD Ignite rolls out program to help providers get Rural Health Transformation efforts off the ground",
+      "url": "https://www.fiercehealthcare.com/health-tech/webmd-ignite-rolls-out-program-help-providers-get-rural-health-transformation-efforts",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-14",
+      "summary": "WebMD Ignite launched a new program that provides a \"shovel-ready\" platform to help states, health systems and rural networks stand up patient engagement, prevention and access programs in just weeks.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "‘The next opioid epidemic’: Gambling legalization outpaces public health response",
+      "url": "https://www.fiercehealthcare.com/providers/next-opioid-epidemic-gambling-addiction-grows-legalization-outpaces-public-health",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-14",
+      "summary": "Seven in 10 U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Wavelet Medical, Aegis Ventures partner on first AI non-invasive fetal EEG monitoring platform",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/wavelet-aegis-partner-first-ai-non-invasive-fetal-eeg-monitoring-platform",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-14",
+      "summary": "The device detects fetal brain signals through sensors on a pregnant person, Wavelet CEO Liz Golden told Fierce Healthcare in an exclusive interview. The device then extracts auditory signals and evaluates them to detect when fetal distress occurs in real-time.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "New Mental Health Parity Index highlights where disparities persist",
+      "url": "https://www.fiercehealthcare.com/payers/new-mental-health-parity-index-highlights-where-disparities-persist",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-14",
+      "summary": "Despite policymakers putting a focus on the issue, mental health parity challenges remain for much of the country, a new report shows.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "CMS taps 150 digital health companies, providers for ACCESS Model",
+      "url": "https://www.fiercehealthcare.com/digital-health/cms-taps-150-digital-health-companies-providers-access-model",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-14",
+      "summary": "CMS picked 150 digital health companies and healthcare providers to participate in the launch of its tech-enabled chronic care model.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Healthcare spending varies widely between metropolitan areas: HCCI",
+      "url": "https://www.fiercehealthcare.com/finance/healthcare-spending-varies-widely-between-metropolitan-areas-hcci",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-14",
+      "summary": "Healthcare spending varies widely between metropolitan areas, according to new data from the Health Care Cost Institute.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "AI speeds up prior auth, coding while driving higher costs for health systems: PHTI report",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/ai-speeding-prior-authorizations-while-driving-higher-costs-health-systems",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-14",
+      "summary": "AI can allow organizations to execute expedited prior authorizations at reduced costs, but there is no existing evidence that it “translates to lower average cost per claim factoring in the cost of the AI solution,\" according to a Peterson Health Technology Institute analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Chutes & Ladders—Maui Health CEO steps down, Tenet Healthcare CIO to retire",
+      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-14",
+      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "CMS showcases first wave of digital health tools as questions about 'last mile' of adoption remain",
+      "url": "https://www.fiercehealthcare.com/health-tech/cms-showcases-first-wave-digital-health-tools-questions-about-last-mile-adoption-remain",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-14",
+      "summary": "On Thursday, Trump administration officials unveiled the first wave of health tech tools as part of a push to make medical records more accessible to Medicare patients.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
     },
     {
       "title": "Ascension Sacred Heart opens 4th freestanding ED in Florida",
@@ -352,159 +632,6 @@
       "summary": "A California federal judge dismissed an Elevance Health subsidiary&#8217;s lawsuit that alleged that HaloMD and several providers conspired to exploit the No Surprises Act’s Independent Dispute Resolution process for financial gain. Anthem Blue Cross alleged that HaloMD and affiliated providers submitted more than 1,500 IDR proceedings between January 2024 and August 2025, of which roughly [&#8230;] The post California judge dismisses Elevance’s No Surprises Act lawsuit against HaloMD appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: Hospitals offer chatbots to fight off ChatGPT",
-      "url": "https://www.statnews.com/2026/04/14/hospitals-offer-chatbots-chatgpt-health-tech/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-14",
-      "summary": "In this edition of STAT Health Tech: Hospitals offer their own chatbots, Medicare's ACCESS pilot, and an update Utah's 'AI doctor' experiment.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "STAT+: Pharmalittle: We&#8217;re reading about an FDA push for trial transparency, a Novo-OpenAI deal, and more",
-      "url": "https://www.statnews.com/pharmalot/2026/04/14/fda-push-clinical-trial-transparency-novo-nordisk-openai-deal/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-14",
-      "summary": "The FDA told more than 2,200 companies and researchers that they are required to report clinical trial results, or they may face fines",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "A fluoride shortage for some U.S. water systems",
-      "url": "https://www.statnews.com/2026/04/14/health-news-fluoride-shortage-for-some-us-water-systems/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-14",
-      "summary": "An experimental Medicare program, how family dynamics affect brain recovery, and other health news from Morning Rounds",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "For Ben Sasse, Revolution Medicines’ pancreatic cancer trial felt like his best, only option",
-      "url": "https://www.statnews.com/2026/04/14/ben-sasse-revolution-medicines-daraxonrasib-clinical-trial/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-14",
-      "summary": "Former Sen. Ben Sasse gives a glimpse of what it's like to be a participant in an tough but promising new drug for pancreatic cancer.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "A top WHO official confronts Iran war fallout, and weighs bid for an even bigger role",
-      "url": "https://www.statnews.com/2026/04/14/next-who-director-general-candidate-qa-with-hanan-balkhy/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-14",
-      "summary": "The director of WHO's Eastern Mediterranean region is weighing whether to run to be the next director-general at a time of tumult over Iran and beyond.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Dana-Farber CEO talks untangling from Mass General Brigham and building new cancer hospital",
-      "url": "https://www.statnews.com/2026/04/14/dana-farber-cancer-hospital-benjamin-ebert-mass-general-brigham/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-14",
-      "summary": "Dana-Farber CEO Benjamin Ebert has no shortage of ideas and vision for the cancer institute as it untangles from Mass General Brigham and builds a new hospital.",
-      "category": "capacity_expansion",
-      "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "Opinion: My brother can’t access a just-approved breakthrough drug for his rare disease",
-      "url": "https://www.statnews.com/2026/04/14/hunter-syndrome-avlayah-age-based-approvals/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-14",
-      "summary": "Rare disease clinical trials, policy discussions, and advocacy initiatives often leave adults behind.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Maryland state affordability board sets its first price cap for a medicine",
-      "url": "https://www.statnews.com/pharmalot/2026/04/13/maryland-affordability-board-sets-first-price-cap-diabetes-medicine/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-14",
-      "summary": "The board will now oversee a process to lower the cost of the type 2 diabetes medicine Jardiance by January 2027.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "WebMD Ignite rolls out program to help providers get Rural Health Transformation efforts off the ground",
-      "url": "https://www.fiercehealthcare.com/health-tech/webmd-ignite-rolls-out-program-help-providers-get-rural-health-transformation-efforts",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-14",
-      "summary": "WebMD Ignite launched a new program that provides a \"shovel-ready\" platform to help states, health systems and rural networks stand up patient engagement, prevention and access programs in just weeks.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "‘The next opioid epidemic’: Gambling legalization outpaces public health response",
-      "url": "https://www.fiercehealthcare.com/providers/next-opioid-epidemic-gambling-addiction-grows-legalization-outpaces-public-health",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-14",
-      "summary": "Seven in 10 U.S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Wavelet Medical, Aegis Ventures partner on first AI non-invasive fetal EEG monitoring platform",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/wavelet-aegis-partner-first-ai-non-invasive-fetal-eeg-monitoring-platform",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-14",
-      "summary": "The device detects fetal brain signals through sensors on a pregnant person, Wavelet CEO Liz Golden told Fierce Healthcare in an exclusive interview. The device then extracts auditory signals and evaluates them to detect when fetal distress occurs in real-time.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "New Mental Health Parity Index highlights where disparities persist",
-      "url": "https://www.fiercehealthcare.com/payers/new-mental-health-parity-index-highlights-where-disparities-persist",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-14",
-      "summary": "Despite policymakers putting a focus on the issue, mental health parity challenges remain for much of the country, a new report shows.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "CMS taps 150 digital health companies, providers for ACCESS Model",
-      "url": "https://www.fiercehealthcare.com/digital-health/cms-taps-150-digital-health-companies-providers-access-model",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-14",
-      "summary": "CMS picked 150 digital health companies and healthcare providers to participate in the launch of its tech-enabled chronic care model.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Healthcare spending varies widely between metropolitan areas: HCCI",
-      "url": "https://www.fiercehealthcare.com/finance/healthcare-spending-varies-widely-between-metropolitan-areas-hcci",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-14",
-      "summary": "Healthcare spending varies widely between metropolitan areas, according to new data from the Health Care Cost Institute.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "AI speeds up prior auth, coding while driving higher costs for health systems: PHTI report",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/ai-speeding-prior-authorizations-while-driving-higher-costs-health-systems",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-14",
-      "summary": "AI can allow organizations to execute expedited prior authorizations at reduced costs, but there is no existing evidence that it “translates to lower average cost per claim factoring in the cost of the AI solution,\" according to a Peterson Health Technology Institute analysis.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Chutes & Ladders—Maui Health CEO steps down, Tenet Healthcare CIO to retire",
-      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-14",
-      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "CMS showcases first wave of digital health tools as questions about 'last mile' of adoption remain",
-      "url": "https://www.fiercehealthcare.com/health-tech/cms-showcases-first-wave-digital-health-tools-questions-about-last-mile-adoption-remain",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-14",
-      "summary": "On Thursday, Trump administration officials unveiled the first wave of health tech tools as part of a push to make medical records more accessible to Medicare patients.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
     },
     {
       "title": "Future-proofing payment integrity: How to gain more value now while scaling for future growth",
@@ -4642,132 +4769,6 @@
       "summary": "Epic has launched a new initiative to track health conditions at the county level and issue alerts when unusual trends emerge. The feature, called Health Alerts, uses statistical models applied to real-world medical records to identify when rates of specific health conditions in a given county exceed expected levels.",
       "category": "mergers_mna",
       "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "CMS issues guidance ahead of noncitizen Medicaid coverage deadline",
-      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/cms-issues-guidance-ahead-of-noncitizen-medicaid-coverage-deadline/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-08",
-      "summary": "CMS has issued operational guidance to states regarding how to implement H.R.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Care New England hospital to kick off $97M expansion",
-      "url": "https://www.beckershospitalreview.com/capital/care-new-england-hospital-to-kick-off-expansion/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-08",
-      "summary": "Kent Hospital in Warwick, R.I.",
-      "category": "capacity_expansion",
-      "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "About 1 in 3 providers believe payers deliver on promises: Aetna",
-      "url": "https://www.beckershospitalreview.com/finance/about-1-in-3-providers-believe-payers-deliver-on-promises-aetna/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-08",
-      "summary": "Thirty-six percent of providers believe payers reliably deliver on promises, according to an inaugural Aetna provider survey released April 8. The survey will run quarterly, polling representatives of U.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Safety concerns stall Geisinger plans for pharmacy distribution center",
-      "url": "https://www.beckershospitalreview.com/pharmacy/safety-concerns-stall-geisinger-plans-for-pharmacy-distribution-center/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-08",
-      "summary": "A proposed pharmacy distribution center tied to Danville, Pa.-based Geisinger was delayed after a zoning hearing in Hazle Township, Pa.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "AI could streamline drug safety detection in EHRs: Study",
-      "url": "https://www.beckershospitalreview.com/pharmacy/ai-could-streamline-drug-safety-detection-in-ehrs-study/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-08",
-      "summary": "Large language models may help identify drug safety signals in clinical notes, though their performance remains below thresholds required for clinical decision support. Researchers evaluated three models — GPT-3.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Digital health startups raked in $4B during Q1 with 12 megadeals driving investment: Rock Health",
-      "url": "https://www.fiercehealthcare.com/digital-health/digital-health-startups-raked-4b-q1-12-megadeals-driving-investment-rock-health",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-08",
-      "summary": "Digital health startups pocketed $4 billion in venture capital funding in the first quarter of 2026, marking the strongest first quarter since the pandemic peak.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Shadow AI: Dos and don’ts for healthcare orgs",
-      "url": "https://www.fiercehealthcare.com/providers/shadow-ai-dos-and-donts-healthcare-orgs",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-08",
-      "summary": "Unauthorized AI use is already happening inside healthcare organizations, and not always in ways leadership can see. A new survey from Wolters Kluwer suggests “shadow AI” is more common than many realize, raising questions about risk, workflow pressures and what responsible adoption should actually look like.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "FDA approves 1st generics of Farxiga for Type 2 diabetes",
-      "url": "https://www.beckershospitalreview.com/pharmacy/fda-approves-1st-generics-of-farxiga-for-type-2-diabetes/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-08",
-      "summary": "The FDA has approved the first generic versions of Farxiga, a drug used to treat Type 2 diabetes and reduce the risk of hospitalization for heart failure. The generic, dapagliflozin, is indicated to improve glycemic control in adults with Type 2 diabetes and to reduce heart failure hospitalization risk in diabetic patients with established cardiovascular [&#8230;] The post FDA approves 1st generics of Farxiga for Type 2 diabetes appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Ohio hospital adds telehealth hospitalists",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/telehealth/ohio-hospital-adds-telehealth-hospitalists/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-08",
-      "summary": "Mount Gilead-based OhioHealth Morrow County Hospital has partnered with Columbus, Ohio-based MedOne Healthcare Partners to provide hospitalist care through a hybrid in-person and telehealth model. The model connects on-site advanced practice providers with MedOne&#8217;s remote physicians who evaluate patients via telehealth and collaborate with emergency department staff, according to an April 2 news release.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "USF Athletics forms jersey partnership with Tampa General",
-      "url": "https://www.beckershospitalreview.com/digital-marketing/usf-athletics-forms-jersey-partnership-with-tampa-general/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-08",
-      "summary": "Tampa-based University of South Florida Athletics and Tampa General Hospital have formed a multi-year partnership to place the TGH logo on the USF Bulls football uniforms. The logo will mark the first jersey patch sponsorship in Florida college athletics and among the first across the U.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Michigan hospitals cut pediatric X-rays for respiratory illnesses by 40%",
-      "url": "https://www.beckershospitalreview.com/quality/patient-safety-outcomes/michigan-hospitals-cut-pediatric-x-rays-for-respiratory-illnesses-by-40/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-08",
-      "summary": "Michigan hospitals reduced the use of chest X-rays on children with respiratory illness by nearly 40%, Medscape reported April 8. The results, published April 7 in Pediatrics, came from the Michigan Emergency Department Improvement Collaborative, a statewide quality improvement and financial incentive program that launched in March 2019.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "ED strategy redesign aims to improve dementia patient outcomes",
-      "url": "https://www.beckershospitalreview.com/post-acute/ed-strategy-redesign-aims-to-improve-dementia-patient-outcomes/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-08",
-      "summary": "New York City-based Memorial Sloan Kettering Cancer Center researchers created an emergency care redesign intervention that can improve care and outcomes of patients with dementia that visit the emergency department. More than 50% of patients living with dementia and their caregivers visit the ED every year.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Acting attorney general forms National Fraud Enforcement Division",
-      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/acting-attorney-general-forms-national-fraud-enforcement-division/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-08",
-      "summary": "Acting U.S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "High-dose Wegovy debuts at $399 for self-paying patients",
-      "url": "https://www.beckershospitalreview.com/glp-1s/high-dose-wegovy-debuts-at-399-for-self-paying-patients/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-08",
-      "summary": "Novo Nordisk&#8217;s recently approved high-dose Wegovy formulation has entered the U.S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
     }
   ]
 }
