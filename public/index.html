@@ -27,10 +27,13 @@
           <img src="./LighthouseIQ-login.png" alt="LighthouseIQ" class="logo-img" />
         </div>
         <p class="login-version">Version 5.0</p>
-        <p class="login-subtitle">Enter your access code to continue</p>
+        <p class="login-subtitle">Sign in to your account</p>
         <form id="login-form">
           <div class="passcode-input-wrapper">
-            <input type="password" id="passcode-input" placeholder="Enter passcode" autocomplete="off" maxlength="20" />
+            <input type="email" id="email-input" placeholder="Work email" autocomplete="username" maxlength="120" required />
+          </div>
+          <div class="passcode-input-wrapper">
+            <input type="password" id="password-input" placeholder="Password" autocomplete="current-password" maxlength="120" required />
           </div>
           <button type="submit" class="btn primary login-btn">Access Dashboard</button>
           <p class="login-error" id="login-error"></p>

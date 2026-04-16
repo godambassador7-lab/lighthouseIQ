@@ -9975,24 +9975,6 @@ const parseLaborRates = (value) => {
   };
 };
 
-const parseHourlyAverageFromRange = (value) => {
-  const text = String(value || '');
-  const range = text.match(/\$?\s*(\d+(?:\.\d+)?)\s*-\s*\$?\s*(\d+(?:\.\d+)?)\s*\/?\s*hr/i);
-  if (range) {
-    const low = Number(range[1]);
-    const high = Number(range[2]);
-    if (Number.isFinite(low) && Number.isFinite(high) && high >= low) {
-      return `$${((low + high) / 2).toFixed(2)}/hr`;
-    }
-  }
-  const single = text.match(/\$?\s*(\d+(?:\.\d+)?)\s*\/?\s*hr/i);
-  if (single) {
-    const hourly = Number(single[1]);
-    if (Number.isFinite(hourly)) return `$${hourly.toFixed(2)}/hr`;
-  }
-  return null;
-};
-
 const getMetroLaborCards = (stateAbbrev, metroName, breakdown) => {
   const labelMap = METRO_LABOR_CARD_LABEL_MAP[stateAbbrev] || {};
   const targetLabel = labelMap[metroName];
@@ -10137,13 +10119,6 @@ const selectHomeStateMetro = (metro, stateAbbrev) => {
     || STATE_METRO_DATA.IN;
   const salaryMeta = metroData?.salaryMeta || {};
   const salary = metro.salary || {};
-  const staffRN = salary.staffRN || '--';
-  const travelRN = salary.travelRN || '--';
-  const signOn = salary.signOn || '--';
-  const averageWage = salary.averageWage
-    || parseHourlyAverageFromRange(staffRN)
-    || parseHourlyAverageFromRange(salaryMeta?.breakdown?.[0]?.value)
-    || '--';
   const breakdown = Array.isArray(salary.breakdown)
     ? salary.breakdown
     : Array.isArray(salaryMeta.breakdown)
@@ -10535,38 +10510,15 @@ const selectTargetStateMetro = (metro, stateAbbrev) => {
       : '';
 
     const laborCards = getMetroLaborCards(stateAbbrev, metro.name, breakdown);
-    const hasLaborSnapshot = laborCards.some((card) => /unemployment|yoy change|prior year|pp/i.test(String(card.label || '')));
-    const salaryCards = [
-      { value: averageWage, label: 'Average Wage' },
-      { value: staffRN, label: 'Staff RN' },
-      { value: travelRN, label: 'Travel RN' },
-      { value: signOn, label: 'Sign-On' }
-    ];
-    const salaryCardsHtml = salaryCards.map((card) => `
+    const topCardsHtml = laborCards.map((card) => `
       <div class="salary-card">
         <div class="salary-value">${escapeHtml(card.value || '--')}</div>
         <div class="salary-label">${escapeHtml(card.label || '--')}</div>
       </div>
     `).join('');
-    const laborCardsHtml = hasLaborSnapshot
-      ? `
-        <div class="salary-breakdown-section">
-          <div class="salary-breakdown-subtitle">Labor snapshot</div>
-          <div class="detail-salary-grid">
-            ${laborCards.map((card) => `
-              <div class="salary-card">
-                <div class="salary-value">${escapeHtml(card.value || '--')}</div>
-                <div class="salary-label">${escapeHtml(card.label || '--')}</div>
-              </div>
-            `).join('')}
-          </div>
-        </div>
-      `
-      : '';
 
     targetStateMetroSalary.innerHTML = `
-      ${salaryCardsHtml}
-      ${laborCardsHtml}
+      ${topCardsHtml}
       ${breakdownHtml}
     `;
   }
