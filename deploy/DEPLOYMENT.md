@@ -60,8 +60,8 @@ cd apps/api && npm install && npm run build
 cp .env.example .env
 nano .env  # Edit with your values
 
-# Generate secure passcode
-openssl rand -base64 16
+# Generate secure session secret
+openssl rand -base64 32
 ```
 
 #### Step 5: Install Cloudflared
@@ -186,7 +186,8 @@ sudo systemctl status postgresql
 
 ## Security Checklist
 
-- [ ] Strong ACCESS_PASSCODE (16+ characters)
+- [ ] Strong TOKEN_SECRET (32+ random chars)
+- [ ] AUTH_BOOTSTRAP_EMAIL and AUTH_BOOTSTRAP_PASSWORD configured
 - [ ] Database password is unique and strong
 - [ ] Firewall configured (only 80/443 open)
 - [ ] SSL/TLS set to "Full (strict)" in Cloudflare

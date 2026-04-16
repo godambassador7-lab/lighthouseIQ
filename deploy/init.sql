@@ -49,6 +49,22 @@ CREATE INDEX IF NOT EXISTS idx_warn_notices_state_date
 CREATE INDEX IF NOT EXISTS idx_warn_notices_score_date
     ON warn_notices(nursing_score DESC, notice_date DESC);
 
+-- Dashboard users for per-user authentication
+CREATE TABLE IF NOT EXISTS dashboard_users (
+    id TEXT PRIMARY KEY,
+    email TEXT NOT NULL UNIQUE,
+    password_salt TEXT NOT NULL,
+    password_hash TEXT NOT NULL,
+    role TEXT NOT NULL DEFAULT 'viewer',
+    is_active BOOLEAN NOT NULL DEFAULT true,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    last_login_at TIMESTAMPTZ
+);
+
+CREATE INDEX IF NOT EXISTS idx_dashboard_users_email
+    ON dashboard_users(email);
+
 -- Grant permissions (if running as superuser creating for another role)
 -- GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO nlr;
 -- GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO nlr;

@@ -1,7 +1,8 @@
 // Login elements
 const loginOverlay = document.getElementById('login-overlay');
 const loginForm = document.getElementById('login-form');
-const passcodeInput = document.getElementById('passcode-input');
+const emailInput = document.getElementById('email-input');
+const passwordInput = document.getElementById('password-input');
 const loginError = document.getElementById('login-error');
 
 // App elements
@@ -248,16 +249,16 @@ const STATE_BEACON_HOME_DEFAULT = 'IN';
 const STATE_BEACON_PROS_MODE_TARGET = 'target_vs_home';
 const STATE_BEACON_PROS_MODE_HOME = 'home_vs_target';
 let stateBeaconProsMode = STATE_BEACON_PROS_MODE_TARGET;
-const STATE_BEACON_INPUTS_KEY = 'lni_state_beacon_inputs';
-const STATE_BEACON_NOTES_KEY = 'lni_state_beacon_notes';
-const MAP_HOME_STATE_KEY = 'lighthouseiq_map_home_state';
-const MAP_TARGET_STATE_KEY = 'lighthouseiq_map_target_state';
+const STATE_BEACON_INPUTS_BASE_KEY = 'lni_state_beacon_inputs';
+const STATE_BEACON_NOTES_BASE_KEY = 'lni_state_beacon_notes';
+const MAP_HOME_STATE_BASE_KEY = 'lighthouseiq_map_home_state';
+const MAP_TARGET_STATE_BASE_KEY = 'lighthouseiq_map_target_state';
 let lastNoticeWindowCount = 0;
 let noticeWindowRaf = null;
 let isMapTargetMode = false;
-const TA_METRICS_KEY = 'lni_ta_metrics_v1';
-const TA_ACTIONS_KEY = 'lni_ta_actions_v1';
-const TA_ROLLOUT_KEY = 'lni_ta_rollout_v1';
+const TA_METRICS_BASE_KEY = 'lni_ta_metrics_v1';
+const TA_ACTIONS_BASE_KEY = 'lni_ta_actions_v1';
+const TA_ROLLOUT_BASE_KEY = 'lni_ta_rollout_v1';
 let taMetrics = {
   outreach: 0,
   responses: 0,
@@ -286,11 +287,32 @@ const getLoadedAccreditors = (programs) => {
 
 // Login handling - server-side validation
 const SESSION_KEY = 'lni_authenticated';
+const SESSION_USER_KEY = 'lni_user';
+const PROJECTS_BASE_KEY = 'lni_projects';
+const CUSTOM_NOTICES_BASE_KEY = 'lni_custom_notices';
+
+const getSessionUser = () => {
+  try {
+    return JSON.parse(sessionStorage.getItem(SESSION_USER_KEY) || 'null');
+  } catch {
+    return null;
+  }
+};
+
+const getUserStorageScope = () => {
+  const user = getSessionUser();
+  if (user?.id) return String(user.id);
+  if (user?.email) return String(user.email).toLowerCase();
+  return 'anonymous';
+};
+
+const scopedStorageKey = (baseKey) => `${baseKey}:${getUserStorageScope()}`;
 
 const checkAuth = () => sessionStorage.getItem(SESSION_KEY) === 'true';
 
 const clearAuthState = () => {
   sessionStorage.removeItem(SESSION_KEY);
+  sessionStorage.removeItem(SESSION_USER_KEY);
   loginOverlay.classList.remove('hidden');
 };
 
@@ -319,11 +341,12 @@ const refreshSession = async () => {
 
 const handleLogin = async (e) => {
   e.preventDefault();
-  const entered = passcodeInput.value.trim();
+  const email = String(emailInput?.value || '').trim().toLowerCase();
+  const password = String(passwordInput?.value || '');
   const loginBtn = loginForm.querySelector('button[type="submit"]');
 
-  if (!entered) {
-    loginError.textContent = 'Please enter a passcode.';
+  if (!email || !password) {
+    loginError.textContent = 'Please enter your email and password.';
     return;
   }
 
@@ -336,24 +359,27 @@ const handleLogin = async (e) => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
-      body: JSON.stringify({ passcode: entered })
+      body: JSON.stringify({ email, password })
     });
 
-    const data = await response.json();
+    const data = await response.json().catch(() => ({}));
 
     if (data.success) {
       sessionStorage.setItem(SESSION_KEY, 'true');
+      if (data.user && typeof data.user === 'object') {
+        sessionStorage.setItem(SESSION_USER_KEY, JSON.stringify(data.user));
+      }
       loginOverlay.classList.add('hidden');
-      passcodeInput.value = '';
+      if (passwordInput) passwordInput.value = '';
       loginError.textContent = '';
       initApp();
     } else {
-      loginError.textContent = 'Invalid passcode. Please try again.';
+      loginError.textContent = data.error || 'Invalid email or password.';
       loginError.classList.remove('shake');
       void loginError.offsetWidth; // Trigger reflow for animation
       loginError.classList.add('shake');
-      passcodeInput.value = '';
-      passcodeInput.focus();
+      if (passwordInput) passwordInput.value = '';
+      passwordInput?.focus();
     }
   } catch (err) {
     loginError.textContent = 'Connection error. Please try again.';
@@ -368,7 +394,11 @@ const bootstrapAuth = async () => {
   try {
     const res = await fetch('/auth/session', { credentials: 'include' });
     if (res.ok) {
+      const data = await res.json().catch(() => ({}));
       sessionStorage.setItem(SESSION_KEY, 'true');
+      if (data.user && typeof data.user === 'object') {
+        sessionStorage.setItem(SESSION_USER_KEY, JSON.stringify(data.user));
+      }
       loginOverlay.classList.add('hidden');
       initApp();
       return;
@@ -377,7 +407,7 @@ const bootstrapAuth = async () => {
     // ignore
   }
   clearAuthState();
-  passcodeInput.focus();
+  emailInput?.focus();
 };
 
 loginForm.addEventListener('submit', handleLogin);
@@ -607,7 +637,7 @@ const showExportToast = (message) => {
 const getStateBeaconInputs = () => {
   if (stateBeaconInputs) return stateBeaconInputs;
   try {
-    const stored = localStorage.getItem(STATE_BEACON_INPUTS_KEY);
+    const stored = localStorage.getItem(scopedStorageKey(STATE_BEACON_INPUTS_BASE_KEY));
     stateBeaconInputs = stored ? JSON.parse(stored) : null;
   } catch {
     stateBeaconInputs = null;
@@ -618,7 +648,7 @@ const getStateBeaconInputs = () => {
 const saveStateBeaconInputs = (inputs) => {
   stateBeaconInputs = inputs;
   try {
-    localStorage.setItem(STATE_BEACON_INPUTS_KEY, JSON.stringify(inputs));
+    localStorage.setItem(scopedStorageKey(STATE_BEACON_INPUTS_BASE_KEY), JSON.stringify(inputs));
   } catch {
     // ignore
   }
@@ -626,7 +656,7 @@ const saveStateBeaconInputs = (inputs) => {
 
 const getStateBeaconNotes = () => {
   try {
-    const stored = localStorage.getItem(STATE_BEACON_NOTES_KEY);
+    const stored = localStorage.getItem(scopedStorageKey(STATE_BEACON_NOTES_BASE_KEY));
     return stored ? JSON.parse(stored) : {};
   } catch {
     return {};
@@ -635,7 +665,7 @@ const getStateBeaconNotes = () => {
 
 const saveStateBeaconNotes = (notes) => {
   try {
-    localStorage.setItem(STATE_BEACON_NOTES_KEY, JSON.stringify(notes));
+    localStorage.setItem(scopedStorageKey(STATE_BEACON_NOTES_BASE_KEY), JSON.stringify(notes));
   } catch {
     // ignore
   }
@@ -1496,19 +1526,7 @@ const fetchLiveData = async () => {
   setLoading('Fetching live data from state WARN sources... This may take a minute.');
 
   try {
-    const res = await fetch('/fetch', {
-      method: 'POST',
-      headers: getAuthHeaders()
-    });
-
-    if (res.status === 401) {
-      sessionStorage.removeItem(SESSION_KEY);
-      sessionStorage.removeItem(PASSCODE_KEY);
-      loginOverlay.classList.remove('hidden');
-      throw new Error('Session expired. Please log in again.');
-    }
-
-    const data = await res.json();
+    const data = await fetchJson('/fetch', { method: 'POST' });
 
     if (data.success) {
       fetchBtn.textContent = `Fetched ${data.count} notices`;
@@ -1801,7 +1819,7 @@ const showMapToast = (message, duration = 3000) => {
 
 const getMapTargetState = () => {
   try {
-    return localStorage.getItem(MAP_TARGET_STATE_KEY) || null;
+    return localStorage.getItem(scopedStorageKey(MAP_TARGET_STATE_BASE_KEY)) || null;
   } catch {
     return null;
   }
@@ -1822,7 +1840,7 @@ const updateMapTargetStateHighlight = () => {
 
 const setMapTargetState = (stateAbbrev) => {
   try {
-    localStorage.setItem(MAP_TARGET_STATE_KEY, stateAbbrev);
+    localStorage.setItem(scopedStorageKey(MAP_TARGET_STATE_BASE_KEY), stateAbbrev);
   } catch {
     // ignore
   }
@@ -1832,7 +1850,7 @@ const setMapTargetState = (stateAbbrev) => {
 
 const clearMapTargetState = () => {
   try {
-    localStorage.removeItem(MAP_TARGET_STATE_KEY);
+    localStorage.removeItem(scopedStorageKey(MAP_TARGET_STATE_BASE_KEY));
   } catch {
     // ignore
   }
@@ -2199,7 +2217,7 @@ const populateCustomStateDropdown = () => {
 // Load custom notices from localStorage
 const loadCustomNotices = () => {
   try {
-    const stored = localStorage.getItem('lni_custom_notices');
+    const stored = localStorage.getItem(scopedStorageKey(CUSTOM_NOTICES_BASE_KEY));
     if (stored) {
       customNotices = JSON.parse(stored);
     }
@@ -2212,7 +2230,7 @@ const loadCustomNotices = () => {
 // Save custom notices to localStorage
 const saveCustomNotices = () => {
   try {
-    localStorage.setItem('lni_custom_notices', JSON.stringify(customNotices));
+    localStorage.setItem(scopedStorageKey(CUSTOM_NOTICES_BASE_KEY), JSON.stringify(customNotices));
   } catch (e) {
     console.error('Failed to save custom notices:', e);
   }
@@ -2270,12 +2288,10 @@ if (customNoticeForm) {
 
 // ==================== PROJECTS FUNCTIONALITY ====================
 
-const PROJECTS_KEY = 'lni_projects';
-
 // Load projects from localStorage
 const loadProjects = () => {
   try {
-    const stored = localStorage.getItem(PROJECTS_KEY);
+    const stored = localStorage.getItem(scopedStorageKey(PROJECTS_BASE_KEY));
     if (stored) {
       projects = JSON.parse(stored);
     }
@@ -2288,7 +2304,7 @@ const loadProjects = () => {
 // Save projects to localStorage
 const saveProjects = () => {
   try {
-    localStorage.setItem(PROJECTS_KEY, JSON.stringify(projects));
+    localStorage.setItem(scopedStorageKey(PROJECTS_BASE_KEY), JSON.stringify(projects));
   } catch (e) {
     console.error('Failed to save projects:', e);
   }
@@ -5474,7 +5490,7 @@ const initMapScopeToggle = () => {
 
 const getMapHomeState = () => {
   try {
-    return localStorage.getItem(MAP_HOME_STATE_KEY) || '';
+    return localStorage.getItem(scopedStorageKey(MAP_HOME_STATE_BASE_KEY)) || '';
   } catch {
     return '';
   }
@@ -5949,22 +5965,22 @@ const pct = (num, den) => den > 0 ? `${Math.round((num / den) * 100)}%` : '0%';
 
 const loadTalentCommandState = () => {
   try {
-    const m = JSON.parse(localStorage.getItem(TA_METRICS_KEY) || 'null');
+    const m = JSON.parse(localStorage.getItem(scopedStorageKey(TA_METRICS_BASE_KEY)) || 'null');
     if (m && typeof m === 'object') taMetrics = { ...taMetrics, ...m };
   } catch {}
   try {
-    const a = JSON.parse(localStorage.getItem(TA_ACTIONS_KEY) || '[]');
+    const a = JSON.parse(localStorage.getItem(scopedStorageKey(TA_ACTIONS_BASE_KEY)) || '[]');
     if (Array.isArray(a)) taActions = a;
   } catch {}
   try {
-    const r = JSON.parse(localStorage.getItem(TA_ROLLOUT_KEY) || '{}');
+    const r = JSON.parse(localStorage.getItem(scopedStorageKey(TA_ROLLOUT_BASE_KEY)) || '{}');
     if (r && typeof r === 'object') taRolloutState = r;
   } catch {}
 };
 
-const saveTalentMetrics = () => localStorage.setItem(TA_METRICS_KEY, JSON.stringify(taMetrics));
-const saveTalentActions = () => localStorage.setItem(TA_ACTIONS_KEY, JSON.stringify(taActions));
-const saveTalentRollout = () => localStorage.setItem(TA_ROLLOUT_KEY, JSON.stringify(taRolloutState));
+const saveTalentMetrics = () => localStorage.setItem(scopedStorageKey(TA_METRICS_BASE_KEY), JSON.stringify(taMetrics));
+const saveTalentActions = () => localStorage.setItem(scopedStorageKey(TA_ACTIONS_BASE_KEY), JSON.stringify(taActions));
+const saveTalentRollout = () => localStorage.setItem(scopedStorageKey(TA_ROLLOUT_BASE_KEY), JSON.stringify(taRolloutState));
 
 const getTalentSignals = () => {
   const healthcare = (currentNotices || []).filter((notice) => isHealthcareNotice(notice));

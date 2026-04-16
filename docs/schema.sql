@@ -50,3 +50,18 @@ CREATE INDEX IF NOT EXISTS idx_nursing_programs_state ON nursing_programs(state)
 CREATE INDEX IF NOT EXISTS idx_nursing_programs_level ON nursing_programs(program_level);
 CREATE INDEX IF NOT EXISTS idx_nursing_programs_accreditor ON nursing_programs(accreditor);
 CREATE INDEX IF NOT EXISTS idx_nursing_programs_unitid ON nursing_programs(nces_unitid);
+
+-- Dashboard users (email/password auth + roles)
+CREATE TABLE IF NOT EXISTS dashboard_users (
+  id TEXT PRIMARY KEY,
+  email TEXT NOT NULL UNIQUE,
+  password_salt TEXT NOT NULL,
+  password_hash TEXT NOT NULL,
+  role TEXT NOT NULL DEFAULT 'viewer',
+  is_active BOOLEAN NOT NULL DEFAULT true,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  last_login_at TIMESTAMPTZ
+);
+
+CREATE INDEX IF NOT EXISTS idx_dashboard_users_email ON dashboard_users(email);
