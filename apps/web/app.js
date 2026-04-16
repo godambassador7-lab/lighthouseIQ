@@ -341,8 +341,15 @@ const refreshSession = async () => {
 
 const handleLogin = async (e) => {
   e.preventDefault();
-  const email = String(emailInput?.value || '').trim().toLowerCase();
-  const password = String(passwordInput?.value || '');
+  const emailField = emailInput
+    || loginForm?.querySelector('#email-input')
+    || loginForm?.querySelector('input[type="email"]');
+  const passwordField = passwordInput
+    || loginForm?.querySelector('#password-input')
+    || loginForm?.querySelector('input[type="password"]');
+  const legacyPasscodeField = loginForm?.querySelector('#passcode-input');
+  const email = String(emailField?.value || '').trim().toLowerCase();
+  const password = String(passwordField?.value || legacyPasscodeField?.value || '');
   const loginBtn = loginForm.querySelector('button[type="submit"]');
 
   if (!email || !password) {
