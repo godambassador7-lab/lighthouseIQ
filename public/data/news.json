@@ -1,82 +1,75 @@
 {
-  "lastUpdated": "2026-04-16T22:46:54.642Z",
+  "lastUpdated": "2026-04-16T23:46:39.000Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
-    "totalSources": 10,
-    "staleSources": 1,
+    "totalSources": 9,
+    "staleSources": 0,
     "healthySources": 9,
     "sources": [
       {
         "source": "Fierce Healthcare",
         "articleCount": 184,
         "latestPublishedAt": "2026-04-16T00:00:00.000Z",
-        "staleHours": 22,
+        "staleHours": 23,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
         "articleCount": 167,
         "latestPublishedAt": "2026-04-16T00:00:00.000Z",
-        "staleHours": 22,
+        "staleHours": 23,
         "status": "ok"
       },
       {
         "source": "STAT News",
         "articleCount": 52,
         "latestPublishedAt": "2026-04-16T00:00:00.000Z",
-        "staleHours": 22,
+        "staleHours": 23,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 32,
         "latestPublishedAt": "2026-04-16T00:00:00.000Z",
-        "staleHours": 22,
+        "staleHours": 23,
         "status": "ok"
       },
       {
         "source": "Health Affairs",
         "articleCount": 27,
         "latestPublishedAt": "2026-04-16T00:00:00.000Z",
-        "staleHours": 22,
+        "staleHours": 23,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 17,
         "latestPublishedAt": "2026-04-16T00:00:00.000Z",
-        "staleHours": 22,
+        "staleHours": 23,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 8,
         "latestPublishedAt": "2026-04-16T00:00:00.000Z",
-        "staleHours": 22,
+        "staleHours": 23,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
-        "articleCount": 7,
+        "articleCount": 8,
         "latestPublishedAt": "2026-04-16T00:00:00.000Z",
-        "staleHours": 22,
+        "staleHours": 23,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 5,
         "latestPublishedAt": "2026-04-15T00:00:00.000Z",
-        "staleHours": 46,
+        "staleHours": 47,
         "status": "ok"
-      },
-      {
-        "source": "SEC Healthcare Filings",
-        "articleCount": 1,
-        "latestPublishedAt": "2026-04-10T00:00:00.000Z",
-        "staleHours": 166,
-        "status": "stale"
       }
     ]
   },
@@ -99,7 +92,7 @@
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 10
+      "count": 11
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
@@ -111,7 +104,7 @@
     },
     "general_market": {
       "label": "General Market",
-      "count": 205
+      "count": 204
     }
   },
   "quality": {
@@ -120,12 +113,12 @@
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
-        "actual": 10,
+        "actual": 9,
         "pass": true
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 120,
+        "actual": 121,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -135,7 +128,7 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 1,
+        "actual": 0,
         "pass": true
       }
     }
@@ -379,6 +372,18 @@
       "publishedAt": "2026-04-16",
       "category": "quality_safety",
       "relevance": 100,
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "Early Alert: Convenience Kit Issue from American Contract Systems",
+      "summary": "The adaptor on Namic RA syringes may unwind during use. The resulting loose connection or disconnection may lead to infection, blood loss, or air embolism.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-convenience-kit-issue-american-contract-systems",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-04-16",
+      "category": "quality_safety",
+      "relevance": 98,
       "categoryLabel": "Quality & Safety"
     },
     {
@@ -4787,18 +4792,6 @@
       "category": "quality_safety",
       "relevance": 100,
       "categoryLabel": "Quality & Safety"
-    },
-    {
-      "title": "HUM 8-K filing - Humana Inc.",
-      "summary": "Humana Inc. filed 8-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/49071/000004907126000013/hum-20260410.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-04-10",
-      "category": "general_market",
-      "relevance": 85,
-      "categoryLabel": "General Market"
     }
   ]
 }
