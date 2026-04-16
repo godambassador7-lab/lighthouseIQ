@@ -339,27 +339,41 @@ const refreshSession = async () => {
   return refreshPromise;
 };
 
+const readFieldValue = (field) => {
+  if (!field || typeof field !== 'object' || !('value' in field)) return '';
+  const raw = field.value;
+  return raw === undefined || raw === null ? '' : String(raw);
+};
+
+const setLoginError = (message) => {
+  if (!loginError) return;
+  loginError.textContent = message || '';
+};
+
 const handleLogin = async (e) => {
   e.preventDefault();
+  const form = e?.currentTarget || loginForm || document.getElementById('login-form');
   const emailField = emailInput
-    || loginForm?.querySelector('#email-input')
-    || loginForm?.querySelector('input[type="email"]');
+    || form?.querySelector('#email-input')
+    || form?.querySelector('input[type="email"]');
   const passwordField = passwordInput
-    || loginForm?.querySelector('#password-input')
-    || loginForm?.querySelector('input[type="password"]');
-  const legacyPasscodeField = loginForm?.querySelector('#passcode-input');
-  const email = String(emailField?.value || '').trim().toLowerCase();
-  const password = String(passwordField?.value || legacyPasscodeField?.value || '');
-  const loginBtn = loginForm.querySelector('button[type="submit"]');
+    || form?.querySelector('#password-input')
+    || form?.querySelector('input[type="password"]');
+  const legacyPasscodeField = form?.querySelector('#passcode-input');
+  const email = readFieldValue(emailField).trim().toLowerCase();
+  const password = readFieldValue(passwordField) || readFieldValue(legacyPasscodeField);
+  const loginBtn = form?.querySelector('button[type="submit"]');
 
   if (!email || !password) {
-    loginError.textContent = 'Please enter your email and password.';
+    setLoginError('Please enter your email and password.');
     return;
   }
 
   // Disable button during request
-  loginBtn.disabled = true;
-  loginBtn.textContent = 'Verifying...';
+  if (loginBtn) {
+    loginBtn.disabled = true;
+    loginBtn.textContent = 'Verifying...';
+  }
 
   try {
     const response = await fetch('/auth/login', {
@@ -378,21 +392,25 @@ const handleLogin = async (e) => {
       }
       loginOverlay.classList.add('hidden');
       if (passwordInput) passwordInput.value = '';
-      loginError.textContent = '';
+      setLoginError('');
       initApp();
     } else {
-      loginError.textContent = data.error || 'Invalid email or password.';
-      loginError.classList.remove('shake');
-      void loginError.offsetWidth; // Trigger reflow for animation
-      loginError.classList.add('shake');
+      setLoginError(data.error || 'Invalid email or password.');
+      if (loginError) {
+        loginError.classList.remove('shake');
+        void loginError.offsetWidth; // Trigger reflow for animation
+        loginError.classList.add('shake');
+      }
       if (passwordInput) passwordInput.value = '';
       passwordInput?.focus();
     }
   } catch (err) {
-    loginError.textContent = 'Connection error. Please try again.';
+    setLoginError('Connection error. Please try again.');
   } finally {
-    loginBtn.disabled = false;
-    loginBtn.textContent = 'Access Dashboard';
+    if (loginBtn) {
+      loginBtn.disabled = false;
+      loginBtn.textContent = 'Access Dashboard';
+    }
   }
 };
 
