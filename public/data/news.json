@@ -1,74 +1,74 @@
 {
-  "lastUpdated": "2026-04-19T23:43:25.864Z",
+  "lastUpdated": "2026-04-20T02:57:51.646Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 9,
-    "staleSources": 1,
-    "healthySources": 8,
+    "staleSources": 4,
+    "healthySources": 5,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 174,
-        "latestPublishedAt": "2026-04-19T00:00:00.000Z",
-        "staleHours": 23,
+        "articleCount": 182,
+        "latestPublishedAt": "2026-04-20T00:00:00.000Z",
+        "staleHours": 2,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 170,
+        "articleCount": 157,
         "latestPublishedAt": "2026-04-17T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 74,
+        "status": "stale"
       },
       {
         "source": "STAT News",
         "articleCount": 50,
         "latestPublishedAt": "2026-04-19T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 26,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 33,
         "latestPublishedAt": "2026-04-20T00:00:00.000Z",
-        "staleHours": -1,
+        "staleHours": 2,
         "status": "ok"
       },
       {
         "source": "Health Affairs",
-        "articleCount": 24,
-        "latestPublishedAt": "2026-04-19T00:00:00.000Z",
-        "staleHours": 23,
+        "articleCount": 29,
+        "latestPublishedAt": "2026-04-20T00:00:00.000Z",
+        "staleHours": 2,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 20,
         "latestPublishedAt": "2026-04-17T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 74,
+        "status": "stale"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 14,
         "latestPublishedAt": "2026-04-17T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 74,
+        "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 8,
         "latestPublishedAt": "2026-04-20T00:00:00.000Z",
-        "staleHours": -1,
+        "staleHours": 2,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 7,
         "latestPublishedAt": "2026-04-16T00:00:00.000Z",
-        "staleHours": 95,
+        "staleHours": 98,
         "status": "stale"
       }
     ]
@@ -76,23 +76,23 @@
   "categoryCoverage": {
     "closures_layoffs": {
       "label": "Closures & Layoffs",
-      "count": 12
+      "count": 11
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 15
+      "count": 12
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 9
+      "count": 10
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 47
+      "count": 44
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 10
+      "count": 8
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
@@ -100,16 +100,18 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 158
+      "count": 163
     },
     "general_market": {
       "label": "General Market",
-      "count": 243
+      "count": 246
     }
   },
   "quality": {
-    "status": "pass",
-    "failedChecks": [],
+    "status": "warning",
+    "failedChecks": [
+      "maxStaleSources"
+    ],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -118,7 +120,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 48,
+        "actual": 46,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -128,8 +130,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 1,
-        "pass": true
+        "actual": 4,
+        "pass": false
       }
     }
   },
@@ -325,6 +327,276 @@
       "category": "general_market",
       "relevance": 96,
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "DOJ seeks immediate asset freeze, receivership against telehealth company Zealthy",
+      "url": "https://www.fiercehealthcare.com/health-tech/doj-seeks-immediate-asset-freeze-receivership-against-telehealth-company-zealthy",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-20",
+      "summary": "The Department of Justice filed a motion seeking an immediate asset freeze and receivership for telehealth company Zealthy and its CEO Kyle Robertson over alleged fraudulent prescribing and other deceptive practices, according to court documents.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Affordability, transparency: A look at large employers' top healthcare concerns",
+      "url": "https://www.fiercehealthcare.com/payers/affordability-transparency-look-large-employers-top-healthcare-concerns",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-20",
+      "summary": "The Purchaser Business Group on Health has released new data that highlights some of the key healthcare priorities of its jumbo employer members, with—perhaps unsurprisingly—the escalating affordability crisis as the biggest challenge.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Gen AI chatbots continually struggle with differential diagnoses, Mass General Brigham study finds",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/gen-ai-chatbots-continually-struggle-differential-diagnoses-mass-general",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-20",
+      "summary": "Mass General Brigham researchers evaluated 21 different generative AI LLMs against 29 standardized clinical vignettes from January to December 2025.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Over 80% of PCPs concerned about financial stability over next several years",
+      "url": "https://www.fiercehealthcare.com/providers/over-80-pcps-concerned-about-financial-stability-over-next-several-years-elation-health",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-20",
+      "summary": "Despite financial concerns, 93% of physicians report remaining committed to primary care, the survey found.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "SocialRx teams up with FQHC in NYC to prescribe arts and culture for chronically ill patients",
+      "url": "https://www.fiercehealthcare.com/providers/socialrx-teams-nyc-federally-qualified-health-center-social-prescribing",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-20",
+      "summary": "Providers will be able to connect patients to non-clinical, community-based experiences that support mental health and reduce social isolation.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Industry Voices—DOJ jumps into 340B cases over state law, raising questions about federal plans for the program",
+      "url": "https://www.fiercehealthcare.com/regulatory/industry-voices-doj-jumps-340b-cases-over-state-law-raising-questions-about-federal",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-20",
+      "summary": "How courts resolve the tension between state regulation and federal preemption will shape 340B contracting and data‑sharing expectations for years to come, write attorneys at Troutman Pepper Locke.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Former Deputy Surgeon General Erica Schwartz, M.D., nominated as CDC director",
+      "url": "https://www.fiercehealthcare.com/providers/former-deputy-surgeon-general-erica-schwartz-md-nominated-cdc-director",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-20",
+      "summary": "Compared to prior nominees and acting directors, the Navy officer and retired rear admiral is a highly qualified and uncontroversial choice. She would be stepping into an agency that has been upended and largely leaderless.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "APA launches resource library for trusted digital mental health tools",
+      "url": "https://www.fiercehealthcare.com/digital-health/apa-launches-digital-badge-solutions-library-trusted-digital-health-tools",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-20",
+      "summary": "The APA Labs Digital Badge Solutions Library lets users browse resources related to behavioral health and wellness, clinical tools, family, pediatrics and monitoring and sleep, relaxation and mindfulness.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Providers' advantage on out-of-network billing disputes likely to continue: Capstone",
+      "url": "https://www.fiercehealthcare.com/finance/providers-advantage-out-network-billing-disputes-likely-continue-capstone",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-20",
+      "summary": "A new report from the strategy firm suggests a quarter-by-quarter increase in Independent Dispute Resolution filings will persist due to structural incentives for providers to engage in the process. Any potential shakeup in the dynamic is likely to come from payers like Anthem rather than policymakers.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "RFK Jr. kicks off string of congressional hearings to talk White House budget plan",
+      "url": "https://www.fiercehealthcare.com/regulatory/rfk-jr-kicks-string-congressional-hearings-talk-white-house-budget-plan",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-20",
+      "summary": "Department of Health and Human Services Secretary Robert F. Kennedy Jr.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Fierce Healthcare Layoff Tracker—UnityPoint outsourcing hits at least 207; Baylor Scott & White sheds 321 insurance staff",
+      "url": "https://www.fiercehealthcare.com/finance/fierce-healthcare-layoff-tracker-2026-job-cuts-eliminations-health-systems-hospitals",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-20",
+      "summary": "Stick with this tracker for the latest layoff and workforce updates from across healthcare.",
+      "category": "closures_layoffs",
+      "categoryLabel": "Closures & Layoffs"
+    },
+    {
+      "title": "DiMe-led initiative brings together pharma, virtual providers, digital pharmacies to develop blueprint for DTC pharma models",
+      "url": "https://www.fiercehealthcare.com/health-tech/dime-led-initiative-brings-together-pharma-virtual-providers-digital-pharmacies-develop",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-20",
+      "summary": "The Digital Medicine Society is leading an effort, in partnership with pharma companies, virtual-first providers and digital pharmacies, to establish a scalable blueprint for direct-to-patient pharma models as the market continues to evolve.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Seqster launches new data tool to turn clinical sites into 'research-ready data collection points'",
+      "url": "https://www.fiercehealthcare.com/health-tech/seqster-launches-new-clinical-site-data-tool-names-bioivt-deployment-partner",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-20",
+      "summary": "The new tool allows clinical sites to share patient-consented electronic health record (EHR) data with clinical trial sponsors, seeking to eliminate barriers to involvement in research.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Carrot launches proprietary AI platform for personalized fertility, family care",
+      "url": "https://www.fiercehealthcare.com/digital-health/carrot-launches-proprietary-ai-platform-personalized-fertility-family-care",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-20",
+      "summary": "The platform, dubbed Carrot Intelligence, has powered several recent AI-powered initiatives from the company, including its metabolic health program Sprints and Global Price Monitoring System.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Progyny unveils new fertility benefit option for small, mid-size employers",
+      "url": "https://www.fiercehealthcare.com/payers/progyny-unveils-new-fertility-benefit-option-small-mid-size-employers",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-20",
+      "summary": "Women's health and fertility company Progyny has unveiled a new fully-insured benefit option that it says will make it easier for small- and mid-size employers to offer fertility coverage to their workers.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "UC Health workers plan open-ended, system-wide strike for May 14",
+      "url": "https://www.fiercehealthcare.com/providers/uc-health-workers-plan-open-ended-system-wide-strike-may-14",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-20",
+      "summary": "A union representing 25,000 UC Health service and patient care workers said the massive academic health system hasn't negotiated in good faith since contracts expired in 2024.",
+      "category": "labor_unions",
+      "categoryLabel": "Labor & Unions"
+    },
+    {
+      "title": "Baylor Scott & White Health Plan to depart individual market, Medicaid this year",
+      "url": "https://www.fiercehealthcare.com/payers/baylor-scott-white-health-plan-depart-individual-market-medicaid-year",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-20",
+      "summary": "The health plan of Texas-based Baylor Scott &amp; White will exit the individual marketplaces as well as Medicaid, the health system announced this week.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "GoodRx launches 7.2-mg Wegovy dose for self-pay patients at $399 per month",
+      "url": "https://www.fiercehealthcare.com/telehealth/goodrx-launches-72-mg-wegovy-dose-self-pay-patients-399-month",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-20",
+      "summary": "Alongside the $399 monthly dose, patients can choose to get a two-month supply for $798 or a three-month supply for $1,197.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Providers back bipartisan bill eliminating Medicare chronic care management cost sharing",
+      "url": "https://www.fiercehealthcare.com/providers/providers-back-new-bipartisan-bill-eliminating-medicare-chronic-care-management-cost",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-20",
+      "summary": "A small monthly fee is keeping millions of eligible Medicare beneficiaries from a slew of beneficial and cost-saving care coordination services, backers of the newly introduced Chronic Care Management Improvement Act say.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Chutes & Ladders—ChristianaCare CEO to retire, successor announced; Maui Health CEO steps down",
+      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-20",
+      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Behavioral health utilization is up with anxiety disorders leading demand, report finds",
+      "url": "https://www.fiercehealthcare.com/payers/trilliant-report-behavioral-health-utilization-telehealth-plateauing",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-20",
+      "summary": "The report by the health data analytics and market research firm focused on behavioral health. It found a 62.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Physician compensation up 3% in 2025, but not all specialties saw raises: Medscape",
+      "url": "https://www.fiercehealthcare.com/providers/physician-compensation-3-2025-not-all-specialties-saw-raises-medscape",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-20",
+      "summary": "Fifty-three percent of all physicians report feeling fairly compensated, as opposed to last year’s report in which only 48% reported fair compensation.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "One man’s journey from gambling addiction to recovery and advocacy",
+      "url": "https://www.fiercehealthcare.com/providers/one-mans-journey-gambling-addiction-recovery-and-advocacy",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-20",
+      "summary": "In this episode, we explore the realities of gambling addiction through one man’s story of recovery.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Keebler Health secures $16M in series A funding for AI-powered risk adjustment platform",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/keebler-health-secures-16m-series-funding",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-20",
+      "summary": "The startup plans to use the funding to expand its team, continue commercial growth and support infrastructure for value-based care organizations across the U.S.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Abridge expands clinical decision support solution with UpToDate partnership, new NEJM, JAMA content tie-ups",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/abridge-expands-clinical-decision-support-capabilities-uptodate-partnership",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-20",
+      "summary": "Abridge is supercharging its clinical decision support capabilities through a partnership with Wolters Kluwer's UpToDate and new content integrations with The New England Journal of Medicine and JAMA.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Drug Prices, Behavioral Health, Hospitals, And More",
+      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2026.00408?af=R",
+      "source": "Health Affairs",
+      "publishedAt": "2026-04-20",
+      "summary": "Health Affairs, Volume 45, Issue 4, Page 349-349, April 2026.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "‘Most Favored Nation’ Drug Pricing Is An Idea Whose Time Has Come",
+      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2025.01127?af=R",
+      "source": "Health Affairs",
+      "publishedAt": "2026-04-20",
+      "summary": "Health Affairs, Volume 45, Issue 4, Page 350-355, April 2026.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "‘Most Favored Nation’ Drug Pricing: An Idea To What End?",
+      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2026.00184?af=R",
+      "source": "Health Affairs",
+      "publishedAt": "2026-04-20",
+      "summary": "Health Affairs, Volume 45, Issue 4, Page 356-360, April 2026.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "‘Most Favored Nation’ Policies And Value-Based Drug Pricing: A European View",
+      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2026.00115?af=R",
+      "source": "Health Affairs",
+      "publishedAt": "2026-04-20",
+      "summary": "Health Affairs, Volume 45, Issue 4, Page 361-364, April 2026.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "US National Spending On Mental Health And Substance Use Disorder Treatment Driven By Case Growth, 2000–21",
+      "url": "https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2025.01351?af=R",
+      "source": "Health Affairs",
+      "publishedAt": "2026-04-20",
+      "summary": "Health Affairs, Volume 45, Issue 4, Page 365-371, April 2026.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "STAT+: AACR 2026: More strong data for Revolution Medicines’ KRAS drug",
@@ -4567,276 +4839,6 @@
       "summary": "Three years ago, Los Angeles-based Keck Medicine of USC became the first hospital to fully discontinue using nitrous oxide in its operating room, and it has never looked back. Nitrous oxide, more commonly known as laughing gas, is a greenhouse gas roughly 300 times more potent than carbon dioxide.",
       "category": "general_market",
       "categoryLabel": "General Market"
-    },
-    {
-      "title": "Lawsuit claims Dartmouth executive was fired for raising supply chain safety concerns",
-      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/lawsuit-claims-dartmouth-executive-was-fired-for-raising-supply-chain-safety-concerns/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-14",
-      "summary": "The former chief quality and value officer of Lebanon, N.H.",
-      "category": "quality_safety",
-      "categoryLabel": "Quality & Safety"
-    },
-    {
-      "title": "CFOs as strategists: How finance leaders are rewriting their role",
-      "url": "https://www.beckershospitalreview.com/finance/cfos-as-strategists-how-finance-leaders-are-rewriting-their-role/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-14",
-      "summary": "Today&#8217;s modern hospital and health system CFO has evolved from the behind-the-desk, numbers-cruncher role of even 10 to 20 years ago. Finance leaders must now don strategic hats to help balance competing pressures like thinning margins, rising labor costs and reimbursement headwinds to protect their organizations competitively while staying true to their mission.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "White House considers physician for FDA vaccine director",
-      "url": "https://www.beckershospitalreview.com/quality/public-health/white-house-considers-physician-for-fda-vaccine-director/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-14",
-      "summary": "The Trump administration is considering appointing Houman Hemmati, MD, PhD, to lead the FDA’s Center for Biologics Evaluation and Research, The Washington Post reported April 14. Dr.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "‘The next opioid epidemic’: Gambling legalization outpaces public health response",
-      "url": "https://www.fiercehealthcare.com/providers/next-opioid-epidemic-gambling-addiction-grows-legalization-outpaces-public-health",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-14",
-      "summary": "Seven in 10 U.S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "AI speeds up prior auth, coding while driving higher costs for health systems: PHTI report",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/ai-speeding-prior-authorizations-while-driving-higher-costs-health-systems",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-14",
-      "summary": "AI can allow organizations to execute expedited prior authorizations at reduced costs, but there is no existing evidence that it “translates to lower average cost per claim factoring in the cost of the AI solution,\" according to a Peterson Health Technology Institute analysis.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Chutes & Ladders—Maui Health CEO steps down, Tenet Healthcare CIO to retire",
-      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-14",
-      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "CMS showcases first wave of digital health tools as questions about 'last mile' of adoption remain",
-      "url": "https://www.fiercehealthcare.com/health-tech/cms-showcases-first-wave-digital-health-tools-questions-about-last-mile-adoption-remain",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-14",
-      "summary": "On Thursday, Trump administration officials unveiled the first wave of health tech tools as part of a push to make medical records more accessible to Medicare patients.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Ascension Sacred Heart opens 4th freestanding ED in Florida",
-      "url": "https://www.beckershospitalreview.com/capital/ascension-sacred-heart-opens-4th-freestanding-ed-in-florida/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-14",
-      "summary": "Pensacola, Fla.-based Ascension Sacred Heart opened a freestanding emergency department in Pace, Fla.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Ohio long-term acute care hospital to close, lay off 116",
-      "url": "https://www.beckershospitalreview.com/finance/ohio-long-term-acute-care-hospital-to-close-lay-off-116/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-14",
-      "summary": "Advanced Specialty Hospitals of Toledo (Ohio) has shared plans to close May 1, affecting all 116 employees, according to its website and a WARN notice filed with the state. Gary Zaciewski, RN, CEO of the facility, said in the WARN notice that the closure was part of a &#8220;recent transaction.",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "The physician specialties seeing the highest pay growth",
-      "url": "https://www.beckershospitalreview.com/compensation-issues/the-physician-specialties-seeing-the-highest-pay-growth/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-14",
-      "summary": "Cardiology had the highest growth in pay with a 10% increase over last year, Medscape&#8217;s Physician Compensation report found. Medscape surveyed 5,916 physicians across more than 29 specialties between Sept.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Mount Sinai, Anthem reach 3-year agreement",
-      "url": "https://www.beckershospitalreview.com/finance/mount-sinai-anthem-reach-3-year-agreement/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-14",
-      "summary": "Anthem Blue Cross Blue Shield in New York and New York City-based Mount Sinai Health System&#160;have established&#160;a three-year agreement, both organizations confirmed to&#160;Becker’s. The agreement includes hospitals, physicians and other providers.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "5 top patient safety hospitals on initiatives that work",
-      "url": "https://www.beckershospitalreview.com/quality/patient-safety-outcomes/5-top-patient-safety-hospitals-on-initiatives-that-work/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-14",
-      "summary": "In March, Healthgrades recognized 438 hospitals in 40 states that excel in quality care while preventing serious safety events during hospital stays. These hospitals represent the top 10% in the nation for patient safety.",
-      "category": "quality_safety",
-      "categoryLabel": "Quality & Safety"
-    },
-    {
-      "title": "Days cash on hand at 50 health systems",
-      "url": "https://www.beckershospitalreview.com/finance/days-cash-on-hand-at-50-health-systems/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-14",
-      "summary": "As health systems continue to grapple with financial pressures from rising labor and supply costs and reimbursement challenges, days cash on hand remains an important measure of financial stability.&#160; Here are the days cash on hand at 50 health systems as of Dec.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "The best states for senior living: US News",
-      "url": "https://www.beckershospitalreview.com/post-acute/the-best-states-for-senior-living-us-news/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-14",
-      "summary": "Florida has the highest number of &#8220;best&#8221; senior living communities, while three states — Alaska, Montana and North Dakota — have no top-ranked communities, according to an April 14 U.S News &#38; World Report ranking.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "CEOs sharpen discipline on capital investments",
-      "url": "https://www.beckershospitalreview.com/capital/ceos-sharpen-discipline-on-capital-investments/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-14",
-      "summary": "As health systems face persistent margin pressure, CEOs are taking a more deliberate approach to capital deployment — not pulling back altogether, but scrutinizing more than ever how and when investments are made. According to Kaufman Hall&#8217;s &#8220;National Hospital Flash Report,&#8221; released Feb.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "hellocare.ai partners with UCHealth to Standardize Virtual Care Delivery",
-      "url": "https://www.beckershospitalreview.com/strategy/hellocare-ai-partners-with-uchealth-to-standardize-virtual-care-delivery/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-14",
-      "summary": "Clearwater, FL – April 14, 2026 &#8211; hellocare.ai, a leading provider of AI assisted virtual care solutions, today announced the expansion of its enterprise partnership with UCHealth, a nationally recognized, non-profit health system serving patients across Colorado, Wyoming, and western Nebraska, to standardize and scale virtual care delivery across its hospitals and care settings.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "California judge dismisses Elevance’s No Surprises Act lawsuit against HaloMD",
-      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/california-judge-dismisses-elevances-no-surprises-act-lawsuit-against-halomd/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-14",
-      "summary": "A California federal judge dismissed an Elevance Health subsidiary&#8217;s lawsuit that alleged that HaloMD and several providers conspired to exploit the No Surprises Act’s Independent Dispute Resolution process for financial gain. Anthem Blue Cross alleged that HaloMD and affiliated providers submitted more than 1,500 IDR proceedings between January 2024 and August 2025, of which roughly [&#8230;] The post California judge dismisses Elevance’s No Surprises Act lawsuit against HaloMD appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Future-proofing payment integrity: How to gain more value now while scaling for future growth",
-      "url": "https://www.fiercehealthcare.com/sponsored/future-proofing-payment-integrity-how-gain-more-value-now-while-scaling-future-growth",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-14",
-      "summary": "Payment integrity is potentially the biggest total cost management lever for health plans. Learn why it demands a fully connected ecosystem that engages as early in the payment continuum as possible.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "How CVS Caremark is using innovative technology to simplify the prior authorization process",
-      "url": "https://www.fiercehealthcare.com/sponsored/how-cvs-caremark-using-innovative-technology-simplify-prior-authorization-process",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-14",
-      "summary": "A faster, easier prior authorization experience ensures providers can focus on their patients and helps ensure people get their medications quickly",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Reducing Barriers to Care: Mary’s Center Advances Technology Through Grant Funding",
-      "url": "https://www.fiercehealthcare.com/sponsored/reducing-barriers-care-marys-center-advances-technology-through-grant-funding",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-14",
-      "summary": "MSDC Healthy Physician Foundation Bestows Grant to Mary’s Center to Advance Remote Patient Monitoring to Serve Patients Who Face Barriers to Care",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "CMS proposes 2.4% hospital pay increase, nationwide mandatory model rollout",
-      "url": "https://www.fiercehealthcare.com/providers/cms-proposes-24-hospital-pay-increase-nationwide-mandatory-model-rollout",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-14",
-      "summary": "The IPPS and LTCH Prospective Payment System proposed rule for FY2027 floats a roughly $1.4 billion annual rise in hospital payments, plus the first mandatory, nationwide test of an episode-based payment model—the Comprehensive Care for Joint Replacement Model.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Proposed CMS rule would set prior auth deadlines for drugs",
-      "url": "https://www.fiercehealthcare.com/regulatory/proposed-cms-rule-would-set-prior-auth-deadlines-drugs",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-14",
-      "summary": "The Trump administration has issued a proposed rule that aims to significantly overhaul prior authorization for pharmaceuticals.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "HHS, after legal setback, updates ACIP charter to put more emphasis on vaccine safety",
-      "url": "https://www.fiercehealthcare.com/pharma/hhs-after-legal-setback-updates-acip-charter-put-more-emphasis-vaccine-safety",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-14",
-      "summary": "HHS Secretary Robert F. Kennedy Jr.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Epic rolls out health alerts to flag rising rates of illness at the county level",
-      "url": "https://www.fiercehealthcare.com/health-tech/epic-rolls-out-health-alerts-flag-rising-rates-illness-county-level",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-14",
-      "summary": "Electronic health record giant Epic debuted a new feature that monitors county-level health trends and issues alerts when elevated rates of illness are detected.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Benefits leaders report increased operational, financial costs amid 'digital health vendor sprawl': Solera survey",
-      "url": "https://www.fiercehealthcare.com/digital-health/benefits-leaders-report-increased-operational-financial-costs-amid-digital-health",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-14",
-      "summary": "Forty-two percent of benefits leaders say they are managing eight or more digital health vendors, with 90% reporting spending more than $1 million annually on costs.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "How Evernorth's new Delaware specialty pharmacy facility highlights a broader care coordination approach",
-      "url": "https://www.fiercehealthcare.com/payers/how-evernorths-new-delware-specialty-pharmacy-facility-highlights-broader-care-coordination",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-14",
-      "summary": "In late October, Evernorth opened a new specialty pharmacy and distribution facility in Newark, Delaware, with the goal of making it easier for members to access key specialty therapies.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Hospital M&A roars back to life in Q1 2026; Operating performances fray in February",
-      "url": "https://www.fiercehealthcare.com/providers/hospital-ma-roars-back-life-q1-2026-operating-performances-fray-february",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-14",
-      "summary": "The first quarter of 2026 extended a recovery from last year's dealmaking slowdown with 22 newly announced transactions, largely fueled by divestitures. Meanwhile, February benchmarking data outlined persistent operating pressures and soft volumes.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Op-ed: Administrative fragility is costing healthcare more than we think",
-      "url": "https://www.fiercehealthcare.com/health-tech/op-ed-administrative-fragility-costing-healthcare-more-we-think",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-14",
-      "summary": "The industry has already proven automation works. The question now is whether organizations are prepared to operationalize it at scale, writes Zelis' Yusuf Qasim.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Function Health acquires mobile healthcare platform Getlabs to provide members with at-home lab tests",
-      "url": "https://www.fiercehealthcare.com/health-tech/function-health-acquires-mobile-healthcare-platform-getlabs-provide-members-home-lab",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-14",
-      "summary": "Function’s testing platform is available at all Quest Diagnostics locations across the U.S.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Fierce Healthcare Layoff Tracker—Mississippi hospital cuts nearly fifth of its workforce; UCI Health laying off 1% of workforce",
-      "url": "https://www.fiercehealthcare.com/finance/fierce-healthcare-layoff-tracker-2026-job-cuts-eliminations-health-systems-hospitals",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-14",
-      "summary": "Stick with this tracker for the latest layoff and workforce updates from across healthcare.",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
     }
   ]
 }
