@@ -1,81 +1,88 @@
 {
-  "lastUpdated": "2026-04-21T15:20:15.545Z",
+  "lastUpdated": "2026-04-21T17:09:24.370Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
-    "totalSources": 10,
+    "totalSources": 11,
     "staleSources": 1,
-    "healthySources": 9,
+    "healthySources": 10,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 170,
+        "articleCount": 172,
         "latestPublishedAt": "2026-04-21T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 17,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 152,
+        "articleCount": 155,
         "latestPublishedAt": "2026-04-21T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 17,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 67,
+        "articleCount": 59,
         "latestPublishedAt": "2026-04-21T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 17,
         "status": "ok"
       },
       {
         "source": "Health Affairs",
         "articleCount": 30,
         "latestPublishedAt": "2026-04-21T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 17,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 29,
         "latestPublishedAt": "2026-04-21T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 17,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 23,
         "latestPublishedAt": "2026-04-17T00:00:00.000Z",
-        "staleHours": 111,
+        "staleHours": 113,
         "status": "stale"
       },
       {
         "source": "Healthcare Dive",
-        "articleCount": 16,
-        "latestPublishedAt": "2026-04-20T00:00:00.000Z",
-        "staleHours": 39,
+        "articleCount": 18,
+        "latestPublishedAt": "2026-04-21T00:00:00.000Z",
+        "staleHours": 17,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 6,
         "latestPublishedAt": "2026-04-20T00:00:00.000Z",
-        "staleHours": 39,
+        "staleHours": 41,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 5,
         "latestPublishedAt": "2026-04-20T00:00:00.000Z",
-        "staleHours": 39,
+        "staleHours": 41,
         "status": "ok"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 2,
         "latestPublishedAt": "2026-04-21T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 17,
+        "status": "ok"
+      },
+      {
+        "source": "National Nurses United RSS",
+        "articleCount": 1,
+        "latestPublishedAt": "2026-04-21T00:00:00.000Z",
+        "staleHours": 17,
         "status": "ok"
       }
     ]
@@ -83,7 +90,7 @@
   "categoryCoverage": {
     "closures_layoffs": {
       "label": "Closures & Layoffs",
-      "count": 9
+      "count": 10
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
@@ -91,7 +98,7 @@
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 10
+      "count": 8
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
@@ -103,15 +110,15 @@
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
-      "count": 10
+      "count": 11
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 170
+      "count": 165
     },
     "general_market": {
       "label": "General Market",
-      "count": 239
+      "count": 244
     }
   },
   "quality": {
@@ -120,12 +127,12 @@
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
-        "actual": 10,
+        "actual": 11,
         "pass": true
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 69,
+        "actual": 89,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -190,6 +197,18 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "Hennepin County Medical Center placed on ‘RED ALERT’ as nurses warn of irreversible impact of federal health care cuts",
+      "summary": "National Nurses United, has placed Hennepin County Medical Center in Minneapolis, MN on “RED ALERT” status, warning policymakers and the public that this potential hospital closure would have a drastic, irreversible impact on patients and healthcare workers across Minnesota and the Midwest.",
+      "url": "https://www.nationalnursesunited.org/press/hennepin-county-medical-center-placed-on-red-alert",
+      "source": "National Nurses United RSS",
+      "sourceType": "rss",
+      "sourceId": "nnu_rss",
+      "publishedAt": "2026-04-21",
+      "category": "closures_layoffs",
+      "relevance": 100,
+      "categoryLabel": "Closures & Layoffs"
+    },
+    {
       "title": "Center for Scientific Review; Notice of Closed Meeting",
       "summary": "",
       "url": "https://www.federalregister.gov/documents/2026/04/21/2026-07747/center-for-scientific-review-notice-of-closed-meeting",
@@ -226,92 +245,119 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "Colorado hospital taps chief legal officer",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/colorado-hospital-taps-chief-legal-officer/",
+      "title": "HCA hospital assistant CNO promoted to chief nurse after 11 months",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/hca-hospital-assistant-cno-promoted-to-chief-nurse-after-11-months/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-04-21",
-      "summary": "Kelly Adams has been appointed chief legal officer of Boulder (Colo.) Community Health.",
+      "summary": "Anjelis Oliveira, PhD, RN, was named chief nursing officer of Sebring-based HCA Florida Highlands Hospital, South Florida Hospital News reported April 20. Dr.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
     {
-      "title": "Judge blocks HHS from reimplementing gender care policy in 21 states: 4 notes",
-      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/judge-blocks-hhs-from-reimplementing-gender-care-policy-in-21-states-4-notes/",
+      "title": "Building a stable physician workforce: Insights from healthcare executives",
+      "url": "https://www.beckershospitalreview.com/workforce/building-a-stable-physician-workforce-insights-from-healthcare-executives/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-04-21",
-      "summary": "A federal judge has issued a sweeping written order formally vacating HHS Secretary Robert F. Kennedy Jr.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "UnitedHealth Group reports $6.2B+ Q1 profit: 7 notes",
-      "url": "https://www.beckershospitalreview.com/finance/unitedhealth-group-reports-6-2b-q1-profit-7-notes/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-21",
-      "summary": "UnitedHealth Group posted $6.28 billion in profit for the first quarter of 2026, dipping slightly compared to the same period last year.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Nevada hospital names CEO",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/nevada-hospital-names-ceo-2/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-21",
-      "summary": "Matt Lutz has been appointed CEO of Mesa View Regional Hospital in Mesquite, Nev. In the new role, Mr.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Bon Secours to appeal HCA, VCU expansion approvals",
-      "url": "https://www.beckershospitalreview.com/capital/bon-secours-to-appeal-hca-vcu-expansion-approvals/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-21",
-      "summary": "Marriottsville, Md.-based Bon Secours filed notices of appeal April 10 for hospital projects for two competitors that were approved March 13 by Virginia&#8217;s state health commissioner.",
-      "category": "capacity_expansion",
-      "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "Wegovy prescriptions jump 50%: 5 notes",
-      "url": "https://www.beckershospitalreview.com/glp-1s/semaglutide-prescriptions-jump-50-5-notes/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-21",
-      "summary": "More Wegovy prescriptions are being written as GLP-1 weight loss drugs gain traction across retail, telehealth and direct-to-consumer channels, according to an April 20 report from Truveta Research. The growth follows the FDA&#8217;s December approval of oral Wegovy (semaglutide) and other GLP-1 pills.",
+      "summary": "For hospitals and health systems, physician shortages threaten access to care. During Becker&#8217;s 16th Annual Meeting in Chicago, a panel of healthcare executives shared strategies for creating flexible, resilient, sustainable staffing models.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "7 new medical schools announced in 2026",
-      "url": "https://www.beckershospitalreview.com/quality/hospital-physician-relationships/7-new-medical-schools-announced-in-2026/",
+      "title": "Novant Health taps chief growth officer",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/novant-health-taps-chief-growth-officer/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-04-21",
-      "summary": "Universities and health systems across the country are opening new medical schools to meet demand for physicians. Here is a list of the medical schools announced in 2026.",
-      "category": "capacity_expansion",
-      "categoryLabel": "Capacity & Expansion"
+      "summary": "Winston-Salem, N.C.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
     },
     {
-      "title": "Quorum sells 146-bed Texas hospital: 4 things to know",
-      "url": "https://www.beckershospitalreview.com/hospital-transactions-and-valuation/quorum-sells-146-bed-texas-hospital-4-things-to-know/",
+      "title": "HCA Florida taps 4 hospital leaders",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/hca-florida-taps-4-hospital-leaders/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-04-21",
-      "summary": "Quorum Health, a for-profit system headquartered in Brentwood, Tenn., on April 1 sold Scenic Mountain Medical Center to San Angelo, Texas-based Shannon Health System, a spokesperson for the system confirmed to Becker&#8217;s.",
+      "summary": "HCA Florida Healthcare, part of Nashville, Tenn.-based HCA Healthcare has appointed four leaders at two of its hospitals.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Top 15 specialty pharmacies of 2025: Report",
+      "url": "https://www.beckershospitalreview.com/pharmacy/top-15-specialty-pharmacies-of-2025-report/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-21",
+      "summary": "Pharmacy benefit manager-affiliated specialty pharmacies continue to dominate the market, with the top three companies accounting for two-thirds of prescription revenues in 2025, according to an April 21 Drug Channels report. Here are five things to know: 1.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Frictionless Access Is Healthcare’s Next Front Door",
+      "url": "https://www.beckershospitalreview.com/hospital-management-administration/frictionless-access-is-healthcares-next-front-door/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-21",
+      "summary": "How Mount Sinai Is Reimagining Patient Access and Transforming Digital Access —With Choice, Security, Privacy, and Care at the Center Healthcare has entered&#160;a new&#160;era where expectations are shaped by&#160;every digital experience patients and employees&#160;encounter—not just those in hospitals. Today, people&#160;anticipate&#160;the same convenience, speed, and security in healthcare that they&#160;enjoy in travel, banking, entertainment, and retail.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Closing the Access Gap",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/digital-health/closing-the-access-gap/",
+      "title": "South Carolina system opens outpatient pharmacy",
+      "url": "https://www.beckershospitalreview.com/pharmacy/south-carolina-system-opens-outpatient-pharmacy/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-04-21",
-      "summary": "6 strategies to redraw the patient care map For rural healthcare organizations, access has become the central organizing principle behind nearly every strategic decision. This new operational reality is being shaped by a convergence of pressures.",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
+      "summary": "Florence, S.C.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
     },
     {
-      "title": "Clinical Denials: ‘Not a Human-Addressable Problem Anymore at This Scale’",
-      "url": "https://www.beckershospitalreview.com/academic-medical-center/finance-academic-medical-center/clinical-denials-not-a-human-addressable-problem-anymore-at-this-scale/",
+      "title": "ECRI spins off supply tech company",
+      "url": "https://www.beckershospitalreview.com/supply-chain/ecri-spins-off-supply-tech-company/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-04-21",
-      "summary": "Many health systems are treating climbing denial rates as a documentation problem. They&#8217;re not.",
+      "summary": "ECRI has spun off its healthcare spend and recall management business into a new company, Staritas. The new entity will focus on data-driven supply chain intelligence, building on platforms used by healthcare organizations to manage purchasing and recalls, according to an April 21 news release.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Mount Sinai launches women’s health podcast series",
+      "url": "https://www.beckershospitalreview.com/digital-marketing/mount-sinai-launches-womens-health-podcast-series/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-21",
+      "summary": "New York City-based Mount Sinai Health System has launched a new podcast series focused on comprehensive women’s health. The series, &#8220;HERology,&#8221; is co-hosted by four Mount Sinai physicians and researchers, according to an April 21 news release.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Revisiting The Competency-Based Board of Directors",
+      "url": "https://www.beckershospitalreview.com/strategy/revisiting-the-competency-based-board-of-directors/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-21",
+      "summary": "Health care industry boards are revisiting the benefits of a strict competency-based approach to their composition. This, given that multiple new regulatory and environmental challenges to the health care system are placing a premium on strategic experience and perspectives at the board and committee level.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Flu vaccine no longer mandated for U.S. troops, defense secretary says",
+      "url": "https://www.statnews.com/2026/04/21/flu-vaccine-military-no-longer-required-hegseth/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-04-21",
+      "summary": "Defense Secretary Pete Hegseth announced Tuesday that the U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: UnitedHealth earnings beat expectations in the first quarter, but hurdles persist",
+      "url": "https://www.statnews.com/2026/04/21/unitedhealth-earnings-beat-expectations-in-first-quarter-2026/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-04-21",
+      "summary": "UnitedHealth’s financial performance in the first quarter far exceeded analyst’s expectations in both its Optum and UnitedHealthcare divisions.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: RFK Jr. to face four GOP doctors at Senate hearings",
+      "url": "https://www.statnews.com/2026/04/21/kennedy-senate-hearings-hhs-budget-bill-cassidy-what-to-watch/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-04-21",
+      "summary": "We'll be zeroed in on Kennedy's exchanges with one doc in particular: Bill Cassidy.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
@@ -411,6 +457,150 @@
       "source": "STAT News",
       "publishedAt": "2026-04-21",
       "summary": "A reconstruction layer has fallen on medicine. It asks: Was the original decision justified?",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "UnitedHealth hikes profit outlook after better-than-expected first quarter",
+      "url": "https://www.healthcaredive.com/news/unitedhealth-hikes-2026-profit-outlook-q1-results/817993/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-04-21",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Blue Shield of California taps chief pharmacy officer",
+      "url": "https://www.healthcaredive.com/news/blue-shield-california-chief-pharmacy-officer-hayley-park/818058/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-04-21",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Providers push back on 340B rebate model",
+      "url": "https://www.healthcaredive.com/news/providers-push-back-340b-rebate-model-comments/818043/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-04-21",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "QuikTrip to sell urgent care clinics after 6 years in business",
+      "url": "https://www.healthcaredive.com/news/quiktrip-to-sell-urgent-care-clinics-after-6-years-in-business/818068/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-04-21",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Merger to create nation's largest suicide prevention nonprofit",
+      "url": "https://www.fiercehealthcare.com/providers/merger-create-nations-largest-suicide-prevention-nonprofit",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-21",
+      "summary": "Should their merger close, the American Foundation for Suicide Prevention and The Jed Foundation would have an annual operating budget of about $75 million and net assets of around $140 million.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Oz previews new plan to push states toward revalidating Medicaid providers",
+      "url": "https://www.fiercehealthcare.com/regulatory/oz-previews-plan-push-states-revalidate-medicaid-providers",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-21",
+      "summary": "CMS Administrator Mehmet Oz on Tuesday previewed the agency's next steps in its effort to root out fraud, waste and abuse in Medicaid.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Colorado hospital taps chief legal officer",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/colorado-hospital-taps-chief-legal-officer/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-21",
+      "summary": "Kelly Adams has been appointed chief legal officer of Boulder (Colo.) Community Health.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Judge blocks HHS from reimplementing gender care policy in 21 states: 4 notes",
+      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/judge-blocks-hhs-from-reimplementing-gender-care-policy-in-21-states-4-notes/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-21",
+      "summary": "A federal judge has issued a sweeping written order formally vacating HHS Secretary Robert F. Kennedy Jr.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "UnitedHealth Group reports $6.2B+ Q1 profit: 7 notes",
+      "url": "https://www.beckershospitalreview.com/finance/unitedhealth-group-reports-6-2b-q1-profit-7-notes/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-21",
+      "summary": "UnitedHealth Group posted $6.28 billion in profit for the first quarter of 2026, dipping slightly compared to the same period last year.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Nevada hospital names CEO",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/nevada-hospital-names-ceo-2/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-21",
+      "summary": "Matt Lutz has been appointed CEO of Mesa View Regional Hospital in Mesquite, Nev. In the new role, Mr.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Bon Secours to appeal HCA, VCU expansion approvals",
+      "url": "https://www.beckershospitalreview.com/capital/bon-secours-to-appeal-hca-vcu-expansion-approvals/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-21",
+      "summary": "Marriottsville, Md.-based Bon Secours filed notices of appeal April 10 for hospital projects for two competitors that were approved March 13 by Virginia&#8217;s state health commissioner.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "Wegovy prescriptions jump 50%: 5 notes",
+      "url": "https://www.beckershospitalreview.com/glp-1s/semaglutide-prescriptions-jump-50-5-notes/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-21",
+      "summary": "More Wegovy prescriptions are being written as GLP-1 weight loss drugs gain traction across retail, telehealth and direct-to-consumer channels, according to an April 20 report from Truveta Research. The growth follows the FDA&#8217;s December approval of oral Wegovy (semaglutide) and other GLP-1 pills.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "7 new medical schools announced in 2026",
+      "url": "https://www.beckershospitalreview.com/quality/hospital-physician-relationships/7-new-medical-schools-announced-in-2026/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-21",
+      "summary": "Universities and health systems across the country are opening new medical schools to meet demand for physicians. Here is a list of the medical schools announced in 2026.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "Quorum sells 146-bed Texas hospital: 4 things to know",
+      "url": "https://www.beckershospitalreview.com/hospital-transactions-and-valuation/quorum-sells-146-bed-texas-hospital-4-things-to-know/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-21",
+      "summary": "Quorum Health, a for-profit system headquartered in Brentwood, Tenn., on April 1 sold Scenic Mountain Medical Center to San Angelo, Texas-based Shannon Health System, a spokesperson for the system confirmed to Becker&#8217;s.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Closing the Access Gap",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/digital-health/closing-the-access-gap/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-21",
+      "summary": "6 strategies to redraw the patient care map For rural healthcare organizations, access has become the central organizing principle behind nearly every strategic decision. This new operational reality is being shaped by a convergence of pressures.",
+      "category": "closures_layoffs",
+      "categoryLabel": "Closures & Layoffs"
+    },
+    {
+      "title": "Clinical Denials: ‘Not a Human-Addressable Problem Anymore at This Scale’",
+      "url": "https://www.beckershospitalreview.com/academic-medical-center/finance-academic-medical-center/clinical-denials-not-a-human-addressable-problem-anymore-at-this-scale/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-21",
+      "summary": "Many health systems are treating climbing denial rates as a documentation problem. They&#8217;re not.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
@@ -4655,186 +4845,6 @@
       "summary": "Signature Healthcare Brockton (Mass.) Hospital has lifted its &#8220;code black&#8221; status following a cybersecurity incident that began April 6.",
       "category": "general_market",
       "categoryLabel": "General Market"
-    },
-    {
-      "title": "Nursing home operators ask Supreme Court to keep Haitians in the US",
-      "url": "https://www.beckershospitalreview.com/post-acute/nursing-home-operators-ask-supreme-court-to-keep-haitians-in-the-us/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-15",
-      "summary": "Nursing home operators are warning the Supreme Court that revoking the right of Haitian immigrants to remain in the U.S.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "WVU Medicine plans $350M in capital projects",
-      "url": "https://www.beckershospitalreview.com/capital/wvu-medicine-plans-350m-in-capital-projects/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-15",
-      "summary": "Morgantown, W.Va.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Union sets strike date for 42,000 U of California workers",
-      "url": "https://www.beckershospitalreview.com/hr/union-sets-strike-date-for-42000-u-of-california-workers/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-15",
-      "summary": "The American Federation of State, County and Municipal Employees, the union representing more than 42,000 University of California workers, plans to begin an open-ended strike May 14, according to an April 15 union news release shared with Becker&#8217;s. AFSCME Local 3299 said the action would be the first such strike across the University of California [&#8230;] The post Union sets strike date for 42,000 U of California workers appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "labor_unions",
-      "categoryLabel": "Labor & Unions"
-    },
-    {
-      "title": "Are health systems&#8217; enterprise IT platforms stifling innovation?",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/innovation/are-health-systems-enterprise-it-platforms-stifling-innovation/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-15",
-      "summary": "Many health systems are opting for a single EHR and enterprise resource planning system, relying on foundational enterprise platforms for much of their technology needs. This also means they&#8217;re consolidating and turning off IT applications, depending less on point-solution companies and startups.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Indiana hospital signs LOI to join Parkview Health",
-      "url": "https://www.beckershospitalreview.com/hospital-transactions-and-valuation/indiana-hospital-signs-loi-to-join-parkview-health/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-15",
-      "summary": "Lebanon, Ind.-based Witham Health Services has signed a nonbinding letter of intent to join Fort Wayne, Ind.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "MetroHealth primary care providers explore unionization with AFSCME",
-      "url": "https://www.beckershospitalreview.com/hr/metrohealth-primary-care-providers-explore-unionization-with-afscme/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-15",
-      "summary": "Primary care providers at Cleveland-based MetroHealth are taking steps to unionize with AFSCME Ohio Council 8, according to cleveland.com.",
-      "category": "labor_unions",
-      "categoryLabel": "Labor & Unions"
-    },
-    {
-      "title": "Florida surgeon charged with manslaughter after removing wrong organ",
-      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/florida-surgeon-charged-with-manslaughter-after-removing-wrong-organ/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-15",
-      "summary": "Thomas Shaknovsky, MD, a Florida surgeon, was charged April 13 with second-degree manslaughter in connection with the death of a 70-year-old man during surgery. The Alabama man was vacationing in Florida when he experienced severe pain on his left side, The New York Times reported.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: CMS proposes rolling back breakthrough device payment flexibilities",
-      "url": "https://www.statnews.com/2026/04/15/cms-proposes-rolling-back-breakthrough-device-payment/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-15",
-      "summary": "CMS is proposing to repeal a pathway that allows breakthrough devices to get supplementary payments.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "STAT+: Novartis CEO joins Anthropic&#8217;s board",
-      "url": "https://www.statnews.com/2026/04/15/biotech-news-novartis-ceo-joins-anthropic-board/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-15",
-      "summary": "Revolution Medicines $2B fundraise, Structure's new hire hints at acquisition efforts, and more Readout biotech news",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "STAT+: FDA panel will meet to discuss allowing broader access to certain peptides",
-      "url": "https://www.statnews.com/2026/04/15/peptides-fda-panel-to-discuss-broader-access-compounding/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-15",
-      "summary": "The FDA will convene an outside panel of advisers to discuss whether to allow compounding pharmacies to manufacture certain peptides",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: A $15 AI test, Project Glasswing, and how Doctronic pilot blindsided Utah medical board",
-      "url": "https://www.statnews.com/2026/04/15/ai-test-project-glasswing-doctronic-pilot-ai-prognosis/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-15",
-      "summary": "In this edition of STAT's AI Prognosis: A $15 AI test, what Project Glasswing means for health care, and an update on Doctronic's AI pilot in Utah.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: Pharmalittle: We&#8217;re reading about FDA seeking more data on a Lilly obesity pill, a pharma 340B win, and more",
-      "url": "https://www.statnews.com/pharmalot/2026/04/15/fda-seeks-data-lilly-obesity-pill-pharma-win-340b-case-hiv/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-15",
-      "summary": "The FDA asked Eli Lilly for more data on liver injury linked to its newly approved ​obesity pill, Foundayo",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Trump DOJ report says Biden administration treated anti-abortion protestors unfairly",
-      "url": "https://www.statnews.com/2026/04/15/health-news-trump-doj-report-on-biden-anti-abortion-protest-treatment/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-15",
-      "summary": "New CDC tetanus shot analysis, AI scans for heart risk, and more health news from Morning Rounds",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: New Bain biotech startup, building on BMS drugs, gets a name and a CEO",
-      "url": "https://www.statnews.com/2026/04/15/beeline-medicines-bain-bristol-myers-squibb-lupus/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-15",
-      "summary": "Beeline Medicine is focused on development of five inflammatory and immune disorder drugs, starting with a potential daily pill for lupus.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: AI could check millions of CT scans for heart risk. Who will pay for it?",
-      "url": "https://www.statnews.com/2026/04/15/coronary-artery-calcium-ai-opportunistic-screening-examined/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-15",
-      "summary": "New AI tools could screen existing CT scans to asses risk for heart disease. But, who'll pay for it, and will it improve health outcomes?",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Opinion: Hosting the ‘intellectual wrestling match’ between MAHA, public health",
-      "url": "https://www.statnews.com/2026/04/15/why-should-i-trust-you-podcast-interview/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-15",
-      "summary": "“These sides aren't talking to each other. And there's a lot riding on it”: the podcast trying to bridge MAHA and public health.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Flawed study on the antidepressant Paxil came with a cautionary note — if you knew how to find it",
-      "url": "https://www.statnews.com/pharmalot/2026/04/15/paxil-adolescent-antidepressant-pivotal-study-expression-concern/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-15",
-      "summary": "When scientific journals publish expressions of concerns, they have an obligation to do so prominently, Ed Silverman writes.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Opinion: Medical schools must continue to teach students about structural barriers to care",
-      "url": "https://www.statnews.com/2026/04/15/lcme-structural-competency-medical-schools-equity/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-15",
-      "summary": "“Patients don’t experience illness in a vacuum,” writes Uché Blackstock.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "ChristianaCare names successor after CEO retires",
-      "url": "https://www.healthcaredive.com/news/christianacare-names-successor-jenn-schwartz-ceo-janice-nevin-retires/817528/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-04-15",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "More insurance claims denials are being overturned upon appeal, study finds",
-      "url": "https://www.healthcaredive.com/news/insurance-denials-overturned-appeal-new-york-study-JAMA/817490/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-04-15",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
     }
   ]
 }
