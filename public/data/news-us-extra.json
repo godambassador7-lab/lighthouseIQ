@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-22T21:02:09.857Z",
+  "lastUpdated": "2026-04-22T22:01:31.093Z",
   "scope": "US healthcare",
   "sourceManifestVersion": "1.0.0",
   "sourceHealth": [
@@ -111,9 +111,10 @@
       "source": "NYSNA RSS",
       "id": "nysna_rss",
       "type": "rss",
-      "ok": true,
-      "status": 200,
-      "records": 12
+      "ok": false,
+      "status": 0,
+      "records": 0,
+      "error": "fetch failed"
     },
     {
       "source": "SEIU RSS",
@@ -1744,39 +1745,6 @@
       "relevance": 100
     },
     {
-      "title": "Save Healthcare Services",
-      "summary": "",
-      "url": "https://www.nysna.org/campaigns/save-healthcare-services",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 100
-    },
-    {
-      "title": "Brooklyn Hospital Center Nurses Win Battle to Restore Health and Pension Benefits",
-      "summary": "",
-      "url": "https://www.nysna.org/news/brooklyn-hospital-center-nurses-win-battle-restore-health-and-pension-benefits",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 100
-    },
-    {
-      "title": "NYSNA Nurses at WMC-HealthAlliance Hospital Ratify Strong Contract Agreement that Protects Nurse and Patient Safety",
-      "summary": "",
-      "url": "https://www.nysna.org/press/nysna-nurses-wmc-healthalliance-hospital-ratify-strong-contract-agreement-protects-nurse-and",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "quality_safety",
-      "relevance": 100
-    },
-    {
       "title": "Vulnerability Disclosure",
       "summary": "",
       "url": "https://www.justice.gov/jmd/vulnerability-disclosure-policy",
@@ -1818,28 +1786,6 @@
       "sourceId": "ftc_press_releases",
       "publishedAt": "",
       "category": "quality_safety",
-      "relevance": 98
-    },
-    {
-      "title": "Using Contract Bargaining to Win Health and Safety Protections",
-      "summary": "",
-      "url": "https://www.nysna.org/news/using-contract-bargaining-win-health-and-safety-protections",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "quality_safety",
-      "relevance": 98
-    },
-    {
-      "title": "NYSNA Nurses at Elizabethtown Overwhelmingly Ratify Contract Agreement that Delivers Good Health Benefits for Nurses",
-      "summary": "",
-      "url": "https://www.nysna.org/press/nysna-nurses-elizabethtown-overwhelmingly-ratify-contract-agreement-delivers-good-health",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
       "relevance": 98
     },
     {
@@ -2052,39 +1998,6 @@
       "relevance": 96
     },
     {
-      "title": "AHA chair speaks at Politico Health Care Summit",
-      "summary": "",
-      "url": "https://www.aha.org/news/headline/2026-04-21-aha-chair-speaks-politico-health-care-summit",
-      "source": "AHA News",
-      "sourceType": "html",
-      "sourceId": "aha_news",
-      "publishedAt": "",
-      "category": "ai_tech",
-      "relevance": 96
-    },
-    {
-      "title": "Rep. Blake Moore discusses health care affordability",
-      "summary": "",
-      "url": "https://www.aha.org/news/headline/2026-04-21-rep-blake-moore-discusses-health-care-affordability",
-      "source": "AHA News",
-      "sourceType": "html",
-      "sourceId": "aha_news",
-      "publishedAt": "",
-      "category": "policy_reimbursement",
-      "relevance": 96
-    },
-    {
-      "title": "Sen. Amy Klobuchar discusses need to address prior authorization, workforce, telehealth in rural areas",
-      "summary": "",
-      "url": "https://www.aha.org/news/headline/2026-04-21-sen-amy-klobuchar-discusses-need-address-prior-authorization-workforce-telehealth-rural-area",
-      "source": "AHA News",
-      "sourceType": "html",
-      "sourceId": "aha_news",
-      "publishedAt": "",
-      "category": "ai_tech",
-      "relevance": 96
-    },
-    {
       "title": "AHA releases Q1 2026 Health Care Plan Accountability Update",
       "summary": "",
       "url": "https://www.aha.org/news/headline/2026-04-22-aha-releases-q1-2026-health-care-plan-accountability-update",
@@ -2107,9 +2020,42 @@
       "relevance": 96
     },
     {
+      "title": "AHA chair speaks at Politico Health Care Summit",
+      "summary": "",
+      "url": "https://www.aha.org/news/headline/2026-04-21-aha-chair-speaks-politico-health-care-summit",
+      "source": "AHA News",
+      "sourceType": "html",
+      "sourceId": "aha_news",
+      "publishedAt": "",
+      "category": "ai_tech",
+      "relevance": 96
+    },
+    {
+      "title": "Sen. Amy Klobuchar discusses need to address prior authorization, workforce, telehealth in rural areas",
+      "summary": "",
+      "url": "https://www.aha.org/news/headline/2026-04-21-sen-amy-klobuchar-discusses-need-address-prior-authorization-workforce-telehealth-rural-area",
+      "source": "AHA News",
+      "sourceType": "html",
+      "sourceId": "aha_news",
+      "publishedAt": "",
+      "category": "ai_tech",
+      "relevance": 96
+    },
+    {
       "title": "CMS announces hospital food pledge",
       "summary": "",
       "url": "https://www.aha.org/news/headline/2026-04-21-cms-announces-hospital-food-pledge",
+      "source": "AHA News",
+      "sourceType": "html",
+      "sourceId": "aha_news",
+      "publishedAt": "",
+      "category": "policy_reimbursement",
+      "relevance": 96
+    },
+    {
+      "title": "Rep. Blake Moore discusses health care affordability",
+      "summary": "",
+      "url": "https://www.aha.org/news/headline/2026-04-21-rep-blake-moore-discusses-health-care-affordability",
       "source": "AHA News",
       "sourceType": "html",
       "sourceId": "aha_news",
@@ -2382,39 +2328,6 @@
       "relevance": 93
     },
     {
-      "title": "Journal of the New York State Nurses Association",
-      "summary": "",
-      "url": "https://www.nysna.org/nursing-resources/journal-new-york-state-nurses-association",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 93
-    },
-    {
-      "title": "Statewide Peer Assistance for Nurses",
-      "summary": "",
-      "url": "https://www.statewidepeerassistance.org/",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 93
-    },
-    {
-      "title": "Health Equity and Social Justice",
-      "summary": "",
-      "url": "https://www.nysna.org/campaigns/health-equity-and-social-justice",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 93
-    },
-    {
       "title": "Nondiscrimination & Accessibility",
       "summary": "",
       "url": "https://www.cms.gov/about-cms/web-policies-important-links/accessibility-nondiscrimination-disabilities-notice",
@@ -2523,50 +2436,6 @@
       "publishedAt": "",
       "category": "ai_tech",
       "relevance": 90
-    },
-    {
-      "title": "NYSNA Update: April 17, 2026",
-      "summary": "",
-      "url": "https://www.nysna.org/news/nysna-update-april-17-2026",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 88
-    },
-    {
-      "title": "NYSNA Update: April 10, 2026",
-      "summary": "",
-      "url": "https://www.nysna.org/news/nysna-update-april-10-2026",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 88
-    },
-    {
-      "title": "NYSNA Update: April 2, 2026",
-      "summary": "",
-      "url": "https://www.nysna.org/news/nysna-update-april-2-2026",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 88
-    },
-    {
-      "title": "See All Photos and Videos",
-      "summary": "",
-      "url": "https://www.nysna.org/news/gallery",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 88
     }
   ]
 }
