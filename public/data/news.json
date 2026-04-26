@@ -1,89 +1,89 @@
 {
-  "lastUpdated": "2026-04-25T23:44:14.713Z",
+  "lastUpdated": "2026-04-26T02:59:01.933Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 11,
-    "staleSources": 1,
-    "healthySources": 10,
+    "staleSources": 3,
+    "healthySources": 8,
     "sources": [
       {
-        "source": "Becker's Hospital Review",
-        "articleCount": 176,
-        "latestPublishedAt": "2026-04-24T00:00:00.000Z",
-        "staleHours": 47,
+        "source": "Fierce Healthcare",
+        "articleCount": 180,
+        "latestPublishedAt": "2026-04-26T00:00:00.000Z",
+        "staleHours": 2,
         "status": "ok"
       },
       {
-        "source": "Fierce Healthcare",
-        "articleCount": 155,
-        "latestPublishedAt": "2026-04-25T00:00:00.000Z",
-        "staleHours": 23,
+        "source": "Becker's Hospital Review",
+        "articleCount": 166,
+        "latestPublishedAt": "2026-04-24T00:00:00.000Z",
+        "staleHours": 50,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 72,
+        "articleCount": 67,
         "latestPublishedAt": "2026-04-25T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 26,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
-        "articleCount": 39,
+        "articleCount": 29,
         "latestPublishedAt": "2026-04-27T00:00:00.000Z",
-        "staleHours": -25,
+        "staleHours": -22,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 14,
         "latestPublishedAt": "2026-04-24T00:00:00.000Z",
-        "staleHours": 47,
+        "staleHours": 50,
         "status": "ok"
       },
       {
         "source": "Health Affairs",
         "articleCount": 10,
         "latestPublishedAt": "2026-04-22T00:00:00.000Z",
-        "staleHours": 95,
+        "staleHours": 98,
         "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 9,
         "latestPublishedAt": "2026-04-27T00:00:00.000Z",
-        "staleHours": -25,
+        "staleHours": -22,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 9,
         "latestPublishedAt": "2026-04-23T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 74,
+        "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 6,
         "latestPublishedAt": "2026-04-24T00:00:00.000Z",
-        "staleHours": 47,
+        "staleHours": 50,
         "status": "ok"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 6,
         "latestPublishedAt": "2026-04-24T00:00:00.000Z",
-        "staleHours": 47,
+        "staleHours": 50,
         "status": "ok"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 4,
         "latestPublishedAt": "2026-04-23T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 74,
+        "status": "stale"
       }
     ]
   },
@@ -94,19 +94,19 @@
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 19
+      "count": 18
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 8
+      "count": 9
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 71
+      "count": 78
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 15
+      "count": 14
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
@@ -114,16 +114,18 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 152
+      "count": 157
     },
     "general_market": {
       "label": "General Market",
-      "count": 220
+      "count": 209
     }
   },
   "quality": {
-    "status": "pass",
-    "failedChecks": [],
+    "status": "warning",
+    "failedChecks": [
+      "maxStaleSources"
+    ],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -132,7 +134,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 36,
+        "actual": 34,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -142,8 +144,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 1,
-        "pass": true
+        "actual": 3,
+        "pass": false
       }
     }
   },
@@ -254,6 +256,231 @@
       "publishedAt": "2026-04-27",
       "category": "general_market",
       "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "HCA Healthcare executives shrug off Q1 volumes disruptions, reaffirm FY2026 guidance",
+      "url": "https://www.fiercehealthcare.com/providers/hca-healthcare-executives-shrug-q1-volumes-disruptions-reaffirm-fy2026-guidance",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-26",
+      "summary": "A sharp end to the flu season and disruptive winter storms dragged the country's largest for-profit health system in January. Executives said there's already signs of recovery since the stumble and pointed to favorable activity among states' Medicaid subsidy programs.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Lawmakers introduce bipartisan legislation to improve access, quality of care in Medicare Advantage plans",
+      "url": "https://www.fiercehealthcare.com/regulatory/lawmakers-introduce-bipartisan-legislation-improve-access-quality-care-medicare",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-26",
+      "summary": "The Medicare Advantage Improvement Act of 2026, introduced April 20, aims to “directly address” barriers to coverage and treatment for America’s seniors.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "UnitedHealthcare, Aetna, Cigna tout progress to standardize prior authorization as part of industry-wide commitment",
+      "url": "https://www.fiercehealthcare.com/payers/unitedhealthcare-aetna-tout-progress-standardize-prior-authorization-part-industry-wide",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-26",
+      "summary": "Major health insurers are advancing efforts to standardize prior authorization requirements as part of an effort to simplify paperwork for providers and reduce delays in medical care.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Industry Voices—Hospitals are very online, but what happens when they're plunged into 'digital darkness'?",
+      "url": "https://www.fiercehealthcare.com/providers/industry-voices-hospitals-are-very-online-what-happens-when-theyre-plunged-digital",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-26",
+      "summary": "Healthcare organizations have a responsibility to prepare their people and their systems for the analog reality that a cyberattack, an outage or a cascading infrastructure failure can impose at any moment, writes ECRI President and CEO Marcus Schabacker, M.D.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Northwell Health unveils toolkit for gun violence prevention in healthcare settings",
+      "url": "https://www.fiercehealthcare.com/hospitals/northwell-health-unveils-first-its-kind-toolkit-gun-violence-prevention-healthcare",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-26",
+      "summary": "The new digital toolkit serves as a practical guide for health systems to adapt, implement and scale strategies on system, community, clinical and organization levels.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "AI-powered prior authorizations for Medicare have greatly delayed care, Washington state hospitals say",
+      "url": "https://www.fiercehealthcare.com/regulatory/ai-powered-prior-authorizations-medicare-have-greatly-delayed-care-wash-hospitals-say",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-26",
+      "summary": "The Centers for Medicare &amp; Medicaid Services' experimental WISeR Model has Medicare patients waiting two to four times longer for procedures, according to a Washington senator's report citing early data from 16 hospitals in her state.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Chutes & Ladders—Cityblock names former UHC exec as chief health officer; Blue Shield taps chief pharmacy officer",
+      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-26",
+      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Healthcare finance leaders cite federal funding uncertainty, Medicaid cuts as top concerns",
+      "url": "https://www.fiercehealthcare.com/finance/govt-funding-uncertainty-medicaid-cuts-top-concern-66-healthcare-finance-leaders-strata",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-26",
+      "summary": "Amid funding uncertainty, 57% of leaders report reducing costs as their top priority for the year—followed closely by managing strategic and performance improvement initiatives.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "FTC files suit over telemarketing scheme selling fake PPO insurance",
+      "url": "https://www.fiercehealthcare.com/regulatory/ftc-files-suit-over-telemarketing-scheme-selling-fake-ppo-insurance",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-26",
+      "summary": "The Federal Trade Commission has filed suit to intervene in a scheme in which it says fraudulent telemarketers targeted individuals seeking insurance coverage.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Molina strikes 'prudent' tone on 2026 outlook amid positive signs on Medicaid spending",
+      "url": "https://www.fiercehealthcare.com/payers/molina-strikes-prudent-tone-2026-outlook-amid-positive-signs-medicaid-spending",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-26",
+      "summary": "Molina Healthcare took the \"prudent\" route of reaffirming its 2026 outlook as questions loom in the Medicaid business.",
+      "category": "labor_unions",
+      "categoryLabel": "Labor & Unions"
+    },
+    {
+      "title": "FTC reaches tentative deal in anesthesiology 'roll-up scheme' litigation",
+      "url": "https://www.fiercehealthcare.com/regulatory/ftc-secures-11th-hour-settlement-pe-firm-welsh-carson-over-alleged-roll-scheme",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-26",
+      "summary": "The regulator's 2023 complaint against USAP was rife with criticisms of its private equity backer. There was no mention of the firm in this week's announcement, which follows a separate 2025 deal and a new commission chair less opposed to such investors on a matter of principle.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "CMS, FDA announce new program to speed up Medicare coverage of breakthrough medical devices",
+      "url": "https://www.fiercehealthcare.com/health-tech/cms-fda-announce-new-program-speed-medicare-coverage-breakthrough-medical-devices",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-26",
+      "summary": "The Trump administration unveiled a new program to speed up Medicare coverage for breakthrough devices, touting that the new pathway cuts red tape for medical device companies to gain reimbursement. CMS said it will pause the existing TCET pathway.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Telehealth provider Him & Hers adds all FDA-approved GLP-1s to platform",
+      "url": "https://www.fiercehealthcare.com/telehealth/telehealth-provider-him-hers-adds-all-fda-approved-glp-1s-platform",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-26",
+      "summary": "Providers can now send prescriptions of Eli Lily’s Zepbound, Mounjaro and oral Foundayo, as well as Novo Nordisk’s Ozempic and Wegovy.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "OpenAI launches ChatGPT for Clinicians, a free AI tool for physicians, NPs and pharmacists",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/openai-launches-chatgpt-clinicians-free-ai-tool-physicians-nps-and",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-26",
+      "summary": "OpenAI unveiled on Wednesday ChatGPT for Clinicians, a version of ChatGPT designed to support clinical tasks like documentation and medical research.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Conservative think tank Paragon Health calls its shots on hospital policy reform",
+      "url": "https://www.fiercehealthcare.com/providers/conservative-think-tank-paragon-health-calls-its-shots-hospital-policy-reform",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-26",
+      "summary": "A conservative policy shop with proven sway over the Trump administration released a new report undercutting the hospital industry's claims of widespread financial distress. An included 12-point wish list spanning site-neutral Medicare rates to more specific tax reporting builds on its recent victories over the hospital lobby.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Zocdoc partners with Yelp to allow real-time scheduling",
+      "url": "https://www.fiercehealthcare.com/health-tech/zocdoc-partners-yelp-allow-real-time-scheduling",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-26",
+      "summary": "The capability is now available on Yelp’s iOS app on provider pages and through the platform’s new artificial intelligence chatbot, Yelp Assistant. It will expand to Android and desktop later this year, the announcement said.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Amazon One Medical launches GLP-1 program integrated with primary care",
+      "url": "https://www.fiercehealthcare.com/digital-health/amazon-one-medical-launches-glp-1-program-integrated-primary-care",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-26",
+      "summary": "Patients can take advantage of the GLP-1 management program through their One Medical primary care clinician. Medications are available for quick delivery to all 50 states, with nearly 3,000 cities having same-day delivery available.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "RFK Jr. continues congressional hearing appearances to talk White House budget plan",
+      "url": "https://www.fiercehealthcare.com/regulatory/rfk-jr-continues-congressional-hearing-appearances-talk-white-house-budget-plan",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-26",
+      "summary": "HHS Secretary Robert F. Kennedy Jr.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Elevance Health seeing shift to bronze tier in ACA plans",
+      "url": "https://www.fiercehealthcare.com/payers/elevance-health-raises-2026-outlook-it-posts-18b-q1-profit",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-26",
+      "summary": "Elevance Health is raising its guidance for 2026 even as its Q1 profits declined year-over-year.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Community Health Systems attributes Q1 volumes stumble to consumers' macroeconomic fears, payers' prior auth denials",
+      "url": "https://www.fiercehealthcare.com/providers/community-health-systems-reports-low-volumes-earnings-dip-q1-2026",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-26",
+      "summary": "Same-store admissions and adjusted admissions respectively declined 1.3% and 0.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Why UnitedHealth Group is betting big on doulas",
+      "url": "https://www.fiercehealthcare.com/payers/why-unitedhealth-group-betting-big-doulas",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-26",
+      "summary": "Fierce Senior Writer Paige Minemyer speaks with Catherine Anderson of UnitedHealth Group about why the insurer is expanding doula support nationwide and what that could mean for maternal and infant health outcomes across the U.S.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "CMS delays Part D GLP-1 model amid skepticism from insurers",
+      "url": "https://www.fiercehealthcare.com/payers/cms-delays-part-d-glp-1-model-amid-skepticism-insurers",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-26",
+      "summary": "The Trump administration is delaying a voluntary model that aimed to expand access to GLP-1s in Part D after pushback from insurers.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Oak HC/FT backs Courier Health's $50M series B to build out AI for the biopharma patient experience",
+      "url": "https://www.fiercehealthcare.com/health-tech/oak-hcft-backs-courier-healths-50m-series-b-build-out-ai-biopharma-patient-experience",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-26",
+      "summary": "Courier Health raised $50 million in series B funding to scale its AI-powered platform purpose-built for biopharma that manages the end-to-end patient journey.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Amperos Health secures $16M in series A funding, unveils AI-native denial management solution",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/amperos-health-secures-16m-series-funding-announces-industrys-new-first-ai",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-26",
+      "summary": "Amperos Health CEO and co-founder Michal Miernowski told Fierce Healthcare the newly announced funding will support scaling the organization and its platform.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "'Don't be a wimp,' Mark Cuban tells lawmakers hesitant to break up PBMs",
+      "url": "https://www.fiercehealthcare.com/payers/dont-be-wimp-mark-cuban-tells-lawmakers-hesitant-break-pbms",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-26",
+      "summary": "The entrepreneur outlines his belief that pressure from vertically integrated insurers and pharmacy benefit managers is preventing an efficient healthcare market. He also called on the Trump administration to \"do your job\" and ramp up enforcement, noting that drug manufacturers today are much more scared of a formulary exclusion than the president himself.",
+      "category": "general_market",
       "categoryLabel": "General Market"
     },
     {
@@ -4610,261 +4837,6 @@
       "publishedAt": "2026-04-20",
       "category": "general_market",
       "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Agency Information Collection Request; 60-Day Public Comment Request",
-      "summary": "In compliance with the requirement of the Paperwork Reduction Act of 1995, the Office of the Secretary (OS), Department of Health and Human Services, is publishing the following summary of a proposed collection for public comment.",
-      "url": "https://www.federalregister.gov/documents/2026/04/20/2026-07642/agency-information-collection-request-60-day-public-comment-request",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-04-20",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "National Institute of Environmental Health Sciences; Notice of Partially Closed Meeting",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/04/20/2026-07607/national-institute-of-environmental-health-sciences-notice-of-partially-closed-meeting",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-04-20",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "National Institute of Dental & Craniofacial Research; Notice of Meeting",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/04/20/2026-07631/national-institute-of-dental-and-craniofacial-research-notice-of-meeting",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-04-20",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Center for Scientific Review; Notice of Closed Meetings",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/04/20/2026-07608/center-for-scientific-review-notice-of-closed-meetings",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-04-20",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Notice of Diabetes Mellitus Interagency Coordinating Committee Meeting",
-      "summary": "The Diabetes Mellitus Interagency Coordinating Committee (DMICC) will hold a meeting on June 24th, 2026. The topic for this meeting will be \"Innovative Research Partnerships in Diabetic Retinal Disease: Insights and Opportunities.\" The meeting is open to the public.",
-      "url": "https://www.federalregister.gov/documents/2026/04/20/2026-07581/notice-of-diabetes-mellitus-interagency-coordinating-committee-meeting",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-04-20",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Center for Scientific Review; Notice of Closed Meetings",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/04/20/2026-07580/center-for-scientific-review-notice-of-closed-meetings",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-04-20",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "National Center for Advancing Translational Sciences; Notice of Meeting",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/04/20/2026-07579/national-center-for-advancing-translational-sciences-notice-of-meeting",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-04-20",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "National Institute of Neurological Disorders and Stroke; Notice of Meeting",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/04/20/2026-07578/national-institute-of-neurological-disorders-and-stroke-notice-of-meeting",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-04-20",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Office of the Director, National Institutes of Health; Notice of Meeting",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/04/20/2026-07576/office-of-the-director-national-institutes-of-health-notice-of-meeting",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-04-20",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "National Institute of Neurological Disorders and Stroke; Notice of Meeting",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/04/20/2026-07577/national-institute-of-neurological-disorders-and-stroke-notice-of-meeting",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-04-20",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "How teleneurology is expanding access and easing the neurologist shortage",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/telehealth/how-teleneurology-is-expanding-access-and-easing-the-neurologist-shortage/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-20",
-      "summary": "Neurology accounts for 8-10% of hospital admissions including patients with strokes, epilepsy, cognitive and neuromuscular disorders. While the demand for neurology services is rising, the supply isn&#8217;t keeping up, leaving overworked neurologists feeling burned out and depressed.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Medical groups split on breast cancer screening age: What to know",
-      "url": "https://www.beckershospitalreview.com/radiology/medical-groups-split-on-breast-cancer-screening-age-what-to-know/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-20",
-      "summary": "The American College of Radiology has raised concerns over new mammography guidelines issued by the American College of Physicians. The American College of Physicians guidelines, published April 17 in the Annals of Internal Medicine, say patients ages 50-74 with an average risk of developing breast cancer should receive a mammogram every other year, while patients [&#8230;] The post Medical groups split on breast cancer screening age: What to know appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Utah AI prescription pilot prompts safety concerns: Viewpoint",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/utah-ai-prescription-pilot-prompts-safety-concerns-viewpoint/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-20",
-      "summary": "A Utah pilot program allowing AI to autonomously renew prescriptions is raising clinical and legal concerns, according to a perspective piece published April 23 in the New England Journal of Medicine. Launched in January, the program uses an AI system developed by Doctronic to renew prescriptions for patients with chronic conditions after physicians review the [&#8230;] The post Utah AI prescription pilot prompts safety concerns: Viewpoint appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Trump&#8217;s CDC director nominee: 6 things to know",
-      "url": "https://www.beckershospitalreview.com/quality/public-health/trump-taps-cdc-director-nominee-6-things-to-know/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-20",
-      "summary": "President Donald Trump has nominated Erica Schwartz, MD, to lead the CDC, following months of leadership instability at the agency. The CDC has been without a Senate-confirmed director since August, with the White House delaying a nomination and relying on interim leadership to oversee the agency.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Idaho hospital transfers imaging patients after cyber incident",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/cybersecurity/idaho-hospital-transfers-imaging-patients-after-cyber-incident/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-20",
-      "summary": "Rupert, Idaho-based Minidoka Memorial Hospital had to transfer some emergency patients after an Easter morning cyber incident disrupted its imaging services. The hospital said April 17 that care wasn&#8217;t otherwise interrupted by the April 5 event that affected certain IT systems and forced the organization into downtime protocols.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Integris prepares for clinic, service line closures amid funding concerns",
-      "url": "https://www.beckershospitalreview.com/finance/integris-prepares-for-clinic-service-line-closures-amid-funding-concerns/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-20",
-      "summary": "Oklahoma City-based Integris Health is preparing to scale back or eliminate select service lines within its medical group as it braces for anticipated Medicaid and Medicare funding cuts. The health system communicated the planned changes April 16, a spokesperson said in a statement shared with Becker&#8217;s.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "UnitedHealthcare pares back prior authorizations, speeds up payments for rural providers",
-      "url": "https://www.beckershospitalreview.com/rural-health/unitedhealthcare-pares-back-prior-authorizations-speeds-up-payments-for-rural-providers/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-20",
-      "summary": "UnitedHealthcare is expanding rural healthcare initiatives to cover the entire U.S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Former Providence workers sue system over alleged 401(k) losses",
-      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/providences-former-philanthropy-chief-4-other-employees-sue-health-system/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-20",
-      "summary": "A retired chief philanthropy officer and four other former employees at Renton, Wash.-based Providence filed a lawsuit April 17 against the system, alleging the organization failed to monitor retirement plans that lost nearly $70 million in five years.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Endeavor cuts operating loss in 2025",
-      "url": "https://www.beckershospitalreview.com/finance/endeavor-cuts-operating-loss-in-2025/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-20",
-      "summary": "Evanston, Ill.-based Endeavor Health recorded an operating loss of $33.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Washington hospital staff oppose PeaceHealth&#8217;s plan for more swing beds",
-      "url": "https://www.beckershospitalreview.com/quality/patient-safety-outcomes/washington-hospital-staff-oppose-peacehealths-plan-for-more-swing-beds/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-20",
-      "summary": "After a critical access hospital in Sedro-Woolley, Wash., redesignated all 25 acute care beds to a &#8220;swing&#8221; status, nurses have raised patient safety concerns, according to an April 19 report from the Cascadia Daily News.",
-      "category": "quality_safety",
-      "categoryLabel": "Quality & Safety"
-    },
-    {
-      "title": "STAT+: At AACR, a provocative use of CAR-T, Merck’s new thing and cancer’s geography problem",
-      "url": "https://www.statnews.com/2026/04/20/aacr-2026-car-t-multiple-myeloma-merck-rural-health-ai/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-20",
-      "summary": "At AACR, a bold use of CAR-T raises hopes and provocative questions about its use in smoldering multiple myeloma.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: Former banker brought on to revitalize Pfizer’s strategy departs his post",
-      "url": "https://www.statnews.com/2026/04/20/andrew-baum-pfizer-leaves-post/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-20",
-      "summary": "Andrew Baum, a former Citi analyst, has left his role as Pfizer's executive vice president and chief strategy and innovation officer.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: In early trial, CAR-T results raise hope of preventing multiple myeloma in high-risk patients",
-      "url": "https://www.statnews.com/2026/04/20/aacr-2026-car-t-trial-results-carvykti-smoldering-multiple-myeloma/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-20",
-      "summary": "A CAR-T trial shows promise in preventing smoldering multiple myeloma from becoming the real thing.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: Trump order to advance psychedelic treatments generates excitement — and worries",
-      "url": "https://www.statnews.com/2026/04/20/trump-eo-psychedelics-advocates-hail-executive-order-fret-politicized-science/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-20",
-      "summary": "President Trump’s executive order on was largely applauded by advocates. But some also quietly worried the White House’s role risks politicizing their field and undermining its credibility.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Opinion: The contradiction at the heart of Republicans’ embrace of psychedelics",
-      "url": "https://www.statnews.com/2026/04/20/trump-executive-order-psychedelics-republicans-veterans-ibogaine/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-20",
-      "summary": "“The research is clear about one thing: Recovery is not primarily a pharmacological event,” write Dimitri Mugianis and Ross Ellenhorn.",
-      "category": "general_market",
       "categoryLabel": "General Market"
     }
   ]
