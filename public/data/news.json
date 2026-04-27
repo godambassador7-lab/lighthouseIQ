@@ -1,88 +1,88 @@
 {
-  "lastUpdated": "2026-04-27T19:32:53.017Z",
+  "lastUpdated": "2026-04-27T21:08:44.894Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 11,
-    "staleSources": 5,
-    "healthySources": 6,
+    "staleSources": 4,
+    "healthySources": 7,
     "sources": [
       {
         "source": "Fierce Healthcare",
         "articleCount": 180,
         "latestPublishedAt": "2026-04-27T00:00:00.000Z",
-        "staleHours": 19,
+        "staleHours": 21,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 163,
+        "articleCount": 169,
         "latestPublishedAt": "2026-04-27T00:00:00.000Z",
-        "staleHours": 19,
+        "staleHours": 21,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 80,
+        "articleCount": 75,
         "latestPublishedAt": "2026-04-27T00:00:00.000Z",
-        "staleHours": 19,
+        "staleHours": 21,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 28,
         "latestPublishedAt": "2026-04-27T00:00:00.000Z",
-        "staleHours": 19,
+        "staleHours": 21,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
-        "articleCount": 17,
+        "articleCount": 14,
         "latestPublishedAt": "2026-04-27T00:00:00.000Z",
-        "staleHours": 19,
+        "staleHours": 21,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 7,
         "latestPublishedAt": "2026-04-27T00:00:00.000Z",
-        "staleHours": 19,
+        "staleHours": 21,
+        "status": "ok"
+      },
+      {
+        "source": "SEC Healthcare Filings",
+        "articleCount": 7,
+        "latestPublishedAt": "2026-04-27T00:00:00.000Z",
+        "staleHours": 21,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 6,
         "latestPublishedAt": "2026-04-23T00:00:00.000Z",
-        "staleHours": 115,
+        "staleHours": 117,
         "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 5,
         "latestPublishedAt": "2026-04-24T00:00:00.000Z",
-        "staleHours": 91,
-        "status": "stale"
-      },
-      {
-        "source": "SEC Healthcare Filings",
-        "articleCount": 5,
-        "latestPublishedAt": "2026-04-24T00:00:00.000Z",
-        "staleHours": 91,
+        "staleHours": 93,
         "status": "stale"
       },
       {
         "source": "Health Affairs",
         "articleCount": 5,
         "latestPublishedAt": "2026-04-22T00:00:00.000Z",
-        "staleHours": 139,
+        "staleHours": 141,
         "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 4,
         "latestPublishedAt": "2026-04-23T00:00:00.000Z",
-        "staleHours": 115,
+        "staleHours": 117,
         "status": "stale"
       }
     ]
@@ -102,7 +102,7 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 79
+      "count": 76
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -110,11 +110,11 @@
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
-      "count": 5
+      "count": 6
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 155
+      "count": 157
     },
     "general_market": {
       "label": "General Market",
@@ -134,7 +134,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 91,
+        "actual": 107,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -144,7 +144,7 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 5,
+        "actual": 4,
         "pass": false
       }
     }
@@ -235,6 +235,18 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
+      "title": "HCA 8-K filing - HCA Healthcare, Inc.",
+      "summary": "HCA Healthcare, Inc. filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/860730/000119312526182265/hca-20260427.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-04-27",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "National Institute on Deafness and Other Communication Disorders; Notice of Meeting",
       "summary": "",
       "url": "https://www.federalregister.gov/documents/2026/04/27/2026-08117/national-institute-on-deafness-and-other-communication-disorders-notice-of-meeting",
@@ -259,97 +271,136 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "Health system governance is falling behind: 8 things to know",
-      "url": "https://www.beckershospitalreview.com/hospital-management-administration/health-system-governance-is-falling-behind-8-things-to-know/",
+      "title": "CI 8-K filing - The Cigna Group",
+      "summary": "The Cigna Group filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1739940/000114036126017123/ef20071227_8k.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-04-27",
+      "category": "general_market",
+      "relevance": 85,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Judy Faulkner warns AI can be &#8216;gamed&#8217; in healthcare",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/innovation/judy-faulkner-warns-ai-can-be-gamed-in-healthcare/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-04-27",
-      "summary": "Nonprofit health system boards are governing larger, more complex enterprises than ever before, but a report published April 27 by The Governance Institute — part of NRC Health — argues that governance capability has not kept pace with that reality. The report draws on survey data, public health spending figures and field experience to examine [&#8230;] The post Health system governance is falling behind: 8 things to know appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "summary": "Epic founder and CEO Judy Faulkner cautions that AI can be manipulated, so the healthcare industry should cautiously monitor its evolution. &#8220;Lots of things have been gamed lately.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Louisiana health system rebrands",
+      "url": "https://www.beckershospitalreview.com/digital-marketing/louisiana-health-system-rebrands-2/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-27",
+      "summary": "Hammond, La.-based North Oaks Health System has rebranded as North Oaks Health.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
     {
-      "title": "14 health system rating downgrades",
-      "url": "https://www.beckershospitalreview.com/finance/14-health-system-rating-downgrades/",
+      "title": "Lifepoint names 5 new hospital CEOs",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/lifepoint-names-5-new-hospital-ceos/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-04-27",
-      "summary": "Multiple hospitals and health systems have suffered downgrades to their financial ratings this year amid rising expenses, ongoing operating losses and challenging work environments. Here are 14 hospitals and health systems that received credit rating downgrades from Fitch Ratings or Moody’s Investors Service in 2026: Children’s Hospital Los Angeles’ credit rating was downgraded to “Ba2” [&#8230;] The post 14 health system rating downgrades appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "summary": "Brentwood, Tenn.-based Lifepoint Health has recently appointed new CEOs at five of its hospitals.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "VCU pediatric hospital taps 1st COO",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/vcu-pediatric-hospital-taps-1st-coo/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-27",
+      "summary": "Katie Golob has been appointed the inaugural COO for Children&#8217;s Hospital of Richmond (Va.), part of Richmond-based VCU Health.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
     {
-      "title": "Hall Render adds 3 shareholders",
-      "url": "https://www.beckershospitalreview.com/hospital-management-administration/hall-render-adds-3-shareholders/",
+      "title": "22 C-suite job openings with CHS",
+      "url": "https://www.beckershospitalreview.com/hospital-management-administration/22-c-suite-job-openings-with-chs/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-04-27",
-      "summary": "Indianapolis-based Hall, Render, Killian, Heath &#38; Lyman, P.C.",
+      "summary": "Community Health Systems, a for-profit hospital operator based in Franklin, Tenn., is seeking leaders for numerous C-suite roles across its facilities.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "Elevance sets aside $935M over Medicare Advantage enrollment threat",
+      "url": "https://www.beckershospitalreview.com/finance/elevance-sets-aside-935m-over-medicare-advantage-enrollment-threat/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-27",
+      "summary": "Elevance Health has set aside $935 million to cover potential costs tied to its ongoing risk adjustment data dispute with CMS, which threatens the insurers&#8217; ability to enroll new members into some of its Medicare Advantage plans. CFO Mark Kaye disclosed the charge during the company&#8217;s first quarter earnings call on April 22, saying the [&#8230;] The post Elevance sets aside $935M over Medicare Advantage enrollment threat appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "All &#8216;good standing&#8217; Texas hospital staff to keep jobs after Christus acquisition",
+      "url": "https://www.beckershospitalreview.com/finance/all-good-standing-texas-hospital-staff-to-keep-jobs-after-christus-acquisition/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-27",
+      "summary": "Irving, Texas-based Christus Health has shared plans to retain all Mount Pleasant, Texas-based Titus Regional Medical Center employees &#8220;in good standing&#8221; after May 1, once the system acquires the independent hospital.&#160; &#8220;As we welcome our new associates, our foremost priority is honoring the individuals who have faithfully served Titus Regional Medical Center,&#8221; a spokesperson for [&#8230;] The post All &#8216;good standing&#8217; Texas hospital staff to keep jobs after Christus acquisition appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Allina transformation chief heads to NorthBay",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/allina-transformation-chief-heads-to-northbay/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-27",
+      "summary": "Molly Clark has been appointed executive vice president and chief administrative officer at Fairfield, Calif.-based NorthBay Health.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "What precision care AI looks like at enterprise scale — 4 takeaways",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/innovation/what-precision-care-ai-looks-like-at-enterprise-scale-4-takeaways/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-27",
+      "summary": "With an estimated 140,000 health AI companies competing for health system attention, the challenge for executives is no longer whether to adopt AI but how to evaluate which platforms will deliver at scale. During a featured session at Becker&#8217;s 16th Annual Meeting in April, sponsored by GW RhythmX, three health system leaders joined the company&#8217;s [&#8230;] The post What precision care AI looks like at enterprise scale — 4 takeaways appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "&#8216;Things are moving too fast&#8217;: Health systems intensify IT vendor scrutiny",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/innovation/things-are-moving-too-fast-health-systems-intensify-it-vendor-scrutiny/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-27",
+      "summary": "With the proliferation of AI and other technology vendors, health systems are applying a fresh level of scrutiny to IT solutions to ensure they&#8217;re actually solving the intended problems — and that their organizations can&#8217;t do the same thing themselves, executives told Becker&#8217;s. In recent months, some high-profile vendor exits have made headlines, with health [&#8230;] The post &#8216;Things are moving too fast&#8217;: Health systems intensify IT vendor scrutiny appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "New U.S. recommendation on hepatitis B vaccine will have dire consequences, studies project",
+      "url": "https://www.statnews.com/2026/04/27/jama-studies-hepatitis-b-vaccination-newborns/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-04-27",
+      "summary": "A new policy that recommends offering hepatitis B vaccine at birth only to babies perceived to be at risk will lead to increased numbers of infected infants and more cases&#8230;",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
     {
-      "title": "Elevating the assessment: Four solutions to common IT challenges when implementing equipment or software",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/elevating-the-assessment-four-solutions-to-common-it-challenges-when-implementing-equipment-or-software/",
-      "source": "Becker's Hospital Review",
+      "title": "Supreme Court grapples with multibillion-dollar wave of lawsuits over Roundup cancer claims",
+      "url": "https://www.statnews.com/2026/04/27/supreme-court-lawsuits-roundup-weedkiller-cancer-claims/?utm_campaign=rss",
+      "source": "STAT News",
       "publishedAt": "2026-04-27",
-      "summary": "Technology and efficiency are moving at a faster pace than ever before, and in healthcare IT, that means an emerging need for IT teams to be at the forefront of system assessment and implementation. Your team should be actively partnering with the clinical team and other decision makers on how to improve and optimize workflows [&#8230;] The post Elevating the assessment: Four solutions to common IT challenges when implementing equipment or software appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
+      "summary": "The Supreme Court seemed divided Monday over whether to block thousands of lawsuits alleging the maker of the weedkiller Roundup failed to warn people it could cause cancer.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Covenant Health taps new CFO",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/covenant-health-taps-new-cfo/",
-      "source": "Becker's Hospital Review",
+      "title": "STAT+: Erasca touts strong, though preliminary, results in trial of pancreatic and lung cancer therapy",
+      "url": "https://www.statnews.com/2026/04/27/erasca-pancreatic-cancer-study-results/?utm_campaign=rss",
+      "source": "STAT News",
       "publishedAt": "2026-04-27",
-      "summary": "Eric Jolly was named CFO of Andover, Mass.-based Covenant Health, according to an April 27 LinkedIn post.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
+      "summary": "The drugmaker Erasca said results on its experimental pill in a trial of pancreatic cancer and non-small cell lung cancer exceeded its expectations.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "New Jersey system taps new vice president of financial planning and analysis",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/new-jersey-system-taps-new-vice-president-of-financial-planning-and-analysis/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-27",
-      "summary": "Melanie Shipek has been named vice president of financial planning and analysis for Morristown, N.J.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Tennessee hospital, Encompass partner on rehab facility",
-      "url": "https://www.beckershospitalreview.com/post-acute/tennessee-hospital-encompass-partner-on-rehab-facility/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-27",
-      "summary": "Birmingham, Ala.-based Encompass Health has partnered with Cookeville (Tenn.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Ascension Dell Children&#8217;s awarded for child safety efforts",
-      "url": "https://www.beckershospitalreview.com/quality/public-health/ascension-dell-childrens-awarded-for-child-safety-efforts/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-27",
-      "summary": "Austin, Texas-based Ascension Dell Children&#8217;s Medical Center received the &#8220;National Child Passenger Safety Team of the Year&#8221; award for its work around car seats. The award was presented by the National Child Passenger Safety Board and recognizes Dell Children&#8217;s dedicated child passenger safety technician team, according to an April 21 system news release.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Catholic Health hospital taps chief nursing officer",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/catholic-health-hospital-taps-chief-nursing-officer/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-27",
-      "summary": "Port Jefferson, N.Y.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "New Mexico hospital inks deal with Medline",
-      "url": "https://www.beckershospitalreview.com/supply-chain/new-mexico-hospital-inks-deal-with-medline/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-27",
-      "summary": "Gallup, N.M.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Dems say RFK Jr. has a pattern of failing to answer their questions",
+      "title": "STAT+: Dems say RFK Jr. has a pattern of failing to answer their questions",
       "url": "https://www.statnews.com/2026/04/27/rfk-jr-questions-from-democrats-unanswered-congressional-hearings/?utm_campaign=rss",
       "source": "STAT News",
       "publishedAt": "2026-04-27",
@@ -500,6 +551,105 @@
       "summary": "<p>The overlooked surgery category quietly driving utilization and cost for health plans</p>",
       "category": "general_market",
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "Health system governance is falling behind: 8 things to know",
+      "url": "https://www.beckershospitalreview.com/hospital-management-administration/health-system-governance-is-falling-behind-8-things-to-know/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-27",
+      "summary": "Nonprofit health system boards are governing larger, more complex enterprises than ever before, but a report published April 27 by The Governance Institute — part of NRC Health — argues that governance capability has not kept pace with that reality. The report draws on survey data, public health spending figures and field experience to examine [&#8230;] The post Health system governance is falling behind: 8 things to know appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "14 health system rating downgrades",
+      "url": "https://www.beckershospitalreview.com/finance/14-health-system-rating-downgrades/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-27",
+      "summary": "Multiple hospitals and health systems have suffered downgrades to their financial ratings this year amid rising expenses, ongoing operating losses and challenging work environments. Here are 14 hospitals and health systems that received credit rating downgrades from Fitch Ratings or Moody’s Investors Service in 2026: Children’s Hospital Los Angeles’ credit rating was downgraded to “Ba2” [&#8230;] The post 14 health system rating downgrades appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Hall Render adds 3 shareholders",
+      "url": "https://www.beckershospitalreview.com/hospital-management-administration/hall-render-adds-3-shareholders/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-27",
+      "summary": "Indianapolis-based Hall, Render, Killian, Heath &#38; Lyman, P.C.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Elevating the assessment: Four solutions to common IT challenges when implementing equipment or software",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/elevating-the-assessment-four-solutions-to-common-it-challenges-when-implementing-equipment-or-software/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-27",
+      "summary": "Technology and efficiency are moving at a faster pace than ever before, and in healthcare IT, that means an emerging need for IT teams to be at the forefront of system assessment and implementation. Your team should be actively partnering with the clinical team and other decision makers on how to improve and optimize workflows [&#8230;] The post Elevating the assessment: Four solutions to common IT challenges when implementing equipment or software appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Covenant Health taps new CFO",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/covenant-health-taps-new-cfo/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-27",
+      "summary": "Eric Jolly was named CFO of Andover, Mass.-based Covenant Health, according to an April 27 LinkedIn post.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "New Jersey system taps new vice president of financial planning and analysis",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/new-jersey-system-taps-new-vice-president-of-financial-planning-and-analysis/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-27",
+      "summary": "Melanie Shipek has been named vice president of financial planning and analysis for Morristown, N.J.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Tennessee hospital, Encompass partner on rehab facility",
+      "url": "https://www.beckershospitalreview.com/post-acute/tennessee-hospital-encompass-partner-on-rehab-facility/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-27",
+      "summary": "Birmingham, Ala.-based Encompass Health has partnered with Cookeville (Tenn.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Ascension Dell Children&#8217;s awarded for child safety efforts",
+      "url": "https://www.beckershospitalreview.com/quality/public-health/ascension-dell-childrens-awarded-for-child-safety-efforts/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-27",
+      "summary": "Austin, Texas-based Ascension Dell Children&#8217;s Medical Center received the &#8220;National Child Passenger Safety Team of the Year&#8221; award for its work around car seats. The award was presented by the National Child Passenger Safety Board and recognizes Dell Children&#8217;s dedicated child passenger safety technician team, according to an April 21 system news release.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Catholic Health hospital taps chief nursing officer",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/catholic-health-hospital-taps-chief-nursing-officer/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-27",
+      "summary": "Port Jefferson, N.Y.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "New Mexico hospital inks deal with Medline",
+      "url": "https://www.beckershospitalreview.com/supply-chain/new-mexico-hospital-inks-deal-with-medline/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-27",
+      "summary": "Gallup, N.M.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Dems say RFK Jr. has a pattern of failing to answer their questions",
+      "url": "https://www.statnews.com/2026/04/27/rfk-jr-questions-from-democrats-unanswered-congressional-hearings/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-04-27",
+      "summary": "Kennedy broke his pledge to share a controversial contract, highlighting Democrats' frustrations with the health secretary.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "As coordination grows more complex, intelligent care is reshaping the response",
@@ -4670,150 +4820,6 @@
       "summary": "A judge is expected to sentence OxyContin maker Purdue Pharma to forfeit $225 million to the Justice Department on Tuesday, clearing the way for the company to finalize a settlement&#8230;",
       "category": "general_market",
       "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: CMS to ask every state for new audits of health care providers",
-      "url": "https://www.statnews.com/2026/04/21/cms-requires-state-audits-health-care-providers-medicare-medicaid/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-21",
-      "summary": "The Trump administration has been heavily focused on combating purported fraud in federal health care programs.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "STAT+: Kelonia Therapeutics&#8217; road from floundering to $3 billion",
-      "url": "https://www.statnews.com/2026/04/21/biotech-news-kelonia-road-from-floundering-to-3-billion/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-21",
-      "summary": "BioAge bets on inflammation, a short Pfizer career, and more biotech news from The Readout",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Pharmalittle: We&#8217;re reading about a Purdue Pharma settlement, a setback for Merck and Eisai, and more",
-      "url": "https://www.statnews.com/pharmalot/2026/04/21/purdue-pharma-settlement-setback-for-merck-and-eisai/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-21",
-      "summary": "A U.S.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "This CDC conference was always open to the public. Until now",
-      "url": "https://www.statnews.com/2026/04/21/health-news-cdc-conference-was-always-open-to-the-public-until-now/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-21",
-      "summary": "A federal ruling against Kennedy's gender declaration, when food insecure families don't qualify for SNAP, and other health news",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: Kennedy hints at coming breakthrough device announcement",
-      "url": "https://www.statnews.com/2026/04/21/kennedy-hints-breakthrough-device-announcement-health-tech/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-21",
-      "summary": "In this edition of STAT Health Tech: Health secretary hints at possible announcement on how breakthrough medical devices are paid for, and more.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: BioAge says experimental pill aimed at reducing heart risks significantly reduced inflammation",
-      "url": "https://www.statnews.com/2026/04/21/bioage-drug-inflammation-cardiovascular-risks/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-21",
-      "summary": "BioAge Labs said its investigational pill for cardiovascular risk prevention significantly reduced inflammation in an early study.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: Tortugas Neuroscience launches with hopes to develop drugs for brain disorders, other conditions",
-      "url": "https://www.statnews.com/2026/04/21/tortugas-neuroscience-jiangsu-hansoh-eisai/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-21",
-      "summary": "Tortugas Neuroscience launched Tuesday with plans to develop drugs licensed from Chinese drugmaker Jiangsu Hansoh and Japanese pharmaceutical Eisai.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Opinion: What happens when a chief executive loses executive functions?",
-      "url": "https://www.statnews.com/2026/04/21/executive-function-ceo-politician-leader-experts/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-21",
-      "summary": "When a CEO develops acquired executive dysfunction yet remains in their role, the challenges are significant.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Opinion: The U.S. health care system is built around looking backward",
-      "url": "https://www.statnews.com/2026/04/21/us-health-care-reconstruction-insurance-prior-authorization/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-21",
-      "summary": "A reconstruction layer has fallen on medicine. It asks: Was the original decision justified?",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "UnitedHealth hikes profit outlook after better-than-expected first quarter",
-      "url": "https://www.healthcaredive.com/news/unitedhealth-hikes-2026-profit-outlook-q1-results/817993/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-04-21",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Blue Shield of California taps chief pharmacy officer",
-      "url": "https://www.healthcaredive.com/news/blue-shield-california-chief-pharmacy-officer-hayley-park/818058/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-04-21",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Providers push back on 340B rebate model",
-      "url": "https://www.healthcaredive.com/news/providers-push-back-340b-rebate-model-comments/818043/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-04-21",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "CMS pauses weight-loss BALANCE model indefinitely for Medicare",
-      "url": "https://www.beckershospitalreview.com/glp-1s/cms-pauses-weight-loss-balance-model-indefinitely-for-medicare/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-21",
-      "summary": "CMS is holding off on its voluntary &#8220;Better Approaches to Lifestyle and Nutrition for Comprehensive hEalth&#8221; model pilot for Medicare Part D, the agency confirmed to Becker&#8217;s April 21. Under BALANCE, CMS would negotiate lower GLP-1 prices for Medicaid programs and Medicare Part D plans.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "CMS to require states to audit Medicaid providers",
-      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/cms-to-require-states-to-audit-medicaid-providers/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-21",
-      "summary": "CMS Administrator Mehmet Oz, MD, said his administration will require all states to audit healthcare providers to address alleged Medicaid fraud, Politico reported April 21. Dr.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "NIH grants differ 0.1%, 40% between DO, MD colleges",
-      "url": "https://www.beckershospitalreview.com/quality/hospital-physician-relationships/nih-grants-differ-0-1-40-between-do-md-colleges/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-21",
-      "summary": "As only 0.1% National Institutes of Health grants are awarded to osteopathic medicine colleges, a national association for such schools is advocating for a stronger research pipeline, according to a report published April 20.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Kaiser plans new hospital in San Francisco: 8 things to know",
-      "url": "https://www.beckershospitalreview.com/capital/kaiser-plans-new-hospital-in-san-francisco-8-things-to-know/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-21",
-      "summary": "Oakland, Calif.-based Kaiser Permanente is planning its first replacement hospital in San Francisco in 70 years, the health system confirmed in a statement shared with Becker&#8217;s.",
-      "category": "capacity_expansion",
-      "categoryLabel": "Capacity & Expansion"
     }
   ]
 }
