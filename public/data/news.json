@@ -1,82 +1,82 @@
 {
-  "lastUpdated": "2026-04-28T14:19:23.887Z",
+  "lastUpdated": "2026-04-28T17:00:51.237Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 3,
-    "healthySources": 7,
+    "staleSources": 2,
+    "healthySources": 8,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 187,
+        "articleCount": 180,
         "latestPublishedAt": "2026-04-28T00:00:00.000Z",
-        "staleHours": 14,
+        "staleHours": 17,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 166,
+        "articleCount": 169,
         "latestPublishedAt": "2026-04-28T00:00:00.000Z",
-        "staleHours": 14,
+        "staleHours": 17,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 73,
+        "articleCount": 74,
         "latestPublishedAt": "2026-04-28T00:00:00.000Z",
-        "staleHours": 14,
+        "staleHours": 17,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 27,
         "latestPublishedAt": "2026-04-28T00:00:00.000Z",
-        "staleHours": 14,
+        "staleHours": 17,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
-        "articleCount": 14,
-        "latestPublishedAt": "2026-04-27T00:00:00.000Z",
-        "staleHours": 38,
+        "articleCount": 16,
+        "latestPublishedAt": "2026-04-28T00:00:00.000Z",
+        "staleHours": 17,
         "status": "ok"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 9,
         "latestPublishedAt": "2026-04-28T00:00:00.000Z",
-        "staleHours": 14,
+        "staleHours": 17,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 9,
         "latestPublishedAt": "2026-04-24T00:00:00.000Z",
-        "staleHours": 110,
+        "staleHours": 113,
         "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 8,
         "latestPublishedAt": "2026-04-28T00:00:00.000Z",
-        "staleHours": 14,
+        "staleHours": 17,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 5,
         "latestPublishedAt": "2026-04-24T00:00:00.000Z",
-        "staleHours": 110,
+        "staleHours": 113,
         "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
-        "articleCount": 2,
-        "latestPublishedAt": "2026-04-23T00:00:00.000Z",
-        "staleHours": 134,
-        "status": "stale"
+        "articleCount": 3,
+        "latestPublishedAt": "2026-04-28T00:00:00.000Z",
+        "staleHours": 17,
+        "status": "ok"
       }
     ]
   },
@@ -95,7 +95,7 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 78
+      "count": 77
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -107,18 +107,16 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 161
+      "count": 159
     },
     "general_market": {
       "label": "General Market",
-      "count": 212
+      "count": 215
     }
   },
   "quality": {
-    "status": "warning",
-    "failedChecks": [
-      "maxStaleSources"
-    ],
+    "status": "pass",
+    "failedChecks": [],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -127,7 +125,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 61,
+        "actual": 76,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -137,8 +135,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 3,
-        "pass": false
+        "actual": 2,
+        "pass": true
       }
     }
   },
@@ -202,6 +200,18 @@
       "category": "quality_safety",
       "relevance": 100,
       "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "National Nurses United endorses Abdul El-Sayed to represent Michigan in U.S. Senate",
+      "summary": "National Nurses United (NNU) today announced its endorsement of Abdul El-Sayed from Michigan for U.S. Senate. El-Sayed has been a longtime partner to NNU in the fight to win a single-payer health care system, and nurses are ready to send him to Congress.",
+      "url": "https://www.nationalnursesunited.org/press/national-nurses-united-endorses-abdul-el-sayed-to-represent-michigan-in-us-senate",
+      "source": "National Nurses United RSS",
+      "sourceType": "rss",
+      "sourceId": "nnu_rss",
+      "publishedAt": "2026-04-28",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
     },
     {
       "title": "Agency Forms Undergoing Paperwork Reduction Act Review",
@@ -286,6 +296,276 @@
       "category": "general_market",
       "relevance": 85,
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "6 best healthcare employers for career growth: LinkedIn",
+      "url": "https://www.beckershospitalreview.com/workforce/6-best-healthcare-employers-for-career-growth-linkedin/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-28",
+      "summary": "Six healthcare organizations — including one health system — have been recognized on LinkedIn&#8217;s list of the 50 best U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "35 health systems with strong finances",
+      "url": "https://www.beckershospitalreview.com/finance/35-health-systems-with-strong-finances-2/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-28",
+      "summary": "Here are 35 health systems with strong operational metrics and solid financial positions, according to reports from credit rating agencies Fitch Ratings and Moody’s Investors Service released in 2026. Note: This is not an exhaustive list.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "HCA taps new senior vice president of marketing, corporate affairs",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/hca-taps-new-senior-vice-president-of-marketing-corporate-affairs/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-28",
+      "summary": "Cynthia Cifuentes-Finkel has been named senior vice president of marketing and corporate affairs of Nashville, Tenn.-based HCA Healthcare, effective June 8.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "The federal policy pushing physicians out of medicine",
+      "url": "https://www.beckershospitalreview.com/news/the-federal-policy-pushing-physicians-out-of-medicine/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-28",
+      "summary": "Physicians are increasingly uncertain if their career choice was worth the debt they took on for training — and some of them would not choose medicine again under new federal caps on student loans, according to new data from Panacea Financial shared with Becker&#8217;s. The survey included responses from 270 physicians and was conducted in [&#8230;] The post The federal policy pushing physicians out of medicine appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "UChicago Medicine to roll out systemwide digital platform",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/innovation/uchicago-medicine-to-roll-out-systemwide-digital-platform/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-28",
+      "summary": "UChicago Medicine plans to deploy a large-scale digital infrastructure platform across its facilities through a new agreement with healthcare technology company Artisight. Under the agreement, the health system will bring Artisight&#8217;s Smart Hospital Platform to multiple care settings, including patient rooms, operating rooms and post-anesthesia care units.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "West Virginia hospital names interim administrative chief",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/west-virginia-hospital-names-interim-administrative-chief/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-28",
+      "summary": "Vandalia Health, based in Charleston, W.Va.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Hospital Security: Mission-critical communications in care",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/hospital-security-mission-critical-communications-in-care/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-28",
+      "summary": "Maintaining safe and secure healthcare environments is a major priority for all medical professionals. However, the high-risk, fast-paced nature of modern healthcare can make addressing security situations uniquely challenging, often requiring advanced technologies and adaptive processes to drive timely communications and efficient incident responses.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "UPMC Washington launches inpatient teleneurosurgery consult service",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/telehealth/upmc-launches-inpatient-teleneurosurgery-consult-service/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-28",
+      "summary": "UPMC Washington (Pa.) has rolled out a new inpatient tele-neurosurgery consultation service.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Encompass Florida rehabilitation hospital taps CEO",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/encompass-florida-rehabilitation-hospital-taps-ceo/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-28",
+      "summary": "Encompass Health Rehabilitation Hospital of Largo (Fla.), has named Nolan Willoughby as CEO.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "10 predictions for hospital margins: Moody&#8217;s",
+      "url": "https://www.beckershospitalreview.com/finance/10-predictions-for-hospital-margins-moodys/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-28",
+      "summary": "Hospitals are bracing for a cascade of financial pressures as rising insurance costs, Medicaid restrictions and a growing number of uninsured patients threaten to reshape patient behavior and erode margins in the years ahead, according to a new Moody&#8217;s Healthcare Quarterly report. From declining elective procedure volumes to worsening payer mix and ballooning bad debt, [&#8230;] The post 10 predictions for hospital margins: Moody&#8217;s appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "STAT+: Supreme Court to hear case about &#8216;skinny labeling&#8217; and generic access",
+      "url": "https://www.statnews.com/pharmalot/2026/04/28/supreme-court-case-skinny-labeling-generics-access/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-04-28",
+      "summary": "The Supreme Court on Wednesday will hear oral arguments about a simmering controversy over so-called skinny labels, with implications for the availability of generics.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "STAT+: Boehringer&#8217;s obesity drug shows 16.6% weight loss; more data needed",
+      "url": "https://www.statnews.com/2026/04/28/biotech-news-boehringer-drug-looks-efficacious-but-more-data-needed/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-04-28",
+      "summary": "Eli Lilly's deal with Profluent, Erasca's RAS-targeting cancer pill, and more biotech news today",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "STAT+: Google&#8217;s clinical director on AI challenges",
+      "url": "https://www.statnews.com/2026/04/28/googles-clinical-director-on-ai-chatbot-challenges-health-tech/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-04-28",
+      "summary": "In this edition of STAT Health Tech newsletter: a conversation with Google's clinical director, an update on Doctronic's Utah experiment, and more.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "STAT+: Pharmalittle: We&#8217;re reading about warnings over Trump&#8217;s MFN plan, Purdue Pharma sentencing, and more",
+      "url": "https://www.statnews.com/pharmalot/2026/04/28/warnings-over-trump-drug-pricing-plan-purdue-pharma-sentencing/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-04-28",
+      "summary": "The Novartis CEO warned that Trump's drug pricing policy poses a “very difficult situation” and the reality will soon catch up with drugmakers and patients",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Predicting consequences of new hepatitis B vaccine recs",
+      "url": "https://www.statnews.com/2026/04/28/health-news-dangerous-consequences-of-new-hep-b-vaccine-guidelines/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-04-28",
+      "summary": "New data on public trust in science, AI and mental health, and other news from Morning Rounds",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "STAT+: Eli Lilly enlists AI startup for next-generation gene editors",
+      "url": "https://www.statnews.com/2026/04/28/eli-lilly-crispr-gene-editing-deal-profluent-ai/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-04-28",
+      "summary": "Eli Lilly's deal with Profluent aims to go beyond CRISPR by using AI-designed enzymes to insert entire genes. It could reshape genetic medicine.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "STAT+: Google clinical director says AI can be a ‘bridge’ for people having a mental health crisis",
+      "url": "https://www.statnews.com/2026/04/28/google-gemini-ai-mental-health-safety-interview-clinical-director-megan-jones-bell/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-04-28",
+      "summary": "Google's clinical director Megan Bell Jones on how the company is addressing concerns over mental health impacts of its AI products.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "STAT+: A giant question looms over GOP’s new Medicaid work requirements",
+      "url": "https://www.statnews.com/2026/04/28/medicaid-work-requirements-enrollment-losses-will-not-be-tracked/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-04-28",
+      "summary": "Coverage losses tied to Medicaid work requirements may not be tracked in every states.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Opinion: Why do discussions about ‘brain health’ ignore mental illness?",
+      "url": "https://www.statnews.com/2026/04/28/brain-health-mental-illness-neurodegenerative-disorders-connection/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-04-28",
+      "summary": "“Failing to adopt a more inclusive concept of brain health represents a massive loss of human potential,” write Husseini K. Manji, Eric J.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Opinion: It’s time to seize the rare bipartisan opening to address microplastics",
+      "url": "https://www.statnews.com/2026/04/28/microplastics-nanoplastics-health-epa-trump-arpa-h/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-04-28",
+      "summary": "“This could be the start of serious action on microplastics. Or it could end up as a headline with little behind it,” write Tim Ryan and Justin Zorn.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "Centene hikes 2026 profit guidance after buoyant Q1",
+      "url": "https://www.healthcaredive.com/news/centene-hikes-2026-profit-guidance-buoyant-q1/818581/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-04-28",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Frequency of medical liability lawsuits is declining, but risk remains for doctors: AMA",
+      "url": "https://www.healthcaredive.com/news/frequency-medical-liability-lawsuits-declining-risk-remains-doctors-ama/818614/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-04-28",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Big companies position themselves for payday from $50B federal rural health fund",
+      "url": "https://www.fiercehealthcare.com/regulatory/big-companies-position-themselves-payday-50b-federal-rural-health-fund",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-28",
+      "summary": "State plans reveal that a heavy dose of prescribed spending will go to companies that can increase the use of electronic health records, strengthen cybersecurity, and improve state and health system technology platforms. And, at least four large-scale coalitions of companies are now pitching multipronged services to the states.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Centene raises 2026 guidance with strong Q1 revenue, earnings results",
+      "url": "https://www.fiercehealthcare.com/payers/centene-raises-2026-guidance-strong-q1-revenue-earnings-results",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-28",
+      "summary": "Centene kicked off the first quarter with better-than-expected revenue and adjusted earnings results, signaling a recovery from a rough 2025 as the insurer makes progress in managing medical costs.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "CCS deploys enterprise-wide agentic AI across chronic care operations",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/ccs-deploys-enterprise-wide-agentic-ai-across-chronic-care-operations",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-28",
+      "summary": "CCS rolled out an agentic AI solution, dubbed CeeCee, that's designed to streamline the patient experience, improve medical supply workflows and boost operational efficiency, executives said.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "UChicago Medicine, Artisight partner on system-wide rollout of smart hospital platform",
+      "url": "https://www.fiercehealthcare.com/hospitals/uchicago-medicine-artisight-partner-smart-hospital-platform-deployment",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-28",
+      "summary": "More than 1,800 devices will be deployed across patient rooms, post-anesthesia care units, operating rooms and UChicago’s new 575,000-square-foot cancer care facility, the organizations said.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Medical professional liability premiums rise for 7th straight year",
+      "url": "https://www.fiercehealthcare.com/providers/medical-professional-liability-premiums-rise-seventh-straight-year",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-28",
+      "summary": "Nearly 40% of claims from leading medical liability insurers reflected year-to-year premium increases in 2025, even as the portion of physicians who have faced a lawsuit in the past year has stayed \"relatively low,\" the American Medical Association wrote in a pair of new reports.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Solace Health expands care navigation services to commercially insured patients",
+      "url": "https://www.fiercehealthcare.com/payers/solace-health-expands-care-navigation-services-commercially-insured-patients",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-28",
+      "summary": "Solace previously connected Medicare and Medicare Advantage patients to its services, which are now also available to many commercially insured patients, including UnitedHealthcare and Anthem Blue Cross Blue Shield.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Utah Medical Licensing Board urges state to shut down Doctronic AI prescribing pilot",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/utah-medical-licensing-board-urges-state-shut-down-doctronic-ai-prescribing",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-28",
+      "summary": "Doctors in the state of Utah are challenging an artificial intelligence-powered prescription medication refill system they say puts patient safety at risk.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Humana's CenterWell, Mark Cuban Cost Plus Drugs partner to tackle employers' drug costs",
+      "url": "https://www.fiercehealthcare.com/payers/humanas-centerwell-mark-cubans-cost-plus-drugs-handle-employers-prescriptions",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-28",
+      "summary": "The arrangement aims to create new \"end-to-end employer prescription solutions\" fueled by Cost Plus Drugs' software platform and drug pricing, as well as CenterWell Pharmacy's distribution infrastructure.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "Hospital CEO turnover flat year over year: 6 things to know",
@@ -376,150 +656,6 @@
       "summary": "Radiology and orthopedics tied for the specialties that lead to the highest net worth, an April 24 Medscape report found. Medscape&#8217;s 2026 &#8220;Physician Wealth and Debt Report&#8221; surveyed 5,916 physicians across more than 29 specialties between Sept.",
       "category": "general_market",
       "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Boehringer&#8217;s obesity drug shows 16.6% weight loss; more data needed",
-      "url": "https://www.statnews.com/2026/04/28/biotech-news-boehringer-drug-looks-efficacious-but-more-data-needed/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-28",
-      "summary": "Eli Lilly's deal with Profluent, Erasca's RAS-targeting cancer pill, and more biotech news today",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: Google&#8217;s clinical director on AI challenges",
-      "url": "https://www.statnews.com/2026/04/28/googles-clinical-director-on-ai-chatbot-challenges-health-tech/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-28",
-      "summary": "In this edition of STAT Health Tech newsletter: a conversation with Google's clinical director, an update on Doctronic's Utah experiment, and more.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: Pharmalittle: We&#8217;re reading about warnings over Trump&#8217;s MFN plan, Purdue Pharma sentencing, and more",
-      "url": "https://www.statnews.com/pharmalot/2026/04/28/warnings-over-trump-drug-pricing-plan-purdue-pharma-sentencing/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-28",
-      "summary": "The Novartis CEO warned that Trump's drug pricing policy poses a “very difficult situation” and the reality will soon catch up with drugmakers and patients",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Predicting consequences of new hepatitis B vaccine recs",
-      "url": "https://www.statnews.com/2026/04/28/health-news-dangerous-consequences-of-new-hep-b-vaccine-guidelines/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-28",
-      "summary": "New data on public trust in science, AI and mental health, and other news from Morning Rounds",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: Eli Lilly enlists AI startup for next-generation gene editors",
-      "url": "https://www.statnews.com/2026/04/28/eli-lilly-crispr-gene-editing-deal-profluent-ai/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-28",
-      "summary": "Eli Lilly's deal with Profluent aims to go beyond CRISPR by using AI-designed enzymes to insert entire genes. It could reshape genetic medicine.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: Google clinical director says AI can be a ‘bridge’ for people having a mental health crisis",
-      "url": "https://www.statnews.com/2026/04/28/google-gemini-ai-mental-health-safety-interview-clinical-director-megan-jones-bell/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-28",
-      "summary": "Google's clinical director Megan Bell Jones on how the company is addressing concerns over mental health impacts of its AI products.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: A giant question looms over GOP’s new Medicaid work requirements",
-      "url": "https://www.statnews.com/2026/04/28/medicaid-work-requirements-enrollment-losses-will-not-be-tracked/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-28",
-      "summary": "Coverage losses tied to Medicaid work requirements may not be tracked in every states.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Opinion: Why do discussions about ‘brain health’ ignore mental illness?",
-      "url": "https://www.statnews.com/2026/04/28/brain-health-mental-illness-neurodegenerative-disorders-connection/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-28",
-      "summary": "“Failing to adopt a more inclusive concept of brain health represents a massive loss of human potential,” write Husseini K. Manji, Eric J.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Opinion: It’s time to seize the rare bipartisan opening to address microplastics",
-      "url": "https://www.statnews.com/2026/04/28/microplastics-nanoplastics-health-epa-trump-arpa-h/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-28",
-      "summary": "“This could be the start of serious action on microplastics. Or it could end up as a headline with little behind it,” write Tim Ryan and Justin Zorn.",
-      "category": "capacity_expansion",
-      "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "Centene raises 2026 guidance with strong Q1 revenue, earnings results",
-      "url": "https://www.fiercehealthcare.com/payers/centene-raises-2026-guidance-strong-q1-revenue-earnings-results",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-28",
-      "summary": "Centene kicked off the first quarter with better-than-expected revenue and adjusted earnings results, signaling a recovery from a rough 2025 as the insurer makes progress in managing medical costs.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "CCS deploys enterprise-wide agentic AI across chronic care operations",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/ccs-deploys-enterprise-wide-agentic-ai-across-chronic-care-operations",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-28",
-      "summary": "CCS rolled out an agentic AI solution, dubbed CeeCee, that's designed to streamline the patient experience, improve medical supply workflows and boost operational efficiency, executives said.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "UChicago Medicine, Artisight partner on system-wide rollout of smart hospital platform",
-      "url": "https://www.fiercehealthcare.com/hospitals/uchicago-medicine-artisight-partner-smart-hospital-platform-deployment",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-28",
-      "summary": "More than 1,800 devices will be deployed across patient rooms, post-anesthesia care units, operating rooms and UChicago’s new 575,000-square-foot cancer care facility, the organizations said.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Medical professional liability premiums rise for 7th straight year",
-      "url": "https://www.fiercehealthcare.com/providers/medical-professional-liability-premiums-rise-seventh-straight-year",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-28",
-      "summary": "Nearly 40% of claims from leading medical liability insurers reflected year-to-year premium increases in 2025, even as the portion of physicians who have faced a lawsuit in the past year has stayed \"relatively low,\" the American Medical Association wrote in a pair of new reports.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Solace Health expands care navigation services to commercially insured patients",
-      "url": "https://www.fiercehealthcare.com/payers/solace-health-expands-care-navigation-services-commercially-insured-patients",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-28",
-      "summary": "Solace previously connected Medicare and Medicare Advantage patients to its services, which are now also available to many commercially insured patients, including UnitedHealthcare and Anthem Blue Cross Blue Shield.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Utah Medical Licensing Board urges state to shut down Doctronic AI prescribing pilot",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/utah-medical-licensing-board-urges-state-shut-down-doctronic-ai-prescribing",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-28",
-      "summary": "Doctors in the state of Utah are challenging an artificial intelligence-powered prescription medication refill system they say puts patient safety at risk.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Humana's CenterWell, Mark Cuban Cost Plus Drugs partner to tackle employers' drug costs",
-      "url": "https://www.fiercehealthcare.com/payers/humanas-centerwell-mark-cubans-cost-plus-drugs-handle-employers-prescriptions",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-28",
-      "summary": "The arrangement aims to create new \"end-to-end employer prescription solutions\" fueled by Cost Plus Drugs' software platform and drug pricing, as well as CenterWell Pharmacy's distribution infrastructure.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "AMA urges lawmakers to implement stronger safeguards for AI chatbots in mental health",
@@ -4687,141 +4823,6 @@
       "summary": "Watch RFK Jr. testify live before the Senate's health care panel.",
       "category": "general_market",
       "categoryLabel": "General Market"
-    },
-    {
-      "title": "Live updates: RFK Jr. continues congressional hearing appearances to talk White House budget plan",
-      "url": "https://www.fiercehealthcare.com/regulatory/rfk-jr-continues-congressional-hearing-appearances-talk-white-house-budget-plan",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-22",
-      "summary": "HHS Secretary Robert F. Kennedy Jr.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "CMS delays Part D GLP-1 model amid skepticism from insurers",
-      "url": "https://www.fiercehealthcare.com/payers/cms-delays-part-d-glp-1-model-amid-skepticism-insurers",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-22",
-      "summary": "The Trump administration is delaying a voluntary model that aimed to expand access to GLP-1s in Part D after pushback from insurers.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Florida system expands interventional radiology program",
-      "url": "https://www.beckershospitalreview.com/radiology/florida-system-expands-interventional-radiology-program/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-22",
-      "summary": "Coral Gables, Fla.-based Baptist Health Heart &#38; Vascular Care has added nine interventional radiology physicians to Baptist Health Miami Cardiac &#38; Vascular Institute.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "A third player enters the AI arms race",
-      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/a-third-player-enters-the-ai-arms-race/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-22",
-      "summary": "A new class of contenders is entering the AI arms race between payers and health systems. Several AI startups are now using large language models to fight insurance denials on behalf of patients with early results that are turning heads.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "10 hospitals, health systems looking for CFOs",
-      "url": "https://www.beckershospitalreview.com/finance/10-hospitals-health-systems-looking-for-cfos-3/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-22",
-      "summary": "Here are 10 hospitals and health systems that are seeking CFOs and assistant CFOs in recent job listings. 1.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "1st-of-its-kind nursing school graduates 1st cohort",
-      "url": "https://www.beckershospitalreview.com/quality/nursing/1st-of-its-kind-nursing-school-graduates-1st-cohort/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-22",
-      "summary": "Rogers-based Arkansas Health Care Association graduated the first class from its school of nursing, CBS affiliate KFSM-TV reported April 14. The first-of-its-kind program trains certified nursing assistants to become licensed practical nurses in long-term care facilities.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Northwell unveils toolkit for health systems to scale gun violence prevention efforts",
-      "url": "https://www.beckershospitalreview.com/digital-marketing/northwell-unveils-toolkit-for-health-systems-to-scale-gun-violence-prevention-efforts/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-22",
-      "summary": "New Hyde Park, N.Y.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "FDA approves 1st 2-drug HIV treatment",
-      "url": "https://www.beckershospitalreview.com/pharmacy/fda-approves-1st-2-drug-hiv-treatment/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-22",
-      "summary": "The FDA has approved Merck&#8217;s once-daily, two-drug regimen for adults with virologically suppressed HIV-1. The treatment combines 100 mg doravirine and 0.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Senate Democrats target Trump drug deals with transparency bill",
-      "url": "https://www.beckershospitalreview.com/pharmacy/senate-democrats-target-trump-drug-deals-with-transparency-bill/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-22",
-      "summary": "Sen. Ron Wyden, D-Ore.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Oak HC/FT backs Courier Health's $50M series B to build out AI for the biopharma patient experience",
-      "url": "https://www.fiercehealthcare.com/health-tech/oak-hcft-backs-courier-healths-50m-series-b-build-out-ai-biopharma-patient-experience",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-22",
-      "summary": "Courier Health raised $50 million in series B funding to scale its AI-powered platform purpose-built for biopharma that manages the end-to-end patient journey.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Amperos Health secures $16M in series A funding, unveils AI-native denial management solution",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/amperos-health-secures-16m-series-funding-announces-industrys-new-first-ai",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-22",
-      "summary": "Amperos Health CEO and co-founder Michal Miernowski told Fierce Healthcare the newly announced funding will support scaling the organization and its platform.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Elevance Health raises 2026 outlook as it posts $1.8B in Q1 profit",
-      "url": "https://www.fiercehealthcare.com/payers/elevance-health-raises-2026-outlook-it-posts-18b-q1-profit",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-22",
-      "summary": "Elevance Health is raising its guidance for 2026 even as its Q1 profits declined year-over-year.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Community Health Systems reports low volumes, earnings dip for Q1 2026",
-      "url": "https://www.fiercehealthcare.com/providers/community-health-systems-reports-low-volumes-earnings-dip-q1-2026",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-22",
-      "summary": "The first major for-profit to report quarterly performance in the new year fell behind its prior-year numbers, with same-store admissions and adjusted admissions declines of 1.3% and 0.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "'Don't be a wimp,' Mark Cuban tells lawmakers hesitant to break up PBMs",
-      "url": "https://www.fiercehealthcare.com/payers/dont-be-wimp-mark-cuban-tells-lawmakers-hesitant-break-pbms",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-22",
-      "summary": "The entrepreneur outlines his belief that pressure from vertically integrated insurers and pharmacy benefit managers is preventing an efficient healthcare market. He also called on the Trump administration to \"do your job\" and ramp up enforcement, noting that drug manufacturers today are much more scared of a formulary exclusion than the president himself.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "UnitedHealth Group spotlights AI investments as part of operational turnaround",
-      "url": "https://www.fiercehealthcare.com/payers/unitedhealth-group-boosts-2026-outlook-it-posts-q1-earnings-revenue-beat",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-22",
-      "summary": "Artificial intelligence is one of the tentpoles of UnitedHealth's turnaround effort, and the company's top brass offered a look at where it's making key investments.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
     }
   ]
 }
