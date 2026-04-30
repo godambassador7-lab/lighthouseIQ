@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-30T16:27:42.425Z",
+  "lastUpdated": "2026-04-30T18:15:53.678Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
@@ -12,70 +12,70 @@
         "source": "Fierce Healthcare",
         "articleCount": 178,
         "latestPublishedAt": "2026-04-30T00:00:00.000Z",
-        "staleHours": 16,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 167,
+        "articleCount": 170,
         "latestPublishedAt": "2026-04-30T00:00:00.000Z",
-        "staleHours": 16,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 74,
+        "articleCount": 72,
         "latestPublishedAt": "2026-04-30T00:00:00.000Z",
-        "staleHours": 16,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 33,
         "latestPublishedAt": "2026-04-30T00:00:00.000Z",
-        "staleHours": 16,
-        "status": "ok"
-      },
-      {
-        "source": "Healthcare Dive",
-        "articleCount": 14,
-        "latestPublishedAt": "2026-04-30T00:00:00.000Z",
-        "staleHours": 16,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 13,
         "latestPublishedAt": "2026-04-30T00:00:00.000Z",
-        "staleHours": 16,
+        "staleHours": 18,
+        "status": "ok"
+      },
+      {
+        "source": "Healthcare Dive",
+        "articleCount": 12,
+        "latestPublishedAt": "2026-04-30T00:00:00.000Z",
+        "staleHours": 18,
+        "status": "ok"
+      },
+      {
+        "source": "FDA MedWatch RSS",
+        "articleCount": 8,
+        "latestPublishedAt": "2026-04-30T00:00:00.000Z",
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 7,
         "latestPublishedAt": "2026-04-30T00:00:00.000Z",
-        "staleHours": 16,
-        "status": "ok"
-      },
-      {
-        "source": "FDA MedWatch RSS",
-        "articleCount": 7,
-        "latestPublishedAt": "2026-04-29T00:00:00.000Z",
-        "staleHours": 40,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 4,
         "latestPublishedAt": "2026-04-27T00:00:00.000Z",
-        "staleHours": 88,
+        "staleHours": 90,
         "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 3,
         "latestPublishedAt": "2026-04-28T00:00:00.000Z",
-        "staleHours": 64,
+        "staleHours": 66,
         "status": "ok"
       }
     ]
@@ -95,7 +95,7 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 64
+      "count": 62
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -103,15 +103,15 @@
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
-      "count": 9
+      "count": 10
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 173
+      "count": 175
     },
     "general_market": {
       "label": "General Market",
-      "count": 223
+      "count": 222
     }
   },
   "quality": {
@@ -125,7 +125,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 77,
+        "actual": 84,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -298,6 +298,18 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
+      "title": "Insulin Pump Recall: Insulet Removes Certain Omnipod 5 Pods",
+      "summary": "Omnipod Pods may not deliver insulin as intended due to a tear in the internal tubing.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/insulin-pump-recall-insulet-removes-certain-omnipod-5-pods",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-04-30",
+      "category": "ai_tech",
+      "relevance": 98,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
       "title": "Center for Scientific Review; Notice of Closed Meetings",
       "summary": "",
       "url": "https://www.federalregister.gov/documents/2026/04/30/2026-08381/center-for-scientific-review-notice-of-closed-meetings",
@@ -332,6 +344,33 @@
       "category": "general_market",
       "relevance": 85,
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "The 10 highest-paying physician specialties in the last 5 years",
+      "url": "https://www.beckershospitalreview.com/asc-transactions-and-valuation-issues/10-highest-paying-physician-specialties-in-the-last-5-years/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-30",
+      "summary": "Orthopedics and plastic surgery have traded the top two spots in Medscape&#8217;s annual Physician Compensation Report every year since 2021, and both specialties have seen compensation climb by more than $80,000 over that span.&#160; Orthopedic surgeons now command an average of $611,000 annually, up 20% from five years ago, while plastic surgeons earn $554,000.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "HCA Missouri hospital taps new COO",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/hca-missouri-hospital-taps-new-coo/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-30",
+      "summary": "John Tyler was named COO of Centerpoint Medical Center in Independence, Mo. on March 30.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "ChristianaCare to build $58.1M health campus",
+      "url": "https://www.beckershospitalreview.com/capital/christianacare-to-build-58-1m-health-campus/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-30",
+      "summary": "Newark, Del.-based ChristianaCare has submitted a notice of intent to the Delaware Health Resources Board to develop a new health campus in Camden, Del.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
     },
     {
       "title": "Trinity Health CEO&#8217;s plan to drive 75% of revenue from community-based care",
@@ -397,34 +436,25 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Change management and intentional design: Key success factors for patient blood management programs",
-      "url": "https://www.beckershospitalreview.com/quality/patient-safety-outcomes/change-management-and-intentional-design-key-success-factors-for-patient-blood-management-programs/",
-      "source": "Becker's Hospital Review",
+      "title": "STAT+: As artificial intelligence show off diagnostic chops, scientists reckon with the way forward",
+      "url": "https://www.statnews.com/2026/04/30/open-ai-llm-model-outperforms-doctors-study-published-journal-science/?utm_campaign=rss",
+      "source": "STAT News",
       "publishedAt": "2026-04-30",
-      "summary": "At Becker&#8217;s 16th Annual Meeting in Chicago, healthcare leaders participated in an executive roundtable sponsored by CSL titled &#8220;Unlocking Clinical and Financial Value Through Patient Blood Management.&#8221; Chris Hood, PharmD, director, global commercial development, hematology at CSL, and chair-elect, SABM Industry Council, moderated a discussion about the challenges and opportunities that hospitals and health systems [&#8230;] The post Change management and intentional design: Key success factors for patient blood management programs appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "summary": "On Thursday, researchers published in Science the results of a study that tested an OpenAI model on diagnostic and clinical reasoning tasks.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Beyond the bottom line: Embracing outcome-centric care models",
-      "url": "https://www.beckershospitalreview.com/quality/patient-safety-outcomes/beyond-the-bottom-line-embracing-outcome-centric-care-models/",
-      "source": "Becker's Hospital Review",
+      "title": "Trump drops Casey Means as surgeon general nominee, opts for radiologist Nicole Saphier",
+      "url": "https://www.statnews.com/2026/04/30/trump-withdraws-casey-means-nomination-surgeon-general-taps-nicole-saphier/?utm_campaign=rss",
+      "source": "STAT News",
       "publishedAt": "2026-04-30",
-      "summary": "Nationwide, hospitals and health systems are accelerating efforts to shift the focus of care delivery from volume to value, with improved patient outcomes seen as a key metric. Achieving that goal requires innovative thinking that reframes care delivery from physician- to patient-focused, while still keeping clinicians deeply involved in decisions.",
+      "summary": "Trump slammed Sen. Bill Cassidy for blocking his surgeon general pick, as he nominated a replacement.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
     {
-      "title": "Patient blood management: The hidden lever for quality, safety and margin",
-      "url": "https://www.beckershospitalreview.com/quality/patient-safety-outcomes/patient-blood-management-the-hidden-lever-for-quality-safety-and-margin/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-30",
-      "summary": "Multi-disciplinary patient blood management (PBM) programs — which go beyond blood bank projects to manage and preserve a patient&#8217;s own blood — can improve health outcomes, reduce the cost of care and produce an attractive financial return. These were among the main ideas from a session focused on PBM programs at Becker&#8217;s 16th Annual Meeting.",
-      "category": "quality_safety",
-      "categoryLabel": "Quality & Safety"
-    },
-    {
-      "title": "STAT+: FDA wants to exclude weight-loss drugs from a compounding list",
+      "title": "STAT+: FDA wants to exclude weight loss drugs from a compounding list",
       "url": "https://www.statnews.com/pharmalot/2026/04/30/fda-weight-loss-drugs-new-rule-would-end-glp-1-compound-pharmacy/?utm_campaign=rss",
       "source": "STAT News",
       "publishedAt": "2026-04-30",
@@ -568,6 +598,15 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "Fierce Healthcare Fundraising Tracker '26: Gravity Rail tackles AI-powered patient engagement; Zócalo Health pockets $15M",
+      "url": "https://www.fiercehealthcare.com/health-tech/fierce-healthcare-fundraising-tracker-26",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-04-30",
+      "summary": "Keep up with all the venture capital dollars being funneled into the health tech and digital health industries.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
       "title": "Waystar kicks off 2026 with strong growth as it targets AI at $100B RCM labor pool",
       "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/waystar-boasts-growth-investments-q1-2026-earnings",
       "source": "Fierce Healthcare",
@@ -575,6 +614,33 @@
       "summary": "Waystar is pivoting its focus from task level automation toward agentic workflows. \"That shift unlocks a much larger opportunity, the approximately $100 billion in annual revenue cycle labor services performed across the industry today,\" CEO Matt Hawkins said.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Change management and intentional design: Key success factors for patient blood management programs",
+      "url": "https://www.beckershospitalreview.com/quality/patient-safety-outcomes/change-management-and-intentional-design-key-success-factors-for-patient-blood-management-programs/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-30",
+      "summary": "At Becker&#8217;s 16th Annual Meeting in Chicago, healthcare leaders participated in an executive roundtable sponsored by CSL titled &#8220;Unlocking Clinical and Financial Value Through Patient Blood Management.&#8221; Chris Hood, PharmD, director, global commercial development, hematology at CSL, and chair-elect, SABM Industry Council, moderated a discussion about the challenges and opportunities that hospitals and health systems [&#8230;] The post Change management and intentional design: Key success factors for patient blood management programs appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Beyond the bottom line: Embracing outcome-centric care models",
+      "url": "https://www.beckershospitalreview.com/quality/patient-safety-outcomes/beyond-the-bottom-line-embracing-outcome-centric-care-models/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-30",
+      "summary": "Nationwide, hospitals and health systems are accelerating efforts to shift the focus of care delivery from volume to value, with improved patient outcomes seen as a key metric. Achieving that goal requires innovative thinking that reframes care delivery from physician- to patient-focused, while still keeping clinicians deeply involved in decisions.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Patient blood management: The hidden lever for quality, safety and margin",
+      "url": "https://www.beckershospitalreview.com/quality/patient-safety-outcomes/patient-blood-management-the-hidden-lever-for-quality-safety-and-margin/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-04-30",
+      "summary": "Multi-disciplinary patient blood management (PBM) programs — which go beyond blood bank projects to manage and preserve a patient&#8217;s own blood — can improve health outcomes, reduce the cost of care and produce an attractive financial return. These were among the main ideas from a session focused on PBM programs at Becker&#8217;s 16th Annual Meeting.",
+      "category": "quality_safety",
+      "categoryLabel": "Quality & Safety"
     },
     {
       "title": "Viz.ai partners with National Rural Health Association to expand AI understanding, access to rural hospitals",
@@ -943,18 +1009,6 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "Insulin Pump Recall: Insulet Removes Certain Omnipod 5 Pods",
-      "summary": "Omnipod Pods may not deliver insulin as intended due to a tear in the internal tubing.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/insulin-pump-recall-insulet-removes-certain-omnipod-5-pods",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-04-29",
-      "category": "ai_tech",
-      "relevance": 98,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
       "title": "Submission for Office of Management and Budget Review; Next Generation of Enhanced Employment Strategies Project",
       "summary": "The Administration for Children and Families (ACF) Office of Planning, Research, and Evaluation (OPRE) is requesting a one-year extension to one of the data collection activities conducted for the Next Generation of Enhanced Employment Strategies (NextGen) Project, the second follow-up survey (OMB #0970-0545, expiration April 30, 026).",
       "url": "https://www.federalregister.gov/documents/2026/04/29/2026-08308/submission-for-office-of-management-and-budget-review-next-generation-of-enhanced-employment",
@@ -1001,6 +1055,18 @@
       "category": "general_market",
       "relevance": 85,
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "Insulin Pump Recall: Insulet Removes Certain Omnipod 5 Pods",
+      "summary": "Omnipod Pods may not deliver insulin as intended due to a tear in the internal tubing.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/insulin-pump-recall-insulet-removes-certain-omnipod-5-pods",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-04-29",
+      "category": "ai_tech",
+      "relevance": 98,
+      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "5 ways insurers are betting big on AI",
@@ -4778,69 +4844,6 @@
       "summary": "A multiple sclerosis drug from Sanofi that was rejected late last year by the FDA found a warmer reception in Europe.",
       "category": "general_market",
       "categoryLabel": "General Market"
-    },
-    {
-      "title": "Growing use of guest editors has turned some journals into a ‘playground of bad science’",
-      "url": "https://www.statnews.com/2026/04/24/science-journal-retractions-highlight-guest-editor-special-edition-problem/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-24",
-      "summary": "The problematic use of guest editors was spotlighted last week when a genetics journal retracted nearly an entire special issue.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Opinion: The local news crisis is also a public health crisis",
-      "url": "https://www.statnews.com/2026/04/24/local-news-crisis-health-science-reporters-public-health/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-24",
-      "summary": "Health and science reporting is often treated as optional coverage. It is anything but.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Psychedelics get a boost from the White House",
-      "url": "https://www.statnews.com/2026/04/24/white-house-boosts-psychedelic-treatments-status-report-alex-hogan/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-24",
-      "summary": "In this week’s STATus Report, host Alex Hogan chats with STAT Washington correspondent Daniel Payne about Trump's psychedelics EO.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Opinion: I started medical school at 69 and will begin residency at 72. Here’s what I learned",
-      "url": "https://www.statnews.com/2026/04/24/medical-school-late-in-life-np-to-md/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-24",
-      "summary": "Starting residency at 72 isn’t for the faint of heart. But that’s what Dawn Zuidegeest-Craft is doing.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Medicare AI prior authorization pilot delaying care in Washington: report",
-      "url": "https://www.healthcaredive.com/news/medicare-ai-prior-authorization-pilot-care-delays-washington-senator-maria-cantwell/818348/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-04-24",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "FTC, US Anesthesia Partners reach settlement in Texas price collusion case",
-      "url": "https://www.healthcaredive.com/news/ftc-us-anesthesia-partners-usap-settlement-texas-welsh-carson/818406/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-04-24",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "HCA Healthcare executives shrug off Q1 volumes disruptions, reaffirm FY2026 guidance",
-      "url": "https://www.fiercehealthcare.com/providers/hca-healthcare-executives-shrug-q1-volumes-disruptions-reaffirm-fy2026-guidance",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-04-24",
-      "summary": "A sharp end to the flu season and disruptive winter storms dragged the country's largest for-profit health system in January. Executives said there's already signs of recovery since the stumble and pointed to favorable activity among states' Medicaid subsidy programs.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
     }
   ]
 }
