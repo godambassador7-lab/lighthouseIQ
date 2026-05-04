@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-05-03T23:54:52.360Z",
+  "lastUpdated": "2026-05-04T03:30:37.643Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 4,
-    "healthySources": 6,
+    "staleSources": 7,
+    "healthySources": 3,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 181,
-        "latestPublishedAt": "2026-05-03T00:00:00.000Z",
-        "staleHours": 23,
+        "articleCount": 206,
+        "latestPublishedAt": "2026-05-04T00:00:00.000Z",
+        "staleHours": 3,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 164,
+        "articleCount": 154,
         "latestPublishedAt": "2026-05-01T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 75,
+        "status": "stale"
       },
       {
         "source": "STAT News",
-        "articleCount": 66,
+        "articleCount": 61,
         "latestPublishedAt": "2026-05-02T00:00:00.000Z",
-        "staleHours": 47,
+        "staleHours": 51,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
-        "articleCount": 35,
+        "articleCount": 30,
         "latestPublishedAt": "2026-05-04T00:00:00.000Z",
-        "staleHours": -1,
-        "status": "ok"
-      },
-      {
-        "source": "Federal Register - FDA",
-        "articleCount": 12,
-        "latestPublishedAt": "2026-04-30T00:00:00.000Z",
-        "staleHours": 95,
-        "status": "stale"
-      },
-      {
-        "source": "SEC Healthcare Filings",
-        "articleCount": 12,
-        "latestPublishedAt": "2026-04-30T00:00:00.000Z",
-        "staleHours": 95,
-        "status": "stale"
-      },
-      {
-        "source": "Federal Register - CMS",
-        "articleCount": 10,
-        "latestPublishedAt": "2026-05-01T00:00:00.000Z",
-        "staleHours": 71,
+        "staleHours": 3,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 10,
         "latestPublishedAt": "2026-05-01T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 75,
+        "status": "stale"
+      },
+      {
+        "source": "Federal Register - FDA",
+        "articleCount": 10,
+        "latestPublishedAt": "2026-04-30T00:00:00.000Z",
+        "staleHours": 99,
+        "status": "stale"
+      },
+      {
+        "source": "SEC Healthcare Filings",
+        "articleCount": 10,
+        "latestPublishedAt": "2026-04-30T00:00:00.000Z",
+        "staleHours": 99,
+        "status": "stale"
+      },
+      {
+        "source": "Federal Register - CMS",
+        "articleCount": 9,
+        "latestPublishedAt": "2026-05-01T00:00:00.000Z",
+        "staleHours": 75,
+        "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 6,
         "latestPublishedAt": "2026-04-30T00:00:00.000Z",
-        "staleHours": 95,
+        "staleHours": 99,
         "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 4,
         "latestPublishedAt": "2026-04-30T00:00:00.000Z",
-        "staleHours": 95,
+        "staleHours": 99,
         "status": "stale"
       }
     ]
@@ -95,23 +95,23 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 46
+      "count": 45
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 7
+      "count": 5
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
-      "count": 16
+      "count": 19
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 184
+      "count": 190
     },
     "general_market": {
       "label": "General Market",
-      "count": 215
+      "count": 209
     }
   },
   "quality": {
@@ -137,7 +137,7 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 4,
+        "actual": 7,
         "pass": false
       }
     }
@@ -202,6 +202,231 @@
       "category": "general_market",
       "relevance": 96,
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "Cleveland Clinic taps startup Luminai to test how AI can run hospital operations",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/how-cleveland-clinic-working-startup-luminai-test-how-ai-can-run-hospital",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-05-04",
+      "summary": "As the Cleveland Clinic works with Luminai, tech leadership sees opportunities to use its tech to tackle other administrative workflows, especially in workflows that are high-volume, complex and operationally intensive, Rohit Chandra, Cleveland Clinic chief digital officer, said.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Senators introduce clean extension to cost-based payments for some rural hospitals",
+      "url": "https://www.fiercehealthcare.com/providers/senators-introduce-clean-extension-cost-based-payments-rural-hospitals",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-05-04",
+      "summary": "The bipartisan reauthorization would add five more years to the Rural Community Hospital Demonstration, a payment model for hospitals with fewer than 51 beds but still too large for Critical Access Hospital designation.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "Industry Voices—Value-based care won the policy argument. Now it has to deliver",
+      "url": "https://www.fiercehealthcare.com/providers/industry-voices-value-based-care-won-policy-argument-now-it-has-deliver",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-05-04",
+      "summary": "Value-based care has succeeded in changing incentives. The next phase must focus on building the operational capacity required to deliver on those incentives.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "Health Tech Weekly Rundown: Sage launches Tasking for senior care workflows; St. Luke’s taps Auxira Health for cardiologist support",
+      "url": "https://www.fiercehealthcare.com/health-tech/health-tech-weekly-rundown-sage-launches-ehr-integrated-senior-care-workflows-st-lukes",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-05-04",
+      "summary": "Stay up-to-date on the latest in health tech, digital health and health AI news with this weekly brief.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Beth Israel Lahey Health taps Heidi for system-wide AI scribe rollout",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/beth-israel-lahey-health-rolls-out-heidi-ai-scribe-system-wide",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-05-04",
+      "summary": "The scaled deployment follows a six-month trial for 1,000 providers at the Boston-based health system.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Omada signs on with Optum Rx's GLP-1 management program",
+      "url": "https://www.fiercehealthcare.com/payers/omada-signs-optum-rx-new-glp-1-management-program",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-05-04",
+      "summary": "Omada Health has signed on with Optum Rx to participate in its Weight Engage program, furthering the company's ability to scale its offerings to reach more people who need cardiometabolic care and support.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Who do Americans believe have the most influence in healthcare?",
+      "url": "https://www.fiercehealthcare.com/providers/sachshealth-survey-examines-american-perceptions-health-stakeholder-influence",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-05-04",
+      "summary": "A new survey report explores the disconnect between who Americans consider influential in healthcare and who they wish had greater influence. The delta was greatest for clinicians.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Tenet Healthcare met Q1's volume curveballs with 'old-fashioned discipline'",
+      "url": "https://www.fiercehealthcare.com/providers/tenet-healthcare-paces-ahead-earnings-despite-q1s-volume-curveballs",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-05-04",
+      "summary": "With much of the quarter's volume disruptions sequestered to January and early February, CEO Saum Sutaria, M.D.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Education Department finalizes industry-opposed student loan caps",
+      "url": "https://www.fiercehealthcare.com/providers/providers-urge-education-department-reconsider-which-jobs-face-stiffer-student-loan-caps",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-05-04",
+      "summary": "The final rule excludes post-baccalaureate health roles like advanced practice registered nurses and physician associates from higher borrowing caps permitted for \"professional\" degrees, like physicians. Healthcare groups had warned it could hamstring the clinical workforce pipeline.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Trump pulls surgeon general nomination of Casey Means, names Nicole Saphier as new pick",
+      "url": "https://www.fiercehealthcare.com/providers/trump-pulls-surgeon-general-nomination-casey-means-names-nicole-saphier-new-pick",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-05-04",
+      "summary": "The president blamed Senate HELP Chair Bill Cassidy for blocking the confirmation of Means, an influential voice within the Make America Healthy Again movement. His new choice is a practicing radiologist, Fox News medical contributor and an author previously critical of the government's COVID-19 pandemic response.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "DOJ launches West Coast Health Care Strike Force to target fraud in Arizona, Nevada, Northern California",
+      "url": "https://www.fiercehealthcare.com/regulatory/doj-launches-west-coast-strike-force-target-fraud-arizona-nevada-northern-california",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-05-04",
+      "summary": "The Department of Justice has formed a new fraud strike force to target schemes across Arizona, Nevada and Northern California, the agency announced Thursday.",
+      "category": "labor_unions",
+      "categoryLabel": "Labor & Unions"
+    },
+    {
+      "title": "Cigna to exit ACA market, pursue strategic alternatives for eviCore unit",
+      "url": "https://www.fiercehealthcare.com/payers/cigna-posts-165b-profit-q1-earnings-beat",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-05-04",
+      "summary": "The Cigna Group beat the Street on both earnings and revenue in the first quarter of 2026, posting $1.65 billion in profit for Q1.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Fierce Healthcare Fundraising Tracker '26: Gravity Rail tackles AI-powered patient engagement; Zócalo Health pockets $15M",
+      "url": "https://www.fiercehealthcare.com/health-tech/fierce-healthcare-fundraising-tracker-26",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-05-04",
+      "summary": "Keep up with all the venture capital dollars being funneled into the health tech and digital health industries.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Functional medicine provider Parsley Health now in-network nationwide",
+      "url": "https://www.fiercehealthcare.com/payers/parsley-health-functional-medicine-provider-now-network-nationwide",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-05-04",
+      "summary": "Today’s nationwide expansion represents a tenfold increase in coverage, per the company. The company offers healthcare via telehealth nationwide or in-person in Los Angeles and New York City.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "Waystar kicks off 2026 with strong growth as it targets AI at $100B RCM labor pool",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/waystar-boasts-growth-investments-q1-2026-earnings",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-05-04",
+      "summary": "Waystar is pivoting its focus from task-level automation toward agentic workflows. \"That shift unlocks a much larger opportunity, the approximately $100 billion in annual revenue cycle labor services performed across the industry today,\" CEO Matt Hawkins said.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Viz.ai partners with National Rural Health Association to expand AI understanding, access to rural hospitals",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/vizai-partners-national-rural-health-association-expand-ai-understanding",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-05-04",
+      "summary": "The newly announced collaboration between the two organizations will provide rural health systems with practical guidance on AI implementation through educational opportunities, case studies and more.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Photon, maker of modern prescription infrastructure, nabs $16M to scale",
+      "url": "https://www.fiercehealthcare.com/health-tech/photon-maker-modern-prescription-infrastructure-nabs-16m-scale",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-05-04",
+      "summary": "The lack of visibility into price and convenience in today's prescribing ecosystem leads to unnecessary transfers, unanswered phone calls and abandoned fills, Photon executives say.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Aidoc banks $150M backed by Goldman Sachs to scale clinical AI foundation model",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/aidoc-banks-150m-backed-goldman-sachs-scale-clinical-ai-foundation-model",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-05-04",
+      "summary": "Clinical artificial intelligence startup Aidoc landed a $150 million funding round, less than a year after raising the same nine-figure amount in new financing.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Teladoc Health reports strong momentum behind BetterHelp insurance shift, CEO says",
+      "url": "https://www.fiercehealthcare.com/health-tech/teladoc-health-reports-strong-momentum-behind-betterhelp-insurance-shift-ceo-says",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-05-04",
+      "summary": "Teladoc Health reported a 2% decline in revenue in the first quarter, but the telehealth giant touted \"meaningful progress\" in scaling insurance coverage for its BetterHelp mental health business as a catalyst for future growth.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Nonprofit health systems are falling short on governance capabilities, report warns",
+      "url": "https://www.fiercehealthcare.com/providers/nonprofit-health-systems-are-falling-short-governance-capabilities-report-warns",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-05-04",
+      "summary": "Hospital consolidation has concentrated governance responsibilities, raising both the bar and the stakes for top-level decision making. Limited ongoing education for board members and poor governance structures won't meet the moment, The Governance Institute warns in a recent report.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Universal Health Services' Q1 2026 earnings growth dampened by volume hits",
+      "url": "https://www.fiercehealthcare.com/providers/universal-health-services-q1-2026-earnings-growth-dampened-volume-hits",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-05-04",
+      "summary": "Executives asserted the acute and behavioral care provider will ramp up business and meet its growth target for the full year, and expanded on the company's Talkspace deal, exchange volumes and AI deployments.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Healthcare costs remain a top concern for voters as midterms loom: KFF",
+      "url": "https://www.fiercehealthcare.com/finance/healthcare-costs-remain-top-concern-voters-midterms-loom-kff",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-05-04",
+      "summary": "Despite concern about other expenses—such as fuel following the launch of the war in Iran—healthcare costs remain at the top of the list for economic fears, a new survey shows.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Only 1 in 4 employers able to ‘absorb’ increasing health benefit costs without impacting business",
+      "url": "https://www.fiercehealthcare.com/finance/only-1-4-healthcare-orgs-able-absorb-increasing-health-benefit-costs-without-impacting",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-05-04",
+      "summary": "The consulting firm surveyed 161 finance leaders for the April report. Some reported impacts from increased health benefits costs include reduced spending towards other benefits, slower wage growth and reduced investment.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "AI-driven coding platform Arintra rolls out new documentation improvement capabilities",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/ai-driven-coding-platform-arintra-rolls-out-new-documentation-improvement",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-05-04",
+      "summary": "Healthcare providers will be able to identify documentation gaps using the AI coding platform’s new capabilities.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "The push to expand access to emergency contraception",
+      "url": "https://www.fiercehealthcare.com/providers/push-expand-access-emergency-contraception",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-05-04",
+      "summary": "Emergency contraception is primarily sold in pharmacies. Cadence OTC is working to expand distribution of the morning-after pill beyond traditional channels.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
     },
     {
       "title": "Cleveland Clinic taps startup Luminai to test how AI can run hospital operations",
@@ -4624,261 +4849,6 @@
       "category": "policy_reimbursement",
       "relevance": 100,
       "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Agency Information Collection Activities: Submission for OMB Review; Comment Request",
-      "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension or reinstatement of an existing collection of information, and to allow a second opportunity for public comment on the notice. Interested persons are invited to send comments regarding the burden estimate or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
-      "url": "https://www.federalregister.gov/documents/2026/04/27/2026-08156/agency-information-collection-activities-submission-for-omb-review-comment-request",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-04-27",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Advisory Committee; Anesthetic and Analgesic Drug Products Advisory Committee; Renewal",
-      "summary": "The Food and Drug Administration (FDA) is announcing the renewal of the Anesthetic and Analgesic Drug Products Advisory Committee by the Commissioner of Food and Drugs (the Commissioner). The Commissioner has determined that it is in the public interest to renew the Anesthetic and Analgesic Drug Products Advisory Committee for an additional 2 years beyond the charter expiration date. The new charter will be in effect until the May 1, 2028, expiration date.",
-      "url": "https://www.federalregister.gov/documents/2026/04/27/2026-08125/advisory-committee-anesthetic-and-analgesic-drug-products-advisory-committee-renewal",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-04-27",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Vaccines and Related Biological Products Advisory Committee; Notice of Meeting; Establishment of a Public Docket; Request for Comments-United States (U.S.) 2026-2027 Formula for COVID-19 Vaccine Composition",
-      "summary": "The Food and Drug Administration (FDA) announces a forthcoming public advisory committee meeting of the Vaccines and Related Biological Products Advisory Committee (the Committee). The general function of the Committee is to provide advice and recommendations to FDA on regulatory issues. The meeting will be open to the public. FDA is establishing a docket for public comment on this document.",
-      "url": "https://www.federalregister.gov/documents/2026/04/27/2026-08122/vaccines-and-related-biological-products-advisory-committee-notice-of-meeting-establishment-of-a",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-04-27",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "HCA 8-K filing - HCA Healthcare, Inc.",
-      "summary": "HCA Healthcare, Inc. filed 8-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/860730/000119312526182265/hca-20260427.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-04-27",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "CI 8-K filing - The Cigna Group",
-      "summary": "The Cigna Group filed 8-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/1739940/000114036126017123/ef20071227_8k.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-04-27",
-      "category": "general_market",
-      "relevance": 85,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Eunice Kennedy Shriver National Institute of Child Health & Human Development; Notice of Meeting",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/04/27/2026-08142/eunice-kennedy-shriver-national-institute-of-child-health-and-human-development-notice-of-meeting",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-04-27",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Patient Safety Organizations: Voluntary Relinquishment for symplr PSO",
-      "summary": "The Patient Safety and Quality Improvement Final Rule (Patient Safety Rule) authorizes AHRQ, on behalf of the Secretary of HHS, to list as a patient safety organization (PSO) an entity that attests that it meets the statutory and regulatory requirements for listing. A PSO can be \"delisted\" by the Secretary if it is found to no longer meet the requirements of the Patient Safety and Quality Improvement Act of 2005 (Patient Safety Act) and Patient Safety Rule, such as when a PSO chooses to voluntarily relinquish its status as a PSO for any reason or when a PSO's listing expires. AHRQ accepted a notification of proposed voluntary relinquishment from the symplr PSO, PSO number P0262, of its status as a PSO and has delisted the PSO accordingly.",
-      "url": "https://www.federalregister.gov/documents/2026/04/27/2026-08136/patient-safety-organizations-voluntary-relinquishment-for-symplr-pso",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-04-27",
-      "category": "quality_safety",
-      "relevance": 100,
-      "categoryLabel": "Quality & Safety"
-    },
-    {
-      "title": "Proposed Information Collection Activity; National Communication System for Runaway and Homeless Youth, Currently Operated by the National Runaway Safeline Data Collection",
-      "summary": "The Family and Youth Services Bureau's (FYSB) Runaway and Homeless Youth Division has a legislative requirement to fund a National Communication System, which is currently operated by the National Runaway Safeline (NRS). The NRS provides information, referral services, crisis intervention, and prevention resources to vulnerable youth at risk of running away and/or becoming homeless and their families or legal guardians at no cost. When necessary, the NRS refers runaway and homeless youth to shelters, counseling, medical assistance, and other vital services. The NRS collects information from all contacts with youth and adults connecting with the NRS (i.e., parents, family members, legal guardians, service providers) on a voluntary basis to inform crisis services and develop an annual report on the information collected during calls, chats, emails, and forum posts from young people who reached out to the NRS's crisis services. This information collection is approved under Office of Management and Budget (OMB)#: 0970-0610. FYSB plans to submit a request to OMB to extend approval of these activities beyond the current expiration date of May 31, 2026.",
-      "url": "https://www.federalregister.gov/documents/2026/04/27/2026-08107/proposed-information-collection-activity-national-communication-system-for-runaway-and-homeless",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-04-27",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "National Institute on Deafness and Other Communication Disorders; Notice of Meeting",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/04/27/2026-08117/national-institute-on-deafness-and-other-communication-disorders-notice-of-meeting",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-04-27",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Center for Scientific Review; Notice of Closed Meetings",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/04/27/2026-08115/center-for-scientific-review-notice-of-closed-meetings",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-04-27",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Medtronic reports IT breach",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/cybersecurity/medtronic-reports-it-breach/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-27",
-      "summary": "Medtronic has reported an unauthorized party accessed data in certain corporate IT systems. The company said it has not identified any impact to its products, patient safety, customer connections, manufacturing and distribution operations, financial reporting systems or its ability to meet patient needs, according to an April 24 news release from the company.",
-      "category": "quality_safety",
-      "categoryLabel": "Quality & Safety"
-    },
-    {
-      "title": "WVU Medicine children’s hospital launches breast milk donation site",
-      "url": "https://www.beckershospitalreview.com/quality/wvu-medicine-childrens-hospital-launches-breast-milk-donation-site/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-27",
-      "summary": "Morgantown, W.Va.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Viewpoint: Is AI actually improving care outcomes?",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/innovation/viewpoint-is-ai-actually-improving-care-outcomes/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-27",
-      "summary": "Healthcare AI has not been widely evaluated for clinical benefits, leaving a dearth of information on whether the technology actually improves patient outcomes, a Nature Medicine correspondence argues. Much of the existing literature focuses on algorithmic performance in retrospective or highly controlled datasets, where AI often shows strong accuracy, wrote authors Jenna Wiens, PhD, of [&#8230;] The post Viewpoint: Is AI actually improving care outcomes?",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Building end-to-end, intelligent patient flow at scale",
-      "url": "https://www.beckershospitalreview.com/hospital-management-administration/building-end-to-end-intelligent-patient-flow-at-scale/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-27",
-      "summary": "Health systems today operate under unprecedented pressure. Rising patient demand, workforce shortages, financial constraints, and policy shifts place new strain on hospital operations and drive more patients to seek care through the emergency department.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Beth Israel Lahey Health names network president",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/beth-israel-lahey-health-names-network-president/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-27",
-      "summary": "Boston-based Beth Israel Lahey Health has named Sue Chapman Moss president of the Beth Israel Lahey Health Performance Network. In her new role, Ms.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "UVM Health lays off staff at New York hospitals",
-      "url": "https://www.beckershospitalreview.com/finance/uvm-health-lays-off-staff-at-new-york-hospitals/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-27",
-      "summary": "Burlington, Vt.-based University of Vermont Health eliminated nine positions April 14 at Alice Hyde Medical Center in Malone, N.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "BMC South workers rescind strike notice",
-      "url": "https://www.beckershospitalreview.com/hr/bmc-south-workers-rescind-strike-notice/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-27",
-      "summary": "The more than 475 registered nurses and healthcare workers at BMC South in Brockton, Mass., who are represented by the Massachusetts Nurses Association have rescinded their strike notice to allow negotiations to continue.",
-      "category": "labor_unions",
-      "categoryLabel": "Labor & Unions"
-    },
-    {
-      "title": "Cottage Health formalizes innovation with new leadership role",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/innovation/cottage-health-formalizes-innovation-with-new-leadership-role/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-27",
-      "summary": "Santa Barbara, Calif.-based Cottage Health is taking a more structured approach to innovation with the addition of a chief innovation officer role designed to turn frontline ideas into measurable results.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "White House fires National Science Foundation&#8217;s board members: Report",
-      "url": "https://www.beckershospitalreview.com/quality/public-health/white-house-fires-national-science-foundations-board-members-report/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-27",
-      "summary": "The White House recently dismissed the board members for the U.S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "UnitedHealth completes sale of UK business to TPG",
-      "url": "https://www.beckershospitalreview.com/hospital-transactions-and-valuation/unitedhealth-completes-sale-of-uk-business-to-tpg/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-04-27",
-      "summary": "TPG has completed its acquisition of Optum UK, a subsidiary of UnitedHealth Group whose core asset is EMIS Group, a healthcare software company used by the United Kingdom&#8217;s NHS. The deal closed March 13, according to UK regulatory filings, and UnitedHealth confirmed the divestiture on April 21, noting $400 million in net proceeds to the [&#8230;] The post UnitedHealth completes sale of UK business to TPG appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "New U.S. recommendation on hepatitis B vaccine will have dire consequences, studies project",
-      "url": "https://www.statnews.com/2026/04/27/jama-studies-hepatitis-b-vaccination-newborns/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-27",
-      "summary": "Policy that recommends offering hep B vaccine at birth only to babies perceived to be at risk will lead to increased numbers of infected infants, new studies project.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Supreme Court grapples with multibillion-dollar wave of lawsuits over Roundup cancer claims",
-      "url": "https://www.statnews.com/2026/04/27/supreme-court-lawsuits-roundup-weedkiller-cancer-claims/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-27",
-      "summary": "The Supreme Court seemed divided Monday over whether to block thousands of lawsuits alleging the maker of the weedkiller Roundup failed to warn people it could cause cancer.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: Erasca touts strong, though preliminary, results in trial of pancreatic and lung cancer therapy",
-      "url": "https://www.statnews.com/2026/04/27/erasca-pancreatic-cancer-study-results/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-27",
-      "summary": "The drugmaker Erasca said results on its experimental pill in a trial of pancreatic cancer and non-small cell lung cancer exceeded its expectations.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: Dems say RFK Jr. has a pattern of failing to answer their questions",
-      "url": "https://www.statnews.com/2026/04/27/rfk-jr-questions-from-democrats-unanswered-congressional-hearings/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-27",
-      "summary": "Kennedy broke his pledge to share a controversial contract, highlighting Democrats' frustrations with the health secretary.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Trump administration warns against using federal dollars on fentanyl test strips",
-      "url": "https://www.statnews.com/2026/04/27/trump-administration-samhsa-clear-shift-from-harm-reduction/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-04-27",
-      "summary": "The Trump administration underlines a “clear shift away from harm reduction and practices” that it says facilitates illegal drug use.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
     }
   ]
 }
