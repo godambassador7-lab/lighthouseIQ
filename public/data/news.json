@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-04T22:07:51.901Z",
+  "lastUpdated": "2026-05-05T00:00:23.877Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
@@ -12,70 +12,70 @@
         "source": "Fierce Healthcare",
         "articleCount": 178,
         "latestPublishedAt": "2026-05-04T00:00:00.000Z",
-        "staleHours": 22,
+        "staleHours": 24,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
         "articleCount": 170,
         "latestPublishedAt": "2026-05-04T00:00:00.000Z",
-        "staleHours": 22,
+        "staleHours": 24,
         "status": "ok"
       },
       {
         "source": "STAT News",
         "articleCount": 69,
         "latestPublishedAt": "2026-05-04T00:00:00.000Z",
-        "staleHours": 22,
+        "staleHours": 24,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 30,
         "latestPublishedAt": "2026-05-04T00:00:00.000Z",
-        "staleHours": 22,
+        "staleHours": 24,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 15,
         "latestPublishedAt": "2026-05-04T00:00:00.000Z",
-        "staleHours": 22,
+        "staleHours": 24,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 10,
         "latestPublishedAt": "2026-04-30T00:00:00.000Z",
-        "staleHours": 118,
+        "staleHours": 120,
         "status": "stale"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 10,
         "latestPublishedAt": "2026-04-30T00:00:00.000Z",
-        "staleHours": 118,
+        "staleHours": 120,
         "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 8,
         "latestPublishedAt": "2026-05-01T00:00:00.000Z",
-        "staleHours": 94,
+        "staleHours": 96,
         "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 6,
         "latestPublishedAt": "2026-04-30T00:00:00.000Z",
-        "staleHours": 118,
+        "staleHours": 120,
         "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 4,
         "latestPublishedAt": "2026-04-30T00:00:00.000Z",
-        "staleHours": 118,
+        "staleHours": 120,
         "status": "stale"
       }
     ]
@@ -117,6 +117,7 @@
   "quality": {
     "status": "warning",
     "failedChecks": [
+      "minArticles24h",
       "maxStaleSources"
     ],
     "checks": {
@@ -127,8 +128,8 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 104,
-        "pass": true
+        "actual": 0,
+        "pass": false
       },
       "minRequiredCategoriesCovered": {
         "threshold": 4,
