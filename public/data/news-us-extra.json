@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-06T14:24:04.588Z",
+  "lastUpdated": "2026-05-06T16:49:58.249Z",
   "scope": "US healthcare",
   "sourceManifestVersion": "1.0.0",
   "sourceHealth": [
@@ -111,9 +111,10 @@
       "source": "NYSNA RSS",
       "id": "nysna_rss",
       "type": "rss",
-      "ok": true,
-      "status": 200,
-      "records": 12
+      "ok": false,
+      "status": 0,
+      "records": 0,
+      "error": "fetch failed"
     },
     {
       "source": "SEIU RSS",
@@ -289,6 +290,17 @@
       "sourceId": "federal_register_hhs",
       "publishedAt": "2026-05-06",
       "category": "policy_reimbursement",
+      "relevance": 100
+    },
+    {
+      "title": "Disruptions in Availability of Neurosurgical Patties, Sponges, and Strips - Letter to Health Care Providers",
+      "summary": "The FDA issued a LHCP to notify providers that Neurosurgical Patties, Sponges, and Strips (product code HBA) are experiencing a supply disruption.",
+      "url": "http://www.fda.gov/medical-devices/letters-health-care-providers/disruptions-availability-neurosurgical-patties-sponges-and-strips-letter-health-care-providers",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-05-06",
+      "category": "ai_tech",
       "relevance": 100
     },
     {
@@ -1315,17 +1327,6 @@
       "relevance": 98
     },
     {
-      "title": "Dialysis Catheter Recall: Merit Medical Removes 16F Dual-Valved Splittable Sheath Introducer",
-      "summary": "The Merit 16F Dual-Valved Splittable Sheath Introducer may not split as intended. This may cause bleeding, embolization, or loss of vessel for future access.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/dialysis-catheter-recall-merit-medical-removes-16f-dual-valved-splittable-sheath-introducer",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-04-14",
-      "category": "quality_safety",
-      "relevance": 100
-    },
-    {
       "title": "HUM 8-K filing - Humana Inc.",
       "summary": "Humana Inc. filed 8-K with the SEC.",
       "url": "https://www.sec.gov/Archives/edgar/data/49071/000004907126000013/hum-20260410.htm",
@@ -1772,61 +1773,6 @@
       "source": "National Nurses United RSS",
       "sourceType": "rss",
       "sourceId": "nnu_rss",
-      "publishedAt": "",
-      "category": "ai_tech",
-      "relevance": 100
-    },
-    {
-      "title": "Save Healthcare Services",
-      "summary": "",
-      "url": "https://www.nysna.org/campaigns/save-healthcare-services",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 100
-    },
-    {
-      "title": "NYSNA Nurses Push Back on Potential Hospital Closures Across New York State",
-      "summary": "",
-      "url": "https://www.nysna.org/news/nysna-nurses-push-back-potential-hospital-closures-across-new-york-state",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "closures_layoffs",
-      "relevance": 100
-    },
-    {
-      "title": "North Country Healthcare Workers Speak Out for Safe Staffing and a Fair Contract",
-      "summary": "",
-      "url": "https://www.nysna.org/news/north-country-healthcare-workers-speak-out-safe-staffing-and-fair-contract",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "ai_tech",
-      "relevance": 100
-    },
-    {
-      "title": "NYSNA Healthcare Workers at UVM-CVPH Speak Out for Safe Staffing and a Fair Contract",
-      "summary": "",
-      "url": "https://www.nysna.org/press/nysna-healthcare-workers-uvm-cvph-speak-out-safe-staffing-and-fair-contract-0",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "ai_tech",
-      "relevance": 100
-    },
-    {
-      "title": "NYSNA Healthcare Workers at UVM-CVPH Speak Out for Safe Staffing and a Fair Contract",
-      "summary": "",
-      "url": "https://www.nysna.org/press/nysna-healthcare-workers-uvm-cvph-speak-out-safe-staffing-and-fair-contract",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
       "publishedAt": "",
       "category": "ai_tech",
       "relevance": 100
@@ -2393,61 +2339,6 @@
       "relevance": 93
     },
     {
-      "title": "Journal of the New York State Nurses Association",
-      "summary": "",
-      "url": "https://www.nysna.org/nursing-resources/journal-new-york-state-nurses-association",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 93
-    },
-    {
-      "title": "Statewide Peer Assistance for Nurses",
-      "summary": "",
-      "url": "https://www.statewidepeerassistance.org/",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 93
-    },
-    {
-      "title": "Health Equity and Social Justice",
-      "summary": "",
-      "url": "https://www.nysna.org/campaigns/health-equity-and-social-justice",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 93
-    },
-    {
-      "title": "ECMC Nurses Continue Fight for Paid Family Leave",
-      "summary": "",
-      "url": "https://www.nysna.org/news/ecmc-nurses-continue-fight-paid-family-leave",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "ai_tech",
-      "relevance": 93
-    },
-    {
-      "title": "“Nurses Helping Nurses”: Nurses House Launches 16th Annual Dolphins for Nurses Campaign",
-      "summary": "",
-      "url": "https://www.nysna.org/news/nurses-helping-nurses-nurses-house-launches-16th-annual-dolphins-nurses-campaign",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "ai_tech",
-      "relevance": 93
-    },
-    {
       "title": "Read more about Moving Prior Authorization into the 21st Century",
       "summary": "",
       "url": "https://www.cms.gov/newsroom/blog/moving-prior-authorization-21st-century",
@@ -2578,28 +2469,6 @@
       "publishedAt": "",
       "category": "ai_tech",
       "relevance": 90
-    },
-    {
-      "title": "NYSNA Update: May 1, 2026",
-      "summary": "",
-      "url": "https://www.nysna.org/news/nysna-update-may-1-2026",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 88
-    },
-    {
-      "title": "See All Photos and Videos",
-      "summary": "",
-      "url": "https://www.nysna.org/news/gallery",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 88
     }
   ]
 }
