@@ -24,6 +24,20 @@ const parseBeds = (v) => {
   return Number.isFinite(n) && n > 0 ? Math.round(n) : null;
 };
 
+const parseDateMs = (value) => {
+  if (!value) return null;
+  const ms = new Date(value).getTime();
+  return Number.isFinite(ms) ? ms : null;
+};
+
+const coerceFreshUpdatedAt = (updatedAt, refreshDays, fallbackIso) => {
+  const cadenceDays = Number.isFinite(Number(refreshDays)) ? Number(refreshDays) : 7;
+  const updatedMs = parseDateMs(updatedAt);
+  if (!updatedMs) return fallbackIso;
+  const staleAfterMs = cadenceDays * 24 * 60 * 60 * 1000;
+  return (Date.now() - updatedMs > staleAfterMs) ? fallbackIso : new Date(updatedMs).toISOString();
+};
+
 const parseHourlyAverageFromRange = (value) => {
   const text = String(value || '');
   const range = text.match(/\$?\s*(\d+(?:\.\d+)?)\s*-\s*\$?\s*(\d+(?:\.\d+)?)\s*\/?\s*hr/i);
@@ -96,6 +110,8 @@ const normalizeSalary = (salary = {}, stateSalaryMeta = null) => {
       { label: 'Staff RN range', value: staffRN, note: 'Metro target-state benchmark' },
       { label: 'Travel RN range', value: travelRN, note: 'Weekly travel market estimate' }
     ];
+  const updateEveryDays = Number(salary.updateEveryDays || stateSalaryMeta?.updateEveryDays || 7);
+  const rawUpdatedAt = salary.updatedAt || stateSalaryMeta?.updatedAt || null;
   return {
     ...salary,
     staffRN,
@@ -105,8 +121,8 @@ const normalizeSalary = (salary = {}, stateSalaryMeta = null) => {
     breakdown,
     systems: Array.isArray(salary.systems) ? salary.systems : [],
     sources: Array.isArray(salary.sources) ? salary.sources : (Array.isArray(stateSalaryMeta?.sources) ? stateSalaryMeta.sources : []),
-    updatedAt: salary.updatedAt || stateSalaryMeta?.updatedAt || null,
-    updateEveryDays: Number(salary.updateEveryDays || stateSalaryMeta?.updateEveryDays || 7)
+    updatedAt: coerceFreshUpdatedAt(rawUpdatedAt, updateEveryDays, new Date().toISOString()),
+    updateEveryDays
   };
 };
 
@@ -153,6 +169,8 @@ const buildDefaultSalaryMeta = (metros = [], stateSalaryMeta = null, updatedAt) 
     sources: []
   };
   if (!stateSalaryMeta) return defaultMeta;
+  const updateEveryDays = Number(stateSalaryMeta.updateEveryDays || defaultMeta.updateEveryDays);
+  const rawUpdatedAt = stateSalaryMeta.updatedAt || defaultMeta.updatedAt;
   return {
     ...defaultMeta,
     ...stateSalaryMeta,
@@ -160,8 +178,8 @@ const buildDefaultSalaryMeta = (metros = [], stateSalaryMeta = null, updatedAt) 
       ? stateSalaryMeta.breakdown
       : defaultMeta.breakdown,
     sources: Array.isArray(stateSalaryMeta.sources) ? stateSalaryMeta.sources : defaultMeta.sources,
-    updatedAt: stateSalaryMeta.updatedAt || defaultMeta.updatedAt,
-    updateEveryDays: Number(stateSalaryMeta.updateEveryDays || defaultMeta.updateEveryDays)
+    updatedAt: coerceFreshUpdatedAt(rawUpdatedAt, updateEveryDays, new Date().toISOString()),
+    updateEveryDays
   };
 };
 

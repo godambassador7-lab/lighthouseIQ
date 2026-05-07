@@ -10141,8 +10141,13 @@ const selectHomeStateMetro = (metro, stateAbbrev) => {
       ? salaryMeta.sources.filter((src) => src && src.name && src.url)
       : [];
   const salarySystems = Array.isArray(salary.systems) ? salary.systems : [];
-  const updatedAtRaw = salary.updatedAt || salaryMeta.updatedAt || null;
-  const updateEveryDays = Number(salary.updateEveryDays || salaryMeta.updateEveryDays || 7);
+  const salaryUpdatedAt = salary?.updatedAt ? new Date(salary.updatedAt) : null;
+  const metaUpdatedAt = salaryMeta?.updatedAt ? new Date(salaryMeta.updatedAt) : null;
+  const salaryUpdatedAtMs = salaryUpdatedAt && !Number.isNaN(salaryUpdatedAt.getTime()) ? salaryUpdatedAt.getTime() : null;
+  const metaUpdatedAtMs = metaUpdatedAt && !Number.isNaN(metaUpdatedAt.getTime()) ? metaUpdatedAt.getTime() : null;
+  const freshestUpdatedAtMs = [salaryUpdatedAtMs, metaUpdatedAtMs].filter(Number.isFinite).sort((a, b) => b - a)[0] ?? null;
+  const updatedAtRaw = freshestUpdatedAtMs ? new Date(freshestUpdatedAtMs).toISOString() : null;
+  const updateEveryDays = Number(salary.updateEveryDays ?? salaryMeta.updateEveryDays ?? 7);
   const updatedAt = updatedAtRaw ? new Date(updatedAtRaw) : null;
   const updatedAtValid = updatedAt && !Number.isNaN(updatedAt.getTime());
   const daysMs = 24 * 60 * 60 * 1000;
@@ -10442,8 +10447,13 @@ const selectTargetStateMetro = (metro, stateAbbrev) => {
       ? salaryMeta.sources.filter((src) => src && src.name && src.url)
       : [];
   const salarySystems = Array.isArray(salary.systems) ? salary.systems : [];
-  const updatedAtRaw = salary.updatedAt || salaryMeta.updatedAt || null;
-  const updateEveryDays = Number(salary.updateEveryDays || salaryMeta.updateEveryDays || 7);
+  const salaryUpdatedAt = salary?.updatedAt ? new Date(salary.updatedAt) : null;
+  const metaUpdatedAt = salaryMeta?.updatedAt ? new Date(salaryMeta.updatedAt) : null;
+  const salaryUpdatedAtMs = salaryUpdatedAt && !Number.isNaN(salaryUpdatedAt.getTime()) ? salaryUpdatedAt.getTime() : null;
+  const metaUpdatedAtMs = metaUpdatedAt && !Number.isNaN(metaUpdatedAt.getTime()) ? metaUpdatedAt.getTime() : null;
+  const freshestUpdatedAtMs = [salaryUpdatedAtMs, metaUpdatedAtMs].filter(Number.isFinite).sort((a, b) => b - a)[0] ?? null;
+  const updatedAtRaw = freshestUpdatedAtMs ? new Date(freshestUpdatedAtMs).toISOString() : null;
+  const updateEveryDays = Number(salary.updateEveryDays ?? salaryMeta.updateEveryDays ?? 7);
   const updatedAt = updatedAtRaw ? new Date(updatedAtRaw) : null;
   const updatedAtValid = updatedAt && !Number.isNaN(updatedAt.getTime());
   const daysMs = 24 * 60 * 60 * 1000;
