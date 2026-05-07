@@ -4090,12 +4090,16 @@ const normalizeTargetMetroSalary = (metro = {}, stateSalaryMeta = null) => {
     || parseHourlyAverageFromRange(stateSalaryMeta?.breakdown?.[0]?.value)
     || `$${benchmarkHourly.toFixed(2)}/hr`;
 
-  const breakdown = Array.isArray(salary.breakdown) && salary.breakdown.length
+  const hasConcreteBreakdown = Array.isArray(salary.breakdown) && salary.breakdown.some((item) => {
+    const value = String(item?.value || '').trim();
+    return value && !/market-based|unavailable|n\/a|--/i.test(value);
+  });
+  const breakdown = hasConcreteBreakdown
     ? salary.breakdown
     : [
-        { label: 'Average wage (est.)', value: averageWage, note: 'Derived from available Staff RN range' },
-        { label: 'Staff RN range', value: staffRN, note: 'Metro target-state benchmark' },
-        { label: 'Travel RN range', value: travelRN, note: 'Weekly travel market estimate' }
+        { label: 'State RN baseline (est.)', value: averageWage, note: 'Derived from state and metro benchmark inputs' },
+        { label: 'Staff RN range (metro est.)', value: staffRN, note: 'Estimated metro hiring range' },
+        { label: 'Travel RN range (weekly est.)', value: travelRN, note: 'Estimated weekly travel pay band' }
       ];
 
   const systems = Array.isArray(salary.systems) ? salary.systems : [];

@@ -10224,8 +10224,13 @@ const selectHomeStateMetro = (metro, stateAbbrev) => {
       `
       : '';
 
-    const laborCards = getMetroLaborCards(stateAbbrev, metro.name, breakdown);
-    const topCardsHtml = laborCards.map((card) => `
+    const topCards = [
+      { value: salary.averageWage || parseHourlyAverageFromRange(salary.staffRN) || '--', label: 'Avg RN hourly (est.)' },
+      { value: salary.staffRN || '--', label: 'Staff RN range' },
+      { value: salary.travelRN || '--', label: 'Travel RN range' },
+      { value: salary.signOn || '--', label: 'Sign-on range' }
+    ];
+    const topCardsHtml = topCards.map((card) => `
       <div class="salary-card">
         <div class="salary-value">${escapeHtml(card.value || '--')}</div>
         <div class="salary-label">${escapeHtml(card.label || '--')}</div>
@@ -10520,8 +10525,13 @@ const selectTargetStateMetro = (metro, stateAbbrev) => {
       `
       : '';
 
-    const laborCards = getMetroLaborCards(stateAbbrev, metro.name, breakdown);
-    const topCardsHtml = laborCards.map((card) => `
+    const topCards = [
+      { value: salary.averageWage || parseHourlyAverageFromRange(salary.staffRN) || '--', label: 'Avg RN hourly (est.)' },
+      { value: salary.staffRN || '--', label: 'Staff RN range' },
+      { value: salary.travelRN || '--', label: 'Travel RN range' },
+      { value: salary.signOn || '--', label: 'Sign-on range' }
+    ];
+    const topCardsHtml = topCards.map((card) => `
       <div class="salary-card">
         <div class="salary-value">${escapeHtml(card.value || '--')}</div>
         <div class="salary-label">${escapeHtml(card.label || '--')}</div>
