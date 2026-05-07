@@ -386,14 +386,25 @@ const checkAuth = () => {
   return sessionStorage.getItem(SESSION_KEY) === 'true';
 };
 
+const readFieldValue = (field) => {
+  if (!field || typeof field !== 'object' || !('value' in field)) return '';
+  const raw = field.value;
+  return raw === undefined || raw === null ? '' : String(raw);
+};
+
 const handleLogin = (e) => {
   e.preventDefault();
-  const entered = passcodeInput.value.trim();
+  const form = e?.currentTarget || loginForm || document.getElementById('login-form');
+  const codeField = passcodeInput
+    || form?.querySelector('#passcode-input')
+    || form?.querySelector('#password-input')
+    || form?.querySelector('input[type="password"]');
+  const entered = readFieldValue(codeField).trim();
 
   if (!PASSCODE || entered === PASSCODE) {
     sessionStorage.setItem(SESSION_KEY, 'true');
     loginOverlay.classList.add('hidden');
-    passcodeInput.value = '';
+    if (codeField && typeof codeField === 'object' && 'value' in codeField) codeField.value = '';
     loginError.textContent = '';
     initApp().then(() => {
       initStrategicReview();
@@ -403,8 +414,8 @@ const handleLogin = (e) => {
     loginError.classList.remove('shake');
     void loginError.offsetWidth;
     loginError.classList.add('shake');
-    passcodeInput.value = '';
-    passcodeInput.focus();
+    if (codeField && typeof codeField === 'object' && 'value' in codeField) codeField.value = '';
+    codeField?.focus();
   }
 };
 
