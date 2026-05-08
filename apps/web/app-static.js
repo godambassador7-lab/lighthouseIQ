@@ -2705,10 +2705,12 @@ const renderNotices = (notices) => {
         <span class="pill">${state}</span>
         ${customBadge}
         ${manufacturingBadge}
-        <span class="score">${label} - ${score}</span>
-        <div class="save-to-project">
-          <button class="save-to-project-btn" data-notice-idx="${globalIdx}">+ Save</button>
-          <div class="save-dropdown" id="dropdown-${globalIdx}"></div>
+        <div class="notice-actions">
+          <span class="score">${label} - ${score}</span>
+          <div class="save-to-project">
+            <button class="save-to-project-btn" data-notice-idx="${globalIdx}">+ Save</button>
+            <div class="save-dropdown" id="dropdown-${globalIdx}"></div>
+          </div>
         </div>
       </div>
       <h4>${employer}</h4>

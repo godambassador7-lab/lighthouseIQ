@@ -3522,6 +3522,7 @@ body.modal-open {
 /* Save to Project Dropdown in Notice Cards */
 .save-to-project {
   position: relative;
+  flex: 0 0 auto;
 }
 
 .save-to-project-btn {
@@ -3556,6 +3557,13 @@ body.modal-open {
 
 .save-dropdown.active {
   display: block;
+}
+
+@media (max-width: 640px) {
+  .notice-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
 }
 
 .save-dropdown-item {
@@ -6477,6 +6485,15 @@ input[type="range"] {
   flex-wrap: wrap;
 }
 
+.notice-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  max-width: 100%;
+}
+
 .pill {
   background: rgba(43, 108, 176, 0.12);
   color: var(--sea);
@@ -6494,8 +6511,12 @@ input[type="range"] {
   border-radius: 999px;
   font-size: 12px;
   font-weight: 700;
-  margin-left: auto;
+  margin-left: 0;
   white-space: nowrap;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Custom notice styling */
