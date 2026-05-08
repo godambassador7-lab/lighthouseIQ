@@ -166,6 +166,9 @@ jobs:
           LNI_OUTPUT_DIR: ${{ github.workspace }}/public/data
           WORKFORCE_REFRESH_DAYS: 7
 
+      - name: Enforce freshness metadata across states/modules
+        run: node scripts/ensure-data-freshness.js
+
       - name: Run recruitment intel export script
         run: node scripts/export-recruitment-intel.js
         env:
