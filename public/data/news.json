@@ -1,74 +1,74 @@
 {
-  "lastUpdated": "2026-05-11T07:47:53.308Z",
+  "lastUpdated": "2026-05-11T11:29:11.036Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 9,
-    "staleSources": 6,
-    "healthySources": 3,
+    "staleSources": 5,
+    "healthySources": 4,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 209,
+        "articleCount": 207,
         "latestPublishedAt": "2026-05-11T00:00:00.000Z",
-        "staleHours": 7,
+        "staleHours": 11,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 151,
+        "articleCount": 150,
         "latestPublishedAt": "2026-05-08T00:00:00.000Z",
-        "staleHours": 79,
+        "staleHours": 83,
         "status": "stale"
       },
       {
         "source": "STAT News",
-        "articleCount": 63,
-        "latestPublishedAt": "2026-05-09T00:00:00.000Z",
-        "staleHours": 55,
+        "articleCount": 69,
+        "latestPublishedAt": "2026-05-11T00:00:00.000Z",
+        "staleHours": 11,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
-        "articleCount": 43,
+        "articleCount": 39,
         "latestPublishedAt": "2026-05-11T00:00:00.000Z",
-        "staleHours": 7,
+        "staleHours": 11,
+        "status": "ok"
+      },
+      {
+        "source": "Healthcare Dive",
+        "articleCount": 11,
+        "latestPublishedAt": "2026-05-11T00:00:00.000Z",
+        "staleHours": 11,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
-        "articleCount": 11,
+        "articleCount": 10,
         "latestPublishedAt": "2026-05-07T00:00:00.000Z",
-        "staleHours": 103,
-        "status": "stale"
-      },
-      {
-        "source": "Healthcare Dive",
-        "articleCount": 9,
-        "latestPublishedAt": "2026-05-08T00:00:00.000Z",
-        "staleHours": 79,
+        "staleHours": 107,
         "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 8,
         "latestPublishedAt": "2026-05-07T00:00:00.000Z",
-        "staleHours": 103,
+        "staleHours": 107,
         "status": "stale"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 4,
         "latestPublishedAt": "2026-05-07T00:00:00.000Z",
-        "staleHours": 103,
+        "staleHours": 107,
         "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 2,
         "latestPublishedAt": "2026-05-08T00:00:00.000Z",
-        "staleHours": 79,
+        "staleHours": 83,
         "status": "stale"
       }
     ]
@@ -88,7 +88,7 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 30
+      "count": 31
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -96,15 +96,15 @@
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
-      "count": 18
+      "count": 17
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 171
+      "count": 170
     },
     "general_market": {
       "label": "General Market",
-      "count": 231
+      "count": 232
     }
   },
   "quality": {
@@ -120,7 +120,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 40,
+        "actual": 49,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -130,7 +130,7 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 6,
+        "actual": 5,
         "pass": false
       }
     }
@@ -305,11 +305,92 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "STAT+: Provider, insurer groups rush to shape No Surprises Act arbitration rules",
+      "url": "https://www.statnews.com/2026/05/11/no-surprises-act-new-rules-dispute-resolution/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-05-11",
+      "summary": "Doctors and insurers are battling to reshape the controversial No Surprises Act arbitration process, which has long frustrated both sides.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Animal skin disease confirmed in clusters of European men who have sex with men",
+      "url": "https://www.statnews.com/2026/05/11/rare-animal-skin-infection-msm-clusters-europe-dermatophilus-congolensis/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-05-11",
+      "summary": "European researchers have diagnosed a number of men who have sex with other men with a skin disease that normally infects livestock.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Medicare is spending far less than expected on new Alzheimer’s drugs",
+      "url": "https://www.statnews.com/2026/05/11/medicare-spending-less-than-expected-alzheimers-drugs-leqembi-kisunla/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-05-11",
+      "summary": "Adoption has been slow with new Alzheimer’s drugs because the treatments are complicated to administer and the benefits are uncertain.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Opinion: AI doctors should be licensed. Here’s a framework to do that",
+      "url": "https://www.statnews.com/2026/05/11/ai-doctors-licenses-utah-doctronic-pilot/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-05-11",
+      "summary": "A state-by-state approach to clinical AI won’t work. Here’s a framework that can.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Opinion: What addiction medicine can teach us about depending on AI",
+      "url": "https://www.statnews.com/2026/05/11/ai-dependence-addiction-substances-relief-psychology/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-05-11",
+      "summary": "People gradually rely on AI to reduce the discomfort of thinking. For some, that can become a problem.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "STAT+: Five years after disaster, a rare disease community gets new chance at treatment",
+      "url": "https://www.statnews.com/2026/05/11/astellas-gene-therapy-trials-resume-promising-myotubular-myopathy-treatment/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-05-11",
+      "summary": "Some boys had astonishing recoveries. But other boys died.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "4 questions your tech should answer to confidently navigate a risk-based future",
+      "url": "https://www.healthcaredive.com/spons/4-questions-your-tech-should-answer-to-confidently-navigate-a-risk-based-fu/819517/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-05-11",
+      "summary": "<p>A risk-based future is the reality for healthcare, is your organization ready to succeed?",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "From hidden costs to smarter choices: Why transparency is key to lowering healthcare spend",
+      "url": "https://www.healthcaredive.com/spons/from-hidden-costs-to-smarter-choices-why-transparency-is-key-to-lowering-h/819407/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-05-11",
+      "summary": "<p>The hidden gap driving higher healthcare costs.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "Advancing Frontline Care With a Quadruplet Regimen for Transplant-Ineligible Myeloma Patients",
       "url": "https://www.fiercehealthcare.com/sponsored/advancing-frontline-care-quadruplet-regimen-transplant-ineligible-myeloma-patients",
       "source": "Fierce Healthcare",
       "publishedAt": "2026-05-11",
       "summary": "Explore a quadruplet treatment regimen now approved for newly diagnosed multiple myeloma patients who are transplant ineligible.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Omada Health posts 42% revenue jump in Q1, joins Eli Lilly employer weight loss program",
+      "url": "https://www.fiercehealthcare.com/digital-health/omada-health-posts-42-revenue-boost-q1-joins-eli-lilly-employer-weight-loss-program",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-05-11",
+      "summary": "Omada Health reported revenue of $78 million in the first quarter, up 42% year over year as the company continues to expand its commercial reach and is seeing traction from its big investments in GLP-1 capabilities.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
@@ -449,15 +530,6 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Nearly 8 in 10 employers say GLP-1 coverage drives up benefit costs: Business Group on Health",
-      "url": "https://www.fiercehealthcare.com/finance/nearly-8-10-employers-say-glp-1-coverage-spiking-benefit-costs-business-group-health",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-11",
-      "summary": "Seventy-two percent of respondents said they would likely continue GLP-1 coverage through 2027 while 10% do not expect to continue coverage.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
       "title": "PeaceHealth, physician group agree to 'reset' litigious ED staffing dispute",
       "url": "https://www.fiercehealthcare.com/providers/peacehealth-sued-over-plans-tap-out-state-staffer-apollomd-oregon-eds",
       "source": "Fierce Healthcare",
@@ -465,6 +537,15 @@
       "summary": "A joint statement appears to signal an upcoming deal in a lawsuit over a staffing decision that drew national attention as an early challenge to Oregon's recent statute restricting corporate medicine.",
       "category": "general_market",
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "Nearly 8 in 10 employers say GLP-1 coverage drives up benefit costs: Business Group on Health",
+      "url": "https://www.fiercehealthcare.com/finance/nearly-8-10-employers-say-glp-1-coverage-spiking-benefit-costs-business-group-health",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-05-11",
+      "summary": "Seventy-two percent of respondents said they would likely continue GLP-1 coverage through 2027 while 10% do not expect to continue coverage.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "Leapfrog Group's latest safety grades have far fewer low scores since removal of non-participating hospitals",
@@ -4743,102 +4824,6 @@
       "summary": "The Department of Justice has formed a new fraud strike force to target schemes across Arizona, Nevada and Northern California, the agency announced Thursday.",
       "category": "labor_unions",
       "categoryLabel": "Labor & Unions"
-    },
-    {
-      "title": "Cigna to exit ACA market, pursue strategic alternatives for eviCore unit",
-      "url": "https://www.fiercehealthcare.com/payers/cigna-posts-165b-profit-q1-earnings-beat",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-05",
-      "summary": "The Cigna Group beat the Street on both earnings and revenue in the first quarter of 2026, posting $1.65 billion in profit for Q1.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Fierce Healthcare Fundraising Tracker '26: Gravity Rail tackles AI-powered patient engagement; Zócalo Health pockets $15M",
-      "url": "https://www.fiercehealthcare.com/health-tech/fierce-healthcare-fundraising-tracker-26",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-05",
-      "summary": "Keep up with all the venture capital dollars being funneled into the health tech and digital health industries.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Functional medicine provider Parsley Health now in-network nationwide",
-      "url": "https://www.fiercehealthcare.com/payers/parsley-health-functional-medicine-provider-now-network-nationwide",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-05",
-      "summary": "Today’s nationwide expansion represents a tenfold increase in coverage, per the company. The company offers healthcare via telehealth nationwide or in-person in Los Angeles and New York City.",
-      "category": "capacity_expansion",
-      "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "Agency Information Collection Activities; Proposed Collection; Comment Request; National Youth Tobacco Survey",
-      "summary": "The Food and Drug Administration (FDA or Agency) is announcing an opportunity for public comment on the proposed collection of certain information by the Agency. Under the Paperwork Reduction Act of 1995 (PRA), Federal Agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension of an existing collection of information, and to allow 60 days for public comment in response to the notice. This notice solicits comments on the National Youth Tobacco Survey.",
-      "url": "https://www.federalregister.gov/documents/2026/05/04/2026-08604/agency-information-collection-activities-proposed-collection-comment-request-national-youth-tobacco",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-05-04",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Submission for Office of Management and Budget Review; Safe Access for Victims' Economic Security, Data Collection for Safety in Child Support Program Research (New Collection)",
-      "summary": "The Administration for Children and Families (ACF) is requesting public comments on a proposed information collection as part of the Safe Access for Victims' Economic Security (SAVES) Demonstration research on safety in the child support program. The SAVES Center, responsible for providing technical assistance and conducting evaluation for SAVES, will conduct one-time data collection activities with domestic violence (DV) survivors, advocates, and child support staff to understand their experiences and to identify barriers and promising practices related to safety in the child support program. These activities are part of ACF's efforts to improve safety in the child support program under SAVES.",
-      "url": "https://www.federalregister.gov/documents/2026/05/04/2026-08584/submission-for-office-of-management-and-budget-review-safe-access-for-victims-economic-security-data",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-05-04",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Submission for Office of Management and Budget Review; Healthy Marriage and Responsible Fatherhood Performance Measures and Additional Data Collection",
-      "summary": "The Administration for Children and Families (ACF), Office of Family Assistance (OFA), has had administrative responsibility for federal funding of programs that strengthen families through healthy marriage and relationship education and responsible fatherhood programming since 2006 through the Healthy Marriage (HM) and Responsible Fatherhood (RF) grant programs. ACF required the 2015 and 2020 cohorts of HMRF grant recipients to collect and report performance measures about program operations, services, and participants (Office of Management and Budget (OMB) #: 0970-0460 and OMB #: 0970-0566). ACF will continue performance measure data collection and reporting for a new cohort of HMRF grant recipients that received 5-year awards in September 2025. ACF is requesting comments on a revision to its approved data collection and reporting (OMB #: 0970-0566) to support these activities with the 2025 HMRF grant cohort. This new cohort is expected to begin collecting performance measure data and reporting to ACF in April 2026. ACF is requesting to extend approval, with the implementation of revisions described below, for 3 years.",
-      "url": "https://www.federalregister.gov/documents/2026/05/04/2026-08577/submission-for-office-of-management-and-budget-review-healthy-marriage-and-responsible-fatherhood",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-05-04",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Center for Scientific Review; Notice of Closed Meetings",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/05/04/2026-08638/center-for-scientific-review-notice-of-closed-meetings",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-05-04",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Center for Scientific Review; Notice of Closed Meetings",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/05/04/2026-08606/center-for-scientific-review-notice-of-closed-meetings",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-05-04",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "AI is finding cancer earlier. Are systems ready for what comes next?",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/ai-is-finding-cancer-earlier-are-systems-ready-for-what-comes-next/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-04",
-      "summary": "Mayo Clinic research published April 28 showed an AI model could detect pancreatic cancer up to three years before clinical diagnosis. Projected to be the second-leading cause of cancer-related death in the U.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
     }
   ]
 }
