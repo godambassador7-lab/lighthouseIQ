@@ -1,74 +1,74 @@
 {
-  "lastUpdated": "2026-05-11T21:24:12.713Z",
+  "lastUpdated": "2026-05-11T23:01:29.022Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 9,
-    "staleSources": 3,
-    "healthySources": 6,
+    "staleSources": 2,
+    "healthySources": 7,
     "sources": [
       {
         "source": "Fierce Healthcare",
         "articleCount": 180,
         "latestPublishedAt": "2026-05-11T00:00:00.000Z",
-        "staleHours": 21,
+        "staleHours": 23,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 176,
+        "articleCount": 179,
         "latestPublishedAt": "2026-05-11T00:00:00.000Z",
-        "staleHours": 21,
+        "staleHours": 23,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 70,
+        "articleCount": 66,
         "latestPublishedAt": "2026-05-11T00:00:00.000Z",
-        "staleHours": 21,
+        "staleHours": 23,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 39,
         "latestPublishedAt": "2026-05-11T00:00:00.000Z",
-        "staleHours": 21,
+        "staleHours": 23,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 10,
         "latestPublishedAt": "2026-05-11T00:00:00.000Z",
-        "staleHours": 21,
+        "staleHours": 23,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 10,
         "latestPublishedAt": "2026-05-07T00:00:00.000Z",
-        "staleHours": 117,
+        "staleHours": 119,
         "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 9,
         "latestPublishedAt": "2026-05-11T00:00:00.000Z",
-        "staleHours": 21,
+        "staleHours": 23,
         "status": "ok"
       },
       {
         "source": "SEC Healthcare Filings",
-        "articleCount": 4,
-        "latestPublishedAt": "2026-05-07T00:00:00.000Z",
-        "staleHours": 117,
-        "status": "stale"
+        "articleCount": 5,
+        "latestPublishedAt": "2026-05-11T00:00:00.000Z",
+        "staleHours": 23,
+        "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 2,
         "latestPublishedAt": "2026-05-08T00:00:00.000Z",
-        "staleHours": 93,
+        "staleHours": 95,
         "status": "stale"
       }
     ]
@@ -80,7 +80,7 @@
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 24
+      "count": 25
     },
     "labor_unions": {
       "label": "Labor & Unions",
@@ -100,18 +100,16 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 166
+      "count": 167
     },
     "general_market": {
       "label": "General Market",
-      "count": 233
+      "count": 231
     }
   },
   "quality": {
-    "status": "warning",
-    "failedChecks": [
-      "maxStaleSources"
-    ],
+    "status": "pass",
+    "failedChecks": [],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -120,7 +118,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 102,
+        "actual": 113,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -130,8 +128,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 3,
-        "pass": false
+        "actual": 2,
+        "pass": true
       }
     }
   },
@@ -305,94 +303,106 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "Northwell launches direct healthcare partnership with 32BJ Health Fund",
-      "url": "https://www.beckershospitalreview.com/finance/northwell-launches-direct-healthcare-partnership-with-32bj-health-fund/",
+      "title": "UNH 8-K filing - UnitedHealth Group Incorporated",
+      "summary": "UnitedHealth Group Incorporated filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/731766/000073176626000129/unh-20260511.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-05-11",
+      "category": "general_market",
+      "relevance": 90,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Entry-level hiring drops at top employers: LinkedIn",
+      "url": "https://www.beckershospitalreview.com/workforce/entry-level-hiring-drops-at-top-employers-linkedin/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-05-11",
-      "summary": "Northwell Direct, the direct-to-employer healthcare network and benefits arm of New Hyde Park, N.Y.",
+      "summary": "Entry-level hiring has declined as artificial intelligence reshapes many of the capabilities that once defined first professional jobs, according to a May 4 LinkedIn News post. The average seasonally adjusted hiring rate of U.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Ascension Texas hospital names chief clinical officer",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/ascension-texas-hospital-names-chief-clinical-officer/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-11",
+      "summary": "Ascension Texas has appointed Joshua Pozos, MD, chief clinical officer for the market. Dr.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
     {
-      "title": "Supreme Court stays lower court&#8217;s decision on mail-ordered mifepristone",
-      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/supreme-court-stays-lower-courts-decision-on-mail-ordered-mifepristone/",
+      "title": "Building winning digital health strategies for patient-centered care — Lessons from 3 health systems",
+      "url": "https://www.beckershospitalreview.com/digital-health/building-winning-digital-health-strategies-for-patient-centered-care-lessons-from-3-health-systems/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-05-11",
-      "summary": "Distributors of mifepristone, an FDA-approved drug to induce an abortion, may continue shipping the medication for now, according to a May 11 order from the Supreme Court. The Supreme Court initially made this order May 4 before extending it May 11.",
+      "summary": "Health systems aren&#8217;t short on digital health pilots. They&#8217;re short on digital health pilots that actually change outcomes.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "5 statistics on physician productivity",
-      "url": "https://www.beckershospitalreview.com/workforce/5-statistics-on-physician-productivity/",
+      "title": "Advocate Health speeds up prior authorizations with AI: 5 notes",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/advocate-health-speeds-up-prior-authorizations-with-ai-5-notes/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-05-11",
-      "summary": "Physician productivity increased in the first quarter of 2026, but so did the cost of sustaining it. Strata&#8217;s &#8220;Monthly Healthcare Industry Financial Benchmarks&#8221; report, drawn from data across more than 135,000 physicians, found that overall work relative value units climbed while support staffing declined, meaning physicians are doing more with less, and health systems are [&#8230;] The post 5 statistics on physician productivity appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "summary": "Charlotte, N.C.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Food insecurity as clinical risk: How health systems are scaling nutrition-integrated access",
-      "url": "https://www.beckershospitalreview.com/quality/food-insecurity-as-clinical-risk-how-health-systems-are-scaling-nutrition-integrated-access/",
+      "title": "The best CEOs say these 3 words: &#8216;I don&#8217;t know&#8217;",
+      "url": "https://www.beckershospitalreview.com/hospital-management-administration/the-best-ceos-say-these-3-words-i-dont-know/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-05-11",
-      "summary": "For health systems, food insecurity is emerging as a clinical, operational and financial variable that demands a structured response. With the One Big Beautiful Bill Act reducing Medicaid eligibility and tightening Supplemental Nutrition Access Program (SNAP) access for millions of Americans, more patients are arriving with unmet nutritional needs and fewer safety net resources to [&#8230;] The post Food insecurity as clinical risk: How health systems are scaling nutrition-integrated access appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "summary": "When Corewell Health began evaluating how to structure its lab services strategy, President and CEO Tina Freese Decker said leadership first had to answer a foundational question: Should the system pursue a partnership model? For Ms.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Women CIOs leading major health systems",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/women-cios-leading-major-health-systems/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-11",
+      "summary": "Women are increasingly leading IT strategy for the nation&#8217;s biggest health systems. Here are female CIOs serving at the top 100 health systems by annual revenue:&#160; — Bobbie Byrne, MD, has been executive vice president and CIO of Charlotte, N.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "How Ascension taps nurse scientists for patient care wins",
+      "url": "https://www.beckershospitalreview.com/quality/nursing/how-ascension-taps-nurse-scientists-for-patient-care-wins/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-11",
+      "summary": "St. Louis-based Ascension is finding success using nurse scientists to improve workforce challenges and patient care.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "7 ways to prevent deepfake physicians: AMA",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/7-ways-to-prevent-deepfake-physicians-ama/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-11",
+      "summary": "Deepfake physicians created by AI are popping up on social media, often endorsing unproven treatments. The American Medical Association released seven key policy principles for preventing AI-generated physicians from proliferating, according to a May 11 news release: 1.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Houston Methodist hospital employee stabbed in parking garage",
+      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/houston-methodist-hospital-employee-stabbed-in-parking-garage/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-11",
+      "summary": "A Houston Methodist employee was attacked the morning of May 11 at a Texas Medical Center parking garage and is being treated at a nearby emergency department, a health system spokesperson confirmed to Becker&#8217;s. Three things to know: 1.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "California’s uninsured population may double by 2030: Report",
+      "url": "https://www.beckershospitalreview.com/finance/californias-uninsured-population-may-double-by-2030-report/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-11",
+      "summary": "California’s uninsured population&#160;could double&#160;by 2030, according to a May 4 report from the state’s Legislative Analyst’s Office, which is responsible for nonpartisan fiscal and policy advising. HR 1’s provisions — including&#160;work requirements&#160;and more frequent eligibility checks for Medicaid — are beginning to pick up steam.",
       "category": "policy_reimbursement",
       "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "16 hospital M&#038;A moves finalized in 2026",
-      "url": "https://www.beckershospitalreview.com/hospital-transactions-and-valuation/16-hospital-ma-moves-finalized-in-2026/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-11",
-      "summary": "From Community Health Systems closing a deal that saw it exit Pennsylvania, to Prime Healthcare acquiring its 55th hospital, here are 16 hospital mergers and acquisitions completed in 2026: 1. Ontario, Calif.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "At Banner Health, engagement is a clinical strategy",
-      "url": "https://www.beckershospitalreview.com/quality/at-banner-health-engagement-is-a-clinical-strategy/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-11",
-      "summary": "Physician burnout costs hospitals an estimated $500,000 every time it results in a departure, according to industry estimates. Multiply that across a 60,000-person workforce, and culture is not a soft initiative but a balance sheet issue.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "&#8216;No clear practical pathway&#8217;: Where the physician visa fee reversal leaves hospitals",
-      "url": "https://www.beckershospitalreview.com/quality/hospital-physician-relationships/no-clear-practical-pathway-where-the-physician-visa-fee-reversal-leaves-hospitals/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-11",
-      "summary": "Visa renewals are processing again, but health systems and international physicians still have no clear path forward. In late April, the U.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Penn State Health taps ambulatory leader",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/penn-state-health-taps-ambulatory-leader/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-11",
-      "summary": "Hershey, Pa.-based Penn State Health has named Bradley Stevens, who served the system as a nuclear medicine technologist more than 20 years ago, as vice president of ambulatory services.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "&#8216;Cicada&#8217; variant holds steady at 4% of COVID cases: CDC",
-      "url": "https://www.beckershospitalreview.com/quality/public-health/cicada-variant-holds-steady-at-4-of-covid-cases-cdc/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-11",
-      "summary": "The &#8220;cicada&#8221; SARS-CoV-2 variant, which earned its nickname after staying relatively dormant following its discovery in 2024, has accounted for a small proportion of COVID-19 cases since the CDC began tracking the variant. In the week ending April 11, the most recent CDC data available for SARS-CoV-2 variant proportions, the agency said the cicada variant [&#8230;] The post &#8216;Cicada&#8217; variant holds steady at 4% of COVID cases: CDC appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "The CIO mindset for the next era of healthcare",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/the-cio-mindset-for-the-next-era-of-healthcare/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-11",
-      "summary": "For health system leaders, the pressure to move fast on artificial intelligence has rarely felt more acute. New tools emerge weekly, vendor pipelines are full and board-level expectations are rising.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
     },
     {
       "title": "Supreme Court temporarily extends women&#8217;s access to a widely used abortion pill",
@@ -573,6 +583,96 @@
       "summary": "It’s the latest move from the organization urging increased safety of increasingly available AI solutions in healthcare.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Northwell launches direct healthcare partnership with 32BJ Health Fund",
+      "url": "https://www.beckershospitalreview.com/finance/northwell-launches-direct-healthcare-partnership-with-32bj-health-fund/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-11",
+      "summary": "Northwell Direct, the direct-to-employer healthcare network and benefits arm of New Hyde Park, N.Y.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Supreme Court stays lower court&#8217;s decision on mail-ordered mifepristone",
+      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/supreme-court-stays-lower-courts-decision-on-mail-ordered-mifepristone/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-11",
+      "summary": "Distributors of mifepristone, an FDA-approved drug to induce an abortion, may continue shipping the medication for now, according to a May 11 order from the Supreme Court. The Supreme Court initially made this order May 4 before extending it May 11.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "5 statistics on physician productivity",
+      "url": "https://www.beckershospitalreview.com/workforce/5-statistics-on-physician-productivity/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-11",
+      "summary": "Physician productivity increased in the first quarter of 2026, but so did the cost of sustaining it. Strata&#8217;s &#8220;Monthly Healthcare Industry Financial Benchmarks&#8221; report, drawn from data across more than 135,000 physicians, found that overall work relative value units climbed while support staffing declined, meaning physicians are doing more with less, and health systems are [&#8230;] The post 5 statistics on physician productivity appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Food insecurity as clinical risk: How health systems are scaling nutrition-integrated access",
+      "url": "https://www.beckershospitalreview.com/quality/food-insecurity-as-clinical-risk-how-health-systems-are-scaling-nutrition-integrated-access/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-11",
+      "summary": "For health systems, food insecurity is emerging as a clinical, operational and financial variable that demands a structured response. With the One Big Beautiful Bill Act reducing Medicaid eligibility and tightening Supplemental Nutrition Access Program (SNAP) access for millions of Americans, more patients are arriving with unmet nutritional needs and fewer safety net resources to [&#8230;] The post Food insecurity as clinical risk: How health systems are scaling nutrition-integrated access appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "16 hospital M&#038;A moves finalized in 2026",
+      "url": "https://www.beckershospitalreview.com/hospital-transactions-and-valuation/16-hospital-ma-moves-finalized-in-2026/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-11",
+      "summary": "From Community Health Systems closing a deal that saw it exit Pennsylvania, to Prime Healthcare acquiring its 55th hospital, here are 16 hospital mergers and acquisitions completed in 2026: 1. Ontario, Calif.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "At Banner Health, engagement is a clinical strategy",
+      "url": "https://www.beckershospitalreview.com/quality/at-banner-health-engagement-is-a-clinical-strategy/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-11",
+      "summary": "Physician burnout costs hospitals an estimated $500,000 every time it results in a departure, according to industry estimates. Multiply that across a 60,000-person workforce, and culture is not a soft initiative but a balance sheet issue.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "&#8216;No clear practical pathway&#8217;: Where the physician visa fee reversal leaves hospitals",
+      "url": "https://www.beckershospitalreview.com/quality/hospital-physician-relationships/no-clear-practical-pathway-where-the-physician-visa-fee-reversal-leaves-hospitals/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-11",
+      "summary": "Visa renewals are processing again, but health systems and international physicians still have no clear path forward. In late April, the U.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Penn State Health taps ambulatory leader",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/penn-state-health-taps-ambulatory-leader/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-11",
+      "summary": "Hershey, Pa.-based Penn State Health has named Bradley Stevens, who served the system as a nuclear medicine technologist more than 20 years ago, as vice president of ambulatory services.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "&#8216;Cicada&#8217; variant holds steady at 4% of COVID cases: CDC",
+      "url": "https://www.beckershospitalreview.com/quality/public-health/cicada-variant-holds-steady-at-4-of-covid-cases-cdc/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-11",
+      "summary": "The &#8220;cicada&#8221; SARS-CoV-2 variant, which earned its nickname after staying relatively dormant following its discovery in 2024, has accounted for a small proportion of COVID-19 cases since the CDC began tracking the variant. In the week ending April 11, the most recent CDC data available for SARS-CoV-2 variant proportions, the agency said the cicada variant [&#8230;] The post &#8216;Cicada&#8217; variant holds steady at 4% of COVID cases: CDC appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "The CIO mindset for the next era of healthcare",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/the-cio-mindset-for-the-next-era-of-healthcare/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-11",
+      "summary": "For health system leaders, the pressure to move fast on artificial intelligence has rarely felt more acute. New tools emerge weekly, vendor pipelines are full and board-level expectations are rising.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
     },
     {
       "title": "Former healthcare CEO sentenced for $212M investment fraud",
@@ -4728,105 +4828,6 @@
       "summary": "Patients treated at a hospital-at-home program had lower rates of mortality and emergency department use compared to patients cared for in brick-and-mortar hospitals, a new study found. Here are seven things to know from a May 5 JAMA Network Open study by researchers at Iowa City-based University of Iowa.",
       "category": "mergers_mna",
       "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "HCA Tennessee hospital taps COO",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/hca-tennessee-hospital-taps-coo/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-05",
-      "summary": "John Summers, RN, has been appointed COO of TriStar Hendersonville (Tenn.) Medical Center, effective May 11.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Colorado hospital names new CEO",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/colorado-hospital-names-new-ceo-2/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-05",
-      "summary": "Russ Miller has been selected as CEO of Sedgwick County Health Center in Julesburg, Colo. Mr.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Yale New Haven hospital president to retire",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/yale-new-haven-hospital-president-to-retire/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-05",
-      "summary": "Rich Lisitano plans to retire in June as president of Yale New Haven (Conn.) Health&#8217;s Lawrence + Memorial Hospital in New London, Conn.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Ascension Tennessee hospital names COO",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/ascension-tennessee-hospital-names-coo/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-05",
-      "summary": "Luke Miller, PharmD, has been appointed COO of Ascension Saint Thomas Hospital Midtown in Nashville, Tenn., effective June 21, according to a May 4 news release shared with Becker&#8217;s.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Nurses fret AI overreliance could erode care, call for more guardrails",
-      "url": "https://www.beckershospitalreview.com/quality/nursing/nurses-fret-ai-overreliance-could-erode-care-call-for-more-guardrails/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-05",
-      "summary": "As U.S.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "&#8216;Dynamics we haven&#8217;t experienced before&#8217;: Hospitals absorb costs as patients lose coverage, skip Medicaid",
-      "url": "https://www.beckershospitalreview.com/finance/we-are-dealing-with-dynamics-we-havent-experienced-before-hospitals-absorbing-costs-as-patients-lose-coverage-skip-medicaid/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-05",
-      "summary": "Hospitals are confronting a new and unexpected pressure point in 2026: Fewer patients losing coverage are transitioning to Medicaid. The slowdown, emerging alongside ACA exchange attrition, is adding to uninsured volumes and complicating payer mix assumptions for some of the nation&#8217;s largest for-profit health systems.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Fatality risk grows 8% per added med-surg nurse patient: Study",
-      "url": "https://www.beckershospitalreview.com/quality/patient-safety-outcomes/fatality-risk-grows-8-per-added-med-surg-nurse-patient-study/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-05",
-      "summary": "For every additional patient assigned to a medical-surgical nurse in Pennsylvania, there is an associated 8% increase in fatality risk within 30 days, according to a study published April 30 in Medical Care. The study analyzed outcomes of nearly 550,000 medical and surgical patients who received care at a Pennsylvania hospital in 2022 or 2023.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Did AI really beat doctors at diagnosis?",
-      "url": "https://www.statnews.com/2026/05/05/did-ai-really-beat-doctors-at-diagnosis-health-tech/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-05-05",
-      "summary": "In this edition of STAT Health Tech: A high-profile study on AI's diagnostic capabilities, role of telehealth in abortion access, and an Epic lawsuit.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: Pharma&#8217;s reputation among patient groups rose last year, but concerns remain over access and pricing",
-      "url": "https://www.statnews.com/pharmalot/2026/05/05/pharma-reputation-patient-groups-rose-slightly-last-year/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-05-05",
-      "summary": "The pharma industry saw its reputation among patient groups inch up last year, a new survey finds, but concerns remain over access and pricing.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: A new attack on AMA’s billing codes",
-      "url": "https://www.statnews.com/2026/05/05/cpt-codes-draw-scrutiny-dc-diagnosis-newsletter/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-05-05",
-      "summary": "A key GOP lawmaker is broadening the party's efforts to combat health care fraud.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Are analysts too quick to gloss over Lilly&#8217;s liver case?",
-      "url": "https://www.statnews.com/2026/05/05/biotech-news-analysts-glossing-over-eli-lilly-liver-case/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-05-05",
-      "summary": "Cytokinetics' Myqorzo's trial results, Johnson &#038; Johnson's IBD therapy, and more biotech news from The Readout",
-      "category": "general_market",
-      "categoryLabel": "General Market"
     }
   ]
 }
