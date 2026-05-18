@@ -1,74 +1,74 @@
 {
-  "lastUpdated": "2026-05-18T18:56:31.805Z",
+  "lastUpdated": "2026-05-18T20:30:13.663Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 9,
-    "staleSources": 3,
-    "healthySources": 6,
+    "staleSources": 2,
+    "healthySources": 7,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 182,
+        "articleCount": 181,
         "latestPublishedAt": "2026-05-18T00:00:00.000Z",
-        "staleHours": 18,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 163,
+        "articleCount": 164,
         "latestPublishedAt": "2026-05-18T00:00:00.000Z",
-        "staleHours": 18,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 88,
+        "articleCount": 89,
         "latestPublishedAt": "2026-05-18T00:00:00.000Z",
-        "staleHours": 18,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 27,
         "latestPublishedAt": "2026-05-18T00:00:00.000Z",
-        "staleHours": 18,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
-        "articleCount": 15,
+        "articleCount": 13,
         "latestPublishedAt": "2026-05-18T00:00:00.000Z",
-        "staleHours": 18,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 10,
         "latestPublishedAt": "2026-05-13T00:00:00.000Z",
-        "staleHours": 138,
+        "staleHours": 140,
         "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 8,
         "latestPublishedAt": "2026-05-18T00:00:00.000Z",
-        "staleHours": 18,
+        "staleHours": 20,
+        "status": "ok"
+      },
+      {
+        "source": "SEC Healthcare Filings",
+        "articleCount": 4,
+        "latestPublishedAt": "2026-05-18T00:00:00.000Z",
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 4,
         "latestPublishedAt": "2026-05-15T00:00:00.000Z",
-        "staleHours": 90,
-        "status": "stale"
-      },
-      {
-        "source": "SEC Healthcare Filings",
-        "articleCount": 3,
-        "latestPublishedAt": "2026-05-15T00:00:00.000Z",
-        "staleHours": 90,
+        "staleHours": 92,
         "status": "stale"
       }
     ]
@@ -84,11 +84,11 @@
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 14
+      "count": 13
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 56
+      "count": 59
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -96,22 +96,20 @@
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
-      "count": 10
+      "count": 11
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 192
+      "count": 190
     },
     "general_market": {
       "label": "General Market",
-      "count": 196
+      "count": 195
     }
   },
   "quality": {
-    "status": "warning",
-    "failedChecks": [
-      "maxStaleSources"
-    ],
+    "status": "pass",
+    "failedChecks": [],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -120,7 +118,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 72,
+        "actual": 84,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -130,8 +128,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 3,
-        "pass": false
+        "actual": 2,
+        "pass": true
       }
     }
   },
@@ -197,6 +195,99 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "CVS 8-K filing - CVS Health Corporation",
+      "summary": "CVS Health Corporation filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/64803/000006480326000082/cvs-20260514.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-05-18",
+      "category": "general_market",
+      "relevance": 90,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "&#8216;Those of us that are deep in it really understand&#8217;: How UW Medicine&#8217;s new CFO is tackling AMC challenges",
+      "url": "https://www.beckershospitalreview.com/finance/those-of-us-that-are-deep-in-it-really-understand-how-uw-medicines-new-cfo-is-tackling-amc-challenges/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-18",
+      "summary": "Jon Alford became CFO of Seattle-based UW Medicine and vice president for medical affairs at the University of Washington, also in Seattle, in March, but has not wasted time settling into his new role.&#160; With challenges like legislative changes, payer pressures and strained clinical margins commanding the attention of Mr.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "37 hospital jobs ranked by pay",
+      "url": "https://www.beckershospitalreview.com/hr/37-hospital-jobs-ranked-by-pay-2/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-18",
+      "summary": "Mean annual wages for hospital workers range from $37,080 for maids and housekeeping cleaners to $454,940 for cardiologists, according to newly released federal data. Registered nurses — the nation&#8217;s largest healthcare occupation — earned a mean annual wage of $101,420 nationwide, according to May 2025 occupational wage data released May 15 by the Bureau of [&#8230;] The post 37 hospital jobs ranked by pay appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Iowa community hospital to roll out Epic",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/iowa-community-hospital-to-roll-out-epic/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-18",
+      "summary": "Lakes Regional Healthcare will implement an Epic EHR system May 30. The new platform will allow healthcare teams to more efficiently review medications, allergies, test results and care plans while helping reduce duplicate services and delays in communication, according to a May 15 news release from the organization.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Tenet system asks court to make Leapfrog pay $10.5M in legal fees",
+      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/tenet-system-asks-court-to-make-leapfrog-pay-10-5m-in-legal-fees/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-18",
+      "summary": "A hospital system part of Dallas-based Tenet Healthcare is requesting The Leapfrog Group to reimburse nearly $10.5 million in legal fees connected to a 2025 lawsuit that questioned the methodology of Leapfrog&#8217;s hospital safety grades.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "HHS splits OCR into 3 divisions",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/cybersecurity/hhs-splits-ocr-into-3-divisions/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-18",
+      "summary": "The U.S.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "The only 96 hospitals to earn Magnet&#8217;s top honor",
+      "url": "https://www.beckershospitalreview.com/quality/nursing/the-only-5-hospitals-to-earn-magnets-top-honor/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-18",
+      "summary": "In 2022, the American Nurses Credentialing Center launched the Magnet with Distinction program to recognize the world’s highest performing Magnet organizations. Since then, 95 hospitals in the U.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "After years of gains, male RN representation fell to 10.4%: 5 notes",
+      "url": "https://www.beckershospitalreview.com/workforce/after-years-of-gains-male-rn-representation-fell-to-10-4-5-notes/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-18",
+      "summary": "Updated May 2026 workforce data from the American Association of Colleges of Nursing show men accounted for a smaller share of registered nurses in 2024 than in 2022. Five notes: 1.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "MultiCare opens $479M freestanding pediatrics hospital",
+      "url": "https://www.beckershospitalreview.com/capital/multicare-opens-479m-freestanding-pediatrics-hospital/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-18",
+      "summary": "Tacoma, Wash.-based MultiCare opened its $479 million Mary Bridge Children&#8217;s Hospital May 16, with 61 patients transported from MultiCare Tacoma General Hospital to the new six-story hospital in Tacoma.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "4 ways to improve surgery outcomes for older adults: Study",
+      "url": "https://www.beckershospitalreview.com/post-acute/4-ways-to-improve-surgery-outcomes-for-older-adults-study/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-18",
+      "summary": "A recent study found that structured programs for common post-surgery hazards for older adults were linked to reduced complications and shorter hospital stays. The study, published May 12 in the Journal of the American College of Surgeons, analyzed 67 studies on seven key components of older adult surgical care.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "Closing the Access Gap6 strategies to redraw the patient care map",
       "url": "https://www.beckershospitalreview.com/uncategorized/closing-the-access-gap6-strategies-to-redraw-the-patient-care-map/",
       "source": "Becker's Hospital Review",
@@ -206,85 +297,13 @@
       "categoryLabel": "Closures & Layoffs"
     },
     {
-      "title": "Louisiana hospital taps Medline as prime vendor",
-      "url": "https://www.beckershospitalreview.com/supply-chain/louisiana-hospital-taps-medline-as-prime-vendor/",
-      "source": "Becker's Hospital Review",
+      "title": "STAT+: Trump’s CMS to allow skimpier plans on ACA exchanges",
+      "url": "https://www.statnews.com/2026/05/18/trump-aca-insurance-new-cms-rules-expand-catastrophic-coverage/?utm_campaign=rss",
+      "source": "STAT News",
       "publishedAt": "2026-05-18",
-      "summary": "Baton Rouge, La.-based Woman’s Hospital has expanded its prime vendor agreement with Medline to include laboratory products and distribution services.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "FDA approves 1st-in-class blood pressure drug",
-      "url": "https://www.beckershospitalreview.com/pharmacy/fda-approves-1st-in-class-blood-pressure-drug/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-18",
-      "summary": "The FDA has approved AstraZeneca’s Baxfendy to treat uncontrolled hypertension, marking the first approval for an aldosterone synthase inhibitor in the indication. Baxfendy, also known as baxdrostat, is indicated for patients with uncontrolled or treatment-resistant hypertension and is intended for use alongside other antihypertensive therapies, according to a May 18 news release.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "The Health-Wealth Connectionas Workforce Strategy at BayCare",
-      "url": "https://www.beckershospitalreview.com/academic-medical-center/academic-medical-center-workforce/the-health-wealth-connectionas-workforce-strategy-at-baycare/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-18",
-      "summary": "Inside the inaugural TIAA Institute Louise Whitfield Carnegie Award Healthcare is serious business, Care delivery requires sure hands, clinical expertise, physical stamina and emotional intelligence. The people who show up every day to care for others have always faced demanding work, and recent pressures have added considerably to the weight healthcare workers bear.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Seattle Children&#8217;s taps COO",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/seattle-childrens-taps-coo/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-18",
-      "summary": "Seattle Children’s has appointed Katerie Chapman senior vice president and COO. Ms.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Northwestern University names new president",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/northwestern-university-names-new-president/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-18",
-      "summary": "Evanston, Ill.-based Northwestern University has selected Mung Chiang, PhD, as its 18th president, effective July 1.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "NYC Health + Hospitals/Lincoln taps new CFO",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/nyc-health-hospitals-lincoln-taps-new-cfo/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-18",
-      "summary": "Braulio Carrero has been named CFO of NYC Health + Hospitals/Lincoln in Bronx, N.Y.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "The US job market in 5 numbers — and what it means for healthcare",
-      "url": "https://www.beckershospitalreview.com/workforce/the-us-job-market-in-5-numbers-and-what-it-means-for-healthcare/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-18",
-      "summary": "The U.S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Cleveland Clinic more than triples operating income in Q1",
-      "url": "https://www.beckershospitalreview.com/finance/cleveland-clinic-more-than-triples-operating-income-in-q1/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-18",
-      "summary": "Cleveland Clinic recorded an operating income of $172.8 million (3.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Mercy names chief people officer",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/mercy-names-chief-people-officer/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-18",
-      "summary": "Chesterfield, Mo.-based Mercy has named Mark “Mo” Moir, PhD, senior vice president and chief people officer for the health system’s multistate region.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
+      "summary": "The new plans could leave patients on the hook for more of their health care costs.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
     },
     {
       "title": "STAT+: Why the WakeMed &#8211; Atrium Health hospital merger matters",
@@ -422,6 +441,15 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
+      "title": "Two-thirds of health leaders concerned about Medicare, Medicaid cuts’ impact on business operations",
+      "url": "https://www.fiercehealthcare.com/finance/67-health-leaders-concerned-about-medicare-medicaid-cuts-impact-business-operations-retarus",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-05-18",
+      "summary": "If potential reimbursement cuts exceed 10%, respondents say it will have negative impacts on staffing decisions and technological investments.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
       "title": "Health system revenue heads increasingly turning their attention to patients' share of the bill",
       "url": "https://www.fiercehealthcare.com/providers/health-system-revenue-heads-increasingly-turning-their-attention-patients-share-bill",
       "source": "Fierce Healthcare",
@@ -447,6 +475,87 @@
       "summary": "Language access affects more than compliance. It impacts throughput, readmissions, provider efficiency, patient satisfaction, and cost.",
       "category": "quality_safety",
       "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "Louisiana hospital taps Medline as prime vendor",
+      "url": "https://www.beckershospitalreview.com/supply-chain/louisiana-hospital-taps-medline-as-prime-vendor/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-18",
+      "summary": "Baton Rouge, La.-based Woman’s Hospital has expanded its prime vendor agreement with Medline to include laboratory products and distribution services.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "FDA approves 1st-in-class blood pressure drug",
+      "url": "https://www.beckershospitalreview.com/pharmacy/fda-approves-1st-in-class-blood-pressure-drug/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-18",
+      "summary": "The FDA has approved AstraZeneca’s Baxfendy to treat uncontrolled hypertension, marking the first approval for an aldosterone synthase inhibitor in the indication. Baxfendy, also known as baxdrostat, is indicated for patients with uncontrolled or treatment-resistant hypertension and is intended for use alongside other antihypertensive therapies, according to a May 18 news release.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "The Health-Wealth Connectionas Workforce Strategy at BayCare",
+      "url": "https://www.beckershospitalreview.com/academic-medical-center/academic-medical-center-workforce/the-health-wealth-connectionas-workforce-strategy-at-baycare/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-18",
+      "summary": "Inside the inaugural TIAA Institute Louise Whitfield Carnegie Award Healthcare is serious business, Care delivery requires sure hands, clinical expertise, physical stamina and emotional intelligence. The people who show up every day to care for others have always faced demanding work, and recent pressures have added considerably to the weight healthcare workers bear.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Seattle Children&#8217;s taps COO",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/seattle-childrens-taps-coo/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-18",
+      "summary": "Seattle Children’s has appointed Katerie Chapman senior vice president and COO. Ms.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Northwestern University names new president",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/northwestern-university-names-new-president/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-18",
+      "summary": "Evanston, Ill.-based Northwestern University has selected Mung Chiang, PhD, as its 18th president, effective July 1.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "NYC Health + Hospitals/Lincoln taps new CFO",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/nyc-health-hospitals-lincoln-taps-new-cfo/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-18",
+      "summary": "Braulio Carrero has been named CFO of NYC Health + Hospitals/Lincoln in Bronx, N.Y.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "The US job market in 5 numbers — and what it means for healthcare",
+      "url": "https://www.beckershospitalreview.com/workforce/the-us-job-market-in-5-numbers-and-what-it-means-for-healthcare/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-18",
+      "summary": "The U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Cleveland Clinic more than triples operating income in Q1",
+      "url": "https://www.beckershospitalreview.com/finance/cleveland-clinic-more-than-triples-operating-income-in-q1/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-18",
+      "summary": "Cleveland Clinic recorded an operating income of $172.8 million (3.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Mercy names chief people officer",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/mercy-names-chief-people-officer/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-18",
+      "summary": "Chesterfield, Mo.-based Mercy has named Mark “Mo” Moir, PhD, senior vice president and chief people officer for the health system’s multistate region.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
     },
     {
       "title": "CMS pulls back limits on non-standard ACA plans in final rule",
@@ -4683,114 +4792,6 @@
       "summary": "Sean Townsend, MD, chief medical executive for clinical transformation at Sacramento, Calif.-based Sutter Health, will soon join Renton, Wash.",
       "category": "general_market",
       "categoryLabel": "General Market"
-    },
-    {
-      "title": "5 big pharma moves",
-      "url": "https://www.beckershospitalreview.com/pharmacy/5-big-pharma-moves/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-12",
-      "summary": "Drugmakers are navigating regulatory shifts, trial setbacks and major dealmaking as the FDA advances new models for drug development and political pressure reshapes the approval process. Here are five recent moves to know: The post 5 big pharma moves appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Worker strikes cost Kaiser over $1B in Q1",
-      "url": "https://www.healthcaredive.com/news/worker-strike-cost-kaiser-over-1-billion-q1/819883/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-05-12",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
-      "category": "labor_unions",
-      "categoryLabel": "Labor & Unions"
-    },
-    {
-      "title": "Optum Rx shifts to fee-based PBM model in bid to boost transparency",
-      "url": "https://www.healthcaredive.com/news/optum-rx-fee-based-pharmacy-benefits-model-transparecy/819975/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-05-12",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Fitness wearable Whoop adds on-demand clinician access, EHR syncing",
-      "url": "https://www.fiercehealthcare.com/digital-health/fitness-wearable-whoop-adds-demand-clinician-access-ehr-syncing",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-12",
-      "summary": "The company says these updates will allow users to “gain a deeper understanding” of how medications, conditions and procedures can impact performance.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "As public vaccine criticism quiets, RFK Jr. keeps safety inquiries running in background: NYT",
-      "url": "https://www.fiercehealthcare.com/pharma/public-vaccine-criticism-quiets-rfk-jr-keeps-safety-inquiries-running-background-nyt",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-12",
-      "summary": "Amid apparent overtures from the Trump administration to curb public vaccine criticism ahead of the midterms this fall, the secretary of the Department of Health and Human Services is allegedly continuing his crusade in the background.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "States with the highest percentage of for-profit hospitals",
-      "url": "https://www.beckershospitalreview.com/rankings-and-ratings/states-with-the-highest-percentage-of-for-profit-hospitals-2/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-12",
-      "summary": "More than half of the community hospitals in Nevada and Texas are for-profit facilities, according to data compiled by KFF.&#160; The data, current as of 2024, comes from the American Hospital Association’s annual survey.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Vanderbilt Health rolls out 1st patient-facing AI tool at scale",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/vanderbilt-health-rolls-out-1st-patient-facing-ai-tool-at-scale/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-12",
-      "summary": "Vanderbilt Health in Nashville, Tenn., is rolling out an AI-powered virtual assistant within its patient portal.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "U of Michigan radiologists caution against full-body MRIs",
-      "url": "https://www.beckershospitalreview.com/radiology/u-of-michigan-radiologists-caution-against-full-body-mris/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-12",
-      "summary": "Ann Arbor-based University of Michigan radiologists are warning against the growing use of full-body MRI scans marketed as preventive health screenings for average-risk patients, according to a May 11 WILX report. The scans are increasingly being promoted nationwide as “peace of mind” evaluations, but physicians said they can lead to unnecessary follow-up testing, appointments and [&#8230;] The post U of Michigan radiologists caution against full-body MRIs appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "&#8216;Gone are the days&#8217;: Optum Rx to delink drug prices from fees",
-      "url": "https://www.beckershospitalreview.com/pharmacy/gone-are-the-days-optum-rx-to-delink-drug-prices-from-fees/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-12",
-      "summary": "Optum Rx, UnitedHealth Group&#8217;s pharmacy benefit manager, said it will roll out a fee-based structure to customers in the coming years. A May 11 news release from Optum said Optum Rx&#8217;s agreements have traditionally been linked to drug prices or prescription volume.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Glioblastoma vaccine shows promise: 3 study notes",
-      "url": "https://www.beckershospitalreview.com/pharmacy/glioblastoma-vaccine-shows-promise-3-study-notes/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-12",
-      "summary": "A personalized vaccine for patients with glioblastoma produced a safe and effective immune response, according to a study published May 12 in Nature Cancer. A phase 1 clinical trial of the vaccine was conducted at St.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Ohio considers noncompete ban amid rural staffing struggles",
-      "url": "https://www.beckershospitalreview.com/rural-health/ohio-considers-noncompete-ban-amid-rural-staffing-struggles/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-12",
-      "summary": "Legislators in Ohio are considering two bills that would create new restrictions for noncompetes as rural healthcare systems in the state continue to face an uphill battle against staffing shortages, The Columbus Dispatch reported May 12. The report delves into the case of Katherine Able-Perkins, DO, a primary care physician with OhioHealth Physician Group in [&#8230;] The post Ohio considers noncompete ban amid rural staffing struggles appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "FDA launches drug repurposing push",
-      "url": "https://www.beckershospitalreview.com/pharmacy/fda-launches-drug-repurposing-push/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-12",
-      "summary": "The FDA is seeking public input on drug repurposing efforts aimed at expanding treatment options for diseases tied to unmet medical needs. The agency said identifying new uses for FDA-approved drugs could accelerate treatment availability by relying on existing safety and scientific data, according to a May 11 FDA news release.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
     }
   ]
 }
