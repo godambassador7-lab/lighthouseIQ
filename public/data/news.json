@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-05-19T16:28:27.083Z",
+  "lastUpdated": "2026-05-19T19:06:51.501Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 2,
-    "healthySources": 8,
+    "staleSources": 1,
+    "healthySources": 9,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 193,
+        "articleCount": 181,
         "latestPublishedAt": "2026-05-19T00:00:00.000Z",
-        "staleHours": 16,
+        "staleHours": 19,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 165,
+        "articleCount": 171,
         "latestPublishedAt": "2026-05-19T00:00:00.000Z",
-        "staleHours": 16,
+        "staleHours": 19,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 82,
+        "articleCount": 84,
         "latestPublishedAt": "2026-05-19T00:00:00.000Z",
-        "staleHours": 16,
+        "staleHours": 19,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 29,
         "latestPublishedAt": "2026-05-19T00:00:00.000Z",
-        "staleHours": 16,
+        "staleHours": 19,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
-        "articleCount": 12,
+        "articleCount": 14,
         "latestPublishedAt": "2026-05-19T00:00:00.000Z",
-        "staleHours": 16,
+        "staleHours": 19,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 6,
         "latestPublishedAt": "2026-05-18T00:00:00.000Z",
-        "staleHours": 40,
+        "staleHours": 43,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 6,
         "latestPublishedAt": "2026-05-13T00:00:00.000Z",
-        "staleHours": 160,
+        "staleHours": 163,
         "status": "stale"
+      },
+      {
+        "source": "FDA MedWatch RSS",
+        "articleCount": 4,
+        "latestPublishedAt": "2026-05-19T00:00:00.000Z",
+        "staleHours": 19,
+        "status": "ok"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 4,
         "latestPublishedAt": "2026-05-18T00:00:00.000Z",
-        "staleHours": 40,
+        "staleHours": 43,
         "status": "ok"
-      },
-      {
-        "source": "FDA MedWatch RSS",
-        "articleCount": 2,
-        "latestPublishedAt": "2026-05-15T00:00:00.000Z",
-        "staleHours": 112,
-        "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 1,
         "latestPublishedAt": "2026-05-19T00:00:00.000Z",
-        "staleHours": 16,
+        "staleHours": 19,
         "status": "ok"
       }
     ]
@@ -99,11 +99,11 @@
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 8
+      "count": 9
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
-      "count": 10
+      "count": 11
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
@@ -111,7 +111,7 @@
     },
     "general_market": {
       "label": "General Market",
-      "count": 186
+      "count": 184
     }
   },
   "quality": {
@@ -125,7 +125,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 60,
+        "actual": 75,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -135,7 +135,7 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 2,
+        "actual": 1,
         "pass": true
       }
     }
@@ -196,6 +196,30 @@
       "source": "Federal Register - HHS",
       "sourceType": "federal_register",
       "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-05-19",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Risks of Using TRUE METRIX Blood Glucose Monitoring Systems by Trividia Health: FDA Safety Communication",
+      "summary": "FDA alerts of risks with use TRUE METRIX Blood Glucose Monitoring Systems by Trividia Health.",
+      "url": "http://www.fda.gov/medical-devices/safety-communications/risks-using-true-metrix-blood-glucose-monitoring-systems-trividia-health-fda-safety-communication",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-05-19",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Blood Glucose Monitor Recall: Trividia Health Issues Correction for TRUE METRIX Blood Glucose Monitoring Systems",
+      "summary": "Trividia recommends that device users who receive an E-5 error code and are experiencing symptoms of high glucose should seek medical care immediately.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/blood-glucose-monitor-recall-trividia-health-issues-correction-true-metrix-blood-glucose-monitoring",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
       "publishedAt": "2026-05-19",
       "category": "general_market",
       "relevance": 100,
@@ -286,6 +310,78 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "Making Automation Smarter: How AI Is Redefining Medication Management",
+      "url": "https://www.beckershospitalreview.com/pharmacy/making-automation-smarter-how-ai-is-redefining-medication-management/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-19",
+      "summary": "For decades, pharmacy automation has been defined by what it can do mechanically — count, sort, dispense. Robots fill bins.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Anxiety-related pediatric visits in primary care rise 300%: Study",
+      "url": "https://www.beckershospitalreview.com/quality/anxiety-related-pediatric-visits-in-primary-care-rise-300-study/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-19",
+      "summary": "Anxiety-related visits in pediatric primary care settings increased 300% between 2014 and 2023, according to a May 18 study published in&#160;JAMA Network Open.&#160; Researchers from Boston University’s School of Public Health and the Harvard Pilgrim Health Care Institute in Boston analyzed Massachusetts’ All-Payer Claims Database records from 2014 to 2023, representing 1,848,249 patients ages 1-18.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Ambient AI adoption isn&#8217;t going as planned — in a good way",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/ambient-ai-adoption-isnt-going-as-planned-in-a-good-way/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-19",
+      "summary": "Health system leaders continue to be surprised by ambient AI adoption trends, with clinicians using the scribes at higher-than-anticipated rates, especially as the tools improve. At Stanford (Calif.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Hospice use higher among cancer patients under Medicare Advantage: 5 notes",
+      "url": "https://www.beckershospitalreview.com/post-acute/hospice-use-higher-among-cancer-patients-under-medicare-advantage-5-notes/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-19",
+      "summary": "Patients with advanced cancers were more likely to receive hospice care if they were enrolled in Medicare Advantage, according to a study published March 24 in JAMA Network Open. While hospice is covered under traditional Medicare, it is excluded under Medicare Advantage.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "The AI &#8216;heat map&#8217; driving Mayo&#8217;s palliative care expansion",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/the-ai-heat-map-driving-mayos-palliative-care-expansion/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-19",
+      "summary": "Rochester, Minn.-based Mayo Clinic is using AI to help identify hospitalized patients who may benefit from palliative care earlier in their stay — part of a broader effort to expand access to supportive care while reducing avoidable readmissions.",
+      "category": "quality_safety",
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "Rush University Medical Center nurses vote to unionize",
+      "url": "https://www.beckershospitalreview.com/hr/rush-university-medical-center-nurses-vote-to-unionize/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-19",
+      "summary": "Registered nurses at Rush University Medical Center in Chicago voted May 14-16 to join the National Nurses Organizing Committee, an affiliate of National Nurses United. Of 1,830 eligible voters, 1,540 ballots were counted, with 1,190 votes cast in favor of unionization, according to the National Labor Relations Board, which conducted the election.",
+      "category": "labor_unions",
+      "categoryLabel": "Labor & Unions"
+    },
+    {
+      "title": "Optum Financial taps Mayo Clinic alum as COO",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/optum-financial-taps-mayo-clinic-alum-as-coo/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-19",
+      "summary": "Matt Settergren joined Optum Financial, a financial services provider that focuses on consumer health accounts, as COO, according to a May LinkedIn post. Mr.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "14 health system projects worth $500M or more in 2026",
+      "url": "https://www.beckershospitalreview.com/capital/14-health-system-projects-worth-500m-or-more-in-2026/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-19",
+      "summary": "From replacement hospitals to major cancer centers, health systems nationwide are moving forward on large-scale construction projects to expand capacity, modernize infrastructure and meet rising patient demand in 2026. Here are 14 hospital projects worth $500 million or more that have been announced, advanced or opened in 2026:&#160; 1.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
       "title": "Why Stanford skipped the CMS hospital-at-home waiver",
       "url": "https://www.beckershospitalreview.com/healthcare-information-technology/innovation/why-stanford-skipped-the-cms-hospital-at-home-waiver/",
       "source": "Becker's Hospital Review",
@@ -304,76 +400,22 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Average ACA deductible increases 37% in 2026: KFF",
-      "url": "https://www.beckershospitalreview.com/finance/average-aca-deductible-increases-37-in-2026-kff/",
-      "source": "Becker's Hospital Review",
+      "title": "STAT+: Canadian medical societies lack sufficient conflict-of-interest policies, study finds",
+      "url": "https://www.statnews.com/pharmalot/2026/05/19/canadian-medical-societies-lack-sufficient-conflict-of-interest-policies/?utm_campaign=rss",
+      "source": "STAT News",
       "publishedAt": "2026-05-19",
-      "summary": "The average ACA deductible&#160;has jumped&#160;37%, an increase of more than $1,000 per person, from 2025 to 2026, according to a KFF analysis published May 19. The analysis pulls from CMS and state open enrollment reports, along with KFF survey data and Wakely Consulting Group estimates.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Supreme Court lets Medicare drug price negotiations stand: What it means for health systems",
-      "url": "https://www.beckershospitalreview.com/pharmacy/supreme-court-lets-medicare-drug-price-negotiations-stand-what-it-means-for-health-systems/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-19",
-      "summary": "The U.S.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "25 states sue to block federal student loan caps: 5 notes",
-      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/25-states-sue-to-block-federal-student-loan-caps-5-notes/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-19",
-      "summary": "Attorneys general from 25 states and the District of Columbia have filed a lawsuit against the Trump administration to block an Education Department rule that limits which degree programs qualify for higher federal student loan limits.&#160; The rule — finalized April 30 and set to take effect July 1 — classifies physician assistant, nurse anesthesia [&#8230;] The post 25 states sue to block federal student loan caps: 5 notes appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "CDC alerts clinicians about hantavirus testing",
-      "url": "https://www.beckershospitalreview.com/quality/public-health/cdc-alerts-clinicians-about-hantavirus-testing/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-19",
-      "summary": "As a Nebraska health system monitors 18 passengers for Andes hantavirus and several states track potential exposure, the CDC outlined three hantaviruses U.S.",
+      "summary": "Most Canadian medical societies lack comprehensive policies governing conflicts of interest, and many policies are generally fragmented and narrow in scope, according to a new analysis.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
     {
-      "title": "AMA taps new COO from UnitedHealth",
-      "url": "https://www.beckershospitalreview.com/uncategorized/ama-taps-new-coo-from-unitedhealth/",
-      "source": "Becker's Hospital Review",
+      "title": "STAT+: At a time of tumult at FDA, a former commissioner is hopeful it’s on a better path",
+      "url": "https://www.statnews.com/2026/05/19/fda-can-thrive-despite-talent-loss-says-david-kessler-former-commissioner/?utm_campaign=rss",
+      "source": "STAT News",
       "publishedAt": "2026-05-19",
-      "summary": "John Wigneswaran, MD, has been named chief operating officer of the American Medical Association, effective June 1, according to a May 19 news release shared with Becker&#8217;s. In his new role, Dr.",
+      "summary": "With the FDA facing upheaval and personnel exits, former commissioner David Kessler sees an opportunity whereby the agency can make a turn for the better.",
       "category": "general_market",
       "categoryLabel": "General Market"
-    },
-    {
-      "title": "Alabama hospital expands MRI access for cardiac patients",
-      "url": "https://www.beckershospitalreview.com/radiology/alabama-hospital-expands-mri-access-for-cardiac-patients/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-19",
-      "summary": "Huntsville (Ala.) Hospital Health System is expanding MRI access for patients with pacemakers and implantable defibrillators across North Alabama, according to a May 13 report from WAAY 31.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "The Ebola outbreak: 11 things hospital leaders need to know",
-      "url": "https://www.beckershospitalreview.com/quality/public-health/the-ebola-outbreak-10-things-hospital-leaders-need-to-know/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-19",
-      "summary": "Ebola is making international headlines again after the World Health Organization declared a global public health emergency, but the CDC said the risk to the U.S.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Maryland caps Ozempic prices for state, local government employee plans",
-      "url": "https://www.beckershospitalreview.com/glp-1s/maryland-caps-ozempic-prices-for-state-local-government-employee-plans/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-19",
-      "summary": "Maryland’s Prescription Drug Affordability Board has voted to place an upper payment limit on Ozempic for state and local government health plans, a first for the nation, and a move supporters said could save about $5.8 million annually.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "STAT+: TrumpRx adds generic drugs",
@@ -457,11 +499,38 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "Tenet, Leapfrog spar over legal fees in hospital ratings case",
+      "url": "https://www.healthcaredive.com/news/tenet-leapfrog-spar-over-legal-fees-in-hospital-ratings-case/820511/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-05-19",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "CommonSpirit $3.4B in the red amid billing contract exit, operational woes",
+      "url": "https://www.healthcaredive.com/news/commonspirit-in-red-conifer-exit-operational-woes-earnings/820574/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-05-19",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "Aetna’s chief digital and technology officer on how the insurer is using AI for patient engagement",
       "url": "https://www.healthcaredive.com/news/healthcare-artificial-intelligence-consumer-experience-engagement-aetna-nathan-frank/820344/",
       "source": "Healthcare Dive",
       "publishedAt": "2026-05-19",
       "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "White House adds 600 generic meds to TrumpRx purchasing portal",
+      "url": "https://www.fiercehealthcare.com/pharma/white-house-adds-600-generic-meds-trumprx-purchasing-portal",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-05-19",
+      "summary": "With questions already swirling about the actual affordability impact of the government’s drug purchasing portal TrumpRx, the White House is updating the platform to address a key gap in the medicines it lists, albeit with a number of caveats remaining.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
     },
@@ -509,6 +578,78 @@
       "summary": "Stick with this tracker for the latest layoff and workforce updates from across healthcare.",
       "category": "closures_layoffs",
       "categoryLabel": "Closures & Layoffs"
+    },
+    {
+      "title": "Average ACA deductible increases 37% in 2026: KFF",
+      "url": "https://www.beckershospitalreview.com/finance/average-aca-deductible-increases-37-in-2026-kff/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-19",
+      "summary": "The average ACA deductible&#160;has jumped&#160;37%, an increase of more than $1,000 per person, from 2025 to 2026, according to a KFF analysis published May 19. The analysis pulls from CMS and state open enrollment reports, along with KFF survey data and Wakely Consulting Group estimates.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Supreme Court lets Medicare drug price negotiations stand: What it means for health systems",
+      "url": "https://www.beckershospitalreview.com/pharmacy/supreme-court-lets-medicare-drug-price-negotiations-stand-what-it-means-for-health-systems/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-19",
+      "summary": "The U.S.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "25 states sue to block federal student loan caps: 5 notes",
+      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/25-states-sue-to-block-federal-student-loan-caps-5-notes/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-19",
+      "summary": "Attorneys general from 25 states and the District of Columbia have filed a lawsuit against the Trump administration to block an Education Department rule that limits which degree programs qualify for higher federal student loan limits.&#160; The rule — finalized April 30 and set to take effect July 1 — classifies physician assistant, nurse anesthesia [&#8230;] The post 25 states sue to block federal student loan caps: 5 notes appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "CDC alerts clinicians about hantavirus testing",
+      "url": "https://www.beckershospitalreview.com/quality/public-health/cdc-alerts-clinicians-about-hantavirus-testing/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-19",
+      "summary": "As a Nebraska health system monitors 18 passengers for Andes hantavirus and several states track potential exposure, the CDC outlined three hantaviruses U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "AMA taps new COO from UnitedHealth",
+      "url": "https://www.beckershospitalreview.com/uncategorized/ama-taps-new-coo-from-unitedhealth/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-19",
+      "summary": "John Wigneswaran, MD, has been named chief operating officer of the American Medical Association, effective June 1, according to a May 19 news release shared with Becker&#8217;s. In his new role, Dr.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Alabama hospital expands MRI access for cardiac patients",
+      "url": "https://www.beckershospitalreview.com/radiology/alabama-hospital-expands-mri-access-for-cardiac-patients/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-19",
+      "summary": "Huntsville (Ala.) Hospital Health System is expanding MRI access for patients with pacemakers and implantable defibrillators across North Alabama, according to a May 13 report from WAAY 31.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "The Ebola outbreak: 11 things hospital leaders need to know",
+      "url": "https://www.beckershospitalreview.com/quality/public-health/the-ebola-outbreak-10-things-hospital-leaders-need-to-know/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-19",
+      "summary": "Ebola is making international headlines again after the World Health Organization declared a global public health emergency, but the CDC said the risk to the U.S.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Maryland caps Ozempic prices for state, local government employee plans",
+      "url": "https://www.beckershospitalreview.com/glp-1s/maryland-caps-ozempic-prices-for-state-local-government-employee-plans/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-19",
+      "summary": "Maryland’s Prescription Drug Affordability Board has voted to place an upper payment limit on Ozempic for state and local government health plans, a first for the nation, and a move supporters said could save about $5.8 million annually.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "Senate HELP Chair Bill Cassidy's primary loss casts congressional health policy, leadership confirmations on new trajectory",
@@ -4647,141 +4788,6 @@
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-05-13",
       "summary": "Paterson, N.J.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Conifer automation helps Tenet offset Q1 headwinds",
-      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/conifer-automation-helps-tenet-offset-q1-headwinds/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-13",
-      "summary": "Tenet Healthcare CEO Saum Sutaria said the system&#8217;s investment in technology enabled the Dallas-based for-profit system to &#8220;more than offset the expected and unexpected headwinds that arose&#8221; in the first quarter of 2026.&#160; Those efforts have increased back-office AI automation, which is improving productivity and consolidating third-party spending, Dr.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "ACA exchanges take spotlight in Q1",
-      "url": "https://www.fiercehealthcare.com/providers/aca-exchanges-take-spotlight-q1",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-13",
-      "summary": "Paige Minemyer and Dave Muoio break down the biggest trends from payer and health system Q1 earnings, including ACA exchange instability, winter storm fallout and signs of a Medicare Advantage rebound.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Mayo Clinic CEO Gianrico Farrugia stepping down at year's end",
-      "url": "https://www.fiercehealthcare.com/providers/mayo-clinic-ceo-gianrico-farrugia-stepping-down-years-end",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-13",
-      "summary": "Mayo Clinic is looking for a new leader as Gianrico Farrugia, M.D.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "University of California, union near May 14 strike deadline with no deal in hand",
-      "url": "https://www.fiercehealthcare.com/providers/university-california-union-near-may-14-strike-deadline-no-deal-hand",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-13",
-      "summary": "A union representing 25,000 UC Health service and patient care workers has so far rebuffed updated contract offers from the public institution. More talks are scheduled through Wednesday.",
-      "category": "labor_unions",
-      "categoryLabel": "Labor & Unions"
-    },
-    {
-      "title": "Hims & Hers posts $92M loss in Q1 as it shifts to branded GLP-1 medications",
-      "url": "https://www.fiercehealthcare.com/health-tech/hims-hers-posts-92m-loss-q1-it-shifts-branded-glp-1-medications",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-13",
-      "summary": "Online health and wellness company Hims &amp; Hers posted a $92 million loss in the first quarter as it transitions its weight loss business to selling branded GLP-1 weight loss treatments, shifting away from compounded weight loss drugs.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "The healthiest, unhealthiest states for older adults in 2026: United Health Foundation",
-      "url": "https://www.beckershospitalreview.com/rankings-and-ratings/the-healthiest-unhealthiest-states-for-older-adults-in-2026-united-health-foundation/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-13",
-      "summary": "For the second consecutive year, Vermont ranked as the healthiest state for older adults in the U.S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Providence puts years of losses in rearview with its third consecutive quarter of operating gains",
-      "url": "https://www.fiercehealthcare.com/providers/providence-puts-years-losses-rearview-its-third-consecutive-quarter-operating-gains",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-13",
-      "summary": "The West Coast nonprofit health system reported a 1.5% operating margin and roughly $360 million net improvement for the first quarter, which management attributed to a slew of restructures, divestitures and other initiatives.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "FDA Commissioner Marty Makary to resign, capping turbulent tenure: report",
-      "url": "https://www.fiercehealthcare.com/pharma/fda-commissioner-marty-makary-resigns-capping-turbulent-tenure",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-13",
-      "summary": "Marty Makary, M.D.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "1 in 5 marketplace enrollees dropped their coverage in 2026: media report",
-      "url": "https://www.fiercehealthcare.com/payers/1-5-marketplace-enrollees-dropped-their-coverage-2026-media-report",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-13",
-      "summary": "About 21% of people who enrolled in coverage through Healthcare.gov have dropped out this year, according to a new report.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Fitness wearable Whoop adds on-demand clinician access, EHR syncing",
-      "url": "https://www.fiercehealthcare.com/digital-health/fitness-wearable-whoop-adds-demand-clinician-access-ehr-syncing",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-13",
-      "summary": "The company says these updates will allow users to “gain a deeper understanding” of how medications, conditions and procedures can impact performance.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "As public vaccine criticism quiets, RFK Jr. keeps safety inquiries running in background: NYT",
-      "url": "https://www.fiercehealthcare.com/pharma/public-vaccine-criticism-quiets-rfk-jr-keeps-safety-inquiries-running-background-nyt",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-13",
-      "summary": "Amid apparent overtures from the Trump administration to curb public vaccine criticism ahead of the midterms this fall, the secretary of the Department of Health and Human Services is allegedly continuing his crusade in the background.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Optum Rx unveils new transparent PBM model",
-      "url": "https://www.fiercehealthcare.com/payers/optum-rx-unveils-new-transparent-pbm-model",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-13",
-      "summary": "UnitedHealth Group's pharmacy benefit manager, Optum Rx, is making the shift to a more transparent model, the company announced Monday.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Skil-Care launches specialized healthcare product innovation program",
-      "url": "https://www.fiercehealthcare.com/providers/skil-care-launches-specialized-healthcare-product-innovation-program",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-13",
-      "summary": "Through the new program, organizations and clinicians can work with the manufacturer to turn frontline needs into products.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Included Health launches AI-powered solution to connect members to providers",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/included-health-launches-ai-powered-solution-connect-members-providers",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-13",
-      "summary": "The new tool, dubbed Provider Connect, is embedded in the virtual care company’s AI assistant.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "The broken pipeline of mental healthcare for LGBTQ teenagers",
-      "url": "https://www.fiercehealthcare.com/providers/broken-pipeline-mental-healthcare-lgbtq-teenagers",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-13",
-      "summary": "Despite strong demand, 44% of LGBTQ youth who want mental healthcare say they cannot access it. Fierce Healthcare and Uncloseted Media investigate why.",
       "category": "general_market",
       "categoryLabel": "General Market"
     }
