@@ -45,6 +45,7 @@ const alertsList = document.getElementById('alerts-list');
 const heatmapList = document.getElementById('heatmap-list');
 const talentList = document.getElementById('talent-list');
 const employerList = document.getElementById('employer-list');
+const specialtySurplusList = document.getElementById('specialty-surplus-list');
 const forecastBeds = document.getElementById('forecast-beds');
 const forecastSetting = document.getElementById('forecast-setting');
 const forecastHorizon = document.getElementById('forecast-horizon');
@@ -271,6 +272,8 @@ let taMetrics = {
 };
 let taActions = [];
 let taRolloutState = {};
+let latestTalentOpportunities = [];
+let specialtySurplusMode = 'loading';
 
 const REQUIRED_PROGRAM_ACCREDITORS = ['CCNE', 'ACEN', 'CNEA'];
 
@@ -1159,6 +1162,7 @@ const renderNotices = (notices) => {
     noticeList.innerHTML = `<div class="empty-state">No notices match these filters yet.</div>`;
     refreshNoticeListWindow(0);
     refreshTalentCommandCenter();
+  renderSpecialtySurplus();
     return;
   }
 
@@ -1244,6 +1248,7 @@ const renderNotices = (notices) => {
 
   refreshNoticeListWindow(visibleNotices.length);
   refreshTalentCommandCenter();
+  renderSpecialtySurplus();
 };
 
 // Close dropdowns when clicking elsewhere
@@ -1365,13 +1370,17 @@ const renderHeatmap = (data) => {
 const renderTalent = (data) => {
   if (!talentList) return;
   const opportunities = data?.opportunities ?? [];
+  latestTalentOpportunities = opportunities;
+  specialtySurplusMode = 'live_talent';
   const top = opportunities
     .sort((a, b) => b.estimated_nurses_available - a.estimated_nurses_available)
     .slice(0, 8);
   if (!top.length) {
     renderInsightFallback(talentList, 'No talent signals yet.');
+    renderSpecialtySurplus();
     return;
   }
+
   talentList.innerHTML = top.map(entry => {
     const cityDisplay = entry.city && entry.city !== 'unknown' ? entry.city : `${entry.state} Statewide`;
     return `
@@ -1387,6 +1396,8 @@ const renderTalent = (data) => {
     </div>
   `;
   }).join('');
+
+  renderSpecialtySurplus();
 };
 
 const renderEmployers = (data) => {
@@ -1410,6 +1421,113 @@ const renderEmployers = (data) => {
   `).join('');
 };
 
+const SURPLUS_SPECIALTY_MAP = {
+  ER: ['ER', 'ED', 'EMERGENCY', 'EMERGENCY DEPARTMENT'],
+  OR: ['OR', 'OPERATING ROOM', 'PERIOPERATIVE', 'SURGICAL'],
+  ICU: ['ICU', 'CRITICAL CARE'],
+  MED_SURG: ['MED SURG', 'MED-SURG', 'MEDICAL SURGICAL'],
+  L_AND_D: ['L&D', 'LABOR', 'DELIVERY', 'OB'],
+  TELE: ['TELE', 'TELEMETRY'],
+  PCU: ['PCU', 'STEPDOWN', 'STEP-DOWN'],
+  PEDS: ['PEDS', 'PEDIATRIC'],
+  BEHAVIORAL: ['BEHAVIORAL', 'PSYCH']
+};
+const SURPLUS_SPECIALTY_ORDER = ['ER', 'OR', 'ICU', 'MED_SURG', 'L_AND_D', 'TELE', 'PCU', 'PEDS', 'BEHAVIORAL'];
+const SURPLUS_SPECIALTY_LABELS = {
+  ER: 'ER/ED',
+  OR: 'OR',
+  ICU: 'ICU',
+  MED_SURG: 'Med-Surg',
+  L_AND_D: 'L&D',
+  TELE: 'Telemetry',
+  PCU: 'PCU',
+  PEDS: 'Pediatrics',
+  BEHAVIORAL: 'Behavioral Health'
+};
+
+const normalizeSpecialty = (value) => String(value || '').toUpperCase().replace(/[^A-Z&\s-]/g, ' ').replace(/\s+/g, ' ').trim();
+const specialtyTokens = (value) => normalizeSpecialty(value).replace(/-/g, ' ').split(' ').filter(Boolean);
+const aliasMatchesSpecialty = (specialtyValue, alias) => {
+  const normalizedValue = normalizeSpecialty(specialtyValue);
+  const normalizedAlias = normalizeSpecialty(alias);
+  if (!normalizedValue || !normalizedAlias) return false;
+  if (normalizedAlias.includes(' ')) return normalizedValue.includes(normalizedAlias);
+  const tokens = specialtyTokens(normalizedValue);
+  return tokens.includes(normalizedAlias);
+};
+
+const findSpecialtyBucket = (value) => {
+  const normalized = normalizeSpecialty(value);
+  if (!normalized) return null;
+  for (const [bucket, aliases] of Object.entries(SURPLUS_SPECIALTY_MAP)) {
+    if (aliases.some((alias) => aliasMatchesSpecialty(normalized, alias))) return bucket;
+  }
+  return null;
+};
+
+const renderSpecialtySurplus = () => {
+  if (!specialtySurplusList) return;
+  const totals = new Map(SURPLUS_SPECIALTY_ORDER.map((key) => [key, 0]));
+
+  if (Array.isArray(latestTalentOpportunities) && latestTalentOpportunities.length) {
+    latestTalentOpportunities.forEach((entry) => {
+      const est = Number(entry?.estimated_nurses_available || 0);
+      const specialties = Array.isArray(entry?.specialties) ? entry.specialties : [];
+      const buckets = [...new Set(specialties.map(findSpecialtyBucket).filter(Boolean))];
+      if (!buckets.length || est <= 0) return;
+      const base = Math.floor(est / buckets.length);
+      let remainder = est % buckets.length;
+      buckets.forEach((bucket) => {
+        const plus = remainder > 0 ? 1 : 0;
+        if (remainder > 0) remainder -= 1;
+        totals.set(bucket, (totals.get(bucket) || 0) + base + plus);
+      });
+    });
+  } else {
+    specialtySurplusMode = 'notice_proxy';
+    (currentNotices || []).forEach((notice) => {
+      const specialties = parseMaybeJson(notice?.nursing_specialties);
+      const buckets = [...new Set(specialties.map(findSpecialtyBucket).filter(Boolean))];
+      if (!buckets.length) return;
+      const affected = Number(notice?.employees_affected || notice?.affected_workers || notice?.affected || 0);
+      const est = Math.max(1, Math.round((affected || 1) * 0.2));
+      const base = Math.floor(est / buckets.length);
+      let remainder = est % buckets.length;
+      buckets.forEach((bucket) => {
+        const plus = remainder > 0 ? 1 : 0;
+        if (remainder > 0) remainder -= 1;
+        totals.set(bucket, (totals.get(bucket) || 0) + base + plus);
+      });
+    });
+  }
+
+  const ranked = SURPLUS_SPECIALTY_ORDER
+    .map((bucket) => ({ bucket, count: totals.get(bucket) || 0 }))
+    .filter((row) => row.count > 0)
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 8);
+
+  if (!ranked.length) {
+    specialtySurplusList.innerHTML = '<div class="empty-state">No specialty surplus signals yet.</div>';
+    return;
+  }
+
+  specialtySurplusList.innerHTML = ranked.map((row) => `
+    <div class="insight-row">
+      <div>
+        <div class="insight-title">${SURPLUS_SPECIALTY_LABELS[row.bucket] || row.bucket}</div>
+        <div class="specialty-surplus-meta">Estimated available pool</div>
+      </div>
+      <div>
+        <div class="insight-pill">${Math.round(row.count).toLocaleString()}</div>
+      </div>
+    </div>
+  `).join('');
+  const modeLabel = specialtySurplusMode === 'live_talent'
+    ? 'Source: Live talent opportunities'
+    : 'Source: Notice proxy model (lower confidence)';
+  specialtySurplusList.innerHTML += `<div class="specialty-surplus-meta">${modeLabel}</div>`;
+};
 const loadInsights = async () => {
   try {
     const [alerts, geo, talent, employers] = await Promise.all([
@@ -1436,10 +1554,12 @@ const loadInsights = async () => {
       renderEmployers(employers);
     } catch (fallbackErr) {
       console.warn('Insights unavailable in API mode:', fallbackErr);
+      specialtySurplusMode = 'unavailable';
       renderInsightFallback(alertsList, 'Insights unavailable.');
       renderInsightFallback(heatmapList, 'Insights unavailable.');
       renderInsightFallback(talentList, 'Insights unavailable.');
       renderInsightFallback(employerList, 'Insights unavailable.');
+      renderInsightFallback(specialtySurplusList, 'Insights unavailable.');
     }
   }
 };
@@ -5918,6 +6038,7 @@ const loadNews = async () => {
     newsCategoryCoverage = data?.categoryCoverage ?? {};
     renderNewsFeed();
     refreshTalentCommandCenter();
+  renderSpecialtySurplus();
   } catch (err) {
     console.warn('News feed not available:', err.message);
     const list = document.getElementById('news-feed-list');
@@ -5928,6 +6049,7 @@ const loadNews = async () => {
     renderNewsCoverageMetrics();
     renderNewsFeedHealth();
     refreshTalentCommandCenter();
+  renderSpecialtySurplus();
   }
 };
 
@@ -6243,6 +6365,7 @@ const initTalentCommandCenter = () => {
   taCampaignSpecialty?.addEventListener('change', renderTalentCampaignTemplate);
 
   refreshTalentCommandCenter();
+  renderSpecialtySurplus();
 };
 
 // Initialize app (called after login)

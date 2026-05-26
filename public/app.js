@@ -1,38 +1,15 @@
-/**
- * Nursing Layoff Radar - Static Frontend
- *
- * This version works with static JSON files hosted on GitHub Pages.
- * Data is pre-fetched hourly via GitHub Actions.
- *
- * Data URLs:
- * - ./data/notices.json - All notices
- * - ./data/states.json - State summary
- * - ./data/metadata.json - Last update info
- * - ./data/by-state/{STATE}.json - Per-state data
- */
-
-// =============================================================================
-// Configuration
-// =============================================================================
-const DATA_BASE_URL = (() => {
-  const path = window.location.pathname;
-  const basePath = path.endsWith('/') ? path : path.replace(/\/[^/]*$/, '/');
-  return `${basePath}data`;
-})();
-const PASSCODE = 'IUH126';
-
-// =============================================================================
-// DOM Elements
-// =============================================================================
+// Login elements
 const loginOverlay = document.getElementById('login-overlay');
 const loginForm = document.getElementById('login-form');
-const passcodeInput = document.getElementById('passcode-input');
+const emailInput = document.getElementById('email-input');
+const passwordInput = document.getElementById('password-input');
 const loginError = document.getElementById('login-error');
 
+// App elements
 const apiDot = document.getElementById('api-dot');
 const apiStatus = document.getElementById('api-status');
 const regionSelect = document.getElementById('filter-region');
-const stateSelect = document.getElementById('filter-state');
+const stateSelect = document.getElementById('filter-state'); // Hidden input for state values
 const stateMultiSelect = document.getElementById('state-multi-select');
 const stateDisplay = document.getElementById('state-display');
 const stateDropdown = document.getElementById('state-dropdown');
@@ -51,14 +28,9 @@ const detailBody = document.getElementById('detail-body');
 const statTotal = document.getElementById('stat-total');
 const statStates = document.getElementById('stat-states');
 const statUpdated = document.getElementById('stat-updated');
-const dataRefreshBadge = document.getElementById('data-refresh-badge');
 const usMapContainer = document.getElementById('us-map');
 const mapTooltip = document.getElementById('map-tooltip');
 const mapToast = document.getElementById('map-toast');
-const mapScopeHealthcareBtn = document.getElementById('map-scope-healthcare');
-const mapScopeAllBtn = document.getElementById('map-scope-all');
-const mapScopeLabel = document.getElementById('map-scope-label');
-const mapHomeStateBtn = document.getElementById('map-home-state-btn');
 const mapTargetModeBtn = document.getElementById('map-target-mode-btn');
 const mapTargetStateBtn = document.getElementById('map-target-state-btn');
 const mapFactorsBtn = document.getElementById('map-factors-btn');
@@ -66,22 +38,14 @@ const mapFactorsPanel = document.getElementById('map-factors-panel');
 const mapFactorsClose = document.getElementById('map-factors-close');
 const mapFactorsList = document.getElementById('map-factors-list');
 const mapFactorsSubtitle = document.getElementById('map-factors-subtitle');
-const mapTabLayoffs = document.getElementById('map-tab-layoffs');
-const mapTabRural = document.getElementById('map-tab-rural');
-const mapTabSalary = document.getElementById('map-tab-salary');
-const mapSectionTitle = document.getElementById('map-section-title');
-const mapSectionDesc = document.getElementById('map-section-desc');
-const ruralClosuresPanel = document.getElementById('rural-closures-panel');
-const ruralClosuresTitle = document.getElementById('rural-closures-title');
-const ruralClosuresSubtitle = document.getElementById('rural-closures-subtitle');
-const ruralClosuresList = document.getElementById('rural-closures-list');
-const ruralClosuresClose = document.getElementById('rural-closures-close');
-const mapHospitalSearchInput = document.getElementById('map-hospital-search');
-const mapHospitalSearchResults = document.getElementById('map-hospital-search-results');
+const mapScopeHealthcareBtn = document.getElementById('map-scope-healthcare');
+const mapScopeAllBtn = document.getElementById('map-scope-all');
+const mapScopeLabel = document.getElementById('map-scope-label');
 const alertsList = document.getElementById('alerts-list');
 const heatmapList = document.getElementById('heatmap-list');
 const talentList = document.getElementById('talent-list');
 const employerList = document.getElementById('employer-list');
+const specialtySurplusList = document.getElementById('specialty-surplus-list');
 const forecastBeds = document.getElementById('forecast-beds');
 const forecastSetting = document.getElementById('forecast-setting');
 const forecastHorizon = document.getElementById('forecast-horizon');
@@ -110,9 +74,11 @@ const taCampaignSpecialty = document.getElementById('ta-campaign-specialty');
 const taCampaignTemplate = document.getElementById('ta-campaign-template');
 const taRolloutList = document.getElementById('ta-rollout-list');
 
+// Custom notice form elements
 const customNoticeForm = document.getElementById('custom-notice-form');
 const customStateSelect = document.getElementById('custom-state');
 
+// Project elements
 const projectsList = document.getElementById('projects-list');
 const newProjectBtn = document.getElementById('new-project-btn');
 const projectModal = document.getElementById('project-modal');
@@ -141,7 +107,6 @@ const programsSearch = document.getElementById('programs-search');
 const programsStateFilter = document.getElementById('programs-state-filter');
 const programsLevelFilter = document.getElementById('programs-level-filter');
 const programsSourceNote = document.getElementById('programs-source-note');
-const programsSchoolInsight = document.getElementById('programs-school-insight');
 const programsExportCsv = document.getElementById('programs-export-csv');
 const programsExportExcel = document.getElementById('programs-export-excel');
 const programsExportPdf = document.getElementById('programs-export-pdf');
@@ -156,8 +121,7 @@ const stateBeaconHomeSelect = document.getElementById('state-beacon-home');
 const stateBeaconStateSelect = document.getElementById('state-beacon-state');
 const stateBeaconUseSelection = document.getElementById('state-beacon-use-selection');
 const stateBeaconMeta = document.getElementById('state-beacon-meta');
-const stateBeaconHospitalsTop = document.getElementById('state-beacon-hospitals-top');
-const stateBeaconHospitalsWorst = document.getElementById('state-beacon-hospitals-worst');
+const stateBeaconHospitals = document.getElementById('state-beacon-hospitals');
 const stateBeaconHospitalsAll = document.getElementById('state-beacon-hospitals-all');
 const stateBeaconClinics = document.getElementById('state-beacon-clinics');
 const stateBeaconNews = document.getElementById('state-beacon-news');
@@ -194,108 +158,108 @@ const homeStateOpenBeacon = document.getElementById('home-state-open-beacon');
 const homeStateExportCsv = document.getElementById('home-state-export-csv');
 const homeStateExportExcel = document.getElementById('home-state-export-excel');
 const homeStateExportPdf = document.getElementById('home-state-export-pdf');
+const homeStateSelected = document.getElementById('home-state-selected');
+const homeStateMeta = document.getElementById('home-state-meta');
+const homeStateHospitals = document.getElementById('home-state-hospitals');
+const homeStateNews = document.getElementById('home-state-news');
+const homeStateCompetition = document.getElementById('home-state-competition');
+const homeStatePipeline = document.getElementById('home-state-pipeline');
+const homeStatePros = document.getElementById('home-state-pros');
+const homeStateCons = document.getElementById('home-state-cons');
 const openHomeStateBtn = document.getElementById('open-home-state');
-// New Home State module elements
-const homeStateName = document.getElementById('home-state-name');
-const homeStateAbbr = document.getElementById('home-state-abbr');
-const homeStateStatHospitals = document.getElementById('home-state-stat-hospitals');
-const homeStateStatMetros = document.getElementById('home-state-stat-metros');
-const homeStateStatPrograms = document.getElementById('home-state-stat-programs');
-const homeStateStatCompact = document.getElementById('home-state-stat-compact');
-const homeStateMetroMap = document.getElementById('home-state-metro-map');
-const homeStateDetailPlaceholder = document.getElementById('home-state-detail-placeholder');
-const homeStateDetailContent = document.getElementById('home-state-detail-content');
-const homeStateMetroName = document.getElementById('home-state-metro-name');
-const homeStateMetroBadge = document.getElementById('home-state-metro-badge');
-const homeStateHospitalCount = document.getElementById('home-state-hospital-count');
-const homeStateMetroHospitals = document.getElementById('home-state-metro-hospitals');
-const homeStateMetroCompetition = document.getElementById('home-state-metro-competition');
-const homeStateMetroSalary = document.getElementById('home-state-metro-salary');
-const homeStateMetroFactors = document.getElementById('home-state-metro-factors');
+const targetStateModal = document.getElementById('target-state-modal');
+const targetStateCloseBtn = document.getElementById('target-state-close');
+const targetStateCloseFooter = document.getElementById('target-state-close-footer');
+const targetStateOpenBeacon = document.getElementById('target-state-open-beacon');
+const openTargetStateBtn = document.getElementById('open-target-state');
+const targetStateExportToggle = document.getElementById('target-state-export-toggle');
+const targetStateExportMenu = document.getElementById('target-state-export-menu');
+const targetStateSelect = document.getElementById('target-state-select');
+const openMasterExportBtn = document.getElementById('open-master-export');
+const masterExportModal = document.getElementById('master-export-modal');
+const masterExportCloseBtn = document.getElementById('master-export-close');
+const masterExportCloseFooter = document.getElementById('master-export-close-footer');
+const masterExportStateSelect = document.getElementById('master-export-state');
+const masterExportMetroCount = document.getElementById('master-export-metros');
+const masterExportWarnCount = document.getElementById('master-export-warn');
+const masterExportRuralCount = document.getElementById('master-export-rural');
+const masterExportButtons = document.getElementById('master-export-buttons');
+const masterExportToggle = document.getElementById('master-export-toggle');
+const masterExportMenu = document.getElementById('master-export-menu');
+const masterExportProgressBar = document.getElementById('master-export-progress-bar');
+const masterExportProgressLabel = document.getElementById('master-export-progress-label');
+const targetStateName = document.getElementById('target-state-name');
+const targetStateAbbr = document.getElementById('target-state-abbr');
+const targetStateStatHospitals = document.getElementById('target-state-stat-hospitals');
+const targetStateStatMetros = document.getElementById('target-state-stat-metros');
+const targetStateStatPrograms = document.getElementById('target-state-stat-programs');
+const targetStateStatCompact = document.getElementById('target-state-stat-compact');
+const targetStateMetroMap = document.getElementById('target-state-metro-map');
+const targetStateDetailPlaceholder = document.getElementById('target-state-detail-placeholder');
+const targetStatePlaceholderText = document.getElementById('target-state-placeholder-text');
+const targetStateDetailContent = document.getElementById('target-state-detail-content');
+const targetStateMetroName = document.getElementById('target-state-metro-name');
+const targetStateMetroBadge = document.getElementById('target-state-metro-badge');
+const targetStateHospitalCount = document.getElementById('target-state-hospital-count');
+const targetStateMetroHospitals = document.getElementById('target-state-metro-hospitals');
+const targetStateMetroCompetition = document.getElementById('target-state-metro-competition');
+const targetStateMetroSalary = document.getElementById('target-state-metro-salary');
+const targetStateMetroFactors = document.getElementById('target-state-metro-factors');
 
-// =============================================================================
-// State
-// =============================================================================
-let allNotices = []; // All loaded notices
-let allNoticesLoaded = false;
-let allNoticesLoading = false;
-let currentNotices = []; // Filtered notices
-const stateNoticesCache = new Map();
-const stateNoticesLoading = new Set();
-let customNotices = [];
-let projects = [];
-let currentProjectId = null;
+let currentTargetStateMetro = null;
+const TARGET_STATE_DEFAULT = 'KY';
+
+const getTargetStateSelection = () => {
+  const preferred = stateBeaconStateSelect?.value
+    || targetStateSelect?.value
+    || TARGET_STATE_DEFAULT;
+  return ALL_STATES.includes(preferred) ? preferred : TARGET_STATE_DEFAULT;
+};
+
+let currentNotices = [];
+let customNotices = []; // User-added notices
+let projects = []; // User projects
+let currentProjectId = null; // For editing
 let stateData = {};
 let stateDataAll = {};
 let stateDataHealthcare = {};
 let mapStateData = {};
-let metadata = {};
-let currentMapView = 'map';
-let selectedStates = [];
-let selectedSpecialties = [];
-let mapScope = 'healthcare';
-let isMapTargetMode = false;
-let activeMapTab = 'layoffs'; // 'layoffs' | 'rural' | 'salary'
-let salaryMapMetrics = {
-  adjusted: {},
-  base: {},
-  col: {},
-  rank: {},
-  projected: {},
-  delta: {}
-};
-let bonusScenario = {
-  active: false, homeState: '', relo: 0, signOn: 0,
-  contractMonths: 24, hoursPerYear: 1872, stackable: true,
-  viewMode: 'projected', diffs: []
-};
-let bfDiffCounter = 0;
-let currentPage = 1;
-let searchQuery = '';
-let applyFiltersToken = 0;
+let apiHasDb = true;
+let isFetching = false;
+let currentMapView = 'map'; // 'map' or 'chart'
+let selectedStates = []; // Multi-select states
+let mapScope = 'healthcare'; // 'healthcare' or 'all'
 const NOTICE_MAX_COUNT = 100;
 const NOTICE_WINDOW_COUNT = 5;
-const NOTICES_PER_PAGE = NOTICE_MAX_COUNT;
-let lastNoticeWindowCount = 0;
-let noticeWindowRaf = null;
 let calibrationStats = { minCount: 0, maxCount: 0 };
 let nursingPrograms = [];
-let programsSearchCache = []; // Pre-computed search haystacks
 let programsMeta = { lastUpdated: null, sources: [] };
 let programsLoaded = false;
 let programsModuleInitialized = false;
-let selectedProgramSchool = '';
 let programsRefreshPrompted = false;
 let stateBeaconData = null;
 let stateBeaconLoaded = false;
 let stateBeaconLoadedAt = 0;
-const STATE_BEACON_REFRESH_MS = 30 * 60 * 1000; // refresh beacon data every 30 minutes
 let stateBeaconInputs = null;
 let stateNewsData = null;
 let stateNewsLoaded = false;
 let stateNewsLoadedAt = 0;
-let hospitalRankingsData = null;
-let hospitalRankingsLoaded = false;
-let hospitalRankingsLoadedAt = 0;
-let ruralClosuresData = null;
-let ruralClosuresLoaded = false;
-let ruralClosuresLoadedAt = 0;
-const RURAL_CLOSURES_REFRESH_MS = 30 * 60 * 1000;
+const STATE_BEACON_REFRESH_MS = 6 * 60 * 60 * 1000; // refresh every 6 hours
 const STATE_BEACON_DEFAULT = 'FL';
 const STATE_BEACON_HOME_DEFAULT = 'IN';
 const STATE_BEACON_PROS_MODE_TARGET = 'target_vs_home';
 const STATE_BEACON_PROS_MODE_HOME = 'home_vs_target';
 let stateBeaconProsMode = STATE_BEACON_PROS_MODE_TARGET;
-const STATE_BEACON_INPUTS_KEY = 'lni_state_beacon_inputs';
-const STATE_BEACON_NOTES_KEY = 'lni_state_beacon_notes';
-const MAP_LONG_PRESS_MS = 2000;
-const MAP_RECRUIT_TARGET_COUNT = 5;
-let mapLongPressTimer = null;
-let mapLongPressSuppressUntil = 0;
-let mapRecruitTargetsInfo = [];
-const TA_METRICS_KEY = 'lni_ta_metrics_v1';
-const TA_ACTIONS_KEY = 'lni_ta_actions_v1';
-const TA_ROLLOUT_KEY = 'lni_ta_rollout_v1';
+const STATE_BEACON_INPUTS_BASE_KEY = 'lni_state_beacon_inputs';
+const STATE_BEACON_NOTES_BASE_KEY = 'lni_state_beacon_notes';
+const MAP_HOME_STATE_BASE_KEY = 'lighthouseiq_map_home_state';
+const MAP_TARGET_STATE_BASE_KEY = 'lighthouseiq_map_target_state';
+let lastNoticeWindowCount = 0;
+let noticeWindowRaf = null;
+let isMapTargetMode = false;
+const TA_METRICS_BASE_KEY = 'lni_ta_metrics_v1';
+const TA_ACTIONS_BASE_KEY = 'lni_ta_actions_v1';
+const TA_ROLLOUT_BASE_KEY = 'lni_ta_rollout_v1';
 let taMetrics = {
   outreach: 0,
   responses: 0,
@@ -308,6 +272,8 @@ let taMetrics = {
 };
 let taActions = [];
 let taRolloutState = {};
+let latestTalentOpportunities = [];
+let specialtySurplusMode = 'loading';
 
 const REQUIRED_PROGRAM_ACCREDITORS = ['CCNE', 'ACEN', 'CNEA'];
 
@@ -320,6 +286,197 @@ const getLoadedAccreditors = (programs) => {
   });
   return accreditors;
 };
+
+
+// Login handling - server-side validation
+const SESSION_KEY = 'lni_authenticated';
+const SESSION_USER_KEY = 'lni_user';
+const PROJECTS_BASE_KEY = 'lni_projects';
+const CUSTOM_NOTICES_BASE_KEY = 'lni_custom_notices';
+
+const getSessionUser = () => {
+  try {
+    return JSON.parse(sessionStorage.getItem(SESSION_USER_KEY) || 'null');
+  } catch {
+    return null;
+  }
+};
+
+const getUserStorageScope = () => {
+  const user = getSessionUser();
+  if (user?.id) return String(user.id);
+  if (user?.email) return String(user.email).toLowerCase();
+  return 'anonymous';
+};
+
+const scopedStorageKey = (baseKey) => `${baseKey}:${getUserStorageScope()}`;
+
+const checkAuth = () => sessionStorage.getItem(SESSION_KEY) === 'true';
+
+const clearAuthState = () => {
+  sessionStorage.removeItem(SESSION_KEY);
+  sessionStorage.removeItem(SESSION_USER_KEY);
+  loginOverlay.classList.remove('hidden');
+};
+
+const getCsrfToken = () => {
+  const match = document.cookie.split(';').map(c => c.trim()).find(c => c.startsWith('csrf_token='));
+  return match ? decodeURIComponent(match.split('=')[1]) : '';
+};
+
+let refreshPromise = null;
+const refreshSession = async () => {
+  if (refreshPromise) return refreshPromise;
+  refreshPromise = fetch('/auth/refresh', {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'X-CSRF-Token': getCsrfToken()
+    }
+  })
+    .then(res => res.ok)
+    .catch(() => false)
+    .finally(() => {
+      refreshPromise = null;
+    });
+  return refreshPromise;
+};
+
+const readFieldValue = (field) => {
+  if (!field || typeof field !== 'object' || !('value' in field)) return '';
+  const raw = field.value;
+  return raw === undefined || raw === null ? '' : String(raw);
+};
+
+const setLoginError = (message) => {
+  if (!loginError) return;
+  loginError.textContent = message || '';
+};
+
+const handleLogin = async (e) => {
+  e.preventDefault();
+  const form = e?.currentTarget || loginForm || document.getElementById('login-form');
+  const emailField = emailInput
+    || form?.querySelector('#email-input')
+    || form?.querySelector('input[type="email"]');
+  const passwordField = passwordInput
+    || form?.querySelector('#password-input')
+    || form?.querySelector('input[type="password"]');
+  const legacyPasscodeField = form?.querySelector('#passcode-input');
+  const email = readFieldValue(emailField).trim().toLowerCase();
+  const password = readFieldValue(passwordField) || readFieldValue(legacyPasscodeField);
+  const loginBtn = form?.querySelector('button[type="submit"]');
+
+  if (!email || !password) {
+    setLoginError('Please enter your email and password.');
+    return;
+  }
+
+  // Disable button during request
+  if (loginBtn) {
+    loginBtn.disabled = true;
+    loginBtn.textContent = 'Verifying...';
+  }
+
+  try {
+    const response = await fetch('/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await response.json().catch(() => ({}));
+
+    if (data.success) {
+      sessionStorage.setItem(SESSION_KEY, 'true');
+      if (data.user && typeof data.user === 'object') {
+        sessionStorage.setItem(SESSION_USER_KEY, JSON.stringify(data.user));
+      }
+      loginOverlay.classList.add('hidden');
+      if (passwordInput) passwordInput.value = '';
+      setLoginError('');
+      initApp();
+    } else {
+      setLoginError(data.error || 'Invalid email or password.');
+      if (loginError) {
+        loginError.classList.remove('shake');
+        void loginError.offsetWidth; // Trigger reflow for animation
+        loginError.classList.add('shake');
+      }
+      if (passwordInput) passwordInput.value = '';
+      passwordInput?.focus();
+    }
+  } catch (err) {
+    setLoginError('Connection error. Please try again.');
+  } finally {
+    if (loginBtn) {
+      loginBtn.disabled = false;
+      loginBtn.textContent = 'Access Dashboard';
+    }
+  }
+};
+
+// Initialize login
+const bootstrapAuth = async () => {
+  try {
+    const res = await fetch('/auth/session', { credentials: 'include' });
+    if (res.ok) {
+      const data = await res.json().catch(() => ({}));
+      sessionStorage.setItem(SESSION_KEY, 'true');
+      if (data.user && typeof data.user === 'object') {
+        sessionStorage.setItem(SESSION_USER_KEY, JSON.stringify(data.user));
+      }
+      loginOverlay.classList.add('hidden');
+      initApp();
+      return;
+    }
+  } catch {
+    // ignore
+  }
+  clearAuthState();
+  emailInput?.focus();
+};
+
+loginForm.addEventListener('submit', handleLogin);
+
+const REGIONS = ['Northeast', 'Midwest', 'South', 'West'];
+
+// Region to states mapping (matches backend)
+const REGION_STATES = {
+  Northeast: ['CT', 'ME', 'MA', 'NH', 'RI', 'VT', 'NJ', 'NY', 'PA'],
+  Midwest: ['IL', 'IN', 'MI', 'OH', 'WI', 'IA', 'KS', 'MN', 'MO', 'NE', 'ND', 'SD'],
+  South: ['DE', 'FL', 'GA', 'MD', 'NC', 'SC', 'VA', 'DC', 'WV', 'AL', 'KY', 'MS', 'TN', 'AR', 'LA', 'OK', 'TX'],
+  West: ['AZ', 'CO', 'ID', 'MT', 'NV', 'NM', 'UT', 'WY', 'AK', 'CA', 'HI', 'OR', 'WA']
+};
+
+const formatDate = (value) => {
+  if (!value) return 'Unknown';
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return String(value);
+  return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+};
+
+const formatNumber = (value) => {
+  if (value === null || value === undefined || value === '') return 'Unknown';
+  const n = Number(value);
+  if (!Number.isFinite(n)) return String(value);
+  return n.toLocaleString();
+};
+
+const parseMaybeJson = (value) => {
+  if (!value) return [];
+  if (Array.isArray(value)) return value;
+  if (typeof value === 'string') {
+    try {
+      return JSON.parse(value);
+    } catch {
+      return [value];
+    }
+  }
+  return [String(value)];
+};
+
 const HEALTHCARE_KEYWORDS = [
   'hospital',
   'healthcare',
@@ -357,338 +514,15 @@ const isHealthcareNotice = (notice) => {
   ].filter(Boolean).join(' ').toLowerCase();
   return HEALTHCARE_KEYWORDS.some(keyword => haystack.includes(keyword));
 };
-let strategicData = null; // Will be loaded from strategic.json
-let strategicDataLoaded = false;
-let relocationData = null; // Will be loaded from relocation.json
-let relocationDataLoaded = false;
-let recruitmentIntel = null; // Pre-computed recruitment scores from private repo
-let recruitmentIntelLoaded = false;
 
-const computeSignalConfidence = (noticeCount = 0, newsCount = 0, majorSystemsCount = 0) => {
-  let score = 0;
-  if (noticeCount >= 5) score += 2;
-  else if (noticeCount >= 1) score += 1;
-  if (newsCount >= 4) score += 2;
-  else if (newsCount >= 1) score += 1;
-  if (majorSystemsCount >= 4) score += 1;
-  if (score >= 4) return { label: 'High', score };
-  if (score >= 2) return { label: 'Medium', score };
-  return { label: 'Low', score };
-};
-
-// =============================================================================
-// Authentication (Simple client-side - data is public)
-// =============================================================================
-const SESSION_KEY = 'lni_authenticated';
-
-const checkAuth = () => {
-  if (!PASSCODE) return true;
-  return sessionStorage.getItem(SESSION_KEY) === 'true';
-};
-
-const readFieldValue = (field) => {
-  if (!field || typeof field !== 'object' || !('value' in field)) return '';
-  const raw = field.value;
-  return raw === undefined || raw === null ? '' : String(raw);
-};
-
-const handleLogin = (e) => {
-  e.preventDefault();
-  const form = e?.currentTarget || loginForm || document.getElementById('login-form');
-  const codeField = passcodeInput
-    || form?.querySelector('#passcode-input')
-    || form?.querySelector('#password-input')
-    || form?.querySelector('input[type="password"]');
-  const entered = readFieldValue(codeField).trim();
-
-  if (!PASSCODE || entered === PASSCODE) {
-    sessionStorage.setItem(SESSION_KEY, 'true');
-    loginOverlay.classList.add('hidden');
-    if (codeField && typeof codeField === 'object' && 'value' in codeField) codeField.value = '';
-    loginError.textContent = '';
-    initApp().then(() => {
-      initStrategicReview();
-    });
-  } else {
-    loginError.textContent = 'Invalid passcode. Please try again.';
-    loginError.classList.remove('shake');
-    void loginError.offsetWidth;
-    loginError.classList.add('shake');
-    if (codeField && typeof codeField === 'object' && 'value' in codeField) codeField.value = '';
-    codeField?.focus();
-  }
-};
-
-loginForm?.addEventListener('submit', handleLogin);
-
-// =============================================================================
-// Constants
-// =============================================================================
-const REGIONS = ['Northeast', 'Midwest', 'South', 'West'];
-
-const REGION_STATES = {
-  Northeast: ['CT', 'ME', 'MA', 'NH', 'RI', 'VT', 'NJ', 'NY', 'PA'],
-  Midwest: ['IL', 'IN', 'MI', 'OH', 'WI', 'IA', 'KS', 'MN', 'MO', 'NE', 'ND', 'SD'],
-  South: ['DE', 'FL', 'GA', 'MD', 'NC', 'SC', 'VA', 'DC', 'WV', 'AL', 'KY', 'MS', 'TN', 'AR', 'LA', 'OK', 'TX'],
-  West: ['AZ', 'CO', 'ID', 'MT', 'NV', 'NM', 'UT', 'WY', 'AK', 'CA', 'HI', 'OR', 'WA']
-};
-
-const ALL_STATES = [
-  'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL',
-  'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME',
-  'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH',
-  'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'PR',
-  'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV',
-  'WI', 'WY'
-];
-
-const STATE_NAMES = {
-  AL: 'Alabama', AK: 'Alaska', AZ: 'Arizona', AR: 'Arkansas', CA: 'California',
-  CO: 'Colorado', CT: 'Connecticut', DE: 'Delaware', DC: 'Washington DC', FL: 'Florida',
-  GA: 'Georgia', HI: 'Hawaii', ID: 'Idaho', IL: 'Illinois', IN: 'Indiana',
-  IA: 'Iowa', KS: 'Kansas', KY: 'Kentucky', LA: 'Louisiana', ME: 'Maine',
-  MD: 'Maryland', MA: 'Massachusetts', MI: 'Michigan', MN: 'Minnesota', MS: 'Mississippi',
-  MO: 'Missouri', MT: 'Montana', NE: 'Nebraska', NV: 'Nevada', NH: 'New Hampshire',
-  NJ: 'New Jersey', NM: 'New Mexico', NY: 'New York', NC: 'North Carolina', ND: 'North Dakota',
-  OH: 'Ohio', OK: 'Oklahoma', OR: 'Oregon', PA: 'Pennsylvania', PR: 'Puerto Rico',
-  RI: 'Rhode Island', SC: 'South Carolina', SD: 'South Dakota', TN: 'Tennessee', TX: 'Texas',
-  UT: 'Utah', VT: 'Vermont', VA: 'Virginia', WA: 'Washington', WV: 'West Virginia',
-  WI: 'Wisconsin', WY: 'Wyoming'
-};
-
-// Exhaustive list of nursing specialties for recruiter search
-const NURSE_SPECIALTIES = {
-  // Critical Care & Emergency
-  'ICU': { name: 'Intensive Care Unit (ICU)', keywords: ['icu', 'intensive care', 'critical care', 'ccu', 'coronary care'] },
-  'MICU': { name: 'Medical ICU', keywords: ['micu', 'medical icu', 'medical intensive'] },
-  'SICU': { name: 'Surgical ICU', keywords: ['sicu', 'surgical icu', 'surgical intensive'] },
-  'CVICU': { name: 'Cardiovascular ICU', keywords: ['cvicu', 'cardiovascular icu', 'cardiac icu', 'heart'] },
-  'NICU': { name: 'Neonatal ICU', keywords: ['nicu', 'neonatal', 'newborn intensive', 'neonate'] },
-  'PICU': { name: 'Pediatric ICU', keywords: ['picu', 'pediatric icu', 'pediatric intensive'] },
-  'ER': { name: 'Emergency Room / ED', keywords: ['emergency', 'er ', 'e.r.', 'ed ', 'emergency department', 'trauma', 'urgent'] },
-  'Trauma': { name: 'Trauma Nursing', keywords: ['trauma', 'level i', 'level ii', 'trauma center'] },
-
-  // Surgical & Perioperative
-  'OR': { name: 'Operating Room', keywords: ['operating room', 'or ', 'o.r.', 'surgical', 'surgery', 'operative'] },
-  'Perioperative': { name: 'Perioperative', keywords: ['perioperative', 'periop', 'pre-op', 'post-op', 'preoperative', 'postoperative'] },
-  'PACU': { name: 'Post-Anesthesia Care Unit', keywords: ['pacu', 'post-anesthesia', 'recovery room', 'post anesthesia'] },
-  'Circulating': { name: 'Circulating Nurse', keywords: ['circulating', 'circulator'] },
-  'Scrub': { name: 'Scrub Nurse', keywords: ['scrub nurse', 'scrub tech'] },
-  'First Assist': { name: 'First Assist (RNFA)', keywords: ['first assist', 'rnfa', 'surgical assist'] },
-
-  // Medical-Surgical
-  'Med-Surg': { name: 'Medical-Surgical', keywords: ['med-surg', 'med surg', 'medical surgical', 'medsurg', 'general medical'] },
-  'Telemetry': { name: 'Telemetry / Step-Down', keywords: ['telemetry', 'tele', 'step-down', 'stepdown', 'progressive care', 'pcu'] },
-  'Orthopedic': { name: 'Orthopedic', keywords: ['orthopedic', 'ortho', 'musculoskeletal', 'joint replacement', 'spine'] },
-  'Neurology': { name: 'Neurology / Neuro', keywords: ['neurology', 'neuro', 'neurological', 'stroke', 'brain', 'neuroscience'] },
-  'Oncology': { name: 'Oncology', keywords: ['oncology', 'onc', 'cancer', 'tumor', 'chemotherapy', 'radiation'] },
-  'Cardiology': { name: 'Cardiology', keywords: ['cardiology', 'cardiac', 'heart', 'cardiovascular', 'cath lab', 'catheterization'] },
-  'Pulmonary': { name: 'Pulmonary / Respiratory', keywords: ['pulmonary', 'respiratory', 'lung', 'pulmonology'] },
-  'Renal': { name: 'Renal / Nephrology', keywords: ['renal', 'nephrology', 'kidney', 'dialysis', 'hemodialysis'] },
-  'GI': { name: 'Gastroenterology', keywords: ['gastroenterology', 'gi ', 'gastrointestinal', 'endoscopy', 'digestive'] },
-  'Urology': { name: 'Urology', keywords: ['urology', 'urological', 'bladder', 'prostate'] },
-
-  // Women's Health & Pediatrics
-  'OB': { name: 'Obstetrics / OB', keywords: ['obstetrics', 'ob ', 'o.b.', 'obstetric', 'prenatal'] },
-  'L&D': { name: 'Labor & Delivery', keywords: ['labor and delivery', 'l&d', 'labor & delivery', 'delivery', 'birthing', 'birth'] },
-  'Postpartum': { name: 'Postpartum / Mother-Baby', keywords: ['postpartum', 'mother-baby', 'mother baby', 'postnatal', 'maternity'] },
-  'LDRP': { name: 'LDRP (Labor/Delivery/Recovery/Postpartum)', keywords: ['ldrp', 'labor delivery recovery'] },
-  'Antepartum': { name: 'Antepartum / High-Risk OB', keywords: ['antepartum', 'high-risk ob', 'high risk pregnancy', 'perinatal'] },
-  'Gynecology': { name: 'Gynecology', keywords: ['gynecology', 'gyn', 'women\'s health', 'womens health'] },
-  'Pediatrics': { name: 'Pediatrics', keywords: ['pediatric', 'peds', 'children', 'child', 'kids', 'pediatric unit'] },
-  'Pediatric ER': { name: 'Pediatric Emergency', keywords: ['pediatric emergency', 'pediatric er', 'peds er', 'children\'s emergency'] },
-  'Pediatric Oncology': { name: 'Pediatric Oncology', keywords: ['pediatric oncology', 'pediatric cancer', 'childhood cancer'] },
-
-  // Mental Health & Behavioral
-  'Psych': { name: 'Psychiatric / Mental Health', keywords: ['psychiatric', 'psych', 'mental health', 'behavioral health', 'psychiatry'] },
-  'Substance Abuse': { name: 'Substance Abuse / Addiction', keywords: ['substance abuse', 'addiction', 'detox', 'rehab', 'recovery', 'chemical dependency'] },
-  'Geriatric Psych': { name: 'Geriatric Psychiatry', keywords: ['geriatric psych', 'geropsych', 'elderly mental health'] },
-  'Child Psych': { name: 'Child/Adolescent Psychiatry', keywords: ['child psych', 'adolescent psych', 'pediatric psych', 'youth mental health'] },
-
-  // Long-Term Care & Geriatrics
-  'LTC': { name: 'Long-Term Care', keywords: ['long-term care', 'ltc', 'long term care', 'nursing home', 'extended care'] },
-  'SNF': { name: 'Skilled Nursing Facility', keywords: ['skilled nursing', 'snf', 'skilled nursing facility'] },
-  'Geriatrics': { name: 'Geriatrics', keywords: ['geriatric', 'elderly', 'senior', 'aging', 'gerontology'] },
-  'Memory Care': { name: 'Memory Care / Dementia', keywords: ['memory care', 'dementia', 'alzheimer', 'cognitive'] },
-  'Rehab': { name: 'Rehabilitation', keywords: ['rehabilitation', 'rehab', 'physical therapy', 'occupational therapy', 'acute rehab'] },
-
-  // Community & Outpatient
-  'Home Health': { name: 'Home Health', keywords: ['home health', 'home care', 'home nursing', 'visiting nurse', 'in-home'] },
-  'Hospice': { name: 'Hospice / Palliative', keywords: ['hospice', 'palliative', 'end of life', 'comfort care', 'terminal'] },
-  'Public Health': { name: 'Public Health', keywords: ['public health', 'community health', 'population health'] },
-  'School Nurse': { name: 'School Nursing', keywords: ['school nurse', 'school nursing', 'student health'] },
-  'Occupational Health': { name: 'Occupational Health', keywords: ['occupational health', 'employee health', 'workplace health', 'industrial'] },
-  'Outpatient': { name: 'Outpatient / Ambulatory', keywords: ['outpatient', 'ambulatory', 'clinic', 'day surgery', 'same day'] },
-  'Infusion': { name: 'Infusion / IV Therapy', keywords: ['infusion', 'iv therapy', 'infusion center', 'chemo infusion'] },
-  'Wound Care': { name: 'Wound Care', keywords: ['wound care', 'wound ostomy', 'wocn', 'wound nurse', 'ostomy'] },
-
-  // Specialty Units
-  'Burn': { name: 'Burn Unit', keywords: ['burn', 'burn unit', 'burn center', 'burn icu'] },
-  'Transplant': { name: 'Transplant', keywords: ['transplant', 'organ transplant', 'bone marrow', 'stem cell'] },
-  'Dialysis': { name: 'Dialysis', keywords: ['dialysis', 'hemodialysis', 'peritoneal dialysis', 'renal replacement'] },
-  'Endoscopy': { name: 'Endoscopy / GI Lab', keywords: ['endoscopy', 'gi lab', 'colonoscopy', 'upper gi'] },
-  'Cath Lab': { name: 'Cardiac Cath Lab', keywords: ['cath lab', 'catheterization', 'cardiac cath', 'interventional cardiology'] },
-  'Electrophysiology': { name: 'Electrophysiology (EP)', keywords: ['electrophysiology', 'ep lab', 'arrhythmia', 'pacemaker'] },
-  'Interventional Radiology': { name: 'Interventional Radiology', keywords: ['interventional radiology', 'ir ', 'i.r.', 'vascular interventional'] },
-  'Pain Management': { name: 'Pain Management', keywords: ['pain management', 'pain clinic', 'chronic pain', 'pain medicine'] },
-  'Sleep Lab': { name: 'Sleep Lab', keywords: ['sleep lab', 'sleep study', 'sleep medicine', 'polysomnography'] },
-
-  // Other Specialties
-  'Float Pool': { name: 'Float Pool / Resource', keywords: ['float pool', 'float nurse', 'resource pool', 'prn', 'per diem'] },
-  'Travel': { name: 'Travel Nurse', keywords: ['travel nurse', 'travel nursing', 'traveler', 'agency'] },
-  'Triage': { name: 'Triage', keywords: ['triage', 'phone triage', 'nurse line', 'advice nurse'] },
-  'Flight Nurse': { name: 'Flight / Transport Nurse', keywords: ['flight nurse', 'transport', 'air ambulance', 'critical care transport', 'ccrn'] },
-  'Correctional': { name: 'Correctional Nursing', keywords: ['correctional', 'prison', 'jail', 'detention', 'forensic'] },
-  'Military': { name: 'Military / VA', keywords: ['military', 'va ', 'veterans', 'army', 'navy', 'air force'] },
-  'Parish': { name: 'Parish / Faith Community', keywords: ['parish', 'faith community', 'church', 'faith-based'] },
-  'Legal Nurse': { name: 'Legal Nurse Consultant', keywords: ['legal nurse', 'lnc', 'forensic', 'legal consulting'] },
-  'Aesthetic': { name: 'Aesthetic / Cosmetic', keywords: ['aesthetic', 'cosmetic', 'plastic surgery', 'dermatology', 'med spa'] },
-  'Bariatric': { name: 'Bariatric', keywords: ['bariatric', 'weight loss surgery', 'obesity', 'gastric bypass'] },
-  'Diabetes': { name: 'Diabetes Education', keywords: ['diabetes', 'diabetic', 'endocrine', 'glucose'] },
-  'Allergy': { name: 'Allergy / Immunology', keywords: ['allergy', 'immunology', 'allergist'] },
-  'ENT': { name: 'ENT / Otolaryngology', keywords: ['ent', 'otolaryngology', 'ear nose throat', 'audiology'] },
-  'Ophthalmology': { name: 'Ophthalmology / Eye', keywords: ['ophthalmology', 'eye', 'vision', 'optometry', 'retina'] },
-  'Dermatology': { name: 'Dermatology', keywords: ['dermatology', 'skin', 'dermatologic'] },
-  'Vascular': { name: 'Vascular', keywords: ['vascular', 'vein', 'arterial', 'peripheral vascular'] }
-};
-
-// =============================================================================
-// Utility Functions
-// =============================================================================
-const formatDate = (value) => {
-  if (!value) return 'Unknown';
-  const d = new Date(value);
-  if (Number.isNaN(d.getTime())) return String(value);
-  return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
-};
-
-const formatNumber = (value) => {
-  if (value === null || value === undefined || value === '') return 'Unknown';
-  const n = Number(value);
-  if (!Number.isFinite(n)) return String(value);
-  return n.toLocaleString();
-};
-
-const escapeHtml = (value) => {
-  return String(value ?? '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
-};
-
-const decodeHtmlEntities = (str) => {
-  return String(str ?? '')
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#x27;|&#39;|&apos;/g, "'");
-};
-
-const getStateBeaconInputs = () => {
-  if (stateBeaconInputs) return stateBeaconInputs;
-  try {
-    const stored = localStorage.getItem(STATE_BEACON_INPUTS_KEY);
-    stateBeaconInputs = stored ? JSON.parse(stored) : null;
-  } catch {
-    stateBeaconInputs = null;
-  }
-  return stateBeaconInputs;
-};
-
-const saveStateBeaconInputs = (inputs) => {
-  stateBeaconInputs = inputs;
-  try {
-    localStorage.setItem(STATE_BEACON_INPUTS_KEY, JSON.stringify(inputs));
-  } catch {
-    // ignore
-  }
-};
-
-const getStateBeaconNotes = () => {
-  try {
-    const stored = localStorage.getItem(STATE_BEACON_NOTES_KEY);
-    return stored ? JSON.parse(stored) : {};
-  } catch {
-    return {};
-  }
-};
-
-const saveStateBeaconNotes = (notes) => {
-  try {
-    localStorage.setItem(STATE_BEACON_NOTES_KEY, JSON.stringify(notes));
-  } catch {
-    // ignore
-  }
-};
-
-const replaceTokens = (template, tokens) => (
-  template.replace(/\{(\w+)\}/g, (_, key) => tokens[key] ?? '')
-);
-
-const isMajorSystemNotice = (notice, majorSystems) => {
-  if (!majorSystems || !majorSystems.length) return true;
-  const employer = String(notice.employer_name || notice.employerName || '').toLowerCase();
-  const system = String(notice.parent_system || '').toLowerCase();
-  return majorSystems.some((name) => {
-    const target = String(name).toLowerCase();
-    return employer.includes(target) || system.includes(target);
+const filterNoticesByScope = (notices) => {
+  let out = mapScope === 'healthcare' ? notices.filter(isHealthcareNotice) : notices;
+  // Exclude hotel / hospitality employers (not nursing-relevant)
+  out = out.filter(n => {
+    const name = (n.employer_name || '').toLowerCase();
+    return !name.includes('hotel') && !name.includes('hospitality');
   });
-};
-
-const filterNoticesByMajorSystems = (notices, majorSystems) => (
-  majorSystems && majorSystems.length
-    ? notices.filter((notice) => isMajorSystemNotice(notice, majorSystems))
-    : notices
-);
-
-const getStateNotices = (state) => {
-  if (stateNoticesCache.has(state)) return stateNoticesCache.get(state);
-  if (Array.isArray(allNotices) && allNoticesLoaded) {
-    return allNotices.filter((notice) => notice.state === state);
-  }
-  return [];
-};
-
-const groupBy = (items, keyFn) => {
-  const map = new Map();
-  items.forEach((item) => {
-    const key = keyFn(item);
-    if (!key) return;
-    if (!map.has(key)) map.set(key, []);
-    map.get(key).push(item);
-  });
-  return map;
-};
-
-const formatRelativeTime = (dateStr) => {
-  if (!dateStr) return 'Unknown';
-  const date = new Date(dateStr);
-  const now = new Date();
-  const diffMs = now - date;
-  const diffMins = Math.floor(diffMs / 60000);
-  const diffHours = Math.floor(diffMs / 3600000);
-  const diffDays = Math.floor(diffMs / 86400000);
-
-  if (diffMins < 60) return `${diffMins} minutes ago`;
-  if (diffHours < 24) return `${diffHours} hours ago`;
-  if (diffDays < 7) return `${diffDays} days ago`;
-  return formatDate(dateStr);
-};
-
-const parseMaybeJson = (value) => {
-  if (!value) return [];
-  if (Array.isArray(value)) return value;
-  if (typeof value === 'string') {
-    try {
-      return JSON.parse(value);
-    } catch {
-      return [value];
-    }
-  }
-  return [String(value)];
+  return out;
 };
 
 const getNoticeDateValue = (notice) => {
@@ -701,35 +535,6 @@ const getNoticeDateValue = (notice) => {
 const sortNoticesByNewest = (notices) => (
   notices.slice().sort((a, b) => getNoticeDateValue(b) - getNoticeDateValue(a))
 );
-
-const normalizeStateCounts = (states) => {
-  const normalized = {};
-  states.forEach((entry) => {
-    const state = entry.state;
-    let count = 0;
-    if (typeof entry.count === 'number') {
-      count = entry.count;
-    } else if (entry.count && typeof entry.count.count === 'number') {
-      count = entry.count.count;
-    }
-    normalized[state] = { count };
-  });
-  return normalized;
-};
-
-const buildHealthcareStateCounts = (notices) => {
-  const counts = {};
-  notices.forEach((notice) => {
-    if (!isHealthcareNotice(notice)) return;
-    const state = notice.state;
-    if (!state) return;
-    counts[state] = (counts[state] || 0) + 1;
-  });
-  return Object.entries(counts).reduce((acc, [state, count]) => {
-    acc[state] = { count };
-    return acc;
-  }, {});
-};
 
 const refreshNoticeListWindow = (count = lastNoticeWindowCount) => {
   if (!noticeList) return;
@@ -768,6 +573,222 @@ const refreshNoticeListWindow = (count = lastNoticeWindowCount) => {
   });
 };
 
+const escapeHtml = (value) => {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+};
+
+const downloadFile = (content, filename, type) => {
+  const blob = new Blob([content], { type });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(url);
+};
+
+const csvEscape = (value) => `"${String(value ?? '').replace(/"/g, '""')}"`;
+
+const buildCsv = (headers, rows) => (
+  [headers.map(csvEscape).join(','), ...rows.map(row => row.map(csvEscape).join(','))].join('\n')
+);
+
+const buildExportTableHtml = (headers, rows) => `
+  <table>
+    <thead>
+      <tr>${headers.map(header => `<th>${escapeHtml(header)}</th>`).join('')}</tr>
+    </thead>
+    <tbody>
+      ${rows.map(row => `<tr>${row.map(cell => `<td>${escapeHtml(cell ?? '')}</td>`).join('')}</tr>`).join('')}
+    </tbody>
+  </table>
+`;
+
+const buildExportHtml = ({ title, meta = [], headers = [], rows = [] } = {}) => `
+  <html>
+    <head>
+      <meta charset="utf-8" />
+      <title>${escapeHtml(title || 'Export')}</title>
+      <style>
+        body { font-family: "Segoe UI", Arial, sans-serif; padding: 24px; color: #0f172a; }
+        h1 { margin: 0 0 8px; font-size: 22px; }
+        .meta { margin: 0 0 16px; font-size: 12px; color: #475569; }
+        .meta p { margin: 2px 0; }
+        table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        th, td { border: 1px solid #cbd5f5; padding: 6px 8px; text-align: left; vertical-align: top; }
+        th { background: #eff6ff; text-transform: uppercase; letter-spacing: 0.04em; font-size: 11px; }
+      </style>
+    </head>
+    <body>
+      <h1>${escapeHtml(title || 'Export')}</h1>
+      ${meta.length ? `<div class="meta">${meta.map(item => `<p>${escapeHtml(item)}</p>`).join('')}</div>` : ''}
+      ${headers.length ? buildExportTableHtml(headers, rows) : ''}
+    </body>
+  </html>
+`;
+
+const downloadExcel = ({ title, meta, headers, rows, filename }) => {
+  const html = buildExportHtml({ title, meta, headers, rows });
+  downloadFile(html, filename, 'application/vnd.ms-excel');
+};
+
+const openPdfExport = ({ title, meta, headers, rows }) => {
+  const pdfWindow = window.open('', '_blank');
+  if (!pdfWindow) {
+    alert('Pop-up blocked. Please allow pop-ups to export PDF.');
+    return;
+  }
+  pdfWindow.document.write(buildExportHtml({ title, meta, headers, rows }));
+  pdfWindow.document.close();
+  pdfWindow.focus();
+  setTimeout(() => {
+    pdfWindow.print();
+  }, 250);
+};
+
+const showExportToast = (message) => {
+  if (typeof showMapToast === 'function') {
+    showMapToast(message, 2200);
+    return;
+  }
+  if (!mapToast) return;
+  mapToast.textContent = message;
+  mapToast.classList.add('visible');
+  setTimeout(() => mapToast.classList.remove('visible'), 2200);
+};
+
+const getStateBeaconInputs = () => {
+  if (stateBeaconInputs) return stateBeaconInputs;
+  try {
+    const stored = localStorage.getItem(scopedStorageKey(STATE_BEACON_INPUTS_BASE_KEY));
+    stateBeaconInputs = stored ? JSON.parse(stored) : null;
+  } catch {
+    stateBeaconInputs = null;
+  }
+  return stateBeaconInputs;
+};
+
+const saveStateBeaconInputs = (inputs) => {
+  stateBeaconInputs = inputs;
+  try {
+    localStorage.setItem(scopedStorageKey(STATE_BEACON_INPUTS_BASE_KEY), JSON.stringify(inputs));
+  } catch {
+    // ignore
+  }
+};
+
+const getStateBeaconNotes = () => {
+  try {
+    const stored = localStorage.getItem(scopedStorageKey(STATE_BEACON_NOTES_BASE_KEY));
+    return stored ? JSON.parse(stored) : {};
+  } catch {
+    return {};
+  }
+};
+
+const saveStateBeaconNotes = (notes) => {
+  try {
+    localStorage.setItem(scopedStorageKey(STATE_BEACON_NOTES_BASE_KEY), JSON.stringify(notes));
+  } catch {
+    // ignore
+  }
+};
+
+const replaceTokens = (template, tokens) => (
+  template.replace(/\{(\w+)\}/g, (_, key) => tokens[key] ?? '')
+);
+
+const isMajorSystemNotice = (notice, majorSystems) => {
+  if (!majorSystems || !majorSystems.length) return true;
+  const employer = String(notice.employer_name || notice.employerName || '').toLowerCase();
+  const system = String(notice.parent_system || '').toLowerCase();
+  return majorSystems.some((name) => {
+    const target = String(name).toLowerCase();
+    return employer.includes(target) || system.includes(target);
+  });
+};
+
+const filterNoticesByMajorSystems = (notices, majorSystems) => (
+  majorSystems && majorSystems.length
+    ? notices.filter((notice) => isMajorSystemNotice(notice, majorSystems))
+    : notices
+);
+
+const getStateNotices = (state) => currentNotices.filter((notice) => notice.state === state);
+
+const groupBy = (items, keyFn) => {
+  const map = new Map();
+  items.forEach((item) => {
+    const key = keyFn(item);
+    if (!key) return;
+    if (!map.has(key)) map.set(key, []);
+    map.get(key).push(item);
+  });
+  return map;
+};
+
+const setStatus = (status, ok) => {
+  apiStatus.textContent = status;
+  apiDot.classList.remove('ok', 'bad');
+  apiDot.classList.add(ok ? 'ok' : 'bad');
+};
+
+const setLoading = (message) => {
+  noticeList.innerHTML = `<div class="empty-state">${message}</div>`;
+};
+
+const buildQuery = () => {
+  const params = new URLSearchParams();
+  if (mapScope === 'healthcare') params.set('recruiterFocus', '1');
+  if (orgInput.value.trim()) params.set('org', orgInput.value.trim());
+  if (regionSelect.value) params.set('region', regionSelect.value);
+  // Handle multiple selected states
+  if (selectedStates.length > 0) {
+    params.set('state', selectedStates.join(','));
+  }
+  if (sinceInput.value) params.set('since', sinceInput.value);
+  if (scoreInput.value) params.set('minScore', scoreInput.value);
+  params.set('order', 'recent');
+  if (!limitInput.value || Number(limitInput.value) <= 0) {
+    params.set('limit', 'all');
+  } else {
+    params.set('limit', limitInput.value);
+  }
+  return params.toString();
+};
+
+const fetchJson = async (path, opts = {}) => {
+  const method = (opts.method || 'GET').toUpperCase();
+  const headers = {
+    ...(opts.headers || {})
+  };
+  if (method !== 'GET' && method !== 'HEAD') {
+    headers['X-CSRF-Token'] = getCsrfToken();
+  }
+  const res = await fetch(path, {
+    credentials: 'include',
+    headers,
+    ...opts
+  });
+  if (res.status === 401) {
+    const refreshed = await refreshSession();
+    if (refreshed) {
+      const retry = await fetch(path, { credentials: 'include', headers, ...opts });
+      if (!retry.ok) throw new Error(`Request failed: ${retry.status}`);
+      return retry.json();
+    }
+    clearAuthState();
+    throw new Error('Session expired. Please log in again.');
+  }
+  if (!res.ok) throw new Error(`Request failed: ${res.status}`);
+  return res.json();
+};
+
 const STATE_CALIBRATION_FACTORS = [
   { key: 'staffing', label: 'Staffing Safety', pitch: 'staffing stability and coverage' },
   { key: 'leadership', label: 'Leadership Support', pitch: 'leader support and team advocacy' },
@@ -790,20 +811,79 @@ const scoreFromCount = (state, invert = false) => {
   return clampScore(Math.round(value * 100) / 10);
 };
 
+const scoreFromStateMetric = (state, metricGetter, invert = false, defaultScore = 5) => {
+  const allValues = ALL_STATES
+    .map((abbr) => Number(metricGetter(abbr)))
+    .filter((value) => Number.isFinite(value));
+  if (!allValues.length) return defaultScore;
+  const minValue = Math.min(...allValues);
+  const maxValue = Math.max(...allValues);
+  if (maxValue <= minValue) return defaultScore;
+  const raw = Number(metricGetter(state));
+  if (!Number.isFinite(raw)) return defaultScore;
+  const ratio = (raw - minValue) / (maxValue - minValue);
+  const value = invert ? 1 - ratio : ratio;
+  return clampScore(Math.round(value * 100) / 10);
+};
+
+const getCalibrationSalaryData = () =>
+  recruitmentIntel?.salaryBenchmarks || strategicData?.salaryData || NURSING_SALARY_DATA || {};
+
+const getCalibrationStateProfiles = () => recruitmentIntel?.stateProfiles || {};
+
+const getCalibrationRelocationIndex = () =>
+  recruitmentIntel?.relocationIndex || relocationData?.relocationScale || {};
+
 const buildStateProfile = (state) => {
-  const staffing = scoreFromCount(state, true);
-  const resources = scoreFromCount(state, false);
-  const growth = scoreFromCount(state, false);
+  const fallbackStaffing = scoreFromCount(state, true);
+  const fallbackResources = scoreFromCount(state, false);
+  const fallbackGrowth = scoreFromCount(state, false);
+  const fetchedProfiles = getCalibrationStateProfiles();
+  const salaryData = getCalibrationSalaryData();
+  const relocationIndex = getCalibrationRelocationIndex();
+  const fetched = fetchedProfiles[state] || {};
+
+  const pay = scoreFromStateMetric(
+    state,
+    (abbr) => salaryData?.[abbr]?.staffRN,
+    false,
+    5
+  );
+  const relocationScore = scoreFromStateMetric(
+    state,
+    (abbr) => relocationIndex?.[abbr],
+    true,
+    5
+  );
+
+  const staffing = clampScore(Number(fetched.staffing ?? fallbackStaffing));
+  const leadership = clampScore(Number(fetched.leadership ?? (staffing * 0.85 + 1.2)));
+  const scheduling = clampScore(Number(fetched.scheduling ?? (staffing * 0.8 + 1)));
+  const safety = clampScore(Number(fetched.safety ?? (staffing * 0.7 + 2)));
+  const resources = clampScore(Number(fetched.resources ?? fallbackResources));
+  const growth = clampScore(Number(fetched.growth ?? fallbackGrowth));
+  const respect = clampScore(
+    Number(
+      fetched.respect ??
+      (
+        (leadership * 0.3) +
+        (safety * 0.3) +
+        (scheduling * 0.2) +
+        (staffing * 0.2) +
+        ((relocationScore - 5) * 0.2)
+      )
+    )
+  );
 
   return {
     staffing,
-    leadership: clampScore(staffing * 0.85 + 1.2),
-    scheduling: clampScore(staffing * 0.8 + 1),
-    pay: 5,
-    safety: clampScore(staffing * 0.7 + 2),
+    leadership,
+    scheduling,
+    pay,
+    safety,
     resources,
     growth,
-    respect: 5
+    respect
   };
 };
 
@@ -877,2700 +957,19 @@ const updateStateCalibration = () => {
   }).join('');
 };
 
-const initStateCalibration = () => {
-  if (!calibrationHome || !calibrationTarget) return;
-  const options = ALL_STATES.map(state => `<option value="${state}">${state}</option>`).join('');
-  calibrationHome.innerHTML = `<option value="">Select state</option>${options}`;
-  calibrationTarget.innerHTML = `<option value="">Select state</option>${options}`;
-  calibrationHome.value = ALL_STATES.includes('IN') ? 'IN' : ALL_STATES[0];
-  calibrationTarget.value = ALL_STATES.includes('FL') ? 'FL' : ALL_STATES[1];
-
-  calibrationHome.addEventListener('change', updateStateCalibration);
-  calibrationTarget.addEventListener('change', updateStateCalibration);
-  updateStateCalibration();
-};
-
-const setStatus = (status, ok) => {
-  apiStatus.textContent = status;
-  apiDot.classList.remove('ok', 'bad');
-  apiDot.classList.add(ok ? 'ok' : 'bad');
-};
-
-// =============================================================================
-// Map Initialization
-// =============================================================================
-const initWeatherMap = async () => {
-  if (!usMapContainer) return;
-  try {
-    const candidates = ['./us-map.svg', '/us-map.svg', './apps/web/us-map.svg', 'us-map.svg'];
-    let svgText = '';
-    for (const url of candidates) {
-      try {
-        const res = await fetch(url);
-        if (!res.ok) continue;
-        svgText = await res.text();
-        if (svgText.includes('<svg')) break;
-      } catch {
-        // Try next candidate
-      }
-    }
-    if (!svgText) throw new Error('map fetch failed');
-    usMapContainer.innerHTML = svgText;
-  } catch (err) {
-    console.error('Failed to load map SVG:', err);
-    usMapContainer.innerHTML = '<div class="empty-state">Map unavailable.</div>';
-    return;
-  }
-
-  const svg = usMapContainer.querySelector('svg');
-  if (!svg) return;
-
-  if (!svg.getAttribute('viewBox')) {
-    const width = svg.getAttribute('width') || '960';
-    const height = svg.getAttribute('height') || '600';
-    svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
-  }
-
-  // Inject vibrant flame gradient for home state (yellow-orange to red-orange)
-  const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-  defs.innerHTML = `
-    <!-- Vibrant flame gradient with animated color stops -->
-    <linearGradient id="home-state-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#ffe135">
-        <animate attributeName="stop-color" values="#ffe135;#ffcc00;#ffe135" dur="2.5s" repeatCount="indefinite"/>
-      </stop>
-      <stop offset="25%" stop-color="#ffb300">
-        <animate attributeName="stop-color" values="#ffb300;#ffc400;#ffb300" dur="3s" repeatCount="indefinite"/>
-      </stop>
-      <stop offset="50%" stop-color="#ff8c00">
-        <animate attributeName="stop-color" values="#ff8c00;#ffa500;#ff8c00" dur="2s" repeatCount="indefinite"/>
-      </stop>
-      <stop offset="75%" stop-color="#ff6600">
-        <animate attributeName="stop-color" values="#ff6600;#ff7700;#ff6600" dur="3.5s" repeatCount="indefinite"/>
-      </stop>
-      <stop offset="100%" stop-color="#ff4500">
-        <animate attributeName="stop-color" values="#ff4500;#ff5722;#ff4500" dur="2.8s" repeatCount="indefinite"/>
-      </stop>
-    </linearGradient>
-  `;
-  svg.insertBefore(defs, svg.firstChild);
-
-  const shapes = svg.querySelectorAll('path, circle');
-    shapes.forEach((shape) => {
-      const classList = Array.from(shape.classList || []);
-      const stateClass = classList.find((c) => c.length === 2 && /^[a-z]{2}$/i.test(c));
-      const rawId = shape.getAttribute('data-state') || shape.getAttribute('id') || '';
-      const abbrev = (stateClass || rawId).toUpperCase();
-      if (!/^[A-Z]{2}$/.test(abbrev)) return;
-      shape.setAttribute('data-state', abbrev);
-      shape.addEventListener('click', () => {
-        if (Date.now() < mapLongPressSuppressUntil) return;
-        // In rural mode, open the rural closures detail panel
-        if (activeMapTab === 'rural') {
-          showRuralClosuresPanel(abbrev);
-          return;
-        }
-        // If target mode is active, set/clear target state instead of toggling selection
-        if (isMapTargetMode) {
-          const currentTarget = getMapTargetState();
-          if (currentTarget === abbrev) {
-            clearMapTargetState();
-          } else {
-            setMapTargetState(abbrev);
-          }
-          return;
-        }
-        toggleStateSelection(abbrev);
-      });
-      shape.addEventListener('mouseenter', (e) => showTooltip(e, abbrev));
-      shape.addEventListener('mousemove', (e) => moveTooltip(e));
-      shape.addEventListener('mouseleave', hideTooltip);
-      shape.addEventListener('pointerdown', (e) => {
-        if (e.button !== 0) return;
-        const homeState = getMapHomeState();
-        if (!homeState || homeState !== abbrev) return;
-        mapLongPressTimer = window.setTimeout(() => {
-          mapLongPressSuppressUntil = Date.now() + 500;
-          applyMapRecruitTargets(homeState);
-          showMapToast(`Top recruiting targets highlighted for ${STATE_NAMES[homeState] || homeState}`);
-        }, MAP_LONG_PRESS_MS);
-      });
-      const clearLongPress = () => {
-        if (mapLongPressTimer) {
-          clearTimeout(mapLongPressTimer);
-          mapLongPressTimer = null;
-        }
-      };
-      shape.addEventListener('pointerup', clearLongPress);
-      shape.addEventListener('pointerleave', clearLongPress);
-      shape.addEventListener('pointercancel', clearLongPress);
-      // Right-click to set/clear home state
-      shape.addEventListener('contextmenu', (e) => {
-        e.preventDefault();
-        const currentHome = getMapHomeState();
-        if (currentHome === abbrev) {
-          clearMapHomeState();
-      } else {
-        setMapHomeState(abbrev);
-      }
-    });
-    // Double-click to open State Beacon for that state
-    shape.addEventListener('dblclick', (e) => {
-      e.preventDefault();
-      openStateBeaconFromMap(abbrev);
-    });
-  });
-
-  // Apply home state highlight if one is saved
-  updateMapHomeStateHighlight();
-  // Apply target state highlight if one is saved
-  updateMapTargetStateHighlight();
-};
-
-  const showTooltip = (e, stateAbbrev) => {
-    if (!mapTooltip) return;
-    const stateName = STATE_NAMES[stateAbbrev] || stateAbbrev;
-
-    // Show different tooltip based on active tab
-    if (activeMapTab === 'rural') {
-      const data = RURAL_HOSPITAL_CLOSURES[stateAbbrev] || { count: 0, recent: 0, atRisk: 0 };
-      const riskLevel = data.atRisk > 5 ? 'High' : data.atRisk > 2 ? 'Medium' : 'Low';
-      mapTooltip.innerHTML = `
-        <div class="tooltip-state">${stateName}</div>
-        <div class="tooltip-count">${data.count} closures since 2010 (${data.recent} recent)</div>
-        <div class="tooltip-confidence">Hospitals at risk: ${data.atRisk}</div>
-        <div class="tooltip-confidence">Risk level: ${riskLevel}</div>
-      `;
-    } else if (activeMapTab === 'salary') {
-      if (bonusScenario.active) {
-        const proj = salaryMapMetrics.projected?.[stateAbbrev];
-        const delta = salaryMapMetrics.delta?.[stateAbbrev];
-        const homeStateName = bonusScenario.homeState ? (STATE_NAMES[bonusScenario.homeState] || bonusScenario.homeState) : '';
-        const isHome = stateAbbrev === bonusScenario.homeState;
-        const deltaStr = Number.isFinite(delta)
-          ? `${delta >= 0 ? '+' : ''}$${Math.round(delta).toLocaleString()}`
-          : null;
-        mapTooltip.innerHTML = `
-          <div class="tooltip-state">${stateName}${isHome ? ' <span style="font-size:0.7rem;opacity:0.7;">(home)</span>' : ''}</div>
-          <div class="tooltip-count">Projected annual: ${Number.isFinite(proj) ? '$' + Math.round(proj).toLocaleString() : 'n/a'}</div>
-          ${homeStateName && deltaStr ? `<div class="tooltip-confidence">vs ${homeStateName}: ${deltaStr}</div>` : ''}
-        `;
-      } else {
-        const adjusted = salaryMapMetrics.adjusted?.[stateAbbrev];
-        const baseSalary = salaryMapMetrics.base?.[stateAbbrev];
-        const col = salaryMapMetrics.col?.[stateAbbrev];
-        const rank = salaryMapMetrics.rank?.[stateAbbrev];
-        mapTooltip.innerHTML = `
-          <div class="tooltip-state">${stateName}</div>
-          <div class="tooltip-count">COL-adjusted RN pay: ${Number.isFinite(adjusted) ? '$' + Math.round(adjusted).toLocaleString() : 'n/a'}</div>
-          <div class="tooltip-confidence">Base RN pay: ${Number.isFinite(baseSalary) ? '$' + Math.round(baseSalary).toLocaleString() : 'n/a'} | COL index: ${Number.isFinite(col) ? col.toFixed(1) : 'n/a'}</div>
-          <div class="tooltip-confidence">Best-value rank: ${Number.isFinite(rank) ? '#' + rank : 'n/a'}</div>
-        `;
-      }
-    } else {
-      const count = mapStateData[stateAbbrev]?.count || 0;
-      const scopeLabel = mapScope === 'all' ? 'total notices' : 'healthcare notices';
-      const confidence = count >= 8 ? 'High' : count >= 3 ? 'Medium' : 'Low';
-      mapTooltip.innerHTML = `
-        <div class="tooltip-state">${stateName}</div>
-        <div class="tooltip-count">${count} ${scopeLabel}</div>
-        <div class="tooltip-confidence">Signal confidence: ${confidence}</div>
-      `;
-    }
-    mapTooltip.classList.add('visible');
-    moveTooltip(e);
-  };
-
-const moveTooltip = (e) => {
-  if (!mapTooltip) return;
-  const container = usMapContainer?.closest('.weather-map-container');
-  if (!container) return;
-  const rect = container.getBoundingClientRect();
-  const x = e.clientX - rect.left + 15;
-  const y = e.clientY - rect.top + 15;
-  mapTooltip.style.left = `${x}px`;
-  mapTooltip.style.top = `${y}px`;
-};
-
-const hideTooltip = () => {
-  mapTooltip?.classList.remove('visible');
-};
-
-const KY_DETAILS = {
-  KY: {
-    nursingEducation: {
-      ukSystemPercentage: 32,
-      kctcsPercentage: 26,
-      otherSchoolsPercentage: 42,
-      totalGraduatesAnnual: 3800,
-      retentionRate: 58
-    },
-    salaryMeta: {
-      updatedAt: '2026-02-01',
-      updateEveryDays: 7,
-      breakdown: [
-        { label: 'BLS Kentucky RN mean (May 2023)', value: '$38-40/hr range', note: 'Statewide OEWS data' },
-        { label: 'BLS Louisville/Jefferson County RN mean (May 2023)', value: '$40-43/hr range', note: 'Metro OEWS data' },
-        { label: 'BLS Lexington-Fayette RN mean (May 2023)', value: '$37-40/hr range', note: 'Metro OEWS data' },
-        { label: 'Job board ranges (KY/metro)', value: '$30-43/hr typical', note: 'Company salary pages by system' },
-        { label: 'Travel RN weekly ranges (KY)', value: '$1,800-2,700/wk', note: 'Regional travel assignments' }
-      ],
-      sources: [
-        { name: 'BLS OEWS Kentucky RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_ky.htm' },
-        { name: 'BLS OEWS Louisville MSA RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_31140.htm' },
-        { name: 'BLS OEWS Lexington MSA RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_30460.htm' }
-      ]
-    },
-    metros: [
-      {
-        name: 'Louisville',
-        size: 'major',
-        population: '1.3M',
-        competition: 'high',
-        hospitals: [
-          { name: 'Norton Hospital', system: 'Norton Healthcare', score: 93, beds: 600, reviews: 4.2 },
-          { name: 'Norton Womens and Childrens Hospital', system: 'Norton Healthcare', score: 92, beds: 300, reviews: 4.3 },
-          { name: 'Norton Audubon Hospital', system: 'Norton Healthcare', score: 88, beds: 287, reviews: 4.0 },
-          { name: 'Norton Brownsboro Hospital', system: 'Norton Healthcare', score: 86, beds: 190, reviews: 4.1 },
-          { name: 'UofL Health - Jewish Hospital', system: 'UofL Health', score: 90, beds: 462, reviews: 4.0 },
-          { name: 'UofL Health - University Hospital', system: 'UofL Health', score: 89, beds: 404, reviews: 4.0 },
-          { name: 'Baptist Health Louisville', system: 'Baptist Health', score: 87, beds: 519, reviews: 3.9 },
-          { name: 'UofL Health - Frazier Rehab', system: 'UofL Health', score: 84, beds: 157, reviews: 4.1 }
-        ],
-        systems: [
-          { name: 'Norton Healthcare', facilities: 6, marketShare: '45%' },
-          { name: 'UofL Health', facilities: 3, marketShare: '20%' },
-          { name: 'Baptist Health', facilities: 2, marketShare: '15%' },
-          { name: 'Independent', facilities: 3, marketShare: '20%' }
-        ],
-        salary: {
-          staffRN: '$30-43/hr',
-          travelRN: '$2,100-2,700/wk',
-          signOn: '$8-22K',
-          systems: [
-            { name: 'Norton Healthcare', value: '$38-42/hr est', source: 'Job boards' },
-            { name: 'UofL Health', value: '$37-41/hr est', source: 'Job boards' },
-            { name: 'Baptist Health', value: '$35-40/hr est', source: 'Job boards' }
-          ]
-        },
-        factors: [
-          { text: 'Large tertiary referral market', type: 'positive' },
-          { text: 'Multiple competing systems', type: 'positive' },
-          { text: 'High ICU and OR demand', type: 'positive' },
-          { text: 'Above-average competition for experienced RNs', type: 'neutral' },
-          { text: 'Traffic and commute variability', type: 'neutral' }
-        ]
-      },
-      {
-        name: 'Lexington',
-        size: 'medium',
-        population: '530K',
-        competition: 'medium',
-        hospitals: [
-          { name: 'UK Albert B. Chandler Hospital', system: 'UK HealthCare', score: 92, beds: 945, reviews: 4.3 },
-          { name: 'UK Good Samaritan Hospital', system: 'UK HealthCare', score: 85, beds: 208, reviews: 4.0 },
-          { name: 'Baptist Health Lexington', system: 'Baptist Health', score: 87, beds: 434, reviews: 3.9 },
-          { name: 'Saint Joseph Hospital', system: 'CHI Saint Joseph', score: 84, beds: 433, reviews: 3.8 },
-          { name: 'Saint Joseph East', system: 'CHI Saint Joseph', score: 82, beds: 217, reviews: 3.8 }
-        ],
-        systems: [
-          { name: 'UK HealthCare', facilities: 2, marketShare: '45%' },
-          { name: 'CHI Saint Joseph', facilities: 2, marketShare: '30%' },
-          { name: 'Baptist Health', facilities: 1, marketShare: '20%' },
-          { name: 'Independent', facilities: 1, marketShare: '5%' }
-        ],
-        salary: {
-          staffRN: '$29-41/hr',
-          travelRN: '$1,950-2,500/wk',
-          signOn: '$7-18K',
-          systems: [
-            { name: 'UK HealthCare', value: '$36-41/hr est', source: 'Job boards' },
-            { name: 'CHI Saint Joseph', value: '$34-39/hr est', source: 'Job boards' },
-            { name: 'Baptist Health', value: '$33-38/hr est', source: 'Job boards' }
-          ]
-        },
-        factors: [
-          { text: 'Academic medical center pipeline', type: 'positive' },
-          { text: 'Strong residency programs', type: 'positive' },
-          { text: 'Growing outpatient demand', type: 'neutral' },
-          { text: 'Moderate competition for specialty roles', type: 'neutral' }
-        ]
-      },
-      {
-        name: 'Northern Kentucky',
-        size: 'medium',
-        population: '450K',
-        competition: 'medium',
-        hospitals: [
-          { name: 'St Elizabeth Edgewood', system: 'St Elizabeth Healthcare', score: 88, beds: 491, reviews: 4.0 },
-          { name: 'St Elizabeth Florence', system: 'St Elizabeth Healthcare', score: 84, beds: 401, reviews: 3.9 },
-          { name: 'St Elizabeth Ft Thomas', system: 'St Elizabeth Healthcare', score: 82, beds: 236, reviews: 3.8 },
-          { name: 'St Elizabeth Grant', system: 'St Elizabeth Healthcare', score: 80, beds: 109, reviews: 3.7 }
-        ],
-        systems: [
-          { name: 'St Elizabeth Healthcare', facilities: 4, marketShare: '65%' },
-          { name: 'Cincinnati systems (OH)', facilities: 2, marketShare: '25%' },
-          { name: 'Independent', facilities: 1, marketShare: '10%' }
-        ],
-        salary: {
-          staffRN: '$30-42/hr',
-          travelRN: '$2,000-2,600/wk',
-          signOn: '$7-16K',
-          systems: [
-            { name: 'St Elizabeth Healthcare', value: '$34-40/hr est', source: 'Job boards' },
-            { name: 'Cincinnati systems (OH)', value: '$36-42/hr est', source: 'Job boards' }
-          ]
-        },
-        factors: [
-          { text: 'Cincinnati metro spillover demand', type: 'positive' },
-          { text: 'Commuter-friendly market', type: 'positive' },
-          { text: 'Cross-border competition for nurses', type: 'neutral' }
-        ]
-      },
-      {
-        name: 'Bowling Green',
-        size: 'small',
-        population: '180K',
-        competition: 'low',
-        hospitals: [
-          { name: 'The Medical Center at Bowling Green', system: 'Med Center Health', score: 84, beds: 477, reviews: 3.9 },
-          { name: 'TriStar Greenview Regional', system: 'HCA TriStar', score: 80, beds: 211, reviews: 3.7 }
-        ],
-        systems: [
-          { name: 'Med Center Health', facilities: 1, marketShare: '60%' },
-          { name: 'HCA TriStar', facilities: 1, marketShare: '40%' }
-        ],
-        salary: {
-          staffRN: '$27-36/hr',
-          travelRN: '$1,700-2,200/wk',
-          signOn: '$5-12K',
-          systems: [
-            { name: 'Med Center Health', value: '$30-36/hr est', source: 'Job boards' },
-            { name: 'HCA TriStar', value: '$29-35/hr est', source: 'Job boards' }
-          ]
-        },
-        factors: [
-          { text: 'Regional hub for south-central KY', type: 'positive' },
-          { text: 'Lower cost of living', type: 'positive' },
-          { text: 'Limited specialty roles', type: 'neutral' }
-        ]
-      },
-      {
-        name: 'Owensboro',
-        size: 'small',
-        population: '120K',
-        competition: 'low',
-        hospitals: [
-          { name: 'Owensboro Health Regional', system: 'Owensboro Health', score: 83, beds: 477, reviews: 3.9 },
-          { name: 'Owensboro Health Twin Lakes', system: 'Owensboro Health', score: 78, beds: 74, reviews: 3.7 }
-        ],
-        systems: [
-          { name: 'Owensboro Health', facilities: 2, marketShare: '80%' },
-          { name: 'Independent', facilities: 1, marketShare: '20%' }
-        ],
-        salary: {
-          staffRN: '$26-35/hr',
-          travelRN: '$1,650-2,150/wk',
-          signOn: '$5-10K',
-          systems: [
-            { name: 'Owensboro Health', value: '$29-35/hr est', source: 'Job boards' }
-          ]
-        },
-        factors: [
-          { text: 'Strong community hospital reputation', type: 'positive' },
-          { text: 'Affordable housing market', type: 'positive' },
-          { text: 'Smaller specialty mix', type: 'neutral' }
-        ]
-      },
-      {
-        name: 'Paducah',
-        size: 'small',
-        population: '100K',
-        competition: 'low',
-        hospitals: [
-          { name: 'Baptist Health Paducah', system: 'Baptist Health', score: 82, beds: 344, reviews: 3.8 },
-          { name: 'Mercy Health Lourdes', system: 'Mercy Health', score: 80, beds: 197, reviews: 3.7 }
-        ],
-        systems: [
-          { name: 'Baptist Health', facilities: 1, marketShare: '55%' },
-          { name: 'Mercy Health', facilities: 1, marketShare: '40%' },
-          { name: 'Independent', facilities: 1, marketShare: '5%' }
-        ],
-        salary: {
-          staffRN: '$26-34/hr',
-          travelRN: '$1,600-2,050/wk',
-          signOn: '$5-10K',
-          systems: [
-            { name: 'Baptist Health', value: '$29-34/hr est', source: 'Job boards' },
-            { name: 'Mercy Health', value: '$28-33/hr est', source: 'Job boards' }
-          ]
-        },
-        factors: [
-          { text: 'Regional draw for western KY', type: 'positive' },
-          { text: 'Lower cost of living', type: 'positive' },
-          { text: 'Limited critical care volume', type: 'neutral' }
-        ]
-      }
-    ]
-  }
-};
-
-
-// =============================================================================
-// Map Home State (right-click to set, double-click to clear)
-// =============================================================================
-const MAP_HOME_STATE_KEY = 'lighthouseiq_map_home_state';
-
-const getMapHomeState = () => {
-  try {
-    return localStorage.getItem(MAP_HOME_STATE_KEY) || null;
-  } catch {
-    return null;
-  }
-};
-
-const setMapHomeState = (stateAbbrev) => {
-  try {
-    localStorage.setItem(MAP_HOME_STATE_KEY, stateAbbrev);
-    // Also sync with the State Beacon home select if it exists
-    if (stateBeaconHomeSelect) {
-      stateBeaconHomeSelect.value = stateAbbrev;
-      // Persist to State Beacon inputs
-      const inputs = getStateBeaconInputs() || {};
-      inputs.homeState = stateAbbrev;
-      saveStateBeaconInputs(inputs);
-    }
-  } catch {
-    // ignore
-  }
-  clearMapRecruitTargets();
-  updateMapHomeStateHighlight();
-  showMapToast(`Home state set to ${STATE_NAMES[stateAbbrev] || stateAbbrev}`);
-};
-
-const clearMapHomeState = () => {
-  try {
-    localStorage.removeItem(MAP_HOME_STATE_KEY);
-  } catch {
-    // ignore
-  }
-  clearMapRecruitTargets();
-  updateMapHomeStateHighlight();
-  showMapToast('Home state cleared');
-};
-
-const updateMapHomeStateHighlight = () => {
-  const homeState = getMapHomeState();
-  document.querySelectorAll('.us-map path[data-state], .us-map circle[data-state]').forEach(shape => {
-    shape.classList.remove('home-state-glow');
-    if (homeState && shape.dataset.state === homeState) {
-      shape.classList.add('home-state-glow');
-    }
-  });
-  if (mapHomeStateBtn) {
-    mapHomeStateBtn.style.display = homeState ? 'inline-flex' : 'none';
-  }
-};
-
-// =============================================================================
-// Map Target State (target mode + highlight)
-// =============================================================================
-const MAP_TARGET_STATE_KEY = 'lighthouseiq_map_target_state';
-
-const getMapTargetState = () => {
-  try {
-    return localStorage.getItem(MAP_TARGET_STATE_KEY) || null;
-  } catch {
-    return null;
-  }
-};
-
-const setMapTargetState = (stateAbbrev) => {
-  try {
-    localStorage.setItem(MAP_TARGET_STATE_KEY, stateAbbrev);
-  } catch {
-    // ignore
-  }
-  updateMapTargetStateHighlight();
-  showMapToast(`Target state set to ${STATE_NAMES[stateAbbrev] || stateAbbrev}`);
-};
-
-const clearMapTargetState = () => {
-  try {
-    localStorage.removeItem(MAP_TARGET_STATE_KEY);
-  } catch {
-    // ignore
-  }
-  updateMapTargetStateHighlight();
-  showMapToast('Target state cleared');
-};
-
-const resetMapToDefaultState = async () => {
-  selectedStates = [];
-  populateStateDropdown(regionSelect.value);
-  updateStateDisplay();
-  updateMapHighlights();
-
-  clearMapHomeState();
-  clearMapTargetState();
-  clearMapRecruitTargets();
-
-  if (mapFactorsPanel) mapFactorsPanel.style.display = 'none';
-  hideRuralClosuresPanel();
-  if (mapTooltip) mapTooltip.classList.remove('visible');
-
-  if (mapLongPressTimer) {
-    clearTimeout(mapLongPressTimer);
-    mapLongPressTimer = null;
-  }
-  mapLongPressSuppressUntil = 0;
-
-  setMapTargetMode(false);
-  await switchMapTab('layoffs');
-  await setMapScope('healthcare');
-
-  await applyFilters();
-  if (currentMapView === 'chart') {
-    renderBarChart();
-  }
-};
-
-const updateMapTargetStateHighlight = () => {
-  const targetState = getMapTargetState();
-  document.querySelectorAll('.us-map path[data-state], .us-map circle[data-state]').forEach(shape => {
-    shape.classList.remove('target-state-glow');
-    if (targetState && shape.dataset.state === targetState) {
-      shape.classList.add('target-state-glow');
-    }
-  });
-  if (mapTargetStateBtn) {
-    mapTargetStateBtn.style.display = targetState ? 'inline-flex' : 'none';
-  }
-};
-
-const setMapTargetMode = (nextValue) => {
-  isMapTargetMode = nextValue;
-  if (mapTargetModeBtn) {
-    mapTargetModeBtn.classList.toggle('active', isMapTargetMode);
-    mapTargetModeBtn.setAttribute('aria-pressed', String(isMapTargetMode));
-    const status = mapTargetModeBtn.querySelector('.map-target-mode-status');
-    if (status) status.textContent = isMapTargetMode ? 'On' : 'Off';
-  }
-};
-
-const ensureMapTargetModeListener = () => {
-  if (!mapTargetModeBtn || mapTargetModeBtn.dataset.listenerAttached === 'true') return;
-  mapTargetModeBtn.dataset.listenerAttached = 'true';
-  const toggle = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    setMapTargetMode(!isMapTargetMode);
-  };
-  mapTargetModeBtn.addEventListener('pointerdown', toggle);
-  mapTargetModeBtn.addEventListener('click', (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-  });
-};
-
-const getRegionForState = (state) => {
-  const entry = Object.entries(REGION_STATES).find(([, states]) => states.includes(state));
-  return entry ? entry[0] : null;
-};
-
-const scoreOutOfStateTarget = (homeState, targetState) => {
-  // Use pre-computed data from private repo when available
-  const precomputedScore = recruitmentIntel?.recruitmentScores?.[homeState]?.[targetState];
-  const salaryBenchmarks = recruitmentIntel?.salaryBenchmarks;
-  const relocationIndex = recruitmentIntel?.relocationIndex;
-
-  // Get display factors (safe to expose - just data, not algorithms)
-  const salaryData = salaryBenchmarks || strategicData?.salaryData || NURSING_SALARY_DATA;
-  const shortage = getBlendedShortageStatus(targetState, salaryData);
-  const homeSalary = Number(salaryData[homeState]?.staffRN ?? 0);
-  const targetSalary = Number(salaryData[targetState]?.staffRN ?? 0);
-  const salaryDelta = homeSalary && targetSalary ? homeSalary - targetSalary : 0;
-  const projectedGap = Number(salaryData[targetState]?.projectedGap ?? 0);
-  const travelWeekly = Number(salaryData[targetState]?.travelWeekly ?? 0);
-  const noticeCount = mapStateData?.[targetState]?.count ?? 0;
-  const relocationScale = relocationIndex?.[targetState] ?? relocationData?.relocationScale?.[targetState];
-  const relocationSource = relocationData?.relocationSource?.[targetState] ?? null;
-  const relocationUpdated = recruitmentIntel?.lastUpdated ?? relocationData?.lastUpdated ?? null;
-  const targetRegion = salaryData[targetState]?.region ?? getRegionForState(targetState);
-
-  // Cost of living data
-  const homeCOL = COST_OF_LIVING_INDEX[homeState] ?? 100;
-  const targetCOL = COST_OF_LIVING_INDEX[targetState] ?? 100;
-  const colDelta = homeCOL - targetCOL; // Positive means target is cheaper
-  const colAdjustedSalary = targetSalary * (100 / targetCOL); // Purchasing power adjusted
-
-  // Rural hospital closure data
-  const ruralClosures = RURAL_HOSPITAL_CLOSURES[targetState] ?? { count: 0, recent: 0, atRisk: 0 };
-  const closureRisk = ruralClosures.atRisk > 5 ? 'high' : ruralClosures.atRisk > 2 ? 'medium' : 'low';
-
-  // Use pre-computed score if available, otherwise fall back to simplified display score
-  let score;
-  if (typeof precomputedScore === 'number') {
-    score = precomputedScore;
-  } else {
-    // Simplified fallback (non-proprietary) - just for display ordering
-    const homeRegion = getRegionForState(homeState);
-    const regionFactor = homeRegion && targetRegion && homeRegion === targetRegion ? 0.5 : 0;
-    const shortageFactor = shortage === 'surplus' ? 1 : shortage === 'balanced' ? 0.5 : 0;
-    // Add cost of living factor (lower COL = better for recruiting)
-    const colFactor = colDelta > 10 ? 0.3 : colDelta > 0 ? 0.15 : 0;
-    // Add rural closure factor (more closures = more available nurses)
-    const closureFactor = ruralClosures.recent > 0 ? 0.2 : 0;
-    score = regionFactor + shortageFactor + colFactor + closureFactor + Math.min(noticeCount / 10, 1);
-  }
-
-  return {
-    score,
-    factors: {
-      shortage,
-      projectedGap,
-      noticeCount,
-      region: targetRegion,
-      travelWeekly,
-      salaryDelta,
-      targetSalary,
-      homeSalary,
-      relocationScale,
-      relocationSource,
-      relocationUpdated,
-      // Cost of living factors
-      homeCOL,
-      targetCOL,
-      colDelta,
-      colAdjustedSalary,
-      // Rural hospital factors
-      ruralClosures: ruralClosures.count,
-      recentClosures: ruralClosures.recent,
-      hospitalsAtRisk: ruralClosures.atRisk,
-      closureRisk
-    }
-  };
-};
-
-const getRecruitingTargets = (homeState, count = MAP_RECRUIT_TARGET_COUNT) => {
-  // Use pre-computed top targets from private repo when available
-  const precomputedTargets = recruitmentIntel?.topTargets?.[homeState];
-  if (Array.isArray(precomputedTargets) && precomputedTargets.length >= count) {
-    return precomputedTargets.slice(0, count).map(state => ({
-      state,
-      ...scoreOutOfStateTarget(homeState, state)
-    }));
-  }
-
-  // Fallback to dynamic calculation
-  const salaryData = recruitmentIntel?.salaryBenchmarks || strategicData?.salaryData || NURSING_SALARY_DATA;
-  return Object.keys(salaryData)
-    .filter((state) => state !== homeState)
-    .map((state) => ({ state, ...scoreOutOfStateTarget(homeState, state) }))
-    .sort((a, b) => b.score - a.score)
-    .slice(0, count);
-};
-
-const clearMapRecruitTargets = () => {
-  const svg = usMapContainer?.querySelector('svg');
-  if (!svg) return;
-  svg.querySelectorAll('.state-rank-label').forEach((node) => node.remove());
-  svg.querySelectorAll('[data-state].recruit-target').forEach((shape) => {
-    shape.classList.remove('recruit-target');
-  });
-  mapRecruitTargetsInfo = [];
-  if (mapFactorsPanel && mapFactorsPanel.style.display !== 'none') {
-    renderMapFactors();
-  }
-};
-
-const applyMapRecruitTargets = (homeState) => {
-  if (!homeState) return;
-  const svg = usMapContainer?.querySelector('svg');
-  if (!svg) return;
-  clearMapRecruitTargets();
-  const targets = getRecruitingTargets(homeState);
-  mapRecruitTargetsInfo = targets;
-  if (!targets.length) return;
-  let layer = svg.querySelector('.state-rank-layer');
-  if (!layer) {
-    layer = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-    layer.setAttribute('class', 'state-rank-layer');
-    svg.appendChild(layer);
-  }
-  targets.forEach((entry, index) => {
-    const state = entry.state;
-    const rank = index + 1;
-    const shapes = svg.querySelectorAll(`[data-state="${state}"]`);
-    shapes.forEach((shape) => shape.classList.add('recruit-target'));
-    const primary = shapes[0];
-    if (!primary) return;
-    const bbox = primary.getBBox();
-    const x = bbox.x + bbox.width / 2;
-    const y = bbox.y + bbox.height / 2;
-    const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-    group.setAttribute('class', 'state-rank-label');
-    group.setAttribute('data-state', state);
-    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    circle.setAttribute('cx', x);
-    circle.setAttribute('cy', y);
-    circle.setAttribute('r', 8);
-    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    text.setAttribute('x', x);
-    text.setAttribute('y', y + 3);
-    text.setAttribute('text-anchor', 'middle');
-    text.setAttribute('class', 'state-rank-text');
-    text.textContent = `${rank}`;
-    group.appendChild(circle);
-    group.appendChild(text);
-    layer.appendChild(group);
-  });
-  if (mapFactorsPanel && mapFactorsPanel.style.display !== 'none') {
-    renderMapFactors();
-  }
-};
-
-const renderMapFactors = () => {
-  if (!mapFactorsList || !mapFactorsSubtitle) return;
-  const homeState = getMapHomeState();
-  if (!homeState) {
-    mapFactorsSubtitle.textContent = 'Set a Home State and long-press it to rank targets.';
-    mapFactorsList.innerHTML = '';
-    return;
-  }
-  if (!mapRecruitTargetsInfo.length) {
-    mapFactorsSubtitle.textContent = 'Long-press your Home State to generate top out-of-state targets.';
-    mapFactorsList.innerHTML = '';
-    return;
-  }
-  const homeName = STATE_NAMES[homeState] || homeState;
-  const relocationRefresh = relocationData?.lastUpdated
-    ? ` Relocation data refresh: ${formatRelativeTime(relocationData.lastUpdated)}.`
-    : '';
-  mapFactorsSubtitle.textContent = `Ranked for recruiting into ${homeName}. Factors: cost-of-living index, salary purchasing power, relocation friction, shortage status, WARN activity, rural hospital closures, and RN relocation scale.${relocationRefresh}`;
-  mapFactorsList.innerHTML = mapRecruitTargetsInfo.map((entry, idx) => {
-    const targetName = STATE_NAMES[entry.state] || entry.state;
-    const f = entry.factors;
-
-    // Salary and pay delta
-    const salaryNote = f.salaryDelta
-      ? `${f.salaryDelta >= 0 ? 'Lower' : 'Higher'} pay vs ${homeState}: $${Math.abs(f.salaryDelta).toLocaleString()}`
-      : `Pay delta vs ${homeState}: n/a`;
-
-    // Cost of living
-    const colNote = f.colDelta !== undefined
-      ? `COL Index: ${f.targetCOL} (${f.colDelta > 0 ? f.colDelta.toFixed(1) + ' cheaper' : Math.abs(f.colDelta).toFixed(1) + ' more expensive'} than ${homeState})`
-      : 'COL: n/a';
-    const adjustedSalaryNote = f.colAdjustedSalary
-      ? `Adjusted salary (PPP): $${Math.round(f.colAdjustedSalary).toLocaleString()}`
-      : '';
-
-    // Gap and travel
-    const gapNote = Number.isFinite(f.projectedGap)
-      ? `Projected gap: ${f.projectedGap.toLocaleString()}`
-      : 'Projected gap: n/a';
-    const travelNote = f.travelWeekly
-      ? `Travel weekly: ${Number(f.travelWeekly).toLocaleString()}`
-      : 'Travel weekly: n/a';
-
-    // Relocation
-    const relocationScale = typeof f.relocationScale === 'number'
-      ? Math.round(f.relocationScale)
-      : null;
-    const relocationSourceMap = { rn: 'RN', clinical: 'Clinical', general: 'General' };
-    const relocationSource = relocationSourceMap[f.relocationSource] || 'n/a';
-    const relocationNote = relocationScale !== null
-      ? `Relocation scale: ${relocationScale} (${relocationSource})`
-      : 'Relocation scale: n/a';
-
-    // Rural hospital closures
-    const closureNote = f.ruralClosures !== undefined
-      ? `Rural closures: ${f.ruralClosures} total (${f.recentClosures} recent)`
-      : 'Rural closures: n/a';
-    const riskClass = f.closureRisk === 'high' ? 'risk-high' : f.closureRisk === 'medium' ? 'risk-medium' : 'risk-low';
-    const atRiskNote = f.hospitalsAtRisk !== undefined
-      ? `<span class="${riskClass}">Hospitals at risk: ${f.hospitalsAtRisk}</span>`
-      : '';
-
-    return `
-        <div class="map-factor-card">
-          <div class="map-factor-title">#${idx + 1} ${targetName} (${entry.state})</div>
-          <div class="map-factor-meta">
-            <div class="factor-row"><strong>Market:</strong> ${f.shortage === 'surplus' ? 'Surplus' : f.shortage === 'shortage' ? 'Shortage' : 'Balanced'} | WARN notices: ${f.noticeCount} | Region: ${f.region || 'n/a'}</div>
-            <div class="factor-row"><strong>Salary:</strong> ${salaryNote} | ${adjustedSalaryNote}</div>
-            <div class="factor-row"><strong>Cost of Living:</strong> ${colNote}</div>
-            <div class="factor-row"><strong>Rural Hospitals:</strong> ${closureNote} | ${atRiskNote}</div>
-            <div class="factor-row"><strong>Mobility:</strong> ${gapNote} | ${travelNote} | ${relocationNote}</div>
-          </div>
-        </div>
-      `;
-  }).join('');
-};
-
-const showMapToast = (message) => {
-  const toast = document.getElementById('map-toast');
-  if (!toast) return;
-  toast.textContent = message;
-  toast.classList.add('visible');
-  setTimeout(() => toast.classList.remove('visible'), 2000);
-};
-
-const openStateBeaconFromMap = (targetState) => {
-  // Get saved home state from map
-  const homeState = getMapHomeState();
-
-  // Set home state in State Beacon if one is saved
-  if (homeState && stateBeaconHomeSelect) {
-    stateBeaconHomeSelect.value = homeState;
-  }
-
-  // Set target state and open State Beacon
-  if (stateBeaconStateSelect) {
-    stateBeaconStateSelect.value = targetState;
-  }
-
-  // Open the State Beacon module
-  openStateBeacon(targetState);
-};
-
-const setLoading = (message) => {
-  noticeList.innerHTML = `<div class="empty-state">${message}</div>`;
-};
-
-// =============================================================================
-// Data Loading (Static JSON)
-// =============================================================================
-const fetchJson = async (url) => {
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`Failed to fetch ${url}: ${res.status}`);
-  return res.json();
-};
-
-const loadMetadata = async () => {
-  try {
-    metadata = await fetchJson(`${DATA_BASE_URL}/metadata.json`);
-    setStatus(`Data updated ${formatRelativeTime(metadata.lastUpdated)}`, true);
-    const refreshedLabel = formatRelativeTime(metadata.lastUpdated);
-    statUpdated.textContent = refreshedLabel;
-    if (dataRefreshBadge) {
-      dataRefreshBadge.textContent = `Data refresh: ${refreshedLabel}`;
-    }
-    if (statTotal && metadata.totalNotices && !allNoticesLoaded) {
-      statTotal.textContent = metadata.totalNotices.toString();
-    }
-  } catch (err) {
-    console.error('Failed to load metadata:', err);
-    setStatus('Data unavailable', false);
-  }
-};
-
-const loadStates = async () => {
-  try {
-    const data = await fetchJson(`${DATA_BASE_URL}/states.json`);
-    stateDataAll = normalizeStateCounts(data.states ?? []);
-    stateData = stateDataAll;
-    if (!Object.keys(stateDataHealthcare).length) {
-      stateDataHealthcare = stateDataAll;
-    }
-    mapStateData = mapScope === 'all' ? stateDataAll : stateDataHealthcare;
-    if (!mapStateData || Object.keys(mapStateData).length === 0) {
-      mapStateData = stateDataAll;
-    }
-    statStates.textContent = Object.keys(stateDataAll).length.toString();
-    const counts = Object.values(stateData).map(entry => entry.count ?? 0);
-    calibrationStats = {
-      minCount: counts.length ? Math.min(...counts) : 0,
-      maxCount: counts.length ? Math.max(...counts) : 0
-    };
-    updateStateCalibration();
-    updateMapColors(); // Color states based on layoff count
-    await setMapScope(mapScope);
-  } catch (err) {
-    console.error('Failed to load states:', err);
-    statStates.textContent = '0';
-  }
-};
-
-// Color each state based on layoff count (green = low, red = high)
-const updateMapColors = () => {
-  const counts = Object.values(mapStateData).map(entry => entry.count ?? 0);
-  const maxCount = Math.max(...counts, 1); // Avoid division by zero
-
-  document.querySelectorAll('.us-map path[data-state], .us-map circle[data-state]').forEach(shape => {
-    const state = shape.dataset.state;
-    const count = mapStateData[state]?.count ?? 0;
-
-    // Remove all existing layoff/rural/salary classes
-    for (let i = 0; i <= 9; i++) {
-      shape.classList.remove(`layoff-${i}`);
-      shape.classList.remove(`salary-${i}`);
-    }
-    shape.classList.remove('rural-critical', 'rural-warning', 'rural-stable');
-
-    // Calculate intensity level (0-9) based on count relative to max
-    let level = 0;
-    if (count === 0) {
-      level = 0;
-    } else if (count <= maxCount * 0.05) {
-      level = 1;
-    } else if (count <= maxCount * 0.1) {
-      level = 2;
-    } else if (count <= maxCount * 0.2) {
-      level = 3;
-    } else if (count <= maxCount * 0.3) {
-      level = 4;
-    } else if (count <= maxCount * 0.4) {
-      level = 5;
-    } else if (count <= maxCount * 0.55) {
-      level = 6;
-    } else if (count <= maxCount * 0.7) {
-      level = 7;
-    } else if (count <= maxCount * 0.85) {
-      level = 8;
-    } else {
-      level = 9;
-    }
-
-    shape.classList.add(`layoff-${level}`);
-  });
-};
-
-// Color each state based on rural hospital closures/at-risk status
-const updateRuralMapColors = () => {
-  const maxAtRisk = Math.max(...Object.values(RURAL_HOSPITAL_CLOSURES).map(d => d.atRisk), 1);
-  const maxClosures = Math.max(...Object.values(RURAL_HOSPITAL_CLOSURES).map(d => d.count), 1);
-
-  document.querySelectorAll('.us-map path[data-state], .us-map circle[data-state]').forEach(shape => {
-    const state = shape.dataset.state;
-    const data = RURAL_HOSPITAL_CLOSURES[state] || { count: 0, recent: 0, atRisk: 0 };
-
-    // Remove all existing layoff/salary classes
-    for (let i = 0; i <= 9; i++) {
-      shape.classList.remove(`layoff-${i}`);
-      shape.classList.remove(`salary-${i}`);
-    }
-    shape.classList.remove('rural-critical', 'rural-warning', 'rural-stable');
-
-    // Color based on closures + at-risk (combined risk score)
-    const riskScore = data.count + data.atRisk * 1.5;
-    const maxRisk = maxClosures + maxAtRisk * 1.5;
-
-    if (riskScore === 0) {
-      shape.classList.add('rural-stable');
-    } else if (riskScore >= maxRisk * 0.6 || data.atRisk >= 8) {
-      shape.classList.add('rural-critical');
-    } else if (riskScore >= maxRisk * 0.3 || data.atRisk >= 4) {
-      shape.classList.add('rural-warning');
-    } else {
-      shape.classList.add('rural-stable');
-    }
-  });
-};
-
-const updateSalaryMapColors = () => {
-  const salaryData = recruitmentIntel?.salaryBenchmarks || strategicData?.salaryData || NURSING_SALARY_DATA || {};
-  const adjustedValues = [];
-  const adjustedByState = {};
-  const baseByState = {};
-  const colByState = {};
-
-  Object.keys(STATE_NAMES).forEach((state) => {
-    const base = Number(salaryData?.[state]?.staffRN ?? 0);
-    const col = Number(COST_OF_LIVING_INDEX?.[state] ?? 100);
-    if (!Number.isFinite(base) || base <= 0 || !Number.isFinite(col) || col <= 0) return;
-    const adjusted = base * (100 / col);
-    adjustedByState[state] = adjusted;
-    baseByState[state] = base;
-    colByState[state] = col;
-    adjustedValues.push(adjusted);
-  });
-
-  const sortedStates = Object.entries(adjustedByState)
-    .sort((a, b) => b[1] - a[1])
-    .map(([state]) => state);
-  const rankByState = {};
-  sortedStates.forEach((state, idx) => { rankByState[state] = idx + 1; });
-  salaryMapMetrics = {
-    adjusted: adjustedByState,
-    base: baseByState,
-    col: colByState,
-    rank: rankByState
-  };
-
-  const minAdjusted = adjustedValues.length ? Math.min(...adjustedValues) : 0;
-  const maxAdjusted = adjustedValues.length ? Math.max(...adjustedValues) : 1;
-  const range = Math.max(maxAdjusted - minAdjusted, 1);
-
-  document.querySelectorAll('.us-map path[data-state], .us-map circle[data-state]').forEach(shape => {
-    const state = shape.dataset.state;
-    const adjusted = adjustedByState[state];
-
-    for (let i = 0; i <= 9; i++) {
-      shape.classList.remove(`layoff-${i}`);
-      shape.classList.remove(`salary-${i}`);
-    }
-    shape.classList.remove('rural-critical', 'rural-warning', 'rural-stable');
-
-    if (!Number.isFinite(adjusted)) {
-      shape.classList.add('salary-0');
-      return;
-    }
-
-    const ratio = (adjusted - minAdjusted) / range;
-    const level = Math.max(0, Math.min(9, Math.round(ratio * 9)));
-    shape.classList.add(`salary-${level}`);
-  });
-};
-
-// -- Bonus Factor calculations ----------------------------------------------
-const computeProjectedForState = (stateAbbrev, salaryData) => {
-  const relo = bonusScenario.relo || 0;
-  const signOn = bonusScenario.signOn || 0;
-  const contractMonths = Math.max(1, bonusScenario.contractMonths || 24);
-  const hoursPerYear = bonusScenario.hoursPerYear || 1872;
-
-  const annualRelo = relo;
-  const annualSignOn = signOn / (contractMonths / 12);
-  const annualIncentives = annualRelo + annualSignOn;
-
-  const base = Number(salaryData?.[stateAbbrev]?.staffRN ?? 0);
-  const hourly = Number(salaryData?.[stateAbbrev]?.staffHourly ?? 0) || (base / 1872);
-
-  const diffs = bonusScenario.diffs || [];
-  const diffValues = diffs.map((d) => {
-    const hours = d.hours || hoursPerYear;
-    if (d.unit === 'hourly') return (d.amount || 0) * hours;
-    return hourly * ((d.amount || 0) / 100) * hours;
-  });
-
-  const annualDiffTotal = bonusScenario.stackable
-    ? diffValues.reduce((a, b) => a + b, 0)
-    : (diffValues.length ? Math.max(...diffValues) : 0);
-
-  return base + annualIncentives + annualDiffTotal;
-};
-
-const updateBonusLegend = () => {
-  const legend = document.getElementById('map-legend');
-  if (!legend) return;
-  if (bonusScenario.viewMode === 'delta' && bonusScenario.homeState) {
-    legend.innerHTML = `
-      <div class="rural-map-legend">
-        <div class="rural-legend-item"><span class="salary-legend-dot salary-high"></span> Best lift vs home</div>
-        <div class="rural-legend-item"><span class="salary-legend-dot salary-mid"></span> Neutral</div>
-        <div class="rural-legend-item"><span class="salary-legend-dot" style="background:#d8d8d8;"></span> Below home baseline</div>
-      </div>
-    `;
-  } else {
-    legend.innerHTML = `
-      <div class="rural-map-legend">
-        <div class="rural-legend-item"><span class="salary-legend-dot salary-high"></span> Highest projected annual</div>
-        <div class="rural-legend-item"><span class="salary-legend-dot salary-mid"></span> Mid projected annual</div>
-        <div class="rural-legend-item"><span class="salary-legend-dot salary-low"></span> Lowest projected annual</div>
-      </div>
-    `;
-  }
-  legend.style.display = '';
-};
-
-const updateBonusMapColors = () => {
-  const salaryData = recruitmentIntel?.salaryBenchmarks || strategicData?.salaryData || NURSING_SALARY_DATA || {};
-  const usMap = document.getElementById('us-map');
-
-  const projectedByState = {};
-  Object.keys(STATE_NAMES).forEach((state) => {
-    const p = computeProjectedForState(state, salaryData);
-    if (p > 0) projectedByState[state] = p;
-  });
-  salaryMapMetrics.projected = projectedByState;
-
-  let valueByState = {};
-
-  if (bonusScenario.viewMode === 'delta' && bonusScenario.homeState) {
-    const homeProj = projectedByState[bonusScenario.homeState] || 0;
-    const deltaByState = {};
-    Object.keys(projectedByState).forEach((state) => {
-      deltaByState[state] = projectedByState[state] - homeProj;
-    });
-    salaryMapMetrics.delta = deltaByState;
-    valueByState = deltaByState;
-    usMap?.classList.add('bf-delta-mode');
-  } else {
-    salaryMapMetrics.delta = {};
-    valueByState = projectedByState;
-    usMap?.classList.remove('bf-delta-mode');
-  }
-
-  const values = Object.values(valueByState).filter(Number.isFinite);
-  if (!values.length) return;
-
-  const isDelta = bonusScenario.viewMode === 'delta' && bonusScenario.homeState;
-  const minVal = Math.min(...values);
-  const maxVal = Math.max(...values);
-  const range = Math.max(maxVal - minVal, 1);
-
-  document.querySelectorAll('.us-map path[data-state], .us-map circle[data-state]').forEach((shape) => {
-    const state = shape.dataset.state;
-    for (let i = 0; i <= 9; i++) {
-      shape.classList.remove(`layoff-${i}`, `salary-${i}`);
-    }
-    shape.classList.remove('rural-critical', 'rural-warning', 'rural-stable');
-
-    const val = valueByState[state];
-    if (!Number.isFinite(val)) { shape.classList.add('salary-0'); return; }
-
-    let level;
-    if (isDelta) {
-      // Split: negatives map to 0�4, positives to 5�9, zero to 5
-      if (val < 0) {
-        const negVals = values.filter(v => v < 0);
-        const minNeg = Math.min(...negVals);
-        const maxNeg = Math.max(...negVals);
-        const negRange = Math.max(maxNeg - minNeg, 1);
-        level = Math.max(0, Math.min(4, Math.round(((val - minNeg) / negRange) * 4)));
-      } else {
-        const posVals = values.filter(v => v > 0);
-        const minPos = posVals.length ? Math.min(...posVals) : 0;
-        const maxPos = posVals.length ? Math.max(...posVals) : 0;
-        const posRange = Math.max(maxPos - minPos, 1);
-        level = 5 + Math.max(0, Math.min(4, Math.round(((val - minPos) / posRange) * 4)));
-      }
-    } else {
-      const ratio = (val - minVal) / range;
-      level = Math.max(0, Math.min(9, Math.round(ratio * 9)));
-    }
-    shape.classList.add(`salary-${level}`);
-  });
-
-  updateBonusLegend();
-};
-
-// Show rural closures detail panel for a selected state
-const showRuralClosuresPanel = (stateAbbrev) => {
-  if (!ruralClosuresPanel) return;
-  const stateName = STATE_NAMES[stateAbbrev] || stateAbbrev;
-  const data = RURAL_HOSPITAL_CLOSURES[stateAbbrev] || { count: 0, recent: 0, atRisk: 0 };
-  const riskLevel = data.atRisk > 5 ? 'High' : data.atRisk > 2 ? 'Medium' : 'Low';
-  const riskClass = data.atRisk > 5 ? 'risk-high' : data.atRisk > 2 ? 'risk-medium' : 'risk-low';
-
-  const closedHospitals = Array.isArray(data.closedHospitals) ? data.closedHospitals : [];
-  const atRiskHospitals = Array.isArray(data.atRiskHospitals) ? data.atRiskHospitals : [];
-  // Sort at-risk: high risk first, then by beds descending
-  const sortedAtRisk = [...atRiskHospitals].sort((a, b) => {
-    if (a.risk === 'high' && b.risk !== 'high') return -1;
-    if (a.risk !== 'high' && b.risk === 'high') return 1;
-    return (b.beds || 0) - (a.beds || 0);
-  });
-  // Sort closed: most recent first
-  const sortedClosed = [...closedHospitals].sort((a, b) => (b.year || 0) - (a.year || 0));
-
-  if (ruralClosuresTitle) ruralClosuresTitle.textContent = `${stateName} Rural Hospitals`;
-  if (ruralClosuresSubtitle) {
-    ruralClosuresSubtitle.textContent = 'Source: CHQPR / Sheps Center for Health Services Research';
-  }
-
-  if (ruralClosuresList) {
-    const freshness = ruralClosuresLastUpdated
-      ? `Data updated ${formatRelativeTime(ruralClosuresLastUpdated)}`
-      : 'Using cached data';
-
-    // Build at-risk hospital rows
-    const atRiskHtml = sortedAtRisk.length > 0
-      ? sortedAtRisk.map(h => {
-        const rc = h.risk === 'high' ? 'risk-high' : 'risk-moderate';
-        const riskLabel = h.risk === 'high' ? 'High Risk' : 'At Risk';
-        const marginClass = h.operatingMargin <= -10 ? 'risk-high' : h.operatingMargin < 0 ? 'risk-medium' : 'risk-low';
-        const factors = (h.riskFactors || []).map(f => `<li>${escapeHtml(f)}</li>`).join('');
-        return `
-          <div class="rural-hospital-card">
-            <div class="rural-hospital-header">
-              <span class="rural-hospital-name">${escapeHtml(h.name)}</span>
-              <span class="rural-risk-badge ${rc}">${riskLabel}</span>
-            </div>
-            <div class="rural-hospital-location">${escapeHtml(h.city)}${h.county ? ', ' + escapeHtml(h.county) + ' Co.' : ''}${h.beds ? ' &middot; ' + h.beds + ' beds' : ''}</div>
-            <div class="rural-hospital-financials">
-              <div class="rural-financial-item">
-                <span class="rural-financial-label">Operating Margin</span>
-                <span class="rural-financial-value ${marginClass}">${h.operatingMargin > 0 ? '+' : ''}${h.operatingMargin}%</span>
-              </div>
-              <div class="rural-financial-item">
-                <span class="rural-financial-label">Daily Census</span>
-                <span class="rural-financial-value">${h.dailyCensus} patients</span>
-              </div>
-            </div>
-            ${factors ? `<ul class="rural-risk-factors">${factors}</ul>` : ''}
-          </div>`;
-      }).join('')
-      : '<div class="rural-empty">No hospitals currently flagged at risk.</div>';
-
-    // Build closed hospital rows
-    const closedHtml = sortedClosed.length > 0
-      ? sortedClosed.map(h => {
-        const typeLabel = h.type === 'converted' ? 'Converted' : 'Closed';
-        const typeClass = h.type === 'converted' ? 'type-converted' : 'type-closed';
-        return `
-          <div class="rural-hospital-row">
-            <div class="rural-hospital-info">
-              <div class="rural-hospital-name">${escapeHtml(h.name)}</div>
-              <div class="rural-hospital-location">${escapeHtml(h.city)}${h.county ? ', ' + escapeHtml(h.county) + ' Co.' : ''}${h.year ? ' &middot; ' + h.year : ''}</div>
-            </div>
-            <span class="rural-hospital-badge ${typeClass}">${typeLabel}</span>
-          </div>`;
-      }).join('')
-      : '<div class="rural-empty">No recorded closures since 2010.</div>';
-
-    ruralClosuresList.innerHTML = `
-      <div class="rural-closures-stat">
-        <span class="rural-closures-stat-label">Total closures since 2010</span>
-        <span class="rural-closures-stat-value">${data.count}</span>
-      </div>
-      <div class="rural-closures-stat">
-        <span class="rural-closures-stat-label">Recent closures (last 2 years)</span>
-        <span class="rural-closures-stat-value ${data.recent > 0 ? 'risk-high' : ''}">${data.recent}</span>
-      </div>
-      <div class="rural-closures-stat">
-        <span class="rural-closures-stat-label">Hospitals currently at risk</span>
-        <span class="rural-closures-stat-value ${riskClass}">${data.atRisk}</span>
-      </div>
-      <div class="rural-closures-stat">
-        <span class="rural-closures-stat-label">Overall risk level</span>
-        <span class="rural-closures-stat-value ${riskClass}">${riskLevel}</span>
-      </div>
-
-      <div class="rural-section-header">
-        <span class="rural-section-icon">&#9888;</span> At-Risk Hospitals (${sortedAtRisk.length})
-      </div>
-      <div class="rural-hospital-list">${atRiskHtml}</div>
-
-      <div class="rural-section-header">
-        <span class="rural-section-icon">&#10006;</span> Closed Since 2010 (${sortedClosed.length})
-      </div>
-      <div class="rural-hospital-list">${closedHtml}</div>
-
-      <div class="rural-closures-beacon-link">
-        <button type="button" id="rural-open-beacon" data-state="${stateAbbrev}">Open ${stateName} State Beacon</button>
-      </div>
-      <div class="rural-data-freshness">${freshness}</div>
-    `;
-
-    // Attach beacon link handler
-    const beaconBtn = document.getElementById('rural-open-beacon');
-    if (beaconBtn) {
-      beaconBtn.addEventListener('click', () => {
-        hideRuralClosuresPanel();
-        openStateBeaconFromMap(stateAbbrev);
-      });
-    }
-  }
-
-  ruralClosuresPanel.style.display = '';
-};
-
-const hideRuralClosuresPanel = () => {
-  if (ruralClosuresPanel) ruralClosuresPanel.style.display = 'none';
-};
-
-// Switch between layoffs, rural hospital, and salary tabs
-const switchMapTab = async (tab) => {
-  if (tab === activeMapTab) return;
-  activeMapTab = tab;
-
-  // Update tab button states
-  mapTabLayoffs?.classList.toggle('active', tab === 'layoffs');
-  mapTabRural?.classList.toggle('active', tab === 'rural');
-  mapTabSalary?.classList.toggle('active', tab === 'salary');
-
-  // Show/hide Bonus Factor button (salary-only)
-  document.getElementById('map-bonus-factor-btn')?.style.setProperty('display', tab === 'salary' ? '' : 'none');
-  if (tab !== 'salary' && bonusScenario.active) {
-    bonusScenario.active = false;
-    document.getElementById('us-map')?.classList.remove('bf-delta-mode');
-  }
-
-  // Update section title and description
-  if (tab === 'layoffs') {
-    hideRuralClosuresPanel();
-    if (mapSectionTitle) mapSectionTitle.textContent = 'Interactive Layoff Weather Map';
-    if (mapSectionDesc) {
-      mapSectionDesc.innerHTML = `Fog intensity shows layoff activity by state. Darker = more layoffs in the current scope. <span class="map-scope-note">Scope: <strong id="map-scope-label">${mapScope === 'all' ? 'All' : 'Healthcare'}</strong></span>`;
-    }
-    // Show layoff-specific controls
-    document.querySelector('.scope-toggle')?.style.setProperty('display', '');
-    document.getElementById('map-legend')?.style.setProperty('display', '');
-    // Update map colors for layoffs
-    updateMapColors();
-  } else if (tab === 'rural') {
-    if (mapSectionTitle) mapSectionTitle.textContent = 'Rural Hospital Vulnerability Map';
-    if (mapSectionDesc) {
-      mapSectionDesc.innerHTML = `Loading rural hospital data...`;
-    }
-    // Fetch fresh rural closures data
-    await loadRuralClosuresData();
-    if (mapSectionDesc) {
-      const freshness = ruralClosuresLastUpdated ? ` Updated ${formatRelativeTime(ruralClosuresLastUpdated)}.` : '';
-      mapSectionDesc.innerHTML = `Shows rural hospital closures since 2010 and hospitals currently at financial risk. Data from CHQPR/Sheps Center.${freshness}`;
-    }
-    // Hide layoff-specific controls, show rural legend
-    document.querySelector('.scope-toggle')?.style.setProperty('display', 'none');
-    const legend = document.getElementById('map-legend');
-    if (legend) {
-      legend.innerHTML = `
-        <div class="rural-map-legend">
-          <div class="rural-legend-item"><span class="rural-legend-dot closures"></span> High closure risk</div>
-          <div class="rural-legend-item"><span class="rural-legend-dot at-risk"></span> Moderate risk</div>
-          <div class="rural-legend-item"><span class="rural-legend-dot stable"></span> Low/No risk</div>
-        </div>
-      `;
-      legend.style.display = '';
-    }
-    // Update map colors for rural hospitals
-    updateRuralMapColors();
-  } else if (tab === 'salary') {
-    hideRuralClosuresPanel();
-    if (mapSectionTitle) mapSectionTitle.textContent = 'Nurse Salary Value Map';
-    if (mapSectionDesc) {
-      mapSectionDesc.innerHTML = 'States are colored by RN salary adjusted for cost of living (best purchasing-power states are darkest blue). Data source stack: BLS-aligned RN salary benchmarks + cost-of-living adjustment.';
-    }
-    document.querySelector('.scope-toggle')?.style.setProperty('display', 'none');
-    const legend = document.getElementById('map-legend');
-    if (legend) {
-      legend.innerHTML = `
-        <div class="rural-map-legend">
-          <div class="rural-legend-item"><span class="salary-legend-dot salary-high"></span> Highest adjusted pay</div>
-          <div class="rural-legend-item"><span class="salary-legend-dot salary-mid"></span> Mid adjusted pay</div>
-          <div class="rural-legend-item"><span class="salary-legend-dot salary-low"></span> Lowest adjusted pay</div>
-        </div>
-      `;
-      legend.style.display = '';
-    }
-    updateSalaryMapColors();
-  }
-};
-
-const loadAllNotices = async () => {
-  if (allNoticesLoaded || allNoticesLoading) return allNotices;
-  allNoticesLoading = true;
-  setLoading('Loading notices...');
-  try {
-    const data = await fetchJson(`${DATA_BASE_URL}/notices.json`);
-    allNotices = data.notices ?? [];
-    statTotal.textContent = allNotices.length.toString();
-    stateDataHealthcare = buildHealthcareStateCounts(allNotices);
-    allNoticesLoaded = true;
-    allNoticesLoading = false;
-    await setMapScope(mapScope);
-    return allNotices;
-  } catch (err) {
-    console.error('Failed to load notices:', err);
-    allNoticesLoading = false;
-    setLoading('Failed to load data. Please refresh the page.');
-    return [];
-  }
-};
-
-const loadStateNotices = async (state) => {
-  if (!state || stateNoticesCache.has(state) || stateNoticesLoading.has(state)) {
-    return stateNoticesCache.get(state) || [];
-  }
-  stateNoticesLoading.add(state);
-  try {
-    const data = await fetchJson(`${DATA_BASE_URL}/by-state/${state}.json`);
-    const notices = data?.notices ?? [];
-    stateNoticesCache.set(state, notices);
-    return notices;
-  } catch (err) {
-    console.warn(`Failed to load notices for ${state}:`, err);
-    stateNoticesCache.set(state, []);
-    return [];
-  } finally {
-    stateNoticesLoading.delete(state);
-  }
-};
-
-// =============================================================================
-// Premium Insights (Static JSON)
-// =============================================================================
-const renderInsightFallback = (element, message) => {
-  if (!element) return;
-  element.innerHTML = `<div class="empty-state">${message}</div>`;
-};
-
-const renderAlerts = (data) => {
-  if (!alertsList) return;
-  const alerts = data?.alerts ?? [];
-  if (!alerts.length) {
-    renderInsightFallback(alertsList, 'No recent alerts.');
-    return;
-  }
-  const top = alerts
-    .sort((a, b) => (b.early_warning === true) - (a.early_warning === true))
-    .slice(0, 8);
-  alertsList.innerHTML = top.map(alert => `
-    <div class="insight-row">
-      <div>
-        <div class="insight-title">${alert.employer_name || 'Unknown employer'}</div>
-        <div class="insight-meta">${[alert.state, alert.facility_name || alert.parent_system].filter(Boolean).join(' | ')}</div>
-      </div>
-      <div>
-        <div class="insight-pill ${alert.early_warning ? 'yellow' : ''}">${alert.early_warning ? 'Early' : 'Signal'}</div>
-        <div class="insight-meta">${alert.lead_time_days ?? 'n/a'}d lead</div>
-      </div>
-    </div>
-  `).join('');
-};
-
-const renderHeatmap = (data) => {
-  if (!heatmapList) return;
-  const locations = data?.locations ?? [];
-  const ranked = locations
-    .filter(loc => loc.risk_level === 'red' || loc.risk_level === 'yellow')
-    .sort((a, b) => b.notices_last_90_days - a.notices_last_90_days)
-    .slice(0, 8);
-  if (!ranked.length) {
-    renderInsightFallback(heatmapList, 'No hotspots detected.');
-    return;
-  }
-  heatmapList.innerHTML = ranked.map(loc => {
-    const cityDisplay = loc.city && loc.city !== 'unknown' ? loc.city : `${loc.state} Statewide`;
-    return `
-    <div class="insight-row">
-      <div>
-        <div class="insight-title">${cityDisplay}</div>
-        <div class="insight-meta">${loc.state} | ${loc.notices_last_90_days} in 90d</div>
-      </div>
-      <div class="insight-pill ${loc.risk_level === 'red' ? 'red' : 'yellow'}">${loc.risk_level.toUpperCase()}</div>
-    </div>
-  `;
-  }).join('');
-};
-
-const renderTalent = (data) => {
-  if (!talentList) return;
-  const opportunities = data?.opportunities ?? [];
-  const top = opportunities
-    .sort((a, b) => b.estimated_nurses_available - a.estimated_nurses_available)
-    .slice(0, 8);
-  if (!top.length) {
-    renderInsightFallback(talentList, 'No talent signals yet.');
-    return;
-  }
-  talentList.innerHTML = top.map(entry => {
-    const cityDisplay = entry.city && entry.city !== 'unknown' ? entry.city : `${entry.state} Statewide`;
-    return `
-    <div class="insight-row">
-      <div>
-        <div class="insight-title">${cityDisplay}</div>
-        <div class="insight-meta">${entry.state} | ${entry.notices_count} notices</div>
-      </div>
-      <div>
-        <div class="insight-pill">${entry.estimated_nurses_available}</div>
-        <div class="insight-meta">${entry.specialties?.slice(0, 2).join(', ') || 'General'}</div>
-      </div>
-    </div>
-  `;
-  }).join('');
-};
-
-const renderEmployers = (data) => {
-  if (!employerList) return;
-  const employers = data?.employers ?? [];
-  const top = employers
-    .sort((a, b) => b.total_notices - a.total_notices)
-    .slice(0, 8);
-  if (!top.length) {
-    renderInsightFallback(employerList, 'No employer profiles yet.');
-    return;
-  }
-  employerList.innerHTML = top.map(entry => `
-    <div class="insight-row">
-      <div>
-        <div class="insight-title">${entry.employer_name || 'Unknown employer'}</div>
-        <div class="insight-meta">${entry.parent_system || entry.state} | ${entry.total_notices} notices</div>
-      </div>
-      <div class="insight-meta">${entry.avg_lead_time_days ?? 'n/a'}d avg lead</div>
-    </div>
-  `).join('');
-};
-
-const loadInsights = async () => {
-  try {
-    const [alerts, geo, talent, employers] = await Promise.all([
-      fetchJson(`${DATA_BASE_URL}/alerts.json`),
-      fetchJson(`${DATA_BASE_URL}/geo.json`),
-      fetchJson(`${DATA_BASE_URL}/talent.json`),
-      fetchJson(`${DATA_BASE_URL}/employers.json`)
-    ]);
-    renderAlerts(alerts);
-    renderHeatmap(geo);
-    renderTalent(talent);
-    renderEmployers(employers);
-    initStrikeAlerts();
-  } catch (err) {
-    console.error('Failed to load insights:', err);
-    renderInsightFallback(alertsList, 'Insights unavailable.');
-    renderInsightFallback(heatmapList, 'Insights unavailable.');
-    renderInsightFallback(talentList, 'Insights unavailable.');
-    renderInsightFallback(employerList, 'Insights unavailable.');
-    initStrikeAlerts(); // still try strike alerts independently
-  }
-};
-
-// Load strategic market data from JSON
-const loadStrategicData = async () => {
-  if (strategicDataLoaded) return strategicData;
-  try {
-    strategicData = await fetchJson(`${DATA_BASE_URL}/strategic.json`);
-    strategicDataLoaded = true;
-    console.log('Strategic data loaded:', strategicData?.lastUpdated);
-    return strategicData;
-  } catch (err) {
-    console.warn('Strategic data not available, using fallback:', err);
-    strategicDataLoaded = true;
-    return null;
-  }
-};
-
-const loadRelocationData = async () => {
-  if (relocationDataLoaded) return relocationData;
-  try {
-    relocationData = await fetchJson(`${DATA_BASE_URL}/relocation.json`);
-    relocationDataLoaded = true;
-    console.log('Relocation data loaded:', relocationData?.lastUpdated);
-    return relocationData;
-  } catch (err) {
-    console.warn('Relocation data not available:', err);
-    relocationDataLoaded = true;
-    relocationData = null;
-    return null;
-  }
-};
-
-// Load pre-computed recruitment intelligence from private repo
-const loadRecruitmentIntel = async () => {
-  if (recruitmentIntelLoaded) return recruitmentIntel;
-  try {
-    recruitmentIntel = await fetchJson(`${DATA_BASE_URL}/recruitment-intel.json`);
-    recruitmentIntelLoaded = true;
-    console.log('Recruitment intel loaded:', recruitmentIntel?.lastUpdated);
-    return recruitmentIntel;
-  } catch (err) {
-    console.warn('Recruitment intel not available, using fallback algorithms:', err);
-    recruitmentIntelLoaded = true;
-    recruitmentIntel = null;
-    return null;
-  }
-};
-
-const initForecast = () => {
-  if (!forecastBeds || !forecastSetting || !forecastHorizon || !forecastOutput) return;
-  const roleMixBySetting = {
-    acute: { rn: 70, lpn: 20, cna: 10 },
-    snf: { rn: 35, lpn: 25, cna: 40 },
-    outpatient: { rn: 60, lpn: 25, cna: 15 },
-    home: { rn: 55, lpn: 25, cna: 20 },
-    behavioral: { rn: 60, lpn: 20, cna: 20 }
-  };
-  const multiplierBySetting = {
-    acute: 0.65,
-    snf: 0.45,
-    outpatient: 0.2,
-    home: 0.15,
-    behavioral: 0.35
-  };
-
-  const updateForecast = () => {
-    const beds = Number.parseInt(forecastBeds.value || '0', 10) || 0;
-    const setting = forecastSetting.value || 'acute';
-    const horizon = Number.parseInt(forecastHorizon.value || '0', 10) || 0;
-    const multiplier = multiplierBySetting[setting] ?? 0.4;
-    const totalNurses = Math.max(0, Math.round(beds * multiplier));
-    const mix = roleMixBySetting[setting] ?? roleMixBySetting.acute;
-    const rn = Math.round((totalNurses * mix.rn) / 100);
-    const lpn = Math.round((totalNurses * mix.lpn) / 100);
-    const cna = Math.round((totalNurses * mix.cna) / 100);
-
-    forecastOutput.innerHTML = `
-      Estimated displacement over ${horizon || 60} days:
-      <strong>${totalNurses}</strong> total nurses
-      (RN ${rn} | LPN ${lpn} | CNA ${cna}).
-    `;
-  };
-
-  forecastBeds.addEventListener('input', updateForecast);
-  forecastSetting.addEventListener('change', updateForecast);
-  forecastHorizon.addEventListener('input', updateForecast);
-  updateForecast();
-};
-
-// =============================================================================
-// Filtering (Client-side)
-// =============================================================================
-
-// Check if a notice matches any of the selected specialties
-const matchesSpecialty = (notice, specialtyKeys) => {
-  if (!specialtyKeys || specialtyKeys.length === 0) return true;
-
-  // Build searchable text from notice fields
-  const searchText = [
-    notice.employer_name,
-    notice.parent_system,
-    notice.reason,
-    notice.raw_text,
-    notice.nursing_care_setting,
-    ...(parseMaybeJson(notice.nursing_specialties) || []),
-    ...(parseMaybeJson(notice.nursing_keywords) || []),
-    ...(parseMaybeJson(notice.nursing_signals) || [])
-  ].filter(Boolean).join(' ').toLowerCase();
-
-  // Check if any selected specialty matches
-  return specialtyKeys.some(key => {
-    const specialty = NURSE_SPECIALTIES[key];
-    if (!specialty) return false;
-    return specialty.keywords.some(keyword => searchText.includes(keyword));
-  });
-};
-
-const filterNotices = () => {
-  const baseNotices = allNoticesLoaded
-    ? allNotices
-    : selectedStates.length > 0
-      ? selectedStates.flatMap((state) => stateNoticesCache.get(state) || [])
-      : [];
-  let filtered = [...baseNotices];
-
-  filtered = filtered.filter(isHealthcareNotice);
-
-  // Filter by region
-  const region = regionSelect.value;
-  if (region && REGION_STATES[region]) {
-    const regionStates = REGION_STATES[region];
-    filtered = filtered.filter(n => regionStates.includes(n.state));
-  }
-
-  // Filter by selected states
-  if (selectedStates.length > 0) {
-    filtered = filtered.filter(n => selectedStates.includes(n.state));
-  }
-
-  // Filter by nursing specialty
-  if (selectedSpecialties.length > 0) {
-    filtered = filtered.filter(n => matchesSpecialty(n, selectedSpecialties));
-  }
-
-  // Filter by organization
-  const org = orgInput.value.trim().toLowerCase();
-  if (org) {
-    filtered = filtered.filter(n => {
-      const text = [
-        n.employer_name,
-        n.parent_system,
-        n.reason,
-        n.raw_text
-      ].filter(Boolean).join(' ').toLowerCase();
-      return text.includes(org);
-    });
-  }
-
-  // Exclude hotel / hospitality employers (not nursing-relevant)
-  filtered = filtered.filter(n => {
-    const name = (n.employer_name || '').toLowerCase();
-    return !name.includes('hotel') && !name.includes('hospitality');
-  });
-
-  // Filter by date
-  const since = sinceInput.value;
-  if (since) {
-    filtered = filtered.filter(n => {
-      const noticeDate = n.notice_date || n.retrieved_at;
-      return noticeDate && noticeDate >= since;
-    });
-  }
-
-  // Filter by score
-  const minScore = parseInt(scoreInput.value) || 0;
-  if (minScore > 0) {
-    filtered = filtered.filter(n => (n.nursing_score || 0) >= minScore);
-  }
-
-  // Apply limit only when explicitly set
-  const limitValue = parseInt(limitInput.value, 10);
-  if (Number.isFinite(limitValue) && limitValue > 0 && filtered.length > limitValue) {
-    filtered = filtered.slice(0, limitValue);
-  }
-
-  // Merge custom notices
-  if (customNotices.length > 0) {
-    filtered = [...customNotices, ...filtered];
-  }
-
-  return sortNoticesByNewest(filtered);
-};
-
-const applyFilters = (resetPage = true) => {
-  const token = ++applyFiltersToken;
-  if (resetPage) currentPage = 1;
-  if (!allNoticesLoaded && selectedStates.length > 0) {
-    const missing = selectedStates.filter((state) => !stateNoticesCache.has(state));
-    if (missing.length) {
-      setLoading('Loading state notices...');
-      Promise.all(missing.map(loadStateNotices)).then(() => {
-        if (token === applyFiltersToken) applyFilters(false);
-      });
-      return;
-    }
-  }
-
-  let filtered = filterNotices();
-
-  // Apply search query
-  if (searchQuery.trim()) {
-    const query = searchQuery.toLowerCase();
-    filtered = filtered.filter(n => {
-      const employerName = (n.employer_name || '').toLowerCase();
-      const parentSystem = (n.parent_system || '').toLowerCase();
-      const city = (n.city || '').toLowerCase();
-      return employerName.includes(query) || parentSystem.includes(query) || city.includes(query);
-    });
-  }
-
-  currentNotices = filtered;
-  renderNotices(currentNotices);
-  updateStats(currentNotices);
-  updateMapHighlights();
-};
-
-// =============================================================================
-// Rendering
-// =============================================================================
-const renderNotices = (notices) => {
-  const paginationContainer = document.getElementById('pagination');
-
-  if (!notices.length) {
-    if (!allNoticesLoaded && selectedStates.length === 0) {
-      noticeList.innerHTML = `
-        <div class="empty-state">
-          Select a state to load notices, or load the national dataset.
-          <button class="btn secondary" id="load-national-notices">Load national notices</button>
-        </div>
-      `;
-      document.getElementById('load-national-notices')?.addEventListener('click', async () => {
-        await loadAllNotices();
-        applyFilters(false);
-      });
-    } else {
-      noticeList.innerHTML = `<div class="empty-state">No notices match these filters.</div>`;
-    }
-    if (paginationContainer) paginationContainer.innerHTML = '';
-    refreshNoticeListWindow(0);
-    refreshTalentCommandCenter();
-    return;
-  }
-
-  // Calculate pagination
-  const totalPages = Math.ceil(notices.length / NOTICES_PER_PAGE);
-  if (currentPage > totalPages) currentPage = totalPages;
-  if (currentPage < 1) currentPage = 1;
-
-  const startIdx = (currentPage - 1) * NOTICES_PER_PAGE;
-  const endIdx = startIdx + NOTICES_PER_PAGE;
-  const paginatedNotices = notices.slice(startIdx, endIdx);
-
-  noticeList.innerHTML = '';
-  paginatedNotices.forEach((notice, idx) => {
-    const globalIdx = startIdx + idx;
-    const card = document.createElement('article');
-    const careSetting = notice.nursing_care_setting || 'unknown';
-    const isManufacturing = careSetting === 'occupational';
-    let cardClasses = 'notice-card';
-    if (notice.isCustom) cardClasses += ' custom-notice';
-    if (isManufacturing) cardClasses += ' manufacturing-notice';
-    card.className = cardClasses;
-    card.style.animationDelay = `${idx * 35}ms`;
-    card.dataset.noticeId = notice.id;
-
-    const label = notice.nursing_label ?? 'Unclear';
-    const score = notice.nursing_score ?? 0;
-    const employer = notice.employer_name ?? 'Unknown employer';
-    const city = notice.city;
-    const state = notice.state;
-    const location = [city, state].filter(Boolean).join(', ') || state;
-    const noticeDate = formatDate(notice.notice_date ?? notice.retrieved_at);
-    const affected = notice.employees_affected;
-
-    const customBadge = notice.isCustom ? '<span class="custom-badge">Custom</span>' : '';
-    const manufacturingBadge = isManufacturing ? '<span class="manufacturing-badge">Industrial</span>' : '';
-
-    card.innerHTML = `
-      <div class="notice-top">
-        <span class="pill">${state}</span>
-        ${customBadge}
-        ${manufacturingBadge}
-        <div class="notice-actions">
-          <span class="score">${label} - ${score}</span>
-          <div class="save-to-project">
-            <button class="save-to-project-btn" data-notice-idx="${globalIdx}">+ Save</button>
-            <div class="save-dropdown" id="dropdown-${globalIdx}"></div>
-          </div>
-        </div>
-      </div>
-      <h4>${employer}</h4>
-      <div class="notice-meta">
-        <span>${location}</span>
-        <span>${noticeDate}</span>
-        <span>${formatNumber(affected)} impacted</span>
-      </div>
-    `;
-
-    noticeList.appendChild(card);
-  });
-
-  // Render pagination controls
-  renderPagination(totalPages, notices.length);
-
-  // Update quick navigation
-  updateQuickNav(totalPages);
-
-  // Add save-to-project dropdown handlers
-  setupSaveDropdowns(notices);
-
-  refreshNoticeListWindow(paginatedNotices.length);
-  refreshTalentCommandCenter();
-};
-
-const renderPagination = (totalPages, totalNotices) => {
-  const paginationContainer = document.getElementById('pagination');
-  if (!paginationContainer) return;
-
-  if (totalPages <= 1) {
-    paginationContainer.innerHTML = `<div class="pagination-info">Showing all ${totalNotices} notices</div>`;
-    return;
-  }
-
-  const startIdx = (currentPage - 1) * NOTICES_PER_PAGE + 1;
-  const endIdx = Math.min(currentPage * NOTICES_PER_PAGE, totalNotices);
-
-  // Generate page numbers (show max 7 pages with ellipsis)
-  let pageNumbers = [];
-  if (totalPages <= 7) {
-    pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
-  } else {
-    if (currentPage <= 4) {
-      pageNumbers = [1, 2, 3, 4, 5, '...', totalPages];
-    } else if (currentPage >= totalPages - 3) {
-      pageNumbers = [1, '...', totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
-    } else {
-      pageNumbers = [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages];
-    }
-  }
-
-  paginationContainer.innerHTML = `
-    <div class="pagination-info">
-      Showing ${startIdx.toLocaleString()}-${endIdx.toLocaleString()} of ${totalNotices.toLocaleString()} notices
-    </div>
-    <div class="pagination-controls">
-      <button class="pagination-btn" id="prev-page" ${currentPage === 1 ? 'disabled' : ''}>
-        &laquo; Prev
-      </button>
-      <div class="pagination-pages">
-        ${pageNumbers.map(p => {
-          if (p === '...') {
-            return '<span class="pagination-ellipsis">...</span>';
-          }
-          return `<button class="pagination-page ${p === currentPage ? 'active' : ''}" data-page="${p}">${p}</button>`;
-        }).join('')}
-      </div>
-      <button class="pagination-btn" id="next-page" ${currentPage === totalPages ? 'disabled' : ''}>
-        Next &raquo;
-      </button>
-    </div>
-  `;
-
-  // Add pagination event listeners
-  document.getElementById('prev-page')?.addEventListener('click', () => {
-    if (currentPage > 1) {
-      currentPage--;
-      applyFilters(false);
-      scrollToResults();
-    }
-  });
-
-  document.getElementById('next-page')?.addEventListener('click', () => {
-    if (currentPage < totalPages) {
-      currentPage++;
-      applyFilters(false);
-      scrollToResults();
-    }
-  });
-
-  paginationContainer.querySelectorAll('.pagination-page').forEach(btn => {
-    btn.addEventListener('click', () => {
-      currentPage = parseInt(btn.dataset.page);
-      applyFilters(false);
-      scrollToResults();
-    });
-  });
-};
-
-const scrollToResults = () => {
-  const resultsSection = document.querySelector('.results');
-  if (resultsSection) {
-    resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-};
-
-const updateQuickNav = (totalPages) => {
-  const quickPrev = document.getElementById('quick-prev');
-  const quickNext = document.getElementById('quick-next');
-  const quickNavInfo = document.getElementById('quick-nav-info');
-
-  if (quickPrev) {
-    quickPrev.disabled = currentPage <= 1;
-  }
-  if (quickNext) {
-    quickNext.disabled = currentPage >= totalPages || totalPages <= 1;
-  }
-  if (quickNavInfo) {
-    if (totalPages <= 1) {
-      quickNavInfo.textContent = 'Page 1';
-    } else {
-      quickNavInfo.textContent = `${currentPage} / ${totalPages}`;
-    }
-  }
-};
-
-const initQuickNav = () => {
-  const quickPrev = document.getElementById('quick-prev');
-  const quickNext = document.getElementById('quick-next');
-
-  quickPrev?.addEventListener('click', () => {
-    if (currentPage > 1) {
-      currentPage--;
-      applyFilters(false);
-      scrollToResults();
-    }
-  });
-
-  quickNext?.addEventListener('click', () => {
-    const totalPages = Math.ceil(currentNotices.length / NOTICES_PER_PAGE);
-    if (currentPage < totalPages) {
-      currentPage++;
-      applyFilters(false);
-      scrollToResults();
-    }
-  });
-};
-
-const setupSaveDropdowns = (notices) => {
-  document.querySelectorAll('.save-to-project-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const idx = btn.dataset.noticeIdx;
-      const dropdown = document.getElementById(`dropdown-${idx}`);
-
-      document.querySelectorAll('.save-dropdown.active').forEach(d => {
-        if (d !== dropdown) d.classList.remove('active');
-      });
-
-      if (projects.length === 0) {
-        dropdown.innerHTML = `<div class="save-dropdown-item" style="color: var(--muted);">No projects yet. Create one first.</div>`;
-      } else {
-        dropdown.innerHTML = projects.map(p => `
-          <div class="save-dropdown-item" data-project-id="${p.id}" style="border-left-color: ${p.color}">
-            ${p.name}
-          </div>
-        `).join('');
-      }
-
-      dropdown.classList.toggle('active');
-    });
-  });
-
-  document.querySelectorAll('.save-dropdown').forEach((dropdown, idx) => {
-    dropdown.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const item = e.target.closest('.save-dropdown-item');
-      if (item && item.dataset.projectId) {
-        const notice = notices[idx];
-        saveNoticeToProject(item.dataset.projectId, notice);
-        dropdown.classList.remove('active');
-      }
-    });
-  });
-};
-
-document.addEventListener('click', (event) => {
-  document.querySelectorAll('.save-dropdown.active').forEach(d => d.classList.remove('active'));
-  if (modulesMenu && !modulesMenu.contains(event.target) && event.target !== modulesMenuBtn) {
-    closeModulesMenu();
-  }
-});
-
-const renderDetail = (notice) => {
-  if (!notice) {
-    detailBody.innerHTML = `<div class="empty-detail">No notice selected.</div>`;
-    return;
-  }
-
-  const signals = parseMaybeJson(notice.nursing_signals);
-  const keywords = parseMaybeJson(notice.nursing_keywords);
-  const specialties = parseMaybeJson(notice.nursing_specialties);
-  const roleMix = notice.nursing_role_mix || null;
-  const careSetting = notice.nursing_care_setting || 'unknown';
-  const leadTime = notice.lead_time_days;
-
-  detailBody.innerHTML = `
-    <div class="detail-section">
-      <h5>${notice.employer_name || 'Unknown employer'}</h5>
-      <p>${[notice.facility_name, notice.parent_system].filter(Boolean).join(' | ') || 'System unknown'}</p>
-      <p>${[notice.address, notice.city, notice.county, notice.state].filter(Boolean).join(', ') || 'Location unknown'}</p>
-    </div>
-    <div class="detail-section">
-      <h5>Impact Summary</h5>
-      <p>Score: ${notice.nursing_score ?? 0} (${notice.nursing_label ?? 'Unclear'})</p>
-      <p>Employees affected: ${formatNumber(notice.employees_affected)}</p>
-      <p>NAICS: ${notice.naics ?? 'Unknown'} - Reason: ${notice.reason ?? 'Not provided'}</p>
-    </div>
-    <div class="detail-section">
-      <h5>Nursing Impact Breakdown</h5>
-      <p>Care setting: ${careSetting}</p>
-      <p>Lead time: ${leadTime !== null && leadTime !== undefined ? `${leadTime} days` : 'Unknown'}</p>
-      <p>Role mix: ${roleMix ? `RN ${roleMix.rn}% | LPN ${roleMix.lpn}% | CNA ${roleMix.cna}%` : 'Unavailable'}</p>
-      <p>Specialties: ${specialties.length ? specialties.join(', ') : 'None detected'}</p>
-    </div>
-    <div class="detail-section">
-      <h5>Signals & Keywords</h5>
-      <p>${signals.length ? signals.join(', ') : 'No signals captured yet.'}</p>
-      <p>${keywords.length ? `Keywords: ${keywords.join(', ')}` : 'No keywords logged.'}</p>
-    </div>
-    <div class="detail-section detail-links">
-      <h5>Source</h5>
-      <p>Source: ${notice.source_name ?? 'Unknown source'}</p>
-      ${notice.source_url ? `<p><a href="${notice.source_url}" target="_blank" rel="noreferrer">Open source page</a></p>` : ''}
-    </div>
-    <div class="detail-section">
-      <h5>Timeline</h5>
-      <p>Notice date: ${formatDate(notice.notice_date)}</p>
-      <p>Effective date: ${formatDate(notice.effective_date)}</p>
-      <p>Retrieved: ${formatDate(notice.retrieved_at)}</p>
-    </div>
-  `;
-};
-
-const updateStats = (notices) => {
-  if (allNoticesLoaded) {
-    statTotal.textContent = notices.length.toString();
-    return;
-  }
-  if (metadata?.totalNotices) {
-    statTotal.textContent = metadata.totalNotices.toString();
-    return;
-  }
-  statTotal.textContent = notices.length.toString();
-};
-
-noticeList.addEventListener('click', (event) => {
-  const card = event.target.closest('.notice-card');
-  if (!card) return;
-  const notice = currentNotices.find((n) => n.id === card.dataset.noticeId);
-  renderDetail(notice);
-});
-
-// =============================================================================
-// Multi-Select State Dropdown
-// =============================================================================
-const populateStateDropdown = (regionFilter = '') => {
-  stateOptions.innerHTML = '';
-
-  let statesToShow = ALL_STATES;
-  if (regionFilter && REGION_STATES[regionFilter]) {
-    statesToShow = REGION_STATES[regionFilter];
-  }
-
-  statesToShow.forEach(abbrev => {
-    const count = stateData[abbrev]?.count || 0;
-    const name = STATE_NAMES[abbrev] || abbrev;
-    const isSelected = selectedStates.includes(abbrev);
-
-    const option = document.createElement('div');
-    option.className = `multi-select-option${isSelected ? ' selected' : ''}`;
-    option.dataset.value = abbrev;
-    option.innerHTML = `
-      <span class="multi-select-checkbox">${isSelected ? '&#10003;' : ''}</span>
-      <span class="multi-select-label">${abbrev} - ${name}</span>
-      <span class="multi-select-count">${count > 0 ? `(${count})` : ''}</span>
-    `;
-    stateOptions.appendChild(option);
-  });
-};
-
-const updateStateDisplay = () => {
-  if (selectedStates.length === 0) {
-    stateDisplay.innerHTML = '<span class="multi-select-placeholder">All states</span>';
-  } else if (selectedStates.length <= 3) {
-    stateDisplay.innerHTML = selectedStates
-      .map(s => `<span class="multi-select-tag">${s}<button class="multi-select-tag-remove" data-state="${s}">&times;</button></span>`)
-      .join('');
-  } else {
-    stateDisplay.innerHTML = `
-      ${selectedStates.slice(0, 2).map(s => `<span class="multi-select-tag">${s}<button class="multi-select-tag-remove" data-state="${s}">&times;</button></span>`).join('')}
-      <span class="multi-select-more">+${selectedStates.length - 2} more</span>
-    `;
-  }
-  stateSelect.value = selectedStates.join(',');
-};
-
-const toggleStateSelection = (state) => {
-  const idx = selectedStates.indexOf(state);
-  if (idx === -1) {
-    selectedStates.push(state);
-  } else {
-    selectedStates.splice(idx, 1);
-  }
-  populateStateDropdown(regionSelect.value);
-  updateStateDisplay();
-  applyFilters();
-};
-
-const initStateMultiSelect = () => {
-  stateMultiSelect.addEventListener('click', (e) => {
-    if (e.target.closest('.multi-select-tag-remove')) {
-      const state = e.target.closest('.multi-select-tag-remove').dataset.state;
-      toggleStateSelection(state);
-      return;
-    }
-    if (e.target.closest('.multi-select-display')) {
-      stateMultiSelect.classList.toggle('open');
-    }
-  });
-
-  stateOptions.addEventListener('click', (e) => {
-    const option = e.target.closest('.multi-select-option');
-    if (option) {
-      toggleStateSelection(option.dataset.value);
-    }
-  });
-
-  stateSearch.addEventListener('input', (e) => {
-    const query = e.target.value.toLowerCase();
-    document.querySelectorAll('.multi-select-option').forEach(opt => {
-      const text = opt.textContent.toLowerCase();
-      opt.classList.toggle('hidden', !text.includes(query));
-    });
-  });
-
-  document.getElementById('select-all-states')?.addEventListener('click', () => {
-    const region = regionSelect.value;
-    const states = region && REGION_STATES[region] ? REGION_STATES[region] : ALL_STATES;
-    selectedStates = [...states];
-    populateStateDropdown(region);
-    updateStateDisplay();
-    applyFilters();
-  });
-
-  document.getElementById('clear-all-states')?.addEventListener('click', () => {
-    selectedStates = [];
-    populateStateDropdown(regionSelect.value);
-    updateStateDisplay();
-    applyFilters();
-  });
-
-  document.addEventListener('click', (e) => {
-    if (!stateMultiSelect.contains(e.target)) {
-      stateMultiSelect.classList.remove('open');
-    }
-  });
-};
-
-// =============================================================================
-// Specialty Multi-Select
-// =============================================================================
-const specialtyMultiSelect = document.getElementById('specialty-multi-select');
-const specialtyDisplay = document.getElementById('specialty-display');
-const specialtyOptions = document.getElementById('specialty-options');
-const specialtySearch = document.getElementById('specialty-search');
-
-// Organize specialties by category for dropdown display
-const SPECIALTY_CATEGORIES = {
-  'Critical Care & Emergency': ['ICU', 'MICU', 'SICU', 'CVICU', 'NICU', 'PICU', 'ER', 'Trauma'],
-  'Surgical & Perioperative': ['OR', 'Perioperative', 'PACU', 'Circulating', 'Scrub', 'First Assist'],
-  'Medical-Surgical': ['Med-Surg', 'Telemetry', 'Orthopedic', 'Neurology', 'Oncology', 'Cardiology', 'Pulmonary', 'Renal', 'GI', 'Urology'],
-  'Women\'s Health & Pediatrics': ['OB', 'L&D', 'Postpartum', 'LDRP', 'Antepartum', 'Gynecology', 'Pediatrics', 'Pediatric ER', 'Pediatric Oncology'],
-  'Mental Health & Behavioral': ['Psych', 'Substance Abuse', 'Geriatric Psych', 'Child Psych'],
-  'Long-Term Care & Geriatrics': ['LTC', 'SNF', 'Geriatrics', 'Memory Care', 'Rehab'],
-  'Community & Outpatient': ['Home Health', 'Hospice', 'Public Health', 'School Nurse', 'Occupational Health', 'Outpatient', 'Infusion', 'Wound Care'],
-  'Specialty Units': ['Burn', 'Transplant', 'Dialysis', 'Endoscopy', 'Cath Lab', 'Electrophysiology', 'Interventional Radiology', 'Pain Management', 'Sleep Lab'],
-  'Other Specialties': ['Float Pool', 'Travel', 'Triage', 'Flight Nurse', 'Correctional', 'Military', 'Parish', 'Legal Nurse', 'Aesthetic', 'Bariatric', 'Diabetes', 'Allergy', 'ENT', 'Ophthalmology', 'Dermatology', 'Vascular']
-};
-
-const populateSpecialtyDropdown = () => {
-  if (!specialtyOptions) return;
-  specialtyOptions.innerHTML = '';
-
-  Object.entries(SPECIALTY_CATEGORIES).forEach(([category, specialties]) => {
-    // Add category header
-    const header = document.createElement('div');
-    header.className = 'multi-select-category';
-    header.textContent = category;
-    specialtyOptions.appendChild(header);
-
-    // Add specialty options
-    specialties.forEach(key => {
-      const spec = NURSE_SPECIALTIES[key];
-      if (!spec) return;
-
-      const isSelected = selectedSpecialties.includes(key);
-      const option = document.createElement('div');
-      option.className = `multi-select-option${isSelected ? ' selected' : ''}`;
-      option.dataset.value = key;
-      option.innerHTML = `
-        <span class="multi-select-checkbox">${isSelected ? '&#10003;' : ''}</span>
-        <span class="multi-select-label">${key}</span>
-        <span class="multi-select-sublabel">${spec.name}</span>
-      `;
-      specialtyOptions.appendChild(option);
-    });
-  });
-};
-
-const updateSpecialtyDisplay = () => {
-  if (!specialtyDisplay) return;
-
-  if (selectedSpecialties.length === 0) {
-    specialtyDisplay.innerHTML = '<span class="multi-select-placeholder">All specialties</span>';
-  } else if (selectedSpecialties.length <= 2) {
-    specialtyDisplay.innerHTML = selectedSpecialties
-      .map(s => `<span class="multi-select-tag">${s}<button class="multi-select-tag-remove" data-specialty="${s}">&times;</button></span>`)
-      .join('');
-  } else {
-    specialtyDisplay.innerHTML = `
-      ${selectedSpecialties.slice(0, 2).map(s => `<span class="multi-select-tag">${s}<button class="multi-select-tag-remove" data-specialty="${s}">&times;</button></span>`).join('')}
-      <span class="multi-select-more">+${selectedSpecialties.length - 2} more</span>
-    `;
-  }
-};
-
-const toggleSpecialtySelection = (specialty) => {
-  const idx = selectedSpecialties.indexOf(specialty);
-  if (idx === -1) {
-    selectedSpecialties.push(specialty);
-  } else {
-    selectedSpecialties.splice(idx, 1);
-  }
-  populateSpecialtyDropdown();
-  updateSpecialtyDisplay();
-  applyFilters();
-};
-
-const initSpecialtyMultiSelect = () => {
-  if (!specialtyMultiSelect) return;
-
-  populateSpecialtyDropdown();
-  updateSpecialtyDisplay();
-
-  specialtyMultiSelect.addEventListener('click', (e) => {
-    if (e.target.closest('.multi-select-tag-remove')) {
-      const specialty = e.target.closest('.multi-select-tag-remove').dataset.specialty;
-      toggleSpecialtySelection(specialty);
-      return;
-    }
-    if (e.target.closest('.multi-select-display')) {
-      specialtyMultiSelect.classList.toggle('open');
-    }
-  });
-
-  specialtyOptions?.addEventListener('click', (e) => {
-    const option = e.target.closest('.multi-select-option');
-    if (option) {
-      toggleSpecialtySelection(option.dataset.value);
-    }
-  });
-
-  specialtySearch?.addEventListener('input', (e) => {
-    const query = e.target.value.toLowerCase();
-    specialtyOptions?.querySelectorAll('.multi-select-option').forEach(opt => {
-      const text = opt.textContent.toLowerCase();
-      opt.classList.toggle('hidden', !text.includes(query));
-    });
-    // Also show/hide categories based on if they have visible options
-    specialtyOptions?.querySelectorAll('.multi-select-category').forEach(cat => {
-      let nextEl = cat.nextElementSibling;
-      let hasVisibleOption = false;
-      while (nextEl && !nextEl.classList.contains('multi-select-category')) {
-        if (nextEl.classList.contains('multi-select-option') && !nextEl.classList.contains('hidden')) {
-          hasVisibleOption = true;
-          break;
-        }
-        nextEl = nextEl.nextElementSibling;
-      }
-      cat.classList.toggle('hidden', !hasVisibleOption);
-    });
-  });
-
-  document.getElementById('select-all-specialties')?.addEventListener('click', () => {
-    selectedSpecialties = Object.keys(NURSE_SPECIALTIES);
-    populateSpecialtyDropdown();
-    updateSpecialtyDisplay();
-    applyFilters();
-  });
-
-  document.getElementById('clear-all-specialties')?.addEventListener('click', () => {
-    selectedSpecialties = [];
-    populateSpecialtyDropdown();
-    updateSpecialtyDisplay();
-    applyFilters();
-  });
-
-  document.addEventListener('click', (e) => {
-    if (!specialtyMultiSelect?.contains(e.target)) {
-      specialtyMultiSelect?.classList.remove('open');
-    }
-  });
-};
-
-// =============================================================================
-// Region Dropdown
-// =============================================================================
-const initRegionSelect = () => {
-  regionSelect.innerHTML = '<option value="">All regions</option>';
-  REGIONS.forEach(region => {
-    const opt = document.createElement('option');
-    opt.value = region;
-    opt.textContent = region;
-    regionSelect.appendChild(opt);
-  });
-
-  regionSelect.addEventListener('change', () => {
-    selectedStates = [];
-    populateStateDropdown(regionSelect.value);
-    updateStateDisplay();
-    applyFilters();
-  });
-};
-
-// =============================================================================
-// Custom State Select (for custom notices)
-// =============================================================================
-const initCustomStateSelect = () => {
-  if (!customStateSelect) return;
-  customStateSelect.innerHTML = '<option value="">Select state</option>';
-  ALL_STATES.forEach(abbrev => {
-    const opt = document.createElement('option');
-    opt.value = abbrev;
-    opt.textContent = `${abbrev} - ${STATE_NAMES[abbrev] || abbrev}`;
-    customStateSelect.appendChild(opt);
-  });
-};
-
-// =============================================================================
-// Filter Controls
-// =============================================================================
-const initFilters = () => {
-  refreshBtn.addEventListener('click', applyFilters);
-
-  clearBtn.addEventListener('click', () => {
-    regionSelect.value = '';
-    selectedStates = [];
-    selectedSpecialties = [];
-    populateStateDropdown('');
-    updateStateDisplay();
-    populateSpecialtyDropdown();
-    updateSpecialtyDisplay();
-    orgInput.value = '';
-    sinceInput.value = '';
-    scoreInput.value = 0;
-    if (scoreReadout) scoreReadout.textContent = '0';
-    limitInput.value = '';
-    searchQuery = '';
-    const searchInput = document.getElementById('notice-search');
-    const clearSearchBtn = document.getElementById('clear-search');
-    if (searchInput) searchInput.value = '';
-    if (clearSearchBtn) clearSearchBtn.style.display = 'none';
-    const specialtySearchInput = document.getElementById('specialty-search');
-    if (specialtySearchInput) specialtySearchInput.value = '';
-    applyFilters();
-  });
-
-  // Disable fetch button (data is static)
-  fetchBtn.textContent = 'Data Updated Every 6 Hours';
-  fetchBtn.disabled = true;
-  fetchBtn.title = 'Data is automatically refreshed hourly via GitHub Actions';
-
-  // Live filter on input changes
-  orgInput.addEventListener('input', debounce(applyFilters, 300));
-  sinceInput.addEventListener('change', applyFilters);
-  scoreInput.addEventListener('input', () => {
-    if (scoreReadout) scoreReadout.textContent = scoreInput.value;
-    applyFilters();
-  });
-  limitInput.addEventListener('change', applyFilters);
-
-  // Search by employer name
-  const searchInput = document.getElementById('notice-search');
-  const clearSearchBtn = document.getElementById('clear-search');
-
-  if (searchInput) {
-    searchInput.addEventListener('input', debounce(() => {
-      searchQuery = searchInput.value;
-      if (clearSearchBtn) {
-        clearSearchBtn.style.display = searchQuery ? 'block' : 'none';
-      }
-      applyFilters();
-    }, 300));
-  }
-
-  if (clearSearchBtn) {
-    clearSearchBtn.addEventListener('click', () => {
-      searchQuery = '';
-      if (searchInput) searchInput.value = '';
-      clearSearchBtn.style.display = 'none';
-      applyFilters();
-    });
-  }
-};
-
-const debounce = (fn, delay) => {
-  let timeout;
-  return (...args) => {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => fn(...args), delay);
-  };
-};
-
-// =============================================================================
-// Projects (localStorage)
-// =============================================================================
-const PROJECTS_KEY = 'lni_projects';
-const CUSTOM_NOTICES_KEY = 'lni_custom_notices';
-
-const loadProjects = () => {
-  try {
-    projects = JSON.parse(localStorage.getItem(PROJECTS_KEY) || '[]');
-  } catch {
-    projects = [];
-  }
-};
-
-const saveProjects = () => {
-  localStorage.setItem(PROJECTS_KEY, JSON.stringify(projects));
-};
-
-const loadCustomNotices = () => {
-  try {
-    customNotices = JSON.parse(localStorage.getItem(CUSTOM_NOTICES_KEY) || '[]');
-  } catch {
-    customNotices = [];
-  }
-};
-
-const saveCustomNotices = () => {
-  localStorage.setItem(CUSTOM_NOTICES_KEY, JSON.stringify(customNotices));
-};
-
-const saveNoticeToProject = (projectId, notice) => {
-  const project = projects.find(p => p.id === projectId);
-  if (!project) return;
-
-  if (!project.notices) project.notices = [];
-  if (project.notices.some(n => n.id === notice.id)) {
-    alert('Notice already saved to this project.');
-    return;
-  }
-
-  project.notices.push(notice);
-  saveProjects();
-  alert(`Saved to "${project.name}"`);
-};
-
-const renderProjects = () => {
-  if (!projectsList) return;
-
-  if (projects.length === 0) {
-    projectsList.innerHTML = `<div class="empty-state">No projects yet. Create one to start organizing notices.</div>`;
-    return;
-  }
-
-  projectsList.innerHTML = projects.map(p => `
-    <div class="project-card" data-project-id="${p.id}" style="border-left-color: ${p.color}">
-      <div class="project-card-header">
-        <h4>${p.name}</h4>
-        <span class="project-count">${(p.notices || []).length} notices</span>
-      </div>
-      ${p.owner ? `<p class="project-owner">Owner: ${p.owner}</p>` : ''}
-      <p class="project-desc">${p.description || 'No description'}</p>
-    </div>
-  `).join('');
-
-  projectsList.querySelectorAll('.project-card').forEach(card => {
-    card.addEventListener('click', () => openProjectDetail(card.dataset.projectId));
-  });
-};
-
-const openProjectDetail = (projectId) => {
-  const project = projects.find(p => p.id === projectId);
-  if (!project || !projectDetailModal) return;
-
-  currentProjectId = projectId;
-  document.getElementById('project-detail-name').textContent = project.name;
-  const ownerEl = document.getElementById('project-detail-owner');
-  if (ownerEl) ownerEl.textContent = project.owner ? `Owner: ${project.owner}` : '';
-  document.getElementById('project-detail-desc').textContent = project.description || 'No description';
-
-  const noticesList = document.getElementById('project-notices-list');
-  if ((project.notices || []).length === 0) {
-    noticesList.innerHTML = `<div class="empty-state">No notices saved to this project yet.</div>`;
-  } else {
-    noticesList.innerHTML = project.notices.map(n => `
-      <div class="project-notice-item">
-        <span class="pill">${n.state}</span>
-        <span>${n.employer_name || 'Unknown'}</span>
-        <span>${formatDate(n.notice_date)}</span>
-        <button class="remove-notice-btn" data-notice-id="${n.id}">Remove</button>
-      </div>
-    `).join('');
-  }
-
-  projectDetailModal.classList.add('active');
-  document.body.classList.add('modal-open');
-};
-
-const initProjects = () => {
-  loadProjects();
-  renderProjects();
-
-  const openProjectModal = () => {
-    projectModal?.classList.add('active');
-    document.body.classList.add('modal-open');
-  };
-  const closeProjectModal = () => {
-    projectModal?.classList.remove('active');
-    document.body.classList.remove('modal-open');
-  };
-
-  // Prevent any accidental form submission from reloading the page
-  document.getElementById('project-form')?.addEventListener('submit', (e) => e.preventDefault());
-
-  newProjectBtn?.addEventListener('click', () => {
-    currentProjectId = null;
-    projectForm?.reset();
-    const nameError = document.getElementById('project-name-error');
-    if (nameError) { nameError.textContent = ''; nameError.style.display = 'none'; }
-    document.getElementById('modal-title').textContent = 'Create New Project';
-    openProjectModal();
-  });
-
-  document.getElementById('save-project-btn')?.addEventListener('click', () => {
-    const name = document.getElementById('project-name')?.value?.trim();
-    const owner = document.getElementById('project-owner')?.value?.trim();
-    const description = document.getElementById('project-description')?.value?.trim();
-    const color = document.querySelector('.color-option.selected')?.dataset?.color || '#3b82f6';
-    const nameError = document.getElementById('project-name-error');
-
-    // Validate required fields with visible feedback
-    if (!name) {
-      if (nameError) { nameError.textContent = 'Project name is required.'; nameError.style.display = 'block'; }
-      document.getElementById('project-name')?.focus();
-      return;
-    }
-    if (!owner) {
-      if (nameError) { nameError.textContent = 'Owner name is required.'; nameError.style.display = 'block'; }
-      document.getElementById('project-owner')?.focus();
-      return;
-    }
-
-    // Check for duplicate project name (case-insensitive, exclude current project when editing)
-    const duplicate = projects.find(p =>
-      p.name.toLowerCase() === name.toLowerCase() && p.id !== currentProjectId
-    );
-    if (duplicate) {
-      if (nameError) { nameError.textContent = 'A project with this name already exists.'; nameError.style.display = 'block'; }
-      return;
-    }
-    if (nameError) { nameError.textContent = ''; nameError.style.display = 'none'; }
-
-    if (currentProjectId) {
-      const project = projects.find(p => p.id === currentProjectId);
-      if (project) {
-        project.name = name;
-        project.owner = owner;
-        project.description = description;
-        project.color = color;
-      }
-    } else {
-      projects.push({
-        id: Date.now().toString(),
-        name,
-        owner,
-        description,
-        color,
-        notices: [],
-        createdAt: new Date().toISOString()
-      });
-    }
-
-    saveProjects();
-    renderProjects();
-    closeProjectModal();
-  });
-
-  // X button (top-right)
-  document.getElementById('modal-close')?.addEventListener('click', closeProjectModal);
-  // Cancel button
-  document.getElementById('modal-cancel')?.addEventListener('click', closeProjectModal);
-  // Click overlay background to close
-  projectModal?.addEventListener('click', (e) => {
-    if (e.target === projectModal) closeProjectModal();
-  });
-
-  const closeDetailModal = () => {
-    projectDetailModal?.classList.remove('active');
-    document.body.classList.remove('modal-open');
-  };
-
-  document.getElementById('close-project-detail')?.addEventListener('click', closeDetailModal);
-  projectDetailModal?.addEventListener('click', (e) => {
-    if (e.target === projectDetailModal) closeDetailModal();
-  });
-
-  document.getElementById('delete-project-btn')?.addEventListener('click', () => {
-    if (currentProjectId && confirm('Delete this project?')) {
-      projects = projects.filter(p => p.id !== currentProjectId);
-      saveProjects();
-      renderProjects();
-      closeDetailModal();
-    }
-  });
-
-  // Color picker
-  colorPicker?.querySelectorAll('.color-option').forEach(opt => {
-    opt.addEventListener('click', () => {
-      colorPicker.querySelectorAll('.color-option').forEach(o => o.classList.remove('selected'));
-      opt.classList.add('selected');
-    });
-  });
-
-  // Project search
-  projectSearch?.addEventListener('input', (e) => {
-    const query = e.target.value.toLowerCase();
-    document.querySelectorAll('.project-card').forEach(card => {
-      const text = card.textContent.toLowerCase();
-      card.style.display = text.includes(query) ? '' : 'none';
-    });
-  });
-};
-
 // =============================================================================
 // Lightworker Pool
 // =============================================================================
 const initLightworker = () => {
-  const lwList       = document.getElementById('lightworker-list');
-  const lwModal      = document.getElementById('lightworker-modal');
-  const lwSearch     = document.getElementById('lightworker-search');
-  const addBtn       = document.getElementById('new-lightworker-btn');
-  const saveBtn      = document.getElementById('save-lightworker-btn');
-  const closeBtn     = document.getElementById('lightworker-modal-close');
-  const cancelBtn    = document.getElementById('lightworker-modal-cancel');
-  const homeSelect   = document.getElementById('lw-home-state');
-  const targetGrid   = document.getElementById('lw-target-states');
+  const lwList     = document.getElementById('lightworker-list');
+  const lwModal    = document.getElementById('lightworker-modal');
+  const lwSearch   = document.getElementById('lightworker-search');
+  const addBtn     = document.getElementById('new-lightworker-btn');
+  const saveBtn    = document.getElementById('save-lightworker-btn');
+  const closeBtn   = document.getElementById('lightworker-modal-close');
+  const cancelBtn  = document.getElementById('lightworker-modal-cancel');
+  const homeSelect = document.getElementById('lw-home-state');
+  const targetGrid = document.getElementById('lw-target-states');
 
   if (!window.__lw_ready) {
     if (lwList) lwList.innerHTML = `
@@ -3582,12 +981,12 @@ const initLightworker = () => {
     return;
   }
 
-  const db         = window.__lw_db;
-  const col        = window.__lw_collection;
-  const addDoc     = window.__lw_addDoc;
-  const getDocs    = window.__lw_getDocs;
-  const deleteDoc  = window.__lw_deleteDoc;
-  const docRef     = window.__lw_doc;
+  const db        = window.__lw_db;
+  const col       = window.__lw_collection;
+  const addDoc    = window.__lw_addDoc;
+  const getDocs   = window.__lw_getDocs;
+  const deleteDoc = window.__lw_deleteDoc;
+  const docRef    = window.__lw_doc;
 
   const populateStatePickers = () => {
     if (homeSelect) {
@@ -3595,7 +994,7 @@ const initLightworker = () => {
       ALL_STATES.forEach(s => {
         const opt = document.createElement('option');
         opt.value = s;
-        opt.textContent = `${s} � ${STATE_NAMES[s] || s}`;
+        opt.textContent = `${s} — ${STATE_NAMES[s] || s}`;
         homeSelect.appendChild(opt);
       });
     }
@@ -3641,7 +1040,7 @@ const initLightworker = () => {
     }
     lwList.innerHTML = contacts.map(c => `
       <div class="lightworker-card" data-id="${c.id}">
-        <button class="lw-remove-btn" data-id="${c.id}" title="Remove contact">Remove</button>
+        <button class="lw-remove-btn" data-id="${c.id}">Remove</button>
         <p class="lw-card-name">${c.name}</p>
         <p class="lw-card-email">${c.email}</p>
         <div class="lw-card-states">
@@ -3650,16 +1049,11 @@ const initLightworker = () => {
         </div>
       </div>
     `).join('');
-
     lwList.querySelectorAll('.lw-remove-btn').forEach(btn => {
       btn.addEventListener('click', async () => {
         if (!confirm('Remove this contact from the Lightworker Pool?')) return;
-        try {
-          await deleteDoc(docRef(db, 'lightworker_pool', btn.dataset.id));
-          loadPool();
-        } catch (e) {
-          alert('Could not remove contact: ' + e.message);
-        }
+        try { await deleteDoc(docRef(db, 'lightworker_pool', btn.dataset.id)); loadPool(); }
+        catch (e) { alert('Could not remove: ' + e.message); }
       });
     });
   };
@@ -3678,12 +1072,9 @@ const initLightworker = () => {
 
   lwSearch?.addEventListener('input', e => {
     const q = e.target.value.toLowerCase();
-    const filtered = allContacts.filter(c =>
-      c.name?.toLowerCase().includes(q) ||
-      c.email?.toLowerCase().includes(q) ||
-      c.homeState?.toLowerCase().includes(q)
-    );
-    renderPool(filtered);
+    renderPool(allContacts.filter(c =>
+      c.name?.toLowerCase().includes(q) || c.email?.toLowerCase().includes(q) || c.homeState?.toLowerCase().includes(q)
+    ));
   });
 
   saveBtn?.addEventListener('click', async () => {
@@ -3693,114 +1084,1745 @@ const initLightworker = () => {
     const nameErr  = document.getElementById('lw-name-error');
     const emailErr = document.getElementById('lw-email-error');
     const stateErr = document.getElementById('lw-state-error');
-
     let valid = true;
-    if (!name) {
-      if (nameErr) { nameErr.textContent = 'Name is required.'; nameErr.style.display = 'block'; }
-      valid = false;
-    } else if (nameErr) { nameErr.textContent = ''; nameErr.style.display = 'none'; }
-
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      if (emailErr) { emailErr.textContent = 'Valid email is required.'; emailErr.style.display = 'block'; }
-      valid = false;
-    } else if (emailErr) { emailErr.textContent = ''; emailErr.style.display = 'none'; }
-
-    if (!state) {
-      if (stateErr) { stateErr.textContent = 'Home state is required.'; stateErr.style.display = 'block'; }
-      valid = false;
-    } else if (stateErr) { stateErr.textContent = ''; stateErr.style.display = 'none'; }
-
+    if (!name)  { if (nameErr)  { nameErr.textContent  = 'Name is required.';       nameErr.style.display  = 'block'; } valid = false; }
+    else        { if (nameErr)  { nameErr.textContent  = '';                         nameErr.style.display  = 'none';  } }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+                { if (emailErr) { emailErr.textContent = 'Valid email is required.'; emailErr.style.display = 'block'; } valid = false; }
+    else        { if (emailErr) { emailErr.textContent = '';                         emailErr.style.display = 'none';  } }
+    if (!state) { if (stateErr) { stateErr.textContent = 'Home state is required.'; stateErr.style.display = 'block'; } valid = false; }
+    else        { if (stateErr) { stateErr.textContent = '';                         stateErr.style.display = 'none';  } }
     if (!valid) return;
-
     const targetStates = [];
-    targetGrid?.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => {
-      targetStates.push(cb.value);
-    });
-
+    targetGrid?.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => targetStates.push(cb.value));
     try {
       saveBtn.disabled = true;
       saveBtn.textContent = 'Saving...';
-      await addDoc(col(db, 'lightworker_pool'), {
-        name, email, homeState: state, targetStates,
-        addedAt: new Date().toISOString(),
-      });
+      await addDoc(col(db, 'lightworker_pool'), { name, email, homeState: state, targetStates, addedAt: new Date().toISOString() });
       closeLwModal();
       loadPool();
-    } catch (e) {
-      alert('Could not save contact: ' + e.message);
-    } finally {
-      saveBtn.disabled = false;
-      saveBtn.textContent = 'Add to Pool';
-    }
+    } catch (e) { alert('Could not save: ' + e.message); }
+    finally { saveBtn.disabled = false; saveBtn.textContent = 'Add to Pool'; }
   });
 };
 
-// =============================================================================
-// Custom Notices
-// =============================================================================
-const initCustomNotices = () => {
-  loadCustomNotices();
+const initStateCalibration = () => {
+  if (!calibrationHome || !calibrationTarget) return;
+  const options = ALL_STATES.map(state => `<option value="${state}">${state}</option>`).join('');
+  calibrationHome.innerHTML = `<option value="">Select state</option>${options}`;
+  calibrationTarget.innerHTML = `<option value="">Select state</option>${options}`;
+  calibrationHome.value = ALL_STATES.includes('IN') ? 'IN' : ALL_STATES[0];
+  calibrationTarget.value = ALL_STATES.includes('FL') ? 'FL' : ALL_STATES[1];
 
-  customNoticeForm?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const employer = document.getElementById('custom-employer')?.value?.trim();
-    const state = customStateSelect?.value;
-    const affected = parseInt(document.getElementById('custom-affected')?.value) || null;
-    const noticeDate = document.getElementById('custom-notice-date')?.value || null;
-    const effectiveDate = document.getElementById('custom-effective-date')?.value || null;
+  calibrationHome.addEventListener('change', updateStateCalibration);
+  calibrationTarget.addEventListener('change', updateStateCalibration);
+  updateStateCalibration();
+  Promise.allSettled([
+    loadRecruitmentIntel(),
+    loadStrategicData(),
+    loadRelocationData()
+  ]).then(() => updateStateCalibration());
+};
 
-    if (!employer || !state) {
-      alert('Employer name and state are required.');
+const loadHealth = async () => {
+  try {
+    const data = await fetchJson('/health');
+    apiHasDb = Boolean(data.db);
+    if (data.ok) {
+      setStatus(data.db ? 'API connected to Postgres' : 'API running without DB', true);
+    } else {
+      setStatus('API error', false);
+    }
+  } catch {
+    apiHasDb = false;
+    setStatus('API offline', false);
+  }
+};
+
+const loadStates = async () => {
+  try {
+    const data = await fetchJson('/states');
+    const states = data.states ?? [];
+    statStates.textContent = states.length.toString();
+    states.forEach(({ state }) => {
+      const opt = document.createElement('option');
+      opt.value = state;
+      opt.textContent = state;
+      stateSelect.appendChild(opt);
+    });
+  } catch {
+    statStates.textContent = '0';
+  }
+};
+
+const renderNotices = (notices) => {
+  const visibleNotices = notices.slice(0, NOTICE_MAX_COUNT);
+
+  if (!visibleNotices.length) {
+    noticeList.innerHTML = `<div class="empty-state">No notices match these filters yet.</div>`;
+    refreshNoticeListWindow(0);
+    refreshTalentCommandCenter();
+  renderSpecialtySurplus();
+    return;
+  }
+
+  noticeList.innerHTML = '';
+  visibleNotices.forEach((notice, idx) => {
+    const card = document.createElement('article');
+    card.className = notice.isCustom ? 'notice-card custom-notice' : 'notice-card';
+    card.style.animationDelay = `${idx * 35}ms`;
+    card.dataset.noticeId = notice.id;
+
+    // Handle both API format and custom notice format
+    const label = notice.nursing_label ?? notice.nursingImpact?.label ?? 'Unclear';
+    const score = notice.nursing_score ?? notice.nursingImpact?.score ?? 0;
+    const employer = notice.employer_name ?? notice.employerName ?? 'Unknown employer';
+    const city = notice.city;
+    const state = notice.state;
+    const location = [city, state].filter(Boolean).join(', ') || state;
+    const noticeDate = formatDate(notice.notice_date ?? notice.noticeDate ?? notice.retrieved_at ?? notice.createdAt);
+    const affected = notice.employees_affected ?? notice.affectedCount;
+
+    const customBadge = notice.isCustom ? '<span class="custom-badge">Custom</span>' : '';
+
+    card.innerHTML = `
+      <div class="notice-top">
+        <span class="pill">${state}</span>
+        ${customBadge}
+        <span class="score">${label} - ${score}</span>
+        <div class="save-to-project">
+          <button class="save-to-project-btn" data-notice-idx="${idx}">+ Save</button>
+          <div class="save-dropdown" id="dropdown-${idx}"></div>
+        </div>
+      </div>
+      <h4>${employer}</h4>
+      <div class="notice-meta">
+        <span>${location}</span>
+        <span>${noticeDate}</span>
+        <span>${formatNumber(affected)} impacted</span>
+      </div>
+    `;
+
+    noticeList.appendChild(card);
+  });
+
+  // Add save-to-project dropdown handlers
+  document.querySelectorAll('.save-to-project-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const idx = btn.dataset.noticeIdx;
+      const dropdown = document.getElementById(`dropdown-${idx}`);
+
+      // Close all other dropdowns
+      document.querySelectorAll('.save-dropdown.active').forEach(d => {
+        if (d !== dropdown) d.classList.remove('active');
+      });
+
+      // Build dropdown content
+      if (projects.length === 0) {
+        dropdown.innerHTML = `<div class="save-dropdown-item" style="color: var(--muted);">No projects yet. Create one first.</div>`;
+      } else {
+        dropdown.innerHTML = projects.map(p => `
+          <div class="save-dropdown-item" data-project-id="${p.id}" style="border-left-color: ${p.color}">
+            ${p.name}
+          </div>
+        `).join('');
+      }
+
+      dropdown.classList.toggle('active');
+    });
+  });
+
+  // Handle dropdown item clicks
+  document.querySelectorAll('.save-dropdown').forEach((dropdown, idx) => {
+    dropdown.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const item = e.target.closest('.save-dropdown-item');
+      if (item && item.dataset.projectId) {
+        const notice = visibleNotices[idx];
+        saveNoticeToProject(item.dataset.projectId, notice);
+        dropdown.classList.remove('active');
+      }
+    });
+  });
+
+  refreshNoticeListWindow(visibleNotices.length);
+  refreshTalentCommandCenter();
+  renderSpecialtySurplus();
+};
+
+// Close dropdowns when clicking elsewhere
+document.addEventListener('click', (event) => {
+  document.querySelectorAll('.save-dropdown.active').forEach(d => d.classList.remove('active'));
+  if (modulesMenu && !modulesMenu.contains(event.target) && event.target !== modulesMenuBtn) {
+    closeModulesMenu();
+  }
+});
+
+const renderDetail = (notice) => {
+  if (!notice) {
+    detailBody.innerHTML = `<div class="empty-detail">No notice selected.</div>`;
+    return;
+  }
+
+  const signals = parseMaybeJson(notice.nursing_signals);
+  const keywords = parseMaybeJson(notice.nursing_keywords);
+  const specialties = parseMaybeJson(notice.nursing_specialties);
+  const roleMix = notice.nursing_role_mix || null;
+  const careSetting = notice.nursing_care_setting || 'unknown';
+  const leadTime = notice.lead_time_days;
+
+  detailBody.innerHTML = `
+    <div class="detail-section">
+      <h5>${notice.employer_name || 'Unknown employer'}</h5>
+      <p>${[notice.facility_name, notice.parent_system].filter(Boolean).join(' • ') || 'System unknown'}</p>
+      <p>${[notice.address, notice.city, notice.county, notice.state].filter(Boolean).join(', ') || 'Location unknown'}</p>
+    </div>
+    <div class="detail-section">
+      <h5>Impact Summary</h5>
+      <p>Score: ${notice.nursing_score ?? 0} (${notice.nursing_label ?? 'Unclear'})</p>
+      <p>Employees affected: ${formatNumber(notice.employees_affected)}</p>
+      <p>NAICS: ${notice.naics ?? 'Unknown'} - Reason: ${notice.reason ?? 'Not provided'}</p>
+    </div>
+    <div class="detail-section">
+      <h5>Nursing Impact Breakdown</h5>
+      <p>Care setting: ${careSetting}</p>
+      <p>Lead time: ${leadTime !== null && leadTime !== undefined ? `${leadTime} days` : 'Unknown'}</p>
+      <p>Role mix: ${roleMix ? `RN ${roleMix.rn}% • LPN ${roleMix.lpn}% • CNA ${roleMix.cna}%` : 'Unavailable'}</p>
+      <p>Specialties: ${specialties.length ? specialties.join(', ') : 'None detected'}</p>
+    </div>
+    <div class="detail-section">
+      <h5>Signals & Keywords</h5>
+      <p>${signals.length ? signals.join(', ') : 'No signals captured yet.'}</p>
+      <p>${keywords.length ? `Keywords: ${keywords.join(', ')}` : 'No keywords logged.'}</p>
+    </div>
+    <div class="detail-section detail-links">
+      <h5>Source</h5>
+      <p>Source: ${notice.source_name ?? 'Unknown source'}</p>
+      <p><a href="${notice.source_url}" target="_blank" rel="noreferrer">Open source page</a></p>
+    </div>
+    <div class="detail-section">
+      <h5>Timeline</h5>
+      <p>Notice date: ${formatDate(notice.notice_date)}</p>
+      <p>Effective date: ${formatDate(notice.effective_date)}</p>
+      <p>Retrieved: ${formatDate(notice.retrieved_at)}</p>
+    </div>
+  `;
+};
+
+// =============================================================================
+// Premium Insights (API mode fallback to /data files when available)
+// =============================================================================
+const renderInsightFallback = (element, message) => {
+  if (!element) return;
+  element.innerHTML = `<div class="empty-state">${message}</div>`;
+};
+
+const renderAlerts = (data) => {
+  if (!alertsList) return;
+  const alerts = data?.alerts ?? [];
+  if (!alerts.length) {
+    renderInsightFallback(alertsList, 'No recent alerts.');
+    return;
+  }
+  const top = alerts
+    .sort((a, b) => (b.early_warning === true) - (a.early_warning === true))
+    .slice(0, 8);
+  alertsList.innerHTML = top.map(alert => `
+    <div class="insight-row">
+      <div>
+        <div class="insight-title">${alert.employer_name || 'Unknown employer'}</div>
+        <div class="insight-meta">${[alert.state, alert.facility_name || alert.parent_system].filter(Boolean).join(' • ')}</div>
+      </div>
+      <div>
+        <div class="insight-pill ${alert.early_warning ? 'yellow' : ''}">${alert.early_warning ? 'Early' : 'Signal'}</div>
+        <div class="insight-meta">${alert.lead_time_days ?? 'n/a'}d lead</div>
+      </div>
+    </div>
+  `).join('');
+};
+
+const renderHeatmap = (data) => {
+  if (!heatmapList) return;
+  const locations = data?.locations ?? [];
+  const ranked = locations
+    .filter(loc => loc.risk_level === 'red' || loc.risk_level === 'yellow')
+    .sort((a, b) => b.notices_last_90_days - a.notices_last_90_days)
+    .slice(0, 8);
+  if (!ranked.length) {
+    renderInsightFallback(heatmapList, 'No hotspots detected.');
+    return;
+  }
+  heatmapList.innerHTML = ranked.map(loc => {
+    const cityDisplay = loc.city && loc.city !== 'unknown' ? loc.city : `${loc.state} Statewide`;
+    return `
+    <div class="insight-row">
+      <div>
+        <div class="insight-title">${cityDisplay}</div>
+        <div class="insight-meta">${loc.state} • ${loc.notices_last_90_days} in 90d</div>
+      </div>
+      <div class="insight-pill ${loc.risk_level === 'red' ? 'red' : 'yellow'}">${loc.risk_level.toUpperCase()}</div>
+    </div>
+  `;
+  }).join('');
+};
+
+const renderTalent = (data) => {
+  if (!talentList) return;
+  const opportunities = data?.opportunities ?? [];
+  latestTalentOpportunities = opportunities;
+  specialtySurplusMode = 'live_talent';
+  const top = opportunities
+    .sort((a, b) => b.estimated_nurses_available - a.estimated_nurses_available)
+    .slice(0, 8);
+  if (!top.length) {
+    renderInsightFallback(talentList, 'No talent signals yet.');
+    renderSpecialtySurplus();
+    return;
+  }
+
+  talentList.innerHTML = top.map(entry => {
+    const cityDisplay = entry.city && entry.city !== 'unknown' ? entry.city : `${entry.state} Statewide`;
+    return `
+    <div class="insight-row">
+      <div>
+        <div class="insight-title">${cityDisplay}</div>
+        <div class="insight-meta">${entry.state} • ${entry.notices_count} notices</div>
+      </div>
+      <div>
+        <div class="insight-pill">${entry.estimated_nurses_available}</div>
+        <div class="insight-meta">${entry.specialties?.slice(0, 2).join(', ') || 'General'}</div>
+      </div>
+    </div>
+  `;
+  }).join('');
+
+  renderSpecialtySurplus();
+};
+
+const renderEmployers = (data) => {
+  if (!employerList) return;
+  const employers = data?.employers ?? [];
+  const top = employers
+    .sort((a, b) => b.total_notices - a.total_notices)
+    .slice(0, 8);
+  if (!top.length) {
+    renderInsightFallback(employerList, 'No employer profiles yet.');
+    return;
+  }
+  employerList.innerHTML = top.map(entry => `
+    <div class="insight-row">
+      <div>
+        <div class="insight-title">${entry.employer_name || 'Unknown employer'}</div>
+        <div class="insight-meta">${entry.parent_system || entry.state} • ${entry.total_notices} notices</div>
+      </div>
+      <div class="insight-meta">${entry.avg_lead_time_days ?? 'n/a'}d avg lead</div>
+    </div>
+  `).join('');
+};
+
+const SURPLUS_SPECIALTY_MAP = {
+  ER: ['ER', 'ED', 'EMERGENCY', 'EMERGENCY DEPARTMENT'],
+  OR: ['OR', 'OPERATING ROOM', 'PERIOPERATIVE', 'SURGICAL'],
+  ICU: ['ICU', 'CRITICAL CARE'],
+  MED_SURG: ['MED SURG', 'MED-SURG', 'MEDICAL SURGICAL'],
+  L_AND_D: ['L&D', 'LABOR', 'DELIVERY', 'OB'],
+  TELE: ['TELE', 'TELEMETRY'],
+  PCU: ['PCU', 'STEPDOWN', 'STEP-DOWN'],
+  PEDS: ['PEDS', 'PEDIATRIC'],
+  BEHAVIORAL: ['BEHAVIORAL', 'PSYCH']
+};
+const SURPLUS_SPECIALTY_ORDER = ['ER', 'OR', 'ICU', 'MED_SURG', 'L_AND_D', 'TELE', 'PCU', 'PEDS', 'BEHAVIORAL'];
+const SURPLUS_SPECIALTY_LABELS = {
+  ER: 'ER/ED',
+  OR: 'OR',
+  ICU: 'ICU',
+  MED_SURG: 'Med-Surg',
+  L_AND_D: 'L&D',
+  TELE: 'Telemetry',
+  PCU: 'PCU',
+  PEDS: 'Pediatrics',
+  BEHAVIORAL: 'Behavioral Health'
+};
+
+const normalizeSpecialty = (value) => String(value || '').toUpperCase().replace(/[^A-Z&\s-]/g, ' ').replace(/\s+/g, ' ').trim();
+const specialtyTokens = (value) => normalizeSpecialty(value).replace(/-/g, ' ').split(' ').filter(Boolean);
+const aliasMatchesSpecialty = (specialtyValue, alias) => {
+  const normalizedValue = normalizeSpecialty(specialtyValue);
+  const normalizedAlias = normalizeSpecialty(alias);
+  if (!normalizedValue || !normalizedAlias) return false;
+  if (normalizedAlias.includes(' ')) return normalizedValue.includes(normalizedAlias);
+  const tokens = specialtyTokens(normalizedValue);
+  return tokens.includes(normalizedAlias);
+};
+
+const findSpecialtyBucket = (value) => {
+  const normalized = normalizeSpecialty(value);
+  if (!normalized) return null;
+  for (const [bucket, aliases] of Object.entries(SURPLUS_SPECIALTY_MAP)) {
+    if (aliases.some((alias) => aliasMatchesSpecialty(normalized, alias))) return bucket;
+  }
+  return null;
+};
+
+const renderSpecialtySurplus = () => {
+  if (!specialtySurplusList) return;
+  const totals = new Map(SURPLUS_SPECIALTY_ORDER.map((key) => [key, 0]));
+
+  if (Array.isArray(latestTalentOpportunities) && latestTalentOpportunities.length) {
+    latestTalentOpportunities.forEach((entry) => {
+      const est = Number(entry?.estimated_nurses_available || 0);
+      const specialties = Array.isArray(entry?.specialties) ? entry.specialties : [];
+      const buckets = [...new Set(specialties.map(findSpecialtyBucket).filter(Boolean))];
+      if (!buckets.length || est <= 0) return;
+      const base = Math.floor(est / buckets.length);
+      let remainder = est % buckets.length;
+      buckets.forEach((bucket) => {
+        const plus = remainder > 0 ? 1 : 0;
+        if (remainder > 0) remainder -= 1;
+        totals.set(bucket, (totals.get(bucket) || 0) + base + plus);
+      });
+    });
+  } else {
+    specialtySurplusMode = 'notice_proxy';
+    (currentNotices || []).forEach((notice) => {
+      const specialties = parseMaybeJson(notice?.nursing_specialties);
+      const buckets = [...new Set(specialties.map(findSpecialtyBucket).filter(Boolean))];
+      if (!buckets.length) return;
+      const affected = Number(notice?.employees_affected || notice?.affected_workers || notice?.affected || 0);
+      const est = Math.max(1, Math.round((affected || 1) * 0.2));
+      const base = Math.floor(est / buckets.length);
+      let remainder = est % buckets.length;
+      buckets.forEach((bucket) => {
+        const plus = remainder > 0 ? 1 : 0;
+        if (remainder > 0) remainder -= 1;
+        totals.set(bucket, (totals.get(bucket) || 0) + base + plus);
+      });
+    });
+  }
+
+  const ranked = SURPLUS_SPECIALTY_ORDER
+    .map((bucket) => ({ bucket, count: totals.get(bucket) || 0 }))
+    .filter((row) => row.count > 0)
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 8);
+
+  if (!ranked.length) {
+    specialtySurplusList.innerHTML = '<div class="empty-state">No specialty surplus signals yet.</div>';
+    return;
+  }
+
+  specialtySurplusList.innerHTML = ranked.map((row) => `
+    <div class="insight-row">
+      <div>
+        <div class="insight-title">${SURPLUS_SPECIALTY_LABELS[row.bucket] || row.bucket}</div>
+        <div class="specialty-surplus-meta">Estimated available pool</div>
+      </div>
+      <div>
+        <div class="insight-pill">${Math.round(row.count).toLocaleString()}</div>
+      </div>
+    </div>
+  `).join('');
+  const modeLabel = specialtySurplusMode === 'live_talent'
+    ? 'Source: Live talent opportunities'
+    : 'Source: Notice proxy model (lower confidence)';
+  specialtySurplusList.innerHTML += `<div class="specialty-surplus-meta">${modeLabel}</div>`;
+};
+const loadInsights = async () => {
+  try {
+    const [alerts, geo, talent, employers] = await Promise.all([
+      fetchJson('/insights/alerts'),
+      fetchJson('/insights/geo'),
+      fetchJson('/insights/talent'),
+      fetchJson('/insights/employers')
+    ]);
+    renderAlerts(alerts);
+    renderHeatmap(geo);
+    renderTalent(talent);
+    renderEmployers(employers);
+  } catch (err) {
+    try {
+      const [alerts, geo, talent, employers] = await Promise.all([
+        fetchJson('/data/alerts.json'),
+        fetchJson('/data/geo.json'),
+        fetchJson('/data/talent.json'),
+        fetchJson('/data/employers.json')
+      ]);
+      renderAlerts(alerts);
+      renderHeatmap(geo);
+      renderTalent(talent);
+      renderEmployers(employers);
+    } catch (fallbackErr) {
+      console.warn('Insights unavailable in API mode:', fallbackErr);
+      specialtySurplusMode = 'unavailable';
+      renderInsightFallback(alertsList, 'Insights unavailable.');
+      renderInsightFallback(heatmapList, 'Insights unavailable.');
+      renderInsightFallback(talentList, 'Insights unavailable.');
+      renderInsightFallback(employerList, 'Insights unavailable.');
+      renderInsightFallback(specialtySurplusList, 'Insights unavailable.');
+    }
+  }
+};
+
+const initForecast = () => {
+  if (!forecastBeds || !forecastSetting || !forecastHorizon || !forecastOutput) return;
+  const roleMixBySetting = {
+    acute: { rn: 70, lpn: 20, cna: 10 },
+    snf: { rn: 35, lpn: 25, cna: 40 },
+    outpatient: { rn: 60, lpn: 25, cna: 15 },
+    home: { rn: 55, lpn: 25, cna: 20 },
+    behavioral: { rn: 60, lpn: 20, cna: 20 }
+  };
+  const multiplierBySetting = {
+    acute: 0.65,
+    snf: 0.45,
+    outpatient: 0.2,
+    home: 0.15,
+    behavioral: 0.35
+  };
+
+  const updateForecast = () => {
+    const beds = Number.parseInt(forecastBeds.value || '0', 10) || 0;
+    const setting = forecastSetting.value || 'acute';
+    const horizon = Number.parseInt(forecastHorizon.value || '0', 10) || 0;
+    const multiplier = multiplierBySetting[setting] ?? 0.4;
+    const totalNurses = Math.max(0, Math.round(beds * multiplier));
+    const mix = roleMixBySetting[setting] ?? roleMixBySetting.acute;
+    const rn = Math.round((totalNurses * mix.rn) / 100);
+    const lpn = Math.round((totalNurses * mix.lpn) / 100);
+    const cna = Math.round((totalNurses * mix.cna) / 100);
+
+    forecastOutput.innerHTML = `
+      Estimated displacement over ${horizon || 60} days:
+      <strong>${totalNurses}</strong> total nurses
+      (RN ${rn} • LPN ${lpn} • CNA ${cna}).
+    `;
+  };
+
+  forecastBeds.addEventListener('input', updateForecast);
+  forecastSetting.addEventListener('change', updateForecast);
+  forecastHorizon.addEventListener('input', updateForecast);
+  updateForecast();
+};
+
+const loadNotices = async () => {
+  setLoading('Loading notices...');
+  const query = buildQuery();
+  try {
+    const data = await fetchJson(`/notices?${query}`);
+    let notices = data.notices ?? [];
+
+    // Merge in custom notices from localStorage
+    if (customNotices.length > 0) {
+      notices = [...customNotices, ...notices];
+    }
+    notices = filterNoticesByScope(notices);
+    notices = sortNoticesByNewest(notices);
+
+    currentNotices = notices;
+    renderNotices(currentNotices);
+    updateStats(currentNotices);
+    if (!currentNotices.length) {
+      if (!apiHasDb) {
+        noticeList.innerHTML = `<div class="empty-state">No database connected. Start Postgres and run the worker to load notices.</div>`;
+      }
+      renderDetail(null);
+    }
+  } catch (err) {
+    // Still show custom notices even if API fails
+    if (customNotices.length > 0) {
+      currentNotices = sortNoticesByNewest([...customNotices]);
+      renderNotices(currentNotices);
+      updateStats(currentNotices);
+    } else {
+      setLoading('Unable to load notices. Is the API running?');
+      statTotal.textContent = '0';
+    }
+    renderDetail(null);
+  }
+};
+
+// Update stats display
+const updateStats = (notices) => {
+  statTotal.textContent = notices.length.toString();
+  statUpdated.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+};
+
+noticeList.addEventListener('click', (event) => {
+  const card = event.target.closest('.notice-card');
+  if (!card) return;
+  const notice = currentNotices.find((n) => n.id === card.dataset.noticeId);
+  renderDetail(notice);
+});
+
+scoreInput.addEventListener('input', () => {
+  scoreReadout.textContent = `${scoreInput.value}+`;
+});
+
+refreshBtn.addEventListener('click', loadNotices);
+
+// Fetch live data from state adapters
+const fetchLiveData = async () => {
+  if (isFetching) return;
+  isFetching = true;
+  fetchBtn.disabled = true;
+  fetchBtn.classList.add('fetching');
+  fetchBtn.textContent = 'Fetching...';
+  setLoading('Fetching live data from state WARN sources... This may take a minute.');
+
+  try {
+    const data = await fetchJson('/fetch', { method: 'POST' });
+
+    if (data.success) {
+      fetchBtn.textContent = `Fetched ${data.count} notices`;
+      setStatus(`Fetched ${data.count} from ${data.states?.length || 0} states`, true);
+      // Reload notices and states
+      await loadStates();
+      await loadNotices();
+    } else {
+      fetchBtn.textContent = 'Fetch Failed';
+      setStatus('Fetch error: ' + (data.error || 'Unknown'), false);
+    }
+  } catch (err) {
+    fetchBtn.textContent = 'Fetch Failed';
+    setStatus('Fetch error: ' + err.message, false);
+  } finally {
+    isFetching = false;
+    fetchBtn.disabled = false;
+    fetchBtn.classList.remove('fetching');
+    setTimeout(() => {
+      fetchBtn.textContent = 'Fetch Live Data';
+    }, 3000);
+  }
+};
+
+fetchBtn.addEventListener('click', fetchLiveData);
+
+clearBtn.addEventListener('click', () => {
+  regionSelect.value = '';
+  // Clear multi-select states
+  selectedStates = [];
+  stateSelect.value = '';
+  populateStateDropdown('');
+  updateStateDisplay();
+  // Clear other filters
+  orgInput.value = '';
+  sinceInput.value = '';
+  scoreInput.value = 0;
+  scoreReadout.textContent = '0+';
+  limitInput.value = '';
+  // Update map highlights and reload
+  if (currentMapView === 'map') {
+    updateMapHighlights();
+  } else {
+    renderBarChart();
+  }
+  loadNotices();
+});
+
+regionSelect.addEventListener('change', () => {
+  // Update state dropdown to show only states in the selected region
+  populateStateDropdown(regionSelect.value);
+  // Update map/chart highlights
+  if (currentMapView === 'map') {
+    updateMapHighlights();
+  } else {
+    renderBarChart();
+  }
+  // Trigger data reload
+  loadNotices();
+});
+
+// State selection is now handled by the multi-select component via onStateSelectionChange()
+
+orgInput.addEventListener('input', () => {
+  if (!orgInput.value.trim()) {
+    loadNotices();
+  }
+});
+
+// US State abbreviation to full name mapping
+const STATE_NAMES = {
+  AL: 'Alabama', AK: 'Alaska', AZ: 'Arizona', AR: 'Arkansas', CA: 'California',
+  CO: 'Colorado', CT: 'Connecticut', DE: 'Delaware', FL: 'Florida', GA: 'Georgia',
+  HI: 'Hawaii', ID: 'Idaho', IL: 'Illinois', IN: 'Indiana', IA: 'Iowa',
+  KS: 'Kansas', KY: 'Kentucky', LA: 'Louisiana', ME: 'Maine', MD: 'Maryland',
+  MA: 'Massachusetts', MI: 'Michigan', MN: 'Minnesota', MS: 'Mississippi', MO: 'Missouri',
+  MT: 'Montana', NE: 'Nebraska', NV: 'Nevada', NH: 'New Hampshire', NJ: 'New Jersey',
+  NM: 'New Mexico', NY: 'New York', NC: 'North Carolina', ND: 'North Dakota', OH: 'Ohio',
+  OK: 'Oklahoma', OR: 'Oregon', PA: 'Pennsylvania', RI: 'Rhode Island', SC: 'South Carolina',
+  SD: 'South Dakota', TN: 'Tennessee', TX: 'Texas', UT: 'Utah', VT: 'Vermont',
+  VA: 'Virginia', WA: 'Washington', WV: 'West Virginia', WI: 'Wisconsin', WY: 'Wyoming',
+  PR: 'Puerto Rico',
+  DC: 'District of Columbia'
+};
+
+// US state SVG - using standard Albers USA projection
+const US_STATES_SVG = `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" preserveAspectRatio="xMidYMid meet" style="background:#f8f8f8">
+  <path id="AL" d="M628.5,405.6l-1.8-16.1l-2.7-19.9l-1.9-15.7l1.6-4.1l2.7-7.1l4.5-8.7l0.4-6l4.2-9.8l0.8-4.7l-1.4-5.7l0.2-2.9l34.4-3.5l11.3-1.1l0.5,1.7l2.9,12.6l3.5,16.9l1.9,10.5l0.4,23.9l-0.7,5.4l1.9,5.3l0.5,5.9l1.9,4.5l-1.5,5l-0.1,3.9l1.8,3.7l3.3,4.9l-1.9,4.7l-15.8,1.8l-5.8,0.2l-1.5,6l-4.6,13.2l-2.6,5.5l3.2,5.6l-2.3,3.6l-26.7,3.3l-2.4-12.9l0.5-6.3l-2.1-6.2l0.1-5.6l-3.9-10.9z"/>
+  <path id="AK" d="M158.1,573.7l-0.3-0.6l0.8-2.1l2.1-1l2.4-0.1l1,0.6l-0.3,1l-2.2,1.2l-2.2,0.9l-0.9,0.2zM162.9,571.2l0.8-1.3l1.9,0.1l0,0.9l-1.3,0.8l-1.1,0z"/>
+  <path id="AZ" d="M214.9,404l-0.5-1.1l-1.7-1.1l-0.6-1.6l0.5-1.1l-0.3-0.7l-2.2-0.7l-0.5-2l1.2-2.6l0.8-1l0-1.9l-1.8-2.4l-3.9-5.8l-3.4-3.6l-1.5-5l-2.7-2.7l-1-3.6l-2.9-2.1l0.6-2.7l1.9-4.7l0.2-11.5l-0.7-3.6l0.6-5.3l-0.2-5.3l-2.9-7.8l-0.7-5.8l-2-3.2l0-1.9l12.1-70.3l38.4,7.2l38.6,6.2l-14.9,100.6l-21.6-3l-30.9-4.7l-0.6,6.5l0.5,1.1l-1.5,2.4l-0.6,4.7l1.7,5.6l0.9,4.9l0.4,2.4l2.4,2.3l0.1,1.9l-2.3,0.1l-1.9,2.5l-1.4,4.3l0.3,2.4l-1.2,0.3z"/>
+  <path id="AR" d="M583.7,340.7l-5.4,0.5l-2.9-3.2l0.5-3.7l-1.9-4l1.9-2.5l-1.6-4.1l2.1-5.3l-2.7-4.3l2-1.2l-0.9-4.5l-40.6,1.5l-35.4,1l0.7,5.4l0,8.4l1.9,7.1l-0.2,4.1l2.1,5.3l0.3,3l-1.2,5.1l0.5,3.5l2.9,4l-0.6,2.7l3.3,0.9l0.9,3.7l1.9-1.7l2.6,1l0.4,29.3l23.5-0.4l24.5-0.8l12.8-0.8l5.4-0.5l1.8-5.7l3.6-3.6l-0.2-3.9l3.6-6.2l3.7-2.2l-0.2-7.9l-2.7-2.9l2.7-1.9l-0.6-5.9l2.9-5.9l2-0.2l-1.1-5.3z"/>
+  <path id="CA" d="M122.7,374.3l-0.7-2.5l-1.5-1.2l-0.8-2.9l1.2-2.4l-1-2.9l0.7-2.2l-1.3-2l0.1-1.8l1.8-2.3l1.8,0.5l1.4-1.6l-2.6-2.9l-1.9-2.6l-1.9-3.4l0.3-2.6l-0.9-4.1l-2.5-4.9l-0.1-3.3l-1.9-3.5l0.3-1.6l-1.4-2.7l-1.7-1l-0.1-2.4l-3.9-5.5l-1.6-5.2l-0.3-2.6l-1.9-3.5l-1.9-4.3l-0.2-2.9l-1.3-2.5l-3.2-2.4l-0.2-1.2l-2.4-2.9l-0.3-2.9l-3.4-3.6l-0.9-2.8l0.3-5.7l-1-1.9l-0.4-3.7l-0.3-3.9l0.7-2.9l-1.9-2l-0.2-0.6l1.6-5.9l3.5-5.9l0.2-3.1l1.7-3.9l2.9-1.6l1.7-3.9l-0.1-3.1l1.4-2.7l0-2.9l-0.4-2.5l4.4-6.6l3.9-4.7l0.9-3l3.9-4.9l0.6-2.9l-0.4-1.5l2.2-4.2l1.5-4l2.4-3.9l-0.9-1l0.7-1.2l6.5-0.9l2.9-1.7l2.6-2.3l0.7-4.6l-1.6-1.7l2.5-5.9l36.2,8.7l33.7,7.5l-10.9,49.6l12.8,16.6l27.5,36.9l18.8,24l-0.9,3.4l0.5,4.5l-0.2,11.5l-1.9,4.7l-0.6,2.7l-22.9-3l-51.9-9.1l1.3,7.4l4.2,12.7l5.1,9.1l0.6,2.3l2.9,3.6l-0.1,4.6l2.2,3.8l-0.1,2.3l4.7,6.3l-0.7,2.9l-4.9-0.2l-6.6-1l-5.5-3.7l-3.5,0.2l-5.3-2.1l-4.2-1.3l-1.9,0.4l-6.5-1.4l-5.6-3.7l-4.7-1.9z"/>
+  <path id="CO" d="M380.6,254l-1.7-14.9l-1.9-13.9l-2.8-18.9l-1.9-16.6l-44.3,3.3l-45.5,2.3l-42.6,0.7l3.5,23.7l3.7,26.1l3.7,23l3.5,25.2l41.9-2.9l42.5-4.1l42.5-5.3z"/>
+  <path id="CT" d="M852.1,175l-4.6-17.9l-0.6-3.5l-6.1,1.4l-22.3,5.1l0.9,5l1.9,8.3l-0.6,6.7l-1.5,2.1l1.4,2.2l5.9-3.9l3.5-3.5l1.3,0.8l3.5-1l5.9-1.2l8.7-1.8z"/>
+  <path id="DE" d="M820.8,228.1l0.4-3.4l0.6-1.9l-1-1.6l-1.5-0.3l0.1-2.7l-2.6-0.6l-1.8-3.3l-0.4-4.7l-4.9-2.6l-1.9-3.3l4.7-0.7l3.8-0.2l1.8,0.3l3,10.7l2.2,7.9l-0.4,3.5l-1.3,0.6z"/>
+  <path id="FL" d="M752.7,488.5l-2.6-3.9l-2.3-5.7l-2.8-4.9l-2.9-7.6l-2.5-3.8l-1.7-5.4l-3.7-5.8l-1.1-2l0.2-2.3l-3-4.9l-4.5-3.9l-3.7-6.2l-3.9-3.9l-2.7-4.7l-0.5-4.5l-1.6,0.7l-1.9,3.5l2.1,4.9l4.7,5.3l3.4,5.7l4.9,5.7l2.2,4.9l3.6,5.2l2.9,3.5l2.3,6.4l3,4.9l0.4,2.6l-2.3,0.9l-0.9,2.5l0.5,3.7l-1.3,1l-3.5,0.1l0.4,3.4l0.9,1.9l-1.7,4.1l-3.9,1.6l-1.3,3.5l-3.3,0.3l-2.7,1.7l-4.9,1.2l-2.3,1.5l-5,1.7l-0.3,2.4l-3.7,0.7l-5.6,2.4l-3.7,0.7l-3.1,2.2l-4.9,1.3l-0.8,1.8l-5.7,2.4l-4.5,0.6l-1.7-1l-2.5,1.7l-4.5-0.8l-3.9,1.6l-2.8-0.9l-1.9,0.9l-3.2-1.9l0.5-2l-3.3-2.5l-4-0.9l-0.9,0.9l-2.9-2.1l-4.9-0.7l-2.5-2l-4.2-0.7l-2.7-2.9l-0.2-2.1l-3.5-0.7l-4.5-3l-5.9-2.6l-2-3.9l-0.9-5.1l-3.2-3.8l1-1.9l-3.3-3.7l-1.6-4.9l0.2-3.5l1.2-0.5l-0.9-3.5l3.9-1.8l6.9-2l5.9-0.9l4.9,1l4.3,1.7l3.3-0.7l4.5,1l4.8,3.9l2.5,1l4.9,0.3l6,1.7l3.9-1.6l1.2-2.9l3.3-2.4l1.5-3.3l-0.7-1.9l2.3-0.6l-0.2-2.2l26.9-3.3l5.7-0.1l15.9-1.9l1.9-4.4l-3.3-5.1l-1.8-3.9l0.9-5.9l-0.5-6l-2.1-6.3l0.4-2.9l2.1,0.4l1.3-2.2l21.5-2.5l19.9-0.6l2.6,2.5l3.7,5l2.7,3.3l0.9,2.7l3.7,4.9l0.5,2.9l1.9,4l6.9,8.3l4.9,3.3l0.4,4.6l4.3,0.5l0.1,3.2l2.5,5.7l-0.3,5.5l-1.1,5.9l0.8,3l-0.8,4.6l-3.1,4.2l0.7,5.5l-1.8,4.1l-0.6,4.4l2.2,3.2l-2.9,4.5l-2.9,1l-1.9,3.8l-0.1,4.3l-1.3,1.5z"/>
+  <path id="GA" d="M699.6,413.9l-7.5,1.1l-7.6,0.9l-4.6,0.1l-2.5-2.5l-1.6-4.1l-4.8-5.5l-3.7-5.8l-4.8-4.1l-1.7-4.7l-3.1-4.7l-4.9-3.9l-0.5-2.9l-3.1-5.7l-0.7-2.9l-2.1-2.7l-3.3-4.7l-2.3-5.9l1.5-4.9l-1.9-4.5l-0.5-5.9l-1.9-5.3l0.7-5.4l-0.4-23.9l-1.9-10.5l-3.5-16.9l-2.9-12.6l-0.5-1.7l21.9-2.6l29.8-3.3l7.9,0.4l2.2,4.2l3.1,5.7l1.2,2.9l4.3,5.6l2.6,3.9l3.9,3.8l1.7,2.9l3.2,2.9l1,3.4l-3.9,5.9l1.3,2.2l0.4,4.7l2.9,4.3l0.7,2.2l-0.7,5.7l2.1,4.9l1.9,2.2l-1.2,5.9l2.9,5l0.9,3.3l2.5,3.7l-0.9,2.8l2.6,2.9l1.9,4.1l4.2,2.2l0.9,3.3l3.1,4.7l-1.9,5l-2.1,2.1l0.2,3l-3.9,5.6l-0.7,2.9l-1.7,0.5l-0.3,3.5l-2.9,5.8l-4.3,0.9l-1.1,2.3l-3.9,2.9l-3.1,0.5l-2.4,5.4z"/>
+  <path id="HI" d="M233.1,519.3l1.9-3.6l2.3-0.9l0.3-0.8l-0.3-2.3l-2.7-0.1l-1.8,1.4l-1.3,2.7l0.1,2.1l1.5,1.5zM243.1,515.6l3.5-2.2l0.6-0.1l1.1,1.5l-0.1,1.3l-1.9,1.5l-2.5,0.4l-1.1-1.3l0.4-1.1zM244.4,525.1l1.2-1.7l3-0.1l1.4-0.8l1.8,0l0.5,1.4l-2,2.4l-2.6,0.3l-1.7-0.1l-1.6-1.4zM262.4,527.6l2.6-1l1.4,0.4l2.1-0.9l1.4,1.2l-0.5,1.4l-2.8,0.6l-1.8,1.1l-2.2-0.3l-0.3-1.5l0.1-1zM274.9,530.6l0.8,2.1l1.5,0.7l0.2,0.8l-0.9,1.7l-2.9,1.1l-2.5-0.3l-0.5-1l0.2-1.7l1.7-2.2l2.4-1.2zM281.9,542.6l-0.5,2.5l-0.4,1.9l0.8,1.8l2.6,0.9l2.2-0.5l3.7-2.3l0.2-1.4l-1.4-2.3l-3.2-1.5l-1.6,0.3l-2.4,0.6z"/>
+  <path id="ID" d="M173.4,188.9l-4.4-0.8l-1.7-2.6l0.2-2.2l-2.2-2.9l-1.9-1.3l-3.5-4l-0.2-2.9l2.3-3.4l0-3.9l0.9-0.5l-0.7-2.5l0.9-3.5l2-1.7l0-1.1l-3-3.2l-0.9-0.2l-2.9-4.4l0.1-3.5l-3.1-3.9l0.9-4.8l2.5-3.9l-0.1-1.2l-1.1-1.3l0.7-4.1l-0.4-4.4l2.7-3.5l0.2-5.9l0.9-5.7l-1.1-2.3l0.5-2.5l-0.9-4.5l-2.5-4.1l0.1-1l3.7-6l1.1-2.9l-0.9-2.9l1.3-1.7l-0.5-2.1l11.5,2.6l-3.3,15.2l2.2,4.8l-0.7,3.2l2.5,3.1l3,2.9l1.2,4.7l1.3,1.1l0.1,2.9l2.8,3.2l0.1,3.7l0.8,1l-0.6,2.7l5.5,7.7l3.7,2.2l0.6,1.8l4.9,3.5l0.4,1.9l2.6,1.8l1.3,2.7l0.2,0.9l-2.2,6.5l1.9,3.6l-0.7,3.5l0.6,2.8l-11.7,53.7l-15.5-3.5z"/>
+  <path id="IL" d="M585.4,259.9l0.6-1.9l-0.2-3.5l-1.9-3.3l-0.9-4.2l1.1-4.1l2.7-3.6l0.9-4.9l-0.6-5.8l-2.1-3.4l-1.2-5.9l0.5-6.7l1.5-3.1l-1.4-1.8l-2.7-0.4l-1.2-2.9l-3.2-3.5l0.7-2.6l0.1-3.2l-1.7-3.3l-2.1-6.3l-2.7-3.3l-0.4-3.5l4-4.2l-0.1-3.6l-2.9-0.7l-0.9-3.3l-3.9-1l-0.1-1.9l-14.7,1.3l-6.8,0.1l-6.8,0.3l0,4.2l-2.2,2.9l-0.6,2.9l2.6,3.7l0.1,6.3l-1.7,4.2l0.1,5.5l-0.3,3.9l1.7,5l7.7,8.6l0.5,5l-1.9,7.3l-0.5,5.7l1.5,4.3l5.9,6.6l0.7,3.1l-1.5,3.9l-4.1,4.1l-1,3.3l0.5,2.7l3.7,2.5l4.7,5.5l4.5,0.2l3,2.7l4.3-0.4l1.8-3.9l4.5-2.3l2.4-3.6l2.9,0.6l3.1,3.7l2.7-0.2l1.2-1.2l5.7,1.1z"/>
+  <path id="IN" d="M612,271.3l0.8-4.5l3-4.5l1.8-6.4l-0.4-5.7l-1.2-3.6l1.7-3.9l-0.3-10.6l-0.8-18.2l-0.6-17.9l-1.9-0.8l-3.7,0.5l-2.9-2.9l-6.5,0.6l-21.9,1.8l0.1,1.9l3.9,1l0.9,3.3l2.9,0.7l0.1,3.6l-4,4.2l0.4,3.5l2.7,3.3l2.1,6.3l1.7,3.3l-0.1,3.2l-0.7,2.6l3.2,3.5l1.2,2.9l2.7,0.4l1.4,1.8l-1.5,3.1l-0.5,6.7l1.2,5.9l2.1,3.4l0.6,5.8l-0.9,4.9l-2.7,3.6l-1.1,4.1l0.9,4.2l1.9,3.3l0.2,3.5l2.9,2.8l2.2-1.9l3.6-5.9l3.6,0.2l2.2-1.6l0.6-4z"/>
+  <path id="IA" d="M543.1,199.1l0.9-4.5l-0.6-3.3l-2.6-2.8l-0.7-3.2l0.9-3.9l-2.1-4.9l-2.5-5.3l-0.1-3l-4.3-4.1l-0.5-3.4l2.1-4.1l1.7-5l-1.5-2.9l-0.3-2.1l-47.1,1.9l-42.7,0.6l-0.9,4.1l1.9,4.1l2.6,2.3l0.2,2.9l3.7,3.9l3.5,1.4l4.9,6.9l6.1,1.1l1.5,1.9l-2.3,4.7l-0.7,3.9l2,2.1l-0.1,4.4l-2.3,1.8l-0.9,2.1l0.9,2.9l2.3,1.5l4.1,1.1l1.3,1.9l5.5-2.7l4.6-1l1.7,1.6l2.7,0.3l1.7-2.3l3.2-0.9l1.5,0.7l2.9-2.2l2.9,1.7l1.5,2.8l2.7,1.6l2.5-0.8l4.6,0.8l4.1,0.1l2.5-1.7l0.8-2.7l2.2-1l3.7,0.6l3.2-1.2l1.5,0.7l3.2,0.1l3.1-4.7l2.7-1.2l-0.9-4.6l3.1-1.6z"/>
+  <path id="KS" d="M498.3,276.6l-48.3,0.7l-50.7-0.3l-44.1-1.3l-17.9-0.5l1.5,29.8l2.8,44.9l23.7,0.9l48.3,1.1l45.9-0.3l40.2-1.6l-0.2-11l-1.3-34.9l0-27.4z"/>
+  <path id="KY" d="M683.3,296.2l-4.9,4.1l-5.5,5.7l-2.5,4.1l-4.1,2.1l-0.5,4.4l-3.6,3.2l-0.9,2.1l-2.9-0.9l-3.5,2l-4.9,5.9l-4.5,0.1l-1.5-2.3l-4.1-0.1l-1.9,2.5l-5.2,0.2l-1.5,3.7l-2.3,0.7l-2.7-0.9l-3.1,2.3l-5.2-1.2l-4.9,3.2l-2.2,3.6l-5.7,2.2l-1.9,3.5l-4.3,2.7l-3.9-3.2l-5.9-0.5l0.3-2.3l-1.5-2.3l2.6-4.1l0.9-4.9l-2.1-2.7l3.1-2.4l3.5-1.7l0.4-4.9l5.3-0.8l1.9-2.4l2.7,0.5l2.5-4.5l4.9-3.5l4.1-1.4l0.5-2.9l2.9-0.3l1.5-2.5l-2.9-2.8l-0.2-3.5l-0.6,1.9l-5.7-1.1l-1.2,1.2l-2.7,0.2l-3.1-3.7l-2.9-0.6l-2.4,3.6l-4.5,2.3l-1.8,3.9l-4.3,0.4l-3-2.7l-4.5-0.2l-4.7-5.5l-3.7-2.5l-0.5-2.7l1-3.3l4.1-4.1l1.5-3.9l-0.7-3.1l11.9-1l13.7-1.2l8.8-0.9l5-0.6l6-0.7l14.9-1.3l15.9-1.7l13.1-1.9l11-0.7l0.9,4.2l4.4,0.9l1.9,2.1l3.4-0.1l3.9,2.3l0.6,2.9l3.2,0.5z"/>
+  <path id="LA" d="M586.4,449.9l-2.2-7.7l-2.3-6.2l-0.2-3.9l-2.7-0.2l-6.6,0.4l-29.3,0.2l0.3,5.6l1.3,5.8l2.1,6.7l3.2,5.5l6.2,7.2l-1.3,4.5l3,1.9l-0.5,1.6l-2.5,0.9l0.9,2l-2.1,1.5l0.8,3.7l5.9,4.1l-0.1,4.9l-2.8,4.2l1.4,2.1l-0.9,3.7l5.7,0.6l6.7,1.7l5.9,0.3l2.9,2l3.8,0.5l3.7,1.8l0.9-2.9l-2.9-1.3l2.2-3.9l0.3-4.9l3.9-1.9l1.7,1.7l1.6-0.7l3.3,1.7l0-2l2.4-3l-1.2-1.5l2.3-2.2l3.9-0.3l4.7,1.5l4.5-2l0.9-4.1l3.7-0.9l1.9-2.6l-1.9-1.8l2.6-5.5l-2-2.8l0.9-2.2l-2.9-2.3l-4.9,2l-3.9-1.9l-1.1,1.1l-1.2-2l2.9-2.5l0.3-3.4l-1.4-2.2l-0.5-5.9z"/>
+  <path id="ME" d="M891.9,96.3l1.9-2.5l1.8-3.4l-1.6-4.3l2.2-4.2l-1.9-4.7l-1.5-5.7l-1.5-1.2l-0.8-3.3l-2.2-1.9l0.7-0.9l0.4-3.9l-2.9-6.1l-2.4-5.3l-0.6-3l-3.3-0.4l-1,3.1l0.2,2.9l-1.8-0.9l-1.2,0.7l0.7,4.2l-0.7,4l-1.6,3l-1.3-1.4l-0.3-3.9l-1.2-0.2l-1,2.6l0.6,3.4l-3.2,4.7l-3.6,1.3l-4.9,9.6l-4.1,3.6l-0.9,1.4l0.3,5.3l-5.4,4.9l-0.5,2.6l0.9,0.8l-0.7,1.9l-7.9,4.3l-1.7,0.4l-3.7,2.3l-0.5,1.9l-1.7-0.7l-3.3,3l0.9,3.9l-0.9,2.6l-0.5,3l-2.5,2.9l1,5.7l3.4,2.8l0.7-1l2.9,2.1l9.5,30.8l2.2,0.2l1.3-1.4l1.9-1.9l0.8,1.2l2.4,0l2.8-3l0.9-2.7l-0.5-4.6l2.7-3.9l-0.9-3l-2.2-0.9l-0.3-1.8l-0.5-2.1l1.5-2.9l0.9-3l1.3,0.1l0.9-3.6l-1.1-2.2l1.1-1.3l0.3-0.4l2.2-4.4l0.9,0.6l1.7-0.4l1.4-3.8l3.3-4l0.4-2.3l-1.4-2.9l2.3-3.7l0.9-4.5l-0.5-1.9l0.9-0.5l-0.2-1.9l2.7,0.1l1.4-4.3l1.6-3l-0.3-1.5l0.8-0.9l2.4,1.9l0.6,2.4l2.8-0.9l1.2-1.6l1.1-6.9l3.8-3l0.9-3.9l0.9,0.9l1.9-1.6z"/>
+  <path id="MD" d="M789.8,236l-1.9-1.9l-1.3,0.7l-0.5-1.7l-2-0.6l-0.8-1.9l-2.1,0.7l-1.1-0.5l-0.3-2.9l-2.3-1.7l-1.7-2.7l-2.1-1l-2.7-1.3l-1.7-0.9l0.9-2.7l-2.5-0.4l-3.4,0.7l-2.7-0.7l-2.4,0.7l-2.6-0.7l-3.7,1l-5.9,0.2l-4.7,0.2l-17.9,2.9l-16.7,2.4l-2.9,0.3l1.3,7.7l18.3-3l3.9,0.3l-0.5,2.9l2.2,1.5l2.5,2l1.9-3.5l2.9,1.9l-0.7,3.7l4.5,0.7l2.5-1.9l2,3.7l-0.5,1.9l3.5,2.1l2.5,0.9l-0.1,5l2.1,2.2l0.2,2l-1.3,2.1l0.5,2.9l0.8,2.2l1.7-0.1l0.2-2.2l-1.9-1l-0.3-3.8l1.5-1.9l0.8-3.8l-2.1-3.3l0.2-1.3l1.7,0.1l2.2,2.5l1.1-0.5l1.5,1.7l-2.1,0.3l-0.2,4.2l1.1,0.7l2.2-3.1l0.8,5.7l4.5,0.6l-2.2,3.5l0.7,2.5l3.2,0.6l1.7,2.1l2.9,1.1l3-0.9l0.9-4.7l1.8-4.9l1.5-5.2l-0.9-2.1l0.6-1.9l-0.4-3.4l11.7-2.5z"/>
+  <path id="MA" d="M879.5,160.5l0.7-2.2l-1.1-2.6l2.9-0.6l1.1-2.2l-4.5,0.8l-7.2,0.3l-0.3,1.7l2.5,0.4l0.1,1.6l-2.6,0.8l-1.2,0l0.9,2.5l2.5-0.5l3.2-0.6l1.7,1.6zM864.1,155.4l2.8-2.4l0.5,1.2l2.3-1.5l-1.1-1.7l-2.3,0.4l-1.6,1.9l-2.2,0.9l0.3,1.5zM852.5,152.4l-2.6-0.3l-0.7-1.1l-2.5,0.3l-4.9-0.4l-2.2,2.4l2.7,1.9l2.2-1.7l1.9,0.4l0.2,3.9l1.2,1.9l2.4-1.6l-0.7-3.5l2.5-0.5l0.8,1.7l2.9-0.3l-0.2-1.9l-3-1.2zM847.7,160.7l4.9-0.6l0.5,0.9l3.7,0.9l5.6-3.4l2.5-4l-2.1-5.8l-5.2-0.8l-2.3,0.2l0.2,1.8l-1.5,0.1l-2.3,4.1l1.6,1.7l-2.6,1l0,1.7l-3.1-0.4l-0.5,2.4z"/>
+  <path id="MI" d="M612.8,162.9l2.1-3.8l2.8-3.9l2.6-3.9l0.1-4.9l1.7-2.9l-0.6-9.7l-1.5-3.9l-1.8-1.5l-3.9-0.1l-0.5-4.4l3.9-2l-0.1-3.2l1.7-3.2l-0.9-1.9l-3.9-0.3l-4.6-1.9l-3.5-4.5l-3-2.3l-0.2-2.9l1-1.7l-0.8-1.9l-3.2,0.1l-1.9,1.7l-1.9-1.1l-4.1-0.4l-1.8-3.2l-1.3-3.5l-3.4-5.7l-3.2,0.9l-3.8,1.3l-0.4,7.5l-0.9,3.9l0.8,4l1.5,2.7l-0.2,4.7l-1.9,4.6l1.3,1.5l2.2,0.9l-0.6,2.7l-2.3,4.1l-0.9,4.9l1.2,2l0.9,4.7l-1.9,3.2l-2.9,3.2l-2.9,0.5l-1.3,3.9l0.5,1.9l-2.9,1.5l-2.1-0.2l-1.7,1.1l-0.5,2.3l-3.5,0.5l0.3,2l0.7,2.9l2.9,1.4l1.4,1.5l-0.3,1.9l0.9,1.1l-0.9,4.5l-1.9,4.7l1.1,5.9l2.3,4.8l0.1,1.9l2.9-0.4l2.5-0.9l3.9-2.5l2.5,2l5,1.1l4.9-1.8l1.3-2.5l0.9-4.3l2.5-1.3l-0.5-1.5l2.1-1.2l2.5,0.9l1.5-0.2l0.9-0.6l-0.1-2l2.3-0.4l5.3-1.1l1.9-1.7l0.5-5.9l1.5-3.8l-0.9-4.9zM545.6,113.9l1.5-1.9l0.6-2.7l3.8-5.9l0.9-2.9l-1.1-2.5l-3,0.9l-1.7,3.1l-1.7,0.7l-2.9,4.2l-0.6,3.4l-0.7,2.9l0.6,2.2l-0.6,3.2l2.7-2l2.2-2.7z"/>
+  <path id="MN" d="M525.5,89.9l-0.8-5.9l-2.2-4.1l-0.4-6.7l-1.8-3.5l-0.3-5.7l0.1-4l-0.8-3.7l-0.9-6.9l-1.5-2.9l-1.9-7.7l0.3-3l1.1-0.5l6.9-0.3l0.2-7.9l0.3-0.9l43.2-0.4l0.1,4.7l2.1,3.7l3.5,1.7l2.1,0.1l2.7,4.8l4.5,4.9l0.4,5.9l1.4,2.3l0.9,6.9l1.4,1.2l3.5,0.4l0.6,0.9l5.3-0.3l1.1-2.3l0.3-3l3.3-1.2l1.5-2.8l0.1-3.6l0.7-2.9l4.2-0.9l3.2,0.7l4.9,3.1l0.2,12.9l-1.9,3.2l-2.7,1.8l-0.3,10.7l1.1,1.4l-0.3,11.2l-0.7,1.5l0.4,3.9l-3.4,4.6l-2,1.9l-0.3,3.9l0.9,4.4l-2.5,2.5l-1.1,1.5l-0.4,2.1l-4.9,0.2l-1.9,2.9l-2.2,1l-7.9,0.6l-11.3,0.3l-10.2,0.2l-23.1,0.3l-0.8-4.7l-2.5-3.7l-0.6-4.1l-0.8-2l-5.2-4.5l-1.1-3.2l-0.3-4.7z"/>
+  <path id="MS" d="M614.5,431.9l-5.6,0.5l-21.9,1.7l-15.1,0.8l-0.1,9.6l-2,5l2.5,5.9l0.5,5.9l1.4,2.2l-0.3,3.4l-2.9,2.5l1.2,2l1.1-1.1l3.9,1.9l4.9-2l2.9,2.3l-0.9,2.2l2,2.8l-2.6,5.5l1.9,1.8l-1.9,2.6l-3.7,0.9l-0.9,4.1l-4.5,2l-4.7-1.5l-3.9,0.3l-2.3,2.2l1.2,1.5l-2.4,3l0,2l30.5-0.2l4.9-0.4l-0.3-3.5l3.3-5.3l1.4-5.9l3.4-5.1l0.3-3.1l-2.1-2.2l1.2-5.6l1.4-9.1l-0.4-11l1.1-7l0.9-8.9l1.8-6.7l1.9-5.4l-3,0z"/>
+  <path id="MO" d="M583.7,340.7l1.1,5.3l-2,0.2l-2.9,5.9l0.6,5.9l-2.7,1.9l2.7,2.9l0.2,7.9l-3.7,2.2l-3.6,6.2l0.2,3.9l-3.6,3.6l-1.8,5.7l-5.4,0.5l-12.8,0.8l-24.5,0.8l-23.5,0.4l-0.4-29.3l-2.6-1l-1.9,1.7l-0.9-3.7l-3.3-0.9l0.6-2.7l-2.9-4l-0.5-3.5l1.2-5.1l-0.3-3l-2.1-5.3l0.2-4.1l-1.9-7.1l0-8.4l-0.7-5.4l0.2-27.4l43.7,0.8l36.1-0.4l9.9-0.4l0.9,4.5l-2,1.2l2.7,4.3l-2.1,5.3l1.6,4.1l-1.9,2.5l1.9,4l-0.5,3.7l2.9,3.2l5.4-0.5l0.1,5.3l2.7,2.2l0,2.1l-3.1,2.6l-0.4,1.3l4,5.4l4.9,1.7l3.2,3.2z"/>
+  <path id="MT" d="M312.9,58.5l-0.4-5.1l1.5-7.5l0.3-4.5l1.7-7.2l1.9-4.7l0.2-3.9l-1.5-3.9l-57.7,5.2l-58.2,3.1l-48.9,1.1l5.7,37.2l5.2,34.2l3.9,22.7l3,18.5l-0.5,2.1l1.3,1.7l-1.3,1.7l0.9,2.9l-1.1,2.9l-3.7,6l-0.1,1l2.5,4.1l0.9,4.5l-0.5,2.5l1.1,2.3l-0.9,5.7l-0.2,5.9l-2.7,3.5l0.4,4.4l-0.7,4.1l15.5,3.5l11.7-53.7l41.2,8.5l41.4,7l37.5,5.5l1.3-7.6l-2.9-5l-0.2-4.6l1.3-0.3l0.9-3.7l2-0.3l1.9-2.9l0-1.1l-3.7-4.1l-0.3-1.9l3.1-5.5l0.2-3.8l-2.9-2.5l-1.7-2.2l-0.8-3.9l-1.2-1.9l-0.3-2.7l-4.7-7.5l1.9-6.7l-1.7-3l-1.9-1.9l0.2-5.9l1-0.9l-0.1-4.5z"/>
+  <path id="NE" d="M451.3,183.6l-50.3,2.5l-51.6,1.1l-0.9-8.7l-17.7,0.8l-2.9,0l2.9,19.9l2.5,18.6l2.4,21.2l2.7,25.3l17.9,0.5l44.1,1.3l50.7,0.3l48.3-0.7l-0.7-17.5l-2.9-2.2l-3.3-0.4l0-2.5l-3.5-4.6l-4.3-2.1l-3.7-0.4l-4.5-2.7l-5.7-1.1l-2.3-2.3l-3.2-0.3l-2.4-1.9l-8.4,0.5l-3.9-4.7l-4.9-1.4l-0.4-3.5l-2.7-3.9l-0.4-7.9l-1.1-2.5z"/>
+  <path id="NV" d="M167.9,314.4l20.9-96.6l-29.1-6.4l-28.3-6.6l-17.1-4.3l-7.6,35.7l-8.5,41.6l-9.9,48.2l30.9,4.7l21.6,3l0.6-6.5l1.7-1.8l-1.2-2.4l0.8-2.9l4.9-3.4l1.7-3l1-0.3l1.2,1.5l2.2-1l3.5-4.6l3.5-1.9l3.2,2.3z"/>
+  <path id="NH" d="M857.3,139.5l-3.4-13l-3.1-14.2l-1.2-2.8l0.6-2l-1.7-3.7l-3.1-1.7l-0.3-5l1.1-3.5l-0.6-2.3l0.2-6.6l-0.9-2.5l0.5-3l-2.5-0.5l-1.2,2.8l-0.7,4.7l-2.9,2l-1.1,2l0.6,5.3l-3.1,1.5l-0.9,1.3l-0.4,5.9l-1,1.8l0.3,0.9l0.7,4.3l-2.5,3.8l-0.8,3.4l0.9,3.5l-1.1,3.2l1.7,4.5l0.1,3.6l-2.9,2l0.5,1.1l3.5,0.5l5.1,19.5l6.1-1.4l0.6,3.5l4.6,17.9l2.6-0.7l0.9-1.7l-0.3-3.9l1.3-2.7l-0.8-3.7l1.6-3.2l-0.6-3.7l1.5-3.7l0.4-3.4l0.1-5.7z"/>
+  <path id="NJ" d="M822.2,211.9l-0.2-4.7l-2.5-1.5l-1.3-0.1l-2.9-4.5l-1.4,0.7l-1.7,2.4l1.3,2l0.3,3.9l-2.7,2.2l0.5,2.3l2.6,0.6l-0.1,2.7l1.5,0.3l1,1.6l-0.6,1.9l-0.4,3.4l1.9,3.3l4.9,2.6l0.4,4.7l1.8,3.3l4.9,4.9l3.6,1.7l3.5-0.5l1.9-2.1l-0.5-2.9l-2.1-0.7l-3.7-0.2l-2.1-2.3l0.4-2.1l2.1-1.1l0.5-2.7l-0.9-2.3l-0.3-3.5l-2.3-2.5l-1.7-5.5l0.8-2.5l-2.3-1.9z"/>
+  <path id="NM" d="M299,406.9l3.3-30.5l7.5-73.2l-40.1-4.3l-37.5-5.3l-13.3,97.7l3.2,0.3l0.3,4.2l7.3,0.9l0.2,6.4l30.4,3.1l38.7,3.5z"/>
+  <path id="NY" d="M826.9,190.9l-1.9-1.4l-3,0.9l-4.1,1.7l-6.3,2.1l-2.4,1.3l-2.5,0.1l-4.9,1.5l-5.6,1.6l-0.6-3.6l1.4-0.9l2.5-2.7l2.2-3.9l-2.7-0.8l-4.6,0.9l-4.4,0.1l-3.5-2.1l-6.1,0.2l-7.3,0.9l-7.6,0.5l-7.3-22.8l-3.1-11.3l-2.2-5.6l-5.7,1.1l-27.9,5.8l-5.2,0.9l0.7,4l3.4,2.2l-0.9,3.3l-2.6,6.9l-3.1,5.7l-2.1,3.7l1.5,1.9l-0.2,3.9l-3.2,3.4l-2.9,0.6l-3.7,3.9l-2.2,0.6l-2.2,1.7l-2.4,0.5l-0.8,1.8l3.6,3.6l3.9,0.8l3.7-1.5l2.7-2.6l1-2.4l3.2-2l2-0.3l3.4,1.6l3.9,0.5l1.9-1.1l2.4,1.1l-2,3.9l-0.4,3.5l1.6,1.2l-0.7,4.9l-1.1,5l0.7,2.6l-0.9,2.7l-5,6l2.3,1.9l-0.8,2.5l1.7,5.5l2.3,2.5l0.3,3.5l0.9,2.3l-0.5,2.7l-2.1,1.1l-0.4,2.1l2.1,2.3l3.7,0.2l2.1,0.7l0.5,2.9l3.9-3.7l1.5-2.5l1.2-3.3l2.2-2.8l2.3-1.6l4.9-1.3l4.3,0.1l3.1-2.7l5.1-7.9l3.6-4.2l3.3-2.7l2.5-1.7l4.7-4.1l3.9-5.5l1.7-3.7l0.4-4.5l-0.7-1.4l2.3-2.5l1.6-0.9l0.2,4.7l1.9,1.4l2.6-0.5l3.7-2.3l1-4.9l4.8-7.9l1.5-1l0.7-3.3l-1.9-3.7l1.1-1.2z"/>
+  <path id="NC" d="M824.4,298l-3.8,3.1l-4.6,4.7l-1.7,3.2l0.1,2.4l-3.6,4.4l-5.3,0.5l-3.1,1.5l-4.5,5.9l-5.7,3.6l-2.2,0.7l-2.1,3.1l-3.9,3.4l-0.7,1.6l-4.9-0.1l-2.9,3.5l-3.2,1.2l-2.7,2.3l-3.9-0.4l-5.7,3.6l-4.3,1.2l-3.5,3.6l-3.7,0.7l-0.5-1.9l-5.6,4l-4,0.5l-1.9,1.5l-2.1-0.8l-3.4,2.4l-8.5,0.8l-9.1,1.4l-25.5,2.8l-19.3,1.5l-17.9,0.8l-3.7-0.3l2.4-5.4l3.1-0.5l3.9-2.9l1.1-2.3l4.3-0.9l2.9-5.8l0.3-3.5l1.7-0.5l0.7-2.9l3.9-5.6l-0.2-3l2.1-2.1l1.9-5l9.5-0.9l17.3-1.9l24.7-3.3l19.3-2.9l23.2-4.9l23.9-5.3l12.8-1.3l6.9-3.7l5.3-2.1l2.1,0l1.2-1.7l4.9,0.2l-0.4,4.5l0.2,1.5z"/>
+  <path id="ND" d="M454.2,75.5l-0.5-5.1l-2.2-6.9l0.5-4.3l-0.9-7.1l-0.5-9.9l-1.9-7.8l-0.3-5.2l-0.5-3.6l-46.2,0.9l-46.6,0l-42.3-0.9l0.4,5.1l1.2,1.9l0.3,2.7l1.2,1.9l0.8,3.9l1.7,2.2l2.9,2.5l-0.2,3.8l-3.1,5.5l0.3,1.9l3.7,4.1l0,1.1l-1.9,2.9l-2,0.3l-0.9,3.7l-1.3,0.3l0.2,4.6l2.9,5l-1.3,7.6l50.5-0.7l50.5-1.9l34.6-2.4z"/>
+  <path id="OH" d="M684.9,209.7l-4.3,3.5l-4.7,2.2l-2.5,2.9l-4.1,2.3l-1.1,3.6l-4.4,3l-2.6,0.5l-1.9,2.8l-2,0.7l-1.7,2.2l-1.5,4.2l-3.2,3.2l1,5.7l4.2,4.9l2,4.3l4.7,5.5l0.2,3.9l-3.4,6.3l1.9,3.5l5.7,1.9l3.9,0.2l2.9-2l2.1,1.8l3.1-0.6l5.7-3.9l4.6-1.9l2.5,1l3.2,0.5l-0.6-2.9l-3.9-2.3l-3.4,0.1l-1.9-2.1l-4.4-0.9l-0.9-4.2l-11,0.7l-13.1,1.9l1.8-6.4l-0.4-5.7l-1.2-3.6l1.7-3.9l-0.3-10.6l-0.8-18.2l-0.6-17.9l5-4.1l17.6-1.7l18.9-2l6.6-0.9l3.9,3.5l2.9,3.4l1.5,3.5l3.7,2.9l0.3,2.9l-2.9,1.1l-2.3,1.9l-1.3,3.4l-2.9,3.9l0.5,2.3l-3.3,2.9l-2.6-1.5l-2.5,2.5l-2.9,0.7l-0.6,4z"/>
+  <path id="OK" d="M423.9,360.9l-0.1-16.7l-29.2-0.3l-29.7-1.1l-3.1,0.5l-1.5,3.1l-5.2-3.9l-1.9,0.7l1.7,5.7l0.2,7.7l-2.7,3.2l-0.2,3.1l2.4,3.7l-0.7,3l-1.9,1.6l2.3,4.2l-0.1,3.7l3.6,0.3l0.3,10l-2.3,6.7l1.4,5.2l2,1.3l1.3-2.1l2.9,1.5l1.9,1.8l2.6-3.6l3.9,1.5l2.7-3.3l2.1,1.9l2.2-0.9l1.9,2.6l4.3,0.5l3.3,1.6l3.3-0.7l3.3,1.7l2.7-2.4l3.2,1l2.7-1.1l2.3,0.5l2.3-2.7l2.9,0.7l4.2,1.6l2-0.7l0.7-3l3.7-0.9l1.5-3.7l3.5-1.3l1.9-0.5l0.8-3.2l4.1-1.5l3.7-0.1l2.4-1.3l0.3-3.9l4.4-1.2l0.4-0.9l-0.6-2.6l-2-1.7l0.8-4.4l-2.2-2.9l1.2-4.2l-2.4-2.5l3.1-6.8l-2.5-1.8z"/>
+  <path id="OR" d="M149.1,195.9l-2.7-1.8l-2.6-1.8l-0.4-1.9l-4.9-3.5l-0.6-1.8l-3.7-2.2l-5.5-7.7l0.6-2.7l-0.8-1l-0.1-3.7l-2.8-3.2l-0.1-2.9l-1.3-1.1l-1.2-4.7l-3-2.9l-2.5-3.1l0.7-3.2l-2.2-4.8l3.3-15.2l-11.5-2.6l-9.2-2.5l-22.9-6.1l-22-5.9l-17.6-5.1l-0.5,2.6l0.4,3.5l-2.7,3.9l-0.3,3.1l-1.8,0.4l-1.1,4.5l0.3,5.7l1.2,3.7l0.3,4.6l-0.6,4l2.4,4.9l1.9,1.7l1.5,3l0.6,4.9l-1,5.2l0.7,4.2l0.3,7.2l-0.9,2.1l1.4,3.9l3.9,1.2l2.3,2.6l6,2.5l1.6,1.3l3.6,1l1.9,1.3l5.9,1.5l4.1-0.5l5.7,1.3l2.9-0.1l0.9-1.9l2.6,0.5l3.6,2.6l4.2,1.5l4.4-0.7l1.1,1l2.2-2.7l4.2-0.6l0.9-0.7l-1-3.9l0.7-3.2l1.7-0.3l0.5-3.9l2.5-0.9l3.4-6.6l5.9-6.7l1.8-0.8l0.3-3.5l3.8-4.2l1.1,0.7l3.2,0.1l1.7,1.5l6.7,1.2l17.1,4.3z"/>
+  <path id="PA" d="M789.3,195.5l0.2,4.7l-3.9,3.7l-3.3,1.2l-2.2,2.7l-2.1,1.6l2.2,4.6l2.6,1.7l2.7,3.4l3.5,4l1.2,3.2l0.2,4.7l-1.8,0.2l-3-0.7l-3.4,1.4l-7.7,3.1l-4.7,0.2l-5.9,1.8l-4.1,2.2l-2.1,0.7l-1.3-7.7l2.9-0.3l16.7-2.4l17.9-2.9l4.7-0.2l5.9-0.2l3.7-1l2.6,0.7l2.4-0.7l2.7,0.7l3.4-0.7l2.5,0.4l-0.9,2.7l-13.9,3l-35.9,7.3l-11.9,2.4l2.7-3.3l0.4-3.5l0.7-4.9l-1.6-1.2l0.4-3.5l2-3.9l-2.4-1.1l-1.9,1.1l-3.9-0.5l-3.4-1.6l-2,0.3l-3.2,2l-1,2.4l-2.7,2.6l-3.7,1.5l-3.9-0.8l-3.6-3.6l0.8-1.8l2.4-0.5l2.2-1.7l2.2-0.6l3.7-3.9l2.9-0.6l3.2-3.4l0.2-3.9l-1.5-1.9l2.1-3.7l3.1-5.7l2.6-6.9l0.9-3.3l-3.4-2.2l-0.7-4l5.2-0.9l27.9-5.8l5.7-1.1l20.2-4.7l2.9,15.6z"/>
+  <path id="RI" d="M867,175.7l-1.9-8.3l-0.9-5l5.3-1.4l1.6,2.9l2.7,3.3l2.9,4.1l-1.2,0.9l-2.5-0.4l-1.5,3.2l-2.5,0.9l-1.3-0.5z"/>
+  <path id="SC" d="M699.6,413.9l2.4-5.4l3.1-0.5l3.9-2.9l1.1-2.3l4.3-0.9l2.9-5.8l0.3-3.5l1.7-0.5l0.7-2.9l3.9-5.6l-0.2-3l2.1-2.1l1.9-5l-3.1-4.7l-0.9-3.3l-4.2-2.2l-1.9-4.1l-2.6-2.9l0.9-2.8l-2.5-3.7l-0.9-3.3l-2.9-5l1.2-5.9l-1.9-2.2l-2.1-4.9l0.7-5.7l-0.7-2.2l-2.9-4.3l-0.4-4.7l-1.3-2.2l3.9-5.9l25.5-2.8l9.1-1.4l8.5-0.8l2.1,3.3l3.4,5.9l6.6,8l3.9,7.5l5,10.9l-1.5,4.3l-3.7,2.5l0.9,3.9l-4.6,2.5l-3.8,4.6l-2.8,4.2l-4.7,3.9l-2.3,4.1l-1.3,0.6l-1.5,3.5l-6.7,4.9l-4.9,1.8l-3.7,5.2l-4.3,1.5l-2.5,1.9l-5.9,0.1l-2.6,1.5l-3,4.3l-3.9,1.9l-1.5,2l0.5,3.2l-4.3,2.5l-3.2,0.1l-1.9,2l-2.2,0.1z"/>
+  <path id="SD" d="M454.2,75.5l-34.6,2.4l-50.5,1.9l-50.5,0.7l-37.5-5.5l1.1-2.5l-0.2-4.9l4.3-5.9l3.3-0.3l2.1-3.5l-0.3-5.5l2.2-7.9l1.6-10.3l-1.5-3.9l1.5-4.9l-2.2-2.1l0.8-5.9l42.3,0.9l46.6,0l46.2-0.9l0.5,3.6l0.3,5.2l1.9,7.8l0.5,9.9l0.9,7.1l-0.5,4.3l2.2,6.9l0.5,5.1l2.1,5.8l2.8,3.7l0,3.5l3.9,6l0.2,3.1l-4.5,0.7l-4.2-0.3l-1.4,1.9l-9.9,0.5l-1.4-2.1l-4.6,0.2l-4.1-0.3l-6.8-0.9l0.1-4.9l-2.1-4.8l-3.9-1.8l-2.9-0.4z"/>
+  <path id="TN" d="M682,305.9l-5.7,0.4l-5.3,0.4l-7.1,0.8l-26.5,2.3l-4.9,0.2l-9.9,0.7l-20.3,1.4l-3.2,3.2l-4.9,1.7l-0.1,5.3l-2.7,2.2l-0.1,2.1l7.1-0.4l42.8-3.2l6.5-0.6l0.4-2.5l3.2-1.7l1.9,0.7l1.7-3.4l5.4-0.2l1.9-2.5l4.1,0.1l1.5,2.3l4.5-0.1l4.9-5.9l3.5-2l2.9,0.9l0.9-2.1l3.6-3.2l0.5-4.4l4.1-2.1l2.5-4.1l5.5-5.7l4.9-4.1l-3.2-0.5l-0.6-2.9l-3.9-2.3l-3.4,0.1l-1.9-2.1l-4.4-0.9l-0.9-4.2l-13.1,1.9l-15.9,1.7l-14.9,1.3l-6,0.7l0.3,2.9l-5.3,0.8l-0.4,4.9l-3.5,1.7l-3.1,2.4l2.1,2.7l-0.9,4.9l-2.6,4.1l1.5,2.3l-0.3,2.3l5.9,0.5l3.9,3.2l4.3-2.7l1.9-3.5l5.7-2.2l2.2-3.6l4.9-3.2l5.2,1.2l3.1-2.3l2.7,0.9l2.3-0.7l1.5-3.7l5.2-0.2z"/>
+  <path id="TX" d="M423.9,360.9l2.5,1.8l-3.1,6.8l2.4,2.5l-1.2,4.2l2.2,2.9l-0.8,4.4l2,1.7l0.6,2.6l-0.4,0.9l-4.4,1.2l-0.3,3.9l-2.4,1.3l-3.7,0.1l-4.1,1.5l-0.8,3.2l-1.9,0.5l-3.5,1.3l-1.5,3.7l-3.7,0.9l-0.7,3l-2,0.7l-4.2-1.6l-2.9-0.7l-2.3,2.7l-2.3-0.5l-2.7,1.1l-3.2-1l-2.7,2.4l-3.3-1.7l-3.3,0.7l-3.3-1.6l-4.3-0.5l-1.9-2.6l-2.2,0.9l-2.1-1.9l-2.7,3.3l-3.9-1.5l-2.6,3.6l-1.9-1.8l-2.9-1.5l-1.3,2.1l-2-1.3l-1.4-5.2l2.3-6.7l-0.3-10l-3.6-0.3l0.1-3.7l-2.3-4.2l1.9-1.6l0.7-3l-2.4-3.7l0.2-3.1l2.7-3.2l-0.2-7.7l-1.7-5.7l1.9-0.7l5.2,3.9l1.5-3.1l3.1-0.5l-1.9-54.4l-0.9-27.4l35.6,1.8l35.5,1.1l0.1,16.7l1.6,29l0,21.3l0.9,5.9l1.4,3.5l-1.1,2.5l1.5,2l-0.5,4.9l1.1,5.5l2.7,3.2l0.9,2.9l3.6,4.2l1.5,3.2l2.3,1.3l0.8,2.2l-0.1,4.2l-0.6,4.4l3.6,3.5l1.3,4l2.9,1.9l-0.7,2.9l1.7,4.9l1.5,1.9l-0.7,1.8l1.2,2.7l0.3,4.2l1.1,1.5l-0.7,5.2l2.2,3.6l0.6,3.2l4.7,5.2l1.9,0.7l2.2,3l2.6,0.3l3.2,1.6l3.9,1.8l1.9,2.6l3.1,1.3l2.6,2.1l3.1,0.4l2.1-2.1l1.3-3.5l3.4-4.4l0.1-2.7l1.2-3.5l-0.7-2.4l-2.6-0.9l1.5-6.5l2.3-4.1l0.1-2.8l1.1-4l-0.9-1.7l2-6.1l-1-1.7l0.9-2.7l-1.7-5.9l2.4-0.6l0.7-2.5l0.9-2.4l-0.5-1.9l0.7-4.6l2.4-3.1l-0.9-1.7l0.9-3.2l1.9-2.5l2.2-2.3l1.4-4.2l3.5-5l1.7-7.7l3.9-6.9l0.5-3.9l1.5-0.9l0.7-2.7l1.5-0.7l0.7-3.2l1.9-2.7l-0.9-1.4l2.9-5.2l2.9-1.7l-0.5-1.9l-1.1-1.4l0.2-2.4l2.3-0.7l0.2-3.5l1.2-2.2l0.1-2.2l-2.4-3.4l-1.2-3.9l-2.2-1.7l0.5-5.5l-3-2.9l-0.7-4l-40.2,1.6l-45.9,0.3z"/>
+  <path id="UT" d="M243.9,288.5l-42-6.5l-13.8-2.6l13.3-72.3l-20.9,96.6l-3.2-2.3l-3.5,1.9l-3.5,4.6l-2.2,1l-1.2-1.5l-1,0.3l-1.7,3l-4.9,3.4l-0.8,2.9l1.2,2.4l-1.7,1.8l14.9,100.6l54.6-8z"/>
+  <path id="VT" d="M828.3,125.9l2.2,5.6l3.1,11.3l0.2,4.7l-1.7,3.6l2.1,4.1l-0.2,2.9l-0.9,2l-23.9,5.6l-0.5-1.1l2.9-2l-0.1-3.6l-1.7-4.5l1.1-3.2l-0.9-3.5l0.8-3.4l2.5-3.8l-0.7-4.3l-0.3-0.9l1-1.8l0.4-5.9l0.9-1.3l3.1-1.5l-0.6-5.3l1.1-2l2.9-2l0.7-4.7l1.2-2.8l2.5,0.5l5.1,19.2z"/>
+  <path id="VA" d="M795.7,288.7l-2.5,4.2l-1.1,1.7l1.7,1.6l-0.9,3.5l-4.9,0.1l0.7,1.6l-3.5-0.7l-0.5,1.9l3.7-0.7l3.5-3.6l4.3-1.2l5.7-3.6l3.9,0.4l2.7-2.3l3.2-1.2l2.9-3.5l4.9,0.1l0.7-1.6l3.9-3.4l2.1-3.1l2.2-0.7l5.7-3.6l4.5-5.9l3.1-1.5l5.3-0.5l-1.7-1.8l0.2-2l-1.5-2.6l-1.2-1.6l-1.9,1.6l-0.9-1.2l0.4-2l-2.6-0.3l-1.5-2.6l0.7-0.7l-0.9-3.3l-2.7-2.2l-0.9,1.7l-0.5-1.2l0.8-2.3l-1.7-1.3l0.7-5l-0.5-3.7l0.5-0.3l1.1,0.9l1.5-1.1l-0.3-1.1l-2.9-1.1l-1.7-2.1l-3.2-0.6l-0.7-2.5l2.2-3.5l-4.5-0.6l-0.8-5.7l-2.2,3.1l-1.1-0.7l0.2-4.2l2.1-0.3l-1.5-1.7l-1.1,0.5l-2.2-2.5l-1.7-0.1l-0.2,1.3l2.1,3.3l-0.8,3.8l-1.5,1.9l0.3,3.8l1.9,1l-0.2,2.2l-1.7,0.1l-0.8-2.2l-0.5-2.9l1.3-2.1l-0.2-2l-2.1-2.2l0.1-5l-2.5-0.9l-3.5-2.1l0.5-1.9l-2-3.7l-2.9-1.9l0.7-3.7l-2.5,1.9l-4.5-0.7l-0.7-4.8l-1.9,0.7l-3.3-0.3l-1.9-1.2l-2.5,3.9l-2.7,1.6l1.3,6.9l-3.4,0.1l-3.3,1.5l-5.9,0.9l-6.5,0.8l-0.4,2.5l2.3,2.5l-2.9,5.9l0.9,4.9l2.9,3.6l3.5,2.3l3.4,5.5l-0.1,3.9l4.5,4.7l-0.9,3.5l0.7,2.5l-0.5,3l-2.7,5.6l2.4,3.6l2.7-3.9l1.7,2l-2.3,4.7l0.9,1.2l-1.5,4.5z"/>
+  <path id="WA" d="M172.1,23l-7.7-2.2l-6.7-1l-5.7-2.3l-5.9-0.8l-1.7-2l-5.3-0.4l-3.3,0.5l-5.4-1.5l-3.9,0.1l-6.1-1.5l1.1,0l-3.7-0.6l1.9,3.2l1.1,3.2l0.5,3.7l2.1,4l2.5,4.2l1.1,4.7l0,4.9l-0.5,2.2l1.9,3.9l0.5,3.7l1.4,1.6l0.5,2.9l-0.3,3.7l0.5,3.6l-0.3,3.7l1.6,2.7l-1.7,0.7l0.7,3l-2.2,0.5l0.5,2.6l17.6,5.1l22,5.9l22.9,6.1l9.2,2.5l-3.3-15.2l-0.9-4.8l-1.8-5.5l0.4-20.9l-2.7-2.9l-1.2-2.9l0.5-4.7l-2.5-0.3l-1.8-3.4l-0.6-5.5l-3.3-5.3l-0.9-3.5l-6.2-0.8z"/>
+  <path id="WV" d="M732.9,237.4l3.3,1.5l1.9,1.2l3.3,0.3l1.9-0.7l0.7,4.8l4.5,0.7l2.5-1.9l-0.7,3.7l2.9,1.9l2,3.7l-0.5,1.9l3.5,2.1l2.5,0.9l-0.1,5l2.1,2.2l0.2,2l-1.3,2.1l0.5,2.9l0.8,2.2l1.7,0.1l0.2-2.2l-1.9-1l-0.3-3.8l1.5-1.9l0.8-3.8l-2.1-3.3l0.2-1.3l1.7,0.1l2.2,2.5l1.1-0.5l1.5,1.7l-2.1,0.3l-0.2,4.2l1.1,0.7l2.2-3.1l0.8,5.7l4.5,0.6l-0.7-2.5l0.7-2.5l2.2-3.5l-4.5-0.6l-0.7-2.6l1.1-5l0.7-4.9l1.6-1.2l-0.4-3.5l-2-3.9l-0.2-1.5l0.4-4.5l-4.9-0.2l-1.2,1.7l-2.1,0l-5.3,2.1l-6.9,3.7l-12.8,1.3l0.2,1.5l-2.7-0.5l-2.5,4.5l-2.7-0.5l-1.9,2.4l-5.3,0.8l-2.9,0.3l-0.5,2.9l-4.1,1.4l-4.9,3.5l4.3-0.1l1.9-2.5l5.2-0.2l1.5-3.7l2.3-0.7l2.7,0.9l3.1-2.3l5.2,1.2z"/>
+  <path id="WI" d="M579.5,108.4l-1.3-2.5l0.2-2.7l1.5-3.1l-0.8-2.7l0.2-2l-1.6-2.6l-1.5-4.6l-1.9-2.7l0.1-2l-4.5-3.4l-3.2-0.2l-0.9-4.7l-2.4-1.3l-0.1-2.2l0.8-2.7l-0.6-1.8l-0.1-3.2l-1.4-0.5l-1.4-3l-3.7-1.5l-0.1-2.6l-1.9-0.5l-0.9,1.8l-0.4,4.3l-3.5,5.7l-2.3,0.5l-0.6,2.5l1.3,2.4l-0.3,3.8l-1.1,4.1l0.9,1.9l-1.7,3.2l0.1,3.2l-3.9,2l0.5,4.4l3.9,0.1l1.8,1.5l1.5,3.9l0.6,9.7l-1.7,2.9l-0.1,4.9l-2.6,3.9l-2.8,3.9l-2.1,3.8l0.2,3.1l3.9,1.1l2.2,0.3l0.5-2.5l2.1-2.6l1.9-0.4l2.2-2.5l2.9,1.3l3.9,3.5l4.7,0.2l0.8-1.5l1.5-0.3l0.5,1.7l-1.1,2.7l0.1,1.9l2.9,0.9l2.7-0.9l0.7-3l2.6-1.1l0.5-2l1.5-0.6l0.2-2.9l-0.1-3.1l-2.8-1.2l1.2-1.1l2.9-0.6l0.5-4.2l2.7-4.8l0.4-4.2l-0.3-4.1l0.9-4.1l-0.6-3.3l-2.6-2.8l-0.7-3.2z"/>
+  <path id="WY" d="M335.9,194.7l-3.7-23l-3.7-26.1l-3.5-23.7l-42.9,4.3l-39.5,2.8l-41.9,1.9l3.8,36l4.6,43.5l41.9-2.9l42.5-4.1l42.5-5.3z"/>
+</svg>
+`;
+
+const MAP_PALETTE = [
+  '#ef476f', '#ffd166', '#06d6a0', '#118ab2', '#f8961e',
+  '#8ecae6', '#fb8500', '#9b5de5', '#f15bb5', '#00bbf9',
+  '#90be6d', '#f3722c'
+];
+
+const getStateColor = (abbrev) => {
+  let hash = 0;
+  for (let i = 0; i < abbrev.length; i++) {
+    hash = (hash * 31 + abbrev.charCodeAt(i)) % MAP_PALETTE.length;
+  }
+  return MAP_PALETTE[hash];
+};
+
+// Get fog level (0-7) based on notice count
+const getFogLevel = (count, maxCount) => {
+  if (count === 0) return 0;
+  if (maxCount === 0) return 0;
+  const ratio = count / maxCount;
+  if (ratio <= 0.05) return 1;
+  if (ratio <= 0.15) return 2;
+  if (ratio <= 0.25) return 3;
+  if (ratio <= 0.4) return 4;
+  if (ratio <= 0.6) return 5;
+  if (ratio <= 0.8) return 6;
+  return 7;
+};
+
+// Initialize the weather map
+const initWeatherMap = async () => {
+  try {
+    const res = await fetch('/us-map.svg');
+    if (!res.ok) throw new Error('map fetch failed');
+    usMapContainer.innerHTML = await res.text();
+  } catch {
+    usMapContainer.innerHTML = US_STATES_SVG;
+  }
+
+  const svg = usMapContainer.querySelector('svg');
+  if (!svg) return;
+
+  if (!svg.getAttribute('viewBox')) {
+    const width = svg.getAttribute('width') || '960';
+    const height = svg.getAttribute('height') || '600';
+    svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+  }
+
+  const shapes = svg.querySelectorAll('path, circle');
+  const stateShapes = [];
+
+  shapes.forEach((shape) => {
+    const classList = Array.from(shape.classList || []);
+    const stateClass = classList.find((c) => c.length === 2 && /^[a-z]{2}$/i.test(c));
+    const rawId = shape.getAttribute('data-state') || shape.getAttribute('id') || '';
+    const abbrev = (stateClass || rawId).toUpperCase();
+    if (!/^[A-Z]{2}$/.test(abbrev)) return;
+    shape.setAttribute('data-state', abbrev);
+    stateShapes.push(shape);
+  });
+
+  stateShapes.forEach((shape) => {
+    const stateId = shape.getAttribute('data-state');
+    const baseColor = getStateColor(stateId);
+    shape.style.fill = baseColor;
+    shape.style.fillOpacity = '0.28';
+    shape.setAttribute('data-base-fill', baseColor);
+    shape.addEventListener('mouseenter', (e) => showTooltip(e, stateId));
+    shape.addEventListener('mousemove', (e) => moveTooltip(e));
+    shape.addEventListener('mouseleave', hideTooltip);
+    shape.addEventListener('click', () => {
+      if (isMapTargetMode) {
+        const currentTarget = getMapTargetState();
+        if (currentTarget === stateId) {
+          clearMapTargetState();
+        } else {
+          setMapTargetState(stateId);
+        }
+        return;
+      }
+      stateSelect.value = stateId;
+      loadNotices();
+    });
+  });
+
+  const labelGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  labelGroup.setAttribute('class', 'state-labels');
+  stateShapes.forEach((shape) => {
+    const bbox = shape.getBBox();
+    if (bbox.width < 22 || bbox.height < 12) return;
+    const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    label.textContent = shape.getAttribute('data-state');
+    label.setAttribute('x', String(bbox.x + bbox.width / 2));
+    label.setAttribute('y', String(bbox.y + bbox.height / 2));
+    label.setAttribute('text-anchor', 'middle');
+    label.setAttribute('dominant-baseline', 'middle');
+    labelGroup.appendChild(label);
+  });
+  svg.appendChild(labelGroup);
+
+  updateMapTargetStateHighlight();
+};
+
+// Show tooltip
+const showTooltip = (e, stateAbbrev) => {
+  const stateName = STATE_NAMES[stateAbbrev] || stateAbbrev;
+  const data = mapStateData[stateAbbrev] || { count: 0 };
+  const scopeLabel = mapScope === 'all' ? 'total notices' : 'healthcare notices';
+
+  mapTooltip.innerHTML = `
+    <div class="tooltip-state">${stateName}</div>
+    <div class="tooltip-count">${data.count} ${scopeLabel}</div>
+  `;
+  mapTooltip.classList.add('visible');
+  moveTooltip(e);
+};
+
+// Move tooltip to follow mouse
+const moveTooltip = (e) => {
+  const container = usMapContainer.closest('.weather-map-container');
+  const rect = container.getBoundingClientRect();
+  const x = e.clientX - rect.left + 15;
+  const y = e.clientY - rect.top + 15;
+
+  mapTooltip.style.left = `${x}px`;
+  mapTooltip.style.top = `${y}px`;
+};
+
+// Hide tooltip
+const hideTooltip = () => {
+  mapTooltip.classList.remove('visible');
+};
+
+// =============================================================================
+// Zero Protocol - Auto-refetch states with 0 notices
+// =============================================================================
+let zeroProtocolInProgress = false;
+
+const showMapToast = (message, duration = 3000) => {
+  if (!mapToast) return;
+  mapToast.textContent = message;
+  mapToast.classList.remove('hidden');
+  mapToast.classList.add('visible');
+
+  setTimeout(() => {
+    mapToast.classList.remove('visible');
+    mapToast.classList.add('hidden');
+  }, duration);
+};
+
+const getMapTargetState = () => {
+  try {
+    return localStorage.getItem(scopedStorageKey(MAP_TARGET_STATE_BASE_KEY)) || null;
+  } catch {
+    return null;
+  }
+};
+
+const updateMapTargetStateHighlight = () => {
+  const targetState = getMapTargetState();
+  usMapContainer?.querySelectorAll('[data-state]').forEach(shape => {
+    shape.classList.remove('target-state-glow');
+    if (targetState && shape.getAttribute('data-state') === targetState) {
+      shape.classList.add('target-state-glow');
+    }
+  });
+  if (mapTargetStateBtn) {
+    mapTargetStateBtn.style.display = targetState ? 'inline-flex' : 'none';
+  }
+};
+
+const setMapTargetState = (stateAbbrev) => {
+  try {
+    localStorage.setItem(scopedStorageKey(MAP_TARGET_STATE_BASE_KEY), stateAbbrev);
+  } catch {
+    // ignore
+  }
+  updateMapTargetStateHighlight();
+  showMapToast(`Target state set to ${STATE_NAMES[stateAbbrev] || stateAbbrev}`);
+};
+
+const clearMapTargetState = () => {
+  try {
+    localStorage.removeItem(scopedStorageKey(MAP_TARGET_STATE_BASE_KEY));
+  } catch {
+    // ignore
+  }
+  updateMapTargetStateHighlight();
+  showMapToast('Target state cleared');
+};
+
+const setMapTargetMode = (nextValue) => {
+  isMapTargetMode = nextValue;
+  if (mapTargetModeBtn) {
+    mapTargetModeBtn.classList.toggle('active', isMapTargetMode);
+    mapTargetModeBtn.setAttribute('aria-pressed', String(isMapTargetMode));
+    const status = mapTargetModeBtn.querySelector('.map-target-mode-status');
+    if (status) status.textContent = isMapTargetMode ? 'On' : 'Off';
+  }
+};
+
+const ensureMapTargetModeListener = () => {
+  if (!mapTargetModeBtn || mapTargetModeBtn.dataset.listenerAttached === 'true') return;
+  mapTargetModeBtn.dataset.listenerAttached = 'true';
+  const toggle = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setMapTargetMode(!isMapTargetMode);
+  };
+  mapTargetModeBtn.addEventListener('pointerdown', toggle);
+  mapTargetModeBtn.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+  });
+};
+
+const refetchStateNotices = async (stateAbbrev) => {
+  try {
+    // Fetch fresh notices for this specific state
+    const response = await fetchJson(`/notices?state=${stateAbbrev}&limit=500`);
+    const notices = response.notices ?? [];
+    return notices.length;
+  } catch (err) {
+    console.error(`Failed to refetch notices for ${stateAbbrev}:`, err);
+    return 0;
+  }
+};
+
+const runZeroProtocol = async () => {
+  // Only run if no state filters are selected
+  if (selectedStates.length > 0) return;
+  if (zeroProtocolInProgress) return;
+
+  // Find states in stateData with 0 notices
+  const zeroStates = Object.keys(stateData).filter(state => {
+    const count = stateData[state]?.count ?? 0;
+    return count === 0;
+  });
+
+  if (zeroStates.length === 0) return;
+
+  zeroProtocolInProgress = true;
+
+  for (const stateAbbrev of zeroStates) {
+    const stateName = STATE_NAMES[stateAbbrev] || stateAbbrev;
+    showMapToast(`Refetching for ${stateName}...`, 2500);
+
+    const newCount = await refetchStateNotices(stateAbbrev);
+
+    if (newCount > 0) {
+      stateData[stateAbbrev] = { count: newCount };
+    }
+
+    // Small delay between requests to avoid overwhelming the server
+    await new Promise(resolve => setTimeout(resolve, 500));
+  }
+
+  // Update the map with new data
+  updateWeatherMap();
+
+  // Recalculate calibration stats
+  const counts = Object.values(stateData).map(entry => entry.count ?? 0);
+  calibrationStats = {
+    minCount: counts.length ? Math.min(...counts) : 0,
+    maxCount: counts.length ? Math.max(...counts) : 0
+  };
+  updateStateCalibration();
+
+  zeroProtocolInProgress = false;
+};
+
+// Update weather map colors based on state data
+const updateWeatherMap = () => {
+  const counts = Object.values(mapStateData).map(s => s.count || 0);
+  const maxCount = Math.max(...counts, 1);
+
+  const shapes = usMapContainer.querySelectorAll('[data-state]');
+  shapes.forEach(shape => {
+    const stateAbbrev = shape.getAttribute('data-state');
+    const count = mapStateData[stateAbbrev]?.count || 0;
+    const fogLevel = getFogLevel(count, maxCount);
+    const baseFill = shape.getAttribute('data-base-fill');
+    shape.style.fill = baseFill || getStateColor(stateAbbrev);
+    shape.style.fillOpacity = `${0.22 + fogLevel * 0.08}`;
+
+    // Remove all fog classes
+    for (let i = 0; i <= 7; i++) {
+      shape.classList.remove(`fog-${i}`);
+    }
+    // Add the appropriate fog class
+    shape.classList.add(`fog-${fogLevel}`);
+  });
+};
+
+const normalizeStateCounts = (states) => {
+  const normalized = {};
+  states.forEach((entry) => {
+    const state = entry.state;
+    let count = 0;
+    if (typeof entry.count === 'number') {
+      count = entry.count;
+    } else if (entry.count && typeof entry.count.count === 'number') {
+      count = entry.count.count;
+    }
+    normalized[state] = { count };
+  });
+  return normalized;
+};
+
+// Modified loadStates to also update weather map
+const originalLoadStates = loadStates;
+const loadStatesWithMap = async () => {
+  try {
+    const allData = await fetchJson('/states');
+    let healthcareData = { states: [] };
+    try {
+      healthcareData = await fetchJson('/states?recruiterFocus=1');
+    } catch {
+      healthcareData = { states: [] };
+    }
+    const states = allData.states ?? [];
+    statStates.textContent = states.length.toString();
+
+    regionSelect.innerHTML = '';
+    const regionDefault = document.createElement('option');
+    regionDefault.value = '';
+    regionDefault.textContent = 'All regions';
+    regionSelect.appendChild(regionDefault);
+    REGIONS.forEach((region) => {
+      const opt = document.createElement('option');
+      opt.value = region;
+      opt.textContent = region;
+      regionSelect.appendChild(opt);
+    });
+
+    // Build state data from API responses
+    stateDataAll = normalizeStateCounts(states);
+    stateDataHealthcare = normalizeStateCounts(healthcareData.states ?? []);
+    stateData = stateDataAll;
+    mapStateData = mapScope === 'all' || Object.keys(stateDataHealthcare).length === 0
+      ? stateDataAll
+      : stateDataHealthcare;
+
+    // Populate state dropdown with all states
+    populateStateDropdown();
+
+    // Update the weather map colors
+    updateWeatherMap();
+    if (mapFactorsPanel && mapFactorsPanel.style.display !== 'none') {
+      renderMapFactors();
+    }
+    const counts = Object.values(stateData).map(entry => entry.count ?? 0);
+    calibrationStats = {
+      minCount: counts.length ? Math.min(...counts) : 0,
+      maxCount: counts.length ? Math.max(...counts) : 0
+    };
+    updateStateCalibration();
+
+    // Run zero protocol to refetch data for states showing 0 notices
+    runZeroProtocol();
+    setMapScope(mapScope);
+  } catch {
+    statStates.textContent = '0';
+  }
+};
+
+// Populate the multi-select state dropdown
+const populateStateDropdown = (selectedRegion = '') => {
+  if (!stateOptions) return;
+
+  // Determine which states to show
+  let statesToShow = ALL_STATES;
+  if (selectedRegion && REGION_STATES[selectedRegion]) {
+    statesToShow = REGION_STATES[selectedRegion].slice().sort();
+  }
+
+  // Clear existing options
+  stateOptions.innerHTML = '';
+
+  // Add state options with counts where available
+  statesToShow.forEach(state => {
+    const count = stateData[state]?.count || 0;
+    const isSelected = selectedStates.includes(state);
+    const option = document.createElement('div');
+    option.className = `multi-select-option${isSelected ? ' selected' : ''}`;
+    option.dataset.state = state;
+    option.innerHTML = `
+      <div class="multi-select-checkbox"></div>
+      <span class="multi-select-label">${state}</span>
+      ${count > 0 ? `<span class="multi-select-count">${count}</span>` : ''}
+    `;
+    stateOptions.appendChild(option);
+  });
+
+  // Filter out selected states that are no longer in the visible list
+  if (selectedRegion) {
+    selectedStates = selectedStates.filter(s => statesToShow.includes(s));
+  }
+
+  // Update the display
+  updateStateDisplay();
+};
+
+// Update the state display to show selected tags
+const updateStateDisplay = () => {
+  if (!stateDisplay) return;
+
+  if (selectedStates.length === 0) {
+    stateDisplay.innerHTML = '<span class="multi-select-placeholder">All states</span>';
+  } else if (selectedStates.length <= 3) {
+    stateDisplay.innerHTML = selectedStates.map(state => `
+      <span class="multi-select-tag" data-state="${state}">
+        ${state}
+        <span class="multi-select-tag-remove" data-state="${state}">&times;</span>
+      </span>
+    `).join('');
+  } else {
+    const visibleStates = selectedStates.slice(0, 2);
+    stateDisplay.innerHTML = visibleStates.map(state => `
+      <span class="multi-select-tag" data-state="${state}">
+        ${state}
+        <span class="multi-select-tag-remove" data-state="${state}">&times;</span>
+      </span>
+    `).join('') + `<span class="multi-select-more">+${selectedStates.length - 2} more</span>`;
+  }
+
+  // Update hidden input
+  stateSelect.value = selectedStates.join(',');
+};
+
+// Toggle state selection
+const toggleStateSelection = (state) => {
+  const index = selectedStates.indexOf(state);
+  if (index === -1) {
+    selectedStates.push(state);
+  } else {
+    selectedStates.splice(index, 1);
+  }
+
+  // Update option visual
+  const option = stateOptions?.querySelector(`[data-state="${state}"]`);
+  if (option) {
+    option.classList.toggle('selected', selectedStates.includes(state));
+  }
+
+  updateStateDisplay();
+  onStateSelectionChange();
+};
+
+// Handle state selection change - update map/chart and reload data
+const onStateSelectionChange = () => {
+  if (currentMapView === 'map') {
+    updateMapHighlights();
+  } else {
+    renderBarChart();
+  }
+  loadNotices();
+};
+
+// Initialize multi-select dropdown
+const initStateMultiSelect = () => {
+  if (!stateMultiSelect) return;
+
+  // Toggle dropdown on display click
+  stateDisplay?.addEventListener('click', (e) => {
+    // Don't toggle if clicking remove button
+    if (e.target.classList.contains('multi-select-tag-remove')) {
+      const state = e.target.dataset.state;
+      if (state) toggleStateSelection(state);
       return;
     }
-
-    const notice = {
-      id: `custom-${Date.now()}`,
-      employer_name: employer,
-      state,
-      employees_affected: affected,
-      notice_date: noticeDate,
-      effective_date: effectiveDate,
-      nursing_score: 50,
-      nursing_label: 'Custom',
-      isCustom: true,
-      createdAt: new Date().toISOString()
-    };
-
-    customNotices.unshift(notice);
-    saveCustomNotices();
-    customNoticeForm.reset();
-    applyFilters();
+    stateMultiSelect.classList.toggle('open');
   });
-};
 
-// =============================================================================
-// Map Highlighting
-// =============================================================================
-const updateMapHighlights = () => {
-  document.querySelectorAll('.us-map path[data-state], .us-map circle[data-state]').forEach(path => {
-    const state = path.dataset.state;
-    path.classList.remove('state-selected', 'state-dimmed');
+  // Handle option clicks
+  stateOptions?.addEventListener('click', (e) => {
+    const option = e.target.closest('.multi-select-option');
+    if (option) {
+      const state = option.dataset.state;
+      if (state) toggleStateSelection(state);
+    }
+  });
 
-    if (selectedStates.length > 0) {
-      if (selectedStates.includes(state)) {
-        path.classList.add('state-selected');
-      } else {
-        path.classList.add('state-dimmed');
+  // Search functionality
+  stateSearch?.addEventListener('input', (e) => {
+    const searchTerm = e.target.value.toLowerCase();
+    const options = stateOptions?.querySelectorAll('.multi-select-option');
+    options?.forEach(option => {
+      const state = option.dataset.state;
+      const stateName = STATE_NAMES[state] || state;
+      const matches = state.toLowerCase().includes(searchTerm) ||
+                      stateName.toLowerCase().includes(searchTerm);
+      option.classList.toggle('hidden', !matches);
+    });
+  });
+
+  // Select all button
+  document.getElementById('select-all-states')?.addEventListener('click', () => {
+    const visibleOptions = stateOptions?.querySelectorAll('.multi-select-option:not(.hidden)');
+    visibleOptions?.forEach(option => {
+      const state = option.dataset.state;
+      if (state && !selectedStates.includes(state)) {
+        selectedStates.push(state);
+        option.classList.add('selected');
       }
-    } else if (regionSelect.value && REGION_STATES[regionSelect.value]) {
-      if (REGION_STATES[regionSelect.value].includes(state)) {
-        path.classList.add('state-selected');
-      } else {
-        path.classList.add('state-dimmed');
-      }
+    });
+    updateStateDisplay();
+    onStateSelectionChange();
+  });
+
+  // Clear all button
+  document.getElementById('clear-all-states')?.addEventListener('click', () => {
+    selectedStates = [];
+    stateOptions?.querySelectorAll('.multi-select-option').forEach(opt => {
+      opt.classList.remove('selected');
+    });
+    updateStateDisplay();
+    onStateSelectionChange();
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!stateMultiSelect.contains(e.target)) {
+      stateMultiSelect.classList.remove('open');
     }
   });
 };
 
-// =============================================================================
-// Help Section
-// =============================================================================
+// All US states + DC + PR for dropdowns
+const ALL_STATES = [
+  'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'GA',
+  'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD',
+  'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ',
+  'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'PR', 'RI', 'SC',
+  'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
+];
+
+// Populate custom state dropdown
+const populateCustomStateDropdown = () => {
+  ALL_STATES.forEach(state => {
+    const opt = document.createElement('option');
+    opt.value = state;
+    opt.textContent = state;
+    customStateSelect.appendChild(opt);
+  });
+};
+
+// Load custom notices from localStorage
+const loadCustomNotices = () => {
+  try {
+    const stored = localStorage.getItem(scopedStorageKey(CUSTOM_NOTICES_BASE_KEY));
+    if (stored) {
+      customNotices = JSON.parse(stored);
+    }
+  } catch (e) {
+    console.error('Failed to load custom notices:', e);
+    customNotices = [];
+  }
+};
+
+// Save custom notices to localStorage
+const saveCustomNotices = () => {
+  try {
+    localStorage.setItem(scopedStorageKey(CUSTOM_NOTICES_BASE_KEY), JSON.stringify(customNotices));
+  } catch (e) {
+    console.error('Failed to save custom notices:', e);
+  }
+};
+
+// Handle custom notice form submission
+const handleCustomNoticeSubmit = (e) => {
+  e.preventDefault();
+
+  const employer = document.getElementById('custom-employer').value.trim();
+  const state = document.getElementById('custom-state').value;
+  const affected = document.getElementById('custom-affected').value;
+  const noticeDate = document.getElementById('custom-date').value;
+  const layoffDate = document.getElementById('custom-layoff-date').value;
+  const location = document.getElementById('custom-location').value.trim();
+  const notes = document.getElementById('custom-notes').value.trim();
+
+  if (!employer || !state) {
+    alert('Please fill in the required fields (Employer Name and State).');
+    return;
+  }
+
+  const customNotice = {
+    id: `custom-${Date.now()}`,
+    employerName: employer,
+    state: state,
+    affectedCount: affected ? parseInt(affected, 10) : null,
+    noticeDate: noticeDate || new Date().toISOString().split('T')[0],
+    layoffDate: layoffDate || null,
+    city: location || null,
+    rawText: notes || null,
+    isCustom: true,
+    nursingImpact: { score: 50, label: 'Custom' },
+    createdAt: new Date().toISOString()
+  };
+
+  customNotices.unshift(customNotice);
+  saveCustomNotices();
+
+  // Add to current notices and re-render
+  currentNotices.unshift(customNotice);
+  renderNotices(currentNotices);
+  updateStats(currentNotices);
+
+  // Reset form
+  customNoticeForm.reset();
+
+  alert(`Custom notice for "${employer}" has been added!`);
+};
+
+// Initialize custom notice form
+if (customNoticeForm) {
+  customNoticeForm.addEventListener('submit', handleCustomNoticeSubmit);
+}
+
+// ==================== PROJECTS FUNCTIONALITY ====================
+
+// Load projects from localStorage
+const loadProjects = () => {
+  try {
+    const stored = localStorage.getItem(scopedStorageKey(PROJECTS_BASE_KEY));
+    if (stored) {
+      projects = JSON.parse(stored);
+    }
+  } catch (e) {
+    console.error('Failed to load projects:', e);
+    projects = [];
+  }
+};
+
+// Save projects to localStorage
+const saveProjects = () => {
+  try {
+    localStorage.setItem(scopedStorageKey(PROJECTS_BASE_KEY), JSON.stringify(projects));
+  } catch (e) {
+    console.error('Failed to save projects:', e);
+  }
+};
+
+// Render projects list
+const renderProjects = (searchTerm = '') => {
+  const filtered = searchTerm
+    ? projects.filter(p =>
+        p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        p.description?.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : projects;
+
+  if (!filtered.length) {
+    projectsList.innerHTML = `<div class="empty-state">${
+      searchTerm ? 'No projects match your search.' : 'No projects yet. Create one to start organizing notices.'
+    }</div>`;
+    return;
+  }
+
+  projectsList.innerHTML = filtered.map(project => `
+    <div class="project-card" data-project-id="${project.id}" style="border-left-color: ${project.color}">
+      <div class="project-card-header">
+        <h4>${project.name}</h4>
+        <span class="project-card-count">${project.notices?.length || 0} notices</span>
+      </div>
+      ${project.owner ? `<p class="project-owner">Owner: ${project.owner}</p>` : ''}
+      <p>${project.description || 'No description'}</p>
+      <div class="project-card-meta">Created ${formatDate(project.createdAt)}</div>
+    </div>
+  `).join('');
+};
+
+// Open project modal
+const openProjectModal = (projectId = null) => {
+  currentProjectId = projectId;
+  const modalTitle = document.getElementById('modal-title');
+  const nameInput = document.getElementById('project-name');
+  const ownerInput = document.getElementById('project-owner');
+  const descInput = document.getElementById('project-description');
+  const nameError = document.getElementById('project-name-error');
+
+  if (projectId) {
+    const project = projects.find(p => p.id === projectId);
+    if (project) {
+      modalTitle.textContent = 'Edit Project';
+      nameInput.value = project.name;
+      if (ownerInput) ownerInput.value = project.owner || '';
+      descInput.value = project.description || '';
+      // Select the color
+      document.querySelectorAll('.color-option').forEach(opt => {
+        opt.classList.toggle('selected', opt.dataset.color === project.color);
+      });
+    }
+  } else {
+    modalTitle.textContent = 'Create New Project';
+    projectForm.reset();
+    document.querySelectorAll('.color-option').forEach((opt, i) => {
+      opt.classList.toggle('selected', i === 0);
+    });
+  }
+  if (nameError) { nameError.textContent = ''; nameError.style.display = 'none'; }
+
+  projectModal.classList.add('active');
+  document.body.classList.add('modal-open');
+};
+
+// Close project modal
+const closeProjectModal = () => {
+  projectModal.classList.remove('active');
+  document.body.classList.remove('modal-open');
+  currentProjectId = null;
+};
+
+// Handle project form submit
+const handleProjectSubmit = () => {
+  const name = document.getElementById('project-name').value.trim();
+  const owner = document.getElementById('project-owner')?.value?.trim();
+  const description = document.getElementById('project-description')?.value?.trim();
+  const selectedColor = document.querySelector('.color-option.selected');
+  const color = selectedColor ? selectedColor.dataset.color : '#3182ce';
+  const nameError = document.getElementById('project-name-error');
+
+  if (!name) {
+    if (nameError) { nameError.textContent = 'Project name is required.'; nameError.style.display = 'block'; }
+    document.getElementById('project-name')?.focus();
+    return;
+  }
+  if (!owner) {
+    if (nameError) { nameError.textContent = 'Owner name is required.'; nameError.style.display = 'block'; }
+    document.getElementById('project-owner')?.focus();
+    return;
+  }
+
+  // Check for duplicate project name (case-insensitive, exclude current project when editing)
+  const duplicate = projects.find(p =>
+    p.name.toLowerCase() === name.toLowerCase() && p.id !== currentProjectId
+  );
+  if (duplicate) {
+    if (nameError) {
+      nameError.textContent = 'A project with this name already exists.';
+      nameError.style.display = 'block';
+    }
+    return;
+  }
+  if (nameError) { nameError.textContent = ''; nameError.style.display = 'none'; }
+
+  if (currentProjectId) {
+    // Update existing project
+    const project = projects.find(p => p.id === currentProjectId);
+    if (project) {
+      project.name = name;
+      project.owner = owner;
+      project.description = description;
+      project.color = color;
+      project.updatedAt = new Date().toISOString();
+    }
+  } else {
+    // Create new project
+    const newProject = {
+      id: `project-${Date.now()}`,
+      name,
+      owner,
+      description,
+      color,
+      notices: [],
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
+    projects.unshift(newProject);
+  }
+
+  saveProjects();
+  renderProjects();
+  closeProjectModal();
+};
+
+// Open project detail modal
+const openProjectDetail = (projectId) => {
+  const project = projects.find(p => p.id === projectId);
+  if (!project) return;
+
+  currentProjectId = projectId;
+  document.getElementById('project-detail-title').textContent = project.name;
+  const ownerEl = document.getElementById('project-detail-owner');
+  if (ownerEl) ownerEl.textContent = project.owner ? `Owner: ${project.owner}` : '';
+  document.getElementById('project-detail-desc').textContent = project.description || 'No description';
+
+  const noticesList = document.getElementById('project-notices-list');
+  if (!project.notices?.length) {
+    noticesList.innerHTML = `<div class="empty-state">No notices saved to this project yet. Click "Save to Project" on any notice card.</div>`;
+  } else {
+    noticesList.innerHTML = project.notices.map(notice => `
+      <div class="project-notice-item" data-notice-id="${notice.id}">
+        <div class="project-notice-item-info">
+          <h5>${notice.employerName || notice.employer_name || 'Unknown'}</h5>
+          <span>${notice.state} • ${formatDate(notice.noticeDate || notice.notice_date)} • ${formatNumber(notice.affectedCount || notice.employees_affected)} affected</span>
+        </div>
+        <button onclick="removeNoticeFromProject('${projectId}', '${notice.id}')" title="Remove from project">&times;</button>
+      </div>
+    `).join('');
+  }
+
+  projectDetailModal.classList.add('active');
+  document.body.classList.add('modal-open');
+};
+
+// Close project detail modal
+const closeProjectDetail = () => {
+  projectDetailModal.classList.remove('active');
+  document.body.classList.remove('modal-open');
+  currentProjectId = null;
+};
+
+// Delete project
+const deleteProject = () => {
+  if (!currentProjectId) return;
+
+  const project = projects.find(p => p.id === currentProjectId);
+  if (!project) return;
+
+  if (confirm(`Are you sure you want to delete "${project.name}"? This cannot be undone.`)) {
+    projects = projects.filter(p => p.id !== currentProjectId);
+    saveProjects();
+    renderProjects();
+    closeProjectDetail();
+  }
+};
+
+// Save notice to project
+const saveNoticeToProject = (projectId, notice) => {
+  const project = projects.find(p => p.id === projectId);
+  if (!project) return;
+
+  // Check if already saved
+  const exists = project.notices?.some(n => n.id === notice.id);
+  if (exists) {
+    alert('This notice is already saved to this project.');
+    return;
+  }
+
+  if (!project.notices) project.notices = [];
+
+  // Save a simplified copy of the notice
+  project.notices.push({
+    id: notice.id,
+    employerName: notice.employer_name || notice.employerName,
+    state: notice.state,
+    noticeDate: notice.notice_date || notice.noticeDate,
+    affectedCount: notice.employees_affected || notice.affectedCount,
+    city: notice.city,
+    savedAt: new Date().toISOString()
+  });
+
+  project.updatedAt = new Date().toISOString();
+  saveProjects();
+  renderProjects();
+  alert(`Notice saved to "${project.name}"`);
+};
+
+// Remove notice from project
+const removeNoticeFromProject = (projectId, noticeId) => {
+  const project = projects.find(p => p.id === projectId);
+  if (!project) return;
+
+  project.notices = project.notices.filter(n => n.id !== noticeId);
+  project.updatedAt = new Date().toISOString();
+  saveProjects();
+
+  // Re-render the detail modal
+  openProjectDetail(projectId);
+};
+
+// Make this function global for onclick handlers
+window.removeNoticeFromProject = removeNoticeFromProject;
+
+// Export project to CSV
+const exportProjectCSV = () => {
+  if (!currentProjectId) return;
+  const project = projects.find(p => p.id === currentProjectId);
+  if (!project || !project.notices?.length) {
+    alert('No notices to export in this project.');
+    return;
+  }
+
+  const headers = ['Employer Name', 'State', 'City', 'Notice Date', 'Layoff Date', 'Affected Employees', 'Impact Score'];
+  const rows = project.notices.map(notice => [
+    `"${(notice.employerName || notice.employer_name || 'Unknown').replace(/"/g, '""')}"`,
+    notice.state || '',
+    `"${(notice.city || '').replace(/"/g, '""')}"`,
+    notice.noticeDate || notice.notice_date || '',
+    notice.layoffDate || notice.layoff_date || '',
+    notice.affectedCount || notice.employees_affected || '',
+    notice.nursingImpact?.score || ''
+  ]);
+
+  const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `${project.name.replace(/[^a-z0-9]/gi, '_')}_export.csv`;
+  link.click();
+  URL.revokeObjectURL(url);
+};
+
+// Export project to JSON
+const exportProjectJSON = () => {
+  if (!currentProjectId) return;
+  const project = projects.find(p => p.id === currentProjectId);
+  if (!project || !project.notices?.length) {
+    alert('No notices to export in this project.');
+    return;
+  }
+
+  const exportData = {
+    projectName: project.name,
+    description: project.description || '',
+    exportedAt: new Date().toISOString(),
+    noticeCount: project.notices.length,
+    notices: project.notices.map(notice => ({
+      employerName: notice.employerName || notice.employer_name || 'Unknown',
+      state: notice.state || '',
+      city: notice.city || '',
+      noticeDate: notice.noticeDate || notice.notice_date || '',
+      layoffDate: notice.layoffDate || notice.layoff_date || '',
+      affectedEmployees: notice.affectedCount || notice.employees_affected || null,
+      impactScore: notice.nursingImpact?.score || null,
+      impactLabel: notice.nursingImpact?.label || ''
+    }))
+  };
+
+  const jsonContent = JSON.stringify(exportData, null, 2);
+  const blob = new Blob([jsonContent], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `${project.name.replace(/[^a-z0-9]/gi, '_')}_export.json`;
+  link.click();
+  URL.revokeObjectURL(url);
+};
+
+// Initialize project event listeners
+const initProjectEvents = () => {
+  // Prevent any accidental form submission from reloading the page
+  document.getElementById('project-form')?.addEventListener('submit', (e) => e.preventDefault());
+
+  // New project button
+  if (newProjectBtn) {
+    newProjectBtn.addEventListener('click', () => openProjectModal());
+  }
+
+  // Modal close buttons
+  document.getElementById('modal-close')?.addEventListener('click', closeProjectModal);
+  document.getElementById('modal-cancel')?.addEventListener('click', closeProjectModal);
+  document.getElementById('project-detail-close')?.addEventListener('click', closeProjectDetail);
+  document.getElementById('close-project-detail')?.addEventListener('click', closeProjectDetail);
+  document.getElementById('delete-project-btn')?.addEventListener('click', deleteProject);
+
+  // Export buttons
+  document.getElementById('export-project-csv')?.addEventListener('click', exportProjectCSV);
+  document.getElementById('export-project-json')?.addEventListener('click', exportProjectJSON);
+
+  // Save project supports both button click and Enter key form submit.
+  if (projectForm && projectForm.dataset.boundProjectSubmit !== 'true') {
+    projectForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      handleProjectSubmit();
+    });
+    projectForm.dataset.boundProjectSubmit = 'true';
+  }
+  // Color picker
+  if (colorPicker) {
+    colorPicker.addEventListener('click', (e) => {
+      if (e.target.classList.contains('color-option')) {
+        document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
+        e.target.classList.add('selected');
+      }
+    });
+  }
+
+  // Project search
+  if (projectSearch) {
+    projectSearch.addEventListener('input', (e) => {
+      renderProjects(e.target.value);
+    });
+  }
+
+  // Project card clicks
+  if (projectsList) {
+    projectsList.addEventListener('click', (e) => {
+      const card = e.target.closest('.project-card');
+      if (card) {
+        openProjectDetail(card.dataset.projectId);
+      }
+    });
+  }
+
+  // Close modals on overlay click
+  projectModal?.addEventListener('click', (e) => {
+    if (e.target === projectModal) closeProjectModal();
+  });
+  projectDetailModal?.addEventListener('click', (e) => {
+    if (e.target === projectDetailModal) closeProjectDetail();
+  });
+};
+
+// ==================== END PROJECTS FUNCTIONALITY ====================
+
+// ==================== HELP SECTION ====================
+
+// Help section toggle
 const initHelpSection = () => {
   const helpSection = document.querySelector('.help-section');
   const helpToggle = document.getElementById('help-toggle');
@@ -3812,7 +2834,7 @@ const initHelpSection = () => {
   const setOpen = (open) => {
     helpSection.classList.toggle('open', open);
     if (helpContent) {
-      helpContent.style.maxHeight = open ? '20000px' : '0px';
+      helpContent.style.maxHeight = open ? `${helpContent.scrollHeight}px` : '0px';
     }
     if (toggleIcon) toggleIcon.textContent = open ? '-' : '+';
     helpToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -3834,23 +2856,12 @@ const initHelpSection = () => {
   }
 
   setOpen(helpSection.classList.contains('open'));
-  const syncHelpHeight = () => {
-    if (helpSection.classList.contains('open') && helpContent) {
-      helpContent.style.maxHeight = '20000px';
-    }
-  };
-  if (helpSection.dataset.resizeBound !== 'true') {
-    window.addEventListener('resize', syncHelpHeight);
-    if (document.fonts?.ready) {
-      document.fonts.ready.then(syncHelpHeight);
-    }
-    helpSection.dataset.resizeBound = 'true';
-  }
 };
 
-// =============================================================================
-// Collapsible Sections
-// =============================================================================
+// Bind once at script load so help toggle still works if initApp isn't reached yet.
+initHelpSection();
+
+// ==================== COLLAPSIBLE SECTIONS ====================
 const initCollapsibleSections = () => {
   const toggleSection = (section, toggle) => {
     if (!section) return;
@@ -3893,49 +2904,23 @@ const initStrategicReview = () => {
   const section = document.querySelector('.strategic-review-section');
   const toggleIcon = section?.querySelector('.strategic-toggle-icon');
 
-  if (!toggleBtn || !section) {
-    console.warn('Strategic review elements not found');
-    return;
-  }
+  if (!toggleBtn || !section) return;
 
   toggleBtn.addEventListener('click', () => {
     section.classList.toggle('open');
     const isOpen = section.classList.contains('open');
-    if (toggleIcon) {
-      toggleIcon.textContent = isOpen ? '-' : '+';
-    }
-    if (isOpen) {
-      renderStrategicReview();
-    }
+    if (toggleIcon) toggleIcon.textContent = isOpen ? '-' : '+';
   });
-
-  // Re-render when filters change
-  const originalApplyFilters = applyFilters;
-  window.applyFiltersWithStrategic = () => {
-    originalApplyFilters();
-    if (section?.classList.contains('open')) {
-      renderStrategicReview();
-    }
-  };
-
-  if (section?.classList.contains('open')) {
-    if (toggleIcon) {
-      toggleIcon.textContent = '-';
-    }
-    renderStrategicReview();
-  }
 };
+
+// ==================== END HELP SECTION ====================
 
 // ==================== ACCREDITED PROGRAMS MODULE ====================
 
-const updateProgramsCount = (count, showing = count) => {
+const updateProgramsCount = (count) => {
   if (!programsCount) return;
   const label = count === 1 ? 'program' : 'programs';
-  if (showing < count) {
-    programsCount.textContent = `Showing ${showing} of ${count} ${label}`;
-  } else {
-    programsCount.textContent = `${count} ${label}`;
-  }
+  programsCount.textContent = `${count} ${label}`;
 };
 
 const updateProgramsLoading = (loaded, total) => {
@@ -3946,54 +2931,15 @@ const updateProgramsLoading = (loaded, total) => {
 };
 
 const normalizeProgram = (program) => {
-  const rawLevel = (program.level ?? program.program_level ?? '').trim();
-  let level = rawLevel;
-  if (/^adn$/i.test(level) || /associate degree/i.test(level)) {
-    level = 'ASN';
-  }
-
   return {
     institution: program.institution ?? program.institution_name ?? program.school ?? 'Unknown',
     campus: program.campus ?? program.campus_name ?? '-',
     city: program.city ?? '',
     state: program.state ?? '',
-    level,
+    level: program.level ?? program.program_level ?? '',
     accreditor: program.accreditor ?? program.accreditation ?? '',
-    credentialNotes: decodeHtmlEntities(program.credential_notes ?? program.credentialNotes ?? '')
+    credentialNotes: program.credential_notes ?? program.credentialNotes ?? ''
   };
-};
-
-const deriveAssociatePrograms = (programs) => {
-  const extras = [];
-  const existing = new Set(
-    programs.map((program) => {
-      const inst = (program.institution ?? program.institution_name ?? '').toLowerCase();
-      const state = (program.state ?? '').toLowerCase();
-      const level = (program.program_level ?? program.level ?? '').toUpperCase();
-      return `${inst}|${state}|${level}`;
-    })
-  );
-
-  programs.forEach((program) => {
-    const accreditationText = `${program.accreditation_status ?? ''} ${program.credential_notes ?? ''}`.toLowerCase();
-    if (!accreditationText.includes('associate degree in nursing')) return;
-    const inst = (program.institution ?? program.institution_name ?? '').toLowerCase();
-    const state = (program.state ?? '').toLowerCase();
-    const baseLevel = (program.program_level ?? program.level ?? '').toUpperCase();
-    if (baseLevel === 'ASN' || baseLevel === 'ADN') return;
-    const key = `${inst}|${state}|ASN`;
-    if (existing.has(key)) return;
-    existing.add(key);
-    const note = (program.credential_notes ?? '').trim();
-    extras.push({
-      ...program,
-      program_level: 'ASN',
-      level: 'ASN',
-      credential_notes: note ? `${note} | Associate Degree in Nursing (derived)` : 'Associate Degree in Nursing (derived)'
-    });
-  });
-
-  return extras.length ? programs.concat(extras) : programs;
 };
 
 const buildProgramRow = (program) => {
@@ -4004,17 +2950,7 @@ const buildProgramRow = (program) => {
 
   return `
     <tr>
-      <td>
-        <button
-          type="button"
-          class="program-school-link"
-          data-school="${escapeHtml(entry.institution)}"
-          data-state="${escapeHtml(entry.state || '')}"
-        >
-          ${escapeHtml(entry.institution)}
-        </button>
-        ${credential}
-      </td>
+      <td><strong>${escapeHtml(entry.institution)}</strong>${credential}</td>
       <td>${escapeHtml(entry.campus || '-')}</td>
       <td>${escapeHtml(entry.city || '-')}</td>
       <td>${escapeHtml(entry.state || '-')}</td>
@@ -4024,86 +2960,7 @@ const buildProgramRow = (program) => {
   `;
 };
 
-const getProgramOutboundTargets = (sourceState, count = 3) => {
-  if (!sourceState || !ALL_STATES.includes(sourceState)) return [];
-
-  const salaryData = recruitmentIntel?.salaryBenchmarks || strategicData?.salaryData || NURSING_SALARY_DATA;
-  const topTargetsMatrix = recruitmentIntel?.topTargets;
-
-  if (topTargetsMatrix && typeof topTargetsMatrix === 'object') {
-    const rankedDestinations = Object.entries(topTargetsMatrix)
-      .map(([destinationState, feederStates]) => {
-        if (destinationState === sourceState || !Array.isArray(feederStates)) return null;
-        const feederRank = feederStates.indexOf(sourceState);
-        if (feederRank === -1) return null;
-        return {
-          state: destinationState,
-          feederRank: feederRank + 1,
-          projectedGap: Number(salaryData?.[destinationState]?.projectedGap ?? 0),
-          travelWeekly: Number(salaryData?.[destinationState]?.travelWeekly ?? 0)
-        };
-      })
-      .filter(Boolean)
-      .sort((a, b) => {
-        if (a.feederRank !== b.feederRank) return a.feederRank - b.feederRank;
-        if (a.projectedGap !== b.projectedGap) return a.projectedGap - b.projectedGap;
-        return b.travelWeekly - a.travelWeekly;
-      })
-      .slice(0, count);
-
-    if (rankedDestinations.length) return rankedDestinations;
-  }
-
-  return Object.entries(salaryData || {})
-    .filter(([state]) => state !== sourceState && getBlendedShortageStatus(state, salaryData) === 'shortage')
-    .sort((a, b) => {
-      const gapA = Number(a[1]?.projectedGap ?? 0);
-      const gapB = Number(b[1]?.projectedGap ?? 0);
-      if (gapA !== gapB) return gapA - gapB;
-      return Number(b[1]?.travelWeekly ?? 0) - Number(a[1]?.travelWeekly ?? 0);
-    })
-    .slice(0, count)
-    .map(([state], idx) => ({ state, feederRank: idx + 1 }));
-};
-
-const filterTableToSchool = (schoolName) => {
-  if (!programsList) return;
-  programsList.querySelectorAll('tr').forEach(row => {
-    const btn = row.querySelector('.program-school-link');
-    if (!btn) { row.style.display = ''; return; }
-    row.style.display = btn.dataset.school === schoolName ? '' : 'none';
-  });
-};
-
-const showAllProgramRows = () => {
-  if (!programsList) return;
-  programsList.querySelectorAll('tr').forEach(row => { row.style.display = ''; });
-};
-
-const renderProgramsSchoolInsight = (schoolName, sourceState, targets) => {
-  if (!programsSchoolInsight) return;
-  if (!schoolName || !sourceState) {
-    programsSchoolInsight.innerHTML = 'Click a school name to see its top 3 destination states.';
-    return;
-  }
-
-  const showAllBtn = '<button type="button" class="programs-show-all">? Show all schools</button>';
-
-  if (!targets.length) {
-    programsSchoolInsight.innerHTML = `<strong>${escapeHtml(schoolName)}</strong> (${escapeHtml(sourceState)}) has no destination signal available yet. ${showAllBtn}`;
-    return;
-  }
-
-  const targetText = targets
-    .map((entry, idx) => `${idx + 1}. ${STATE_NAMES[entry.state] || entry.state}`)
-    .join(' | ');
-  programsSchoolInsight.innerHTML = `
-    <strong>${escapeHtml(schoolName)}</strong> (${escapeHtml(sourceState)}) likely feeds nurses to:
-    <span>${escapeHtml(targetText)}</span> ${showAllBtn}
-  `;
-};
-
-const DEFAULT_PROGRAM_LEVELS = ['LPN', 'ASN', 'BSN', 'MSN'];
+const DEFAULT_PROGRAM_LEVELS = ['ASN', 'BSN', 'MSN'];
 
 const getSelectedLevels = () => {
   if (!programsLevelFilter) return DEFAULT_PROGRAM_LEVELS;
@@ -4118,31 +2975,23 @@ const getFilteredPrograms = () => {
   const stateFilter = programsStateFilter?.value ?? '';
   const selectedLevels = getSelectedLevels();
 
-  // Use cached search data for performance
-  if (programsSearchCache.length) {
-    const results = [];
-    for (let i = 0; i < programsSearchCache.length; i++) {
-      const { entry, haystack } = programsSearchCache[i];
-      if (stateFilter && entry.state !== stateFilter) continue;
-      if (selectedLevels.length > 0 && !selectedLevels.includes(entry.level)) continue;
-      if (query && !haystack.includes(query)) continue;
-      results.push(nursingPrograms[i]);
-    }
-    return results;
-  }
-
-  // Fallback if cache not ready
   return nursingPrograms.filter((program) => {
     const entry = normalizeProgram(program);
     if (stateFilter && entry.state !== stateFilter) return false;
     if (selectedLevels.length > 0 && !selectedLevels.includes(entry.level)) return false;
     if (!query) return true;
-    const haystack = [entry.institution, entry.campus, entry.city, entry.state, entry.level, entry.accreditor, entry.credentialNotes].filter(Boolean).join(' ').toLowerCase();
+    const haystack = [
+      entry.institution,
+      entry.campus,
+      entry.city,
+      entry.state,
+      entry.level,
+      entry.accreditor,
+      entry.credentialNotes
+    ].filter(Boolean).join(' ').toLowerCase();
     return haystack.includes(query);
   });
 };
-
-const MAX_PROGRAMS_RENDER = 300;
 
 const renderProgramsTable = (programs) => {
   if (!programsList) return;
@@ -4153,15 +3002,12 @@ const renderProgramsTable = (programs) => {
     return;
   }
 
-  const displayPrograms = programs.slice(0, MAX_PROGRAMS_RENDER);
-  programsList.innerHTML = displayPrograms.map(buildProgramRow).join('');
-  updateProgramsCount(programs.length, displayPrograms.length);
+  programsList.innerHTML = programs.map(buildProgramRow).join('');
+  updateProgramsCount(programs.length);
 };
 
 const renderProgramsWithProgress = (programs) => {
   if (!programsList) return;
-  selectedProgramSchool = '';
-  if (programsSchoolInsight) programsSchoolInsight.innerHTML = 'Click a school name to see its top 3 destination states.';
   programsList.innerHTML = '';
 
   if (!programs.length) {
@@ -4176,13 +3022,13 @@ const renderProgramsWithProgress = (programs) => {
   const batchSize = 50;
   programsLoading?.classList.add('active');
   updateProgramsLoading(0, total);
-  updateProgramsCount(total, Math.min(total, MAX_PROGRAMS_RENDER));
+  updateProgramsCount(total);
 
   const appendBatch = () => {
-    const batch = programs.slice(rendered, Math.min(rendered + batchSize, MAX_PROGRAMS_RENDER));
+    const batch = programs.slice(rendered, rendered + batchSize);
     if (!batch.length) {
       programsLoading?.classList.remove('active');
-      updateProgramsLoading(Math.min(total, MAX_PROGRAMS_RENDER), total);
+      updateProgramsLoading(total, total);
       return;
     }
 
@@ -4190,7 +3036,7 @@ const renderProgramsWithProgress = (programs) => {
     rendered += batch.length;
     updateProgramsLoading(rendered, total);
 
-    if (rendered < Math.min(total, MAX_PROGRAMS_RENDER)) {
+    if (rendered < total) {
       requestAnimationFrame(appendBatch);
     } else {
       programsLoading?.classList.remove('active');
@@ -4290,26 +3136,13 @@ const loadPrograms = async (force = false) => {
   try {
     programsLoading?.classList.add('active');
     updateProgramsLoading(0, 1);
-    const response = await fetch(`/data/programs.json?ts=${Date.now()}`);
-    if (!response.ok) throw new Error(`Failed to load programs: ${response.status}`);
-    const data = await response.json();
+    const data = await fetchJson(`/data/programs.json?ts=${Date.now()}`);
 
     nursingPrograms = Array.isArray(data) ? data : (data.programs ?? []);
-    nursingPrograms = deriveAssociatePrograms(nursingPrograms);
     programsMeta = {
       lastUpdated: data.lastUpdated ?? null,
       sources: data.sources ?? []
     };
-
-    // Pre-compute search haystacks for fast filtering
-    programsSearchCache = nursingPrograms.map((program) => {
-      const entry = normalizeProgram(program);
-      return {
-        entry,
-        haystack: [entry.institution, entry.campus, entry.city, entry.state, entry.level, entry.accreditor, entry.credentialNotes]
-          .filter(Boolean).join(' ').toLowerCase()
-      };
-    });
 
     if (programsUpdated) {
       programsUpdated.textContent = programsMeta.lastUpdated
@@ -4382,48 +3215,11 @@ const initProgramsModule = () => {
     if (event.target === programsModal) closeProgramsModal();
   });
 
-  const renderProgramsFiltered = () => renderProgramsWithProgress(getFilteredPrograms());
-  programsSearch?.addEventListener('input', debounce(renderProgramsFiltered, 300));
-  programsStateFilter?.addEventListener('change', renderProgramsFiltered);
-  programsSchoolInsight?.addEventListener('click', (event) => {
-    if (event.target.closest('.programs-show-all')) {
-      selectedProgramSchool = '';
-      showAllProgramRows();
-      renderProgramsSchoolInsight('', '', []);
-    }
-  });
-
-  programsList?.addEventListener('click', async (event) => {
-    const schoolBtn = event.target.closest('.program-school-link');
-    if (!schoolBtn) return;
-
-    const schoolName = schoolBtn.dataset.school || '';
-    const sourceState = (schoolBtn.dataset.state || '').toUpperCase();
-
-    // Toggle: clicking the same school again shows all
-    if (selectedProgramSchool === schoolName) {
-      selectedProgramSchool = '';
-      showAllProgramRows();
-      renderProgramsSchoolInsight('', '', []);
-      return;
-    }
-
-    selectedProgramSchool = schoolName;
-    filterTableToSchool(schoolName);
-
-    if (!sourceState) {
-      renderProgramsSchoolInsight(schoolName, sourceState, []);
-      return;
-    }
-
-    await loadStrategicData();
-    await loadRecruitmentIntel();
-    const targets = getProgramOutboundTargets(sourceState, 3);
-    renderProgramsSchoolInsight(schoolName, sourceState, targets);
-  });
+  programsSearch?.addEventListener('input', () => renderProgramsTable(getFilteredPrograms()));
+  programsStateFilter?.addEventListener('change', () => renderProgramsTable(getFilteredPrograms()));
   // Add change listeners to all level checkboxes
   programsLevelFilter?.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-    cb.addEventListener('change', renderProgramsFiltered);
+    cb.addEventListener('change', () => renderProgramsTable(getFilteredPrograms()));
   });
   programsExportCsv?.addEventListener('click', exportProgramsCsv);
   programsExportExcel?.addEventListener('click', exportProgramsExcel);
@@ -4440,7 +3236,7 @@ const loadStateBeaconData = async (forceRefresh = false) => {
     return stateBeaconData;
   }
   try {
-    const data = await fetchJson(`${DATA_BASE_URL}/state-beacon.json?ts=${now}`);
+    const data = await fetchJson(`/data/state-beacon.json?ts=${now}`);
     stateBeaconData = {
       lastUpdated: data?.lastUpdated || new Date(now).toISOString(),
       states: data?.states || {}
@@ -4460,165 +3256,13 @@ const loadStateNewsData = async (forceRefresh = false) => {
     return stateNewsData;
   }
   try {
-    stateNewsData = await fetchJson(`${DATA_BASE_URL}/state-news.json?ts=${now}`);
+    stateNewsData = await fetchJson(`/data/state-news.json?ts=${now}`);
   } catch (err) {
-    if (!stateNewsData) stateNewsData = null;
+    stateNewsData = null;
   }
   stateNewsLoaded = true;
   stateNewsLoadedAt = now;
   return stateNewsData;
-};
-
-const loadHospitalRankingsData = async (forceRefresh = false) => {
-  const now = Date.now();
-  if (hospitalRankingsLoaded && !forceRefresh && (now - hospitalRankingsLoadedAt) < STATE_BEACON_REFRESH_MS) {
-    return hospitalRankingsData;
-  }
-  try {
-    hospitalRankingsData = await fetchJson(`${DATA_BASE_URL}/hospital-rankings.json?ts=${now}`);
-  } catch (err) {
-    if (!hospitalRankingsData) hospitalRankingsData = null;
-  }
-  hospitalRankingsLoaded = true;
-  hospitalRankingsLoadedAt = now;
-  return hospitalRankingsData;
-};
-
-const getHospitalRankingScore = (hospital) => {
-  if (!hospital || typeof hospital !== 'object') return 0;
-  const score = Number(
-    hospital.compositeScore
-    ?? hospital.baseScore
-    ?? hospital.score
-    ?? 0
-  );
-  return Number.isFinite(score) ? score : 0;
-};
-
-const normalizeHospitalNameKey = (value) => String(value || '')
-  .toLowerCase()
-  .replace(/[^a-z0-9]/g, '');
-
-const buildHospitalNameKeys = (value) => {
-  const raw = String(value || '').toLowerCase().replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
-  if (!raw) return [];
-  const variants = new Set([raw]);
-  const replacements = [
-    ['university of kentucky', 'uk'],
-    ['university of michigan', 'umich'],
-    ['saint ', 'st '],
-    ['medical center', 'med center'],
-    [' and ', ' ']
-  ];
-  for (const [from, to] of replacements) {
-    if (raw.includes(from)) variants.add(raw.replaceAll(from, to));
-  }
-  const out = new Set();
-  variants.forEach((item) => {
-    const key = normalizeHospitalNameKey(item);
-    if (key) out.add(key);
-  });
-  return Array.from(out);
-};
-
-const parseHospitalBeds = (value) => {
-  const parsed = Number(value);
-  return Number.isFinite(parsed) && parsed > 0 ? parsed : null;
-};
-
-const getStaticHospitalBedsMapForState = (stateAbbrev) => {
-  const metros = STATE_METRO_DATA?.[stateAbbrev]?.metros || [];
-  const map = new Map();
-  metros.forEach((metro) => {
-    (metro?.hospitals || []).forEach((hospital) => {
-      const beds = parseHospitalBeds(hospital?.beds);
-      if (beds === null) return;
-      buildHospitalNameKeys(hospital?.name).forEach((key) => {
-        if (key && !map.has(key)) {
-          map.set(key, beds);
-        }
-      });
-    });
-  });
-  return map;
-};
-
-const mapHasAnyHospitalKey = (map, keys) => {
-  if (!map || !keys?.length) return null;
-  for (const key of keys) {
-    if (map.has(key)) return map.get(key);
-  }
-  return null;
-};
-
-const mapFindFuzzyHospitalKey = (map, keys) => {
-  if (!map || !keys?.length) return null;
-  for (const [candidateKey, beds] of map.entries()) {
-    for (const key of keys) {
-      if (candidateKey.includes(key) || key.includes(candidateKey)) return beds;
-    }
-  }
-  return null;
-};
-
-const resolveTargetHospitalBeds = (stateAbbrev, hospital, fetchedBedsMap, staticBedsMap) => {
-  const directBeds = parseHospitalBeds(hospital?.beds);
-  if (directBeds !== null) return directBeds;
-
-  const keys = buildHospitalNameKeys(hospital?.name);
-  if (!keys.length) return '--';
-
-  const fetchedExact = mapHasAnyHospitalKey(fetchedBedsMap, keys);
-  if (fetchedExact !== null) return fetchedExact;
-
-  const staticExact = mapHasAnyHospitalKey(staticBedsMap, keys);
-  if (staticExact !== null) return staticExact;
-
-  const fetchedFuzzy = mapFindFuzzyHospitalKey(fetchedBedsMap, keys);
-  if (fetchedFuzzy !== null) return fetchedFuzzy;
-
-  const staticFuzzy = mapFindFuzzyHospitalKey(staticBedsMap, keys);
-  if (staticFuzzy !== null) return staticFuzzy;
-
-  return '--';
-};
-
-const getFetchedHospitalBedsMapForState = (fetchedRankings) => {
-  const map = new Map();
-  (fetchedRankings || []).forEach((item) => {
-    const beds = parseHospitalBeds(item?.beds);
-    if (beds === null) return;
-    buildHospitalNameKeys(item?.name).forEach((key) => {
-      if (key && !map.has(key)) {
-        map.set(key, beds);
-      }
-    });
-  });
-  return map;
-};
-
-const getFetchedHospitalRankingsForState = (state) => {
-  const rankings = hospitalRankingsData?.states?.[state]?.hospitalRankings || [];
-  return Array.isArray(rankings) ? rankings : [];
-};
-
-const getRankedHospitalsForMetro = (stateAbbrev, metroName) => {
-  const metroKey = String(metroName || '').toLowerCase();
-  if (!metroKey) return [];
-  return getFetchedHospitalRankingsForState(stateAbbrev)
-    .filter((hospital) => {
-      const metro = String(hospital?.metro || '').toLowerCase();
-      return metro && (metro.includes(metroKey) || metroKey.includes(metro));
-    })
-    .sort((a, b) => getHospitalRankingScore(b) - getHospitalRankingScore(a))
-    .slice(0, 10)
-    .map((hospital) => ({
-      name: hospital.name,
-      system: hospital.system || hospital.name,
-      score: getHospitalRankingScore(hospital),
-      beds: Number.isFinite(Number(hospital?.beds)) ? Number(hospital.beds) : '--',
-      reviews: '--'
-    }));
 };
 
 const getStateNewsFeed = (state, entry) => {
@@ -4631,9 +3275,7 @@ const getStateNewsFeed = (state, entry) => {
 const ensureProgramsDataForBeacon = async () => {
   if (nursingPrograms.length) return;
   try {
-    const response = await fetch(`${DATA_BASE_URL}/programs.json?ts=${Date.now()}`);
-    if (!response.ok) throw new Error(`Failed to load programs: ${response.status}`);
-    const data = await response.json();
+    const data = await fetchJson(`/data/programs.json?ts=${Date.now()}`);
     nursingPrograms = Array.isArray(data) ? data : (data.programs ?? []);
     programsMeta = {
       lastUpdated: data.lastUpdated ?? null,
@@ -4648,7 +3290,6 @@ const ensureProgramsDataForBeacon = async () => {
 
 const getBeaconEntry = (state) => {
   const entry = stateBeaconData?.states?.[state] ?? {};
-  const fetchedHospitalRankings = getFetchedHospitalRankingsForState(state);
   return {
     name: entry.name || STATE_NAMES[state] || state,
     compact: entry.compact ?? null,
@@ -4664,9 +3305,8 @@ const getBeaconEntry = (state) => {
     drawbacks: entry.drawbacks ?? [],
     talkingPoints: entry.talkingPoints ?? [],
     objections: entry.objections ?? [],
-      warnMajorSystems: entry.warnMajorSystems ?? [],
-      hospitalRankings: entry.hospitalRankings?.length ? entry.hospitalRankings : fetchedHospitalRankings,
-      hospitalRegistry: entry.hospitalRegistry ?? [],
+    warnMajorSystems: entry.warnMajorSystems ?? [],
+    hospitalRegistry: entry.hospitalRegistry ?? [],
     clinicRegistry: entry.clinicRegistry ?? [],
     newsFeed: entry.newsFeed ?? [],
     candidateInsights: entry.candidateInsights ?? [],
@@ -4677,7 +3317,14 @@ const getBeaconEntry = (state) => {
   };
 };
 
-const buildFallbackBeaconObjections = () => ([
+const buildFallbackTalkingPoints = () => ([
+  '{homeState} teams are hiring {specialty} RNs right now with relocation support from {targetState}.',
+  'We can fast-track a move from {targetState} to {homeState} using your {license} status and a {timeline} start window.',
+  'We prioritize {homeState} hospitals with strong onboarding and lower WARN risk across {shift} schedules.',
+  'We can target pay bands near {targetPay} and match you to the best {metro} fit in {homeState}.'
+]);
+
+const buildFallbackObjections = () => ([
   {
     concern: 'I am not sure moving states is worth it',
     response: 'We compare pay, schedule stability, and onboarding support so you can decide with clear numbers.'
@@ -4774,7 +3421,9 @@ const enrichBeaconEntry = (state, entry, notices, programsInState) => {
       if (/indiana feeder schools:/i.test(feederSchools)) return row;
       return { ...row, feederSchools: `${feederSchools}; ${indianaFeederText}` };
     });
-
+  const majorProgramsWithIndiana = indianaFeederSchools.length
+    ? Array.from(new Set([...majorProgramsFallback, ...indianaFeederSchools])).slice(0, 10)
+    : majorProgramsFallback;
   const competitionSystems = entry.competition?.systems?.length ? entry.competition.systems : inferredSystems;
   const candidateInsightsWithIndiana = (
     entry.candidateInsights?.length ? entry.candidateInsights : [
@@ -4796,7 +3445,8 @@ const enrichBeaconEntry = (state, entry, notices, programsInState) => {
       if (/indiana feeder schools:/i.test(feederSchools)) return row;
       return { ...row, feederSchools: `${feederSchools}; ${indianaFeederText}` };
     });
-  return {
+
+  const merged = {
     ...entry,
     summary: {
       demand: entry.summary?.demand || `${stateName} shows active healthcare demand and recruitment movement.`,
@@ -4818,7 +3468,7 @@ const enrichBeaconEntry = (state, entry, notices, programsInState) => {
     },
     pipeline: {
       ...entry.pipeline,
-      majorPrograms: entry.pipeline?.majorPrograms?.length ? entry.pipeline.majorPrograms : majorProgramsFallback,
+      majorPrograms: entry.pipeline?.majorPrograms?.length ? entry.pipeline.majorPrograms : majorProgramsWithIndiana,
       residencies: entry.pipeline?.residencies?.length ? entry.pipeline.residencies : [
         'Nurse residency options vary by major health system.',
         'Onboarding timelines should be validated per facility.'
@@ -4843,7 +3493,8 @@ const enrichBeaconEntry = (state, entry, notices, programsInState) => {
       'Cost-of-living and commute burden can differ by metro.',
       'Shift availability and onboarding speed vary by employer.'
     ],
-    objections: entry.objections?.length ? entry.objections : buildFallbackBeaconObjections(),
+    talkingPoints: entry.talkingPoints?.length ? entry.talkingPoints : buildFallbackTalkingPoints(),
+    objections: entry.objections?.length ? entry.objections : buildFallbackObjections(),
     warnMajorSystems: entry.warnMajorSystems?.length ? entry.warnMajorSystems : competitionSystems.map((s) => s.name),
     hospitalRankings: entry.hospitalRankings?.length ? entry.hospitalRankings : rankingFallback,
     hospitalRegistry: entry.hospitalRegistry?.length ? entry.hospitalRegistry : hospitalRegistryFallback,
@@ -4853,51 +3504,8 @@ const enrichBeaconEntry = (state, entry, notices, programsInState) => {
     priorityMetros: entry.priorityMetros?.length ? entry.priorityMetros : inferredMetros,
     newsKeywords: entry.newsKeywords?.length ? entry.newsKeywords : [stateName, state, ...inferredMetros].filter(Boolean)
   };
-};
 
-const buildHomeStateTalkingPoints = (homeEntry, inputs, programsCount = 0) => {
-  const points = [];
-  const name = homeEntry.name || inputs.homeState || 'your destination';
-  const compact = homeEntry.compact ?? homeEntry.licensing?.compact;
-  const hourly = homeEntry.compensation?.staffHourlyRange;
-  const travel = homeEntry.compensation?.travelWeeklyRange;
-  const shiftDiffs = homeEntry.compensation?.shiftDiffs;
-  const signOn = homeEntry.compensation?.signOn;
-  const benefits = homeEntry.compensation?.benefitsNotes;
-  const drivers = homeEntry.market?.drivers ?? [];
-  const systems = homeEntry.competition?.systems ?? [];
-  const residencies = homeEntry.pipeline?.residencies ?? [];
-  const attractions = homeEntry.attractions ?? [];
-  const pros = homeEntry.pros ?? [];
-
-  if (pros.length) {
-    points.push(`Why ${name}: ${pros[0]}`);
-  }
-  if (compact !== null) {
-    points.push(`${name} is ${compact ? 'a Nurse Licensure Compact state' : 'a non-compact state'} with ${homeEntry.licensing?.endorsementTime || 'clear endorsement timelines'}.`);
-  }
-  if (hourly || shiftDiffs) {
-    const diffNote = shiftDiffs ? ` with ${shiftDiffs}` : '';
-    points.push(`Staff RN compensation in ${name} runs ${hourly || 'competitive hourly ranges'}${diffNote}.`);
-  }
-  if (signOn || benefits) {
-    points.push(`Incentives in ${name}: ${signOn || 'sign-on support'}${benefits ? ` plus ${benefits}` : ''}.`);
-  }
-  if (programsCount || residencies.length) {
-    const residencyNote = residencies.length ? ` Residency options include ${residencies.slice(0, 2).join(', ')}.` : '';
-    points.push(`Pipeline strength: ${programsCount ? `${programsCount} accredited programs` : 'robust local programs'}.${residencyNote}`);
-  }
-  if (systems.length) {
-    points.push(`Major systems hiring in ${name}: ${systems.slice(0, 3).map((s) => s.name || s).join(', ')}.`);
-  }
-  if (drivers.length) {
-    points.push(`Market drivers in ${name}: ${drivers.slice(0, 2).join(' - ')}.`);
-  }
-  if (attractions.length) {
-    points.push(`Lifestyle highlights: ${attractions.slice(0, 2).join(', ')}.`);
-  }
-
-  return points.filter(Boolean).slice(0, 7);
+  return merged;
 };
 
 const renderBeaconList = (container, items, formatter) => {
@@ -4906,7 +3514,7 @@ const renderBeaconList = (container, items, formatter) => {
     container.innerHTML = '<div class="empty-state">No data available yet.</div>';
     return;
   }
-  container.innerHTML = items.map((item, idx) => formatter(item, idx)).join('');
+  container.innerHTML = items.map((item) => formatter(item)).join('');
 };
 
 const setStateBeaconProsMode = (mode) => {
@@ -4980,35 +3588,14 @@ const getWarnCountForHospital = (notices, hospital, majorSystems = []) => {
 
 const renderStateBeacon = async (state) => {
   await loadStateBeaconData();
-  await loadHospitalRankingsData();
   await ensureProgramsDataForBeacon();
   await loadStateNewsData();
-  if (!allNoticesLoaded && !stateNoticesCache.has(state)) {
-    await loadStateNotices(state);
-  }
 
   const notices = getStateNotices(state);
   const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === state);
   const entry = enrichBeaconEntry(state, getBeaconEntry(state), notices, programsInState);
   const majorNotices = filterNoticesByMajorSystems(notices, entry.warnMajorSystems);
   const noticeCount = majorNotices.length;
-  const stateFeed = getStateNewsFeed(state, entry);
-  const confidence = computeSignalConfidence(
-    noticeCount,
-    Array.isArray(stateFeed) ? stateFeed.length : 0,
-    entry.warnMajorSystems?.length || 0
-  );
-  const salaryData = strategicData?.salaryData || NURSING_SALARY_DATA;
-  const marketStatus = getBlendedShortageStatus(state, salaryData);
-  const payPosition = (() => {
-    const avgStaffSalary = Math.round(Object.values(salaryData).reduce((sum, d) => sum + d.staffRN, 0) /
-      Math.max(Object.keys(salaryData).length, 1));
-    const stateSalary = salaryData[state]?.staffRN ?? null;
-    if (!stateSalary) return null;
-    if (stateSalary >= avgStaffSalary * 1.05) return 'Above market';
-    if (stateSalary <= avgStaffSalary * 0.95) return 'Below market';
-    return 'At market';
-  })();
 
   const chips = [];
   if (entry.compact !== null) chips.push(`Compact: ${entry.compact ? 'Yes' : 'No'}`);
@@ -5016,42 +3603,46 @@ const renderStateBeacon = async (state) => {
   if (entry.summary?.unionization) chips.push(`Union: ${entry.summary.unionization}`);
   if (programsInState.length) chips.push(`Pipeline: ${programsInState.length} programs`);
   if (noticeCount) chips.push(`WARN notices (major systems): ${noticeCount}`);
-  if (confidence?.label) chips.push(`Signal confidence: ${confidence.label}`);
-  if (payPosition) chips.push(`Pay position: ${payPosition}`);
-  if (marketStatus) chips.push(`Market: ${marketStatus} (latest fetched)`);
 
   if (stateBeaconMeta) {
     stateBeaconMeta.innerHTML = chips.map((chip) => `<span class="state-beacon-chip">${escapeHtml(chip)}</span>`).join('');
   }
 
-  // Hospital Quality Rankings (Top 10 and Worst 10 based on US News / Newsweek scores)
+  let hospitalItems = [];
   if (entry.hospitalRankings?.length) {
-    const sorted = entry.hospitalRankings
-      .map((hospital) => ({
-        ...hospital,
-        score: getHospitalRankingScore(hospital)
-      }))
-      .sort((a, b) => b.score - a.score);
+    const scored = entry.hospitalRankings.map((hospital) => {
+      const baseScore = Number(hospital.baseScore ?? 50);
+      const warnWeight = Number(hospital.warnWeight ?? 1);
+      const warnCount = getWarnCountForHospital(majorNotices, hospital, entry.warnMajorSystems);
+      const score = baseScore - (warnCount * warnWeight);
+      return { ...hospital, warnCount, score };
+    }).sort((a, b) => b.score - a.score);
 
-    const top10 = sorted.slice(0, 10);
-    const worst10 = sorted.slice(-10).reverse();
+    const best = scored.slice(0, 5);
+    const worst = scored.slice(-5).reverse();
+    hospitalItems = [
+      ...best.map((item) => ({ ...item, label: 'Best (review + news score)' })),
+      ...worst.map((item) => ({ ...item, label: 'Watchlist (review + WARN)' }))
+    ];
 
-    renderBeaconList(stateBeaconHospitalsTop, top10, (item, idx) => `
+    renderBeaconList(stateBeaconHospitals, hospitalItems, (item) => `
       <div class="state-beacon-item">
-        <strong>#${idx + 1} ${escapeHtml(item.name)}</strong>
-        <span>${escapeHtml(item.metro || '')} &bull; Composite Score: ${item.score}${item.sourceCount ? ` &bull; Sources: ${item.sourceCount}` : ''}</span>
-      </div>
-    `);
-
-    renderBeaconList(stateBeaconHospitalsWorst, worst10, (item, idx) => `
-      <div class="state-beacon-item">
-        <strong>#${sorted.length - 9 + idx} ${escapeHtml(item.name)}</strong>
-        <span>${escapeHtml(item.metro || '')} &bull; Composite Score: ${item.score}${item.sourceCount ? ` &bull; Sources: ${item.sourceCount}` : ''}</span>
+        <strong>${escapeHtml(item.name)}</strong>
+        <span>${escapeHtml(item.label)} • Score ${item.score.toFixed(1)} • WARN ${item.warnCount}</span>
       </div>
     `);
   } else {
-    renderBeaconList(stateBeaconHospitalsTop, [], () => '');
-    renderBeaconList(stateBeaconHospitalsWorst, [], () => '');
+    const { best, worst } = buildHospitalRank(majorNotices, entry.warnMajorSystems);
+    hospitalItems = [
+      ...best.map((item) => ({ ...item, label: 'Best (low WARN activity)' })),
+      ...worst.map((item) => ({ ...item, label: 'Watchlist (high WARN activity)' }))
+    ];
+    renderBeaconList(stateBeaconHospitals, hospitalItems, (item) => `
+      <div class="state-beacon-item">
+        <strong>${escapeHtml(item.employer)}</strong>
+        <span>${escapeHtml(item.label)} • ${item.notices} notices</span>
+      </div>
+    `);
   }
 
   const hospitalRegistry = entry.hospitalRegistry || [];
@@ -5071,7 +3662,7 @@ const renderStateBeacon = async (state) => {
       <strong>${escapeHtml(item.name)}</strong>
       <span>
         ${item.flagship ? '<span class="state-beacon-badge">Flagship</span>' : ''}
-        ${item.metro ? `| ${escapeHtml(item.metro)}` : ''}
+        ${item.metro ? `• ${escapeHtml(item.metro)}` : ''}
       </span>
     </div>
   `);
@@ -5085,7 +3676,7 @@ const renderStateBeacon = async (state) => {
   renderBeaconList(stateBeaconCompetition, competitionSystems, (system) => `
     <div class="state-beacon-item">
       <strong>${escapeHtml(system.name)}</strong>
-      <span>${escapeHtml(system.presence || '')} ${system.notes ? `| ${escapeHtml(system.notes)}` : ''}</span>
+      <span>${escapeHtml(system.presence || '')} ${system.notes ? `• ${escapeHtml(system.notes)}` : ''}</span>
     </div>
   `);
 
@@ -5141,6 +3732,7 @@ const renderStateBeacon = async (state) => {
     }
   }
 
+  const stateFeed = getStateNewsFeed(state, entry);
   let newsMatches = [];
   if (stateFeed.length) {
     newsMatches = stateFeed
@@ -5157,7 +3749,7 @@ const renderStateBeacon = async (state) => {
   renderBeaconList(stateBeaconNews, newsMatches, (article) => `
     <a href="${article.url}" target="_blank" rel="noopener noreferrer">
       <strong>${escapeHtml(article.title)}</strong>
-      <div class="state-beacon-subtitle">${escapeHtml(article.source || '')}${article.publishedAt ? ` | ${escapeHtml(article.publishedAt)}` : ''}</div>
+      <div class="state-beacon-subtitle">${escapeHtml(article.source || '')}${article.publishedAt ? ` • ${escapeHtml(article.publishedAt)}` : ''}</div>
     </a>
   `);
 
@@ -5218,15 +3810,9 @@ const renderStateBeacon = async (state) => {
     metro
   };
 
-  const homeEntry = inputs.homeState ? getBeaconEntry(inputs.homeState) : entry;
-  const homePrograms = nursingPrograms.filter(
-    (program) => normalizeProgram(program).state === (inputs.homeState || state)
-  );
-  const talkingPoints = buildHomeStateTalkingPoints(homeEntry, inputs, homePrograms.length);
-
-  renderBeaconList(stateBeaconScript, talkingPoints, (point) => `
+  renderBeaconList(stateBeaconScript, entry.talkingPoints, (point) => `
     <div class="state-beacon-item">
-      <strong>|</strong>
+      <strong>•</strong>
       <span>${escapeHtml(replaceTokens(point, tokens))}</span>
     </div>
   `);
@@ -5271,12 +3857,7 @@ const buildStateBeaconExport = (state) => {
     license: inputs.license || (entry.compact ? 'Compact' : 'No license'),
     metro
   };
-  const homeEntry = inputs.homeState ? getBeaconEntry(inputs.homeState) : entry;
-  const homePrograms = nursingPrograms.filter(
-    (program) => normalizeProgram(program).state === (inputs.homeState || state)
-  );
-  const talkingPoints = buildHomeStateTalkingPoints(homeEntry, inputs, homePrograms.length)
-    .map((point) => replaceTokens(point, tokens));
+  const talkingPoints = entry.talkingPoints.map((point) => replaceTokens(point, tokens));
   const objections = entry.objections.map((item) => ({
     concern: replaceTokens(item.concern, tokens),
     response: replaceTokens(item.response, tokens)
@@ -5329,2107 +3910,128 @@ const buildStateBeaconExport = (state) => {
   };
 };
 
-// Metro data for states (Indiana as default, can be extended)
-const STATE_METRO_DATA = {
-  IN: {
-    nursingEducation: {
-      iuSystemPercentage: 35,
-      ivyTechPercentage: 28,
-      otherSchoolsPercentage: 37,
-      totalGraduatesAnnual: 4100,
-      retentionRate: 62
-    },
-    salaryMeta: {
-      updatedAt: '2026-02-01',
-      updateEveryDays: 7,
-      breakdown: [
-        { label: 'BLS Indiana RN mean (May 2023)', value: '$39.76/hr | $82,700/yr', note: 'Statewide OEWS data' },
-        { label: 'BLS Indianapolis-Carmel-Anderson RN mean (May 2023)', value: '$41.14/hr | $85,580/yr', note: 'Metro OEWS data' },
-        { label: 'Indeed company averages (IN/metro)', value: '$34-$42/hr typical', note: 'Company salary pages by system' },
-        { label: 'Reddit: r/indianapolis nurses', value: '$25-$31/hr base reported', note: 'Community discussion (2025)' },
-        { label: 'Reddit: r/Indiana + r/nursing', value: '$26/hr start | $41/hr @ 13 yrs', note: 'Community-reported (2024-2025)' }
-      ],
-      sources: [
-        { name: 'BLS OEWS Indiana RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_in.htm' },
-        { name: 'BLS OEWS Indianapolis MSA RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_26900.htm' },
-        { name: 'Indeed: IU Health RN (IN)', url: 'https://www.indeed.com/cmp/Indiana-University-Health/salaries/Registered-Nurse/Indiana' },
-        { name: 'Indeed: Ascension RN (Indianapolis)', url: 'https://www.indeed.com/cmp/Ascension/salaries/Registered-Nurse/Indianapolis-IN' },
-        { name: 'Indeed: Community Health Network RN (Indianapolis)', url: 'https://www.indeed.com/cmp/Community-Health-Network/salaries/Registered-Nurse/Indianapolis-IN' },
-        { name: 'Indeed: Franciscan Health RN (IN)', url: 'https://www.indeed.com/cmp/Franciscan-Health-21c7906f/salaries/Registered-Nurse/Indiana' },
-        { name: 'Indeed: Eskenazi Health RN (Indianapolis)', url: 'https://www.indeed.com/cmp/Eskenazi-Health/salaries/Registered-Nurse/Indianapolis-IN' },
-        { name: 'Indeed: Parkview Health RN (Fort Wayne)', url: 'https://www.indeed.com/cmp/Parkview-Health-3/salaries/Registered-Nurse/Fort-Wayne-IN' },
-        { name: 'Indeed: Lutheran Health Network RN (IN)', url: 'https://www.indeed.com/cmp/Lutheran-Health-Network-of-Indiana/salaries/Registered-Nurse/Indiana' },
-        { name: 'Indeed: Deaconess Health System RN (Evansville)', url: 'https://www.indeed.com/cmp/Deaconess-Health-System/salaries/Registered-Nurse/Evansville-IN' },
-        { name: 'Indeed: Beacon Health System RN (IN)', url: 'https://www.indeed.com/cmp/Beacon-Health-System/salaries/Registered-Nurse/Indiana' },
-        { name: 'Indeed: Trinity Health RN (IN)', url: 'https://www.indeed.com/cmp/Trinity-Health/salaries/Registered-Nurse/Indiana' },
-        { name: 'Indeed: Methodist Hospitals RN (IN)', url: 'https://www.indeed.com/cmp/Methodist-Hospitals-1/salaries/Registered-Nurse/Indiana' },
-        { name: 'Indeed: Community Healthcare System RN (IN)', url: 'https://www.indeed.com/cmp/Community-Healthcare-System-4/salaries/Registered-Nurse/Indiana' },
-        { name: 'Indeed: Northwest Health Porter RN (IN)', url: 'https://www.indeed.com/cmp/Northwest-Health-Porter/salaries/Registered-Nurse/Indiana' },
-        { name: 'Indeed: Baptist Health System KY & IN RN (IN)', url: 'https://www.indeed.com/cmp/Baptist-Health-System-Ky-%26-in/salaries/Registered-Nurse/Indiana' },
-        { name: 'Reddit: r/indianapolis nurses thread (Sep 2025)', url: 'https://www.reddit.com/r/indianapolis/comments/1lgedw3/nurses_of_indianapolis_where_do_you_work_and_do/' },
-        { name: 'Reddit: r/Indiana RN salary thread (Aug 2025)', url: 'https://www.reddit.com/r/Indiana/comments/1msxn09' },
-        { name: 'Reddit: r/nursing Indiana pay transparency (Jan 2024)', url: 'https://www.reddit.com/r/nursing/comments/19e4o5y' }
-      ]
-    },
-    metros: [
-      {
-        name: 'Indianapolis',
-        size: 'major',
-        population: '2.1M',
-        competition: 'high',
-        hospitals: [
-          { name: 'IU Health Methodist Hospital', system: 'IU Health', score: 96, beds: 802, reviews: 4.3 },
-          { name: 'IU Health University Hospital', system: 'IU Health', score: 95, beds: 350, reviews: 4.4 },
-          { name: 'Riley Hospital for Children', system: 'IU Health', score: 94, beds: 375, reviews: 4.6 },
-          { name: 'Ascension St. Vincent Indianapolis', system: 'Ascension St. Vincent', score: 91, beds: 725, reviews: 4.0 },
-          { name: 'Community Hospital East', system: 'Community Health Network', score: 88, beds: 350, reviews: 3.9 },
-          { name: 'Community Hospital North', system: 'Community Health Network', score: 87, beds: 303, reviews: 4.0 },
-          { name: 'Community Hospital South', system: 'Community Health Network', score: 85, beds: 158, reviews: 3.8 },
-          { name: 'Franciscan Health Indianapolis', system: 'Franciscan Health', score: 87, beds: 485, reviews: 4.1 },
-          { name: 'Eskenazi Health', system: 'Health & Hospital Corp', score: 85, beds: 315, reviews: 3.8 },
-          { name: 'IU Health Saxony Hospital', system: 'IU Health', score: 84, beds: 48, reviews: 4.2 },
-          { name: 'IU Health North Hospital', system: 'IU Health', score: 86, beds: 149, reviews: 4.1 },
-          { name: 'IU Health West Hospital', system: 'IU Health', score: 85, beds: 127, reviews: 4.0 },
-          { name: 'Ascension St. Vincent Carmel', system: 'Ascension St. Vincent', score: 86, beds: 104, reviews: 4.1 },
-          { name: 'Ascension St. Vincent Fishers', system: 'Ascension St. Vincent', score: 85, beds: 44, reviews: 4.2 },
-          { name: 'Ascension St. Vincent Heart Center', system: 'Ascension St. Vincent', score: 89, beds: 88, reviews: 4.3 },
-          { name: 'Franciscan Health Carmel', system: 'Franciscan Health', score: 84, beds: 42, reviews: 4.0 },
-          { name: 'Community Westview Hospital', system: 'Community Health Network', score: 82, beds: 72, reviews: 3.7 },
-          { name: 'Riverview Health', system: 'Riverview Health', score: 83, beds: 156, reviews: 4.0 },
-          { name: 'Witham Health Services', system: 'Witham Health', score: 81, beds: 97, reviews: 3.9 },
-          { name: 'Hendricks Regional Health', system: 'Hendricks Regional', score: 84, beds: 127, reviews: 4.1 },
-          { name: 'Johnson Memorial Hospital', system: 'Johnson Memorial', score: 80, beds: 81, reviews: 3.8 },
-          { name: 'Hancock Regional Hospital', system: 'Hancock Health', score: 82, beds: 65, reviews: 4.0 },
-          { name: 'Franciscan Health Mooresville', system: 'Franciscan Health', score: 81, beds: 115, reviews: 3.9 },
-          { name: 'Major Health Partners', system: 'Major Health', score: 78, beds: 65, reviews: 3.7 }
-        ],
-        systems: [
-          { name: 'IU Health', facilities: 8, marketShare: '35%' },
-          { name: 'Ascension St. Vincent', facilities: 5, marketShare: '22%' },
-          { name: 'Community Health Network', facilities: 5, marketShare: '18%' },
-          { name: 'Franciscan Health', facilities: 3, marketShare: '10%' },
-          { name: 'Independent Hospitals', facilities: 8, marketShare: '15%' }
-        ],
-          salary: {
-            staffRN: '$32-45/hr',
-            travelRN: '$2,200-2,800/wk',
-            signOn: '$10-25K',
-            systems: [
-              {
-                name: 'IU Health',
-                value: '$37.42/hr avg',
-                source: 'Indeed (IN)',
-                url: 'https://www.indeed.com/cmp/Indiana-University-Health/salaries/Registered-Nurse/Indiana'
-              },
-              {
-                name: 'Ascension St. Vincent',
-                value: '$37.70/hr avg',
-                source: 'Indeed (Indianapolis)',
-                url: 'https://www.indeed.com/cmp/Ascension/salaries/Registered-Nurse/Indianapolis-IN'
-              },
-              {
-                name: 'Community Health Network',
-                value: '$41.60/hr avg',
-                source: 'Indeed (Indianapolis)',
-                url: 'https://www.indeed.com/cmp/Community-Health-Network/salaries/Registered-Nurse/Indianapolis-IN'
-              },
-              {
-                name: 'Franciscan Health',
-                value: '$34.94/hr avg',
-                source: 'Indeed (IN)',
-                url: 'https://www.indeed.com/cmp/Franciscan-Health-21c7906f/salaries/Registered-Nurse/Indiana'
-              },
-              {
-                name: 'Eskenazi Health',
-                value: '$41.62/hr avg',
-                source: 'Indeed (Indianapolis)',
-                url: 'https://www.indeed.com/cmp/Eskenazi-Health/salaries/Registered-Nurse/Indianapolis-IN'
-              },
-              {
-                name: 'Independent Hospitals',
-                value: 'Market est. $34-44/hr',
-                source: 'BLS + Reddit',
-                note: 'Estimate when system-level data is unavailable'
-              }
-            ]
-          },
-        factors: [
-          { text: 'Major academic medical center (IU Health)', type: 'positive' },
-          { text: 'High demand for ICU/ED/OR specialties', type: 'positive' },
-          { text: 'Strong nurse residency programs', type: 'positive' },
-          { text: 'Competitive multi-system market', type: 'neutral' },
-          { text: 'Higher cost of living for Indiana', type: 'negative' }
-        ]
-      },
-      {
-        name: 'Fort Wayne',
-        size: 'medium',
-        population: '420K',
-        competition: 'medium',
-        hospitals: [
-          { name: 'Parkview Regional Medical Center', system: 'Parkview Health', score: 90, beds: 700, reviews: 4.3 },
-          { name: 'Parkview Hospital Randallia', system: 'Parkview Health', score: 85, beds: 160, reviews: 4.0 },
-          { name: 'Parkview Ortho Hospital', system: 'Parkview Health', score: 87, beds: 37, reviews: 4.4 },
-          { name: 'Lutheran Hospital', system: 'Lutheran Health Network', score: 86, beds: 396, reviews: 4.0 },
-          { name: 'Lutheran Hospital Downtown', system: 'Lutheran Health Network', score: 83, beds: 140, reviews: 3.8 },
-          { name: 'Dupont Hospital', system: 'Lutheran Health Network', score: 84, beds: 131, reviews: 4.1 },
-          { name: 'Parkview Wabash Hospital', system: 'Parkview Health', score: 79, beds: 25, reviews: 3.9 },
-          { name: 'Parkview Whitley Hospital', system: 'Parkview Health', score: 80, beds: 30, reviews: 4.0 },
-          { name: 'Parkview Huntington Hospital', system: 'Parkview Health', score: 79, beds: 36, reviews: 3.8 },
-          { name: 'Parkview DeKalb Hospital', system: 'Parkview Health', score: 81, beds: 50, reviews: 4.0 },
-          { name: 'Parkview LaGrange Hospital', system: 'Parkview Health', score: 78, beds: 25, reviews: 3.7 },
-          { name: 'Parkview Noble Hospital', system: 'Parkview Health', score: 79, beds: 31, reviews: 3.8 },
-          { name: 'Kosciusko Community Hospital', system: 'Lutheran Health Network', score: 80, beds: 72, reviews: 3.9 },
-          { name: 'Bluffton Regional Medical Center', system: 'Lutheran Health Network', score: 78, beds: 79, reviews: 3.7 }
-        ],
-        systems: [
-          { name: 'Parkview Health', facilities: 10, marketShare: '55%' },
-          { name: 'Lutheran Health Network', facilities: 5, marketShare: '35%' },
-          { name: 'Independent', facilities: 2, marketShare: '10%' }
-        ],
-          salary: {
-            staffRN: '$28-40/hr',
-            travelRN: '$1,900-2,500/wk',
-            signOn: '$8-18K',
-            systems: [
-              {
-                name: 'Parkview Health',
-                value: '$34.42/hr avg',
-                source: 'Indeed (Fort Wayne)',
-                url: 'https://www.indeed.com/cmp/Parkview-Health-3/salaries/Registered-Nurse/Fort-Wayne-IN'
-              },
-              {
-                name: 'Lutheran Health Network',
-                value: '$38.40/hr avg',
-                source: 'Indeed (IN)',
-                url: 'https://www.indeed.com/cmp/Lutheran-Health-Network-of-Indiana/salaries/Registered-Nurse/Indiana'
-              },
-              {
-                name: 'Independent',
-                value: 'Market est. $30-38/hr',
-                source: 'BLS + Reddit',
-                note: 'Estimate for non-system facilities'
-              }
-            ]
-          },
-        factors: [
-          { text: 'Parkview dominates market with excellent benefits', type: 'positive' },
-          { text: 'Growing regional healthcare hub', type: 'positive' },
-          { text: 'Lower cost of living than Indianapolis', type: 'positive' },
-          { text: 'Strong community hospital culture', type: 'positive' },
-          { text: 'Less specialty career options', type: 'neutral' }
-        ]
-      },
-      {
-        name: 'Evansville',
-        size: 'medium',
-        population: '315K',
-        competition: 'medium',
-        hospitals: [
-          { name: 'Deaconess Midtown Hospital', system: 'Deaconess Health', score: 88, beds: 476, reviews: 4.1 },
-          { name: 'Deaconess Gateway Hospital', system: 'Deaconess Health', score: 86, beds: 192, reviews: 4.0 },
-          { name: 'Deaconess Gibson General Hospital', system: 'Deaconess Health', score: 79, beds: 70, reviews: 3.8 },
-          { name: 'The Women\'s Hospital', system: 'Deaconess Health', score: 87, beds: 74, reviews: 4.3 },
-          { name: 'Ascension St. Vincent Evansville', system: 'Ascension St. Vincent', score: 85, beds: 342, reviews: 3.9 },
-          { name: 'Good Samaritan Hospital', system: 'Good Samaritan', score: 80, beds: 161, reviews: 3.7 },
-          { name: 'Daviess Community Hospital', system: 'Daviess Community', score: 77, beds: 42, reviews: 3.6 },
-          { name: 'Memorial Hospital Jasper', system: 'Memorial Hospital Jasper', score: 79, beds: 63, reviews: 3.8 },
-          { name: 'Perry County Memorial Hospital', system: 'Perry County Memorial', score: 75, beds: 25, reviews: 3.5 }
-        ],
-        systems: [
-          { name: 'Deaconess Health System', facilities: 5, marketShare: '60%' },
-          { name: 'Ascension St. Vincent', facilities: 1, marketShare: '25%' },
-          { name: 'Independent Regional', facilities: 4, marketShare: '15%' }
-        ],
-          salary: {
-            staffRN: '$27-38/hr',
-            travelRN: '$1,800-2,400/wk',
-            signOn: '$7-15K',
-            systems: [
-              {
-                name: 'Deaconess Health System',
-                value: '$39.76/hr avg',
-                source: 'Indeed (Evansville)',
-                url: 'https://www.indeed.com/cmp/Deaconess-Health-System/salaries/Registered-Nurse/Evansville-IN'
-              },
-              {
-                name: 'Ascension St. Vincent',
-                value: '$39.96/hr avg',
-                source: 'Indeed (IN)',
-                url: 'https://www.indeed.com/cmp/Ascension/salaries/Registered-Nurse/Indiana'
-              },
-              {
-                name: 'Independent Regional',
-                value: 'Market est. $29-36/hr',
-                source: 'BLS + Reddit',
-                note: 'Estimate for independent facilities'
-              }
-            ]
-          },
-        factors: [
-          { text: 'Tri-state regional healthcare hub (IN/KY/IL)', type: 'positive' },
-          { text: 'Very affordable housing market', type: 'positive' },
-          { text: 'Deaconess offers strong benefits package', type: 'positive' },
-          { text: 'Limited Level I trauma coverage', type: 'neutral' },
-          { text: 'Rural areas have chronic shortages', type: 'neutral' }
-        ]
-      },
-      {
-        name: 'South Bend-Elkhart',
-        size: 'medium',
-        population: '325K',
-        competition: 'medium',
-        hospitals: [
-          { name: 'Memorial Hospital of South Bend', system: 'Beacon Health System', score: 87, beds: 537, reviews: 4.0 },
-          { name: 'Elkhart General Hospital', system: 'Beacon Health System', score: 84, beds: 263, reviews: 3.9 },
-          { name: 'St. Joseph Regional Medical Center', system: 'Trinity Health', score: 85, beds: 254, reviews: 3.8 },
-          { name: 'Goshen Health', system: 'Goshen Health', score: 82, beds: 123, reviews: 4.0 }
-        ],
-        systems: [
-          { name: 'Beacon Health System', facilities: 2, marketShare: '50%' },
-          { name: 'Trinity Health', facilities: 1, marketShare: '30%' },
-          { name: 'Goshen Health', facilities: 1, marketShare: '15%' }
-        ],
-          salary: {
-            staffRN: '$28-39/hr',
-            travelRN: '$1,850-2,500/wk',
-            signOn: '$8-16K',
-            systems: [
-              {
-                name: 'Beacon Health System',
-                value: '$38.50/hr avg',
-                source: 'Indeed (South Bend)',
-                url: 'https://www.indeed.com/cmp/Beacon-Health-System/salaries/Registered-Nurse/South-Bend-IN'
-              },
-              {
-                name: 'Trinity Health',
-                value: '$37.68/hr avg',
-                source: 'Indeed (IN)',
-                url: 'https://www.indeed.com/cmp/Trinity-Health/salaries/Registered-Nurse/Indiana'
-              },
-              {
-                name: 'Goshen Health',
-                value: 'Market est. $30-38/hr',
-                source: 'BLS + Reddit',
-                note: 'Estimate where job-board ranges are limited'
-              }
-            ]
-          },
-        factors: [
-          { text: 'Notre Dame University community', type: 'positive' },
-          { text: 'Access to Michigan job market', type: 'positive' },
-          { text: 'Growing Beacon Health system', type: 'positive' },
-          { text: 'Seasonal lake-effect weather', type: 'negative' }
-        ]
-      },
-      {
-        name: 'Northwest Indiana',
-        size: 'medium',
-        population: '775K',
-        competition: 'high',
-        hospitals: [
-          { name: 'Franciscan Health Hammond', system: 'Franciscan Health', score: 85, beds: 402, reviews: 3.9 },
-          { name: 'Franciscan Health Crown Point', system: 'Franciscan Health', score: 86, beds: 254, reviews: 4.0 },
-          { name: 'Franciscan Health Dyer', system: 'Franciscan Health', score: 84, beds: 215, reviews: 3.9 },
-          { name: 'Franciscan Health Michigan City', system: 'Franciscan Health', score: 82, beds: 171, reviews: 3.8 },
-          { name: 'Franciscan Health Munster', system: 'Franciscan Health', score: 83, beds: 32, reviews: 4.0 },
-          { name: 'Methodist Hospitals Northlake', system: 'Methodist Hospitals', score: 83, beds: 186, reviews: 3.8 },
-          { name: 'Methodist Hospitals Southlake', system: 'Methodist Hospitals', score: 81, beds: 151, reviews: 3.7 },
-          { name: 'St. Catherine Hospital', system: 'Community Healthcare System', score: 82, beds: 189, reviews: 3.8 },
-          { name: 'St. Mary Medical Center', system: 'Community Healthcare System', score: 83, beds: 195, reviews: 3.9 },
-          { name: 'Porter Regional Hospital', system: 'Northwest Health', score: 81, beds: 276, reviews: 3.7 },
-          { name: 'LaPorte Hospital', system: 'Northwest Health', score: 79, beds: 153, reviews: 3.6 }
-        ],
-        systems: [
-          { name: 'Franciscan Health', facilities: 5, marketShare: '45%' },
-          { name: 'Community Healthcare System', facilities: 2, marketShare: '20%' },
-          { name: 'Methodist Hospitals', facilities: 2, marketShare: '15%' },
-          { name: 'Northwest Health', facilities: 2, marketShare: '15%' }
-        ],
-          salary: {
-            staffRN: '$30-42/hr',
-            travelRN: '$2,000-2,600/wk',
-            signOn: '$8-18K',
-            systems: [
-              {
-                name: 'Franciscan Health',
-                value: '$35.81/hr avg',
-                source: 'Indeed (Munster)',
-                url: 'https://www.indeed.com/cmp/Franciscan-Health-21c7906f/salaries/Registered-Nurse/Munster-IN'
-              },
-              {
-                name: 'Community Healthcare System',
-                value: '$41.51/hr avg',
-                source: 'Indeed (IN)',
-                url: 'https://www.indeed.com/cmp/Community-Healthcare-System-4/salaries/Registered-Nurse/Indiana'
-              },
-              {
-                name: 'Methodist Hospitals',
-                value: '$37.03/hr avg',
-                source: 'Indeed (IN)',
-                url: 'https://www.indeed.com/cmp/Methodist-Hospitals-1/salaries/Registered-Nurse/Indiana'
-              },
-              {
-                name: 'Northwest Health',
-                value: '$38.80/hr avg',
-                source: 'Indeed (IN)',
-                url: 'https://www.indeed.com/cmp/Northwest-Health-Porter/salaries/Registered-Nurse/Indiana'
-              }
-            ]
-          },
-        factors: [
-          { text: 'Chicago metro spillover demand', type: 'positive' },
-          { text: 'Higher wages due to Illinois competition', type: 'positive' },
-          { text: 'Strong union presence (SEIU)', type: 'neutral' },
-          { text: 'Urban challenges in Gary/Hammond', type: 'negative' },
-          { text: 'Commute options to Chicago hospitals', type: 'positive' }
-        ]
-      },
-      {
-        name: 'Bloomington',
-        size: 'small',
-        population: '175K',
-        competition: 'low',
-        hospitals: [
-          { name: 'IU Health Bloomington Hospital', system: 'IU Health', score: 86, beds: 275, reviews: 4.2 },
-          { name: 'IU Health Bedford Hospital', system: 'IU Health', score: 77, beds: 25, reviews: 3.7 },
-          { name: 'IU Health Paoli Hospital', system: 'IU Health', score: 76, beds: 25, reviews: 3.6 }
-        ],
-        systems: [
-          { name: 'IU Health', facilities: 3, marketShare: '95%' }
-        ],
-          salary: {
-            staffRN: '$27-37/hr',
-            travelRN: '$1,700-2,300/wk',
-            signOn: '$6-12K',
-            systems: [
-              {
-                name: 'IU Health',
-                value: '$37.42/hr avg',
-                source: 'Indeed (IN)',
-                url: 'https://www.indeed.com/cmp/Indiana-University-Health/salaries/Registered-Nurse/Indiana'
-              }
-            ]
-          },
-        factors: [
-          { text: 'Indiana University campus culture', type: 'positive' },
-          { text: 'Close connection to IU School of Nursing', type: 'positive' },
-          { text: 'Single system dominance', type: 'neutral' },
-          { text: 'Limited specialty positions', type: 'negative' }
-        ]
-      },
-      {
-        name: 'Lafayette',
-        size: 'small',
-        population: '230K',
-        competition: 'low',
-        hospitals: [
-          { name: 'IU Health Arnett Hospital', system: 'IU Health', score: 84, beds: 191, reviews: 4.0 },
-          { name: 'Franciscan Health Lafayette East', system: 'Franciscan Health', score: 82, beds: 168, reviews: 3.9 },
-          { name: 'Franciscan Health Crawfordsville', system: 'Franciscan Health', score: 78, beds: 42, reviews: 3.7 },
-          { name: 'Franciscan Health Rensselaer', system: 'Franciscan Health', score: 76, beds: 25, reviews: 3.6 },
-          { name: 'IU Health White Memorial Hospital', system: 'IU Health', score: 75, beds: 25, reviews: 3.5 }
-        ],
-        systems: [
-          { name: 'IU Health', facilities: 2, marketShare: '50%' },
-          { name: 'Franciscan Health', facilities: 3, marketShare: '45%' }
-        ],
-          salary: {
-            staffRN: '$26-36/hr',
-            travelRN: '$1,650-2,200/wk',
-            signOn: '$5-12K',
-            systems: [
-              {
-                name: 'IU Health',
-                value: '$37.42/hr avg',
-                source: 'Indeed (IN)',
-                url: 'https://www.indeed.com/cmp/Indiana-University-Health/salaries/Registered-Nurse/Indiana'
-              },
-              {
-                name: 'Franciscan Health',
-                value: '$34.94/hr avg',
-                source: 'Indeed (IN)',
-                url: 'https://www.indeed.com/cmp/Franciscan-Health-21c7906f/salaries/Registered-Nurse/Indiana'
-              }
-            ]
-          },
-        factors: [
-          { text: 'Purdue University community', type: 'positive' },
-          { text: 'Growing tech sector jobs', type: 'positive' },
-          { text: 'Two-system competition', type: 'positive' },
-          { text: 'Smaller facility sizes', type: 'neutral' }
-        ]
-      },
-      {
-        name: 'Terre Haute',
-        size: 'small',
-        population: '170K',
-        competition: 'low',
-        hospitals: [
-          { name: 'Union Hospital', system: 'Union Health', score: 81, beds: 208, reviews: 3.8 },
-          { name: 'Terre Haute Regional Hospital', system: 'HCA Healthcare', score: 78, beds: 175, reviews: 3.5 },
-          { name: 'Union Hospital Clinton', system: 'Union Health', score: 75, beds: 25, reviews: 3.5 },
-          { name: 'Sullivan County Community Hospital', system: 'Sullivan County', score: 73, beds: 25, reviews: 3.4 },
-          { name: 'Greene County General Hospital', system: 'Greene County', score: 72, beds: 25, reviews: 3.3 }
-        ],
-        systems: [
-          { name: 'Union Health', facilities: 2, marketShare: '50%' },
-          { name: 'HCA Healthcare', facilities: 1, marketShare: '40%' },
-          { name: 'Independent', facilities: 2, marketShare: '10%' }
-        ],
-          salary: {
-            staffRN: '$25-34/hr',
-            travelRN: '$1,600-2,100/wk',
-            signOn: '$5-10K',
-            systems: [
-              {
-                name: 'Union Health',
-                value: 'Market est. $28-35/hr',
-                source: 'BLS + Reddit',
-                note: 'Estimate where job-board ranges are limited'
-              },
-              {
-                name: 'HCA Healthcare',
-                value: 'Market est. $28-36/hr',
-                source: 'BLS + Reddit',
-                note: 'Estimate where job-board ranges are limited'
-              },
-              {
-                name: 'Independent',
-                value: 'Market est. $26-33/hr',
-                source: 'BLS + Reddit',
-                note: 'Estimate for non-system facilities'
-              }
-            ]
-          },
-        factors: [
-          { text: 'Very affordable cost of living', type: 'positive' },
-          { text: 'Indiana State University', type: 'positive' },
-          { text: 'Rural healthcare needs', type: 'neutral' },
-          { text: 'Limited career advancement', type: 'negative' },
-          { text: 'Economic challenges in region', type: 'negative' }
-        ]
-      },
-      {
-        name: 'Muncie-Anderson',
-        size: 'small',
-        population: '185K',
-        competition: 'low',
-        hospitals: [
-          { name: 'IU Health Ball Memorial Hospital', system: 'IU Health', score: 83, beds: 304, reviews: 3.9 },
-          { name: 'IU Health Blackford Hospital', system: 'IU Health', score: 74, beds: 15, reviews: 3.5 },
-          { name: 'IU Health Jay Hospital', system: 'IU Health', score: 75, beds: 25, reviews: 3.5 },
-          { name: 'Ascension St. Vincent Anderson', system: 'Ascension St. Vincent', score: 80, beds: 141, reviews: 3.7 },
-          { name: 'Community Hospital Anderson', system: 'Community Health Network', score: 79, beds: 202, reviews: 3.6 }
-        ],
-        systems: [
-          { name: 'IU Health', facilities: 3, marketShare: '50%' },
-          { name: 'Ascension St. Vincent', facilities: 1, marketShare: '25%' },
-          { name: 'Community Health Network', facilities: 1, marketShare: '25%' }
-        ],
-          salary: {
-            staffRN: '$25-34/hr',
-            travelRN: '$1,550-2,050/wk',
-            signOn: '$5-10K',
-            systems: [
-              {
-                name: 'IU Health',
-                value: '$37.42/hr avg',
-                source: 'Indeed (IN)',
-                url: 'https://www.indeed.com/cmp/Indiana-University-Health/salaries/Registered-Nurse/Indiana'
-              },
-              {
-                name: 'Ascension St. Vincent',
-                value: '$39.96/hr avg',
-                source: 'Indeed (IN)',
-                url: 'https://www.indeed.com/cmp/Ascension/salaries/Registered-Nurse/Indiana'
-              },
-              {
-                name: 'Community Health Network',
-                value: '$38.16/hr avg',
-                source: 'Indeed (Anderson)',
-                url: 'https://www.indeed.com/cmp/Community-Health-Network/salaries/Registered-Nurse/Anderson-IN'
-              }
-            ]
-          },
-        factors: [
-          { text: 'Ball State University nursing program', type: 'positive' },
-          { text: 'Lower cost of living', type: 'positive' },
-          { text: 'Multi-system presence', type: 'neutral' },
-          { text: 'Economic challenges in region', type: 'negative' }
-        ]
-      },
-      {
-        name: 'Kokomo-Marion',
-        size: 'small',
-        population: '145K',
-        competition: 'low',
-        hospitals: [
-          { name: 'Ascension St. Vincent Kokomo', system: 'Ascension St. Vincent', score: 81, beds: 152, reviews: 3.8 },
-          { name: 'Community Howard Regional Health', system: 'Community Health Network', score: 80, beds: 140, reviews: 3.7 },
-          { name: 'Marion General Hospital', system: 'Marion Health', score: 78, beds: 109, reviews: 3.6 },
-          { name: 'Logansport Memorial Hospital', system: 'Logansport Memorial', score: 76, beds: 70, reviews: 3.5 },
-          { name: 'Dukes Memorial Hospital', system: 'Dukes Memorial', score: 74, beds: 25, reviews: 3.4 }
-        ],
-        systems: [
-          { name: 'Ascension St. Vincent', facilities: 1, marketShare: '35%' },
-          { name: 'Community Health Network', facilities: 1, marketShare: '30%' },
-          { name: 'Independent', facilities: 3, marketShare: '35%' }
-        ],
-          salary: {
-            staffRN: '$24-33/hr',
-            travelRN: '$1,500-1,950/wk',
-            signOn: '$4-8K',
-            systems: [
-              {
-                name: 'Ascension St. Vincent',
-                value: '$39.96/hr avg',
-                source: 'Indeed (IN)',
-                url: 'https://www.indeed.com/cmp/Ascension/salaries/Registered-Nurse/Indiana'
-              },
-              {
-                name: 'Community Health Network',
-                value: '$41.63/hr avg',
-                source: 'Indeed (IN)',
-                url: 'https://www.indeed.com/cmp/Community-Health-Network/salaries/Registered-Nurse/Indiana'
-              },
-              {
-                name: 'Independent',
-                value: 'Market est. $26-32/hr',
-                source: 'BLS + Reddit',
-                note: 'Estimate for independent facilities'
-              }
-            ]
-          },
-        factors: [
-          { text: 'Strong community hospital culture', type: 'positive' },
-          { text: 'Very affordable living', type: 'positive' },
-          { text: 'IU Kokomo nursing program nearby', type: 'positive' },
-          { text: 'Declining population', type: 'negative' },
-          { text: 'Limited specialty opportunities', type: 'negative' }
-        ]
-      },
-      {
-        name: 'Columbus-Seymour',
-        size: 'small',
-        population: '130K',
-        competition: 'low',
-        hospitals: [
-          { name: 'Columbus Regional Hospital', system: 'Columbus Regional', score: 84, beds: 225, reviews: 4.1 },
-          { name: 'Schneck Medical Center', system: 'Schneck Medical', score: 82, beds: 93, reviews: 4.0 },
-          { name: 'Decatur County Memorial Hospital', system: 'Decatur County Memorial', score: 78, beds: 83, reviews: 3.7 }
-        ],
-        systems: [
-          { name: 'Columbus Regional Health', facilities: 1, marketShare: '60%' },
-          { name: 'Schneck Medical Center', facilities: 1, marketShare: '25%' },
-          { name: 'Independent', facilities: 1, marketShare: '15%' }
-        ],
-          salary: {
-            staffRN: '$26-35/hr',
-            travelRN: '$1,600-2,100/wk',
-            signOn: '$5-10K',
-            systems: [
-              {
-                name: 'Columbus Regional Health',
-                value: 'Market est. $29-36/hr',
-                source: 'BLS + Reddit',
-                note: 'Estimate where job-board ranges are limited'
-              },
-              {
-                name: 'Schneck Medical Center',
-                value: 'Market est. $28-35/hr',
-                source: 'BLS + Reddit',
-                note: 'Estimate where job-board ranges are limited'
-              },
-              {
-                name: 'Independent',
-                value: 'Market est. $27-34/hr',
-                source: 'BLS + Reddit',
-                note: 'Estimate for non-system facilities'
-              }
-            ]
-          },
-        factors: [
-          { text: 'Cummins Inc. corporate headquarters', type: 'positive' },
-          { text: 'Strong local economy', type: 'positive' },
-          { text: 'Community-focused hospitals', type: 'positive' },
-          { text: 'Limited metro amenities', type: 'neutral' }
-        ]
-      },
-      {
-        name: 'Richmond-Connersville',
-        size: 'small',
-        population: '95K',
-        competition: 'low',
-        hospitals: [
-          { name: 'Reid Health', system: 'Reid Health', score: 83, beds: 217, reviews: 4.0 },
-          { name: 'Margaret Mary Health', system: 'Margaret Mary Health', score: 79, beds: 25, reviews: 3.8 }
-        ],
-        systems: [
-          { name: 'Reid Health', facilities: 1, marketShare: '85%' },
-          { name: 'Margaret Mary Health', facilities: 1, marketShare: '15%' }
-        ],
-          salary: {
-            staffRN: '$25-33/hr',
-            travelRN: '$1,550-2,000/wk',
-            signOn: '$5-8K',
-            systems: [
-              {
-                name: 'Reid Health',
-                value: 'Market est. $28-34/hr',
-                source: 'BLS + Reddit',
-                note: 'Estimate where job-board ranges are limited'
-              },
-              {
-                name: 'Margaret Mary Health',
-                value: 'Market est. $27-33/hr',
-                source: 'BLS + Reddit',
-                note: 'Estimate where job-board ranges are limited'
-              }
-            ]
-          },
-        factors: [
-          { text: 'Strong community hospital reputation', type: 'positive' },
-          { text: 'Ohio border access', type: 'positive' },
-          { text: 'Very affordable living', type: 'positive' },
-          { text: 'Single dominant employer', type: 'neutral' },
-          { text: 'Declining population', type: 'negative' }
-        ]
-      },
-      {
-        name: 'New Albany-Jeffersonville',
-        size: 'small',
-        population: '180K',
-        competition: 'medium',
-        hospitals: [
-          { name: 'Baptist Health Floyd', system: 'Baptist Health', score: 85, beds: 236, reviews: 4.0 },
-          { name: 'Clark Memorial Health', system: 'Clark Memorial', score: 82, beds: 180, reviews: 3.8 },
-          { name: 'King\'s Daughters\' Health', system: 'King\'s Daughters\'', score: 80, beds: 75, reviews: 3.7 },
-          { name: 'Harrison County Hospital', system: 'Harrison County', score: 76, beds: 25, reviews: 3.5 }
-        ],
-        systems: [
-          { name: 'Baptist Health (Louisville)', facilities: 1, marketShare: '45%' },
-          { name: 'Clark Memorial', facilities: 1, marketShare: '30%' },
-          { name: 'Independent', facilities: 2, marketShare: '25%' }
-        ],
-          salary: {
-            staffRN: '$28-38/hr',
-            travelRN: '$1,800-2,400/wk',
-            signOn: '$7-14K',
-            systems: [
-              {
-                name: 'Baptist Health (Louisville)',
-                value: '$34.44/hr avg',
-                source: 'Indeed (IN)',
-                url: 'https://www.indeed.com/cmp/Baptist-Health-System-Ky-%26-in/salaries/Registered-Nurse/Indiana'
-              },
-              {
-                name: 'Clark Memorial',
-                value: 'Market est. $30-38/hr',
-                source: 'BLS + Reddit',
-                note: 'Estimate where job-board ranges are limited'
-              },
-              {
-                name: 'Independent',
-                value: 'Market est. $29-36/hr',
-                source: 'BLS + Reddit',
-                note: 'Estimate for non-system facilities'
-              }
-            ]
-          },
-        factors: [
-          { text: 'Louisville metro spillover demand', type: 'positive' },
-          { text: 'Access to Kentucky job market', type: 'positive' },
-          { text: 'Higher wages due to Louisville competition', type: 'positive' },
-          { text: 'IU Southeast nursing program nearby', type: 'positive' }
-        ]
-      }
-    ]
-  },
-  FL: {
-    nursingEducation: {
-      ufSystemPercentage: 22,
-      stateCollegePercentage: 34,
-      otherSchoolsPercentage: 44,
-      totalGraduatesAnnual: 12500,
-      retentionRate: 55
-    },
-    salaryMeta: {
-      updatedAt: '2026-02-01',
-      updateEveryDays: 7,
-      breakdown: [
-        { label: 'BLS Florida RN mean (May 2023)', value: '$37.66/hr | $78,330/yr', note: 'Statewide OEWS data' },
-        { label: 'BLS Miami-Fort Lauderdale RN mean (May 2023)', value: '$39.52/hr | $82,200/yr', note: 'Metro OEWS data' },
-        { label: 'Job board ranges (FL/metro)', value: '$32-44/hr typical', note: 'Company salary pages by system' }
-      ],
-      sources: [
-        { name: 'BLS OEWS Florida RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_fl.htm' },
-        { name: 'BLS OEWS Miami-Fort Lauderdale MSA RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_33100.htm' },
-        { name: 'BLS OEWS Tampa-St. Petersburg MSA RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_45300.htm' }
-      ]
-    },
-    metros: [
-      {
-        name: 'Miami',
-        size: 'major',
-        population: '6.1M',
-        competition: 'high',
-        hospitals: [
-          { name: 'Jackson Memorial Hospital', system: 'Jackson Health System', score: 93, beds: 1547, reviews: 4.2 },
-          { name: 'Baptist Hospital of Miami', system: 'Baptist Health South Florida', score: 92, beds: 728, reviews: 4.3 },
-          { name: 'University of Miami Hospital', system: 'UHealth', score: 91, beds: 560, reviews: 4.1 },
-          { name: 'Mount Sinai Medical Center', system: 'Mount Sinai', score: 89, beds: 672, reviews: 4.0 },
-          { name: 'Aventura Hospital and Medical Center', system: 'HCA Healthcare', score: 86, beds: 407, reviews: 3.9 },
-          { name: 'Memorial Regional Hospital', system: 'Memorial Healthcare System', score: 90, beds: 704, reviews: 4.2 },
-          { name: 'Broward Health Medical Center', system: 'Broward Health', score: 87, beds: 716, reviews: 3.9 },
-          { name: 'Holy Cross Hospital', system: 'Trinity Health', score: 85, beds: 571, reviews: 4.0 },
-          { name: 'Cleveland Clinic Weston', system: 'Cleveland Clinic Florida', score: 90, beds: 206, reviews: 4.4 }
-        ],
-        systems: [
-          { name: 'Baptist Health South Florida', facilities: 6, marketShare: '25%' },
-          { name: 'Jackson Health System', facilities: 3, marketShare: '20%' },
-          { name: 'Memorial Healthcare System', facilities: 4, marketShare: '15%' },
-          { name: 'HCA Healthcare', facilities: 5, marketShare: '15%' },
-          { name: 'Independent/Other', facilities: 6, marketShare: '25%' }
-        ],
-        salary: {
-          staffRN: '$34-48/hr',
-          travelRN: '$2,200-2,800/wk',
-          signOn: '$8-20K',
-          systems: [
-            { name: 'Baptist Health South Florida', value: '$39-44/hr est', source: 'Job boards' },
-            { name: 'Jackson Health System', value: '$37-43/hr est', source: 'Job boards' },
-            { name: 'Memorial Healthcare System', value: '$38-44/hr est', source: 'Job boards' },
-            { name: 'HCA Healthcare', value: '$35-42/hr est', source: 'Job boards' }
-          ]
-        },
-        factors: [
-          { text: 'Massive diverse metro with high patient volume', type: 'positive' },
-          { text: 'Year-round travel RN demand', type: 'positive' },
-          { text: 'Bilingual (English/Spanish) strongly preferred', type: 'neutral' },
-          { text: 'High cost of living relative to wages', type: 'negative' },
-          { text: 'Seasonal population surge (snowbirds)', type: 'neutral' }
-        ]
-      },
-      {
-        name: 'Tampa',
-        size: 'major',
-        population: '3.2M',
-        competition: 'high',
-        hospitals: [
-          { name: 'Tampa General Hospital', system: 'Tampa General', score: 92, beds: 1041, reviews: 4.2 },
-          { name: 'AdventHealth Tampa', system: 'AdventHealth', score: 89, beds: 533, reviews: 4.1 },
-          { name: 'St. Joseph\'s Hospital', system: 'BayCare Health System', score: 88, beds: 929, reviews: 4.0 },
-          { name: 'Moffitt Cancer Center', system: 'Moffitt Cancer Center', score: 94, beds: 206, reviews: 4.5 },
-          { name: 'James A. Haley Veterans Hospital', system: 'VA', score: 87, beds: 352, reviews: 4.0 },
-          { name: 'Morton Plant Hospital', system: 'BayCare Health System', score: 86, beds: 687, reviews: 4.0 },
-          { name: 'HCA Florida South Tampa Hospital', system: 'HCA Healthcare', score: 84, beds: 112, reviews: 3.8 }
-        ],
-        systems: [
-          { name: 'BayCare Health System', facilities: 6, marketShare: '35%' },
-          { name: 'AdventHealth', facilities: 3, marketShare: '20%' },
-          { name: 'HCA Healthcare', facilities: 4, marketShare: '18%' },
-          { name: 'Tampa General', facilities: 1, marketShare: '15%' },
-          { name: 'Independent/Other', facilities: 3, marketShare: '12%' }
-        ],
-        salary: {
-          staffRN: '$32-44/hr',
-          travelRN: '$2,100-2,700/wk',
-          signOn: '$8-18K',
-          systems: [
-            { name: 'BayCare Health System', value: '$36-42/hr est', source: 'Job boards' },
-            { name: 'AdventHealth', value: '$35-41/hr est', source: 'Job boards' },
-            { name: 'Tampa General Hospital', value: '$37-43/hr est', source: 'Job boards' },
-            { name: 'HCA Healthcare', value: '$34-40/hr est', source: 'Job boards' }
-          ]
-        },
-        factors: [
-          { text: 'Major academic and cancer center hub', type: 'positive' },
-          { text: 'Rapid population growth driving demand', type: 'positive' },
-          { text: 'Multiple competing systems', type: 'positive' },
-          { text: 'Growing elderly population increases acuity', type: 'neutral' },
-          { text: 'Hurricane season staffing challenges', type: 'negative' }
-        ]
-      },
-      {
-        name: 'Orlando',
-        size: 'major',
-        population: '2.7M',
-        competition: 'high',
-        hospitals: [
-          { name: 'Orlando Health Orlando Regional Medical Center', system: 'Orlando Health', score: 91, beds: 808, reviews: 4.1 },
-          { name: 'AdventHealth Orlando', system: 'AdventHealth', score: 90, beds: 1368, reviews: 4.2 },
-          { name: 'Nemours Children\'s Hospital', system: 'Nemours', score: 92, beds: 130, reviews: 4.5 },
-          { name: 'Orlando Health Dr. P. Phillips Hospital', system: 'Orlando Health', score: 87, beds: 237, reviews: 4.0 },
-          { name: 'HCA Florida Osceola Hospital', system: 'HCA Healthcare', score: 83, beds: 340, reviews: 3.8 },
-          { name: 'AdventHealth Celebration', system: 'AdventHealth', score: 85, beds: 239, reviews: 4.0 }
-        ],
-        systems: [
-          { name: 'AdventHealth', facilities: 8, marketShare: '40%' },
-          { name: 'Orlando Health', facilities: 6, marketShare: '30%' },
-          { name: 'HCA Healthcare', facilities: 4, marketShare: '18%' },
-          { name: 'Independent/Other', facilities: 3, marketShare: '12%' }
-        ],
-        salary: {
-          staffRN: '$31-43/hr',
-          travelRN: '$2,000-2,600/wk',
-          signOn: '$7-16K',
-          systems: [
-            { name: 'AdventHealth', value: '$35-41/hr est', source: 'Job boards' },
-            { name: 'Orlando Health', value: '$36-42/hr est', source: 'Job boards' },
-            { name: 'HCA Healthcare', value: '$33-40/hr est', source: 'Job boards' }
-          ]
-        },
-        factors: [
-          { text: 'Major tourism economy supports healthcare demand', type: 'positive' },
-          { text: 'Rapid metro growth and expansion', type: 'positive' },
-          { text: 'Two dominant systems competing for talent', type: 'positive' },
-          { text: 'Seasonal tourist volume creates ER surges', type: 'neutral' },
-          { text: 'Rising cost of living', type: 'negative' }
-        ]
-      },
-      {
-        name: 'Jacksonville',
-        size: 'major',
-        population: '1.6M',
-        competition: 'high',
-        hospitals: [
-          { name: 'Mayo Clinic Jacksonville', system: 'Mayo Clinic', score: 95, beds: 304, reviews: 4.6 },
-          { name: 'Baptist Medical Center Jacksonville', system: 'Baptist Health', score: 90, beds: 948, reviews: 4.1 },
-          { name: 'UF Health Jacksonville', system: 'UF Health', score: 89, beds: 695, reviews: 4.0 },
-          { name: 'Ascension St. Vincent\'s Medical Center', system: 'Ascension', score: 87, beds: 528, reviews: 4.0 },
-          { name: 'Memorial Hospital Jacksonville', system: 'HCA Healthcare', score: 84, beds: 418, reviews: 3.8 },
-          { name: 'Baptist Medical Center South', system: 'Baptist Health', score: 86, beds: 271, reviews: 4.0 }
-        ],
-        systems: [
-          { name: 'Baptist Health', facilities: 5, marketShare: '35%' },
-          { name: 'UF Health', facilities: 2, marketShare: '20%' },
-          { name: 'Ascension', facilities: 2, marketShare: '15%' },
-          { name: 'HCA Healthcare', facilities: 3, marketShare: '15%' },
-          { name: 'Mayo Clinic / Other', facilities: 3, marketShare: '15%' }
-        ],
-        salary: {
-          staffRN: '$32-44/hr',
-          travelRN: '$2,100-2,700/wk',
-          signOn: '$8-20K',
-          systems: [
-            { name: 'Baptist Health', value: '$36-42/hr est', source: 'Job boards' },
-            { name: 'Mayo Clinic', value: '$40-48/hr est', source: 'Job boards' },
-            { name: 'UF Health', value: '$35-41/hr est', source: 'Job boards' },
-            { name: 'HCA Healthcare', value: '$34-40/hr est', source: 'Job boards' }
-          ]
-        },
-        factors: [
-          { text: 'Mayo Clinic presence elevates market', type: 'positive' },
-          { text: 'Military/veteran population (Naval Station Mayport)', type: 'positive' },
-          { text: 'Affordable cost of living for Florida', type: 'positive' },
-          { text: 'Growing metro with increasing demand', type: 'positive' },
-          { text: 'Sprawling geography impacts commutes', type: 'neutral' }
-        ]
-      }
-    ]
-  },
-  IL: {
-    nursingEducation: {
-      uicSystemPercentage: 18,
-      communityCollegePercentage: 35,
-      otherSchoolsPercentage: 47,
-      totalGraduatesAnnual: 8200,
-      retentionRate: 60
-    },
-    salaryMeta: {
-      updatedAt: '2026-02-01',
-      updateEveryDays: 7,
-      breakdown: [
-        { label: 'BLS Illinois RN mean (May 2023)', value: '$40.67/hr | $84,600/yr', note: 'Statewide OEWS data' },
-        { label: 'BLS Chicago-Naperville-Elgin RN mean (May 2023)', value: '$42.89/hr | $89,210/yr', note: 'Metro OEWS data' },
-        { label: 'Job board ranges (IL/metro)', value: '$34-50/hr typical', note: 'Company salary pages by system' }
-      ],
-      sources: [
-        { name: 'BLS OEWS Illinois RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_il.htm' },
-        { name: 'BLS OEWS Chicago-Naperville MSA RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_16980.htm' },
-        { name: 'BLS OEWS Springfield MSA RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_44100.htm' }
-      ]
-    },
-    metros: [
-      {
-        name: 'Chicago',
-        size: 'major',
-        population: '9.4M',
-        competition: 'high',
-        hospitals: [
-          { name: 'Northwestern Memorial Hospital', system: 'Northwestern Medicine', score: 95, beds: 894, reviews: 4.4 },
-          { name: 'Rush University Medical Center', system: 'Rush', score: 94, beds: 664, reviews: 4.3 },
-          { name: 'University of Chicago Medical Center', system: 'UChicago Medicine', score: 93, beds: 811, reviews: 4.2 },
-          { name: 'Advocate Christ Medical Center', system: 'Advocate Health', score: 91, beds: 749, reviews: 4.1 },
-          { name: 'Lurie Children\'s Hospital', system: 'Northwestern Medicine', score: 94, beds: 360, reviews: 4.5 },
-          { name: 'Loyola University Medical Center', system: 'Trinity Health/Loyola', score: 90, beds: 547, reviews: 4.1 },
-          { name: 'Advocate Lutheran General Hospital', system: 'Advocate Health', score: 88, beds: 639, reviews: 4.0 },
-          { name: 'Amita Health Resurrection Medical Center', system: 'Ascension', score: 84, beds: 409, reviews: 3.8 },
-          { name: 'NorthShore University HealthSystem Evanston', system: 'NorthShore-Edward', score: 89, beds: 491, reviews: 4.1 },
-          { name: 'Edward Hospital', system: 'NorthShore-Edward', score: 87, beds: 359, reviews: 4.2 }
-        ],
-        systems: [
-          { name: 'Advocate Health', facilities: 12, marketShare: '25%' },
-          { name: 'Northwestern Medicine', facilities: 6, marketShare: '20%' },
-          { name: 'Ascension', facilities: 8, marketShare: '15%' },
-          { name: 'NorthShore-Edward', facilities: 5, marketShare: '10%' },
-          { name: 'UChicago Medicine / Other', facilities: 10, marketShare: '30%' }
-        ],
-        salary: {
-          staffRN: '$36-52/hr',
-          travelRN: '$2,400-3,100/wk',
-          signOn: '$10-25K',
-          systems: [
-            { name: 'Northwestern Medicine', value: '$42-50/hr est', source: 'Job boards' },
-            { name: 'Advocate Health', value: '$38-46/hr est', source: 'Job boards' },
-            { name: 'Rush University Medical Center', value: '$40-48/hr est', source: 'Job boards' },
-            { name: 'UChicago Medicine', value: '$41-49/hr est', source: 'Job boards' },
-            { name: 'Ascension', value: '$36-43/hr est', source: 'Job boards' }
-          ]
-        },
-        factors: [
-          { text: 'World-class academic medical centers', type: 'positive' },
-          { text: 'Strong union presence (SEIU, NNU)', type: 'neutral' },
-          { text: 'Massive metro with diverse patient populations', type: 'positive' },
-          { text: 'High cost of living in city core', type: 'negative' },
-          { text: 'Excellent public transit access to hospitals', type: 'positive' },
-          { text: 'Intense competition for specialty RNs', type: 'neutral' }
-        ]
-      },
-      {
-        name: 'Springfield',
-        size: 'medium',
-        population: '210K',
-        competition: 'medium',
-        hospitals: [
-          { name: 'HSHS St. John\'s Hospital', system: 'HSHS', score: 87, beds: 432, reviews: 4.0 },
-          { name: 'Memorial Medical Center', system: 'Memorial Health System', score: 88, beds: 500, reviews: 4.1 },
-          { name: 'Springfield Memorial Hospital', system: 'Memorial Health System', score: 85, beds: 265, reviews: 3.9 },
-          { name: 'Abraham Lincoln Memorial Hospital', system: 'Memorial Health System', score: 80, beds: 25, reviews: 3.7 }
-        ],
-        systems: [
-          { name: 'Memorial Health System', facilities: 3, marketShare: '55%' },
-          { name: 'HSHS', facilities: 1, marketShare: '35%' },
-          { name: 'Independent', facilities: 1, marketShare: '10%' }
-        ],
-        salary: {
-          staffRN: '$30-40/hr',
-          travelRN: '$1,900-2,500/wk',
-          signOn: '$7-15K',
-          systems: [
-            { name: 'Memorial Health System', value: '$34-40/hr est', source: 'Job boards' },
-            { name: 'HSHS', value: '$33-39/hr est', source: 'Job boards' }
-          ]
-        },
-        factors: [
-          { text: 'State capital with stable government employment', type: 'positive' },
-          { text: 'SIU School of Medicine pipeline', type: 'positive' },
-          { text: 'Lower cost of living', type: 'positive' },
-          { text: 'Two-system market with moderate competition', type: 'neutral' }
-        ]
-      },
-      {
-        name: 'Peoria',
-        size: 'medium',
-        population: '370K',
-        competition: 'medium',
-        hospitals: [
-          { name: 'OSF Saint Francis Medical Center', system: 'OSF HealthCare', score: 89, beds: 616, reviews: 4.1 },
-          { name: 'UnityPoint Health - Methodist', system: 'UnityPoint Health', score: 87, beds: 353, reviews: 4.0 },
-          { name: 'UnityPoint Health - Proctor', system: 'UnityPoint Health', score: 84, beds: 186, reviews: 3.9 },
-          { name: 'OSF Saint Francis Children\'s Hospital', system: 'OSF HealthCare', score: 90, beds: 136, reviews: 4.3 }
-        ],
-        systems: [
-          { name: 'OSF HealthCare', facilities: 3, marketShare: '50%' },
-          { name: 'UnityPoint Health', facilities: 3, marketShare: '40%' },
-          { name: 'Independent', facilities: 1, marketShare: '10%' }
-        ],
-        salary: {
-          staffRN: '$29-39/hr',
-          travelRN: '$1,850-2,400/wk',
-          signOn: '$6-14K',
-          systems: [
-            { name: 'OSF HealthCare', value: '$33-39/hr est', source: 'Job boards' },
-            { name: 'UnityPoint Health', value: '$32-38/hr est', source: 'Job boards' }
-          ]
-        },
-        factors: [
-          { text: 'UICOMP medical campus (Level I trauma)', type: 'positive' },
-          { text: 'Two strong competing health systems', type: 'positive' },
-          { text: 'Affordable cost of living', type: 'positive' },
-          { text: 'Declining regional population', type: 'negative' },
-          { text: 'Moderate specialty opportunities', type: 'neutral' }
-        ]
-      }
-    ]
-  },
-  MI: {
-    nursingEducation: {
-      umSystemPercentage: 20,
-      communityCollegePercentage: 30,
-      otherSchoolsPercentage: 50,
-      totalGraduatesAnnual: 6500,
-      retentionRate: 62
-    },
-    salaryMeta: {
-      updatedAt: '2026-02-01',
-      updateEveryDays: 7,
-      breakdown: [
-        { label: 'BLS Michigan RN mean (May 2023)', value: '$40.22/hr | $83,650/yr', note: 'Statewide OEWS data' },
-        { label: 'BLS Detroit-Warren-Dearborn RN mean (May 2023)', value: '$42.15/hr | $87,670/yr', note: 'Metro OEWS data' },
-        { label: 'Job board ranges (MI/metro)', value: '$33-46/hr typical', note: 'Company salary pages by system' }
-      ],
-      sources: [
-        { name: 'BLS OEWS Michigan RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_mi.htm' },
-        { name: 'BLS OEWS Detroit-Warren MSA RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_19820.htm' },
-        { name: 'BLS OEWS Ann Arbor MSA RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_11460.htm' }
-      ]
-    },
-    metros: [
-      {
-        name: 'Detroit',
-        size: 'major',
-        population: '4.3M',
-        competition: 'high',
-        hospitals: [
-          { name: 'Beaumont Hospital Royal Oak', system: 'Corewell Health', score: 92, beds: 1070, reviews: 4.2 },
-          { name: 'Henry Ford Hospital', system: 'Henry Ford Health', score: 91, beds: 877, reviews: 4.1 },
-          { name: 'DMC Harper University Hospital', system: 'Tenet/DMC', score: 87, beds: 421, reviews: 3.9 },
-          { name: 'DMC Detroit Receiving Hospital', system: 'Tenet/DMC', score: 85, beds: 237, reviews: 3.8 },
-          { name: 'Ascension Providence Rochester', system: 'Ascension', score: 86, beds: 518, reviews: 4.0 },
-          { name: 'Beaumont Hospital Dearborn', system: 'Corewell Health', score: 88, beds: 632, reviews: 4.0 },
-          { name: 'Henry Ford Macomb Hospital', system: 'Henry Ford Health', score: 86, beds: 349, reviews: 4.0 },
-          { name: 'Beaumont Hospital Troy', system: 'Corewell Health', score: 89, beds: 520, reviews: 4.1 },
-          { name: 'Ascension St. John Hospital', system: 'Ascension', score: 85, beds: 612, reviews: 3.9 }
-        ],
-        systems: [
-          { name: 'Corewell Health (Beaumont)', facilities: 8, marketShare: '30%' },
-          { name: 'Henry Ford Health', facilities: 6, marketShare: '25%' },
-          { name: 'Ascension Michigan', facilities: 5, marketShare: '15%' },
-          { name: 'Tenet/DMC', facilities: 4, marketShare: '15%' },
-          { name: 'Trinity Health / Other', facilities: 4, marketShare: '15%' }
-        ],
-        salary: {
-          staffRN: '$34-47/hr',
-          travelRN: '$2,200-2,900/wk',
-          signOn: '$10-22K',
-          systems: [
-            { name: 'Corewell Health', value: '$39-45/hr est', source: 'Job boards' },
-            { name: 'Henry Ford Health', value: '$38-44/hr est', source: 'Job boards' },
-            { name: 'Tenet/DMC', value: '$35-42/hr est', source: 'Job boards' },
-            { name: 'Ascension Michigan', value: '$36-43/hr est', source: 'Job boards' }
-          ]
-        },
-        factors: [
-          { text: 'Large metro with multiple major health systems', type: 'positive' },
-          { text: 'Strong union presence (MNA, SEIU)', type: 'neutral' },
-          { text: 'High demand for ED and trauma nurses', type: 'positive' },
-          { text: 'Significant sign-on bonuses market-wide', type: 'positive' },
-          { text: 'Urban core safety concerns for some facilities', type: 'negative' }
-        ]
-      },
-      {
-        name: 'Grand Rapids',
-        size: 'medium',
-        population: '1.1M',
-        competition: 'medium',
-        hospitals: [
-          { name: 'Corewell Health Butterworth Hospital', system: 'Corewell Health', score: 91, beds: 875, reviews: 4.2 },
-          { name: 'Corewell Health Blodgett Hospital', system: 'Corewell Health', score: 88, beds: 400, reviews: 4.1 },
-          { name: 'Trinity Health Saint Mary\'s', system: 'Trinity Health', score: 86, beds: 344, reviews: 4.0 },
-          { name: 'Mary Free Bed Rehabilitation Hospital', system: 'Mary Free Bed', score: 89, beds: 167, reviews: 4.3 },
-          { name: 'Holland Hospital', system: 'Holland Hospital', score: 84, beds: 189, reviews: 4.0 }
-        ],
-        systems: [
-          { name: 'Corewell Health', facilities: 5, marketShare: '55%' },
-          { name: 'Trinity Health', facilities: 2, marketShare: '25%' },
-          { name: 'Independent', facilities: 3, marketShare: '20%' }
-        ],
-        salary: {
-          staffRN: '$31-43/hr',
-          travelRN: '$2,000-2,600/wk',
-          signOn: '$8-18K',
-          systems: [
-            { name: 'Corewell Health', value: '$36-43/hr est', source: 'Job boards' },
-            { name: 'Trinity Health', value: '$34-41/hr est', source: 'Job boards' }
-          ]
-        },
-        factors: [
-          { text: 'Growing West Michigan economy', type: 'positive' },
-          { text: 'Corewell Health is dominant employer', type: 'neutral' },
-          { text: 'Strong community hospital culture', type: 'positive' },
-          { text: 'Lower cost of living than Detroit', type: 'positive' },
-          { text: 'Growing medical research presence', type: 'positive' }
-        ]
-      },
-      {
-        name: 'Ann Arbor',
-        size: 'medium',
-        population: '370K',
-        competition: 'high',
-        hospitals: [
-          { name: 'Michigan Medicine University Hospital', system: 'Michigan Medicine', score: 95, beds: 1000, reviews: 4.4 },
-          { name: 'C.S. Mott Children\'s Hospital', system: 'Michigan Medicine', score: 95, beds: 348, reviews: 4.6 },
-          { name: 'Michigan Medicine Cardiovascular Center', system: 'Michigan Medicine', score: 93, beds: 120, reviews: 4.4 },
-          { name: 'VA Ann Arbor Healthcare System', system: 'VA', score: 86, beds: 146, reviews: 4.0 },
-          { name: 'Trinity Health Ann Arbor', system: 'Trinity Health', score: 85, beds: 537, reviews: 3.9 }
-        ],
-        systems: [
-          { name: 'Michigan Medicine (U-M)', facilities: 4, marketShare: '65%' },
-          { name: 'Trinity Health', facilities: 1, marketShare: '20%' },
-          { name: 'VA / Other', facilities: 2, marketShare: '15%' }
-        ],
-        salary: {
-          staffRN: '$35-48/hr',
-          travelRN: '$2,300-2,900/wk',
-          signOn: '$10-20K',
-          systems: [
-            { name: 'Michigan Medicine', value: '$40-48/hr est', source: 'Job boards' },
-            { name: 'Trinity Health', value: '$35-42/hr est', source: 'Job boards' }
-          ]
-        },
-        factors: [
-          { text: 'Top-ranked academic medical center (U-M)', type: 'positive' },
-          { text: 'Excellent research and specialty opportunities', type: 'positive' },
-          { text: 'Strong nurse residency programs', type: 'positive' },
-          { text: 'Higher cost of living for Michigan', type: 'negative' },
-          { text: 'Single dominant employer limits negotiation', type: 'neutral' }
-        ]
-      }
-    ]
-  },
-  NY: {
-    nursingEducation: {
-      sunySystemPercentage: 25,
-      cunyCityPercentage: 18,
-      otherSchoolsPercentage: 57,
-      totalGraduatesAnnual: 14000,
-      retentionRate: 56
-    },
-    salaryMeta: {
-      updatedAt: '2026-02-01',
-      updateEveryDays: 7,
-      breakdown: [
-        { label: 'BLS New York RN mean (May 2023)', value: '$51.65/hr | $107,440/yr', note: 'Statewide OEWS data' },
-        { label: 'BLS New York-Newark-Jersey City RN mean (May 2023)', value: '$55.19/hr | $114,790/yr', note: 'Metro OEWS data' },
-        { label: 'Job board ranges (NY/metro)', value: '$42-65/hr typical', note: 'Company salary pages by system' }
-      ],
-      sources: [
-        { name: 'BLS OEWS New York RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_ny.htm' },
-        { name: 'BLS OEWS New York-Newark MSA RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_35620.htm' },
-        { name: 'BLS OEWS Buffalo-Cheektowaga MSA RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_15380.htm' }
-      ]
-    },
-    metros: [
-      {
-        name: 'New York City',
-        size: 'major',
-        population: '8.3M',
-        competition: 'high',
-        hospitals: [
-          { name: 'NYU Langone Health', system: 'NYU Langone', score: 95, beds: 1069, reviews: 4.4 },
-          { name: 'NewYork-Presbyterian/Columbia', system: 'NewYork-Presbyterian', score: 95, beds: 745, reviews: 4.3 },
-          { name: 'NewYork-Presbyterian/Weill Cornell', system: 'NewYork-Presbyterian', score: 94, beds: 862, reviews: 4.3 },
-          { name: 'Mount Sinai Hospital', system: 'Mount Sinai Health System', score: 93, beds: 1134, reviews: 4.2 },
-          { name: 'Memorial Sloan Kettering Cancer Center', system: 'MSK', score: 95, beds: 514, reviews: 4.5 },
-          { name: 'Hospital for Special Surgery', system: 'HSS', score: 94, beds: 215, reviews: 4.5 },
-          { name: 'Montefiore Medical Center', system: 'Montefiore', score: 90, beds: 1491, reviews: 4.0 },
-          { name: 'NYC Health + Hospitals/Bellevue', system: 'NYC H+H', score: 87, beds: 844, reviews: 3.9 },
-          { name: 'Northwell Health Lenox Hill Hospital', system: 'Northwell Health', score: 88, beds: 450, reviews: 4.0 },
-          { name: 'Maimonides Medical Center', system: 'Maimonides', score: 85, beds: 711, reviews: 3.8 }
-        ],
-        systems: [
-          { name: 'NewYork-Presbyterian', facilities: 6, marketShare: '18%' },
-          { name: 'Northwell Health', facilities: 8, marketShare: '15%' },
-          { name: 'Mount Sinai Health System', facilities: 7, marketShare: '14%' },
-          { name: 'NYC Health + Hospitals', facilities: 11, marketShare: '15%' },
-          { name: 'NYU Langone / Other', facilities: 12, marketShare: '38%' }
-        ],
-        salary: {
-          staffRN: '$45-68/hr',
-          travelRN: '$2,800-3,800/wk',
-          signOn: '$10-25K',
-          systems: [
-            { name: 'NYU Langone', value: '$52-62/hr est', source: 'Job boards' },
-            { name: 'NewYork-Presbyterian', value: '$50-60/hr est', source: 'Job boards' },
-            { name: 'Mount Sinai', value: '$48-58/hr est', source: 'Job boards' },
-            { name: 'Northwell Health', value: '$46-56/hr est', source: 'Job boards' },
-            { name: 'NYC Health + Hospitals', value: '$50-65/hr est', source: 'Job boards' }
-          ]
-        },
-        factors: [
-          { text: 'Highest-paying RN market in the US', type: 'positive' },
-          { text: 'World-renowned academic medical centers', type: 'positive' },
-          { text: 'Strong union protections (NYSNA)', type: 'positive' },
-          { text: 'Extremely high cost of living', type: 'negative' },
-          { text: 'Safe staffing ratio legislation improving conditions', type: 'positive' },
-          { text: 'Intense competition for specialty and Magnet roles', type: 'neutral' }
-        ]
-      },
-      {
-        name: 'Buffalo',
-        size: 'medium',
-        population: '1.2M',
-        competition: 'medium',
-        hospitals: [
-          { name: 'Kaleida Health Buffalo General Medical Center', system: 'Kaleida Health', score: 88, beds: 437, reviews: 4.0 },
-          { name: 'Roswell Park Comprehensive Cancer Center', system: 'Roswell Park', score: 93, beds: 133, reviews: 4.4 },
-          { name: 'ECMC (Erie County Medical Center)', system: 'ECMC', score: 85, beds: 573, reviews: 3.9 },
-          { name: 'Kaleida Health Millard Fillmore Suburban', system: 'Kaleida Health', score: 84, beds: 310, reviews: 3.9 },
-          { name: 'Catholic Health Mercy Hospital', system: 'Catholic Health', score: 83, beds: 438, reviews: 3.8 },
-          { name: 'Catholic Health Sisters of Charity Hospital', system: 'Catholic Health', score: 82, beds: 267, reviews: 3.7 }
-        ],
-        systems: [
-          { name: 'Kaleida Health', facilities: 4, marketShare: '35%' },
-          { name: 'Catholic Health', facilities: 4, marketShare: '30%' },
-          { name: 'ECMC', facilities: 1, marketShare: '15%' },
-          { name: 'Independent/Other', facilities: 3, marketShare: '20%' }
-        ],
-        salary: {
-          staffRN: '$35-48/hr',
-          travelRN: '$2,200-2,800/wk',
-          signOn: '$8-18K',
-          systems: [
-            { name: 'Kaleida Health', value: '$38-46/hr est', source: 'Job boards' },
-            { name: 'Catholic Health', value: '$36-44/hr est', source: 'Job boards' },
-            { name: 'ECMC', value: '$37-45/hr est', source: 'Job boards' }
-          ]
-        },
-        factors: [
-          { text: 'NCI-designated cancer center (Roswell Park)', type: 'positive' },
-          { text: 'Affordable cost of living for New York', type: 'positive' },
-          { text: 'Strong union presence (CWA, NYSNA)', type: 'neutral' },
-          { text: 'Canadian border proximity adds unique patient mix', type: 'neutral' },
-          { text: 'Harsh winter weather impacts commutes', type: 'negative' }
-        ]
-      },
-      {
-        name: 'Rochester',
-        size: 'medium',
-        population: '1.1M',
-        competition: 'medium',
-        hospitals: [
-          { name: 'Strong Memorial Hospital', system: 'UR Medicine', score: 92, beds: 886, reviews: 4.2 },
-          { name: 'Rochester General Hospital', system: 'Rochester Regional Health', score: 88, beds: 528, reviews: 4.0 },
-          { name: 'Highland Hospital', system: 'UR Medicine', score: 86, beds: 261, reviews: 4.1 },
-          { name: 'Unity Hospital', system: 'Rochester Regional Health', score: 84, beds: 287, reviews: 3.9 },
-          { name: 'Golisano Children\'s Hospital', system: 'UR Medicine', score: 91, beds: 142, reviews: 4.4 }
-        ],
-        systems: [
-          { name: 'UR Medicine', facilities: 5, marketShare: '50%' },
-          { name: 'Rochester Regional Health', facilities: 4, marketShare: '40%' },
-          { name: 'Independent', facilities: 2, marketShare: '10%' }
-        ],
-        salary: {
-          staffRN: '$34-47/hr',
-          travelRN: '$2,100-2,700/wk',
-          signOn: '$8-16K',
-          systems: [
-            { name: 'UR Medicine', value: '$38-46/hr est', source: 'Job boards' },
-            { name: 'Rochester Regional Health', value: '$36-44/hr est', source: 'Job boards' }
-          ]
-        },
-        factors: [
-          { text: 'Strong academic medical center (U of R)', type: 'positive' },
-          { text: 'Two-system market with healthy competition', type: 'positive' },
-          { text: 'Affordable cost of living for New York', type: 'positive' },
-          { text: 'Robust pediatric and specialty programs', type: 'positive' },
-          { text: 'Winter weather challenges', type: 'negative' }
-        ]
-      }
-    ]
-  },
-  TX: {
-    nursingEducation: {
-      utSystemPercentage: 20,
-      communityCollegePercentage: 32,
-      otherSchoolsPercentage: 48,
-      totalGraduatesAnnual: 16000,
-      retentionRate: 58
-    },
-    salaryMeta: {
-      updatedAt: '2026-02-01',
-      updateEveryDays: 7,
-      breakdown: [
-        { label: 'BLS Texas RN mean (May 2023)', value: '$40.69/hr | $84,630/yr', note: 'Statewide OEWS data' },
-        { label: 'BLS Houston-The Woodlands RN mean (May 2023)', value: '$42.33/hr | $88,050/yr', note: 'Metro OEWS data' },
-        { label: 'Job board ranges (TX/metro)', value: '$33-48/hr typical', note: 'Company salary pages by system' }
-      ],
-      sources: [
-        { name: 'BLS OEWS Texas RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_tx.htm' },
-        { name: 'BLS OEWS Houston-The Woodlands MSA RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_26420.htm' },
-        { name: 'BLS OEWS Dallas-Fort Worth MSA RN (May 2023)', url: 'https://www.bls.gov/oes/2023/may/oes_19100.htm' }
-      ]
-    },
-    metros: [
-      {
-        name: 'Houston',
-        size: 'major',
-        population: '7.1M',
-        competition: 'high',
-        hospitals: [
-          { name: 'Houston Methodist Hospital', system: 'Houston Methodist', score: 95, beds: 907, reviews: 4.4 },
-          { name: 'Memorial Hermann-Texas Medical Center', system: 'Memorial Hermann', score: 93, beds: 1052, reviews: 4.2 },
-          { name: 'MD Anderson Cancer Center', system: 'UT MD Anderson', score: 95, beds: 654, reviews: 4.5 },
-          { name: 'Texas Children\'s Hospital', system: 'Texas Children\'s', score: 95, beds: 973, reviews: 4.5 },
-          { name: 'Ben Taub Hospital', system: 'Harris Health', score: 86, beds: 586, reviews: 3.9 },
-          { name: 'St. Luke\'s Health - Baylor St. Luke\'s Medical Center', system: 'CommonSpirit Health', score: 89, beds: 881, reviews: 4.0 },
-          { name: 'HCA Houston Healthcare Clear Lake', system: 'HCA Healthcare', score: 84, beds: 525, reviews: 3.8 },
-          { name: 'Memorial Hermann The Woodlands', system: 'Memorial Hermann', score: 88, beds: 400, reviews: 4.1 },
-          { name: 'Houston Methodist Willowbrook', system: 'Houston Methodist', score: 87, beds: 312, reviews: 4.1 }
-        ],
-        systems: [
-          { name: 'Memorial Hermann', facilities: 10, marketShare: '25%' },
-          { name: 'Houston Methodist', facilities: 7, marketShare: '20%' },
-          { name: 'HCA Healthcare', facilities: 8, marketShare: '18%' },
-          { name: 'Harris Health (safety net)', facilities: 3, marketShare: '10%' },
-          { name: 'Texas Children\'s / MD Anderson / Other', facilities: 8, marketShare: '27%' }
-        ],
-        salary: {
-          staffRN: '$34-48/hr',
-          travelRN: '$2,300-3,000/wk',
-          signOn: '$10-25K',
-          systems: [
-            { name: 'Houston Methodist', value: '$40-48/hr est', source: 'Job boards' },
-            { name: 'Memorial Hermann', value: '$38-46/hr est', source: 'Job boards' },
-            { name: 'MD Anderson', value: '$42-50/hr est', source: 'Job boards' },
-            { name: 'Texas Children\'s', value: '$39-47/hr est', source: 'Job boards' },
-            { name: 'HCA Healthcare', value: '$34-42/hr est', source: 'Job boards' }
-          ]
-        },
-        factors: [
-          { text: 'Texas Medical Center is world\'s largest medical complex', type: 'positive' },
-          { text: 'Massive and diverse job market', type: 'positive' },
-          { text: 'No state income tax boosts take-home pay', type: 'positive' },
-          { text: 'High demand for oncology, peds, and trauma RNs', type: 'positive' },
-          { text: 'Sprawling metro with long commute times', type: 'negative' },
-          { text: 'Hurricane season staffing challenges', type: 'neutral' }
-        ]
-      },
-      {
-        name: 'Dallas-Fort Worth',
-        size: 'major',
-        population: '7.6M',
-        competition: 'high',
-        hospitals: [
-          { name: 'UT Southwestern Medical Center', system: 'UT Southwestern', score: 94, beds: 740, reviews: 4.3 },
-          { name: 'Baylor University Medical Center', system: 'Baylor Scott & White', score: 93, beds: 903, reviews: 4.2 },
-          { name: 'Parkland Memorial Hospital', system: 'Parkland Health', score: 90, beds: 862, reviews: 4.0 },
-          { name: 'Texas Health Presbyterian Dallas', system: 'Texas Health Resources', score: 88, beds: 850, reviews: 4.0 },
-          { name: 'Medical City Dallas', system: 'HCA Healthcare', score: 87, beds: 661, reviews: 4.0 },
-          { name: 'JPS Health Network', system: 'JPS Health', score: 86, beds: 537, reviews: 3.9 },
-          { name: 'Cook Children\'s Medical Center', system: 'Cook Children\'s', score: 92, beds: 443, reviews: 4.4 },
-          { name: 'Children\'s Medical Center Dallas', system: 'Children\'s Health', score: 93, beds: 490, reviews: 4.4 },
-          { name: 'Baylor Scott & White All Saints - Fort Worth', system: 'Baylor Scott & White', score: 85, beds: 538, reviews: 3.9 }
-        ],
-        systems: [
-          { name: 'Baylor Scott & White', facilities: 10, marketShare: '22%' },
-          { name: 'Texas Health Resources', facilities: 14, marketShare: '20%' },
-          { name: 'HCA Healthcare', facilities: 12, marketShare: '20%' },
-          { name: 'UT Southwestern', facilities: 2, marketShare: '10%' },
-          { name: 'Parkland / Other', facilities: 8, marketShare: '28%' }
-        ],
-        salary: {
-          staffRN: '$34-48/hr',
-          travelRN: '$2,200-2,900/wk',
-          signOn: '$10-22K',
-          systems: [
-            { name: 'Baylor Scott & White', value: '$38-46/hr est', source: 'Job boards' },
-            { name: 'Texas Health Resources', value: '$37-44/hr est', source: 'Job boards' },
-            { name: 'UT Southwestern', value: '$40-48/hr est', source: 'Job boards' },
-            { name: 'HCA Healthcare', value: '$34-42/hr est', source: 'Job boards' },
-            { name: 'Parkland Health', value: '$38-45/hr est', source: 'Job boards' }
-          ]
-        },
-        factors: [
-          { text: 'Massive and rapidly growing metro', type: 'positive' },
-          { text: 'Multiple competing systems drive wage competition', type: 'positive' },
-          { text: 'No state income tax', type: 'positive' },
-          { text: 'Strong academic medicine presence', type: 'positive' },
-          { text: 'Extreme commute distances across DFW', type: 'negative' },
-          { text: 'Corporate relocations driving population growth', type: 'neutral' }
-        ]
-      },
-      {
-        name: 'San Antonio',
-        size: 'major',
-        population: '2.6M',
-        competition: 'high',
-        hospitals: [
-          { name: 'Methodist Hospital San Antonio', system: 'Methodist Healthcare', score: 90, beds: 1536, reviews: 4.1 },
-          { name: 'University Hospital San Antonio', system: 'University Health', score: 89, beds: 716, reviews: 4.0 },
-          { name: 'Baptist Medical Center San Antonio', system: 'Tenet Healthcare', score: 86, beds: 1577, reviews: 3.9 },
-          { name: 'CHRISTUS Santa Rosa Hospital Medical Center', system: 'CHRISTUS Health', score: 85, beds: 433, reviews: 3.9 },
-          { name: 'Brooke Army Medical Center (BAMC)', system: 'Military', score: 91, beds: 450, reviews: 4.2 },
-          { name: 'Methodist Children\'s Hospital', system: 'Methodist Healthcare', score: 88, beds: 213, reviews: 4.2 }
-        ],
-        systems: [
-          { name: 'Methodist Healthcare (HCA)', facilities: 6, marketShare: '30%' },
-          { name: 'Tenet Healthcare', facilities: 4, marketShare: '20%' },
-          { name: 'University Health', facilities: 2, marketShare: '18%' },
-          { name: 'CHRISTUS Health', facilities: 3, marketShare: '12%' },
-          { name: 'Military / Other', facilities: 4, marketShare: '20%' }
-        ],
-        salary: {
-          staffRN: '$32-44/hr',
-          travelRN: '$2,100-2,700/wk',
-          signOn: '$8-18K',
-          systems: [
-            { name: 'Methodist Healthcare', value: '$36-43/hr est', source: 'Job boards' },
-            { name: 'Tenet Healthcare', value: '$34-41/hr est', source: 'Job boards' },
-            { name: 'University Health', value: '$37-44/hr est', source: 'Job boards' },
-            { name: 'CHRISTUS Health', value: '$34-41/hr est', source: 'Job boards' }
-          ]
-        },
-        factors: [
-          { text: 'Major military healthcare hub (BAMC, Lackland)', type: 'positive' },
-          { text: 'Affordable cost of living for large metro', type: 'positive' },
-          { text: 'UT Health San Antonio academic pipeline', type: 'positive' },
-          { text: 'Growing demand from aging population', type: 'positive' },
-          { text: 'Bilingual (English/Spanish) preferred', type: 'neutral' }
-        ]
-      },
-      {
-        name: 'Austin',
-        size: 'major',
-        population: '2.3M',
-        competition: 'high',
-        hospitals: [
-          { name: 'Ascension Seton Medical Center', system: 'Ascension', score: 89, beds: 458, reviews: 4.1 },
-          { name: 'Dell Seton Medical Center at UT', system: 'Ascension', score: 91, beds: 211, reviews: 4.2 },
-          { name: 'St. David\'s Medical Center', system: 'HCA Healthcare', score: 88, beds: 350, reviews: 4.0 },
-          { name: 'St. David\'s North Austin Medical Center', system: 'HCA Healthcare', score: 86, beds: 396, reviews: 3.9 },
-          { name: 'Dell Children\'s Medical Center', system: 'Ascension', score: 90, beds: 248, reviews: 4.3 },
-          { name: 'Baylor Scott & White Medical Center - Round Rock', system: 'Baylor Scott & White', score: 85, beds: 300, reviews: 4.0 },
-          { name: 'St. David\'s South Austin Medical Center', system: 'HCA Healthcare', score: 84, beds: 282, reviews: 3.8 }
-        ],
-        systems: [
-          { name: 'HCA Healthcare (St. David\'s)', facilities: 6, marketShare: '40%' },
-          { name: 'Ascension (Seton)', facilities: 4, marketShare: '30%' },
-          { name: 'Baylor Scott & White', facilities: 2, marketShare: '15%' },
-          { name: 'Independent/Other', facilities: 3, marketShare: '15%' }
-        ],
-        salary: {
-          staffRN: '$33-46/hr',
-          travelRN: '$2,200-2,800/wk',
-          signOn: '$8-20K',
-          systems: [
-            { name: 'HCA Healthcare (St. David\'s)', value: '$36-44/hr est', source: 'Job boards' },
-            { name: 'Ascension (Seton)', value: '$37-45/hr est', source: 'Job boards' },
-            { name: 'Baylor Scott & White', value: '$35-43/hr est', source: 'Job boards' }
-          ]
-        },
-        factors: [
-          { text: 'Fastest-growing major metro in Texas', type: 'positive' },
-          { text: 'Dell Medical School expanding academic medicine', type: 'positive' },
-          { text: 'No state income tax', type: 'positive' },
-          { text: 'Rising cost of living challenging affordability', type: 'negative' },
-          { text: 'Tech industry driving healthcare benefit competition', type: 'neutral' },
-          { text: 'Rapidly expanding suburban hospital capacity', type: 'positive' }
-        ]
-      }
-    ]
-  },
-  // Kentucky data from KY_DETAILS
-  KY: KY_DETAILS.KY
-};
-
-const TARGET_STATE_TEMPLATE_STATE = 'IN';
-const targetStateMetroDataCache = {};
-const homeStateMetroDataCache = {};
-let targetStateMetrosData = null;
-let metroLaborData = null;
-
-const loadTargetStateMetrosData = async () => {
-  if (targetStateMetrosData) return targetStateMetrosData;
-  try {
-    targetStateMetrosData = await fetchJson(`${DATA_BASE_URL}/target-state-metros.json?ts=${Date.now()}`);
-  } catch (err) {
-    targetStateMetrosData = null;
-  }
-  return targetStateMetrosData;
-};
-
-const loadMetroLaborData = async () => {
-  if (metroLaborData) return metroLaborData;
-  try {
-    metroLaborData = await fetchJson(`${DATA_BASE_URL}/metro-labor.json?ts=${Date.now()}`);
-  } catch (err) {
-    metroLaborData = null;
-  }
-  return metroLaborData;
-};
-
-const buildMetroRowsFromFetchedNotices = (stateAbbrev, notices) => {
-  const stateName = STATE_NAMES[stateAbbrev] || stateAbbrev;
-  const healthcare = (notices || []).filter((notice) => isHealthcareNotice(notice));
-  const byCity = groupBy(healthcare, (notice) => String(notice.city || '').trim() || stateName);
-  const cityEntries = Array.from(byCity.entries())
-    .sort((a, b) => b[1].length - a[1].length)
-    .slice(0, 4);
-
-  if (!cityEntries.length) {
-    return [{
-      name: `${stateName} Regional Hub`,
-      size: 'medium',
-      population: 'N/A',
-      competition: 'medium',
-      hospitals: [],
-      systems: [],
-      salary: {
-        staffRN: 'Fetched benchmark pending',
-        travelRN: 'Fetched benchmark pending',
-        signOn: 'Varies by employer'
-      },
-      factors: [
-        { text: `Fetched fallback from ${TARGET_STATE_TEMPLATE_STATE} while local feed is sparse`, type: 'neutral' }
-      ]
-    }];
-  }
-
-  return cityEntries.map(([city, items]) => {
-    const employerGroups = Array.from(
-      groupBy(items, (notice) => notice.employer_name || notice.employerName || 'Unknown employer').entries()
-    )
-      .map(([name, employerItems]) => ({
-        name,
-        notices: employerItems.length,
-        affected: employerItems.reduce((sum, n) => sum + Number(n.affectedCount || n.employees_affected || 0), 0),
-        system: employerItems.find((n) => n.parent_system)?.parent_system || name
-      }))
-      .sort((a, b) => b.affected - a.affected || b.notices - a.notices);
-
-    const rankedMetroHospitals = getRankedHospitalsForMetro(stateAbbrev, city);
-    const hospitals = rankedMetroHospitals.length
-      ? rankedMetroHospitals
-      : employerGroups.slice(0, 10).map((employer) => ({
-        name: employer.name,
-        system: employer.system,
-        score: '--',
-        beds: '--',
-        reviews: '--'
-      }));
-
-    const systems = Array.from(groupBy(employerGroups, (row) => row.system).entries())
-      .map(([name, systemRows]) => ({
-        name,
-        facilities: systemRows.length,
-        marketShare: `${Math.min(60, Math.max(8, systemRows.length * 8))}%`
-      }))
-      .sort((a, b) => b.facilities - a.facilities)
-      .slice(0, 6);
-
-    const competition = systems.length >= 4 ? 'high' : systems.length >= 2 ? 'medium' : 'low';
-    return {
-      name: city,
-      size: items.length >= 40 ? 'major' : items.length >= 16 ? 'medium' : 'small',
-      population: `${Math.max(120, items.length * 40)}K`,
-      competition,
-      hospitals,
-      systems,
-      salary: {
-        staffRN: 'Fetched benchmark by market',
-        travelRN: 'Fetched benchmark by market',
-        signOn: 'Varies by specialty'
-      },
-      factors: [
-        { text: `Derived from fetched WARN healthcare notices for ${stateName}`, type: 'positive' },
-        { text: rankedMetroHospitals.length
-          ? 'Hospital ranks sourced from statewide composite rankings and aligned to this metro.'
-          : 'No ranked hospitals matched this metro label yet; showing WARN-only facility context.', type: 'neutral' }
-      ]
-    };
-  });
-};
-
-const buildFetchedTargetStateMetroData = (stateAbbrev) => {
-  const stateNotices = getStateNotices(stateAbbrev);
-  const healthcareNotices = stateNotices.filter((notice) => isHealthcareNotice(notice));
-  const fallbackNotices = getStateNotices(TARGET_STATE_TEMPLATE_STATE).filter((notice) => isHealthcareNotice(notice));
-  const sourceState = healthcareNotices.length ? stateAbbrev : TARGET_STATE_TEMPLATE_STATE;
-  const sourceNotices = healthcareNotices.length ? healthcareNotices : fallbackNotices;
-
-  return {
-    nursingEducation: {
-      templateSource: sourceState,
-      note: `Fetched from /data/by-state/${sourceState}.json`
-    },
-    salaryMeta: {
-      updatedAt: new Date().toISOString().slice(0, 10),
-      updateEveryDays: 7,
-      breakdown: [
-        {
-          label: `${STATE_NAMES[stateAbbrev] || stateAbbrev} healthcare notice sample`,
-          value: `${sourceNotices.length} fetched healthcare notices`,
-          note: `Source state feed: ${sourceState}`
-        }
-      ],
-      sources: [
-        { name: 'State by-state notices feed', url: `${DATA_BASE_URL}/by-state/${sourceState}.json` }
-      ]
-    },
-    metros: buildMetroRowsFromFetchedNotices(stateAbbrev, sourceNotices)
-  };
-};
-
-const getTargetStateMetroData = async (stateAbbrev) => {
-  if (targetStateMetroDataCache[stateAbbrev]) {
-    return targetStateMetroDataCache[stateAbbrev];
-  }
-
-  const fetchedDataset = await loadTargetStateMetrosData();
-  const fetchedState = fetchedDataset?.states?.[stateAbbrev];
-  let metroData = fetchedState?.metros?.length ? fetchedState : null;
-
-  if (!metroData) {
-    if (!hospitalRankingsLoaded) {
-      await loadHospitalRankingsData();
-    }
-    if (!stateNoticesCache.has(stateAbbrev) && !allNoticesLoaded) {
-      await loadStateNotices(stateAbbrev);
-    }
-    if (!stateNoticesCache.has(TARGET_STATE_TEMPLATE_STATE) && !allNoticesLoaded) {
-      await loadStateNotices(TARGET_STATE_TEMPLATE_STATE);
-    }
-    metroData = buildFetchedTargetStateMetroData(stateAbbrev);
-  }
-
-  const laborDataset = await loadMetroLaborData();
-  const laborSalaryMeta = laborDataset?.states?.[stateAbbrev]
-    || TARGET_STATE_MONTHLY_LABOR_OVERRIDES[stateAbbrev]
-    || null;
-  const salaryMeta = laborSalaryMeta
-    ? {
-      ...(metroData.salaryMeta || {}),
-      ...laborSalaryMeta,
-      sources: Array.isArray(laborSalaryMeta.sources) && laborSalaryMeta.sources.length
-        ? laborSalaryMeta.sources
-        : TARGET_STATE_MONTHLY_LABOR_SOURCES
-    }
-    : (metroData.salaryMeta || {});
-
-  targetStateMetroDataCache[stateAbbrev] = {
-    ...metroData,
-    salaryMeta
-  };
-  return targetStateMetroDataCache[stateAbbrev];
-};
-const TARGET_STATE_MONTHLY_LABOR_OVERRIDES = {
-  IN: {
-    updatedAt: '2026-02-06',
-    updateEveryDays: 30,
-    breakdown: [
-      { label: 'Indianapolis-Carmel-Anderson unemployment (latest)', value: '2.5% (Dec 2024: 3.7%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Fort Wayne unemployment (latest)', value: '2.5% (Dec 2024: 3.7%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Evansville unemployment (latest)', value: '2.6% (Dec 2024: 3.6%)', note: 'BLS LAUS metro monthly' },
-      { label: 'South Bend-Mishawaka unemployment (latest)', value: '3.2% (Dec 2024: 4.7%)', note: 'BLS LAUS metro monthly' }
-    ],
-    sources: []
-  },
-  KY: {
-    updatedAt: '2026-02-06',
-    updateEveryDays: 30,
-    breakdown: [
-      { label: 'Louisville/Jefferson County unemployment (latest)', value: '3.1% (Dec 2024: 4.4%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Lexington-Fayette unemployment (latest)', value: '2.9% (Dec 2024: 4.1%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Bowling Green unemployment (latest)', value: '3.4% (Dec 2024: 4.6%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Owensboro unemployment (latest)', value: '3.3% (Dec 2024: 4.9%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Cincinnati (Northern KY market) unemployment (latest)', value: '3.6% (Dec 2024: 4.1%)', note: 'BLS LAUS metro monthly' }
-    ],
-    sources: []
-  },
-  FL: {
-    updatedAt: '2026-02-06',
-    updateEveryDays: 30,
-    breakdown: [
-      { label: 'Miami-Fort Lauderdale-West Palm Beach unemployment (latest)', value: '3.5% (Dec 2024: 2.7%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Tampa-St. Petersburg-Clearwater unemployment (latest)', value: '4.6% (Dec 2024: 3.3%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Orlando-Kissimmee-Sanford unemployment (latest)', value: '4.4% (Dec 2024: 3.0%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Jacksonville unemployment (latest)', value: '4.6% (Dec 2024: 3.2%)', note: 'BLS LAUS metro monthly' }
-    ],
-    sources: []
-  },
-  IL: {
-    updatedAt: '2026-02-06',
-    updateEveryDays: 30,
-    breakdown: [
-      { label: 'Chicago-Naperville-Elgin unemployment (latest)', value: '4.5% (Dec 2024: 4.5%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Springfield unemployment (latest)', value: '5.0% (Dec 2024: 3.8%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Peoria unemployment (latest)', value: '5.6% (Dec 2024: 4.5%)', note: 'BLS LAUS metro monthly' }
-    ],
-    sources: []
-  },
-  MI: {
-    updatedAt: '2026-02-06',
-    updateEveryDays: 30,
-    breakdown: [
-      { label: 'Detroit-Warren-Dearborn unemployment (latest)', value: '4.7% (Dec 2024: 4.7%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Grand Rapids-Wyoming-Kentwood unemployment (latest)', value: '4.0% (Dec 2024: 4.3%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Ann Arbor unemployment (latest)', value: '3.7% (Dec 2024: 3.8%)', note: 'BLS LAUS metro monthly' }
-    ],
-    sources: []
-  },
-  NY: {
-    updatedAt: '2026-02-06',
-    updateEveryDays: 30,
-    breakdown: [
-      { label: 'New York-Newark-Jersey City unemployment (latest)', value: '4.5% (Dec 2024: 4.3%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Buffalo-Cheektowaga unemployment (latest)', value: '4.0% (Dec 2024: 3.9%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Rochester unemployment (latest)', value: '3.7% (Dec 2024: 3.4%)', note: 'BLS LAUS metro monthly' }
-    ],
-    sources: []
-  },
-  TX: {
-    updatedAt: '2026-02-06',
-    updateEveryDays: 30,
-    breakdown: [
-      { label: 'Houston-Pasadena-The Woodlands unemployment (latest)', value: '4.2% (Dec 2024: 4.0%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Dallas-Fort Worth-Arlington unemployment (latest)', value: '3.6% (Dec 2024: 3.5%)', note: 'BLS LAUS metro monthly' },
-      { label: 'Austin-Round Rock-San Marcos unemployment (latest)', value: '3.2% (Dec 2024: 3.1%)', note: 'BLS LAUS metro monthly' },
-      { label: 'San Antonio-New Braunfels unemployment (latest)', value: '3.7% (Dec 2024: 3.4%)', note: 'BLS LAUS metro monthly' }
-    ],
-    sources: []
-  }
-};
-
-const TARGET_STATE_MONTHLY_LABOR_SOURCES = [
-  { name: 'BLS Metro Area Employment and Unemployment (latest)', url: 'https://www.bls.gov/news.release/metro.t01.htm' },
-  { name: 'BLS Metro unemployment text table', url: 'https://www.bls.gov/web/metro/laucntycur14.txt' },
-  { name: 'BLS CES State and Metro Area Employment (monthly)', url: 'https://www.bls.gov/sae/' },
-  { name: 'BLS QCEW (quarterly wages and employment)', url: 'https://www.bls.gov/cew/' },
-  { name: 'ADP National Employment Report (monthly)', url: 'https://adpemploymentreport.com/' }
-];
-
-Object.entries(TARGET_STATE_MONTHLY_LABOR_OVERRIDES).forEach(([state, salaryMeta]) => {
-  if (!STATE_METRO_DATA[state]) return;
-  STATE_METRO_DATA[state].salaryMeta = {
-    ...salaryMeta,
-    sources: TARGET_STATE_MONTHLY_LABOR_SOURCES
-  };
-});
-
-const METRO_LABOR_CARD_LABEL_MAP = {
-  IN: {
-    Indianapolis: 'Indianapolis-Carmel-Anderson unemployment (latest)',
-    'Fort Wayne': 'Fort Wayne unemployment (latest)',
-    Evansville: 'Evansville unemployment (latest)',
-    'South Bend-Elkhart': 'South Bend-Mishawaka unemployment (latest)'
-  },
-  KY: {
-    Louisville: 'Louisville/Jefferson County unemployment (latest)',
-    Lexington: 'Lexington-Fayette unemployment (latest)',
-    'Northern Kentucky': 'Cincinnati (Northern KY market) unemployment (latest)',
-    'Bowling Green': 'Bowling Green unemployment (latest)',
-    Owensboro: 'Owensboro unemployment (latest)'
-  },
-  FL: {
-    Miami: 'Miami-Fort Lauderdale-West Palm Beach unemployment (latest)',
-    'Tampa Bay': 'Tampa-St. Petersburg-Clearwater unemployment (latest)',
-    Orlando: 'Orlando-Kissimmee-Sanford unemployment (latest)',
-    Jacksonville: 'Jacksonville unemployment (latest)'
-  },
-  IL: {
-    Chicago: 'Chicago-Naperville-Elgin unemployment (latest)',
-    Springfield: 'Springfield unemployment (latest)',
-    Peoria: 'Peoria unemployment (latest)'
-  },
-  MI: {
-    Detroit: 'Detroit-Warren-Dearborn unemployment (latest)',
-    'Grand Rapids': 'Grand Rapids-Wyoming-Kentwood unemployment (latest)',
-    'Ann Arbor': 'Ann Arbor unemployment (latest)'
-  },
-  NY: {
-    'New York City': 'New York-Newark-Jersey City unemployment (latest)',
-    Buffalo: 'Buffalo-Cheektowaga unemployment (latest)',
-    Rochester: 'Rochester unemployment (latest)'
-  },
-  TX: {
-    Houston: 'Houston-Pasadena-The Woodlands unemployment (latest)',
-    'Dallas-Fort Worth': 'Dallas-Fort Worth-Arlington unemployment (latest)',
-    'San Antonio': 'San Antonio-New Braunfels unemployment (latest)',
-    Austin: 'Austin-Round Rock-San Marcos unemployment (latest)'
-  }
-};
-
-const parseLaborRates = (value) => {
-  const match = String(value || '').match(/(\d+(?:\.\d+)?)%\s*\(([^:]+):\s*(\d+(?:\.\d+)?)%\)/);
-  if (!match) return null;
-  return {
-    current: Number(match[1]),
-    baselineLabel: match[2],
-    baseline: Number(match[3])
-  };
-};
-
-const getMetroLaborCards = (stateAbbrev, metroName, breakdown) => {
-  const labelMap = METRO_LABOR_CARD_LABEL_MAP[stateAbbrev] || {};
-  const targetLabel = labelMap[metroName];
-  const rows = Array.isArray(breakdown) ? breakdown : [];
-  const row = targetLabel
-    ? rows.find((item) => item?.label === targetLabel)
-    : rows[0];
-  const selectedRow = row || rows[0];
-  if (!selectedRow) {
-    return [
-      { value: '--', label: 'Latest Unemployment' },
-      { value: '--', label: 'YoY Change' },
-      { value: '--', label: 'Prior Year' }
-    ];
-  }
-  const parsed = parseLaborRates(selectedRow.value);
-  if (!parsed) {
-    return [
-      { value: String(selectedRow.value || '--'), label: 'Latest Labor Metric' },
-      { value: String(selectedRow.label || '--'), label: 'Series' },
-      { value: String(selectedRow.note || 'BLS metro monthly'), label: 'Source' }
-    ];
-  }
-  const delta = parsed.current - parsed.baseline;
-  return [
-    { value: `${parsed.current.toFixed(1)}%`, label: 'Latest Unemployment' },
-    { value: `${delta >= 0 ? '+' : ''}${delta.toFixed(1)} pp`, label: 'YoY Change' },
-    { value: `${parsed.baseline.toFixed(1)}%`, label: parsed.baselineLabel }
-  ];
-};
-
-let currentHomeStateMetro = null;
-
-const renderHomeState = async (stateAbbrev) => {
+const renderHomeState = async (homeState) => {
   await loadStateBeaconData();
   await ensureProgramsDataForBeacon();
+  await loadStateNewsData();
 
-  const entry = getBeaconEntry(stateAbbrev);
-  const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === stateAbbrev);
-  const fetchedMetroData = await getTargetStateMetroData(stateAbbrev);
-  const metroData = fetchedMetroData?.metros?.length
-    ? fetchedMetroData
-    : (STATE_METRO_DATA[stateAbbrev] || STATE_METRO_DATA.IN);
-  homeStateMetroDataCache[stateAbbrev] = metroData;
-  const metros = metroData?.metros || [];
+  const entry = getBeaconEntry(homeState);
+  const notices = getStateNotices(homeState);
+  const majorNotices = filterNoticesByMajorSystems(notices, entry.warnMajorSystems);
+  const noticeCount = majorNotices.length;
+  const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === homeState);
 
-  // Update header
-  if (homeStateName) homeStateName.textContent = entry.name;
-  if (homeStateAbbr) homeStateAbbr.textContent = stateAbbrev;
-
-  // Update stats
-  const totalHospitals = metros.reduce((sum, m) => sum + (m.hospitals?.length || 0), 0);
-  if (homeStateStatHospitals) homeStateStatHospitals.textContent = totalHospitals || '--';
-  if (homeStateStatMetros) homeStateStatMetros.textContent = metros.length || '--';
-  if (homeStateStatPrograms) homeStateStatPrograms.textContent = programsInState.length || '--';
-  if (homeStateStatCompact) homeStateStatCompact.textContent = entry.compact ? 'Yes' : 'No';
-
-  // Render metro cards
-  if (homeStateMetroMap) {
-    homeStateMetroMap.innerHTML = metros.map((metro, idx) => `
-      <div class="metro-city-card" data-metro-index="${idx}">
-        <div class="metro-city-icon ${metro.size || 'small'}" title="${metro.size === 'major' ? 'High density metro' : metro.size === 'medium' ? 'Medium density metro' : 'Local density metro'}" aria-label="${metro.size === 'major' ? 'High density metro' : metro.size === 'medium' ? 'Medium density metro' : 'Local density metro'}">
-          <span class="metro-density-symbol">${metro.size === 'major' ? '&#127750;' : metro.size === 'medium' ? '&#127961;&#65039;' : '&#127960;&#65039;'}</span>
-        </div>
-        <div class="metro-city-info">
-          <div class="metro-city-name">${escapeHtml(metro.name)}</div>
-          <div class="metro-city-meta">${escapeHtml(metro.population)} | ${metro.hospitals?.length || 0} hospitals</div>
-        </div>
-        <div class="metro-city-indicator ${metro.competition}"></div>
-      </div>
-    `).join('');
-
-    // Add click handlers
-    homeStateMetroMap.querySelectorAll('.metro-city-card').forEach(card => {
-      card.addEventListener('click', () => {
-        const idx = parseInt(card.dataset.metroIndex, 10);
-        selectHomeStateMetro(metros[idx], stateAbbrev);
-        homeStateMetroMap.querySelectorAll('.metro-city-card').forEach(c => c.classList.remove('active'));
-        card.classList.add('active');
-      });
-    });
+  if (homeStateSelected) {
+    homeStateSelected.innerHTML = `<span class="state-beacon-chip">${escapeHtml(entry.name)} (${escapeHtml(homeState)})</span>`;
   }
 
-  // Reset detail panel to placeholder
-  currentHomeStateMetro = null;
-  if (homeStateDetailPlaceholder) homeStateDetailPlaceholder.style.display = 'flex';
-  if (homeStateDetailContent) homeStateDetailContent.style.display = 'none';
-};
-
-const selectHomeStateMetro = (metro, stateAbbrev) => {
-  currentHomeStateMetro = metro;
-
-  // Show detail content, hide placeholder
-  if (homeStateDetailPlaceholder) homeStateDetailPlaceholder.style.display = 'none';
-  if (homeStateDetailContent) homeStateDetailContent.style.display = 'block';
-
-  // Update header
-  if (homeStateMetroName) homeStateMetroName.textContent = metro.name;
-  if (homeStateMetroBadge) {
-    const badgeText = metro.size === 'major' ? 'Major Metro' : metro.size === 'medium' ? 'Regional Hub' : 'Small Market';
-    homeStateMetroBadge.textContent = badgeText;
+  const chips = [];
+  if (entry.compact !== null) chips.push(`Compact: ${entry.compact ? 'Yes' : 'No'}`);
+  if (entry.summary?.demand) chips.push(`Demand: ${entry.summary.demand}`);
+  if (entry.summary?.unionization) chips.push(`Union: ${entry.summary.unionization}`);
+  if (programsInState.length) chips.push(`Pipeline: ${programsInState.length} programs`);
+  if (noticeCount) chips.push(`WARN notices (major systems): ${noticeCount}`);
+  if (homeStateMeta) {
+    homeStateMeta.innerHTML = chips.map((chip) => `<span class="state-beacon-chip">${escapeHtml(chip)}</span>`).join('');
   }
 
-  // Render hospitals
-  const hospitals = metro.hospitals || [];
-  if (homeStateHospitalCount) homeStateHospitalCount.textContent = `${hospitals.length} facilities`;
-  if (homeStateMetroHospitals) {
-    homeStateMetroHospitals.innerHTML = hospitals.map((h, idx) => `
-      <div class="hospital-card">
-        <div class="hospital-rank">${idx + 1}</div>
-        <div class="hospital-info">
-          <div class="hospital-name">${escapeHtml(h.name)}</div>
-          <div class="hospital-details">
-            <span>${escapeHtml(h.system)}</span>
-            <span>${h.beds} beds</span>
-            <span>* ${h.reviews}</span>
-          </div>
-        </div>
-        <div class="hospital-score">
-          <span class="score-value">${h.score}</span>
-          <span class="score-label">Composite Score</span>
-        </div>
-      </div>
-    `).join('');
-  }
+  let hospitalItems = [];
+  if (entry.hospitalRankings?.length) {
+    const scored = entry.hospitalRankings.map((hospital) => {
+      const baseScore = Number(hospital.baseScore ?? 50);
+      const warnWeight = Number(hospital.warnWeight ?? 1);
+      const warnCount = getWarnCountForHospital(majorNotices, hospital, entry.warnMajorSystems);
+      const score = baseScore - (warnCount * warnWeight);
+      return { ...hospital, warnCount, score };
+    }).sort((a, b) => b.score - a.score);
 
-  // Render competition/systems
-  const systems = metro.systems || [];
-  if (homeStateMetroCompetition) {
-    homeStateMetroCompetition.innerHTML = systems.map(s => `
-      <div class="competition-card">
-        <div class="competition-name">${escapeHtml(s.name)}</div>
-        <div class="competition-details">${s.facilities} facilities | ${escapeHtml(s.marketShare)} market share</div>
-      </div>
-    `).join('');
-  }
-
-  // Render salary data
-  const metroData = homeStateMetroDataCache[stateAbbrev]
-    || targetStateMetroDataCache[stateAbbrev]
-    || STATE_METRO_DATA[stateAbbrev]
-    || STATE_METRO_DATA.IN;
-  const salaryMeta = metroData?.salaryMeta || {};
-  const salary = metro.salary || {};
-  const breakdown = Array.isArray(salary.breakdown)
-    ? salary.breakdown
-    : Array.isArray(salaryMeta.breakdown)
-      ? salaryMeta.breakdown
-      : [];
-  const sources = Array.isArray(salary.sources)
-    ? salary.sources.filter((src) => src && src.name && src.url)
-    : Array.isArray(salaryMeta.sources)
-      ? salaryMeta.sources.filter((src) => src && src.name && src.url)
-      : [];
-  const salarySystems = Array.isArray(salary.systems) ? salary.systems : [];
-  const salaryUpdatedAt = salary?.updatedAt ? new Date(salary.updatedAt) : null;
-  const metaUpdatedAt = salaryMeta?.updatedAt ? new Date(salaryMeta.updatedAt) : null;
-  const salaryUpdatedAtMs = salaryUpdatedAt && !Number.isNaN(salaryUpdatedAt.getTime()) ? salaryUpdatedAt.getTime() : null;
-  const metaUpdatedAtMs = metaUpdatedAt && !Number.isNaN(metaUpdatedAt.getTime()) ? metaUpdatedAt.getTime() : null;
-  const freshestUpdatedAtMs = [salaryUpdatedAtMs, metaUpdatedAtMs].filter(Number.isFinite).sort((a, b) => b - a)[0] ?? null;
-  const updatedAtRaw = freshestUpdatedAtMs ? new Date(freshestUpdatedAtMs).toISOString() : null;
-  const updateEveryDays = Number(salary.updateEveryDays ?? salaryMeta.updateEveryDays ?? 7);
-  const updatedAt = updatedAtRaw ? new Date(updatedAtRaw) : null;
-  const updatedAtValid = updatedAt && !Number.isNaN(updatedAt.getTime());
-  const daysMs = 24 * 60 * 60 * 1000;
-  const isStale = updatedAtValid && (Date.now() - updatedAt.getTime() > updateEveryDays * daysMs);
-  const updatedLabel = updatedAtValid
-    ? updatedAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-    : null;
-  const nextUpdateLabel = updatedAtValid
-    ? new Date(updatedAt.getTime() + updateEveryDays * daysMs)
-      .toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-    : null;
-
-  if (homeStateMetroSalary) {
-    const breakdownSectionHtml = breakdown.length
-      ? `
-        <div class="salary-breakdown-section">
-          <div class="salary-breakdown-subtitle">Market benchmarks</div>
-          <div class="salary-breakdown-grid">
-            ${breakdown.map((item) => `
-              <div class="salary-breakdown-item">
-                <div class="salary-breakdown-label">${escapeHtml(item.label || '--')}</div>
-                <div class="salary-breakdown-value">${escapeHtml(item.value || '--')}</div>
-                ${item.note ? `<div class="salary-breakdown-note">${escapeHtml(item.note)}</div>` : ''}
-              </div>
-            `).join('')}
-          </div>
-        </div>
-      `
-      : '';
-    const systemsSectionHtml = salarySystems.length
-      ? `
-        <div class="salary-breakdown-section">
-          <div class="salary-breakdown-subtitle">Major systems (est.)</div>
-          <div class="salary-system-grid">
-            ${salarySystems.map((item) => `
-              <div class="salary-system-item">
-                <div class="salary-system-name">${escapeHtml(item.name || '--')}</div>
-                <div class="salary-system-value">${escapeHtml(item.value || '--')}</div>
-                ${item.source && item.url ? `
-                  <a class="salary-system-source" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">
-                    ${escapeHtml(item.source)}
-                  </a>
-                ` : item.source ? `<div class="salary-system-source">${escapeHtml(item.source)}</div>` : ''}
-                ${item.note ? `<div class="salary-system-note">${escapeHtml(item.note)}</div>` : ''}
-              </div>
-            `).join('')}
-          </div>
-        </div>
-      `
-      : '';
-    const refreshHtml = updatedAtValid
-      ? `
-        <div class="salary-breakdown-refresh ${isStale ? 'stale' : ''}">
-          <span>Updated ${escapeHtml(updatedLabel)}</span>
-          ${nextUpdateLabel ? `<span>Next refresh: ${escapeHtml(nextUpdateLabel)}</span>` : ''}
-          ${isStale ? '<span class="refresh-flag">Update due</span>' : ''}
-        </div>
-      `
-      : '';
-    const sourcesHtml = sources.length
-      ? `
-        <div class="salary-breakdown-sources">
-          <span class="salary-breakdown-sources-label">Sources:</span>
-          ${sources.map((src, idx) => `
-            <a href="${escapeHtml(src.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(src.name)}</a>${idx < sources.length - 1 ? '<span class="source-sep">|</span>' : ''}
-          `).join('')}
-        </div>
-      `
-      : '';
-    const breakdownHtml = (breakdownSectionHtml || systemsSectionHtml || refreshHtml || sourcesHtml)
-      ? `
-        <div class="salary-breakdown">
-          <div class="salary-breakdown-title">Estimated salary breakdown</div>
-          ${breakdownSectionHtml}
-          ${systemsSectionHtml}
-          ${refreshHtml}
-          ${sourcesHtml}
-        </div>
-      `
-      : '';
-
-    const topCards = [
-      { value: salary.averageWage || parseHourlyAverageFromRange(salary.staffRN) || '--', label: 'Avg RN hourly (est.)' },
-      { value: salary.staffRN || '--', label: 'Staff RN range' },
-      { value: salary.travelRN || '--', label: 'Travel RN range' },
-      { value: salary.signOn || '--', label: 'Sign-on range' }
+    const best = scored.slice(0, 5);
+    const worst = scored.slice(-5).reverse();
+    hospitalItems = [
+      ...best.map((item) => ({ ...item, label: 'Best (review + news score)' })),
+      ...worst.map((item) => ({ ...item, label: 'Watchlist (review + WARN)' }))
     ];
-    const topCardsHtml = topCards.map((card) => `
-      <div class="salary-card">
-        <div class="salary-value">${escapeHtml(card.value || '--')}</div>
-        <div class="salary-label">${escapeHtml(card.label || '--')}</div>
-      </div>
-    `).join('');
 
-    homeStateMetroSalary.innerHTML = `
-      ${topCardsHtml}
-      ${breakdownHtml}
-    `;
+    renderBeaconList(homeStateHospitals, hospitalItems, (item) => `
+      <div class="state-beacon-item">
+        <strong>${escapeHtml(item.name)}</strong>
+        <span>${escapeHtml(item.label)} • Score ${item.score.toFixed(1)} • WARN ${item.warnCount}</span>
+      </div>
+    `);
+  } else {
+    const { best, worst } = buildHospitalRank(majorNotices, entry.warnMajorSystems);
+    hospitalItems = [
+      ...best.map((item) => ({ ...item, label: 'Best (low WARN activity)' })),
+      ...worst.map((item) => ({ ...item, label: 'Watchlist (high WARN activity)' }))
+    ];
+    renderBeaconList(homeStateHospitals, hospitalItems, (item) => `
+      <div class="state-beacon-item">
+        <strong>${escapeHtml(item.employer)}</strong>
+        <span>${escapeHtml(item.label)} • ${item.notices} notices</span>
+      </div>
+    `);
   }
 
-  // Render factors
-  const factors = metro.factors || [];
-  if (homeStateMetroFactors) {
-    homeStateMetroFactors.innerHTML = factors.map(f => `
-      <span class="factor-tag ${f.type}">${escapeHtml(f.text)}</span>
-    `).join('');
+  const competitionSystems = entry.competition?.systems?.length
+    ? entry.competition.systems
+    : Array.from(groupBy(majorNotices, (n) => n.parent_system || n.employer_name || n.employerName).entries())
+      .map(([name, items]) => ({ name, presence: `${items.length} notices`, notes: 'Derived from WARN activity.' }))
+      .slice(0, 6);
+
+  renderBeaconList(homeStateCompetition, competitionSystems, (system) => `
+    <div class="state-beacon-item">
+      <strong>${escapeHtml(system.name)}</strong>
+      <span>${escapeHtml(system.presence || '')} ${system.notes ? `• ${escapeHtml(system.notes)}` : ''}</span>
+    </div>
+  `);
+
+  const programsByLevel = programsInState.reduce((acc, program) => {
+    const level = normalizeProgram(program).level || 'Other';
+    acc[level] = (acc[level] || 0) + 1;
+    return acc;
+  }, {});
+  const pipelineItems = [
+    ...(entry.pipeline?.majorPrograms || []).map((name) => ({ title: name, detail: 'Major program' })),
+    ...Object.entries(programsByLevel).map(([level, count]) => ({ title: level, detail: `${count} programs` })),
+    ...(entry.pipeline?.residencies || []).map((name) => ({ title: name, detail: 'Residency pipeline' }))
+  ];
+  renderBeaconList(homeStatePipeline, pipelineItems, (item) => `
+    <div class="state-beacon-item">
+      <strong>${escapeHtml(item.title)}</strong>
+      <span>${escapeHtml(item.detail)}</span>
+    </div>
+  `);
+
+  const stateFeed = getStateNewsFeed(homeState, entry);
+  let newsMatches = [];
+  if (stateFeed.length) {
+    newsMatches = stateFeed
+      .slice()
+      .sort((a, b) => new Date(b.publishedAt || b.date || 0) - new Date(a.publishedAt || a.date || 0))
+      .slice(0, 12);
+  } else {
+    const keywords = (entry.newsKeywords || []).map((word) => word.toLowerCase());
+    newsMatches = newsArticles.filter((article) => {
+      const haystack = `${article.title} ${article.summary}`.toLowerCase();
+      return keywords.some((word) => word && haystack.includes(word));
+    }).slice(0, 6);
+  }
+  renderBeaconList(homeStateNews, newsMatches, (article) => `
+    <a href="${article.url}" target="_blank" rel="noopener noreferrer">
+      <strong>${escapeHtml(article.title)}</strong>
+      <div class="state-beacon-subtitle">${escapeHtml(article.source || '')}${article.publishedAt ? ` • ${escapeHtml(article.publishedAt)}` : ''}</div>
+    </a>
+  `);
+
+  if (homeStatePros) {
+    homeStatePros.innerHTML = entry.pros.length
+      ? entry.pros.map((item) => `<li>${escapeHtml(item)}</li>`).join('')
+      : '<li>No pros listed yet.</li>';
+  }
+  if (homeStateCons) {
+    homeStateCons.innerHTML = entry.cons.length
+      ? entry.cons.map((item) => `<li>${escapeHtml(item)}</li>`).join('')
+      : '<li>No cons listed yet.</li>';
   }
 };
 
@@ -7444,319 +4046,6 @@ const openHomeState = async () => {
 };
 
 const closeHomeState = () => homeStateModal?.classList.remove('active');
-
-// =============================================================================
-// TARGET STATE MODULE (Kentucky Pilot)
-// =============================================================================
-
-const targetStateModal = document.getElementById('target-state-modal');
-const targetStateCloseBtn = document.getElementById('target-state-close');
-const targetStateCloseFooter = document.getElementById('target-state-close-footer');
-const targetStateOpenBeacon = document.getElementById('target-state-open-beacon');
-const openTargetStateBtn = document.getElementById('open-target-state');
-const targetStateSelect = document.getElementById('target-state-select');
-const openMasterExportBtn = document.getElementById('open-master-export');
-const masterExportModal = document.getElementById('master-export-modal');
-const masterExportCloseBtn = document.getElementById('master-export-close');
-const masterExportCloseFooter = document.getElementById('master-export-close-footer');
-const masterExportStateSelect = document.getElementById('master-export-state');
-const masterExportMetroCount = document.getElementById('master-export-metros');
-const masterExportWarnCount = document.getElementById('master-export-warn');
-const masterExportRuralCount = document.getElementById('master-export-rural');
-const masterExportButtons = document.getElementById('master-export-buttons');
-const masterExportToggle = document.getElementById('master-export-toggle');
-const masterExportMenu = document.getElementById('master-export-menu');
-const masterExportProgressBar = document.getElementById('master-export-progress-bar');
-const masterExportProgressLabel = document.getElementById('master-export-progress-label');
-const targetStateExportToggle = document.getElementById('target-state-export-toggle');
-const targetStateExportMenu = document.getElementById('target-state-export-menu');
-
-// Target State module elements
-const targetStateName = document.getElementById('target-state-name');
-const targetStateAbbr = document.getElementById('target-state-abbr');
-const targetStateStatHospitals = document.getElementById('target-state-stat-hospitals');
-const targetStateStatMetros = document.getElementById('target-state-stat-metros');
-const targetStateStatPrograms = document.getElementById('target-state-stat-programs');
-const targetStateStatCompact = document.getElementById('target-state-stat-compact');
-const targetStateMetroMap = document.getElementById('target-state-metro-map');
-const targetStateDetailPlaceholder = document.getElementById('target-state-detail-placeholder');
-const targetStatePlaceholderText = document.getElementById('target-state-placeholder-text');
-const targetStateDetailContent = document.getElementById('target-state-detail-content');
-const targetStateMetroName = document.getElementById('target-state-metro-name');
-const targetStateMetroBadge = document.getElementById('target-state-metro-badge');
-const targetStateHospitalCount = document.getElementById('target-state-hospital-count');
-const targetStateMetroHospitals = document.getElementById('target-state-metro-hospitals');
-const targetStateMetroCompetition = document.getElementById('target-state-metro-competition');
-const targetStateMetroSalary = document.getElementById('target-state-metro-salary');
-const targetStateMetroFactors = document.getElementById('target-state-metro-factors');
-
-let currentTargetStateMetro = null;
-const TARGET_STATE_DEFAULT = 'KY'; // Kentucky as pilot
-
-const renderTargetState = async (stateAbbrev = TARGET_STATE_DEFAULT) => {
-  await loadStateBeaconData();
-  await loadHospitalRankingsData();
-  await ensureProgramsDataForBeacon();
-
-  const entry = getBeaconEntry(stateAbbrev);
-  const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === stateAbbrev);
-  const metroData = await getTargetStateMetroData(stateAbbrev);
-  targetStateMetroDataCache[stateAbbrev] = metroData || targetStateMetroDataCache[stateAbbrev];
-  const metros = metroData?.metros || [];
-
-  // Update header
-  if (targetStateName) targetStateName.textContent = entry.name;
-  if (targetStateAbbr) targetStateAbbr.textContent = stateAbbrev;
-  if (targetStatePlaceholderText) targetStatePlaceholderText.textContent = `Click on a city from the map to view detailed healthcare market information including hospitals, competition, and salary data for ${entry.name}.`;
-
-  // Update stats
-  const totalHospitals = metros.reduce((sum, m) => sum + (m.hospitals?.length || 0), 0);
-  if (targetStateStatHospitals) targetStateStatHospitals.textContent = totalHospitals || '--';
-  if (targetStateStatMetros) targetStateStatMetros.textContent = metros.length || '--';
-  if (targetStateStatPrograms) targetStateStatPrograms.textContent = programsInState.length || '--';
-  if (targetStateStatCompact) targetStateStatCompact.textContent = entry.compact ? 'Yes' : 'No';
-
-  // Render metro cards
-  if (targetStateMetroMap) {
-    targetStateMetroMap.innerHTML = metros.map((metro, idx) => `
-      <div class="metro-city-card" data-metro-index="${idx}">
-        <div class="metro-city-icon ${metro.size || 'small'}" title="${metro.size === 'major' ? 'High density metro' : metro.size === 'medium' ? 'Medium density metro' : 'Local density metro'}" aria-label="${metro.size === 'major' ? 'High density metro' : metro.size === 'medium' ? 'Medium density metro' : 'Local density metro'}">
-          <span class="metro-density-symbol">${metro.size === 'major' ? '&#127750;' : metro.size === 'medium' ? '&#127961;&#65039;' : '&#127960;&#65039;'}</span>
-        </div>
-        <div class="metro-city-info">
-          <div class="metro-city-name">${escapeHtml(metro.name)}</div>
-          <div class="metro-city-meta">${escapeHtml(metro.population)} | ${metro.hospitals?.length || 0} hospitals</div>
-        </div>
-        <div class="metro-city-indicator ${metro.competition}"></div>
-      </div>
-    `).join('');
-
-    // Add click handlers
-    targetStateMetroMap.querySelectorAll('.metro-city-card').forEach(card => {
-      card.addEventListener('click', () => {
-        const idx = parseInt(card.dataset.metroIndex, 10);
-        selectTargetStateMetro(metros[idx], stateAbbrev);
-        targetStateMetroMap.querySelectorAll('.metro-city-card').forEach(c => c.classList.remove('active'));
-        card.classList.add('active');
-      });
-    });
-  }
-
-  // Reset detail panel to placeholder
-  currentTargetStateMetro = null;
-  if (targetStateDetailPlaceholder) targetStateDetailPlaceholder.style.display = 'flex';
-  if (targetStateDetailContent) targetStateDetailContent.style.display = 'none';
-};
-
-const selectTargetStateMetro = (metro, stateAbbrev) => {
-  currentTargetStateMetro = metro;
-
-  // Show detail content, hide placeholder
-  if (targetStateDetailPlaceholder) targetStateDetailPlaceholder.style.display = 'none';
-  if (targetStateDetailContent) targetStateDetailContent.style.display = 'block';
-
-  // Update header
-  if (targetStateMetroName) targetStateMetroName.textContent = metro.name;
-  if (targetStateMetroBadge) {
-    const badgeText = metro.size === 'major' ? 'Major Metro' : metro.size === 'medium' ? 'Regional Hub' : 'Small Market';
-    targetStateMetroBadge.textContent = badgeText;
-  }
-
-  // Render hospitals
-  const hospitals = metro.hospitals || [];
-  const fetchedRankings = getFetchedHospitalRankingsForState(stateAbbrev);
-  const fetchedScoreMap = new Map(
-    fetchedRankings
-      .filter((item) => item?.name)
-      .map((item) => [String(item.name).toLowerCase(), getHospitalRankingScore(item)])
-  );
-  const fetchedBedsMap = getFetchedHospitalBedsMapForState(fetchedRankings);
-  const staticBedsMap = getStaticHospitalBedsMapForState(stateAbbrev);
-  const displayHospitals = hospitals.map((hospital) => ({
-    ...hospital,
-    resolvedBeds: resolveTargetHospitalBeds(stateAbbrev, hospital, fetchedBedsMap, staticBedsMap)
-  }));
-  if (targetStateHospitalCount) targetStateHospitalCount.textContent = `${hospitals.length} facilities`;
-  if (targetStateMetroHospitals) {
-    targetStateMetroHospitals.innerHTML = displayHospitals.map((h, idx) => `
-      <div class="hospital-card">
-        <div class="hospital-rank">${idx + 1}</div>
-        <div class="hospital-info">
-          <div class="hospital-name">${escapeHtml(h.name)}</div>
-          <div class="hospital-details">
-            <span>${escapeHtml(h.system)}</span>
-            <span>${h.resolvedBeds} beds</span>
-            <span>* ${h.reviews}</span>
-          </div>
-        </div>
-        <div class="hospital-score">
-          <span class="score-value">${fetchedScoreMap.get(String(h.name || '').toLowerCase()) || h.score}</span>
-          <span class="score-label">Composite Score</span>
-        </div>
-      </div>
-    `).join('');
-  }
-
-  // Render competition/systems
-  const systems = metro.systems || [];
-  if (targetStateMetroCompetition) {
-    targetStateMetroCompetition.innerHTML = systems.map(s => `
-      <div class="competition-card">
-        <div class="competition-name">${escapeHtml(s.name)}</div>
-        <div class="competition-details">${s.facilities} facilities | ${escapeHtml(s.marketShare)} market share</div>
-      </div>
-    `).join('');
-  }
-
-  // Render salary data
-  const metroData = targetStateMetroDataCache[stateAbbrev] || { salaryMeta: {} };
-  const salaryMeta = metroData?.salaryMeta || {};
-  const salary = metro.salary || {};
-  const breakdown = Array.isArray(salary.breakdown)
-    ? salary.breakdown
-    : Array.isArray(salaryMeta.breakdown)
-      ? salaryMeta.breakdown
-      : [];
-  const sources = Array.isArray(salary.sources)
-    ? salary.sources.filter((src) => src && src.name && src.url)
-    : Array.isArray(salaryMeta.sources)
-      ? salaryMeta.sources.filter((src) => src && src.name && src.url)
-      : [];
-  const salarySystems = Array.isArray(salary.systems) ? salary.systems : [];
-  const salaryUpdatedAt = salary?.updatedAt ? new Date(salary.updatedAt) : null;
-  const metaUpdatedAt = salaryMeta?.updatedAt ? new Date(salaryMeta.updatedAt) : null;
-  const salaryUpdatedAtMs = salaryUpdatedAt && !Number.isNaN(salaryUpdatedAt.getTime()) ? salaryUpdatedAt.getTime() : null;
-  const metaUpdatedAtMs = metaUpdatedAt && !Number.isNaN(metaUpdatedAt.getTime()) ? metaUpdatedAt.getTime() : null;
-  const freshestUpdatedAtMs = [salaryUpdatedAtMs, metaUpdatedAtMs].filter(Number.isFinite).sort((a, b) => b - a)[0] ?? null;
-  const updatedAtRaw = freshestUpdatedAtMs ? new Date(freshestUpdatedAtMs).toISOString() : null;
-  const updateEveryDays = Number(salary.updateEveryDays ?? salaryMeta.updateEveryDays ?? 7);
-  const updatedAt = updatedAtRaw ? new Date(updatedAtRaw) : null;
-  const updatedAtValid = updatedAt && !Number.isNaN(updatedAt.getTime());
-  const daysMs = 24 * 60 * 60 * 1000;
-  const isStale = updatedAtValid && (Date.now() - updatedAt.getTime() > updateEveryDays * daysMs);
-  const updatedLabel = updatedAtValid
-    ? updatedAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-    : null;
-  const nextUpdateLabel = updatedAtValid
-    ? new Date(updatedAt.getTime() + updateEveryDays * daysMs)
-      .toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-    : null;
-
-  if (targetStateMetroSalary) {
-    const breakdownSectionHtml = breakdown.length
-      ? `
-        <div class="salary-breakdown-section">
-          <div class="salary-breakdown-subtitle">Market benchmarks</div>
-          <div class="salary-breakdown-grid">
-            ${breakdown.map((item) => `
-              <div class="salary-breakdown-item">
-                <div class="salary-breakdown-label">${escapeHtml(item.label || '--')}</div>
-                <div class="salary-breakdown-value">${escapeHtml(item.value || '--')}</div>
-                ${item.note ? `<div class="salary-breakdown-note">${escapeHtml(item.note)}</div>` : ''}
-              </div>
-            `).join('')}
-          </div>
-        </div>
-      `
-      : '';
-    const systemsSectionHtml = salarySystems.length
-      ? `
-        <div class="salary-breakdown-section">
-          <div class="salary-breakdown-subtitle">Major systems (est.)</div>
-          <div class="salary-system-grid">
-            ${salarySystems.map((item) => `
-              <div class="salary-system-item">
-                <div class="salary-system-name">${escapeHtml(item.name || '--')}</div>
-                <div class="salary-system-value">${escapeHtml(item.value || '--')}</div>
-                ${item.source && item.url ? `
-                  <a class="salary-system-source" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">
-                    ${escapeHtml(item.source)}
-                  </a>
-                ` : item.source ? `<div class="salary-system-source">${escapeHtml(item.source)}</div>` : ''}
-                ${item.note ? `<div class="salary-system-note">${escapeHtml(item.note)}</div>` : ''}
-              </div>
-            `).join('')}
-          </div>
-        </div>
-      `
-      : '';
-    const refreshHtml = updatedAtValid
-      ? `
-        <div class="salary-breakdown-refresh ${isStale ? 'stale' : ''}">
-          <span>Updated ${escapeHtml(updatedLabel)}</span>
-          ${nextUpdateLabel ? `<span>Next refresh: ${escapeHtml(nextUpdateLabel)}</span>` : ''}
-          ${isStale ? '<span class="refresh-flag">Update due</span>' : ''}
-        </div>
-      `
-      : '';
-    const sourcesHtml = sources.length
-      ? `
-        <div class="salary-breakdown-sources">
-          <span class="salary-breakdown-sources-label">Sources:</span>
-          ${sources.map((src, idx) => `
-            <a href="${escapeHtml(src.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(src.name)}</a>${idx < sources.length - 1 ? '<span class="source-sep">|</span>' : ''}
-          `).join('')}
-        </div>
-      `
-      : '';
-    const breakdownHtml = (breakdownSectionHtml || systemsSectionHtml || refreshHtml || sourcesHtml)
-      ? `
-        <div class="salary-breakdown">
-          <div class="salary-breakdown-title">Estimated salary breakdown</div>
-          ${breakdownSectionHtml}
-          ${systemsSectionHtml}
-          ${refreshHtml}
-          ${sourcesHtml}
-        </div>
-      `
-      : '';
-
-    const topCards = [
-      { value: salary.averageWage || parseHourlyAverageFromRange(salary.staffRN) || '--', label: 'Avg RN hourly (est.)' },
-      { value: salary.staffRN || '--', label: 'Staff RN range' },
-      { value: salary.travelRN || '--', label: 'Travel RN range' },
-      { value: salary.signOn || '--', label: 'Sign-on range' }
-    ];
-    const topCardsHtml = topCards.map((card) => `
-      <div class="salary-card">
-        <div class="salary-value">${escapeHtml(card.value || '--')}</div>
-        <div class="salary-label">${escapeHtml(card.label || '--')}</div>
-      </div>
-    `).join('');
-
-    targetStateMetroSalary.innerHTML = `
-      ${topCardsHtml}
-      ${breakdownHtml}
-    `;
-  }
-
-  // Render factors
-  const factors = metro.factors || [];
-  if (targetStateMetroFactors) {
-    targetStateMetroFactors.innerHTML = factors.map(f => `
-      <span class="factor-tag ${f.type}">${escapeHtml(f.text)}</span>
-    `).join('');
-  }
-};
-
-const openTargetState = async () => {
-  // Use the map's selected target state, then the dropdown value, then the default
-  const state = getMapTargetState() || targetStateSelect?.value || TARGET_STATE_DEFAULT;
-  // Sync the dropdown to reflect the active state
-  if (targetStateSelect) targetStateSelect.value = state;
-  targetStateModal?.classList.add('active');
-  try {
-    await renderTargetState(state);
-  } catch (error) {
-    console.error('Target State render failed:', error);
-  }
-};
-
-const closeTargetState = () => targetStateModal?.classList.remove('active');
-
-// =============================================================================
-// END TARGET STATE MODULE
-// =============================================================================
 
 const buildHomeStateExport = (state) => {
   const notices = getStateNotices(state);
@@ -7824,7 +4113,7 @@ const buildHomeStateExportRows = (data) => {
   data.hospitals?.watchlist?.forEach((item) => pushRow('Hospitals Watchlist', item.employer, `${item.notices} notices`));
 
   data.competitionSystems?.forEach((system) => {
-    pushRow('Competition', system.name, [system.presence, system.notes].filter(Boolean).join(' | '));
+    pushRow('Competition', system.name, [system.presence, system.notes].filter(Boolean).join(' • '));
   });
 
   pushRow('Pipeline', 'Programs count', data.programsCount);
@@ -7833,12 +4122,520 @@ const buildHomeStateExportRows = (data) => {
   (data.pipeline?.residencies || []).forEach((entry) => pushRow('Pipeline Residencies', entry, ''));
 
   data.newsFeed?.forEach((article) => {
-    const meta = [article.source, article.publishedAt || article.date].filter(Boolean).join(' | ');
+    const meta = [article.source, article.publishedAt || article.date].filter(Boolean).join(' • ');
     pushRow('News', article.title || 'Untitled', meta);
   });
 
   data.pros?.forEach((item) => pushRow('Pros', item, ''));
   data.cons?.forEach((item) => pushRow('Cons', item, ''));
+
+  return rows;
+};
+
+const targetStateMetroDataCache = {};
+const targetStateMetroDataLoadedAt = {};
+const TARGET_STATE_REFRESH_MS = STATE_BEACON_REFRESH_MS;
+let targetStateMetrosData = null;
+
+const loadTargetStateMetrosData = async () => {
+  if (targetStateMetrosData) return targetStateMetrosData;
+  try {
+    targetStateMetrosData = await fetchJson(`/data/target-state-metros.json?ts=${Date.now()}`);
+  } catch (err) {
+    targetStateMetrosData = null;
+  }
+  return targetStateMetrosData;
+};
+
+const loadTargetStateNotices = async (stateAbbrev) => {
+  try {
+    const response = await fetchJson(`/notices?state=${stateAbbrev}&limit=500`);
+    return Array.isArray(response?.notices) ? response.notices : [];
+  } catch (err) {
+    console.warn(`Target state notices unavailable for ${stateAbbrev}:`, err.message);
+    return [];
+  }
+};
+
+const parseHourlyAverageFromRange = (value) => {
+  const text = String(value || '');
+  const range = text.match(/\$?\s*(\d+(?:\.\d+)?)\s*-\s*\$?\s*(\d+(?:\.\d+)?)\s*\/?\s*hr/i);
+  if (range) {
+    const low = Number(range[1]);
+    const high = Number(range[2]);
+    if (Number.isFinite(low) && Number.isFinite(high) && high >= low) {
+      return `$${((low + high) / 2).toFixed(2)}/hr`;
+    }
+  }
+  const single = text.match(/\$?\s*(\d+(?:\.\d+)?)\s*\/?\s*hr/i);
+  if (single) {
+    const hourly = Number(single[1]);
+    if (Number.isFinite(hourly)) {
+      return `$${hourly.toFixed(2)}/hr`;
+    }
+  }
+  return null;
+};
+
+const parseHourlyValue = (value) => {
+  const text = String(value || '');
+  const m = text.match(/\$?\s*(\d+(?:\.\d+)?)\s*\/?\s*hr/i);
+  if (!m) return null;
+  const n = Number(m[1]);
+  return Number.isFinite(n) ? n : null;
+};
+
+const deriveStaffRangeFromHourly = (hourly) => {
+  const low = Math.max(20, Math.round((hourly - 4) * 100) / 100);
+  const high = Math.max(low, Math.round((hourly + 4) * 100) / 100);
+  return `$${low.toFixed(2)}-$${high.toFixed(2)}/hr`;
+};
+
+const deriveTravelRangeFromHourly = (hourly) => {
+  const low = Math.max(1200, Math.round(hourly * 36));
+  const high = Math.max(low, Math.round(hourly * 42));
+  return `$${low}-${high}/wk`;
+};
+
+const parseStateBenchmarkHourly = (stateSalaryMeta = null) => {
+  const rows = Array.isArray(stateSalaryMeta?.breakdown) ? stateSalaryMeta.breakdown : [];
+  for (const row of rows) {
+    const n = parseHourlyValue(row?.value);
+    if (Number.isFinite(n)) return n;
+    const avgFromRange = parseHourlyAverageFromRange(row?.value);
+    const avgN = parseHourlyValue(avgFromRange);
+    if (Number.isFinite(avgN)) return avgN;
+  }
+  return 40;
+};
+
+const normalizeTargetMetroSalary = (metro = {}, stateSalaryMeta = null) => {
+  const salary = (metro && typeof metro.salary === 'object' && metro.salary !== null) ? metro.salary : {};
+  const benchmarkHourly = parseStateBenchmarkHourly(stateSalaryMeta);
+  const staffRNRaw = salary.staffRN || '';
+  const travelRNRaw = salary.travelRN || '';
+  const staffRN = staffRNRaw && !/market-based/i.test(staffRNRaw)
+    ? staffRNRaw
+    : deriveStaffRangeFromHourly(benchmarkHourly);
+  const travelRN = travelRNRaw && !/market-based/i.test(travelRNRaw)
+    ? travelRNRaw
+    : deriveTravelRangeFromHourly(benchmarkHourly);
+  const signOn = salary.signOn || 'Varies by system';
+  const averageWage = salary.averageWage
+    || parseHourlyAverageFromRange(staffRN)
+    || parseHourlyAverageFromRange(stateSalaryMeta?.breakdown?.[0]?.value)
+    || `$${benchmarkHourly.toFixed(2)}/hr`;
+
+  const hasConcreteBreakdown = Array.isArray(salary.breakdown) && salary.breakdown.some((item) => {
+    const value = String(item?.value || '').trim();
+    return value && !/market-based|unavailable|n\/a|--/i.test(value);
+  });
+  const breakdown = hasConcreteBreakdown
+    ? salary.breakdown
+    : [
+        { label: 'State RN baseline (est.)', value: averageWage, note: 'Derived from state and metro benchmark inputs' },
+        { label: 'Staff RN range (metro est.)', value: staffRN, note: 'Estimated metro hiring range' },
+        { label: 'Travel RN range (weekly est.)', value: travelRN, note: 'Estimated weekly travel pay band' }
+      ];
+
+  const systems = Array.isArray(salary.systems) ? salary.systems : [];
+  const sources = Array.isArray(salary.sources) && salary.sources.length
+    ? salary.sources
+    : (Array.isArray(stateSalaryMeta?.sources) ? stateSalaryMeta.sources : []);
+
+  return {
+    ...salary,
+    staffRN,
+    travelRN,
+    signOn,
+    averageWage,
+    breakdown,
+    systems,
+    sources,
+    updatedAt: salary.updatedAt || stateSalaryMeta?.updatedAt || null,
+    updateEveryDays: Number(salary.updateEveryDays || stateSalaryMeta?.updateEveryDays || 7)
+  };
+};
+
+const normalizeTargetMetro = (metro = {}, stateSalaryMeta = null) => ({
+  name: String(metro.name || 'Regional Hub'),
+  size: metro.size || 'small',
+  population: metro.population || 'N/A',
+  competition: metro.competition || 'medium',
+  hospitals: Array.isArray(metro.hospitals) ? metro.hospitals : [],
+  systems: Array.isArray(metro.systems) ? metro.systems : [],
+  salary: normalizeTargetMetroSalary(metro, stateSalaryMeta),
+  factors: Array.isArray(metro.factors) && metro.factors.length
+    ? metro.factors
+    : [{ text: 'Metro detail generated from available data sources.', type: 'neutral' }]
+});
+
+const buildTargetStateMetroRows = (stateAbbrev, notices) => {
+  const stateName = STATE_NAMES[stateAbbrev] || stateAbbrev;
+  const healthcare = (notices || []).filter((notice) => isHealthcareNotice(notice));
+  const byCity = groupBy(healthcare, (notice) => String(notice.city || '').trim() || stateName);
+  const entries = Array.from(byCity.entries())
+    .sort((a, b) => b[1].length - a[1].length)
+    .slice(0, 8);
+
+  if (!entries.length) {
+    return [{
+      name: `${stateName} Regional Hub`,
+      size: 'medium',
+      population: 'N/A',
+      competition: 'medium',
+      hospitals: [],
+      systems: [],
+      salary: {
+        staffRN: '--',
+        travelRN: '--',
+        signOn: '--',
+        averageWage: '--',
+        breakdown: [{ label: 'Average wage (est.)', value: '--', note: 'No metro wage benchmark available yet.' }]
+      },
+      factors: [{ text: `No recent healthcare notices found for ${stateName}.`, type: 'neutral' }]
+    }];
+  }
+
+  return entries.map(([city, items]) => {
+    const employerGroups = Array.from(
+      groupBy(items, (notice) => notice.employer_name || notice.employerName || 'Unknown employer').entries()
+    )
+      .map(([name, employerItems]) => ({
+        name,
+        notices: employerItems.length,
+        affected: employerItems.reduce((sum, n) => sum + Number(n.affectedCount || n.employees_affected || 0), 0),
+        system: employerItems.find((n) => n.parent_system)?.parent_system || name
+      }))
+      .sort((a, b) => b.affected - a.affected || b.notices - a.notices);
+
+    const hospitals = employerGroups.slice(0, 10).map((employer) => ({
+      name: employer.name,
+      system: employer.system,
+      score: '--',
+      beds: '--',
+      reviews: '--'
+    }));
+
+    const systems = Array.from(groupBy(employerGroups, (row) => row.system).entries())
+      .map(([name, rows]) => ({
+        name,
+        facilities: rows.length,
+        marketShare: `${Math.min(60, Math.max(8, rows.length * 8))}%`
+      }))
+      .sort((a, b) => b.facilities - a.facilities)
+      .slice(0, 6);
+
+    const competition = systems.length >= 4 ? 'high' : systems.length >= 2 ? 'medium' : 'low';
+    return {
+      name: city,
+      size: items.length >= 40 ? 'major' : items.length >= 16 ? 'medium' : 'small',
+      population: `${Math.max(120, items.length * 40)}K`,
+      competition,
+      hospitals,
+      systems,
+      salary: {
+        staffRN: 'Market-based',
+        travelRN: 'Market-based',
+        signOn: 'Varies by system',
+        averageWage: 'Market-based',
+        breakdown: [
+          { label: 'Average wage (est.)', value: 'Market-based', note: 'Live WARN-derived fallback profile' },
+          { label: 'Staff RN range', value: 'Market-based', note: 'Range unavailable in fallback data' }
+        ]
+      },
+      factors: [
+        { text: `Derived from live WARN healthcare notices for ${stateName}`, type: 'positive' }
+      ]
+    };
+  });
+};
+
+const getTargetStateMetroData = async (stateAbbrev) => {
+  const fetchedDataset = await loadTargetStateMetrosData();
+  const fetchedState = fetchedDataset?.states?.[stateAbbrev];
+  if (fetchedState?.metros?.length) {
+    const stateSalaryMeta = fetchedState?.salaryMeta || null;
+    return {
+      ...fetchedState,
+      metros: fetchedState.metros.map((metro) => normalizeTargetMetro(metro, stateSalaryMeta))
+    };
+  }
+
+  const now = Date.now();
+  const cached = targetStateMetroDataCache[stateAbbrev];
+  const cachedAt = targetStateMetroDataLoadedAt[stateAbbrev] || 0;
+  if (cached && (now - cachedAt) < TARGET_STATE_REFRESH_MS) return cached;
+
+  const notices = await loadTargetStateNotices(stateAbbrev);
+  const metros = buildTargetStateMetroRows(stateAbbrev, notices);
+  const data = { metros: metros.map((metro) => normalizeTargetMetro(metro, null)) };
+  targetStateMetroDataCache[stateAbbrev] = data;
+  targetStateMetroDataLoadedAt[stateAbbrev] = now;
+  return data;
+};
+
+const renderTargetState = async (stateAbbrev = TARGET_STATE_DEFAULT) => {
+  await loadStateBeaconData();
+  await ensureProgramsDataForBeacon();
+
+  const entry = getBeaconEntry(stateAbbrev);
+  const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === stateAbbrev);
+  const metroData = await getTargetStateMetroData(stateAbbrev);
+  const metros = metroData?.metros?.length ? metroData.metros : buildTargetStateMetroRows(stateAbbrev, []);
+
+  if (targetStateName) targetStateName.textContent = entry.name;
+  if (targetStateAbbr) targetStateAbbr.textContent = stateAbbrev;
+
+  const totalHospitals = metros.reduce((sum, metro) => sum + (metro.hospitals?.length || 0), 0);
+  if (targetStateStatHospitals) targetStateStatHospitals.textContent = totalHospitals || '--';
+  if (targetStateStatMetros) targetStateStatMetros.textContent = metros.length || '--';
+  if (targetStateStatPrograms) targetStateStatPrograms.textContent = programsInState.length || '--';
+  if (targetStateStatCompact) targetStateStatCompact.textContent = entry.compact === null ? '--' : (entry.compact ? 'Yes' : 'No');
+  if (targetStatePlaceholderText) {
+    targetStatePlaceholderText.textContent = `Click on a city from the map to view detailed healthcare market information including hospitals, competition, and salary data for ${entry.name}.`;
+  }
+
+  if (targetStateMetroMap) {
+    targetStateMetroMap.innerHTML = metros.map((metro, idx) => `
+      <div class="metro-city-card" data-metro-index="${idx}">
+        <div class="metro-city-icon ${metro.size || 'small'}"></div>
+        <div class="metro-city-info">
+          <div class="metro-city-name">${escapeHtml(metro.name)}</div>
+          <div class="metro-city-meta">${escapeHtml(metro.population || 'N/A')} | ${metro.hospitals?.length || 0} hospitals</div>
+        </div>
+        <div class="metro-city-indicator ${metro.competition || 'medium'}"></div>
+      </div>
+    `).join('');
+
+    targetStateMetroMap.querySelectorAll('.metro-city-card').forEach((card) => {
+      card.addEventListener('click', () => {
+        const idx = Number(card.dataset.metroIndex || 0);
+        const metro = metros[idx];
+        if (!metro) return;
+        selectTargetStateMetro(metro, stateAbbrev);
+        targetStateMetroMap.querySelectorAll('.metro-city-card').forEach((c) => c.classList.remove('active'));
+        card.classList.add('active');
+      });
+    });
+  }
+
+  currentTargetStateMetro = null;
+  if (targetStateDetailPlaceholder) targetStateDetailPlaceholder.style.display = 'flex';
+  if (targetStateDetailContent) targetStateDetailContent.style.display = 'none';
+};
+
+const selectTargetStateMetro = (metro, stateAbbrev) => {
+  currentTargetStateMetro = metro;
+  if (targetStateDetailPlaceholder) targetStateDetailPlaceholder.style.display = 'none';
+  if (targetStateDetailContent) targetStateDetailContent.style.display = 'block';
+
+  if (targetStateMetroName) targetStateMetroName.textContent = metro.name;
+  if (targetStateMetroBadge) {
+    targetStateMetroBadge.textContent = metro.size === 'major' ? 'Major Metro' : (metro.size === 'medium' ? 'Regional Hub' : 'Local Market');
+  }
+
+  const hospitals = metro.hospitals || [];
+  if (targetStateHospitalCount) targetStateHospitalCount.textContent = `${hospitals.length} facilities`;
+  if (targetStateMetroHospitals) {
+    targetStateMetroHospitals.innerHTML = hospitals.map((h, idx) => `
+      <div class="hospital-card">
+        <div class="hospital-rank">${idx + 1}</div>
+        <div class="hospital-info">
+          <div class="hospital-name">${escapeHtml(h.name)}</div>
+          <div class="hospital-details">
+            <span>${escapeHtml(h.system || '--')}</span>
+            <span>${escapeHtml(String(h.beds ?? '--'))} beds</span>
+            <span>* ${escapeHtml(String(h.reviews ?? '--'))}</span>
+          </div>
+        </div>
+        <div class="hospital-score">
+          <span class="score-value">${escapeHtml(String(h.score ?? '--'))}</span>
+          <span class="score-label">Composite Score</span>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  const systems = metro.systems || [];
+  if (targetStateMetroCompetition) {
+    targetStateMetroCompetition.innerHTML = systems.map((s) => `
+      <div class="competition-card">
+        <div class="competition-name">${escapeHtml(s.name)}</div>
+        <div class="competition-details">${escapeHtml(String(s.facilities || 0))} facilities | ${escapeHtml(s.marketShare || '--')} market share</div>
+      </div>
+    `).join('');
+  }
+
+  const metroData = targetStateMetroDataCache[stateAbbrev] || { salaryMeta: {} };
+  const salaryMeta = metroData?.salaryMeta || {};
+  const salary = normalizeTargetMetroSalary(metro, salaryMeta);
+  const breakdown = Array.isArray(salary.breakdown) ? salary.breakdown : [];
+  const salarySystems = Array.isArray(salary.systems) ? salary.systems : [];
+  const sources = Array.isArray(salary.sources) ? salary.sources : [];
+  if (targetStateMetroSalary) {
+    const breakdownHtml = breakdown.length ? `
+      <div class="salary-breakdown">
+        <div class="salary-breakdown-title">Estimated salary breakdown</div>
+        <div class="salary-breakdown-section">
+          <div class="salary-breakdown-grid">
+            ${breakdown.map((item) => `
+              <div class="salary-breakdown-item">
+                <div class="salary-breakdown-label">${escapeHtml(item.label || '--')}</div>
+                <div class="salary-breakdown-value">${escapeHtml(item.value || '--')}</div>
+                ${item.note ? `<div class="salary-breakdown-note">${escapeHtml(item.note)}</div>` : ''}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+        ${salarySystems.length ? `
+          <div class="salary-breakdown-section">
+            <div class="salary-breakdown-subtitle">Major systems (est.)</div>
+            <div class="salary-system-grid">
+              ${salarySystems.map((item) => `
+                <div class="salary-system-item">
+                  <div class="salary-system-name">${escapeHtml(item.name || '--')}</div>
+                  <div class="salary-system-value">${escapeHtml(item.value || '--')}</div>
+                  ${item.source ? `<div class="salary-system-source">${escapeHtml(item.source)}</div>` : ''}
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        ` : ''}
+        ${sources.length ? `
+          <div class="salary-breakdown-sources">
+            <span class="salary-breakdown-sources-label">Sources:</span>
+            ${sources.map((src, idx) => `
+              <a href="${escapeHtml(src.url || '#')}" target="_blank" rel="noopener noreferrer">${escapeHtml(src.name || 'Source')}</a>${idx < sources.length - 1 ? '<span class="source-sep">|</span>' : ''}
+            `).join('')}
+          </div>
+        ` : ''}
+      </div>
+    ` : '';
+
+    targetStateMetroSalary.innerHTML = `
+      <div class="salary-card">
+        <div class="salary-value">${escapeHtml(salary.averageWage || '--')}</div>
+        <div class="salary-label">Average Wage</div>
+      </div>
+      <div class="salary-card">
+        <div class="salary-value">${escapeHtml(salary.staffRN || '--')}</div>
+        <div class="salary-label">Staff RN</div>
+      </div>
+      <div class="salary-card">
+        <div class="salary-value">${escapeHtml(salary.travelRN || '--')}</div>
+        <div class="salary-label">Travel RN</div>
+      </div>
+      <div class="salary-card">
+        <div class="salary-value">${escapeHtml(salary.signOn || '--')}</div>
+        <div class="salary-label">Sign-On</div>
+      </div>
+      ${breakdownHtml}
+    `;
+  }
+
+  const factors = metro.factors || [];
+  if (targetStateMetroFactors) {
+    targetStateMetroFactors.innerHTML = factors.map((f) => `
+      <span class="factor-tag ${f.type || 'neutral'}">${escapeHtml(f.text)}</span>
+    `).join('');
+  }
+};
+
+const openTargetState = async () => {
+  const state = getMapTargetState() || targetStateSelect?.value || TARGET_STATE_DEFAULT;
+  if (targetStateSelect) targetStateSelect.value = state;
+  await renderTargetState(state);
+  targetStateModal?.classList.add('active');
+  closeModulesMenu();
+};
+
+const closeTargetState = () => targetStateModal?.classList.remove('active');
+
+const buildTargetStateExport = async (stateAbbrev, options = {}) => {
+  const { scope = 'all' } = options;
+  const entry = getBeaconEntry(stateAbbrev);
+  const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === stateAbbrev);
+  const metroData = await getTargetStateMetroData(stateAbbrev);
+  const metros = metroData?.metros || [];
+  const totalHospitals = metros.reduce((sum, metro) => sum + (metro.hospitals?.length || 0), 0);
+  const selectedMetro = scope === 'selected' ? currentTargetStateMetro : null;
+  const metrosForExport = scope === 'selected' && selectedMetro ? [selectedMetro] : metros;
+
+  return {
+    generatedAt: new Date().toISOString(),
+    state: stateAbbrev,
+    name: entry.name,
+    compact: entry.compact,
+    programsCount: programsInState.length,
+    metrosCount: metros.length,
+    totalHospitals,
+    metros: metrosForExport,
+    selectedMetro,
+    exportScope: scope
+  };
+};
+
+const buildTargetStateExportRows = (data) => {
+  const rows = [];
+  const pushRow = (section, item, detail = '') => rows.push([section, item, detail]);
+  const scopeLabel = data.exportScope === 'selected' ? 'Selected Metro' : 'All Metros';
+
+  pushRow('Overview', 'State', data.name);
+  pushRow('Overview', 'Generated At', data.generatedAt);
+  pushRow('Overview', 'Export Scope', scopeLabel);
+  if (data.compact !== null && data.compact !== undefined) {
+    pushRow('Overview', 'Compact', data.compact ? 'Yes' : 'No');
+  }
+  pushRow('Overview', 'Programs', data.programsCount);
+  pushRow('Overview', 'Metros', data.metrosCount);
+  pushRow('Overview', 'Hospitals', data.totalHospitals);
+
+  if (data.exportScope === 'all') {
+    data.metros.forEach((metro) => {
+      const detail = [metro.population, `${metro.hospitals?.length || 0} hospitals`, metro.competition].filter(Boolean).join(' | ');
+      pushRow('Metro Summary', metro.name, detail);
+    });
+  }
+
+  if (!data.selectedMetro) {
+    if (data.exportScope === 'selected') {
+      pushRow('Selected Metro', 'Selection', 'None selected');
+    }
+    return rows;
+  }
+
+  const metro = data.selectedMetro;
+  pushRow('Selected Metro', 'Name', metro.name);
+  pushRow('Selected Metro', 'Size', metro.size || '');
+  if (metro.population) pushRow('Selected Metro', 'Population', metro.population);
+  if (metro.competition) pushRow('Selected Metro', 'Competition', metro.competition);
+
+  (metro.hospitals || []).forEach((hospital) => {
+    const detail = [hospital.system, `${hospital.beds} beds`, `Rating ${hospital.reviews}`, `Score ${hospital.score}`]
+      .filter(Boolean)
+      .join(' | ');
+    pushRow('Selected Metro Hospitals', hospital.name, detail);
+  });
+
+  (metro.systems || []).forEach((system) => {
+    const detail = [system.marketShare, `${system.facilities} facilities`].filter(Boolean).join(' | ');
+    pushRow('Selected Metro Systems', system.name, detail);
+  });
+
+  if (metro.salary) {
+    pushRow('Selected Metro Salary', 'Staff RN Hourly', metro.salary.staffRN || '--');
+    pushRow('Selected Metro Salary', 'Travel RN Weekly', metro.salary.travelRN || '--');
+    pushRow('Selected Metro Salary', 'Sign-On Bonus', metro.salary.signOn || '--');
+    (metro.salary.breakdown || []).forEach((item) => {
+      const detail = [item.value, item.note].filter(Boolean).join(' | ');
+      pushRow('Selected Metro Salary Breakdown', item.label || 'Benchmark', detail);
+    });
+  }
+
+  (metro.factors || []).forEach((factor) => {
+    pushRow('Selected Metro Factors', factor.text, factor.type || '');
+  });
 
   return rows;
 };
@@ -7889,94 +4686,6 @@ const exportHomeStatePdf = async () => {
     rows
   });
   showExportToast('Home State PDF opened.');
-};
-
-const buildTargetStateExport = async (stateAbbrev, options = {}) => {
-  const { scope = 'all' } = options;
-  const entry = getBeaconEntry(stateAbbrev);
-  const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === stateAbbrev);
-  const metroData = await getTargetStateMetroData(stateAbbrev);
-  const metros = metroData?.metros || [];
-  const totalHospitals = metros.reduce((sum, metro) => sum + (metro.hospitals?.length || 0), 0);
-  const selectedMetro = scope === 'selected' ? currentTargetStateMetro : null;
-  const metrosForExport = scope === 'selected' && selectedMetro ? [selectedMetro] : metros;
-
-  return {
-    generatedAt: new Date().toISOString(),
-    state: stateAbbrev,
-    name: entry.name,
-    compact: entry.compact,
-    programsCount: programsInState.length,
-    metrosCount: metros.length,
-    totalHospitals,
-    metros: metrosForExport,
-    selectedMetro,
-    exportScope: scope
-  };
-};
-
-const buildTargetStateExportRows = (data) => {
-  const rows = [];
-  const pushRow = (section, item, detail = '') => rows.push([section, item, detail]);
-  const scopeLabel = data.exportScope === 'selected' ? 'Selected Metro' : 'All Metros';
-
-  pushRow('Overview', 'State', data.name);
-  pushRow('Overview', 'Generated At', data.generatedAt);
-  pushRow('Overview', 'Export Scope', scopeLabel);
-  if (data.compact !== null && data.compact !== undefined) {
-    pushRow('Overview', 'Compact', data.compact ? 'Yes' : 'No');
-  }
-  pushRow('Overview', 'Programs', data.programsCount);
-  pushRow('Overview', 'Metros', data.metrosCount);
-  pushRow('Overview', 'Hospitals', data.totalHospitals);
-
-  if (data.exportScope === 'all') {
-    data.metros.forEach((metro) => {
-      const detail = [metro.population, `${metro.hospitals?.length || 0} hospitals`, metro.competition].filter(Boolean).join(' ??? ');
-      pushRow('Metro Summary', metro.name, detail);
-    });
-  }
-
-  if (!data.selectedMetro) {
-    if (data.exportScope === 'selected') {
-      pushRow('Selected Metro', 'Selection', 'None selected');
-    }
-    return rows;
-  }
-
-  const metro = data.selectedMetro;
-  pushRow('Selected Metro', 'Name', metro.name);
-  pushRow('Selected Metro', 'Size', metro.size || '');
-  if (metro.population) pushRow('Selected Metro', 'Population', metro.population);
-  if (metro.competition) pushRow('Selected Metro', 'Competition', metro.competition);
-
-  (metro.hospitals || []).forEach((hospital) => {
-    const detail = [hospital.system, `${hospital.beds} beds`, `Rating ${hospital.reviews}`, `Score ${hospital.score}`]
-      .filter(Boolean)
-      .join(' | ');
-    pushRow('Selected Metro Hospitals', hospital.name, detail);
-  });
-
-  (metro.systems || []).forEach((system) => {
-    const detail = [system.marketShare, `${system.facilities} facilities`].filter(Boolean).join(' | ');
-    pushRow('Selected Metro Systems', system.name, detail);
-  });
-
-  if (metro.salary) {
-    pushRow('Selected Metro Salary', 'Staff RN Hourly', metro.salary.staffRN || '--');
-    pushRow('Selected Metro Salary', 'Travel RN Weekly', metro.salary.travelRN || '--');
-    pushRow('Selected Metro Salary', 'Sign-On Bonus', metro.salary.signOn || '--');
-    (metro.salary.breakdown || []).forEach((item) => {
-      const detail = [item.value, item.note].filter(Boolean).join(' | ');
-      pushRow('Selected Metro Salary Breakdown', item.label || 'Benchmark', detail);
-    });
-  }
-
-  (metro.factors || []).forEach((factor) => {
-    pushRow('Selected Metro Factors', factor.text, factor.type || '');
-  });
-
-  return rows;
 };
 
 const exportTargetState = async ({ format = 'csv', scope = 'all' } = {}) => {
@@ -8169,7 +4878,6 @@ const getTopInstitutionsForState = (state, limit = 12) => {
 
 const buildMasterExportData = async (state, progressCb) => {
   await loadStateBeaconData();
-  await loadHospitalRankingsData();
   if (progressCb) progressCb(25);
   await ensureProgramsDataForBeacon();
   if (progressCb) progressCb(35);
@@ -8179,13 +4887,8 @@ const buildMasterExportData = async (state, progressCb) => {
   if (progressCb) progressCb(45);
 
   const entry = getBeaconEntry(state);
-  const enrichedEntry = enrichBeaconEntry(
-    state,
-    entry,
-    getStateNotices(state),
-    nursingPrograms.filter((program) => normalizeProgram(program).state === state)
-  );
-  const metroData = await getTargetStateMetroData(state) || {};
+  const enrichedEntry = enrichBeaconEntry(state, entry, getStateNotices(state), nursingPrograms.filter((program) => normalizeProgram(program).state === state));
+  const metroData = await getTargetStateMetroData(state);
   const metros = metroData?.metros || [];
   const totalHospitals = metros.reduce((sum, metro) => sum + (metro.hospitals?.length || 0), 0);
   const recentWarnNotices = await getRecentWarnNoticesForState(state);
@@ -8193,9 +4896,6 @@ const buildMasterExportData = async (state, progressCb) => {
   const rural = getRuralDataForMasterExport(state);
   const topInstitutions = getTopInstitutionsForState(state);
   const topIndianaInstitutions = getTopInstitutionsForState(MASTER_EXPORT_HOME_STATE);
-  const salaryData = strategicData?.salaryData || NURSING_SALARY_DATA;
-  const marketStatus = getBlendedShortageStatus(state, salaryData);
-  const marketSources = getMarketStatusSources();
   const stateBeacon = buildStateBeaconExportWithHome(state, MASTER_EXPORT_HOME_STATE);
   const rawBeaconEntry = stateBeaconData?.states?.[state] ?? {};
   const nursingEducation = rawBeaconEntry.nursingEducation ?? null;
@@ -8214,8 +4914,6 @@ const buildMasterExportData = async (state, progressCb) => {
     recentWarnNotices,
     rural,
     stateBeacon,
-    marketStatus,
-    marketSources,
     pipeline: enrichedEntry.pipeline || {},
     nursingEducation,
     indianaEducation,
@@ -8230,6 +4928,16 @@ const setMasterExportProgress = (value) => {
   if (masterExportProgressBar) masterExportProgressBar.style.width = `${pct}%`;
   if (masterExportProgressLabel) masterExportProgressLabel.textContent = `${pct}%`;
 };
+const setMasterExportDisabled = (isDisabled) => {
+  if (masterExportToggle) masterExportToggle.disabled = isDisabled;
+  if (masterExportModal) {
+    masterExportModal.querySelectorAll('button[data-format]').forEach((btn) => {
+      btn.disabled = isDisabled;
+    });
+  }
+};
+
+
 const withTimeout = (promise, ms, label) => (
   new Promise((resolve, reject) => {
     const timer = setTimeout(() => reject(new Error(`${label} timed out`)), ms);
@@ -8262,7 +4970,6 @@ const buildMasterExportRows = (data) => {
   pushRow('Master Overview', 'Home State (Comparison)', STATE_NAMES[MASTER_EXPORT_HOME_STATE] || MASTER_EXPORT_HOME_STATE);
   pushRow('Master Overview', 'Metros', data.metroSummary.count);
   pushRow('Master Overview', 'Hospitals', data.metroSummary.totalHospitals);
-  pushRow('Master Overview', 'Market status (latest fetched)', data.marketStatus || 'balanced');
   pushRow('Master Overview', 'WARN notices (30d)', data.recentWarnNotices.length);
   pushRow('Master Overview', 'Rural closures (since 2010)', data.rural.summary.count);
   pushRow('Master Overview', 'Rural closures (recent)', data.rural.summary.recent);
@@ -8378,13 +5085,6 @@ const buildMasterExportRows = (data) => {
     pushRow('Outbound Insights Sources', key, value);
   });
 
-  if (data.marketSources?.length) {
-    pushSection('Market Status Sources');
-    data.marketSources.forEach((source) => {
-      pushRow('Market Status Sources', 'Source', source);
-    });
-  }
-
   pushSection('WARN Notices (30d)');
   data.recentWarnNotices.forEach((notice) => {
     const employer = notice.employer_name || notice.employerName || 'Unknown employer';
@@ -8457,7 +5157,7 @@ const buildMasterExportRows = (data) => {
 const exportMasterExport = async (format = 'csv') => {
   const state = masterExportStateSelect?.value || TARGET_STATE_DEFAULT;
   setMasterExportProgress(5);
-  if (masterExportToggle) masterExportToggle.disabled = true;
+  setMasterExportDisabled(true);
   try {
     const data = await withTimeout(
       buildMasterExportData(state, setMasterExportProgress),
@@ -8502,7 +5202,7 @@ const exportMasterExport = async (format = 'csv') => {
     showExportToast('Master Export failed. Please try again.');
     setMasterExportProgress(0);
   } finally {
-    if (masterExportToggle) masterExportToggle.disabled = false;
+    setMasterExportDisabled(false);
   }
 };
 
@@ -8520,7 +5220,7 @@ const closeMasterExport = () => masterExportModal?.classList.remove('active');
 const updateMasterExportSummary = async () => {
   if (!masterExportStateSelect) return;
   const state = masterExportStateSelect.value;
-  const metroData = await getTargetStateMetroData(state) || {};
+  const metroData = await getTargetStateMetroData(state);
   const metros = metroData?.metros || [];
   if (masterExportMetroCount) masterExportMetroCount.textContent = metros.length || '--';
   if (typeof loadRuralClosuresData === 'function') {
@@ -8564,13 +5264,19 @@ const initMasterExport = () => {
     if (!btn) return;
     exportMasterExport(btn.dataset.format || 'csv');
   });
+
+
 };
 
 const exportStateBeaconJson = () => {
   if (!stateBeaconStateSelect) return;
   const data = buildStateBeaconExport(stateBeaconStateSelect.value);
   const content = JSON.stringify(data, null, 2);
-  downloadFile(content, `state-beacon-${data.state}.json`, 'application/json');
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(new Blob([content], { type: 'application/json' }));
+  link.download = `state-beacon-${data.state}.json`;
+  link.click();
+  URL.revokeObjectURL(link.href);
   showExportToast('State Beacon JSON exported.');
 };
 
@@ -8590,7 +5296,7 @@ const buildStateBeaconExportRows = (data) => {
   Object.entries(data.market || {}).forEach(([key, value]) => pushRow('Market', key, Array.isArray(value) ? value.join('; ') : value));
 
   data.competition?.systems?.forEach((system) => {
-    pushRow('Competition', system.name, [system.presence, system.notes].filter(Boolean).join(' | '));
+    pushRow('Competition', system.name, [system.presence, system.notes].filter(Boolean).join(' • '));
   });
 
   data.hospitals?.best?.forEach((item) => pushRow('Hospitals Best', item.employer, `${item.notices} notices`));
@@ -8631,7 +5337,7 @@ const exportStateBeaconCsv = () => {
   Object.entries(data.market || {}).forEach(([key, value]) => pushRow('Market', key, Array.isArray(value) ? value.join('; ') : value));
 
   data.competition?.systems?.forEach((system) => {
-    pushRow('Competition', system.name, [system.presence, system.notes].filter(Boolean).join(' | '));
+    pushRow('Competition', system.name, [system.presence, system.notes].filter(Boolean).join(' • '));
   });
 
   data.hospitals?.best?.forEach((item) => pushRow('Hospitals Best', item.employer, `${item.notices} notices`));
@@ -8652,7 +5358,11 @@ const exportStateBeaconCsv = () => {
   data.objections?.forEach((item) => pushRow('Objections', item.concern, item.response));
 
   const csv = rows.map((row) => row.join(',')).join('\n');
-  downloadFile(csv, `state-beacon-${data.state}.csv`, 'text/csv');
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+  link.download = `state-beacon-${data.state}.csv`;
+  link.click();
+  URL.revokeObjectURL(link.href);
   showExportToast('State Beacon CSV exported.');
 };
 
@@ -8705,52 +5415,6 @@ const initStateBeacon = () => {
   stateBeaconStateSelect.value = STATE_BEACON_DEFAULT;
   stateBeaconHomeSelect.value = STATE_BEACON_HOME_DEFAULT;
 
-  // Tab switching
-  const tabs = document.querySelectorAll('.beacon-tab');
-  const tabContents = document.querySelectorAll('.beacon-tab-content');
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      const targetTab = tab.dataset.tab;
-      tabs.forEach(t => t.classList.remove('active'));
-      tabContents.forEach(c => c.classList.remove('active'));
-      tab.classList.add('active');
-      document.getElementById(`beacon-content-${targetTab}`)?.classList.add('active');
-    });
-  });
-
-  // Filters toggle
-  const filtersToggleBtn = document.getElementById('beacon-filters-toggle');
-  const filtersPanel = document.getElementById('beacon-filters-panel');
-  filtersToggleBtn?.addEventListener('click', () => {
-    filtersToggleBtn.classList.toggle('active');
-    filtersPanel?.classList.toggle('open');
-  });
-
-  // Update quick tags when filters change
-  const updateQuickTags = () => {
-    const tagSpecialty = document.getElementById('beacon-tag-specialty');
-    const tagExperience = document.getElementById('beacon-tag-experience');
-    const tagLicense = document.getElementById('beacon-tag-license');
-    if (tagSpecialty) tagSpecialty.textContent = stateBeaconSpecialty?.value || 'General RN';
-    if (tagExperience) tagExperience.textContent = stateBeaconExperience?.value || 'New grad';
-    if (tagLicense) tagLicense.textContent = stateBeaconLicense?.value || 'Compact';
-  };
-
-  // Copy button for script
-  document.querySelectorAll('.beacon-copy-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const targetId = btn.dataset.copy;
-      const target = document.getElementById(targetId);
-      if (target) {
-        navigator.clipboard.writeText(target.textContent || '').then(() => {
-          const originalText = btn.textContent;
-          btn.textContent = 'Copied!';
-          setTimeout(() => { btn.textContent = originalText; }, 1500);
-        });
-      }
-    });
-  });
-
   const onInputsChange = () => {
     const inputs = {
       homeState: stateBeaconHomeSelect?.value || STATE_BEACON_HOME_DEFAULT,
@@ -8762,7 +5426,6 @@ const initStateBeacon = () => {
       license: stateBeaconLicense?.value || 'Compact'
     };
     saveStateBeaconInputs(inputs);
-    updateQuickTags();
     renderStateBeacon(stateBeaconStateSelect.value);
   };
 
@@ -8822,13 +5485,6 @@ const initStateBeacon = () => {
     }
   });
 
-  // Target State event listeners
-  openTargetStateBtn?.addEventListener('click', openTargetState);
-  targetStateCloseBtn?.addEventListener('click', closeTargetState);
-  targetStateCloseFooter?.addEventListener('click', closeTargetState);
-  targetStateSelect?.addEventListener('change', () => {
-    renderTargetState(targetStateSelect.value);
-  });
   targetStateExportToggle?.addEventListener('click', (event) => {
     event.stopPropagation();
     targetStateExportMenu?.classList.toggle('active');
@@ -8841,126 +5497,915 @@ const initStateBeacon = () => {
     targetStateExportMenu.classList.remove('active');
     exportTargetState({ format, scope });
   });
+  openTargetStateBtn?.addEventListener('click', openTargetState);
+  targetStateCloseBtn?.addEventListener('click', closeTargetState);
+  targetStateCloseFooter?.addEventListener('click', closeTargetState);
+  targetStateSelect?.addEventListener('change', () => {
+    renderTargetState(targetStateSelect.value);
+  });
   targetStateOpenBeacon?.addEventListener('click', () => {
     const state = targetStateSelect?.value || TARGET_STATE_DEFAULT;
     closeTargetState();
     openStateBeacon(state);
   });
 
-  // Initialize quick tags
-  updateQuickTags();
   setStateBeaconProsMode(stateBeaconProsMode);
 };
 
 // ==================== END STATE BEACON MODULE ====================
 
-// Update initApp to include Strategic Review
-const originalInitApp = initApp;
+// ==================== MAP/CHART VIEW TOGGLE ====================
+
+// Render bar chart view
+const renderBarChart = () => {
+  const barChart = document.getElementById('bar-chart');
+  if (!barChart) return;
+
+  // Get all states with their counts, sorted by count descending
+  const statesWithCounts = ALL_STATES.map(state => {
+    const entry = mapStateData[state];
+    // Handle both { count: X } and just X formats
+    let count = 0;
+    if (typeof entry === 'number') {
+      count = entry;
+    } else if (entry && typeof entry.count === 'number') {
+      count = entry.count;
+    } else if (entry && typeof entry.count === 'object' && entry.count?.count) {
+      // Handle nested { count: { count: X } } case
+      count = entry.count.count;
+    }
+    return { state, count };
+  }).sort((a, b) => b.count - a.count);
+
+  const maxCount = Math.max(...statesWithCounts.map(s => s.count), 1);
+
+  // Determine which states to highlight
+  const selectedRegion = regionSelect.value;
+  let statesToHighlight = [];
+
+  if (selectedStates.length > 0) {
+    // Use the multi-select selected states
+    statesToHighlight = selectedStates;
+  } else if (selectedRegion && REGION_STATES[selectedRegion]) {
+    // Fall back to region states if no specific states selected
+    statesToHighlight = REGION_STATES[selectedRegion];
+  }
+
+  barChart.innerHTML = statesWithCounts.map(({ state, count }) => {
+    const percentage = (count / maxCount) * 100;
+    const isSelected = statesToHighlight.length === 0 || statesToHighlight.includes(state);
+    const selectedClass = statesToHighlight.length > 0 && statesToHighlight.includes(state) ? 'selected' : '';
+
+    return `
+      <div class="bar-chart-row ${selectedClass}" data-state="${state}" style="${!isSelected && statesToHighlight.length > 0 ? 'opacity: 0.4;' : ''}">
+        <span class="bar-chart-label">${state}</span>
+        <div class="bar-chart-bar">
+          <div class="bar-chart-fill" style="width: ${percentage}%"></div>
+        </div>
+        <span class="bar-chart-count">${count.toLocaleString()}</span>
+      </div>
+    `;
+  }).join('');
+};
+
+// Toggle between map and chart view
+const toggleMapView = (view) => {
+  currentMapView = view;
+  const mapContainer = document.getElementById('us-map');
+  const barChart = document.getElementById('bar-chart');
+  const mapLegend = document.getElementById('map-legend');
+  const mapViewBtn = document.getElementById('map-view-btn');
+  const chartViewBtn = document.getElementById('chart-view-btn');
+
+  if (view === 'map') {
+    mapContainer.style.display = 'block';
+    barChart.style.display = 'none';
+    mapLegend.style.display = 'flex';
+    mapViewBtn.classList.add('active');
+    chartViewBtn.classList.remove('active');
+    updateMapHighlights();
+  } else {
+    mapContainer.style.display = 'none';
+    barChart.style.display = 'block';
+    mapLegend.style.display = 'none';
+    mapViewBtn.classList.remove('active');
+    chartViewBtn.classList.add('active');
+    renderBarChart();
+  }
+};
+
+// Update map highlights based on selected region/state
+const updateMapHighlights = () => {
+  const shapes = usMapContainer.querySelectorAll('[data-state]');
+  const selectedRegion = regionSelect.value;
+
+  // Determine which states to highlight
+  let statesToHighlight = [];
+
+  if (selectedStates.length > 0) {
+    // Use the multi-select selected states
+    statesToHighlight = selectedStates;
+  } else if (selectedRegion && REGION_STATES[selectedRegion]) {
+    // Fall back to region states if no specific states selected
+    statesToHighlight = REGION_STATES[selectedRegion];
+  }
+
+  shapes.forEach(shape => {
+    const stateAbbrev = shape.getAttribute('data-state');
+    shape.classList.remove('state-selected', 'state-dimmed');
+
+    if (statesToHighlight.length > 0) {
+      if (statesToHighlight.includes(stateAbbrev)) {
+        shape.classList.add('state-selected');
+      } else {
+        shape.classList.add('state-dimmed');
+      }
+    }
+  });
+};
+
+const setMapScope = (scope, { reloadNotices = false } = {}) => {
+  mapScope = scope === 'all' ? 'all' : 'healthcare';
+  mapStateData = mapScope === 'all' ? stateDataAll : stateDataHealthcare;
+  if (!mapStateData || Object.keys(mapStateData).length === 0) {
+    mapStateData = stateDataAll;
+  }
+
+  if (mapScopeHealthcareBtn && mapScopeAllBtn) {
+    mapScopeHealthcareBtn.classList.toggle('active', mapScope === 'healthcare');
+    mapScopeAllBtn.classList.toggle('active', mapScope === 'all');
+  }
+  if (mapScopeLabel) {
+    mapScopeLabel.textContent = mapScope === 'all' ? 'All notices' : 'Healthcare';
+  }
+
+  updateWeatherMap();
+  if (currentMapView === 'chart') {
+    renderBarChart();
+  }
+  if (reloadNotices) {
+    loadNotices();
+  }
+};
+
+const initMapScopeToggle = () => {
+  mapScopeHealthcareBtn?.addEventListener('click', () => setMapScope('healthcare', { reloadNotices: true }));
+  mapScopeAllBtn?.addEventListener('click', () => setMapScope('all', { reloadNotices: true }));
+};
+
+const getMapHomeState = () => {
+  try {
+    return localStorage.getItem(scopedStorageKey(MAP_HOME_STATE_BASE_KEY)) || '';
+  } catch {
+    return '';
+  }
+};
+
+const getHomeStateForFactors = () => (
+  getMapHomeState()
+  || stateBeaconHomeSelect?.value
+  || getStateBeaconInputs()?.homeState
+  || STATE_BEACON_HOME_DEFAULT
+);
+
+const getRegionForState = (state) => {
+  const entry = Object.entries(REGION_STATES).find(([, states]) => states.includes(state));
+  return entry ? entry[0] : null;
+};
+
+const scoreOutOfStateTarget = (homeState, targetState) => {
+  const noticeCount = mapStateData?.[targetState]?.count ?? 0;
+  const homeRegion = getRegionForState(homeState);
+  const targetRegion = getRegionForState(targetState);
+  const regionBonus = homeRegion && targetRegion && homeRegion === targetRegion ? 2 : 0;
+  const score = noticeCount + regionBonus;
+  return { score, noticeCount, targetRegion };
+};
+
+const getRecruitingTargets = (homeState, count = 5) => (
+  Object.keys(mapStateData || {})
+    .filter((state) => state !== homeState)
+    .map((state) => ({ state, ...scoreOutOfStateTarget(homeState, state) }))
+    .sort((a, b) => b.score - a.score)
+    .slice(0, count)
+);
+
+const renderMapFactors = () => {
+  if (!mapFactorsList) return;
+  const homeState = getHomeStateForFactors();
+  const entries = getRecruitingTargets(homeState, 5);
+
+  if (mapFactorsSubtitle) {
+    mapFactorsSubtitle.textContent = homeState
+      ? `Top 5 recruiting targets from ${STATE_NAMES[homeState] || homeState}.`
+      : 'Select a Home State to rank recruiting targets.';
+  }
+
+  if (!entries.length) {
+    mapFactorsList.innerHTML = '<div class="empty-state">No state data available.</div>';
+    return;
+  }
+
+  mapFactorsList.innerHTML = entries.map((entry, idx) => `
+    <div class="map-factor-card">
+      <div class="map-factor-title">#${idx + 1} ${STATE_NAMES[entry.state] || entry.state}</div>
+      <div class="map-factor-meta">
+        Notices: ${entry.noticeCount} | Region: ${entry.targetRegion || 'n/a'}
+      </div>
+    </div>
+  `).join('');
+};
+
+const initMapFactors = () => {
+  mapFactorsBtn?.addEventListener('click', () => {
+    if (!mapFactorsPanel) return;
+    const isVisible = mapFactorsPanel.style.display !== 'none';
+    mapFactorsPanel.style.display = isVisible ? 'none' : 'block';
+    if (!isVisible) renderMapFactors();
+  });
+
+  mapFactorsClose?.addEventListener('click', () => {
+    if (mapFactorsPanel) mapFactorsPanel.style.display = 'none';
+  });
+};
+
+// Initialize map/chart toggle
+const initMapToggle = () => {
+  const mapViewBtn = document.getElementById('map-view-btn');
+  const chartViewBtn = document.getElementById('chart-view-btn');
+
+  mapViewBtn?.addEventListener('click', () => toggleMapView('map'));
+  chartViewBtn?.addEventListener('click', () => toggleMapView('chart'));
+
+  ensureMapTargetModeListener();
+};
+
+// ==================== END MAP/CHART VIEW TOGGLE ====================
+
+// =============================================================================
+// Daily News Feed
+// =============================================================================
+let newsArticles = [];
+let newsClosuresOnly = false;
+let newsFeedLastUpdated = null;
+let newsSourceHealth = [];
+let newsCategoryCoverage = {};
+const NEWS_WINDOW_COUNT = 5;
+const NEWS_MIN_SOURCE_TARGET = 8;
+const NEWS_CATEGORY_LABELS = {
+  closures_layoffs: 'Closures',
+  mergers_mna: 'M&A',
+  labor_unions: 'Labor',
+  policy_reimbursement: 'Policy',
+  quality_safety: 'Quality',
+  capacity_expansion: 'Capacity',
+  ai_tech: 'AI',
+  general_market: 'General'
+};
+
+const NEWS_CLOSURE_KEYWORDS = [
+  'closure', 'closing', 'shut down', 'shutting down', 'shuttered',
+  'bankrupt', 'chapter 11', 'chapter 7', 'insolvency', 'insolvent',
+  'layoff', 'lay off', 'laid off', 'layoffs', 'laying off', 'furlough',
+  'workforce reduction', 'job cuts', 'job losses', 'downsiz', 'job elimination',
+  'at risk', 'at-risk', 'financial distress',
+  'wind down', 'winding down', 'liquidat',
+  'cease operations', 'ceasing operations',
+  'receivership',
+];
+
+const matchesClosureKeywords = (article) => {
+  const text = ((article.title || '') + ' ' + (article.summary || '')).toLowerCase();
+  return NEWS_CLOSURE_KEYWORDS.some(kw => text.includes(kw));
+};
+
+const getSourceBadgeClass = (source) => {
+  const s = String(source || '').toLowerCase();
+  if (s.includes('becker')) return 'beckers';
+  if (s.includes('stat')) return 'stat-news';
+  if (s.includes('healthcare dive')) return 'healthcare-dive';
+  if (s.includes('fierce')) return 'fierce';
+  if (s.includes('health affairs')) return 'health-affairs';
+  return 'default';
+};
+
+const parseNewsDate = (value) => {
+  if (!value) return null;
+  if (value instanceof Date) return Number.isNaN(value.getTime()) ? null : value;
+  if (typeof value === 'number') {
+    const numeric = new Date(value);
+    return Number.isNaN(numeric.getTime()) ? null : numeric;
+  }
+  const raw = String(value).trim();
+  if (!raw) return null;
+  try {
+    return raw.includes('T') ? new Date(raw) : new Date(`${raw}T00:00:00`);
+  } catch {
+    return null;
+  }
+};
+
+const formatNewsDate = (dateStr) => {
+  if (!dateStr) return '';
+  try {
+    const d = parseNewsDate(dateStr) || new Date(dateStr);
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  } catch {
+    return dateStr;
+  }
+};
+
+const getNewsFeedHealth = () => {
+  if (!newsArticles.length) {
+    return {
+      level: 'danger',
+      message: 'No news articles loaded yet.'
+    };
+  }
+
+  const uniqueSources = new Set(
+    newsArticles
+      .map((article) => String(article?.source || '').trim())
+      .filter(Boolean)
+  );
+
+  const articleDates = newsArticles
+    .map((article) => parseNewsDate(article?.publishedAt || article?.date))
+    .filter((d) => d && !Number.isNaN(d.getTime()));
+  const latestArticle = articleDates.length
+    ? new Date(Math.max(...articleDates.map((d) => d.getTime())))
+    : null;
+
+  const referenceDate = parseNewsDate(newsFeedLastUpdated) || latestArticle;
+  const ageHours = referenceDate
+    ? Math.floor((Date.now() - referenceDate.getTime()) / (1000 * 60 * 60))
+    : null;
+
+  const stale = ageHours !== null && ageHours > 24;
+  const criticallyStale = ageHours !== null && ageHours > 48;
+  const limitedSources = uniqueSources.size < NEWS_MIN_SOURCE_TARGET;
+  const level = criticallyStale ? 'danger' : (stale || limitedSources ? 'warning' : 'good');
+
+  const freshnessLabel = ageHours === null
+    ? 'refresh age unavailable'
+    : `last refreshed ${ageHours}h ago`;
+
+  const detailBits = [
+    `${newsArticles.length} articles`,
+    `${uniqueSources.size} sources`,
+    latestArticle ? `latest article ${formatNewsDate(latestArticle.toISOString())}` : null
+  ].filter(Boolean);
+
+  const warningBits = [];
+  if (stale) warningBits.push('feed refresh is stale');
+  if (limitedSources) warningBits.push(`source diversity is limited (target ${NEWS_MIN_SOURCE_TARGET}+)`);
+
+  const message = warningBits.length
+    ? `Feed health: ${warningBits.join(' and ')} (${freshnessLabel}; ${detailBits.join(' | ')}).`
+    : `Feed health: good (${freshnessLabel}; ${detailBits.join(' | ')}).`;
+
+  return { level, message };
+};
+
+const renderNewsFeedHealth = () => {
+  const el = document.getElementById('news-feed-health');
+  if (!el) return;
+  const { level, message } = getNewsFeedHealth();
+  el.classList.remove('is-good', 'is-warning', 'is-danger');
+  el.classList.add(level === 'danger' ? 'is-danger' : level === 'warning' ? 'is-warning' : 'is-good');
+  el.textContent = message;
+};
+
+const getNewsDateFilter = () => {
+  const filter = document.getElementById('news-date-filter');
+  return filter ? parseInt(filter.value, 10) || 3 : 3;
+};
+
+const getNewsCategoryFilter = () => {
+  const filter = document.getElementById('news-category-filter');
+  return filter ? String(filter.value || 'all') : 'all';
+};
+
+const filterNewsByDate = (articles, days) => {
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
+  const cutoff = new Date(now.getTime() - (days - 1) * 24 * 60 * 60 * 1000);
+  return articles.filter(article => {
+    const articleDate = parseNewsDate(article.publishedAt || article.date);
+    if (!articleDate || Number.isNaN(articleDate.getTime())) return true;
+    return articleDate >= cutoff;
+  });
+};
+
+const filterNewsByCategory = (articles, categoryKey) => {
+  if (!categoryKey || categoryKey === 'all') return articles;
+  return articles.filter((article) => String(article?.category || 'general_market') === categoryKey);
+};
+
+const renderNewsCoverageMetrics = () => {
+  const categoryEl = document.getElementById('news-category-coverage');
+  const sourceEl = document.getElementById('news-source-health');
+  if (!categoryEl || !sourceEl) return;
+
+  const coverage = newsCategoryCoverage && typeof newsCategoryCoverage === 'object'
+    ? newsCategoryCoverage
+    : {};
+
+  const categoryRows = Object.entries(coverage)
+    .map(([key, value]) => ({
+      key,
+      label: value?.label || NEWS_CATEGORY_LABELS[key] || key,
+      count: Number(value?.count || 0)
+    }))
+    .sort((a, b) => b.count - a.count);
+
+  categoryEl.innerHTML = categoryRows.length
+    ? categoryRows.slice(0, 8).map((row) => `
+      <span class="news-category-chip">${escapeHtml(row.label)}: ${row.count}</span>
+    `).join('')
+    : '<span class="news-category-chip">No category coverage data</span>';
+
+  const sourceRows = Array.isArray(newsSourceHealth) ? newsSourceHealth : [];
+  sourceEl.innerHTML = sourceRows.length
+    ? sourceRows.slice(0, 8).map((row) => `
+      <div class="news-source-card">
+        <div class="news-source-name">${escapeHtml(row.source || 'Unknown')}</div>
+        <div class="news-source-meta ${row.status === 'stale' ? 'stale' : ''}">
+          ${Number(row.articleCount || 0)} articles${Number.isFinite(Number(row.staleHours)) ? ` | ${Number(row.staleHours)}h` : ''}
+        </div>
+      </div>
+    `).join('')
+    : '<div class="news-source-card"><div class="news-source-name">No source health data</div><div class="news-source-meta">Will populate on next export.</div></div>';
+};
+
+const renderNewsFeed = () => {
+  const list = document.getElementById('news-feed-list');
+  if (!list) return;
+
+  const days = getNewsDateFilter();
+  const categoryKey = getNewsCategoryFilter();
+  let filtered = filterNewsByDate(newsArticles, days);
+  filtered = filterNewsByCategory(filtered, categoryKey);
+  if (newsClosuresOnly) {
+    filtered = filtered.filter(matchesClosureKeywords);
+  }
+
+  if (!filtered.length) {
+    const label = newsClosuresOnly ? 'closure-related ' : '';
+    list.innerHTML = `<div class="empty-state">No ${label}news articles in the last ${days} days.</div>`;
+    list.style.maxHeight = '';
+    list.classList.remove('news-feed-windowed');
+    renderNewsCoverageMetrics();
+    renderNewsFeedHealth();
+    return;
+  }
+
+  list.innerHTML = filtered.map(article => `
+    <a class="news-card" href="${article.url}" target="_blank" rel="noopener noreferrer">
+      <div class="news-card-body">
+        <h4 class="news-card-title">${article.title}</h4>
+        <p class="news-card-summary">${article.summary}</p>
+      </div>
+      <div class="news-card-meta">
+        <span class="news-source-badge ${getSourceBadgeClass(article.source)}">${article.source}</span>
+        <span class="news-card-date">${formatNewsDate(article.publishedAt)}</span>
+      </div>
+    </a>
+  `).join('');
+
+  // Apply scroll window
+  requestAnimationFrame(() => {
+    const cards = list.querySelectorAll('.news-card');
+    if (cards.length <= NEWS_WINDOW_COUNT) {
+      list.style.maxHeight = '';
+      list.classList.remove('news-feed-windowed');
+      return;
+    }
+    let height = 0;
+    for (let i = 0; i < Math.min(NEWS_WINDOW_COUNT, cards.length); i++) {
+      height += cards[i].getBoundingClientRect().height;
+    }
+    if (height === 0) {
+      list.style.maxHeight = '';
+      list.classList.remove('news-feed-windowed');
+      return;
+    }
+    height += NEWS_WINDOW_COUNT - 1;
+    list.style.maxHeight = `${Math.ceil(height)}px`;
+    list.classList.add('news-feed-windowed');
+  });
+
+  renderNewsCoverageMetrics();
+  renderNewsFeedHealth();
+};
+
+const getFilteredNewsArticles = () => {
+  const days = getNewsDateFilter();
+  const categoryKey = getNewsCategoryFilter();
+  let filtered = filterNewsByDate(newsArticles, days);
+  filtered = filterNewsByCategory(filtered, categoryKey);
+  if (newsClosuresOnly) {
+    filtered = filtered.filter(matchesClosureKeywords);
+  }
+  return filtered;
+};
+
+window.exportNewsFeed = async function(btn) {
+  const filtered = getFilteredNewsArticles();
+  if (!filtered.length) return;
+  const lines = filtered.map(a => `${a.title}\n${a.url}`).join('\n\n');
+  try {
+    await navigator.clipboard.writeText(lines);
+    const original = btn.textContent;
+    btn.textContent = 'Copied!';
+    btn.classList.add('active');
+    setTimeout(() => { btn.textContent = original; btn.classList.remove('active'); }, 2000);
+  } catch {
+    const w = window.open('', '_blank');
+    if (w) {
+      w.document.write(`<pre style="font-family:system-ui;white-space:pre-wrap">${lines.replace(/</g, '&lt;')}</pre>`);
+      w.document.close();
+    }
+  }
+};
+
+const loadNews = async () => {
+  try {
+    const data = await fetchJson(`/data/news.json?ts=${Date.now()}`);
+    newsArticles = data.articles ?? [];
+    newsFeedLastUpdated = data.lastUpdated || null;
+    newsSourceHealth = data?.sourceHealth?.sources ?? [];
+    newsCategoryCoverage = data?.categoryCoverage ?? {};
+    renderNewsFeed();
+    refreshTalentCommandCenter();
+  renderSpecialtySurplus();
+  } catch (err) {
+    console.warn('News feed not available:', err.message);
+    const list = document.getElementById('news-feed-list');
+    if (list) list.innerHTML = '<div class="empty-state">News feed unavailable.</div>';
+    newsArticles = [];
+    newsSourceHealth = [];
+    newsCategoryCoverage = {};
+    renderNewsCoverageMetrics();
+    renderNewsFeedHealth();
+    refreshTalentCommandCenter();
+  renderSpecialtySurplus();
+  }
+};
+
+// Explicit window globals so inline onclick handlers can always find them
+window.toggleNewsClosures = function(btn) {
+  newsClosuresOnly = !newsClosuresOnly;
+  btn.classList.toggle('active', newsClosuresOnly);
+  renderNewsFeed();
+
+  // Show toast with closure article count
+  if (newsClosuresOnly) {
+    const days = getNewsDateFilter();
+    const dated = filterNewsByDate(newsArticles, days);
+    const count = dated.filter(matchesClosureKeywords).length;
+    const msg = count > 0
+      ? `${count} closure article${count === 1 ? '' : 's'} found`
+      : 'No closure articles listed';
+    showNewsToast(msg);
+  }
+};
+
+function showNewsToast(message) {
+  let toast = document.getElementById('news-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'news-toast';
+    toast.className = 'news-toast';
+    const toolbar = document.querySelector('.news-feed-toolbar');
+    if (toolbar) toolbar.parentElement.insertBefore(toast, toolbar.nextSibling);
+    else document.body.appendChild(toast);
+  }
+  toast.textContent = message;
+  toast.classList.add('visible');
+  clearTimeout(toast._hideTimer);
+  toast._hideTimer = setTimeout(() => toast.classList.remove('visible'), 3000);
+};
+
+const initNewsFeed = () => {
+  const dateFilter = document.getElementById('news-date-filter');
+  if (dateFilter) {
+    dateFilter.addEventListener('change', renderNewsFeed);
+  }
+  const categoryFilter = document.getElementById('news-category-filter');
+  if (categoryFilter) {
+    categoryFilter.addEventListener('change', renderNewsFeed);
+  }
+  // Closures & Export buttons use inline onclick handlers (see HTML)
+};
+
+// =============================================================================
+// Talent Command Center
+// =============================================================================
+const TA_WEEKLY_RHYTHM = [
+  { day: 'Monday', task: 'Prioritize top markets and specialties.' },
+  { day: 'Tuesday', task: 'Build outreach campaigns by signal type.' },
+  { day: 'Wednesday', task: 'Run outreach sprint + referral pushes.' },
+  { day: 'Thursday', task: 'Review pipeline bottlenecks and rebalance.' },
+  { day: 'Friday', task: 'Leadership KPI and ROI review.' }
+];
+
+const TA_ROLLOUT_PHASES = [
+  { id: '30-instrumentation', phase: 'Days 0-30', task: 'Enable action queue ownership and 24h SLA tracking.' },
+  { id: '60-conversion', phase: 'Days 31-60', task: 'Tune outreach templates and increase response/screen rates.' },
+  { id: '90-automation', phase: 'Days 61-90', task: 'Automate top-priority actions from market signals.' }
+];
+
+const TA_CAMPAIGN_TEMPLATES = {
+  closure: ({ specialty }) => `Subject: Immediate ${specialty} roles with stable teams and structured onboarding\n\nHi {{first_name}},\nWe saw recent workforce transitions in your market and wanted to share current ${specialty} opportunities with strong onboarding support, schedule flexibility, and transparent compensation.\n\nOpen to a 10-minute call this week?\n\n- {{recruiter_name}}`,
+  strike: ({ specialty }) => `Subject: ${specialty} opportunities with continuity-focused teams\n\nHi {{first_name}},\nGiven labor volatility in your market, we are hiring ${specialty} clinicians into teams with protected staffing plans and clear leadership support.\n\nIf timing is right, I can share openings and shift options today.\n\n- {{recruiter_name}}`,
+  expansion: ({ specialty }) => `Subject: New care capacity opening - ${specialty} hiring now\n\nHi {{first_name}},\nA major service-line expansion is underway and we are scaling ${specialty} coverage across day/night shifts. This is a strong entry point for long-term growth and advancement.\n\nCan we connect this week?\n\n- {{recruiter_name}}`,
+  merger: ({ specialty }) => `Subject: Post-merger ${specialty} hiring with transition support\n\nHi {{first_name}},\nAs local systems consolidate, we are placing ${specialty} clinicians into stable teams with transition coaching and clear role alignment.\n\nHappy to share current openings if you are exploring options.\n\n- {{recruiter_name}}`
+};
+
+const parseNum = (value) => {
+  const n = Number(value);
+  return Number.isFinite(n) ? Math.max(0, n) : 0;
+};
+
+const pct = (num, den) => den > 0 ? `${Math.round((num / den) * 100)}%` : '0%';
+
+const loadTalentCommandState = () => {
+  try {
+    const m = JSON.parse(localStorage.getItem(scopedStorageKey(TA_METRICS_BASE_KEY)) || 'null');
+    if (m && typeof m === 'object') taMetrics = { ...taMetrics, ...m };
+  } catch {}
+  try {
+    const a = JSON.parse(localStorage.getItem(scopedStorageKey(TA_ACTIONS_BASE_KEY)) || '[]');
+    if (Array.isArray(a)) taActions = a;
+  } catch {}
+  try {
+    const r = JSON.parse(localStorage.getItem(scopedStorageKey(TA_ROLLOUT_BASE_KEY)) || '{}');
+    if (r && typeof r === 'object') taRolloutState = r;
+  } catch {}
+};
+
+const saveTalentMetrics = () => localStorage.setItem(scopedStorageKey(TA_METRICS_BASE_KEY), JSON.stringify(taMetrics));
+const saveTalentActions = () => localStorage.setItem(scopedStorageKey(TA_ACTIONS_BASE_KEY), JSON.stringify(taActions));
+const saveTalentRollout = () => localStorage.setItem(scopedStorageKey(TA_ROLLOUT_BASE_KEY), JSON.stringify(taRolloutState));
+
+const getTalentSignals = () => {
+  const healthcare = (currentNotices || []).filter((notice) => isHealthcareNotice(notice));
+  const byState = Array.from(groupBy(healthcare, (notice) => notice.state || 'NA').entries())
+    .map(([state, rows]) => ({
+      state,
+      count: rows.length,
+      affected: rows.reduce((sum, row) => sum + Number(row.affected_workers || row.affected || 0), 0)
+    }))
+    .sort((a, b) => b.affected - a.affected || b.count - a.count)
+    .slice(0, 5);
+  return { byState };
+};
+
+const seedTalentActions = () => {
+  if (taActions.length) return;
+  const { byState } = getTalentSignals();
+  const seeded = [];
+  byState.slice(0, 3).forEach((row, idx) => {
+    seeded.push({
+      id: `ta-${Date.now()}-${idx}`,
+      title: `Launch targeted outreach in ${STATE_NAMES[row.state] || row.state}`,
+      detail: `${row.count} healthcare notices and ${row.affected.toLocaleString()} affected workers detected.`,
+      priority: idx === 0 ? 'critical' : 'high',
+      owner: '',
+      specialty: idx % 2 === 0 ? 'ICU' : 'Med-Surg',
+      signalType: 'closure',
+      status: 'open',
+      createdAt: new Date().toISOString(),
+      dueAt: new Date(Date.now() + (24 + idx * 12) * 60 * 60 * 1000).toISOString(),
+      completedAt: null
+    });
+  });
+  taActions = seeded;
+  saveTalentActions();
+};
+
+const renderTalentRhythm = () => {
+  if (!taWeeklyRhythm) return;
+  taWeeklyRhythm.innerHTML = TA_WEEKLY_RHYTHM.map((item) => `
+    <div class="talent-rhythm-item">
+      <div class="talent-rhythm-day">${item.day}</div>
+      <div class="talent-rhythm-task">${item.task}</div>
+    </div>
+  `).join('');
+};
+
+const readTalentMetricInputs = () => {
+  taMetrics.outreach = parseNum(taInputOutreach?.value);
+  taMetrics.responses = parseNum(taInputResponses?.value);
+  taMetrics.screens = parseNum(taInputScreens?.value);
+  taMetrics.offers = parseNum(taInputOffers?.value);
+  taMetrics.accepted = parseNum(taInputAccepted?.value);
+  taMetrics.hires = parseNum(taInputHires?.value);
+  taMetrics.spend = parseNum(taInputSpend?.value);
+  taMetrics.agencySaved = parseNum(taInputAgencySaved?.value);
+  saveTalentMetrics();
+};
+
+const syncTalentMetricInputs = () => {
+  if (taInputOutreach) taInputOutreach.value = String(taMetrics.outreach || 0);
+  if (taInputResponses) taInputResponses.value = String(taMetrics.responses || 0);
+  if (taInputScreens) taInputScreens.value = String(taMetrics.screens || 0);
+  if (taInputOffers) taInputOffers.value = String(taMetrics.offers || 0);
+  if (taInputAccepted) taInputAccepted.value = String(taMetrics.accepted || 0);
+  if (taInputHires) taInputHires.value = String(taMetrics.hires || 0);
+  if (taInputSpend) taInputSpend.value = String(taMetrics.spend || 0);
+  if (taInputAgencySaved) taInputAgencySaved.value = String(taMetrics.agencySaved || 0);
+};
+
+const renderTalentKpis = () => {
+  const highPriority = taActions.filter((action) => action.priority === 'critical' || action.priority === 'high');
+  const completedFast = highPriority.filter((action) => {
+    if (!action.completedAt) return false;
+    const created = new Date(action.createdAt).getTime();
+    const completed = new Date(action.completedAt).getTime();
+    if (!Number.isFinite(created) || !Number.isFinite(completed)) return false;
+    return (completed - created) <= (24 * 60 * 60 * 1000);
+  });
+
+  if (taKpiSla) taKpiSla.textContent = pct(completedFast.length, highPriority.length || 1);
+  if (taKpiResponse) taKpiResponse.textContent = pct(taMetrics.responses, taMetrics.outreach || 1);
+  if (taKpiScreen) taKpiScreen.textContent = pct(taMetrics.screens, taMetrics.responses || 1);
+  if (taKpiAcceptance) taKpiAcceptance.textContent = pct(taMetrics.accepted, taMetrics.offers || 1);
+  if (taKpiCost) taKpiCost.textContent = taMetrics.hires > 0 ? `$${Math.round(taMetrics.spend / taMetrics.hires).toLocaleString()}` : '$0';
+  if (taKpiAgency) taKpiAgency.textContent = `$${Math.round(taMetrics.agencySaved || 0).toLocaleString()}`;
+};
+
+const renderTalentActions = () => {
+  if (!taActionList) return;
+  const ownerFilter = String(taOwnerFilter?.value || '').trim().toLowerCase();
+  const specialtyFilter = String(taSpecialtyFilter?.value || '').trim();
+  const filtered = taActions.filter((action) => {
+    if (ownerFilter && !String(action.owner || '').toLowerCase().includes(ownerFilter)) return false;
+    if (specialtyFilter && String(action.specialty || '') !== specialtyFilter) return false;
+    return true;
+  });
+
+  if (!filtered.length) {
+    taActionList.innerHTML = '<div class="empty-state">No actions match your filters.</div>';
+    return;
+  }
+
+  taActionList.innerHTML = filtered.map((action) => `
+    <div class="ta-action-row">
+      <div class="ta-action-top">
+        <div class="ta-action-title">${escapeHtml(action.title || 'Untitled action')}</div>
+        <span class="ta-priority ${escapeHtml(action.priority || 'medium')}">${escapeHtml(action.priority || 'medium')}</span>
+      </div>
+      <div class="ta-action-meta">${escapeHtml(action.detail || '')}</div>
+      <div class="ta-action-meta">
+        Owner: ${escapeHtml(action.owner || 'Unassigned')} | Specialty: ${escapeHtml(action.specialty || '--')} |
+        Due: ${escapeHtml(formatDate(action.dueAt))}
+      </div>
+      <div class="ta-action-buttons">
+        <button type="button" data-ta-action="done" data-ta-id="${escapeHtml(action.id)}">Mark Done</button>
+        <button type="button" data-ta-action="reopen" data-ta-id="${escapeHtml(action.id)}">Reopen</button>
+        <button type="button" data-ta-action="assign-me" data-ta-id="${escapeHtml(action.id)}">Assign Owner Filter</button>
+      </div>
+    </div>
+  `).join('');
+
+  taActionList.querySelectorAll('button[data-ta-action]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-ta-id');
+      const action = btn.getAttribute('data-ta-action');
+      const target = taActions.find((row) => row.id === id);
+      if (!target) return;
+      if (action === 'done') {
+        target.status = 'done';
+        target.completedAt = new Date().toISOString();
+      } else if (action === 'reopen') {
+        target.status = 'open';
+        target.completedAt = null;
+      } else if (action === 'assign-me') {
+        const owner = String(taOwnerFilter?.value || '').trim();
+        if (owner) target.owner = owner;
+      }
+      saveTalentActions();
+      renderTalentActions();
+      renderTalentKpis();
+    });
+  });
+};
+
+const renderTalentCampaignTemplate = () => {
+  if (!taCampaignTemplate) return;
+  const signalType = String(taCampaignSignal?.value || 'closure');
+  const specialty = String(taCampaignSpecialty?.value || 'ICU');
+  const builder = TA_CAMPAIGN_TEMPLATES[signalType] || TA_CAMPAIGN_TEMPLATES.closure;
+  taCampaignTemplate.value = builder({ specialty });
+};
+
+const renderTalentRollout = () => {
+  if (!taRolloutList) return;
+  taRolloutList.innerHTML = TA_ROLLOUT_PHASES.map((item) => `
+    <label class="ta-rollout-item">
+      <input type="checkbox" data-ta-rollout="${escapeHtml(item.id)}" ${taRolloutState[item.id] ? 'checked' : ''} />
+      <div>
+        <div class="ta-rollout-phase">${item.phase}</div>
+        <div class="ta-rollout-task">${item.task}</div>
+      </div>
+    </label>
+  `).join('');
+
+  taRolloutList.querySelectorAll('input[data-ta-rollout]').forEach((input) => {
+    input.addEventListener('change', () => {
+      const id = input.getAttribute('data-ta-rollout');
+      taRolloutState[id] = input.checked;
+      saveTalentRollout();
+    });
+  });
+};
+
+const refreshTalentCommandCenter = () => {
+  if (!taActionList) return;
+  seedTalentActions();
+  renderTalentKpis();
+  renderTalentActions();
+  renderTalentCampaignTemplate();
+  renderTalentRollout();
+};
+
+const initTalentCommandCenter = () => {
+  if (!taActionList) return;
+  loadTalentCommandState();
+  syncTalentMetricInputs();
+  renderTalentRhythm();
+  renderTalentRollout();
+  renderTalentCampaignTemplate();
+
+  [
+    taInputOutreach, taInputResponses, taInputScreens, taInputOffers,
+    taInputAccepted, taInputHires, taInputSpend, taInputAgencySaved
+  ].forEach((input) => {
+    input?.addEventListener('input', () => {
+      readTalentMetricInputs();
+      renderTalentKpis();
+    });
+  });
+
+  taResetMetricsBtn?.addEventListener('click', () => {
+    taMetrics = {
+      outreach: 0, responses: 0, screens: 0, offers: 0,
+      accepted: 0, hires: 0, spend: 0, agencySaved: 0
+    };
+    saveTalentMetrics();
+    syncTalentMetricInputs();
+    renderTalentKpis();
+  });
+
+  taOwnerFilter?.addEventListener('input', renderTalentActions);
+  taSpecialtyFilter?.addEventListener('change', renderTalentActions);
+  taCampaignSignal?.addEventListener('change', renderTalentCampaignTemplate);
+  taCampaignSpecialty?.addEventListener('change', renderTalentCampaignTemplate);
+
+  refreshTalentCommandCenter();
+  renderSpecialtySurplus();
+};
+
+// Initialize app (called after login)
+const initApp = () => {
+  mapScope = 'healthcare';
+  const safeInit = (fn, label) => {
+    try { fn(); } catch (err) { console.warn(`Init error [${label}]:`, err); }
+  };
+  safeInit(initWeatherMap, 'weatherMap');
+  safeInit(initHelpSection, 'helpSection');
+  safeInit(initCollapsibleSections, 'collapsibleSections');
+  safeInit(initStrategicReview, 'strategicReview');
+  safeInit(initMapToggle, 'mapToggle');
+  safeInit(initMapScopeToggle, 'mapScopeToggle');
+  safeInit(initMapFactors, 'mapFactors');
+  safeInit(initStateMultiSelect, 'stateMultiSelect');
+  safeInit(initForecast, 'forecast');
+  safeInit(initProgramsModule, 'programsModule');
+  safeInit(initStateBeacon, 'stateBeacon');
+  safeInit(initMasterExport, 'masterExport');
+  safeInit(initNewsFeed, 'newsFeed');
+  safeInit(initTalentCommandCenter, 'talentCommandCenter');
+  loadHealth();
+  loadStatesWithMap();
+  loadInsights();
+  loadNews();
+  loadCustomNotices();
+  loadProjects();
+  populateCustomStateDropdown();
+  initProjectEvents();
+  initLightworker();
+  initStateCalibration();
+  renderProjects();
+  loadNotices();
+};
 
 window.addEventListener('resize', () => refreshNoticeListWindow());
 if (document.fonts && document.fonts.ready) {
   document.fonts.ready.then(() => refreshNoticeListWindow());
 }
 
-// Start the app if already authenticated
-if (checkAuth()) {
-  initApp().then(() => {
-    initStrategicReview();
-  });
-}
-
-// Ensure critical event listeners are attached directly
-document.addEventListener('DOMContentLoaded', () => {
-  // Collapsible sections
-  document.querySelectorAll('section[data-collapsible="true"]').forEach(section => {
-    const toggle = section.querySelector('.section-toggle');
-    if (!toggle || toggle.dataset.boundToggle === 'true') return;
-    const label = toggle.querySelector('.section-toggle-label');
-    const icon = toggle.querySelector('.section-toggle-icon');
-    toggle.dataset.boundToggle = 'true';
-    toggle.addEventListener('click', () => {
-      section.classList.toggle('collapsed');
-      const isCollapsed = section.classList.contains('collapsed');
-      toggle.setAttribute('aria-expanded', String(!isCollapsed));
-      if (label) label.textContent = isCollapsed ? 'Expand' : 'Collapse';
-      if (icon) icon.textContent = isCollapsed ? '+' : '\u2212';
-    });
-  });
-
-  // Out of State Factors button
-  const factorsBtn = document.getElementById('map-factors-btn');
-  const factorsPanel = document.getElementById('map-factors-panel');
-  if (factorsBtn && factorsPanel) {
-    factorsBtn.addEventListener('click', () => {
-      const isVisible = factorsPanel.style.display !== 'none';
-      factorsPanel.style.display = isVisible ? 'none' : 'block';
-      if (!isVisible && typeof renderMapFactors === 'function') {
-        renderMapFactors();
-      }
-    });
-  }
-
-  // Factors close button
-  const factorsClose = document.getElementById('map-factors-close');
-  if (factorsClose && factorsPanel) {
-    factorsClose.addEventListener('click', () => {
-      factorsPanel.style.display = 'none';
-    });
-  }
-
-  // Target mode fallback — only attach if initViewToggle didn't already
-  const targetBtn = document.getElementById('map-target-mode-btn');
-  if (targetBtn && !targetBtn.dataset.listenerAttached) {
-    targetBtn.dataset.listenerAttached = 'true';
-    targetBtn.addEventListener('click', () => {
-      if (typeof setMapTargetMode === 'function') {
-        setMapTargetMode(!isMapTargetMode);
-      }
-    });
-  }
-
-  // Target State open fallback bindings
-  const targetModuleBtn = document.getElementById('open-target-state');
-  if (targetModuleBtn && targetModuleBtn.dataset.boundOpenTargetState !== 'true') {
-    targetModuleBtn.dataset.boundOpenTargetState = 'true';
-    targetModuleBtn.addEventListener('click', () => {
-      if (typeof openTargetState === 'function') openTargetState();
-    });
-  }
-
-  const mapTargetOpenBtn = document.getElementById('map-target-state-btn');
-  if (mapTargetOpenBtn && mapTargetOpenBtn.dataset.boundOpenTargetState !== 'true') {
-    mapTargetOpenBtn.dataset.boundOpenTargetState = 'true';
-    mapTargetOpenBtn.addEventListener('click', () => {
-      if (typeof openTargetState === 'function') openTargetState();
-    });
-  }
-  // Strategic Market Review toggle
-  const strategicToggle = document.getElementById('strategic-toggle');
-  const strategicSection = document.querySelector('.strategic-review-section');
-  if (strategicToggle && strategicSection) {
-    strategicToggle.addEventListener('click', () => {
-      strategicSection.classList.toggle('open');
-      const isOpen = strategicSection.classList.contains('open');
-      const toggleIcon = strategicSection.querySelector('.strategic-toggle-icon');
-      if (toggleIcon) {
-        toggleIcon.textContent = isOpen ? '-' : '+';
-      }
-      if (isOpen && typeof renderStrategicReview === 'function') {
-        renderStrategicReview();
-      }
-    });
-  }
-
-  // Closures & Export buttons use inline onclick handlers (see HTML)
-});
-
-
-
-
-
-
-
-
-
-
+// Auto-init if already authenticated
+bootstrapAuth();
