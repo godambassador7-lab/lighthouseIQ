@@ -1,74 +1,81 @@
 {
-  "lastUpdated": "2026-05-26T03:48:33.012Z",
+  "lastUpdated": "2026-05-26T07:55:53.113Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
-    "totalSources": 9,
+    "totalSources": 10,
     "staleSources": 7,
-    "healthySources": 2,
+    "healthySources": 3,
     "sources": [
       {
         "source": "Fierce Healthcare",
         "articleCount": 225,
         "latestPublishedAt": "2026-05-26T00:00:00.000Z",
-        "staleHours": 3,
+        "staleHours": 7,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 140,
+        "articleCount": 132,
         "latestPublishedAt": "2026-05-22T00:00:00.000Z",
-        "staleHours": 99,
+        "staleHours": 103,
         "status": "stale"
       },
       {
         "source": "STAT News",
-        "articleCount": 63,
+        "articleCount": 61,
         "latestPublishedAt": "2026-05-25T00:00:00.000Z",
-        "staleHours": 27,
+        "staleHours": 31,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
-        "articleCount": 40,
-        "latestPublishedAt": "2026-05-22T00:00:00.000Z",
-        "staleHours": 99,
-        "status": "stale"
+        "articleCount": 45,
+        "latestPublishedAt": "2026-05-26T00:00:00.000Z",
+        "staleHours": 7,
+        "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 15,
         "latestPublishedAt": "2026-05-22T00:00:00.000Z",
-        "staleHours": 99,
+        "staleHours": 103,
         "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 6,
         "latestPublishedAt": "2026-05-22T00:00:00.000Z",
-        "staleHours": 99,
+        "staleHours": 103,
         "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 6,
         "latestPublishedAt": "2026-05-21T00:00:00.000Z",
-        "staleHours": 123,
+        "staleHours": 127,
+        "status": "stale"
+      },
+      {
+        "source": "Federal Register - FDA",
+        "articleCount": 5,
+        "latestPublishedAt": "2026-05-22T00:00:00.000Z",
+        "staleHours": 103,
         "status": "stale"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 4,
         "latestPublishedAt": "2026-05-22T00:00:00.000Z",
-        "staleHours": 99,
+        "staleHours": 103,
         "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 1,
         "latestPublishedAt": "2026-05-19T00:00:00.000Z",
-        "staleHours": 171,
+        "staleHours": 175,
         "status": "stale"
       }
     ]
@@ -100,11 +107,11 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 150
+      "count": 148
     },
     "general_market": {
       "label": "General Market",
-      "count": 204
+      "count": 206
     }
   },
   "quality": {
@@ -115,12 +122,12 @@
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
-        "actual": 9,
+        "actual": 10,
         "pass": true
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 25,
+        "actual": 35,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -136,6 +143,126 @@
     }
   },
   "articles": [
+    {
+      "title": "Renewal of the President's Council on Sports, Fitness & Nutrition's Charter",
+      "summary": "The U.S. Department of Health and Human Services (HHS) is hereby giving notice that the charter for the President's Council on Sports, Fitness & Nutrition (hereafter referred to as the Council) has been renewed.",
+      "url": "https://www.federalregister.gov/documents/2026/05/26/2026-10411/renewal-of-the-presidents-council-on-sports-fitness-and-nutritions-charter",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-05-26",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Advisory Committee; Pulmonary-Allergy Drugs Advisory Committee; Renewal",
+      "summary": "The Food and Drug Administration (FDA) is announcing the renewal of the Pulmonary-Allergy Drugs Advisory Committee by the Commissioner of Food and Drugs (the Commissioner). The Commissioner has determined that it is in the public interest to renew the Pulmonary- Allergy Drugs Advisory Committee for an additional 2 years beyond the charter expiration date. The new charter will be in effect until the May 30, 2028, expiration date.",
+      "url": "https://www.federalregister.gov/documents/2026/05/26/2026-10410/advisory-committee-pulmonary-allergy-drugs-advisory-committee-renewal",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-05-26",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Agency Information Collection Activities; Proposed Collection; Comment Request; Human Drug Compounding Under Sections 503A and 503B of the Federal Food, Drug, and Cosmetic Act",
+      "summary": "The Food and Drug Administration (FDA or Agency) is announcing an opportunity for public comment on the proposed collection of certain information by the Agency. Under the Paperwork Reduction Act of 1995 (PRA), Federal Agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension of an existing collection of information, and to allow 60 days for public comment in response to the notice. This notice solicits comments on information collection relating to human drug compounding.",
+      "url": "https://www.federalregister.gov/documents/2026/05/26/2026-10372/agency-information-collection-activities-proposed-collection-comment-request-human-drug-compounding",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-05-26",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Advisory Committee; Drug Safety and Risk Management Advisory Committee; Renewal",
+      "summary": "The Food and Drug Administration (FDA) is announcing the renewal of the Drug Safety and Risk Management Advisory Committee by the Commissioner of Food and Drugs (the Commissioner). The Commissioner has determined that it is in the public interest to renew the Drug Safety and Risk Management Advisory Committee for an additional 2 years beyond the charter expiration date. The new charter will be in effect until the May 31, 2028, expiration date.",
+      "url": "https://www.federalregister.gov/documents/2026/05/26/2026-10371/advisory-committee-drug-safety-and-risk-management-advisory-committee-renewal",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-05-26",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Center for Scientific Review; Notice of Closed Meetings",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/05/26/2026-10434/center-for-scientific-review-notice-of-closed-meetings",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-05-26",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Reducing Bureaucracy and Burden for Family Assistance Programs",
+      "summary": "The Administration for Children and Families proposes to amend the Grants to States for Public Assistance Programs regulations, the General Administration--State Plans and Grant Appeals regulations, the General Administration--Public Assistance Programs regulations, the Training and Use of Subprofessionals and Volunteers regulations, the Coverage and Conditions of Eligibility in Financial Assistance Programs regulations, the Financial Assistance to Individuals regulations, the Administration of Financial Assistance Programs regulations, the Fiscal Administration of Financial Assistance Programs regulations, the General Temporary Assistance for Needy Families (TANF) Provisions regulations, the Ensuring That Recipients Work regulations, the Accountability Provisions--General regulations, the Expenditures of State and Federal TANF Funds regulations, the Other Accountability Provisions regulations, the Data Collection and Reporting Requirements regulations, the High Performance Bonus Awards regulations, the Implementation of Section 403(a)(2) of the Social Security Act Bonus to Reward Decrease in Illegitimacy Ratio regulations, the Methodology for Determining Whether an Increase in a State or Territory's Child Poverty Rate Is the Result of the TANF Program regulations, the Tribal TANF Provisions regulations, and The Native Employment Works (NEW) Program regulations to eliminate unnecessary or obsolete regulations. The docket on https://www.regulations.gov will include a plain language summary of the NPRM.",
+      "url": "https://www.federalregister.gov/documents/2026/05/26/2026-10401/reducing-bureaucracy-and-burden-for-family-assistance-programs",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-05-26",
+      "category": "ai_tech",
+      "relevance": 96,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Agency Information Collection Activities: Submission for OMB Review; Comment Request",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/05/26/2026-10384/agency-information-collection-activities-submission-for-omb-review-comment-request",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-05-26",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "National Heart, Lung, and Blood Institute; Notice of Closed Meeting",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/05/26/2026-10355/national-heart-lung-and-blood-institute-notice-of-closed-meeting",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-05-26",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Fogarty International Center; Amended Notice of Meeting",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/05/26/2026-10354/fogarty-international-center-amended-notice-of-meeting",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-05-26",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "National Cancer Institute; Notice of Meeting",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/05/26/2026-10353/national-cancer-institute-notice-of-meeting",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-05-26",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
     {
       "title": "How specialty practices can get more out of technology investments",
       "url": "https://www.fiercehealthcare.com/sponsored/how-specialty-practices-can-get-more-out-technology-investments",
@@ -1151,9 +1278,9 @@
       "title": "Notice of Decision Not To Designate Hepatitis Delta Virus Diseases as an Addition to the Current List of Tropical Diseases in the Federal Food, Drug, and Cosmetic Act",
       "summary": "In response to a suggestion by Gilead Sciences, Inc. (Gilead) that was submitted to the public docket FDA-2008-N-0567 on February 14, 2022, the Food and Drug Administration (FDA or Agency) has analyzed whether hepatitis delta virus (HDV) infection meets the statutory criteria for designation as a \"tropical disease\" under Section 524 of the Federal Food, Drug, and Cosmetic Act (FD&C Act). Specifically, the Agency has analyzed whether there is \"no significant market in developed nations\" for drugs for HDV infections and whether HDV \"disproportionately affects poor and marginalized populations,\" both of which are statutory criteria for designation as a \"tropical disease.\" At this time, the Agency cannot conclude that HDV infection meets the statutory criteria for addition to the list of tropical diseases under the FD&C Act; therefore, FDA declines to add it to the list of tropical diseases.",
       "url": "https://www.federalregister.gov/documents/2026/05/22/2026-10268/notice-of-decision-not-to-designate-hepatitis-delta-virus-diseases-as-an-addition-to-the-current",
-      "source": "Federal Register - HHS",
+      "source": "Federal Register - FDA",
       "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
+      "sourceId": "federal_register_fda",
       "publishedAt": "2026-05-22",
       "category": "quality_safety",
       "relevance": 100,
@@ -1823,9 +1950,9 @@
       "title": "Agency Information Collection Activities; Submission for Office of Management and Budget Review; Comment Request; Patent Term Restoration; Due Diligence Petitions; Filing, Format, and Content of Petitions",
       "summary": "The Food and Drug Administration (FDA) is announcing that a proposed collection of information has been submitted to the Office of Management and Budget (OMB) for review and clearance under the Paperwork Reduction Act of 1995.",
       "url": "https://www.federalregister.gov/documents/2026/05/21/2026-10190/agency-information-collection-activities-submission-for-office-of-management-and-budget-review",
-      "source": "Federal Register - HHS",
+      "source": "Federal Register - FDA",
       "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
+      "sourceId": "federal_register_fda",
       "publishedAt": "2026-05-21",
       "category": "general_market",
       "relevance": 100,
@@ -1835,9 +1962,9 @@
       "title": "Agency Information Collection Activities; Submission for Office of Management and Budget Review; Comment Request; Adverse Experience/Events With Approved New Animal Drugs",
       "summary": "The Food and Drug Administration (FDA) is announcing that a proposed collection of information has been submitted to the Office of Management and Budget (OMB) for review and clearance under the Paperwork Reduction Act of 1995.",
       "url": "https://www.federalregister.gov/documents/2026/05/21/2026-10189/agency-information-collection-activities-submission-for-office-of-management-and-budget-review",
-      "source": "Federal Register - HHS",
+      "source": "Federal Register - FDA",
       "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
+      "sourceId": "federal_register_fda",
       "publishedAt": "2026-05-21",
       "category": "general_market",
       "relevance": 100,
@@ -1847,9 +1974,9 @@
       "title": "Agency Information Collection Activities; Submission for Office of Management and Budget Review; Comment Request; Current Good Manufacturing Practice (CGMP): Manufacturing, Processing, Packing, and Holding of Drugs; GMP for Finished Pharmaceuticals (Including Active Pharmaceutical Ingredients) and the Advanced Manufacturing Technologies Designation Program",
       "summary": "The Food and Drug Administration (FDA) is announcing that a proposed collection of information has been submitted to the Office of Management and Budget (OMB) for review and clearance under the Paperwork Reduction Act of 1995.",
       "url": "https://www.federalregister.gov/documents/2026/05/21/2026-10188/agency-information-collection-activities-submission-for-office-of-management-and-budget-review",
-      "source": "Federal Register - HHS",
+      "source": "Federal Register - FDA",
       "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
+      "sourceId": "federal_register_fda",
       "publishedAt": "2026-05-21",
       "category": "general_market",
       "relevance": 100,
@@ -1859,9 +1986,9 @@
       "title": "Agency Information Collection Activities; Submission for Office of Management and Budget Review; Comment Request; Required Warnings for Cigarette Packages and Advertisements",
       "summary": "The Food and Drug Administration (FDA) is announcing that a proposed collection of information has been submitted to the Office of Management and Budget (OMB) for review and clearance under the Paperwork Reduction Act of 1995.",
       "url": "https://www.federalregister.gov/documents/2026/05/21/2026-10187/agency-information-collection-activities-submission-for-office-of-management-and-budget-review",
-      "source": "Federal Register - HHS",
+      "source": "Federal Register - FDA",
       "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
+      "sourceId": "federal_register_fda",
       "publishedAt": "2026-05-21",
       "category": "general_market",
       "relevance": 100,
@@ -1902,6 +2029,18 @@
       "category": "ai_tech",
       "relevance": 98,
       "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "UHS 8-K filing - Universal Health Services, Inc.",
+      "summary": "Universal Health Services, Inc. filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/352915/000119312526233402/uhs-20260518.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-05-21",
+      "category": "general_market",
+      "relevance": 90,
+      "categoryLabel": "General Market"
     },
     {
       "title": "National Cancer Institute; Notice of Meeting",
@@ -1961,18 +2100,6 @@
       "publishedAt": "2026-05-21",
       "category": "general_market",
       "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "UHS 8-K filing - Universal Health Services, Inc.",
-      "summary": "Universal Health Services, Inc. filed 8-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/352915/000119312526233402/uhs-20260518.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-05-21",
-      "category": "general_market",
-      "relevance": 90,
       "categoryLabel": "General Market"
     },
     {
@@ -4714,96 +4841,6 @@
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-05-18",
       "summary": "A patient with a gun was shot by an off-duty officer May 12 at Methodist Northlake Hospital in Gary, Ind., ABC affiliate WLS reported May 13.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "HHS prepares for possible career staff reclassifications: Report",
-      "url": "https://www.beckershospitalreview.com/workforce/hhs-prepares-for-possible-career-staff-reclassifications-report/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-18",
-      "summary": "HHS is preparing to reclassify hundreds of senior staff members&#8217; roles under a new civil service category that would remove certain procedural protections and make them easier to fire, Politico reported May 15. The reclassifications could happen if President Donald Trump signs an executive order, an HHS official said in a statement shared with Becker&#8217;s [&#8230;] The post HHS prepares for possible career staff reclassifications: Report appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Huntsman Cancer Institute executive to retire after 29 years",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/huntsman-cancer-institute-executive-to-retire-after-29-years/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-18",
-      "summary": "Don Milligan, chief administrative officer of the Cancer Hospital at Huntsman Cancer Institute and University of Utah Health, is retiring after 29 years with the organization. Mr.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Penn State Health pushes back on employees&#8217; sterilization concerns: 5 notes",
-      "url": "https://www.beckershospitalreview.com/quality/patient-safety-outcomes/penn-state-health-pushes-back-on-employees-sterilization-concerns-5-notes/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-18",
-      "summary": "Hershey, Pa.-based Penn State Health&#8217;s Milton S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Why retrospective documentation review is becoming a liability — 4 takeaways",
-      "url": "https://www.beckershospitalreview.com/strategy/why-retrospective-documentation-review-is-becoming-a-liability-4-takeaways/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-18",
-      "summary": "Clinical documentation integrity teams have long relied on retrospective queries to close gaps in physician documentation. But as payers accelerate AI-driven claims review and increasingly deny diagnoses added to the chart after the clinical moment, that approach is becoming a liability — and the infrastructure built around it increasingly hard to justify.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "UT Dell Medical Center names 1st AI chief",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/ut-dell-medical-center-names-1st-ai-chief/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-18",
-      "summary": "Hongfang Liu, PhD, has been named the inaugural chief translational AI and informatics officer of UT Dell Medical Center, a soon-to-be-built academic medical center in Austin, Texas. Dr.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "UnitedHealth tracks AI use among some staff: Report",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/unitedhealth-tracks-ai-use-among-some-staff-report/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-18",
-      "summary": "UnitedHealth Group is monitoring some Optum staff’s AI use, sources familiar with the matter told&#160;Bloomberg. The company is checking whether services division workers query tools such as ChatGPT and Copilot at least once a day, the sources said.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "The integrated care model that can&#8217;t be ignored any longer",
-      "url": "https://www.beckershospitalreview.com/care-coordination/the-integrated-care-model-that-cant-be-ignored-any-longer/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-18",
-      "summary": "As medical-dental integration moves from concept to operational reality, Henderson, Nev.-based PDS Health is reimagining primary care around prevention and whole-person health.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "American physician tests positive for Ebola in Congo outbreak: 5 notes",
-      "url": "https://www.beckershospitalreview.com/quality/public-health/american-physician-tests-positive-for-ebola-in-congo-outbreak-5-notes/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-18",
-      "summary": "An American physician who has tested positive for Ebola is among seven Americans being transported out of the Democratic Republic of Congo amid an outbreak involving a strain with no approved treatments or vaccines. Here is what to know: 1.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: White House taps Amazon, GoodRx, and Mark Cuban to bolster TrumpRx",
-      "url": "https://www.statnews.com/2026/05/18/trumprx-adds-generic-drugs-amazon-pharmacy-mark-cuban-goodrx/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-05-18",
-      "summary": "Trump's drug discount platform adds 600 generic medications via major online pharmacies.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "With no approved vaccine for Ebola outbreak, experts weigh testing a long shot",
-      "url": "https://www.statnews.com/2026/05/18/ebola-outbreak-update-experts-weigh-use-merck-vaccine-ervebo/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-05-18",
-      "summary": "With no approved vaccine for the fast-growing Ebola outbreak in the DRC, experts weigh testing one with unknown protection.",
       "category": "general_market",
       "categoryLabel": "General Market"
     }
