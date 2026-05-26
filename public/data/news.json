@@ -1,82 +1,82 @@
 {
-  "lastUpdated": "2026-05-26T15:44:25.780Z",
+  "lastUpdated": "2026-05-26T18:34:45.512Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 5,
-    "healthySources": 5,
+    "staleSources": 3,
+    "healthySources": 7,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 213,
+        "articleCount": 207,
         "latestPublishedAt": "2026-05-26T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 137,
+        "articleCount": 138,
         "latestPublishedAt": "2026-05-26T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 72,
+        "articleCount": 74,
         "latestPublishedAt": "2026-05-26T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 41,
         "latestPublishedAt": "2026-05-26T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 17,
         "latestPublishedAt": "2026-05-26T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
-        "articleCount": 6,
-        "latestPublishedAt": "2026-05-21T00:00:00.000Z",
-        "staleHours": 135,
-        "status": "stale"
+        "articleCount": 8,
+        "latestPublishedAt": "2026-05-26T00:00:00.000Z",
+        "staleHours": 18,
+        "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 5,
         "latestPublishedAt": "2026-05-22T00:00:00.000Z",
-        "staleHours": 111,
+        "staleHours": 114,
         "status": "stale"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 5,
         "latestPublishedAt": "2026-05-22T00:00:00.000Z",
-        "staleHours": 111,
+        "staleHours": 114,
         "status": "stale"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 3,
         "latestPublishedAt": "2026-05-22T00:00:00.000Z",
-        "staleHours": 111,
+        "staleHours": 114,
         "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
-        "articleCount": 1,
-        "latestPublishedAt": "2026-05-19T00:00:00.000Z",
-        "staleHours": 183,
-        "status": "stale"
+        "articleCount": 2,
+        "latestPublishedAt": "2026-05-26T00:00:00.000Z",
+        "staleHours": 18,
+        "status": "ok"
       }
     ]
   },
@@ -95,11 +95,11 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 75
+      "count": 72
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 9
+      "count": 8
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
@@ -107,11 +107,11 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 144
+      "count": 146
     },
     "general_market": {
       "label": "General Market",
-      "count": 215
+      "count": 217
     }
   },
   "quality": {
@@ -127,7 +127,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 61,
+        "actual": 77,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -137,7 +137,7 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 5,
+        "actual": 3,
         "pass": false
       }
     }
@@ -189,6 +189,42 @@
       "publishedAt": "2026-05-26",
       "category": "general_market",
       "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Dialysis Catheter Kit Recall: Arrow International Removes Dialysis Catheter Kits Containing Merit Medical Splittable Sheath Introducers",
+      "summary": "Arrow International is removing dialysis catheter kits containing recalled Merit Medical Splittable Sheath Introducers",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/dialysis-catheter-kit-recall-arrow-international-removes-dialysis-catheter-kits-containing-merit",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-05-26",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "New data shows there is a nurse retention crisis, not a nurse shortage",
+      "summary": "Nearly 1.15 million registered nurses (RNs) with active licenses are not working as nurses, announced National Nurses United (NNU). NNU reached this number by comparing the latest Bureau of Labor Statistics data, released on May 15, with data covering the same period from the National Council of the State Boards of Nursing.",
+      "url": "https://www.nationalnursesunited.org/press/new-data-shows-there-is-a-nurse-retention-crisis-not-a-nurse-shortage",
+      "source": "National Nurses United RSS",
+      "sourceType": "rss",
+      "sourceId": "nnu_rss",
+      "publishedAt": "2026-05-26",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Manifold Recall: Medline Removes Namic Star Off Handle Manifolds",
+      "summary": "Particulates have the potential to be introduced into blood circulation and become lodged within blood vessels.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/manifold-recall-medline-removes-namic-star-handle-manifolds",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-05-26",
+      "category": "general_market",
+      "relevance": 98,
       "categoryLabel": "General Market"
     },
     {
@@ -264,94 +300,112 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "Louisiana universities partner on pharmacy training pathway",
-      "url": "https://www.beckershospitalreview.com/pharmacy/louisiana-universities-partner-on-pharmacy-training-pathway/",
+      "title": "Dr. Oz taps new CMS chief of staff",
+      "url": "https://www.beckershospitalreview.com/leadership/dr-oz-taps-new-chief-of-staff/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-05-26",
-      "summary": "Louisiana State University of Alexandria and the University of Louisiana at Monroe have established a new pathway program for students pursuing a career in pharmacy. The agreement allows Louisiana State University of Alexandria students enrolled in biology or chemistry bachelor&#8217;s degree programs with a preprofessional concentration to receive advising aligned with University of Louisiana at [&#8230;] The post Louisiana universities partner on pharmacy training pathway appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "summary": "CMS Administrator Mehmet Oz is revamping leadership roles at the agency, a spokesperson told Bloomberg May 23.&#160; Rebekah Armstrong has been named CMS&#8217; new chief of staff, according to the report.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "George Washington University, Universal Health Services reach final contract deal",
+      "url": "https://www.beckershospitalreview.com/quality/hospital-physician-relationships/george-washington-university-physician-group-reach-final-contract-deal/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-26",
+      "summary": "Washington, D.C.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Can Epic get any bigger?",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/can-epic-get-any-bigger/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-26",
+      "summary": "While Epic continued to get larger in 2025, the company had its slowest year of EHR market share growth over the past half-decade. But health system CIOs told Becker&#8217;s they predict the healthcare IT giant can keep expanding its reach, whether internationally or into other software products outside the traditional EHR.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "UHS behavioral health president resigns",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/uhs-behavioral-health-president-resigns/",
+      "title": "Select Medical, Carilion Clinic to build Virginia rehab hospital",
+      "url": "https://www.beckershospitalreview.com/uncategorized/select-medical-carilion-clinic-to-build-virginia-rehab-hospital/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-05-26",
-      "summary": "King of Prussia, Pa.-based Universal Health Services&#160;disclosed&#160;Matthew Peterson resigned from his roles as executive vice president and president of behavioral health, effective June 19, according to a May 18 Securities and Exchange Commission filing.",
+      "summary": "Mechanicsburg, Pa.-based Select Medical Corp.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
     {
-      "title": "Travel nurse market shows signs of stabilization: Survey",
-      "url": "https://www.beckershospitalreview.com/workforce/travel-nurse-market-shows-signs-of-stabilization-survey/",
+      "title": "4 medical device recalls to know",
+      "url": "https://www.beckershospitalreview.com/supply-chain/4-medical-device-recalls-to-know/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-05-26",
-      "summary": "The travel nurse staffing market continues to stabilize after the sharp growth and correction that followed the COVID-19 pandemic, though profitability pressures remain, according to findings from the annual SIA NATHO Travel Nurse Benchmarking Survey. The survey, published May 13, was completed by respondents in February and March.",
+      "summary": "The FDA has flagged four medical device recalls, corrections and early alerts affecting heart pump controllers, ventilators, automated compounding systems and thoracic stent grafts. Here are four recalls to know: 1.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "South Dakota system to rebrand post-Sanford Health merger",
+      "url": "https://www.beckershospitalreview.com/digital-marketing/south-dakota-system-to-rebrand-post-sanford-health-merger/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-26",
+      "summary": "Watertown, S.D.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "UW Medicine partners on imaging for cancer care",
+      "url": "https://www.beckershospitalreview.com/radiology/uw-medicine-partners-on-imaging-for-cancer-care/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-26",
+      "summary": "Seattle-based University of Washington Medicine&#8217;s radiology department and GE HealthCare have launched a strategic research collaboration focused on advancing CT and molecular imaging technologies for cardiology, oncology and theranostics. The organizations said the collaboration will focus on automating imaging workflows, accelerating clinical translation of imaging technologies and advancing personalized care models for cancer, cardiovascular disease [&#8230;] The post UW Medicine partners on imaging for cancer care appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Trump&#8217;s health tech agenda: 6 recent moves",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/trumps-health-tech-agenda-6-recent-moves/",
+      "title": "4 Massachusetts hospitals, universities to open nurse apprenticeships",
+      "url": "https://www.beckershospitalreview.com/quality/nursing/4-massachusetts-hospitals-universities-to-open-nurse-apprenticeships/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-05-26",
-      "summary": "The Trump administration has made a series of high-profile moves on health technology in the months since President Donald Trump&#8217;s second term took full shape. Here is a look at those moves: Trump postpones AI oversight executive order In May, President Trump postponed signing a planned executive order that would have expanded federal oversight of [&#8230;] The post Trump&#8217;s health tech agenda: 6 recent moves appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "summary": "Four Massachusetts hospitals and universities are partnering to launch nursing apprenticeships. The program is funded by $240,000 in grants from the Executive Office of Health and Human Services.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "No &#8216;certain&#8217; COVID-19 vaccine link to child deaths: FDA",
+      "url": "https://www.beckershospitalreview.com/quality/public-health/no-certain-covid-19-vaccine-link-to-child-deaths-fda/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-26",
+      "summary": "The FDA reviewed 96 reports of child deaths following COVID-19 vaccination and found no cases that were “certain” to be linked to the vaccines, according to a Dec. 5, 2025, memorandum made public this month.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Lee Health names clinical chief",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/lee-health-names-clinical-chief/",
+      "title": "FDA approves 1st chronic HDV treatment",
+      "url": "https://www.beckershospitalreview.com/pharmacy/fda-approves-1st-chronic-hdv-treatment/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-05-26",
-      "summary": "Lee Health, a five-hospital system based in Fort Myers, Fla., recently promoted Nariman Heshmati, MD, to chief clinical officer.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
+      "summary": "The FDA has approved Gilead Sciences’ Hepcludex to treat chronic hepatitis delta virus infection in adults without cirrhosis or with compensated cirrhosis. The approval marks the first FDA-approved treatment for chronic HDV infection.",
+      "category": "quality_safety",
+      "categoryLabel": "Quality & Safety"
     },
     {
-      "title": "Pomona Valley Hospital Medical Center clears its surgical backlog in 90 days with predictive scheduling",
-      "url": "https://www.beckershospitalreview.com/hospital-management-administration/pomona-valley-hospital-medical-center-clears-its-surgical-backlog-in-90-days-with-predictive-scheduling/",
-      "source": "Becker's Hospital Review",
+      "title": "STAT+: Praise for FDA’s acting commissioner",
+      "url": "https://www.statnews.com/2026/05/26/kyle-diamantas-fda-draws-praise-nih-leadership-vacuum-dc-diagnosis/?utm_campaign=rss",
+      "source": "STAT News",
       "publishedAt": "2026-05-26",
-      "summary": "Many U.S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "California hospital taps new CFO",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/california-hospital-taps-new-cfo-2/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-26",
-      "summary": "Drew Hartmann has been named CFO of Riverside (Calif.) Community Hospital, an affiliate of Nashville, Tenn.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "CVS sues Tennessee over PBM law",
-      "url": "https://www.beckershospitalreview.com/pharmacy/cvs-sues-tennessee-over-pbm-law/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-26",
-      "summary": "CVS Health has filed a federal lawsuit challenging the constitutionality of Tennessee&#8217;s recently passed Freedom, Access and Integrity in Registered Pharmacy Act, also known as the Fair Rx Act. The complaint, filed May 22 in the U.",
+      "summary": "Kyle Diamantas doesn't have the typical CV for an FDA commissioner, but he's earning early praise.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "How Texas Oncology’s San Antonio Region increased infusion volume 16% without adding staff or chairs",
-      "url": "https://www.beckershospitalreview.com/hospital-management-administration/how-texas-oncologys-san-antonio-region-increased-infusion-volume-16-without-adding-staff-or-chairs/",
-      "source": "Becker's Hospital Review",
+      "title": "STAT+: $775 billion, $1.2 billion, and $38k",
+      "url": "https://www.statnews.com/2026/05/26/medicaid-cuts-loom-health-insurance-cost-climbs-no-surprises-act/?utm_campaign=rss",
+      "source": "STAT News",
       "publishedAt": "2026-05-26",
-      "summary": "Infusion centers are caught between two forces that won&#8217;t relent: patient volumes that keep climbing and clinician pipelines that can&#8217;t keep pace. For many organizations, the instinct is to hire more nurses or expand physical capacity, but that answer isn&#8217;t always available.",
-      "category": "capacity_expansion",
-      "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "Cottage Hospital CEO&#8217;s tough decision reversed a -16% margin",
-      "url": "https://www.beckershospitalreview.com/finance/cottage-hospital-ceos-tough-decision-reversed-a-16-margin/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-26",
-      "summary": "Cottage Hospital in Woodsville, N.H.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
+      "summary": "Medicaid cuts stemming from Republicans' 2025 tax law are expected to be even bigger than forecast.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
     },
     {
       "title": "Trump is seeing doctors for his annual physical. What the public finds out is up to him",
@@ -471,6 +525,15 @@
       "categoryLabel": "Quality & Safety"
     },
     {
+      "title": "CVS sues to challenge Tennessee's new PBM law",
+      "url": "https://www.fiercehealthcare.com/payers/cvs-sues-challenge-tennessees-new-pbm-law",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-05-26",
+      "summary": "CVS has filed suit to challenge a Tennessee law that would bar pharmacy benefit managers from owning pharmacies in the state.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "Fierce Healthcare Layoff Tracker—Intermountain cuts 93 clinic staff; Innovaccer lays off 340 employees",
       "url": "https://www.fiercehealthcare.com/finance/fierce-healthcare-layoff-tracker-2026-job-cuts-eliminations-health-systems-hospitals",
       "source": "Fierce Healthcare",
@@ -505,6 +568,96 @@
       "summary": "NextGen Healthcare on why specialty practices that connect their technology are seeing real gains in efficiency, patient experience and revenue.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Louisiana universities partner on pharmacy training pathway",
+      "url": "https://www.beckershospitalreview.com/pharmacy/louisiana-universities-partner-on-pharmacy-training-pathway/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-26",
+      "summary": "Louisiana State University of Alexandria and the University of Louisiana at Monroe have established a new pathway program for students pursuing a career in pharmacy. The agreement allows Louisiana State University of Alexandria students enrolled in biology or chemistry bachelor&#8217;s degree programs with a preprofessional concentration to receive advising aligned with University of Louisiana at [&#8230;] The post Louisiana universities partner on pharmacy training pathway appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "UHS behavioral health president resigns",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/uhs-behavioral-health-president-resigns/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-26",
+      "summary": "King of Prussia, Pa.-based Universal Health Services&#160;disclosed&#160;Matthew Peterson resigned from his roles as executive vice president and president of behavioral health, effective June 19, according to a May 18 Securities and Exchange Commission filing.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Travel nurse market shows signs of stabilization: Survey",
+      "url": "https://www.beckershospitalreview.com/workforce/travel-nurse-market-shows-signs-of-stabilization-survey/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-26",
+      "summary": "The travel nurse staffing market continues to stabilize after the sharp growth and correction that followed the COVID-19 pandemic, though profitability pressures remain, according to findings from the annual SIA NATHO Travel Nurse Benchmarking Survey. The survey, published May 13, was completed by respondents in February and March.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Trump&#8217;s health tech agenda: 6 recent moves",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/trumps-health-tech-agenda-6-recent-moves/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-26",
+      "summary": "The Trump administration has made a series of high-profile moves on health technology in the months since President Donald Trump&#8217;s second term took full shape. Here is a look at those moves: Trump postpones AI oversight executive order In May, President Trump postponed signing a planned executive order that would have expanded federal oversight of [&#8230;] The post Trump&#8217;s health tech agenda: 6 recent moves appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Lee Health names clinical chief",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/lee-health-names-clinical-chief/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-26",
+      "summary": "Lee Health, a five-hospital system based in Fort Myers, Fla., recently promoted Nariman Heshmati, MD, to chief clinical officer.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Pomona Valley Hospital Medical Center clears its surgical backlog in 90 days with predictive scheduling",
+      "url": "https://www.beckershospitalreview.com/hospital-management-administration/pomona-valley-hospital-medical-center-clears-its-surgical-backlog-in-90-days-with-predictive-scheduling/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-26",
+      "summary": "Many U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "California hospital taps new CFO",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/california-hospital-taps-new-cfo-2/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-26",
+      "summary": "Drew Hartmann has been named CFO of Riverside (Calif.) Community Hospital, an affiliate of Nashville, Tenn.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "CVS sues Tennessee over PBM law",
+      "url": "https://www.beckershospitalreview.com/pharmacy/cvs-sues-tennessee-over-pbm-law/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-26",
+      "summary": "CVS Health has filed a federal lawsuit challenging the constitutionality of Tennessee&#8217;s recently passed Freedom, Access and Integrity in Registered Pharmacy Act, also known as the Fair Rx Act. The complaint, filed May 22 in the U.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "How Texas Oncology’s San Antonio Region increased infusion volume 16% without adding staff or chairs",
+      "url": "https://www.beckershospitalreview.com/hospital-management-administration/how-texas-oncologys-san-antonio-region-increased-infusion-volume-16-without-adding-staff-or-chairs/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-26",
+      "summary": "Infusion centers are caught between two forces that won&#8217;t relent: patient volumes that keep climbing and clinician pipelines that can&#8217;t keep pace. For many organizations, the instinct is to hire more nurses or expand physical capacity, but that answer isn&#8217;t always available.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "Cottage Hospital CEO&#8217;s tough decision reversed a -16% margin",
+      "url": "https://www.beckershospitalreview.com/finance/cottage-hospital-ceos-tough-decision-reversed-a-16-margin/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-05-26",
+      "summary": "Cottage Hospital in Woodsville, N.H.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
     },
     {
       "title": "ACAP warns final ACA rule adds further uncertainty to a market in flux",
@@ -2241,18 +2394,6 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "Early Alert: Heart Pump Controller Issue from Abiomed",
-      "summary": "A software error may cause the Automated Impella Controller to restart when used in conjunction with left ventricular Impella devices.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-heart-pump-controller-issue-abiomed",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-05-21",
-      "category": "general_market",
-      "relevance": 98,
-      "categoryLabel": "General Market"
-    },
-    {
       "title": "Automated Compounding System Recall: Omnicell Removes Syringe Labels Used with the i.v.STATION Automated Compounding System",
       "summary": "Certain labels used with i.v.STATION automated compounding systems may not be detected, leading to mislabeled sterile filled syringes.",
       "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/automated-compounding-system-recall-omnicell-removes-syringe-labels-used-ivstation-automated",
@@ -2263,6 +2404,18 @@
       "category": "ai_tech",
       "relevance": 98,
       "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Early Alert: Heart Pump Controller Issue from Abiomed",
+      "summary": "A software error may cause the Automated Impella Controller to restart when used in conjunction with left ventricular Impella devices.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-heart-pump-controller-issue-abiomed",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-05-21",
+      "category": "general_market",
+      "relevance": 98,
+      "categoryLabel": "General Market"
     },
     {
       "title": "UHS 8-K filing - Universal Health Services, Inc.",
@@ -4681,150 +4834,6 @@
       "summary": "Stick with this tracker for the latest layoff and workforce updates from across healthcare.",
       "category": "closures_layoffs",
       "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "Average ACA deductible increases 37% in 2026: KFF",
-      "url": "https://www.beckershospitalreview.com/finance/average-aca-deductible-increases-37-in-2026-kff/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-19",
-      "summary": "The average ACA deductible&#160;has jumped&#160;37%, an increase of more than $1,000 per person, from 2025 to 2026, according to a KFF analysis published May 19. The analysis pulls from CMS and state open enrollment reports, along with KFF survey data and Wakely Consulting Group estimates.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Supreme Court lets Medicare drug price negotiations stand: What it means for health systems",
-      "url": "https://www.beckershospitalreview.com/pharmacy/supreme-court-lets-medicare-drug-price-negotiations-stand-what-it-means-for-health-systems/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-19",
-      "summary": "The U.S.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "25 states sue to block federal student loan caps: 5 notes",
-      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/25-states-sue-to-block-federal-student-loan-caps-5-notes/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-19",
-      "summary": "Attorneys general from 25 states and the District of Columbia have filed a lawsuit against the Trump administration to block an Education Department rule that limits which degree programs qualify for higher federal student loan limits.&#160; The rule — finalized April 30 and set to take effect July 1 — classifies physician assistant, nurse anesthesia [&#8230;] The post 25 states sue to block federal student loan caps: 5 notes appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "CDC alerts clinicians about hantavirus testing",
-      "url": "https://www.beckershospitalreview.com/quality/public-health/cdc-alerts-clinicians-about-hantavirus-testing/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-19",
-      "summary": "As a Nebraska health system monitors 18 passengers for Andes hantavirus and several states track potential exposure, the CDC outlined three hantaviruses U.S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "AMA taps new COO from UnitedHealth",
-      "url": "https://www.beckershospitalreview.com/uncategorized/ama-taps-new-coo-from-unitedhealth/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-19",
-      "summary": "John Wigneswaran, MD, has been named chief operating officer of the American Medical Association, effective June 1, according to a May 19 news release shared with Becker&#8217;s. In his new role, Dr.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Alabama hospital expands MRI access for cardiac patients",
-      "url": "https://www.beckershospitalreview.com/radiology/alabama-hospital-expands-mri-access-for-cardiac-patients/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-19",
-      "summary": "Huntsville (Ala.) Hospital Health System is expanding MRI access for patients with pacemakers and implantable defibrillators across North Alabama, according to a May 13 report from WAAY 31.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "The Ebola outbreak: 11 things hospital leaders need to know",
-      "url": "https://www.beckershospitalreview.com/quality/public-health/the-ebola-outbreak-10-things-hospital-leaders-need-to-know/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-19",
-      "summary": "Ebola is making international headlines again after the World Health Organization declared a global public health emergency, but the CDC said the risk to the U.S.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Maryland caps Ozempic prices for state, local government employee plans",
-      "url": "https://www.beckershospitalreview.com/glp-1s/maryland-caps-ozempic-prices-for-state-local-government-employee-plans/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-19",
-      "summary": "Maryland’s Prescription Drug Affordability Board has voted to place an upper payment limit on Ozempic for state and local government health plans, a first for the nation, and a move supporters said could save about $5.8 million annually.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Senate HELP Chair Bill Cassidy's primary loss casts congressional health policy, leadership confirmations on new trajectory",
-      "url": "https://www.fiercehealthcare.com/regulatory/senate-help-chair-bill-cassidys-primary-loss-casts-congressional-health-policy",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-19",
-      "summary": "Louisiana Sen. Bill Cassidy, M.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Two-thirds of health leaders concerned about Medicare, Medicaid cuts’ impact on business operations",
-      "url": "https://www.fiercehealthcare.com/finance/67-health-leaders-concerned-about-medicare-medicaid-cuts-impact-business-operations-retarus",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-19",
-      "summary": "If potential reimbursement cuts exceed 10%, respondents say it will have negative impacts on staffing decisions and technological investments.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Health system revenue heads increasingly turning their attention to patients' share of the bill",
-      "url": "https://www.fiercehealthcare.com/providers/health-system-revenue-heads-increasingly-turning-their-attention-patients-share-bill",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-19",
-      "summary": "The portion of survey respondents who named patient balances as their single top priority nearly doubled from 2025 to 2026, reflecting \"a new financial reality\" ushered by greater premiums, high-deductible plans and stricter Medicaid eligibility.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Psychedelic Therapies Are Almost Here. The Infrastructure Isn't.",
-      "url": "https://www.fiercehealthcare.com/sponsored/psychedelic-therapies-are-almost-here-infrastructure-isnt",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-19",
-      "summary": "Psychedelic-assisted therapy is closer to approval than most health systems realize.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Turn Language Access into an Operational Advantage",
-      "url": "https://www.fiercehealthcare.com/sponsored/turn-language-access-operational-advantage",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-19",
-      "summary": "Language access affects more than compliance. It impacts throughput, readmissions, provider efficiency, patient satisfaction, and cost.",
-      "category": "quality_safety",
-      "categoryLabel": "Quality & Safety"
-    },
-    {
-      "title": "Collette Health and Prime Healthcare Partner to Transform Patient Safety and Advance Virtual Nursing Capabilities",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/innovation/collette-health-and-prime-healthcare-partner-to-transform-patient-safety-and-advance-virtual-nursing-capabilities/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-19",
-      "summary": "Health system leverages virtual sitting success as strategic foundation for comprehensive virtual care transformation NOBLESVILLE, Ind. – [May 19th, 0800 ET] – Collette Health, ranked #1 in the 2025 and 2026 Best in KLAS Virtual Sitting &#38; Nursing category, today announced a strategic partnership with Prime Healthcare, the fifth-largest for-profit health system in the United [&#8230;] The post Collette Health and Prime Healthcare Partner to Transform Patient Safety and Advance Virtual Nursing Capabilities appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "quality_safety",
-      "categoryLabel": "Quality & Safety"
-    },
-    {
-      "title": "CMS pulls back limits on non-standard ACA plans in final rule",
-      "url": "https://www.fiercehealthcare.com/regulatory/cms-pulls-back-limits-non-standard-aca-plans-final-rule",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-19",
-      "summary": "The Trump administration has finalized annual regulations governing the Affordable Care Act's exchanges, including a plan that would pull back limits on non-standardized plan options offered by insurers.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Supply costs, payer challenges drag CommonSpirit Health to -5.8% operating margin in fiscal Q3",
-      "url": "https://www.fiercehealthcare.com/providers/commonspirit-shoulders-58-operating-margin-fiscal-q3",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-19",
-      "summary": "Operating performance at the 137-hospital nonprofit system took a dive even before the recorded impact of a multi-billion-dollar decoupling from Tenet's revenue cycle business.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
     }
   ]
 }
