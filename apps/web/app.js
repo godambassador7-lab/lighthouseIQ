@@ -2743,26 +2743,42 @@ initHelpSection();
 
 // ==================== COLLAPSIBLE SECTIONS ====================
 const initCollapsibleSections = () => {
+  const toggleSection = (section, toggle) => {
+    if (!section) return;
+    section.classList.toggle('collapsed');
+    const isCollapsed = section.classList.contains('collapsed');
+    if (toggle) {
+      const label = toggle.querySelector('.section-toggle-label');
+      const icon = toggle.querySelector('.section-toggle-icon');
+      toggle.setAttribute('aria-expanded', String(!isCollapsed));
+      if (label) label.textContent = isCollapsed ? 'Expand' : 'Collapse';
+      if (icon) icon.textContent = isCollapsed ? '+' : '-';
+    }
+    if (!isCollapsed && section.classList.contains('news-feed-section')) {
+      requestAnimationFrame(refreshNewsFeedWindow);
+    }
+  };
+
   document.querySelectorAll('section[data-collapsible="true"]').forEach(section => {
     const toggle = section.querySelector('.section-toggle');
     if (!toggle || toggle.dataset.boundToggle === 'true') return;
-    const label = toggle.querySelector('.section-toggle-label');
-    const icon = toggle.querySelector('.section-toggle-icon');
 
     toggle.dataset.boundToggle = 'true';
-    toggle.addEventListener('click', () => {
-      section.classList.toggle('collapsed');
-      const isCollapsed = section.classList.contains('collapsed');
-      toggle.setAttribute('aria-expanded', String(!isCollapsed));
-      if (label) label.textContent = isCollapsed ? 'Expand' : 'Collapse';
-      if (icon) icon.textContent = isCollapsed ? '+' : '–';
-      if (!isCollapsed && section.classList.contains('news-feed-section')) {
-        requestAnimationFrame(refreshNewsFeedWindow);
-      }
+    toggle.addEventListener('click', (event) => {
+      event.stopPropagation();
+      toggleSection(section, toggle);
     });
+
+    const header = section.querySelector('.section-header');
+    if (header && header.dataset.boundToggle !== 'true') {
+      header.dataset.boundToggle = 'true';
+      header.addEventListener('click', (event) => {
+        if (event.target.closest('.section-toggle')) return;
+        toggleSection(section, toggle);
+      });
+    }
   });
 };
-
 const initStrategicReview = () => {
   const toggleBtn = document.getElementById('strategic-toggle');
   const section = document.querySelector('.strategic-review-section');
