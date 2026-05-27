@@ -375,10 +375,12 @@ const handleLogin = async (e) => {
   const password = readFieldValue(passwordField) || readFieldValue(legacyPasscodeField);
   const loginBtn = form?.querySelector('button[type="submit"]');
 
-  if (!email || !password) {
-    setLoginError('Please enter your email and password.');
+  if (!password) {
+    setLoginError('Please enter your password or passcode.');
     return;
   }
+
+  const emailForAuth = email || 'passcode@local';
 
   // Disable button during request
   if (loginBtn) {
@@ -391,7 +393,7 @@ const handleLogin = async (e) => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
-      body: JSON.stringify({ email, password })
+      body: JSON.stringify({ email: emailForAuth, password })
     });
 
     const data = await response.json().catch(() => ({}));
@@ -6578,3 +6580,4 @@ if (document.fonts && document.fonts.ready) {
 
 // Auto-init if already authenticated
 bootstrapAuth();
+
