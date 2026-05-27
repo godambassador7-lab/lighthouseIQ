@@ -809,7 +809,130 @@ const buildQuery = () => {
   return params.toString();
 };
 
+let staticDataMode = false;
+let staticNoticesCache = null;
+let staticStatesCache = null;
+const API_ROUTE_PATTERN = /^\/(health|states|notices|fetch)(\?|$)/i;
+
+const isApiRoute = (path) => API_ROUTE_PATTERN.test(String(path || ''));
+
+const noticeEventDateMs = (notice) => {
+  const raw = notice?.notice_date || notice?.effective_date || notice?.retrieved_at || '';
+  const ms = Date.parse(raw);
+  return Number.isFinite(ms) ? ms : -1;
+};
+
+const parseLimit = (rawLimit) => {
+  if (!rawLimit || rawLimit === 'all') return null;
+  const n = Number(rawLimit);
+  return Number.isFinite(n) && n > 0 ? Math.floor(n) : null;
+};
+
+const loadStaticNotices = async () => {
+  if (Array.isArray(staticNoticesCache)) return staticNoticesCache;
+  const res = await fetch('/data/notices.json', { credentials: 'omit' });
+  if (!res.ok) throw new Error(`Static notices unavailable: ${res.status}`);
+  const data = await res.json();
+  staticNoticesCache = Array.isArray(data?.notices) ? data.notices : [];
+  return staticNoticesCache;
+};
+
+const loadStaticStates = async () => {
+  if (Array.isArray(staticStatesCache)) return staticStatesCache;
+  const res = await fetch('/data/states.json', { credentials: 'omit' });
+  if (!res.ok) throw new Error(`Static states unavailable: ${res.status}`);
+  const data = await res.json();
+  staticStatesCache = Array.isArray(data?.states) ? data.states : [];
+  return staticStatesCache;
+};
+
+const buildStateCountsFromNotices = (notices) => {
+  const counts = new Map();
+  notices.forEach((n) => {
+    const st = String(n?.state || '').trim().toUpperCase();
+    if (!st) return;
+    counts.set(st, (counts.get(st) || 0) + 1);
+  });
+  return Array.from(counts.entries())
+    .map(([state, count]) => ({ state, count }))
+    .sort((a, b) => a.state.localeCompare(b.state));
+};
+
+const applyStaticNoticesQuery = (allNotices, params) => {
+  let notices = Array.isArray(allNotices) ? [...allNotices] : [];
+  const recruiterFocus = params.get('recruiterFocus');
+  const org = String(params.get('org') || '').trim().toLowerCase();
+  const region = String(params.get('region') || '').trim();
+  const stateParam = String(params.get('state') || '').trim();
+  const since = String(params.get('since') || '').trim();
+  const minScore = Number(params.get('minScore') || 0);
+  const order = String(params.get('order') || '').trim().toLowerCase();
+  const limit = parseLimit(params.get('limit'));
+
+  if (recruiterFocus === '1') {
+    notices = notices.filter(isHealthcareNotice);
+  }
+  if (org) {
+    notices = notices.filter((n) => String(n?.employer_name || '').toLowerCase().includes(org));
+  }
+  if (region && REGION_STATES[region]) {
+    const allowed = new Set(REGION_STATES[region]);
+    notices = notices.filter((n) => allowed.has(String(n?.state || '').toUpperCase()));
+  }
+  if (stateParam) {
+    const selected = new Set(stateParam.split(',').map((s) => s.trim().toUpperCase()).filter(Boolean));
+    notices = notices.filter((n) => selected.has(String(n?.state || '').toUpperCase()));
+  }
+  if (since) {
+    const sinceMs = Date.parse(since);
+    if (Number.isFinite(sinceMs)) {
+      notices = notices.filter((n) => noticeEventDateMs(n) >= sinceMs);
+    }
+  }
+  if (Number.isFinite(minScore) && minScore > 0) {
+    notices = notices.filter((n) => Number(n?.nursing_score || 0) >= minScore);
+  }
+  if (order === 'recent') {
+    notices.sort((a, b) => noticeEventDateMs(b) - noticeEventDateMs(a));
+  }
+  if (limit) notices = notices.slice(0, limit);
+  return notices;
+};
+
+const fetchStaticFallback = async (path) => {
+  const [base, queryString = ''] = String(path || '').split('?');
+  const params = new URLSearchParams(queryString);
+  if (base === '/health') {
+    return { ok: true, db: false, mode: 'static' };
+  }
+  if (base === '/fetch') {
+    return { success: false, error: 'Live fetch unavailable in static mode' };
+  }
+  if (base === '/notices') {
+    const allNotices = await loadStaticNotices();
+    return { notices: applyStaticNoticesQuery(allNotices, params) };
+  }
+  if (base === '/states') {
+    if (params.get('recruiterFocus') === '1') {
+      const allNotices = await loadStaticNotices();
+      return { states: buildStateCountsFromNotices(allNotices.filter(isHealthcareNotice)) };
+    }
+    try {
+      const staticStates = await loadStaticStates();
+      if (staticStates.length) return { states: staticStates };
+    } catch {
+      // fallback to computed state counts from notices below
+    }
+    const allNotices = await loadStaticNotices();
+    return { states: buildStateCountsFromNotices(allNotices) };
+  }
+  throw new Error(`No static fallback for ${base}`);
+};
+
 const fetchJson = async (path, opts = {}) => {
+  if (staticDataMode && isApiRoute(path)) {
+    return fetchStaticFallback(path);
+  }
   const method = (opts.method || 'GET').toUpperCase();
   const headers = {
     ...(opts.headers || {})
@@ -832,7 +955,13 @@ const fetchJson = async (path, opts = {}) => {
     clearAuthState();
     throw new Error('Session expired. Please log in again.');
   }
-  if (!res.ok) throw new Error(`Request failed: ${res.status}`);
+  if (!res.ok) {
+    if (res.status === 404 && isApiRoute(path)) {
+      staticDataMode = true;
+      return fetchStaticFallback(path);
+    }
+    throw new Error(`Request failed: ${res.status}`);
+  }
   return res.json();
 };
 
@@ -1176,7 +1305,11 @@ const loadHealth = async () => {
     const data = await fetchJson('/health');
     apiHasDb = Boolean(data.db);
     if (data.ok) {
-      setStatus(data.db ? 'API connected to Postgres' : 'API running without DB', true);
+      if (data.mode === 'static') {
+        setStatus('Static data mode (API offline)', true);
+      } else {
+        setStatus(data.db ? 'API connected to Postgres' : 'API running without DB', true);
+      }
     } else {
       setStatus('API error', false);
     }
