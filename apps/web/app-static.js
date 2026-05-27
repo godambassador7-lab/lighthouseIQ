@@ -278,6 +278,7 @@ let latestTalentUpdatedAt = null;
 let freeMarketSignals = null;
 let marketReadinessIntegration = null;
 let marketRequiredMetrics = null;
+let facilityMarketFeatures = null;
 
 const SPECIALTY_SURPLUS_MAX_STALE_HOURS = 24;
 const SPECIALTY_SURPLUS_MIN_BUCKET_SAMPLES = 3;
@@ -1560,6 +1561,14 @@ const loadMarketRequiredMetrics = async () => {
   }
 };
 
+const loadFacilityMarketFeatures = async () => {
+  try {
+    facilityMarketFeatures = await fetchJson('/data/facility-market-features.json');
+  } catch {
+    facilityMarketFeatures = null;
+  }
+};
+
 const renderSpecialtySurplus = () => {
   if (!specialtySurplusList) return;
   const ageHours = getSpecialtySurplusAgeHours();
@@ -1594,7 +1603,8 @@ const renderSpecialtySurplus = () => {
     const state = String(entry?.state || '').trim().toUpperCase();
     const estBase = Number(entry?.estimated_nurses_available || 0);
     const stateWeight = Number(freeMarketSignals?.stateFactors?.[state]?.combinedWeight || 1);
-    const est = Math.max(0, Math.round(estBase * stateWeight));
+    const facilityStateWeight = Number(facilityMarketFeatures?.stateFeatures?.[state]?.distressWeight || 1);
+    const est = Math.max(0, Math.round(estBase * stateWeight * facilityStateWeight));
     if (est <= 0) return;
     totalRows += 1;
     const specialties = Array.isArray(entry?.specialties) ? entry.specialties : [];
@@ -1661,6 +1671,9 @@ const renderSpecialtySurplus = () => {
     : 'HRSA/BLS/NCSBN/CMS source health unavailable';
   specialtySurplusList.innerHTML += `<div class="specialty-surplus-meta">Source: Live talent opportunities | Coverage ${Math.round(mappingCoverage * 100)}% | Mapped ${mappedRows}/${totalRows || 0} | Unmapped ${unmappedRows} | Duplicates removed ${duplicateRows} | Excluded ${excludedRows} | Freshness ${freshnessLabel}</div>`;
   specialtySurplusList.innerHTML += `<div class="specialty-surplus-meta">Source health: ${sourceLine}</div>`;
+  if (facilityMarketFeatures?.summary) {
+    specialtySurplusList.innerHTML += `<div class="specialty-surplus-meta">Facility joins: ${Number(facilityMarketFeatures.summary.matchedFacilities || 0).toLocaleString()}/${Number(facilityMarketFeatures.summary.totalFacilities || 0).toLocaleString()} matched (top facilities indexed)</div>`;
+  }
   if (marketReadinessIntegration?.summary) {
     const req = Array.isArray(marketReadinessIntegration.requiredDatasets) ? marketReadinessIntegration.requiredDatasets : [];
     const pending = req.filter((d) => !d.integrated).map((d) => d.label);
@@ -1681,6 +1694,7 @@ const loadInsights = async () => {
   await loadFreeMarketSignals();
   await loadMarketReadinessIntegration();
   await loadMarketRequiredMetrics();
+  await loadFacilityMarketFeatures();
   try {
     const [alerts, geo, talent, employers] = await Promise.all([
       fetchJson('/insights/alerts'),
