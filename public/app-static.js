@@ -273,7 +273,11 @@ let taMetrics = {
 let taActions = [];
 let taRolloutState = {};
 let latestTalentOpportunities = [];
-let specialtySurplusMode = 'loading';
+let specialtySurplusMode = 'unavailable';
+let latestTalentUpdatedAt = null;
+
+const SPECIALTY_SURPLUS_MAX_STALE_HOURS = 24;
+const SPECIALTY_SURPLUS_MIN_BUCKET_SAMPLES = 3;
 
 const REQUIRED_PROGRAM_ACCREDITORS = ['CCNE', 'ACEN', 'CNEA'];
 
@@ -1371,6 +1375,7 @@ const renderTalent = (data) => {
   if (!talentList) return;
   const opportunities = data?.opportunities ?? [];
   latestTalentOpportunities = opportunities;
+  latestTalentUpdatedAt = data?.lastUpdated || data?.updatedAt || null;
   specialtySurplusMode = 'live_talent';
   const top = opportunities
     .sort((a, b) => b.estimated_nurses_available - a.estimated_nurses_available)
@@ -1465,50 +1470,70 @@ const findSpecialtyBucket = (value) => {
   return null;
 };
 
+const getSpecialtySurplusAgeHours = () => {
+  if (!latestTalentUpdatedAt) return null;
+  const timestamp = new Date(latestTalentUpdatedAt).getTime();
+  if (!Number.isFinite(timestamp)) return null;
+  return Math.max(0, Math.floor((Date.now() - timestamp) / (1000 * 60 * 60)));
+};
+
+const specialtyConfidenceLabel = (score) => {
+  if (score >= 80) return 'High';
+  if (score >= 60) return 'Medium';
+  return 'Low';
+};
+
 const renderSpecialtySurplus = () => {
   if (!specialtySurplusList) return;
-  const totals = new Map(SURPLUS_SPECIALTY_ORDER.map((key) => [key, 0]));
-
-  if (Array.isArray(latestTalentOpportunities) && latestTalentOpportunities.length) {
-    latestTalentOpportunities.forEach((entry) => {
-      const est = Number(entry?.estimated_nurses_available || 0);
-      const specialties = Array.isArray(entry?.specialties) ? entry.specialties : [];
-      const buckets = [...new Set(specialties.map(findSpecialtyBucket).filter(Boolean))];
-      if (!buckets.length || est <= 0) return;
-      const base = Math.floor(est / buckets.length);
-      let remainder = est % buckets.length;
-      buckets.forEach((bucket) => {
-        const plus = remainder > 0 ? 1 : 0;
-        if (remainder > 0) remainder -= 1;
-        totals.set(bucket, (totals.get(bucket) || 0) + base + plus);
-      });
-    });
-  } else {
-    specialtySurplusMode = 'notice_proxy';
-    (currentNotices || []).forEach((notice) => {
-      const specialties = parseMaybeJson(notice?.nursing_specialties);
-      const buckets = [...new Set(specialties.map(findSpecialtyBucket).filter(Boolean))];
-      if (!buckets.length) return;
-      const affected = Number(notice?.employees_affected || notice?.affected_workers || notice?.affected || 0);
-      const est = Math.max(1, Math.round((affected || 1) * 0.2));
-      const base = Math.floor(est / buckets.length);
-      let remainder = est % buckets.length;
-      buckets.forEach((bucket) => {
-        const plus = remainder > 0 ? 1 : 0;
-        if (remainder > 0) remainder -= 1;
-        totals.set(bucket, (totals.get(bucket) || 0) + base + plus);
-      });
-    });
+  const ageHours = getSpecialtySurplusAgeHours();
+  const isStale = ageHours !== null && ageHours > SPECIALTY_SURPLUS_MAX_STALE_HOURS;
+  if (!Array.isArray(latestTalentOpportunities) || !latestTalentOpportunities.length || isStale) {
+    specialtySurplusMode = 'unavailable';
+    const staleNote = isStale ? ` Last update is ${ageHours}h old.` : '';
+    specialtySurplusList.innerHTML = `<div class="empty-state">Live specialty surplus unavailable until fresh talent opportunities load.${staleNote}</div>`;
+    return;
   }
 
+  const totals = new Map(SURPLUS_SPECIALTY_ORDER.map((key) => [key, 0]));
+  const bucketSampleCounts = new Map(SURPLUS_SPECIALTY_ORDER.map((key) => [key, 0]));
+  const bucketNoticeCounts = new Map(SURPLUS_SPECIALTY_ORDER.map((key) => [key, 0]));
+  let totalRows = 0;
+  let mappedRows = 0;
+
+  latestTalentOpportunities.forEach((entry) => {
+    const est = Number(entry?.estimated_nurses_available || 0);
+    if (est <= 0) return;
+    totalRows += 1;
+    const specialties = Array.isArray(entry?.specialties) ? entry.specialties : [];
+    const buckets = [...new Set(specialties.map(findSpecialtyBucket).filter(Boolean))];
+    if (!buckets.length) return;
+    mappedRows += 1;
+    const base = Math.floor(est / buckets.length);
+    let remainder = est % buckets.length;
+    buckets.forEach((bucket) => {
+      const plus = remainder > 0 ? 1 : 0;
+      if (remainder > 0) remainder -= 1;
+      totals.set(bucket, (totals.get(bucket) || 0) + base + plus);
+      bucketSampleCounts.set(bucket, (bucketSampleCounts.get(bucket) || 0) + 1);
+      bucketNoticeCounts.set(bucket, (bucketNoticeCounts.get(bucket) || 0) + Number(entry?.notices_count || 0));
+    });
+  });
+
+  const mappingCoverage = totalRows > 0 ? mappedRows / totalRows : 0;
+
   const ranked = SURPLUS_SPECIALTY_ORDER
-    .map((bucket) => ({ bucket, count: totals.get(bucket) || 0 }))
-    .filter((row) => row.count > 0)
+    .map((bucket) => ({
+      bucket,
+      count: totals.get(bucket) || 0,
+      samples: bucketSampleCounts.get(bucket) || 0,
+      noticeCount: bucketNoticeCounts.get(bucket) || 0
+    }))
+    .filter((row) => row.count > 0 && row.samples >= SPECIALTY_SURPLUS_MIN_BUCKET_SAMPLES)
     .sort((a, b) => b.count - a.count)
     .slice(0, 8);
 
   if (!ranked.length) {
-    specialtySurplusList.innerHTML = '<div class="empty-state">No specialty surplus signals yet.</div>';
+    specialtySurplusList.innerHTML = `<div class="empty-state">Insufficient live specialty sample size. Need ${SPECIALTY_SURPLUS_MIN_BUCKET_SAMPLES}+ mapped records per specialty.</div>`;
     return;
   }
 
@@ -1516,17 +1541,15 @@ const renderSpecialtySurplus = () => {
     <div class="insight-row">
       <div>
         <div class="insight-title">${SURPLUS_SPECIALTY_LABELS[row.bucket] || row.bucket}</div>
-        <div class="specialty-surplus-meta">Estimated available pool</div>
+        <div class="specialty-surplus-meta">${row.samples} mapped records • ${row.noticeCount} notices • Confidence ${specialtyConfidenceLabel(Math.round((Math.min(1, row.samples / 8) * 0.4 + Math.min(1, mappingCoverage / 0.7) * 0.3 + (ageHours === null ? 0.2 : Math.max(0, 1 - ageHours / SPECIALTY_SURPLUS_MAX_STALE_HOURS) * 0.3)) * 100))}</div>
       </div>
       <div>
         <div class="insight-pill">${Math.round(row.count).toLocaleString()}</div>
       </div>
     </div>
   `).join('');
-  const modeLabel = specialtySurplusMode === 'live_talent'
-    ? 'Source: Live talent opportunities'
-    : 'Source: Notice proxy model (lower confidence)';
-  specialtySurplusList.innerHTML += `<div class="specialty-surplus-meta">${modeLabel}</div>`;
+  const freshnessLabel = ageHours === null ? 'age unknown' : `${ageHours}h old`;
+  specialtySurplusList.innerHTML += `<div class="specialty-surplus-meta">Source: Live talent opportunities • Coverage ${Math.round(mappingCoverage * 100)}% • Freshness ${freshnessLabel}</div>`;
 };
 const loadInsights = async () => {
   try {
