@@ -1673,6 +1673,9 @@ const renderSpecialtySurplus = () => {
   specialtySurplusList.innerHTML += `<div class="specialty-surplus-meta">Source health: ${sourceLine}</div>`;
   if (facilityMarketFeatures?.summary) {
     specialtySurplusList.innerHTML += `<div class="specialty-surplus-meta">Facility joins: ${Number(facilityMarketFeatures.summary.matchedFacilities || 0).toLocaleString()}/${Number(facilityMarketFeatures.summary.totalFacilities || 0).toLocaleString()} matched (top facilities indexed)</div>`;
+    const providerLikeCoverage = Number(facilityMarketFeatures.summary.healthcareProviderLikeCoveragePct || 0);
+    const hospitalActionableCoverage = Number(facilityMarketFeatures.summary.healthcareHospitalActionableCoveragePct || 0);
+    specialtySurplusList.innerHTML += `<div class="specialty-surplus-meta">Live healthcare join coverage: ${providerLikeCoverage.toFixed(1)}% provider-like | ${hospitalActionableCoverage.toFixed(1)}% hospital-actionable</div>`;
   }
   if (marketReadinessIntegration?.summary) {
     const req = Array.isArray(marketReadinessIntegration.requiredDatasets) ? marketReadinessIntegration.requiredDatasets : [];

@@ -63,6 +63,14 @@ const PROVIDER_HINTS = [
   'hospital', 'medical center', 'health system', 'clinic', 'behavioral health', 'rehab',
   'urgent care', 'children s', 'st ', 'saint ', 'memorial', 'community hospital'
 ];
+const HOSPITAL_ACTIONABLE_HINTS = [
+  'hospital', 'medical center', 'health system', 'regional medical', 'university hospital',
+  'children s hospital', 'rehabilitation hospital', 'rehab hospital', 'critical access hospital'
+];
+const NON_FACILITY_PROVIDER_HINTS = [
+  'health plan', 'insurance', 'diagnostic', 'diagnostics', 'laboratory', 'laboratories',
+  'pharmacy benefit', 'home care', 'home health', 'hospice', 'staffing', 'resources', 'mso'
+];
 
 const isLikelyHealthcareNotice = (notice) => {
   const text = `${notice?.employer_name || ''} ${notice?.facility_name || ''} ${notice?.parent_system || ''}`.toLowerCase();
@@ -125,6 +133,13 @@ const isLikelyProviderEntity = (text) => {
   if (!t) return false;
   if (PROVIDER_HINTS.some((h) => t.includes(h))) return true;
   return !isLikelyVendorHealthcareEntity(t) && HEALTHCARE_HINTS.some((h) => t.includes(h));
+};
+
+const isHospitalActionableEntity = (text) => {
+  const t = normalizeText(text || '');
+  if (!t) return false;
+  if (NON_FACILITY_PROVIDER_HINTS.some((h) => t.includes(h))) return false;
+  return HOSPITAL_ACTIONABLE_HINTS.some((h) => t.includes(h));
 };
 
 const extractNoticeMatchCandidates = (notice) => {
@@ -309,6 +324,9 @@ let healthcareHighConfidenceCount = 0;
 let healthcareProviderLikeCount = 0;
 let healthcareProviderLikeMatchedCount = 0;
 let healthcareProviderLikeHighConfidenceCount = 0;
+let healthcareHospitalActionableCount = 0;
+let healthcareHospitalActionableMatchedCount = 0;
+let healthcareHospitalActionableHighConfidenceCount = 0;
 
 noticeRows.forEach((n) => {
   const state = String(n?.state || '').trim().toUpperCase();
@@ -330,9 +348,22 @@ noticeRows.forEach((n) => {
   const providerLike = isLikelyProviderEntity(primaryCandidate) || matchCandidates.some((c) => isLikelyProviderEntity(c));
   const vendorLike = isLikelyVendorHealthcareEntity(facilityRaw) || isLikelyVendorHealthcareEntity(n?.employer_name || '');
   const providerTargetPresent = matchCandidates.some((c) => isLikelyProviderEntity(c) && !isLikelyVendorHealthcareEntity(c));
-  const providerLikeNotice = isHealthcare && providerLike && (!vendorLike || providerTargetPresent);
+  const hospitalActionable = matchCandidates.some((c) => isHospitalActionableEntity(c));
+  const careSetting = normalizeText(n?.nursing_care_setting || '');
+  const acuteLikeSetting = ['acute', 'snf', 'ltac', 'rehab', 'behavioral'].includes(careSetting);
+  const nonFacilityProvider = matchCandidates.some((c) => {
+    const t = normalizeText(c);
+    return NON_FACILITY_PROVIDER_HINTS.some((h) => t.includes(h));
+  });
+  const providerLikeNotice = isHealthcare
+    && providerLike
+    && (!vendorLike || providerTargetPresent)
+    && (!nonFacilityProvider || hospitalActionable)
+    && (hospitalActionable || acuteLikeSetting);
+  const hospitalActionableNotice = providerLikeNotice && hospitalActionable;
   if (isHealthcare) healthcareNoticeCount += 1;
   if (providerLikeNotice) healthcareProviderLikeCount += 1;
+  if (hospitalActionableNotice) healthcareHospitalActionableCount += 1;
 
   const matchedCandidate = findBestHospitalMatch(state, matchCandidates, cityRaw);
   const matched = matchedCandidate?.row || null;
@@ -355,6 +386,12 @@ noticeRows.forEach((n) => {
         healthcareProviderLikeHighConfidenceCount += 1;
       }
     }
+    if (hospitalActionableNotice) {
+      healthcareHospitalActionableMatchedCount += 1;
+      if (matchedCandidate?.tier === 'high' || matchedCandidate?.method === 'exact' || matchedCandidate?.method === 'manual_override') {
+        healthcareHospitalActionableHighConfidenceCount += 1;
+      }
+    }
   } else {
     s.unmatchedFacilities += 1;
   }
@@ -370,6 +407,7 @@ noticeRows.forEach((n) => {
       canonical: facilityCanonical,
       healthcareLikely: isHealthcare,
       providerLikeHealthcare: Boolean(providerLikeNotice),
+      hospitalActionableHealthcare: Boolean(hospitalActionableNotice),
       vendorLikeHealthcare: Boolean(isHealthcare && vendorLike),
       notices: 0,
       affected: 0,
@@ -435,6 +473,8 @@ const healthcareCoverage = healthcareNoticeCount > 0 ? (healthcareMatchedCount /
 const highConfidenceCoverage = healthcareNoticeCount > 0 ? (healthcareHighConfidenceCount / healthcareNoticeCount) : 0;
 const providerLikeCoverage = healthcareProviderLikeCount > 0 ? (healthcareProviderLikeMatchedCount / healthcareProviderLikeCount) : 0;
 const providerLikeHighConfidenceCoverage = healthcareProviderLikeCount > 0 ? (healthcareProviderLikeHighConfidenceCount / healthcareProviderLikeCount) : 0;
+const hospitalActionableCoverage = healthcareHospitalActionableCount > 0 ? (healthcareHospitalActionableMatchedCount / healthcareHospitalActionableCount) : 0;
+const hospitalActionableHighConfidenceCoverage = healthcareHospitalActionableCount > 0 ? (healthcareHospitalActionableHighConfidenceCount / healthcareHospitalActionableCount) : 0;
 
 const out = {
   lastUpdated: new Date().toISOString(),
@@ -458,7 +498,11 @@ const out = {
     healthcareProviderLikeNoticeCount: healthcareProviderLikeCount,
     healthcareProviderLikeMatchedCount: healthcareProviderLikeMatchedCount,
     healthcareProviderLikeCoveragePct: Number((providerLikeCoverage * 100).toFixed(2)),
-    healthcareProviderLikeHighConfidenceCoveragePct: Number((providerLikeHighConfidenceCoverage * 100).toFixed(2))
+    healthcareProviderLikeHighConfidenceCoveragePct: Number((providerLikeHighConfidenceCoverage * 100).toFixed(2)),
+    healthcareHospitalActionableNoticeCount: healthcareHospitalActionableCount,
+    healthcareHospitalActionableMatchedCount: healthcareHospitalActionableMatchedCount,
+    healthcareHospitalActionableCoveragePct: Number((hospitalActionableCoverage * 100).toFixed(2)),
+    healthcareHospitalActionableHighConfidenceCoveragePct: Number((hospitalActionableHighConfidenceCoverage * 100).toFixed(2))
   },
   stateFeatures: Object.fromEntries(Array.from(byState.entries()).sort(([a], [b]) => a.localeCompare(b))),
   facilityFeatures: facilityRows.sort((a, b) => b.affected - a.affected || b.notices - a.notices).slice(0, 3000)
@@ -513,10 +557,13 @@ const qualityKpis = {
     highConfidenceCoverageHealthcarePct: out.summary.highConfidenceHealthcareCoveragePct,
     coverageProviderLikeHealthcarePct: out.summary.healthcareProviderLikeCoveragePct,
     highConfidenceCoverageProviderLikeHealthcarePct: out.summary.healthcareProviderLikeHighConfidenceCoveragePct,
+    coverageHospitalActionableHealthcarePct: out.summary.healthcareHospitalActionableCoveragePct,
+    highConfidenceCoverageHospitalActionableHealthcarePct: out.summary.healthcareHospitalActionableHighConfidenceCoveragePct,
     precisionProxyHighTierPct: matchedCount > 0 ? Number(((highTier / matchedCount) * 100).toFixed(2)) : 0,
     totalMatched: matchedCount,
     totalHealthcareNotices: healthcareNoticeCount,
-    totalProviderLikeHealthcareNotices: healthcareProviderLikeCount
+    totalProviderLikeHealthcareNotices: healthcareProviderLikeCount,
+    totalHospitalActionableHealthcareNotices: healthcareHospitalActionableCount
   }
 };
 
