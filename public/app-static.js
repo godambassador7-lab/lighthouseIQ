@@ -1483,6 +1483,33 @@ const specialtyConfidenceLabel = (score) => {
   return 'Low';
 };
 
+const computeSpecialtyConfidenceScore = (samples, coverage, ageHours) => {
+  const sampleComponent = Math.min(1, samples / 8) * 0.4;
+  const coverageComponent = Math.min(1, coverage / 0.7) * 0.35;
+  const freshnessRatio = ageHours === null ? 0.7 : Math.max(0, 1 - (ageHours / SPECIALTY_SURPLUS_MAX_STALE_HOURS));
+  const freshnessComponent = freshnessRatio * 0.25;
+  return Math.round((sampleComponent + coverageComponent + freshnessComponent) * 100);
+};
+
+const specialtyConfidenceInterval = (count, confidenceScore) => {
+  const uncertainty = Math.max(0.1, (100 - confidenceScore) / 100);
+  const delta = Math.round(count * uncertainty * 0.35);
+  return {
+    low: Math.max(0, count - delta),
+    high: count + delta
+  };
+};
+
+const getSurplusDedupeKey = (entry) => {
+  const state = String(entry?.state || '').trim().toUpperCase();
+  const city = String(entry?.city || '').trim().toUpperCase();
+  const est = Number(entry?.estimated_nurses_available || 0);
+  const specialties = Array.isArray(entry?.specialties)
+    ? entry.specialties.map((s) => normalizeSpecialty(s)).filter(Boolean).sort().join('|')
+    : '';
+  return `${state}::${city}::${est}::${specialties}`;
+};
+
 const renderSpecialtySurplus = () => {
   if (!specialtySurplusList) return;
   const ageHours = getSpecialtySurplusAgeHours();
@@ -1497,16 +1524,36 @@ const renderSpecialtySurplus = () => {
   const totals = new Map(SURPLUS_SPECIALTY_ORDER.map((key) => [key, 0]));
   const bucketSampleCounts = new Map(SURPLUS_SPECIALTY_ORDER.map((key) => [key, 0]));
   const bucketNoticeCounts = new Map(SURPLUS_SPECIALTY_ORDER.map((key) => [key, 0]));
+  const dedupeMap = new Map();
+  let duplicateRows = 0;
   let totalRows = 0;
   let mappedRows = 0;
+  let excludedRows = 0;
+  let unmappedRows = 0;
 
   latestTalentOpportunities.forEach((entry) => {
+    const dedupeKey = getSurplusDedupeKey(entry);
+    if (dedupeMap.has(dedupeKey)) {
+      duplicateRows += 1;
+      return;
+    }
+    dedupeMap.set(dedupeKey, entry);
+  });
+
+  dedupeMap.forEach((entry) => {
     const est = Number(entry?.estimated_nurses_available || 0);
     if (est <= 0) return;
     totalRows += 1;
     const specialties = Array.isArray(entry?.specialties) ? entry.specialties : [];
     const buckets = [...new Set(specialties.map(findSpecialtyBucket).filter(Boolean))];
-    if (!buckets.length) return;
+    if (!buckets.length) {
+      unmappedRows += 1;
+      return;
+    }
+    if (buckets.length && buckets.length < SPECIALTY_SURPLUS_MIN_BUCKET_SAMPLES && est < 25) {
+      excludedRows += 1;
+      return;
+    }
     mappedRows += 1;
     const base = Math.floor(est / buckets.length);
     let remainder = est % buckets.length;
@@ -1526,7 +1573,8 @@ const renderSpecialtySurplus = () => {
       bucket,
       count: totals.get(bucket) || 0,
       samples: bucketSampleCounts.get(bucket) || 0,
-      noticeCount: bucketNoticeCounts.get(bucket) || 0
+      noticeCount: bucketNoticeCounts.get(bucket) || 0,
+      confidenceScore: computeSpecialtyConfidenceScore(bucketSampleCounts.get(bucket) || 0, mappingCoverage, ageHours)
     }))
     .filter((row) => row.count > 0 && row.samples >= SPECIALTY_SURPLUS_MIN_BUCKET_SAMPLES)
     .sort((a, b) => b.count - a.count)
@@ -1537,19 +1585,24 @@ const renderSpecialtySurplus = () => {
     return;
   }
 
-  specialtySurplusList.innerHTML = ranked.map((row) => `
-    <div class="insight-row">
-      <div>
-        <div class="insight-title">${SURPLUS_SPECIALTY_LABELS[row.bucket] || row.bucket}</div>
-        <div class="specialty-surplus-meta">${row.samples} mapped records • ${row.noticeCount} notices • Confidence ${specialtyConfidenceLabel(Math.round((Math.min(1, row.samples / 8) * 0.4 + Math.min(1, mappingCoverage / 0.7) * 0.3 + (ageHours === null ? 0.2 : Math.max(0, 1 - ageHours / SPECIALTY_SURPLUS_MAX_STALE_HOURS) * 0.3)) * 100))}</div>
+  specialtySurplusList.innerHTML = ranked.map((row) => {
+    const interval = specialtyConfidenceInterval(row.count, row.confidenceScore);
+    return `
+      <div class="insight-row">
+        <div>
+          <div class="insight-title">${SURPLUS_SPECIALTY_LABELS[row.bucket] || row.bucket}</div>
+          <div class="specialty-surplus-meta">${row.samples} mapped records | ${row.noticeCount} notices | Confidence ${specialtyConfidenceLabel(row.confidenceScore)}</div>
+        </div>
+        <div>
+          <div class="insight-pill">${Math.round(row.count).toLocaleString()}</div>
+          <div class="specialty-surplus-meta">${interval.low.toLocaleString()}-${interval.high.toLocaleString()}</div>
+        </div>
       </div>
-      <div>
-        <div class="insight-pill">${Math.round(row.count).toLocaleString()}</div>
-      </div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
+
   const freshnessLabel = ageHours === null ? 'age unknown' : `${ageHours}h old`;
-  specialtySurplusList.innerHTML += `<div class="specialty-surplus-meta">Source: Live talent opportunities • Coverage ${Math.round(mappingCoverage * 100)}% • Freshness ${freshnessLabel}</div>`;
+  specialtySurplusList.innerHTML += `<div class="specialty-surplus-meta">Source: Live talent opportunities | Coverage ${Math.round(mappingCoverage * 100)}% | Mapped ${mappedRows}/${totalRows || 0} | Unmapped ${unmappedRows} | Duplicates removed ${duplicateRows} | Excluded ${excludedRows} | Freshness ${freshnessLabel}</div>`;
 };
 const loadInsights = async () => {
   try {
