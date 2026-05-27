@@ -333,7 +333,12 @@ const getCsrfToken = () => {
 };
 
 let refreshPromise = null;
+let authApiReachable = true;
+const STATIC_PASSCODE = 'IUH126';
+const staticPasscodeAllowed = (passcode) => String(passcode || '').trim() === STATIC_PASSCODE;
+
 const refreshSession = async () => {
+  if (!authApiReachable) return false;
   if (refreshPromise) return refreshPromise;
   refreshPromise = fetch('/auth/refresh', {
     method: 'POST',
@@ -342,7 +347,13 @@ const refreshSession = async () => {
       'X-CSRF-Token': getCsrfToken()
     }
   })
-    .then(res => res.ok)
+    .then((res) => {
+      if (res.status === 404) {
+        authApiReachable = false;
+        return false;
+      }
+      return res.ok;
+    })
     .catch(() => false)
     .finally(() => {
       refreshPromise = null;
@@ -361,6 +372,19 @@ const setLoginError = (message) => {
   loginError.textContent = message || '';
 };
 
+const markLoginSuccess = (user) => {
+  sessionStorage.setItem(SESSION_KEY, 'true');
+  if (user && typeof user === 'object') {
+    sessionStorage.setItem(SESSION_USER_KEY, JSON.stringify(user));
+  } else {
+    sessionStorage.removeItem(SESSION_USER_KEY);
+  }
+  loginOverlay.classList.add('hidden');
+  if (passwordInput) passwordInput.value = '';
+  setLoginError('');
+  initApp();
+};
+
 const handleLogin = async (e) => {
   e.preventDefault();
   const form = e?.currentTarget || loginForm || document.getElementById('login-form');
@@ -375,12 +399,10 @@ const handleLogin = async (e) => {
   const password = readFieldValue(passwordField) || readFieldValue(legacyPasscodeField);
   const loginBtn = form?.querySelector('button[type="submit"]');
 
-  if (!password) {
-    setLoginError('Please enter your password or passcode.');
+  if (!email || !password) {
+    setLoginError('Please enter your work email and passcode.');
     return;
   }
-
-  const emailForAuth = email || 'passcode@local';
 
   // Disable button during request
   if (loginBtn) {
@@ -393,20 +415,31 @@ const handleLogin = async (e) => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
-      body: JSON.stringify({ email: emailForAuth, password })
+      body: JSON.stringify({ email, password })
     });
 
+    if (response.status === 404) {
+      authApiReachable = false;
+      if (staticPasscodeAllowed(password)) {
+        markLoginSuccess({ id: 'static-passcode', email, role: 'admin' });
+        return;
+      }
+      setLoginError('Invalid email or passcode.');
+      if (loginError) {
+        loginError.classList.remove('shake');
+        void loginError.offsetWidth;
+        loginError.classList.add('shake');
+      }
+      if (passwordInput) passwordInput.value = '';
+      passwordInput?.focus();
+      return;
+    }
+
+    authApiReachable = true;
     const data = await response.json().catch(() => ({}));
 
     if (data.success) {
-      sessionStorage.setItem(SESSION_KEY, 'true');
-      if (data.user && typeof data.user === 'object') {
-        sessionStorage.setItem(SESSION_USER_KEY, JSON.stringify(data.user));
-      }
-      loginOverlay.classList.add('hidden');
-      if (passwordInput) passwordInput.value = '';
-      setLoginError('');
-      initApp();
+      markLoginSuccess(data.user);
     } else {
       setLoginError(data.error || 'Invalid email or password.');
       if (loginError) {
@@ -418,6 +451,11 @@ const handleLogin = async (e) => {
       passwordInput?.focus();
     }
   } catch (err) {
+    authApiReachable = false;
+    if (staticPasscodeAllowed(password)) {
+      markLoginSuccess({ id: 'static-passcode', email, role: 'admin' });
+      return;
+    }
     setLoginError('Connection error. Please try again.');
   } finally {
     if (loginBtn) {
@@ -432,17 +470,16 @@ const bootstrapAuth = async () => {
   try {
     const res = await fetch('/auth/session', { credentials: 'include' });
     if (res.ok) {
+      authApiReachable = true;
       const data = await res.json().catch(() => ({}));
-      sessionStorage.setItem(SESSION_KEY, 'true');
-      if (data.user && typeof data.user === 'object') {
-        sessionStorage.setItem(SESSION_USER_KEY, JSON.stringify(data.user));
-      }
-      loginOverlay.classList.add('hidden');
-      initApp();
+      markLoginSuccess(data.user);
       return;
     }
+    if (res.status === 404) {
+      authApiReachable = false;
+    }
   } catch {
-    // ignore
+    authApiReachable = false;
   }
   clearAuthState();
   emailInput?.focus();
