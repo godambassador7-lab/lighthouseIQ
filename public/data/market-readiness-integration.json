@@ -1,0 +1,74 @@
+{
+  "lastUpdated": "2026-05-27T09:00:37.963Z",
+  "requiredDatasets": [
+    {
+      "key": "hrsa_nssrn",
+      "label": "HRSA NSSRN",
+      "use": "Nurse supply",
+      "integrated": true,
+      "status": "ok",
+      "details": "Specialty baseline loaded"
+    },
+    {
+      "key": "cms_hcris",
+      "label": "CMS HCRIS",
+      "use": "Hospital labor spend",
+      "integrated": true,
+      "status": "ok",
+      "details": "Reachable"
+    },
+    {
+      "key": "bls_oes",
+      "label": "BLS OES",
+      "use": "Salary pressure",
+      "integrated": true,
+      "status": "ok",
+      "details": "State salary pressure loaded"
+    },
+    {
+      "key": "warn_notices",
+      "label": "WARN notices",
+      "use": "Layoffs",
+      "integrated": true,
+      "status": "ok",
+      "details": "56554 notices loaded"
+    },
+    {
+      "key": "cms_care_compare",
+      "label": "CMS Care Compare",
+      "use": "Staffing distress",
+      "integrated": true,
+      "status": "ok",
+      "details": "Reachable hospital topic page"
+    },
+    {
+      "key": "state_hcai_oshpd",
+      "label": "State HCAI/OSHPD",
+      "use": "Unit staffing",
+      "integrated": true,
+      "status": "ok",
+      "details": "Reachable HCAI hospital financials page"
+    },
+    {
+      "key": "irs_990s",
+      "label": "IRS 990s",
+      "use": "Financial health",
+      "integrated": true,
+      "status": "ok",
+      "details": "Search API reachable; total_results=6100"
+    },
+    {
+      "key": "hospital_annual_reports",
+      "label": "Hospital annual reports",
+      "use": "Expansion/contraction",
+      "integrated": true,
+      "status": "ok",
+      "details": "At least one major system annual-report source reachable"
+    }
+  ],
+  "summary": {
+    "integratedCount": 8,
+    "totalRequired": 8,
+    "completenessPct": 100
+  }
+}

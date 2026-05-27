@@ -275,6 +275,9 @@ let taRolloutState = {};
 let latestTalentOpportunities = [];
 let specialtySurplusMode = 'unavailable';
 let latestTalentUpdatedAt = null;
+let freeMarketSignals = null;
+let marketReadinessIntegration = null;
+let marketRequiredMetrics = null;
 
 const SPECIALTY_SURPLUS_MAX_STALE_HOURS = 24;
 const SPECIALTY_SURPLUS_MIN_BUCKET_SAMPLES = 3;
@@ -1483,12 +1486,13 @@ const specialtyConfidenceLabel = (score) => {
   return 'Low';
 };
 
-const computeSpecialtyConfidenceScore = (samples, coverage, ageHours) => {
+const computeSpecialtyConfidenceScore = (samples, coverage, ageHours, sourceHealthBonus) => {
   const sampleComponent = Math.min(1, samples / 8) * 0.4;
   const coverageComponent = Math.min(1, coverage / 0.7) * 0.35;
   const freshnessRatio = ageHours === null ? 0.7 : Math.max(0, 1 - (ageHours / SPECIALTY_SURPLUS_MAX_STALE_HOURS));
   const freshnessComponent = freshnessRatio * 0.25;
-  return Math.round((sampleComponent + coverageComponent + freshnessComponent) * 100);
+  const bonus = Math.max(-0.06, Math.min(0.08, sourceHealthBonus || 0));
+  return Math.round((sampleComponent + coverageComponent + freshnessComponent + bonus) * 100);
 };
 
 const specialtyConfidenceInterval = (count, confidenceScore) => {
@@ -1508,6 +1512,52 @@ const getSurplusDedupeKey = (entry) => {
     ? entry.specialties.map((s) => normalizeSpecialty(s)).filter(Boolean).sort().join('|')
     : '';
   return `${state}::${city}::${est}::${specialties}`;
+};
+
+const getSourceHealthBonus = () => {
+  const sources = freeMarketSignals?.sources;
+  if (!sources || typeof sources !== 'object') return 0;
+  const keys = ['hrsa', 'bls', 'ncsbn', 'cms'];
+  let score = 0;
+  keys.forEach((key) => {
+    const status = String(sources[key] || '').toLowerCase();
+    if (status === 'ok') score += 1;
+    else if (status === 'error') score -= 1;
+  });
+  const metricDatasets = marketRequiredMetrics?.datasets || {};
+  const metricStatuses = [
+    metricDatasets?.hrsaNssrn?.status,
+    metricDatasets?.cmsHcris?.status,
+    metricDatasets?.blsOes?.status,
+    metricDatasets?.warnNotices?.status,
+    metricDatasets?.cmsCareCompare?.status,
+    metricDatasets?.stateHcaiOshpd?.status,
+    metricDatasets?.irs990?.status,
+    metricDatasets?.hospitalAnnualReports?.status
+  ];
+  let metricScore = 0;
+  metricStatuses.forEach((statusRaw) => {
+    const status = String(statusRaw || '').toLowerCase();
+    if (status === 'ok') metricScore += 1;
+    else if (status === 'error') metricScore -= 1;
+  });
+  return (score / (keys.length * 12)) + (metricScore / (Math.max(1, metricStatuses.length) * 18));
+};
+
+const loadMarketReadinessIntegration = async () => {
+  try {
+    marketReadinessIntegration = await fetchJson('/data/market-readiness-integration.json');
+  } catch {
+    marketReadinessIntegration = null;
+  }
+};
+
+const loadMarketRequiredMetrics = async () => {
+  try {
+    marketRequiredMetrics = await fetchJson('/data/market-required-metrics.json');
+  } catch {
+    marketRequiredMetrics = null;
+  }
 };
 
 const renderSpecialtySurplus = () => {
@@ -1541,7 +1591,10 @@ const renderSpecialtySurplus = () => {
   });
 
   dedupeMap.forEach((entry) => {
-    const est = Number(entry?.estimated_nurses_available || 0);
+    const state = String(entry?.state || '').trim().toUpperCase();
+    const estBase = Number(entry?.estimated_nurses_available || 0);
+    const stateWeight = Number(freeMarketSignals?.stateFactors?.[state]?.combinedWeight || 1);
+    const est = Math.max(0, Math.round(estBase * stateWeight));
     if (est <= 0) return;
     totalRows += 1;
     const specialties = Array.isArray(entry?.specialties) ? entry.specialties : [];
@@ -1567,6 +1620,7 @@ const renderSpecialtySurplus = () => {
   });
 
   const mappingCoverage = totalRows > 0 ? mappedRows / totalRows : 0;
+  const sourceHealthBonus = getSourceHealthBonus();
 
   const ranked = SURPLUS_SPECIALTY_ORDER
     .map((bucket) => ({
@@ -1574,7 +1628,7 @@ const renderSpecialtySurplus = () => {
       count: totals.get(bucket) || 0,
       samples: bucketSampleCounts.get(bucket) || 0,
       noticeCount: bucketNoticeCounts.get(bucket) || 0,
-      confidenceScore: computeSpecialtyConfidenceScore(bucketSampleCounts.get(bucket) || 0, mappingCoverage, ageHours)
+      confidenceScore: computeSpecialtyConfidenceScore(bucketSampleCounts.get(bucket) || 0, mappingCoverage, ageHours, sourceHealthBonus)
     }))
     .filter((row) => row.count > 0 && row.samples >= SPECIALTY_SURPLUS_MIN_BUCKET_SAMPLES)
     .sort((a, b) => b.count - a.count)
@@ -1602,9 +1656,31 @@ const renderSpecialtySurplus = () => {
   }).join('');
 
   const freshnessLabel = ageHours === null ? 'age unknown' : `${ageHours}h old`;
+  const sourceLine = freeMarketSignals?.sources
+    ? `HRSA ${freeMarketSignals.sources.hrsa || 'unknown'}, BLS ${freeMarketSignals.sources.bls || 'unknown'}, NCSBN ${freeMarketSignals.sources.ncsbn || 'unknown'}, CMS ${freeMarketSignals.sources.cms || 'unknown'}`
+    : 'HRSA/BLS/NCSBN/CMS source health unavailable';
   specialtySurplusList.innerHTML += `<div class="specialty-surplus-meta">Source: Live talent opportunities | Coverage ${Math.round(mappingCoverage * 100)}% | Mapped ${mappedRows}/${totalRows || 0} | Unmapped ${unmappedRows} | Duplicates removed ${duplicateRows} | Excluded ${excludedRows} | Freshness ${freshnessLabel}</div>`;
+  specialtySurplusList.innerHTML += `<div class="specialty-surplus-meta">Source health: ${sourceLine}</div>`;
+  if (marketReadinessIntegration?.summary) {
+    const req = Array.isArray(marketReadinessIntegration.requiredDatasets) ? marketReadinessIntegration.requiredDatasets : [];
+    const pending = req.filter((d) => !d.integrated).map((d) => d.label);
+    const completion = Number(marketReadinessIntegration.summary.completenessPct || 0);
+    const pendingLine = pending.length ? ` | Pending: ${pending.join(', ')}` : '';
+    specialtySurplusList.innerHTML += `<div class="specialty-surplus-meta">Required dataset integration: ${completion}%${pendingLine}</div>`;
+  }
+};
+
+const loadFreeMarketSignals = async () => {
+  try {
+    freeMarketSignals = await fetchJson('/data/free-market-signals.json');
+  } catch {
+    freeMarketSignals = null;
+  }
 };
 const loadInsights = async () => {
+  await loadFreeMarketSignals();
+  await loadMarketReadinessIntegration();
+  await loadMarketRequiredMetrics();
   try {
     const [alerts, geo, talent, employers] = await Promise.all([
       fetchJson('/insights/alerts'),
