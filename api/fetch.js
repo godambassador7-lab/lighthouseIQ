@@ -1,4 +1,4 @@
-module.exports = function handler(req, res) {
+export default function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ success: false, error: 'Method not allowed' });
   }
@@ -6,5 +6,4 @@ module.exports = function handler(req, res) {
     success: false,
     error: 'Live upstream fetch is not enabled in this deployment'
   });
-};
-
+}

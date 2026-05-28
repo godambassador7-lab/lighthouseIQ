@@ -1,6 +1,6 @@
-const { getNotices, filterNotices } = require('./_lib/data');
+import { getNotices, filterNotices } from './_lib/data.js';
 
-module.exports = function handler(req, res) {
+export default function handler(req, res) {
   const notices = filterNotices(getNotices(), req.query || {});
   res.status(200).json({
     notices,
@@ -8,5 +8,4 @@ module.exports = function handler(req, res) {
     cached: true,
     mode: 'vercel-serverless'
   });
-};
-
+}

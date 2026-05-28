@@ -1,9 +1,9 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 const DATA_DIR = path.join(process.cwd(), 'public', 'data');
 
-function readJson(fileName, fallback) {
+export function readJson(fileName, fallback) {
   try {
     const raw = fs.readFileSync(path.join(DATA_DIR, fileName), 'utf8');
     return JSON.parse(raw);
@@ -12,12 +12,12 @@ function readJson(fileName, fallback) {
   }
 }
 
-function getNotices() {
+export function getNotices() {
   const payload = readJson('notices.json', { notices: [] });
   return Array.isArray(payload?.notices) ? payload.notices : [];
 }
 
-function isHealthcareNotice(notice) {
+export function isHealthcareNotice(notice) {
   const naics = String(notice?.naics || '');
   if (naics.startsWith('62')) return true;
 
@@ -61,7 +61,7 @@ function sortByRecencyDesc(a, b) {
   return bDate.localeCompare(aDate);
 }
 
-function filterNotices(all, query) {
+export function filterNotices(all, query) {
   let out = all.slice();
 
   const states = normalizeStateParam(query.state);
@@ -97,11 +97,3 @@ function filterNotices(all, query) {
 
   return out;
 }
-
-module.exports = {
-  readJson,
-  getNotices,
-  filterNotices,
-  isHealthcareNotice
-};
-
