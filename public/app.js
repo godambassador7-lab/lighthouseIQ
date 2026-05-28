@@ -3579,7 +3579,13 @@ const loadPrograms = async (force = false) => {
     );
     if (missingAccreditors.length && !programsRefreshPrompted) {
       programsRefreshPrompted = true;
-      setStatus(`Program data partial: missing ${missingAccreditors.join(', ')}`, true);
+      const shouldReload = window.confirm(
+        `Some accreditor data did not load (${missingAccreditors.join(', ')}). Refresh now?`
+      );
+      if (shouldReload) {
+        window.location.reload();
+        return;
+      }
     }
 
     populateProgramFilters(nursingPrograms);
