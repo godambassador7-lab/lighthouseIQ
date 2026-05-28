@@ -27,6 +27,8 @@
     "build:target-metros": "node scripts/compile-target-state-metros.js",
     "export": "npm run build && npm run build:scripts && node dist/scripts/export-notices.js",
     "dev": "npm -ws run dev",
+    "api:start": "node apps/api/dist/index.js",
+    "live": "node apps/api/dist/index.js",
     "lint": "npm -ws run lint",
     "serve": "npx serve public -l 3000"
   },
