@@ -275,9 +275,6 @@ let taRolloutState = {};
 let latestTalentOpportunities = [];
 let specialtySurplusMode = 'unavailable';
 let latestTalentUpdatedAt = null;
-let recruitmentIntel = null;
-let strategicData = null;
-let relocationData = null;
 let freeMarketSignals = null;
 let marketReadinessIntegration = null;
 let marketRequiredMetrics = null;
@@ -822,8 +819,6 @@ const API_OR_AUTH_ROUTE_PATTERN = /^\/(auth\/|health|states|notices|fetch|insigh
 const unique = (values) => Array.from(new Set(values.filter(Boolean)));
 
 const getConfiguredApiBase = () => {
-  const host = window.location.hostname;
-  const isVercelHost = host.endsWith('vercel.app');
   try {
     const qsBase = new URLSearchParams(window.location.search).get('apiBase');
     if (qsBase) {
@@ -838,14 +833,7 @@ const getConfiguredApiBase = () => {
   }
   try {
     const persisted = localStorage.getItem(API_BASE_STORAGE_KEY);
-    if (persisted && persisted.trim()) {
-      const normalized = persisted.trim();
-      if (isVercelHost && /\/\/api\./i.test(normalized)) {
-        localStorage.removeItem(API_BASE_STORAGE_KEY);
-        return '';
-      }
-      return normalized;
-    }
+    if (persisted && persisted.trim()) return persisted.trim();
   } catch {
     // ignore storage failures
   }
@@ -860,7 +848,7 @@ const getApiBaseCandidates = () => {
     '',
     configured
   ];
-  if (host && !host.startsWith('api.') && !host.endsWith('vercel.app')) {
+  if (host && !host.startsWith('api.')) {
     candidates.push(`${protocol}//api.${host}`);
   }
   return unique(candidates.map((v) => String(v || '').trim().replace(/\/$/, '')));
@@ -1096,30 +1084,6 @@ const getCalibrationStateProfiles = () => recruitmentIntel?.stateProfiles || {};
 
 const getCalibrationRelocationIndex = () =>
   recruitmentIntel?.relocationIndex || relocationData?.relocationScale || {};
-
-const loadRecruitmentIntel = async () => {
-  try {
-    recruitmentIntel = await fetchJson(`/data/recruitment-intel.json?ts=${Date.now()}`);
-  } catch {
-    recruitmentIntel = {};
-  }
-};
-
-const loadStrategicData = async () => {
-  try {
-    strategicData = await fetchJson(`/data/strategic.json?ts=${Date.now()}`);
-  } catch {
-    strategicData = {};
-  }
-};
-
-const loadRelocationData = async () => {
-  try {
-    relocationData = await fetchJson(`/data/relocation.json?ts=${Date.now()}`);
-  } catch {
-    relocationData = {};
-  }
-};
 
 const buildStateProfile = (state) => {
   const fallbackStaffing = scoreFromCount(state, true);
