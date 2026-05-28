@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-05-28T03:53:38.788Z",
+  "lastUpdated": "2026-05-28T08:05:42.077Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 3,
-    "healthySources": 7,
+    "staleSources": 2,
+    "healthySources": 8,
     "sources": [
       {
         "source": "Fierce Healthcare",
         "articleCount": 232,
         "latestPublishedAt": "2026-05-28T00:00:00.000Z",
-        "staleHours": 3,
+        "staleHours": 8,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
         "articleCount": 141,
         "latestPublishedAt": "2026-05-28T00:00:00.000Z",
-        "staleHours": 3,
+        "staleHours": 8,
         "status": "ok"
       },
       {
         "source": "STAT News",
         "articleCount": 53,
         "latestPublishedAt": "2026-05-27T00:00:00.000Z",
-        "staleHours": 27,
+        "staleHours": 32,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
-        "articleCount": 33,
-        "latestPublishedAt": "2026-05-27T00:00:00.000Z",
-        "staleHours": 27,
+        "articleCount": 35,
+        "latestPublishedAt": "2026-05-28T00:00:00.000Z",
+        "staleHours": 8,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 14,
         "latestPublishedAt": "2026-05-27T00:00:00.000Z",
-        "staleHours": 27,
-        "status": "ok"
-      },
-      {
-        "source": "FDA MedWatch RSS",
-        "articleCount": 10,
-        "latestPublishedAt": "2026-05-27T00:00:00.000Z",
-        "staleHours": 27,
+        "staleHours": 32,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
+        "articleCount": 11,
+        "latestPublishedAt": "2026-05-26T00:00:00.000Z",
+        "staleHours": 56,
+        "status": "ok"
+      },
+      {
+        "source": "FDA MedWatch RSS",
         "articleCount": 9,
-        "latestPublishedAt": "2026-05-22T00:00:00.000Z",
-        "staleHours": 147,
-        "status": "stale"
+        "latestPublishedAt": "2026-05-27T00:00:00.000Z",
+        "staleHours": 32,
+        "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
-        "articleCount": 5,
+        "articleCount": 2,
         "latestPublishedAt": "2026-05-22T00:00:00.000Z",
-        "staleHours": 147,
+        "staleHours": 152,
         "status": "stale"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 2,
         "latestPublishedAt": "2026-05-22T00:00:00.000Z",
-        "staleHours": 147,
+        "staleHours": 152,
         "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 1,
         "latestPublishedAt": "2026-05-26T00:00:00.000Z",
-        "staleHours": 51,
+        "staleHours": 56,
         "status": "ok"
       }
     ]
@@ -95,7 +95,7 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 63
+      "count": 60
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -103,22 +103,20 @@
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
-      "count": 7
+      "count": 9
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 157
+      "count": 156
     },
     "general_market": {
       "label": "General Market",
-      "count": 212
+      "count": 214
     }
   },
   "quality": {
-    "status": "warning",
-    "failedChecks": [
-      "maxStaleSources"
-    ],
+    "status": "pass",
+    "failedChecks": [],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -127,7 +125,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 26,
+        "actual": 32,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -137,12 +135,84 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 3,
-        "pass": false
+        "actual": 2,
+        "pass": true
       }
     }
   },
   "articles": [
+    {
+      "title": "Medical Devices; Gastroenterology-Urology Devices; Classification of the Endoscopic Suturing Device for Altering Gastric Anatomy for Weight Loss",
+      "summary": "The Food and Drug Administration (FDA) is classifying the endoscopic suturing device for altering gastric anatomy for weight loss into class II (special controls). The special controls that apply to the device type are identified in this order and will be part of the codified language for classification of the endoscopic suturing device for altering gastric anatomy for weight loss. We are taking this action because we have determined that classifying the device into class II will provide a reasonable assurance of safety and effectiveness of the device. We believe this action will also enhance patients' access to beneficial innovative devices, in part by reducing regulatory burdens.",
+      "url": "https://www.federalregister.gov/documents/2026/05/28/2026-10621/medical-devices-gastroenterology-urology-devices-classification-of-the-endoscopic-suturing-device",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-05-28",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Food Additive Petition From Environmental Defense Fund, et al.; Request To Amend the Food Additive Regulations To Remove the Solvents Benzene, Ethylene Dichloride, Methylene Chloride, and Trichloroethylene; Reopening of the Comment Period",
+      "summary": "The Food and Drug Administration (FDA or we) is reopening the comment period for the notification of petition, published in the Federal Register of January 11, 2024, announcing that we filed a food additive petition proposing that the food additive regulations be amended to remove four specified solvents. FDA is reopening the comment period to allow for the submission of any updated data and other information over the last two years.",
+      "url": "https://www.federalregister.gov/documents/2026/05/28/2026-10615/food-additive-petition-from-environmental-defense-fund-et-al-request-to-amend-the-food-additive",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-05-28",
+      "category": "capacity_expansion",
+      "relevance": 100,
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "Color Additive Petition from Environmental Defense Fund, et al.; Request To Amend the Color Additive Regulations To Remove the Solvents Ethylene Dichloride, Methylene Chloride, and Trichloroethylene; Reopening of the Comment Period",
+      "summary": "The Food and Drug Administration (FDA or we) is reopening the comment period for the notification of petition, published in the Federal Register of January 11, 2024, announcing that we filed a color additive petition proposing that the color additive regulations be amended to remove three specified solvents. FDA is reopening the comment period to allow for the submission of any updated data and other information over the last two years.",
+      "url": "https://www.federalregister.gov/documents/2026/05/28/2026-10614/color-additive-petition-from-environmental-defense-fund-et-al-request-to-amend-the-color-additive",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-05-28",
+      "category": "capacity_expansion",
+      "relevance": 100,
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "Challenges and Solutions in Lot-Level Food Traceability; Public Meeting and Request for Comments",
+      "summary": "The Food and Drug Administration (FDA, the Agency, or we) is announcing a public meeting titled \"Challenges and Solutions in Lot- Level Food Traceability.\" The purpose of the meeting is to provide a forum for the public to share information on continued implementation of the Food Traceability Rule and areas of concern, especially as they relate to lot-level tracking, and identify potential flexibilities to support compliance. In addition, FDA has developed a discussion paper titled \"Identifying Additional Flexibilities for Satisfying the Food Traceability Rule's Lot-Level Tracking Requirement\" that includes potential flexibilities for lot-level food traceability and questions we have regarding those flexibilities. This discussion paper may be helpful to speakers as they develop remarks for the public meeting. We are also providing an opportunity for all stakeholders to submit feedback on the discussion paper.",
+      "url": "https://www.federalregister.gov/documents/2026/05/28/2026-10603/challenges-and-solutions-in-lot-level-food-traceability-public-meeting-and-request-for-comments",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-05-28",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "AI-Enabled Optimization of Early-Phase Clinical Trials Pilot Program; Request for Information; Extension of Comment Period",
+      "summary": "The Food and Drug Administration (FDA or the Agency) is extending the comment period for the notice entitled \"AI-Enabled Optimization of Early-Phase Clinical Trials Pilot Program; Request for Information\" that appeared in the Federal Register of April 29, 2026. In the notice, FDA requested comments to solicit input on a proposed pilot program to assess how artificial intelligence (AI)-enabled technologies can improve efficiency, speed, and quality of decision- making in early phase clinical trials. The Agency is taking this action in response to a request for an extension to allow interested persons additional time to submit comments.",
+      "url": "https://www.federalregister.gov/documents/2026/05/28/2026-10602/ai-enabled-optimization-of-early-phase-clinical-trials-pilot-program-request-for-information",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-05-28",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Center for Scientific Review; Notice of Closed Meetings",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/05/28/2026-10544/center-for-scientific-review-notice-of-closed-meetings",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-05-28",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
     {
       "title": "5 physician residency programs launching or expanding in 2026",
       "url": "https://www.beckershospitalreview.com/physician-workforce/4-new-physician-residency-programs/",
@@ -476,7 +546,7 @@
     {
       "title": "Early Alert: Heart Pump Issue from Abiomed",
       "summary": "Specific Impella CP Sets are out of specification; use may result in low purge pressure events from the onset of the case",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-heart-pump-issue-abiomed",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-heart-pump-issue-abiomed-0",
       "source": "FDA MedWatch RSS",
       "sourceType": "rss",
       "sourceId": "fda_medwatch_rss",
@@ -572,7 +642,7 @@
     {
       "title": "Early Alert: Heart Pump Issue from Abiomed",
       "summary": "Specific Impella CP Sets are out of specification; use may result in low purge pressure events from the onset of the case",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-heart-pump-issue-abiomed-0",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-heart-pump-issue-abiomed",
       "source": "FDA MedWatch RSS",
       "sourceType": "rss",
       "sourceId": "fda_medwatch_rss",
@@ -1374,9 +1444,9 @@
       "title": "Agency Information Collection Activities; Proposed Collection; Comment Request; Human Drug Compounding Under Sections 503A and 503B of the Federal Food, Drug, and Cosmetic Act",
       "summary": "The Food and Drug Administration (FDA or Agency) is announcing an opportunity for public comment on the proposed collection of certain information by the Agency. Under the Paperwork Reduction Act of 1995 (PRA), Federal Agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension of an existing collection of information, and to allow 60 days for public comment in response to the notice. This notice solicits comments on information collection relating to human drug compounding.",
       "url": "https://www.federalregister.gov/documents/2026/05/26/2026-10372/agency-information-collection-activities-proposed-collection-comment-request-human-drug-compounding",
-      "source": "Federal Register - HHS",
+      "source": "Federal Register - FDA",
       "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
+      "sourceId": "federal_register_fda",
       "publishedAt": "2026-05-26",
       "category": "ai_tech",
       "relevance": 100,
@@ -1386,9 +1456,9 @@
       "title": "Advisory Committee; Drug Safety and Risk Management Advisory Committee; Renewal",
       "summary": "The Food and Drug Administration (FDA) is announcing the renewal of the Drug Safety and Risk Management Advisory Committee by the Commissioner of Food and Drugs (the Commissioner). The Commissioner has determined that it is in the public interest to renew the Drug Safety and Risk Management Advisory Committee for an additional 2 years beyond the charter expiration date. The new charter will be in effect until the May 31, 2028, expiration date.",
       "url": "https://www.federalregister.gov/documents/2026/05/26/2026-10371/advisory-committee-drug-safety-and-risk-management-advisory-committee-renewal",
-      "source": "Federal Register - HHS",
+      "source": "Federal Register - FDA",
       "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
+      "sourceId": "federal_register_fda",
       "publishedAt": "2026-05-26",
       "category": "general_market",
       "relevance": 100,
@@ -4750,78 +4820,6 @@
       "summary": "If potential reimbursement cuts exceed 10%, respondents say it will have negative impacts on staffing decisions and technological investments.",
       "category": "policy_reimbursement",
       "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Agency Information Collection Activities: Proposed Collection; Comment Request",
-      "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information (including each proposed extension or reinstatement of an existing collection of information) and to allow 60 days for public comment on the proposed action. Interested persons are invited to send comments regarding our burden estimates or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
-      "url": "https://www.federalregister.gov/documents/2026/05/20/2026-10102/agency-information-collection-activities-proposed-collection-comment-request",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-05-20",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Medicaid and Children's Health Insurance Program (CHIP) Generic Information Collection Activities: Proposed Collection; Comment Request",
-      "summary": "On May 28, 2010, the Office of Management and Budget (OMB) issued Paperwork Reduction Act (PRA) guidance related to the \"generic\" clearance process. Generally, this is an expedited process by which agencies may obtain OMB's approval of collection of information requests that are \"usually voluntary, low-burden, and uncontroversial collections,\" do not raise any substantive or policy issues, and do not require policy or methodological review. The process requires the submission of an overarching plan that defines the scope of the individual collections that would fall under its umbrella. On October 23, 2011, OMB approved our initial request to use the generic clearance process under control number 0938-1148 (CMS-10398). It was last approved on April 26, 2021, via the standard PRA process which included the publication of 60- and 30-day Federal Register notices. The scope of the April 2021 umbrella accounts for Medicaid and CHIP State plan amendments, waivers, demonstrations, and reporting. This Federal Register notice seeks public comment on one or more of our collection of information requests that we believe are generic and fall within the scope of the umbrella. Interested persons are invited to submit comments regarding our burden estimates or any other aspect of this collection of information, including: the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
-      "url": "https://www.federalregister.gov/documents/2026/05/20/2026-10097/medicaid-and-childrens-health-insurance-program-chip-generic-information-collection-activities",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-05-20",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Patient Protection and Affordable Care Act, HHS Notice of Benefit and Payment Parameters for 2027; and Basic Health Program",
-      "summary": "This final rule contains provisions to improve implementation of the Patient Protection and Affordable Care Act, including payment parameters and provisions related to the HHS-operated risk adjustment and risk adjustment data validation (HHS-RADV) programs, as well as 2027 user fee rates for issuers offering qualified health plans (QHPs) through Federally-facilitated Exchanges (FFEs) and State-based Exchanges on the Federal platform (SBE-FPs). This final rule also includes provisions related to civil money penalties (CMPs) for noncompliant issuers and other responsible entities; standards governing agents, brokers, and web-brokers; the expansion and codification of hardship exemption eligibility; implementation of the State Exchange Improper Payment Measurement (SEIPM); provider access standards and essential community provider standards for QHP certification; QHP certification of non-network plans; a prohibition on issuers from including routine non-pediatric dental services as an Essential Health Benefit (EHB); requirements related to defrayal for the cost of any State-required benefits in addition to the EHB; cost- sharing flexibilities for catastrophic and individual market bronze plans; establishment of catastrophic plans with plan terms of up to 10 consecutive plan years; QHP issuer quality improvement strategies (QISs); and revisions affecting which enrollees are included in Federal Basic Health Program (BHP) payment calculations to States. This final rule also includes amendments to implement certain provisions of the Working Families Tax Cut (WFTC) legislation.",
-      "url": "https://www.federalregister.gov/documents/2026/05/20/2026-10050/patient-protection-and-affordable-care-act-hhs-notice-of-benefit-and-payment-parameters-for-2027-and",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-05-20",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Thoracic Stent Graft Recall: Bolton Medical Removes Relay Pro System",
-      "summary": "Affected grafts may not unclasp from the delivery system. This may require conversion to open surgical repair and can result in patient death.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/thoracic-stent-graft-recall-bolton-medical-removes-relay-pro-system",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-05-20",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Agency Information Collection Activities: Submission to OMB for Review and Approval; Public Comment Request; Standardized Work Plan Form for Use With Applications to the Bureau of Health Workforce Research and Training Grants and Cooperative Agreements, OMB No. 0906-0049-Revision",
-      "summary": "In compliance with the Paperwork Reduction Act of 1995, HRSA submitted an Information Collection Request (ICR) to the Office of Management and Budget (OMB) for review and approval. Comments submitted during the first public review of this ICR will be provided to OMB. OMB will accept further comments from the public during the review and approval period. OMB may act on HRSA's ICR only after the 30-day comment period for this notice has closed.",
-      "url": "https://www.federalregister.gov/documents/2026/05/20/2026-10081/agency-information-collection-activities-submission-to-omb-for-review-and-approval-public-comment",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-05-20",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Agency Information Collection Activities: Proposed Collection: Public Comment Request; Information Collection Request Title: National Health Service Corps Scholar/Students to Service Travel Worksheet, OMB No. 0906-0087-Revision",
-      "summary": "In compliance with the requirement for opportunity for public comment on proposed data collection projects of the Paperwork Reduction Act of 1995, HRSA announces plans to submit an Information Collection Request (ICR), described below, to the Office of Management and Budget (OMB). Prior to submitting the ICR to OMB, HRSA seeks comments from the public regarding the burden estimate, below, or any other aspect of the ICR.",
-      "url": "https://www.federalregister.gov/documents/2026/05/20/2026-10077/agency-information-collection-activities-proposed-collection-public-comment-request-information",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-05-20",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
     }
   ]
 }
