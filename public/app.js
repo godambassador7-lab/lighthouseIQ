@@ -6305,6 +6305,32 @@ const normalizeStrikeConfidence = (row) => {
   return 'low';
 };
 
+const STRIKE_ARTICLE_URL_FIELDS = ['articleUrl', 'articleURL', 'url', 'link', 'sourceUrl'];
+
+const extractStrikeUrlFromText = (value) => {
+  const text = String(value || '');
+  const match = text.match(/https?:\/\/[^\s)]+/i);
+  if (!match) return '';
+  return match[0].replace(/[.,;]+$/, '');
+};
+
+const getStrikeArticleUrl = (row) => {
+  for (const field of STRIKE_ARTICLE_URL_FIELDS) {
+    const candidate = String(row?.[field] || '').trim();
+    if (/^https?:\/\//i.test(candidate)) return candidate;
+  }
+  return extractStrikeUrlFromText(row?.notes || row?.reason || '');
+};
+
+const getStrikeArticleLabel = (row, url) => {
+  if (!url) return '';
+  const source = String(row?.source || '').toLowerCase();
+  if (source.includes('google_news') || source.includes('news') || /news\.google\.com/i.test(url)) {
+    return 'Read article';
+  }
+  return 'View source';
+};
+
 const getFilteredStrikeAlerts = () => {
   const state = String(strikeStateFilter?.value || '').trim().toUpperCase();
   const dateFilter = String(strikeDateFilter?.value || '').trim();
@@ -6375,12 +6401,15 @@ const renderStrikeAlerts = () => {
     const location = [city, state].filter(Boolean).join(', ') || state || 'Unknown location';
     const date = row?.startDate || row?.date || 'Date unknown';
     const source = String(row?.source || '').replace(/_/g, ' ').trim();
+    const articleUrl = getStrikeArticleUrl(row);
+    const articleLabel = getStrikeArticleLabel(row, articleUrl);
     return `
       <div class="insight-row">
         <div>
           <div class="insight-title">${escapeHtml(row?.employer || 'Unknown employer')}</div>
           <div class="insight-meta">${escapeHtml(location)} • ${escapeHtml(date)} • ${escapeHtml(status)}</div>
           <div class="insight-meta">${escapeHtml(String(row?.reason || 'No reason provided'))}</div>
+          ${articleUrl ? `<div class="insight-meta"><a class="strike-source-link" href="${escapeHtml(articleUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(articleLabel)} (new tab)</a></div>` : ''}
         </div>
         <div>
           <div class="insight-pill">${workers > 0 ? workers.toLocaleString() : '--'}</div>
