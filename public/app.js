@@ -1021,26 +1021,40 @@ const API_OR_AUTH_ROUTE_PATTERN = /^\/(auth\/|health|states|notices|fetch|insigh
 
 const unique = (values) => Array.from(new Set(values.filter(Boolean)));
 
+const sanitizeApiBaseForHost = (rawBase, isVercelHost) => {
+  const normalized = String(rawBase || '').trim().replace(/\/$/, '');
+  if (!normalized) return '';
+  if (isVercelHost && /\/\/api\.[^/]*vercel\.app/i.test(normalized)) {
+    return '';
+  }
+  return normalized;
+};
+
 const getConfiguredApiBase = () => {
   const host = window.location.hostname;
   const isVercelHost = host.endsWith('vercel.app');
   try {
     const qsBase = new URLSearchParams(window.location.search).get('apiBase');
-    if (qsBase) {
-      localStorage.setItem(API_BASE_STORAGE_KEY, qsBase);
-      return qsBase;
+    if (qsBase !== null) {
+      const normalizedQs = sanitizeApiBaseForHost(qsBase, isVercelHost);
+      if (normalizedQs) {
+        localStorage.setItem(API_BASE_STORAGE_KEY, normalizedQs);
+      } else {
+        localStorage.removeItem(API_BASE_STORAGE_KEY);
+      }
+      return normalizedQs;
     }
   } catch {
     // ignore query parsing/storage failures
   }
   if (typeof window !== 'undefined' && typeof window.__LNI_API_BASE__ === 'string' && window.__LNI_API_BASE__.trim()) {
-    return window.__LNI_API_BASE__.trim();
+    return sanitizeApiBaseForHost(window.__LNI_API_BASE__, isVercelHost);
   }
   try {
     const persisted = localStorage.getItem(API_BASE_STORAGE_KEY);
     if (persisted && persisted.trim()) {
-      const normalized = persisted.trim();
-      if (isVercelHost && /\/\/api\./i.test(normalized)) {
+      const normalized = sanitizeApiBaseForHost(persisted, isVercelHost);
+      if (!normalized) {
         localStorage.removeItem(API_BASE_STORAGE_KEY);
         return '';
       }
