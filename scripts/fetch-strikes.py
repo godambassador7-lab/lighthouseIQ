@@ -18,9 +18,11 @@ import json
 import os
 import re
 import sys
+import time
 import urllib.parse
 from email.utils import parsedate_to_datetime
 from datetime import datetime, timedelta, timezone
+from html import unescape
 from pathlib import Path
 import xml.etree.ElementTree as ET
 
@@ -59,6 +61,9 @@ ACTIVE_STALE_DAYS = int(os.environ.get("STRIKE_ACTIVE_STALE_DAYS", "45"))
 GOOGLE_ONLY_STALE_DAYS = int(os.environ.get("STRIKE_GOOGLE_ONLY_STALE_DAYS", "120"))
 LOW_CONFIDENCE_RESOLVED_RETENTION_DAYS = int(os.environ.get("STRIKE_LOW_CONF_RESOLVED_RETENTION_DAYS", "730"))
 LOW_CONFIDENCE_THRESHOLD = int(os.environ.get("STRIKE_LOW_CONFIDENCE_THRESHOLD", "60"))
+LOCATION_ENRICH_LIMIT = int(os.environ.get("STRIKE_LOCATION_ENRICH_LIMIT", "30"))
+GOOGLE_DECODE_LIMIT = int(os.environ.get("STRIKE_GOOGLE_DECODE_LIMIT", "8"))
+GOOGLE_DECODE_MIN_INTERVAL_SEC = float(os.environ.get("STRIKE_GOOGLE_DECODE_MIN_INTERVAL_SEC", "0.6"))
 
 # Healthcare NAICS prefixes (sector 62 = Health Care & Social Assistance)
 HEALTHCARE_NAICS = ("62",)
@@ -119,6 +124,69 @@ STATE_ABBREVS = {
     "Vermont": "VT", "Virginia": "VA", "Washington": "WA", "West Virginia": "WV",
     "Wisconsin": "WI", "Wyoming": "WY", "District of Columbia": "DC",
 }
+
+STATE_ABBR_SET = set(STATE_ABBREVS.values())
+STATE_ABBR_PATTERN = "|".join(sorted(STATE_ABBR_SET, key=len, reverse=True))
+STATE_FULL_PATTERN = "|".join(sorted((re.escape(name) for name in STATE_ABBREVS), key=len, reverse=True))
+LOCATION_CANDIDATE_RE = re.compile(
+    rf"\b([A-Z][A-Za-z'.-]+(?:\s+[A-Z][A-Za-z'.-]+){{0,3}}),\s*({STATE_ABBR_PATTERN}|{STATE_FULL_PATTERN})\b"
+)
+LOCATION_IN_CANDIDATE_RE = re.compile(
+    rf"\bin\s+([A-Z][A-Za-z'.-]+(?:\s+[A-Z][A-Za-z'.-]+){{0,3}}),\s*({STATE_ABBR_PATTERN}|{STATE_FULL_PATTERN})\b"
+)
+LOCATION_DATELINE_RE = re.compile(
+    rf"\b([A-Z][A-Z\s'.-]{{2,42}}),\s*({STATE_ABBR_PATTERN}|{STATE_FULL_PATTERN})\b\s*[—-]"
+)
+GENERIC_LOCATION_WORDS = {
+    "news", "health", "healthcare", "hospital", "nurse", "nurses", "workers",
+    "union", "contract", "strike", "story", "article", "report", "member",
+    "members", "center", "medical", "group", "state", "county",
+}
+SOURCE_DOMAIN_STATE_HINTS = {
+    "hpae.org": "NJ",
+    "veritenews.org": "LA",
+    "enterprisenews.com": "MA",
+    "kqed.org": "CA",
+    "wcax.com": "VT",
+    "kare11.com": "MN",
+    "newscentermaine.com": "ME",
+    "wabi.tv": "ME",
+    "wgme.com": "ME",
+    "wagmtv.com": "ME",
+    "mainebiz.biz": "ME",
+    "maineaflcio.org": "ME",
+    "post-gazette.com": "PA",
+    "triblive.com": "PA",
+    "crainsnewyork.com": "NY",
+    "gothamist.com": "NY",
+    "sfchronicle.com": "CA",
+    "latimes.com": "CA",
+    "fox5sandiego.com": "CA",
+    "vtdigger.org": "VT",
+    "wgno.com": "LA",
+    "nola.com": "LA",
+}
+EMPLOYER_STATE_TOKEN_HINTS = {
+    "uvm": "VT",
+}
+NON_US_DOMAIN_SUFFIXES = (".co.ke", ".ca", ".ng", ".africa")
+SOURCE_DOMAIN_INTERNATIONAL_HINTS = {
+    "thenationonlineng.net": "Nigeria",
+    "arise.tv": "Nigeria",
+    "nation.africa": "Kenya",
+}
+INTERNATIONAL_LOCATION_HINTS = {
+    "nigeria": "Nigeria",
+    "victoria": "Victoria, Australia",
+    "kenya": "Kenya",
+    "canada": "Canada",
+}
+
+_GOOGLE_DECODE_CACHE = {}
+_ARTICLE_LOCATION_CACHE = {}
+_GOOGLE_DECODE_COUNT = 0
+_LAST_GOOGLE_DECODE_TS = 0.0
+_PROVIDER_LOCATION_INDEX = None
 
 SEARCH_TEMPLATES = {
     "massnurses.org": "https://www.massnurses.org/?s={q}",
@@ -282,18 +350,390 @@ def parse_date_str(value: str) -> str:
 def extract_state_from_text(text: str) -> str:
     if not text:
         return ""
-    up = text.upper()
-    m = re.search(r"\(([A-Z]{2})\)", up)
+    m = re.search(r"\(([A-Z]{2})\)", text)
     if m:
-        return m.group(1)
-    m = re.search(r"(?:,\s*|\s-\s)([A-Z]{2})(?:\b|\))", up)
-    if m and m.group(1) in set(STATE_ABBREVS.values()):
-        return m.group(1)
+        abbr = m.group(1).upper()
+        if abbr in STATE_ABBR_SET:
+            return abbr
+    m = re.search(r"(?:,\s*|\s-\s)([A-Z]{2})(?:\b|\))", text)
+    if m:
+        abbr = m.group(1).upper()
+        if abbr in STATE_ABBR_SET:
+            return abbr
+    # Catch explicit all-caps state abbreviations in headlines (e.g., "in NJ").
+    for m in re.finditer(r"\b([A-Z]{2})\b", text):
+        abbr = m.group(1).upper()
+        if abbr in STATE_ABBR_SET:
+            return abbr
     lower = text.lower()
     for full_name, abbr in STATE_ABBREVS.items():
         if full_name.lower() in lower:
             return abbr
     return ""
+
+
+def normalize_location_text(value: str) -> str:
+    text = re.sub(r"[^a-z0-9\s]", " ", (value or "").lower())
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def sanitize_city(value: str) -> str:
+    city = clean_text(value).strip(" ,.;:-")
+    if not city or len(city) < 2 or len(city) > 48:
+        return ""
+    if re.search(r"\d", city):
+        return ""
+    lower = city.lower()
+    if lower in GENERIC_LOCATION_WORDS:
+        return ""
+    if lower.startswith(("the ", "and ")):
+        return ""
+    return city
+
+
+def extract_city_state_from_text(text: str):
+    if not text:
+        return "", ""
+    normalized = clean_text(unescape(text))
+    for pattern in (LOCATION_IN_CANDIDATE_RE, LOCATION_CANDIDATE_RE):
+        m = pattern.search(normalized)
+        if not m:
+            continue
+        city = sanitize_city(m.group(1))
+        state = normalize_state(m.group(2))
+        if city and state:
+            return city, state
+    m = LOCATION_DATELINE_RE.search(normalized)
+    if m:
+        city = sanitize_city(m.group(1).title())
+        state = normalize_state(m.group(2))
+        if city and state:
+            return city, state
+    return "", ""
+
+
+def state_hint_from_domain(source_url: str) -> str:
+    domain = get_domain(source_url)
+    if not domain:
+        return ""
+    for key, abbr in SOURCE_DOMAIN_STATE_HINTS.items():
+        if domain == key or domain.endswith(f".{key}"):
+            return abbr
+    return ""
+
+
+def international_location_hint(text: str, source_url: str) -> str:
+    domain = get_domain(source_url)
+    blob = normalize_location_text(f"{text} {source_url}")
+    for key, label in SOURCE_DOMAIN_INTERNATIONAL_HINTS.items():
+        if domain == key or domain.endswith(f".{key}"):
+            return label
+    for suffix in NON_US_DOMAIN_SUFFIXES:
+        if domain.endswith(suffix):
+            if suffix == ".co.ke":
+                return "Kenya"
+            if suffix == ".ng":
+                return "Nigeria"
+            if suffix == ".ca":
+                return "Canada"
+            if suffix == ".africa":
+                return "Africa"
+    for token, label in INTERNATIONAL_LOCATION_HINTS.items():
+        if token in blob:
+            return label
+    return ""
+
+
+def decode_google_news_article_url(source_url: str) -> str:
+    global _GOOGLE_DECODE_COUNT, _LAST_GOOGLE_DECODE_TS
+    if not source_url:
+        return ""
+    if source_url in _GOOGLE_DECODE_CACHE:
+        return _GOOGLE_DECODE_CACHE[source_url]
+
+    parsed = urllib.parse.urlparse(source_url)
+    parts = [p for p in parsed.path.split("/") if p]
+    if parsed.hostname != "news.google.com" or len(parts) < 2 or parts[-2] not in ("articles", "read"):
+        _GOOGLE_DECODE_CACHE[source_url] = source_url
+        return source_url
+    if _GOOGLE_DECODE_COUNT >= GOOGLE_DECODE_LIMIT:
+        _GOOGLE_DECODE_CACHE[source_url] = source_url
+        return source_url
+
+    article_id = parts[-1]
+
+    now = time.time()
+    wait = GOOGLE_DECODE_MIN_INTERVAL_SEC - (now - _LAST_GOOGLE_DECODE_TS)
+    if wait > 0:
+        time.sleep(wait)
+    _LAST_GOOGLE_DECODE_TS = time.time()
+
+    signature = None
+    timestamp = None
+    for page_url in (f"https://news.google.com/articles/{article_id}", f"https://news.google.com/rss/articles/{article_id}"):
+        try:
+            resp = requests.get(page_url, headers=HEADERS, timeout=TIMEOUT)
+            if resp.status_code != 200:
+                continue
+            signature_m = re.search(r'data-n-a-sg="([^"]+)"', resp.text)
+            timestamp_m = re.search(r'data-n-a-ts="([^"]+)"', resp.text)
+            if signature_m and timestamp_m:
+                signature = signature_m.group(1)
+                timestamp = timestamp_m.group(1)
+                break
+        except Exception:
+            continue
+
+    if not signature or not timestamp:
+        _GOOGLE_DECODE_CACHE[source_url] = source_url
+        return source_url
+
+    payload = [
+        "Fbv4je",
+        (
+            f'["garturlreq",[["X","X",["X","X"],null,null,1,1,"US:en",null,1,null,null,null,null,null,0,1],'
+            f'"X","X",1,[1,1,1],1,1,null,0,0,null,0],"{article_id}",{timestamp},"{signature}"]'
+        ),
+    ]
+    try:
+        _GOOGLE_DECODE_COUNT += 1
+        response = requests.post(
+            "https://news.google.com/_/DotsSplashUi/data/batchexecute",
+            headers={
+                "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+                "User-Agent": HEADERS.get("User-Agent", "Mozilla/5.0"),
+            },
+            data=f"f.req={urllib.parse.quote(json.dumps([[payload]]))}",
+            timeout=TIMEOUT,
+        )
+        if response.status_code != 200 or "\n\n" not in response.text:
+            _GOOGLE_DECODE_CACHE[source_url] = source_url
+            return source_url
+        parsed_data = json.loads(response.text.split("\n\n", 1)[1])
+        decoded_url = json.loads(parsed_data[0][2])[1]
+        if isinstance(decoded_url, str) and decoded_url.startswith(("http://", "https://")):
+            _GOOGLE_DECODE_CACHE[source_url] = decoded_url
+            return decoded_url
+    except Exception:
+        pass
+
+    _GOOGLE_DECODE_CACHE[source_url] = source_url
+    return source_url
+
+
+def extract_location_from_article_html(html_text: str):
+    if not html_text:
+        return "", ""
+    snippets = []
+
+    if HAS_BS4:
+        soup = BeautifulSoup(html_text, "html.parser")
+        for meta in soup.find_all("meta"):
+            key = (meta.get("name") or meta.get("property") or "").lower()
+            content = clean_text(unescape(meta.get("content") or ""))
+            if not content:
+                continue
+            if "description" in key or "geo" in key or "location" in key:
+                snippets.append(content)
+
+        article_text = []
+        for selector in ("article p", "main p", ".entry-content p", ".post-content p"):
+            nodes = soup.select(selector)
+            if nodes:
+                article_text = [clean_text(n.get_text(" ", strip=True)) for n in nodes if clean_text(n.get_text(" ", strip=True))]
+                if article_text:
+                    break
+        if not article_text:
+            article_text = [
+                clean_text(p.get_text(" ", strip=True))
+                for p in soup.find_all("p")[:30]
+                if clean_text(p.get_text(" ", strip=True))
+            ]
+        if article_text:
+            snippets.append(" ".join(article_text[:40]))
+    else:
+        for m in re.finditer(
+            r'<meta[^>]+(?:name|property)=["\']([^"\']+)["\'][^>]*content=["\']([^"\']+)["\']',
+            html_text,
+            flags=re.I,
+        ):
+            key = (m.group(1) or "").lower()
+            content = clean_text(unescape(m.group(2) or ""))
+            if content and ("description" in key or "geo" in key or "location" in key):
+                snippets.append(content)
+
+    for snippet in snippets:
+        city, state = extract_city_state_from_text(snippet)
+        if city or state:
+            return city, state
+    return "", ""
+
+
+def resolve_article_url(source_url: str) -> str:
+    if not source_url:
+        return ""
+    if source_url.startswith("https://news.google.com/") or source_url.startswith("http://news.google.com/"):
+        return decode_google_news_article_url(source_url)
+    return source_url
+
+
+def infer_location_from_known_records(record: dict, known_records: list):
+    employer_blob = normalize_location_text(f"{record.get('employer', '')} {record.get('notes', '')}")
+    if not employer_blob:
+        return "", ""
+    best = []
+    for known in known_records:
+        known_name = known.get("nameNorm", "")
+        if len(known_name) < 8:
+            continue
+        if known_name in employer_blob:
+            score = len(known_name)
+            best.append((score, known.get("city", ""), known.get("state", "")))
+    if not best:
+        return "", ""
+    best.sort(key=lambda x: x[0], reverse=True)
+    top = best[0]
+    if len(best) > 1 and best[1][0] == top[0] and best[1][2] != top[2]:
+        return "", ""
+    return top[1], top[2]
+
+
+def infer_location_from_provider_index(record: dict):
+    global _PROVIDER_LOCATION_INDEX
+    if _PROVIDER_LOCATION_INDEX is None:
+        provider_path = Path("public/data/provider-master.json")
+        if not provider_path.exists():
+            _PROVIDER_LOCATION_INDEX = []
+        else:
+            try:
+                with open(provider_path, encoding="utf-8") as pf:
+                    provider_data = json.load(pf)
+            except Exception:
+                provider_data = {}
+            providers = provider_data.get("providers") if isinstance(provider_data, dict) else None
+            built = []
+            if isinstance(providers, list):
+                for p in providers:
+                    name = clean_text(p.get("name") or "")
+                    state = normalize_state(p.get("state") or "")
+                    city = clean_text(p.get("metro") or "")
+                    if not name or not state:
+                        continue
+                    name_norm = normalize_location_text(name)
+                    if len(name_norm) < 10:
+                        continue
+                    built.append({"nameNorm": name_norm, "city": city, "state": state})
+            _PROVIDER_LOCATION_INDEX = built
+
+    text_norm = normalize_location_text(f"{record.get('employer', '')} {record.get('notes', '')}")
+    if not text_norm:
+        return "", ""
+
+    hits = []
+    for p in _PROVIDER_LOCATION_INDEX:
+        name_norm = p.get("nameNorm") or ""
+        if name_norm and name_norm in text_norm:
+            score = len(name_norm)
+            hits.append((score, p.get("city") or "", p.get("state") or ""))
+    if not hits:
+        return "", ""
+    hits.sort(key=lambda x: x[0], reverse=True)
+    top = hits[0]
+    if len(hits) > 1 and hits[1][0] == top[0] and hits[1][2] != top[2]:
+        return "", ""
+    return top[1], top[2]
+
+
+def enrich_missing_locations(strikes: list) -> list:
+    enriched = []
+    known_locations = []
+    for s in strikes:
+        city = clean_text(s.get("city") or "")
+        state = normalize_state(s.get("state") or "")
+        if city or state:
+            known_locations.append({
+                "nameNorm": normalize_location_text(s.get("employer", "")),
+                "city": city,
+                "state": state,
+            })
+
+    fetch_budget = LOCATION_ENRICH_LIMIT
+    for strike in strikes:
+        s = dict(strike)
+        city = clean_text(s.get("city") or "")
+        state = normalize_state(s.get("state") or "")
+        context = clean_text(
+            f"{s.get('employer', '')} {s.get('notes', '')} {s.get('reason', '')} {s.get('publisherSourceName', '')}"
+        )
+
+        if not state:
+            state = extract_state_from_text(context)
+        if not state:
+            lowered = normalize_location_text(context)
+            for token, hinted_state in EMPLOYER_STATE_TOKEN_HINTS.items():
+                if re.search(rf"\b{re.escape(token)}\b", lowered):
+                    state = hinted_state
+                    break
+        if not city or not state:
+            text_city, text_state = extract_city_state_from_text(context)
+            city = city or text_city
+            state = state or text_state
+        if not state:
+            state = (
+                state_hint_from_domain(s.get("publisherSourceUrl") or "")
+                or state_hint_from_domain(s.get("sourceUrl") or "")
+            )
+
+        if (not city or not state) and (s.get("sourceUrl") or "") and fetch_budget > 0:
+            url = s.get("sourceUrl") or ""
+            resolved_url = resolve_article_url(url)
+            if resolved_url:
+                cache_key = resolved_url
+                if cache_key in _ARTICLE_LOCATION_CACHE:
+                    article_city, article_state = _ARTICLE_LOCATION_CACHE[cache_key]
+                else:
+                    article_city, article_state = "", ""
+                    try:
+                        fetch_budget -= 1
+                        resp = requests.get(resolved_url, headers=HEADERS, timeout=TIMEOUT)
+                        if resp.status_code == 200:
+                            article_city, article_state = extract_location_from_article_html(resp.text)
+                    except Exception:
+                        pass
+                    _ARTICLE_LOCATION_CACHE[cache_key] = (article_city, article_state)
+                city = city or article_city
+                state = state or article_state
+
+        if not city or not state:
+            known_city, known_state = infer_location_from_known_records(s, known_locations)
+            city = city or known_city
+            state = state or known_state
+
+        if not city or not state:
+            provider_city, provider_state = infer_location_from_provider_index(s)
+            city = city or provider_city
+            state = state or provider_state
+
+        if not city and not state:
+            intl_hint = international_location_hint(
+                context,
+                (s.get("publisherSourceUrl") or s.get("sourceUrl") or ""),
+            )
+            if intl_hint:
+                city = intl_hint
+
+        s["city"] = city
+        s["state"] = state
+        enriched.append(s)
+
+        if city or state:
+            known_locations.append({
+                "nameNorm": normalize_location_text(s.get("employer", "")),
+                "city": city,
+                "state": state,
+            })
+
+    return enriched
 
 
 def infer_hc_type(employer: str, union: str, reason: str) -> str:
@@ -386,6 +826,8 @@ def normalize_record(raw: dict, source: str) -> dict:
         "status": status,
         "source": source,
         "sourceUrl": (raw.get("source_url") or raw.get("url") or ""),
+        "publisherSourceUrl": (raw.get("publisher_source_url") or ""),
+        "publisherSourceName": (raw.get("publisher_source_name") or ""),
         "healthcareType": hc_type,
         "isTravelOpportunity": is_opp,
         "notes": clean_text(raw.get("notes") or raw.get("description") or ""),
@@ -578,11 +1020,14 @@ def extract_channel_items(xml_text: str):
         description = clean_text(item.findtext("description") or "")
         link = clean_text(item.findtext("link") or "")
         pub_date = clean_text(item.findtext("pubDate") or "")
+        source_el = item.find("source")
         items.append({
             "title": title,
             "description": description,
             "link": link,
             "pubDate": pub_date,
+            "sourceName": clean_text(source_el.text or "") if source_el is not None else "",
+            "sourceUrl": clean_text(source_el.get("url") or "") if source_el is not None else "",
         })
     return items
 
@@ -680,6 +1125,8 @@ def fetch_union_rss() -> list:
                     "action_type": action_type,
                     "reason": "Union feed signal",
                     "source_url": it["link"] or feed_url,
+                    "publisher_source_url": it.get("sourceUrl") or "",
+                    "publisher_source_name": it.get("sourceName") or "",
                     "notes": clean_text(it["title"]),
                     "union": source_name.replace("_rss", "").upper(),
                 }
@@ -738,6 +1185,8 @@ def fetch_google_news_rss() -> list:
                     "action_type": action_type,
                     "reason": "Google News nurse-strike signal",
                     "source_url": it["link"] or feed_url,
+                    "publisher_source_url": it.get("sourceUrl") or "",
+                    "publisher_source_name": it.get("sourceName") or "",
                     "notes": headline[:180],
                     "union": "",
                 }
@@ -1204,6 +1653,11 @@ def main():
 
     existing = load_existing()
     merged = merge_strikes(fetched, existing)
+    missing_before = sum(1 for s in merged if not clean_text(s.get("city") or "") and not normalize_state(s.get("state") or ""))
+    merged = enrich_missing_locations(merged)
+    missing_after = sum(1 for s in merged if not clean_text(s.get("city") or "") and not normalize_state(s.get("state") or ""))
+    if missing_before != missing_after:
+        print(f"[Strikes] Location enrichment: unresolved {missing_before} -> {missing_after}")
     verified = apply_verification_rules(merged)
     consolidated = consolidate_events(verified)
     quality_filtered, quality_dropped = apply_quality_filters(consolidated)
