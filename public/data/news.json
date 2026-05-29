@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-05-29T08:03:46.419Z",
+  "lastUpdated": "2026-05-29T11:41:59.219Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 4,
-    "healthySources": 6,
+    "staleSources": 2,
+    "healthySources": 8,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 234,
+        "articleCount": 229,
         "latestPublishedAt": "2026-05-29T00:00:00.000Z",
-        "staleHours": 8,
+        "staleHours": 11,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
         "articleCount": 143,
         "latestPublishedAt": "2026-05-28T00:00:00.000Z",
-        "staleHours": 32,
+        "staleHours": 35,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 52,
-        "latestPublishedAt": "2026-05-28T00:00:00.000Z",
-        "staleHours": 32,
+        "articleCount": 54,
+        "latestPublishedAt": "2026-05-29T00:00:00.000Z",
+        "staleHours": 11,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
-        "articleCount": 29,
-        "latestPublishedAt": "2026-05-28T00:00:00.000Z",
-        "staleHours": 32,
+        "articleCount": 37,
+        "latestPublishedAt": "2026-05-29T00:00:00.000Z",
+        "staleHours": 11,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 15,
         "latestPublishedAt": "2026-05-28T00:00:00.000Z",
-        "staleHours": 32,
-        "status": "ok"
-      },
-      {
-        "source": "FDA MedWatch RSS",
-        "articleCount": 11,
-        "latestPublishedAt": "2026-05-28T00:00:00.000Z",
-        "staleHours": 32,
+        "staleHours": 35,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
-        "articleCount": 11,
-        "latestPublishedAt": "2026-05-26T00:00:00.000Z",
-        "staleHours": 80,
-        "status": "stale"
+        "articleCount": 9,
+        "latestPublishedAt": "2026-05-27T00:00:00.000Z",
+        "staleHours": 59,
+        "status": "ok"
+      },
+      {
+        "source": "FDA MedWatch RSS",
+        "articleCount": 8,
+        "latestPublishedAt": "2026-05-28T00:00:00.000Z",
+        "staleHours": 35,
+        "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
-        "articleCount": 2,
-        "latestPublishedAt": "2026-05-22T00:00:00.000Z",
-        "staleHours": 176,
-        "status": "stale"
-      },
-      {
-        "source": "SEC Healthcare Filings",
-        "articleCount": 2,
-        "latestPublishedAt": "2026-05-22T00:00:00.000Z",
-        "staleHours": 176,
-        "status": "stale"
+        "articleCount": 3,
+        "latestPublishedAt": "2026-05-29T00:00:00.000Z",
+        "staleHours": 11,
+        "status": "ok"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 1,
         "latestPublishedAt": "2026-05-26T00:00:00.000Z",
-        "staleHours": 80,
+        "staleHours": 83,
+        "status": "stale"
+      },
+      {
+        "source": "SEC Healthcare Filings",
+        "articleCount": 1,
+        "latestPublishedAt": "2026-05-22T00:00:00.000Z",
+        "staleHours": 179,
         "status": "stale"
       }
     ]
@@ -87,7 +87,7 @@
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 45
+      "count": 44
     },
     "labor_unions": {
       "label": "Labor & Unions",
@@ -95,11 +95,11 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 48
+      "count": 50
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 9
+      "count": 10
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
@@ -111,14 +111,12 @@
     },
     "general_market": {
       "label": "General Market",
-      "count": 222
+      "count": 220
     }
   },
   "quality": {
-    "status": "warning",
-    "failedChecks": [
-      "maxStaleSources"
-    ],
+    "status": "pass",
+    "failedChecks": [],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -127,7 +125,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 25,
+        "actual": 38,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -137,12 +135,162 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 4,
-        "pass": false
+        "actual": 2,
+        "pass": true
       }
     }
   },
   "articles": [
+    {
+      "title": "Agency Information Collection Activities: Submission for OMB Review; Comment Request",
+      "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension or reinstatement of an existing collection of information, and to allow a second opportunity for public comment on the notice. Interested persons are invited to send comments regarding the burden estimate or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
+      "url": "https://www.federalregister.gov/documents/2026/05/29/2026-10777/agency-information-collection-activities-submission-for-omb-review-comment-request",
+      "source": "Federal Register - CMS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_cms",
+      "publishedAt": "2026-05-29",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Regulation for Federal Financial Assistance",
+      "summary": "The Office of Management and Budget (OMB) proposes to revise the Guidance for Federal Financial Assistance to improve government- wide policies and requirements related to the management of grants, cooperative agreements, and other forms of assistance. OMB is proposing revisions that would improve transparency, accountability, and oversight for Federal awards across the Federal Government. This includes ensuring that American tax dollars are not wasted or misused, activities performed under Federal awards are consistent with law and policy, and recipients are held accountable when they fail to meet relevant standards. The revisions also aim to ensure that basic American principles of equality and equal opportunity are upheld throughout all stages of the award making process and that unlawful discrimination is no longer permitted. Proposed changes also include providing further clarification on the regulatory status of the OMB requirements and on the process for future updates to the government- wide requirements. Finally, OMB also proposes changes to reduce recipient burden. The listed Federal grant-making agencies propose conforming changes to their respective adopting regulations, or, in the case of some agencies and other entities, establishing new adopting regulations or policies. The proposed changes reflect the administration's commitment to transparency, accountability, and proper oversight for the Federal grantmaking process. The proposed regulations seek to ensure that American tax dollars are ultimately used to serve the needs of the American public.",
+      "url": "https://www.federalregister.gov/documents/2026/05/29/2026-10817/regulation-for-federal-financial-assistance",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-05-29",
+      "category": "quality_safety",
+      "relevance": 100,
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "Patient-Focused Drug Development for Nonhealing Chronic Wounds; Public Meeting; Request for Comments",
+      "summary": "The Food and Drug Administration (FDA, the Agency, or we) is announcing the following public meeting entitled \"Patient-Focused Drug Development for Nonhealing Chronic Wounds.\" The purpose of the public meeting is to obtain patient perspectives about the impact of nonhealing chronic wounds on daily life, patient views on treatment approaches, factors to consider when selecting a treatment, and what they consider when determining whether to participate in a clinical trial.",
+      "url": "https://www.federalregister.gov/documents/2026/05/29/2026-10752/patient-focused-drug-development-for-nonhealing-chronic-wounds-public-meeting-request-for-comments",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-05-29",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Content of Human Factors Information in Medical Device Marketing Submissions; Guidance for Industry and Food and Drug Administration Staff; Availability",
+      "summary": "The Food and Drug Administration (FDA or Agency) is announcing the availability of a final guidance titled \"Content of Human Factors Information in Medical Device Marketing Submissions.\" This guidance provides a risk-based framework to guide manufacturers and FDA staff on the human factors information that should be included in a marketing submission to the Center for Devices and Radiological Health (CDRH) to facilitate the efficiency of the FDA review process.",
+      "url": "https://www.federalregister.gov/documents/2026/05/29/2026-10734/content-of-human-factors-information-in-medical-device-marketing-submissions-guidance-for-industry",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-05-29",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Statistical Approaches To Establishing Bioequivalence; Guidance for Industry; Availability",
+      "summary": "The Food and Drug Administration (FDA or Agency) is announcing the availability of a final guidance for industry entitled \"Statistical Approaches to Establishing Bioequivalence.\" This guidance provides recommendations to sponsors and applicants planning to use equivalence criteria in analyzing bioequivalence (BE) studies for investigational new drug applications (INDs), new drug applications (NDAs), abbreviated new drug applications (ANDAs), and amendments and supplements to these applications. The guidance discusses statistical approaches for BE comparisons and focuses on how to use these approaches both generally and in specific situations. This guidance finalizes the draft guidance of the same title issued on December 5, 2022, and replaces the guidance of the same title issued on February 2, 2001.",
+      "url": "https://www.federalregister.gov/documents/2026/05/29/2026-10705/statistical-approaches-to-establishing-bioequivalence-guidance-for-industry-availability",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-05-29",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Bioequivalence Studies With Pharmacokinetic Endpoints for Drugs Submitted Under an Abbreviated New Drug Application; Guidance for Industry; Availability",
+      "summary": "The Food and Drug Administration (FDA or Agency) is announcing the availability of a final guidance for industry entitled \"Bioequivalence Studies With Pharmacokinetic Endpoints for Drugs Submitted Under an ANDA.\" This guidance provides recommendations to applicants planning to include bioequivalence (BE) information in abbreviated new drug applications (ANDAs), ANDA amendments, and ANDA supplements. In addition, this guidance describes how to meet the BE requirements set forth in the Federal Food, Drug, and Cosmetic Act (FD&C Act) and FDA regulations. This guidance finalizes the draft guidance for industry of the same title issued on August 23, 2021.",
+      "url": "https://www.federalregister.gov/documents/2026/05/29/2026-10703/bioequivalence-studies-with-pharmacokinetic-endpoints-for-drugs-submitted-under-an-abbreviated-new",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-05-29",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Notice of an Amended Order Under Sections 362 and 365 of the Public Health Service Act Suspending Introduction of Certain Persons From Countries Where a Communicable Disease Exists",
+      "summary": "The Centers for Disease Control and Prevention (CDC), a component of the Department of Health and Human Services (HHS), announces the issuance of an Amended Order under Section 362 and 365 of the Public Health Service Act that suspends the introduction of certain persons from countries where an outbreak of a communicable disease exists for a period of 30 days. The Amended Order was issued on May 22, 2026.",
+      "url": "https://www.federalregister.gov/documents/2026/05/29/2026-10701/notice-of-an-amended-order-under-sections-362-and-365-of-the-public-health-service-act-suspending",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-05-29",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "National Institute of Mental Health; Notice of Meeting",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/05/29/2026-10679/national-institute-of-mental-health-notice-of-meeting",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-05-29",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Medical Devices; Neurological Devices; Classification of the Transcutaneous Electrical Nerve Stimulator To Treat Fibromyalgia Symptoms",
+      "summary": "The Food and Drug Administration (FDA) is classifying the transcutaneous electrical nerve stimulator to treat fibromyalgia symptoms into class II (special controls). The special controls that apply to the device type are identified in this order and will be part of the codified language for classification of the transcutaneous electrical nerve stimulator to treat fibromyalgia symptoms. We are taking this action because we have determined that classifying the device into class II will provide a reasonable assurance of safety and effectiveness of the device. We believe this action will also enhance patients' access to beneficial innovative devices, in part by reducing regulatory burdens.",
+      "url": "https://www.federalregister.gov/documents/2026/05/29/2026-10675/medical-devices-neurological-devices-classification-of-the-transcutaneous-electrical-nerve",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-05-29",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Advisory Committee; Psychopharmacologic Drugs Advisory Committee; Renewal",
+      "summary": "The Food and Drug Administration (FDA) is announcing the renewal of the Psychopharmacologic Drugs Advisory Committee by the Commissioner of Food and Drugs (the Commissioner). The Commissioner has determined that it is in the public interest to renew the Psychopharmacologic Drugs Advisory Committee for an additional 2 years beyond the charter expiration date. The new charter will be in effect until the June 4, 2028, expiration date.",
+      "url": "https://www.federalregister.gov/documents/2026/05/29/2026-10674/advisory-committee-psychopharmacologic-drugs-advisory-committee-renewal",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-05-29",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Agency Information Collection Activities: Proposed Collection; Comment Request",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/05/29/2026-10723/agency-information-collection-activities-proposed-collection-comment-request",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-05-29",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Opinion: I’m a weight-loss doctor. Here’s why I worry about GLP-1 ‘microdoses’",
+      "url": "https://www.statnews.com/2026/05/29/glp-1-microdose-popular-but-unsupported-by-evidence/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-05-29",
+      "summary": "Long term, we don’t know what tiny doses of GLP-1s for cosmetic weight loss can do, writes a weight-loss doctor.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: The woman behind the world’s biggest longevity competition",
+      "url": "https://www.statnews.com/2026/05/29/xprize-healthspan-longevity-science-jamie-justice-q-and-a/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-05-29",
+      "summary": "Jamie Justice of XPRIZE Healthspan on the most promising research and \"purely scammy\" treatments in the world of longevity.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
     {
       "title": "Fierce Healthcare Layoff Tracker—Washington Regional's strategic consolidation cuts 86 employees; Care New England restructure hits 30+ jobs",
       "url": "https://www.fiercehealthcare.com/finance/fierce-healthcare-layoff-tracker-2026-job-cuts-eliminations-health-systems-hospitals",
@@ -1374,48 +1522,12 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "Proposed Data Collection Submitted for Public Comment and Recommendations",
-      "summary": "The Centers for Disease Control and Prevention (CDC), as part of its continuing effort to reduce public burden and maximize the utility of government information, invites the general public and other federal agencies the opportunity to comment on a continuing information collection, as required by the Paperwork Reduction Act of 1995. This notice invites comment on a proposed information collection project titled Rape Prevention and Education (RPE) Program. This program is designed to collect data from RPE recipients to assess how recipients are improving prevention infrastructure, implementing and evaluating prevention strategies to expand efforts to prevent sexual assault, and using data to inform prevention action.",
-      "url": "https://www.federalregister.gov/documents/2026/05/27/2026-10514/proposed-data-collection-submitted-for-public-comment-and-recommendations",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-05-27",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Proposed Data Collection Submitted for Public Comment and Recommendations",
-      "summary": "The Centers for Disease Control and Prevention (CDC), as part of its continuing effort to reduce public burden and maximize the utility of government information, invites the general public and other federal agencies the opportunity to comment on a continuing information collection, as required by the Paperwork Reduction Act of 1995. This notice invites comment on a proposed information collection project titled Advancing Violence Epidemiology in Real-Time (AVERT). The AVERT program provides funding to jurisdictions to conduct routine monitoring of Emergency Department visits related to violence-related injuries and mental health conditions, and to analyze these data in a timely manner.",
-      "url": "https://www.federalregister.gov/documents/2026/05/27/2026-10513/proposed-data-collection-submitted-for-public-comment-and-recommendations",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-05-27",
-      "category": "mergers_mna",
-      "relevance": 100,
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
       "title": "Drugs for Human Use; Drug Efficacy Study Implementation: Estrogen-Androgen Fixed-Combination Drug Products; Syntest D.S. and Syntest H.S. Tablets; Withdrawal of Hearing Requests; Final Resolution of Drug Efficacy Study Implementation 7661",
       "summary": "The Food and Drug Administration (FDA or Agency) is announcing that all outstanding hearing requests for estrogen-androgen fixed- combination drug products under Docket FDA-1998-P-0083 (formerly 76N- 0377) (DESI 7661) have been withdrawn. Therefore, as proposed in the April 14, 2003, notice of opportunity for hearing (NOOH), FDA finds that the products subject to this proceeding have not been shown to be effective for use under the conditions of use prescribed, recommended, or suggested in the labeling. Shipment in interstate commerce of any product identified in this docket (DESI 7661), or any identical, related, or similar (IRS) product, that is not the subject of an approved new drug application (NDA) or abbreviated new drug application (ANDA) is unlawful as of the date of this notice.",
       "url": "https://www.federalregister.gov/documents/2026/05/27/2026-10479/drugs-for-human-use-drug-efficacy-study-implementation-estrogen-androgen-fixed-combination-drug",
-      "source": "Federal Register - HHS",
+      "source": "Federal Register - FDA",
       "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-05-27",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Agency Information Collection Activities: Proposed Collection: Public Comment Request; Information Collection Request Title: Health Professions Student Loan Program, Loans for Disadvantaged Students Program, Primary Care Loan Program, and Nursing Student Loan Program Administrative Requirements, OMB No. 0906-0088-Extension",
-      "summary": "In compliance with the requirement for opportunity for public comment on proposed data collection projects of the Paperwork Reduction Act of 1995, HRSA announces plans to submit an Information Collection Request (ICR), described below, to the Office of Management and Budget (OMB). Prior to submitting the ICR to OMB, HRSA seeks comments from the public regarding the burden estimate below, or any other aspect of the ICR.",
-      "url": "https://www.federalregister.gov/documents/2026/05/27/2026-10469/agency-information-collection-activities-proposed-collection-public-comment-request-information",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
+      "sourceId": "federal_register_fda",
       "publishedAt": "2026-05-27",
       "category": "general_market",
       "relevance": 100,
@@ -1443,6 +1555,42 @@
       "publishedAt": "2026-05-27",
       "category": "general_market",
       "relevance": 98,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Proposed Data Collection Submitted for Public Comment and Recommendations",
+      "summary": "The Centers for Disease Control and Prevention (CDC), as part of its continuing effort to reduce public burden and maximize the utility of government information, invites the general public and other federal agencies the opportunity to comment on a continuing information collection, as required by the Paperwork Reduction Act of 1995. This notice invites comment on a proposed information collection project titled Rape Prevention and Education (RPE) Program. This program is designed to collect data from RPE recipients to assess how recipients are improving prevention infrastructure, implementing and evaluating prevention strategies to expand efforts to prevent sexual assault, and using data to inform prevention action.",
+      "url": "https://www.federalregister.gov/documents/2026/05/27/2026-10514/proposed-data-collection-submitted-for-public-comment-and-recommendations",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-05-27",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Proposed Data Collection Submitted for Public Comment and Recommendations",
+      "summary": "The Centers for Disease Control and Prevention (CDC), as part of its continuing effort to reduce public burden and maximize the utility of government information, invites the general public and other federal agencies the opportunity to comment on a continuing information collection, as required by the Paperwork Reduction Act of 1995. This notice invites comment on a proposed information collection project titled Advancing Violence Epidemiology in Real-Time (AVERT). The AVERT program provides funding to jurisdictions to conduct routine monitoring of Emergency Department visits related to violence-related injuries and mental health conditions, and to analyze these data in a timely manner.",
+      "url": "https://www.federalregister.gov/documents/2026/05/27/2026-10513/proposed-data-collection-submitted-for-public-comment-and-recommendations",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-05-27",
+      "category": "mergers_mna",
+      "relevance": 100,
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Agency Information Collection Activities: Proposed Collection: Public Comment Request; Information Collection Request Title: Health Professions Student Loan Program, Loans for Disadvantaged Students Program, Primary Care Loan Program, and Nursing Student Loan Program Administrative Requirements, OMB No. 0906-0088-Extension",
+      "summary": "In compliance with the requirement for opportunity for public comment on proposed data collection projects of the Paperwork Reduction Act of 1995, HRSA announces plans to submit an Information Collection Request (ICR), described below, to the Office of Management and Budget (OMB). Prior to submitting the ICR to OMB, HRSA seeks comments from the public regarding the burden estimate below, or any other aspect of the ICR.",
+      "url": "https://www.federalregister.gov/documents/2026/05/27/2026-10469/agency-information-collection-activities-proposed-collection-public-comment-request-information",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-05-27",
+      "category": "general_market",
+      "relevance": 100,
       "categoryLabel": "General Market"
     },
     {
@@ -2307,24 +2455,12 @@
       "categoryLabel": "Policy & Reimbursement"
     },
     {
-      "title": "Renewal of the President's Council on Sports, Fitness & Nutrition's Charter",
-      "summary": "The U.S. Department of Health and Human Services (HHS) is hereby giving notice that the charter for the President's Council on Sports, Fitness & Nutrition (hereafter referred to as the Council) has been renewed.",
-      "url": "https://www.federalregister.gov/documents/2026/05/26/2026-10411/renewal-of-the-presidents-council-on-sports-fitness-and-nutritions-charter",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-05-26",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
       "title": "Advisory Committee; Pulmonary-Allergy Drugs Advisory Committee; Renewal",
       "summary": "The Food and Drug Administration (FDA) is announcing the renewal of the Pulmonary-Allergy Drugs Advisory Committee by the Commissioner of Food and Drugs (the Commissioner). The Commissioner has determined that it is in the public interest to renew the Pulmonary- Allergy Drugs Advisory Committee for an additional 2 years beyond the charter expiration date. The new charter will be in effect until the May 30, 2028, expiration date.",
       "url": "https://www.federalregister.gov/documents/2026/05/26/2026-10410/advisory-committee-pulmonary-allergy-drugs-advisory-committee-renewal",
-      "source": "Federal Register - HHS",
+      "source": "Federal Register - FDA",
       "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
+      "sourceId": "federal_register_fda",
       "publishedAt": "2026-05-26",
       "category": "general_market",
       "relevance": 100,
@@ -2401,6 +2537,18 @@
       "category": "general_market",
       "relevance": 98,
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "Renewal of the President's Council on Sports, Fitness & Nutrition's Charter",
+      "summary": "The U.S. Department of Health and Human Services (HHS) is hereby giving notice that the charter for the President's Council on Sports, Fitness & Nutrition (hereafter referred to as the Council) has been renewed.",
+      "url": "https://www.federalregister.gov/documents/2026/05/26/2026-10411/renewal-of-the-presidents-council-on-sports-fitness-and-nutritions-charter",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-05-26",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
     },
     {
       "title": "Center for Scientific Review; Notice of Closed Meetings",
@@ -4669,147 +4817,6 @@
       "summary": "The company plans to scale its clinical AI suite, including its ambient notetaking tool Scribe and clinical AI assistant and medical search engine Ask (formerly DoxGPT).",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Coalition of attorneys general sue to block federal student loan caps",
-      "url": "https://www.fiercehealthcare.com/providers/coalition-attorneys-general-sue-block-federal-student-loan-caps",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-22",
-      "summary": "Twenty-six attorneys general filed a lawsuit Tuesday against the Department of Education over a recently finalized restrictions on federal student loans the litigators, as well as health industry groups, say will hamper the clinical workforce pipeline.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "AI company Commure banks $70M funding round, hits $7B valuation",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/ai-company-commure-banks-70m-funding-round-hits-7b-valuation",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-22",
-      "summary": "Healthcare AI company Commure has banked $70 million in fresh funding, reaching a $7 billion valuation.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Reduced average length of stay salvaged hospitals' operating margins in March: report",
-      "url": "https://www.fiercehealthcare.com/providers/reduced-average-length-stay-salvaged-hospitals-operating-margins-march-report",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-22",
-      "summary": "Hospitals' average length of stay declined 2% from February to March, fueling a 4% month-to-month decline in total daily calendar expense that outpaced a 1% dip in total daily revenue, according to healthcare advisory services firm Kaufman Hall.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "UVA Health launches ‘on-demand’ virtual primary care service to address physician shortage",
-      "url": "https://www.fiercehealthcare.com/telehealth/uva-health-launches-demand-virtual-primary-care-service-new-existing-patients",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-22",
-      "summary": "New and existing patients can use the service to schedule appointments for common conditions, preventive care and disease management.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "OIG: Jury still out on impacts of vertical consolidation in Part D",
-      "url": "https://www.fiercehealthcare.com/payers/oig-jury-still-out-impacts-vertical-consolidation-part-d",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-22",
-      "summary": "A new analysis from the Office of Inspector General found a similar net cost for drugs through vertically-integrated Part D plans compared to other plans.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Agency Information Collection Activities; Submission for Office of Management and Budget Review; Comment Request; Patent Term Restoration; Due Diligence Petitions; Filing, Format, and Content of Petitions",
-      "summary": "The Food and Drug Administration (FDA) is announcing that a proposed collection of information has been submitted to the Office of Management and Budget (OMB) for review and clearance under the Paperwork Reduction Act of 1995.",
-      "url": "https://www.federalregister.gov/documents/2026/05/21/2026-10190/agency-information-collection-activities-submission-for-office-of-management-and-budget-review",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-05-21",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Agency Information Collection Activities; Submission for Office of Management and Budget Review; Comment Request; Adverse Experience/Events With Approved New Animal Drugs",
-      "summary": "The Food and Drug Administration (FDA) is announcing that a proposed collection of information has been submitted to the Office of Management and Budget (OMB) for review and clearance under the Paperwork Reduction Act of 1995.",
-      "url": "https://www.federalregister.gov/documents/2026/05/21/2026-10189/agency-information-collection-activities-submission-for-office-of-management-and-budget-review",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-05-21",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Agency Information Collection Activities; Submission for Office of Management and Budget Review; Comment Request; Current Good Manufacturing Practice (CGMP): Manufacturing, Processing, Packing, and Holding of Drugs; GMP for Finished Pharmaceuticals (Including Active Pharmaceutical Ingredients) and the Advanced Manufacturing Technologies Designation Program",
-      "summary": "The Food and Drug Administration (FDA) is announcing that a proposed collection of information has been submitted to the Office of Management and Budget (OMB) for review and clearance under the Paperwork Reduction Act of 1995.",
-      "url": "https://www.federalregister.gov/documents/2026/05/21/2026-10188/agency-information-collection-activities-submission-for-office-of-management-and-budget-review",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-05-21",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Agency Information Collection Activities; Submission for Office of Management and Budget Review; Comment Request; Required Warnings for Cigarette Packages and Advertisements",
-      "summary": "The Food and Drug Administration (FDA) is announcing that a proposed collection of information has been submitted to the Office of Management and Budget (OMB) for review and clearance under the Paperwork Reduction Act of 1995.",
-      "url": "https://www.federalregister.gov/documents/2026/05/21/2026-10187/agency-information-collection-activities-submission-for-office-of-management-and-budget-review",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-05-21",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Ventilator Recall: React Health Removes VOCSN V+Pro Ventilators",
-      "summary": "React Health is removing affected devices due to a manufacturing process deviation that may result in an undetected oxygen leak condition.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/ventilator-recall-react-health-removes-vocsn-vpro-ventilators",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-05-21",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Automated Compounding System Recall: Omnicell Removes Syringe Labels Used with the i.v.STATION Automated Compounding System",
-      "summary": "Certain labels used with i.v.STATION automated compounding systems may not be detected, leading to mislabeled sterile filled syringes.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/automated-compounding-system-recall-omnicell-removes-syringe-labels-used-ivstation-automated",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-05-21",
-      "category": "ai_tech",
-      "relevance": 98,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Early Alert: Heart Pump Controller Issue from Abiomed",
-      "summary": "A software error may cause the Automated Impella Controller to restart when used in conjunction with left ventricular Impella devices.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-heart-pump-controller-issue-abiomed",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-05-21",
-      "category": "general_market",
-      "relevance": 98,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "UHS 8-K filing - Universal Health Services, Inc.",
-      "summary": "Universal Health Services, Inc. filed 8-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/352915/000119312526233402/uhs-20260518.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-05-21",
-      "category": "general_market",
-      "relevance": 90,
-      "categoryLabel": "General Market"
     }
   ]
 }
