@@ -88,6 +88,11 @@ RSS_EMPLOYER_SIGNAL_KEYWORDS = [
     "hospital", "medical center", "health", "clinic", "healthcare", "nursing home", "facility",
 ]
 
+NURSING_CONTEXT_KEYWORDS = [
+    "nurse", "nurses", "registered nurse", "rn", "crna",
+    "nurse practitioner", "staffing ratio", "patient safety",
+]
+
 HEALTHCARE_UNION_KEYWORDS = [
     "nysna", "national nurses united", "nnoc", "hpae", "onac", "wsna",
     "nurse", "nurses association",
@@ -144,6 +149,7 @@ GENERIC_LOCATION_WORDS = {
     "members", "center", "medical", "group", "state", "county",
 }
 SOURCE_DOMAIN_STATE_HINTS = {
+    "unacuhcp.org": "CA",
     "hpae.org": "NJ",
     "veritenews.org": "LA",
     "enterprisenews.com": "MA",
@@ -197,6 +203,7 @@ SEARCH_TEMPLATES = {
     "mnnurses.org": "https://www.mnnurses.org/?s={q}",
     "pasnap.org": "https://pasnap.org/?s={q}",
     "seiu.org": "https://www.seiu.org/search/{q}",
+    "unacuhcp.org": "https://www.unacuhcp.org/?s={q}",
     "nurse.org": "https://nurse.org/articles/nurse-strikes-list/",
 }
 
@@ -205,6 +212,7 @@ SOURCE_HEALTH = []
 UNION_RSS_SOURCES = [
     ("nnu_rss", "https://www.nationalnursesunited.org/rss.xml"),
     ("nysna_rss", "https://www.nysna.org/rss.xml"),
+    ("unacuhcp_rss", "https://www.unacuhcp.org/feed/"),
     ("massnurses_rss", "https://www.massnurses.org/feed/"),
     ("hpae_rss", "https://www.hpae.org/feed/"),
     ("mnnurses_rss", "https://www.mnnurses.org/feed/"),
@@ -216,6 +224,14 @@ GOOGLE_NEWS_RSS_SOURCES = [
     ("google_news_nurse_strike", "https://news.google.com/rss/search?q=nurse+strike+hospital+when:30d&hl=en-US&gl=US&ceid=US:en"),
     ("google_news_healthcare_strike", "https://news.google.com/rss/search?q=healthcare+workers+strike+hospital+when:30d&hl=en-US&gl=US&ceid=US:en"),
     ("google_news_nurses_vote_strike", "https://news.google.com/rss/search?q=nurses+vote+to+strike+hospital+when:30d&hl=en-US&gl=US&ceid=US:en"),
+    ("google_news_rn_strike_notice", "https://news.google.com/rss/search?q=registered+nurses+strike+notice+hospital+when:30d&hl=en-US&gl=US&ceid=US:en"),
+    ("google_news_nurse_walkout", "https://news.google.com/rss/search?q=nurse+walkout+hospital+when:30d&hl=en-US&gl=US&ceid=US:en"),
+]
+
+HEALTHCARE_NEWS_RSS_SOURCES = [
+    ("healthcaredive_rss", "https://www.healthcaredive.com/feeds/news/"),
+    ("fiercehealthcare_rss", "https://www.fiercehealthcare.com/rss/xml"),
+    ("kffhealthnews_rss", "https://kffhealthnews.org/feed/"),
 ]
 
 SOURCE_CONFIDENCE_WEIGHTS = {
@@ -223,6 +239,7 @@ SOURCE_CONFIDENCE_WEIGHTS = {
     "nurse_org": 75,
     "nnu_rss": 70,
     "nysna_rss": 70,
+    "unacuhcp_rss": 70,
     "massnurses_rss": 70,
     "hpae_rss": 70,
     "mnnurses_rss": 70,
@@ -231,6 +248,11 @@ SOURCE_CONFIDENCE_WEIGHTS = {
     "google_news_nurse_strike": 45,
     "google_news_healthcare_strike": 45,
     "google_news_nurses_vote_strike": 45,
+    "google_news_rn_strike_notice": 45,
+    "google_news_nurse_walkout": 45,
+    "healthcaredive_rss": 52,
+    "fiercehealthcare_rss": 52,
+    "kffhealthnews_rss": 50,
     "curated": 62,
 }
 
@@ -1087,16 +1109,30 @@ def infer_rss_action_type(text: str) -> str:
     return "strike"
 
 
+def has_nursing_context(text: str) -> bool:
+    lower = (text or "").lower()
+    return any(k in lower for k in NURSING_CONTEXT_KEYWORDS)
+
+
+def clean_employer_candidate(value: str) -> str:
+    employer = clean_text(value)
+    employer = re.sub(r"^\s*(?:about|around|over|nearly|more than)\s+\d[\d,]*\s+", "", employer, flags=re.I)
+    employer = re.sub(r"^\s*\d[\d,]*\s+", "", employer)
+    employer = re.sub(r"^\s*(?:striking|unionized)\s+nurses?\s+(?:at|from)\s+", "", employer, flags=re.I)
+    employer = employer.strip(" -,:;")
+    return clean_text(employer)
+
+
 def infer_employer_from_text(title: str, description: str) -> str:
     text = clean_text(title or description)
     if " at " in text.lower():
         parts = re.split(r"\bat\b", text, flags=re.I)
         if len(parts) >= 2:
-            return clean_text(parts[-1])[:90]
+            return clean_employer_candidate(parts[-1])[:90]
     m = re.match(r"(.+?)\s+nurses?\b", text, flags=re.I)
     if m:
-        return clean_text(m.group(1))[:90]
-    return text[:90]
+        return clean_employer_candidate(m.group(1))[:90]
+    return clean_employer_candidate(text[:90])
 
 
 def is_low_quality_employer(employer: str) -> bool:
@@ -1189,6 +1225,8 @@ def fetch_google_news_rss() -> list:
                     continue
                 if not any(k in blob for k in HEALTHCARE_KEYWORDS):
                     continue
+                if not has_nursing_context(blob):
+                    continue
                 if not any(k in blob for k in RSS_EMPLOYER_SIGNAL_KEYWORDS):
                     continue
 
@@ -1224,6 +1262,73 @@ def fetch_google_news_rss() -> list:
 
             source_health(source_name, feed_url, ok=True, status_code=200, records=matched)
             print(f"[{source_name}]   -> {matched} healthcare strike signals")
+        except Exception as exc:
+            source_health(source_name, feed_url, ok=False, error=exc)
+            print(f"[{source_name}]   -> error: {exc}")
+    return results
+
+
+def fetch_healthcare_news_rss() -> list:
+    """
+    Supplemental healthcare-business news feeds. Keep strict nursing/strike
+    gating so this stream only contributes likely nursing labor actions.
+    """
+    results = []
+    for source_name, feed_url in HEALTHCARE_NEWS_RSS_SOURCES:
+        try:
+            print(f"[{source_name}] GET {feed_url}")
+            r = requests.get(feed_url, headers=HEADERS, timeout=TIMEOUT)
+            if r.status_code != 200:
+                source_health(source_name, feed_url, ok=False, status_code=r.status_code)
+                print(f"[{source_name}]   -> {r.status_code}")
+                continue
+
+            items = extract_channel_items(r.text)
+            matched = 0
+            for it in items:
+                blob = clean_text(f"{it['title']} {it['description']}").lower()
+                if not any(k in blob for k in STRIKE_KEYWORDS + PENDING_KEYWORDS + RESOLVED_KEYWORDS):
+                    continue
+                if not any(k in blob for k in HEALTHCARE_KEYWORDS):
+                    continue
+                if not has_nursing_context(blob):
+                    continue
+
+                title = clean_text(it["title"])
+                headline = title.rsplit(" - ", 1)[0] if " - " in title else title
+                employer = infer_employer_from_text(headline, it["description"])
+                if is_low_quality_employer(employer):
+                    continue
+
+                start_dt = parse_iso_date(it["pubDate"])
+                if start_dt and (NOW_UTC - start_dt).days > 365:
+                    continue
+
+                state = extract_state_from_text(f"{headline} {it['description']}")
+                status = infer_news_status(blob)
+                action_type = infer_rss_action_type(blob)
+                start_date = parse_date_str(it["pubDate"])
+
+                raw = {
+                    "employer": employer,
+                    "state": state,
+                    "workers": 0,
+                    "start_date": start_date,
+                    "status": status,
+                    "action_type": action_type,
+                    "reason": "Healthcare news nurse-strike signal",
+                    "source_url": it["link"] or feed_url,
+                    "publisher_source_url": it.get("sourceUrl") or "",
+                    "publisher_source_name": it.get("sourceName") or "",
+                    "notes": headline[:180],
+                    "union": "",
+                }
+                if is_healthcare(raw):
+                    matched += 1
+                    results.append(normalize_record(raw, source_name))
+
+            source_health(source_name, feed_url, ok=True, status_code=200, records=matched)
+            print(f"[{source_name}]   -> {matched} healthcare nurse-strike signals")
         except Exception as exc:
             source_health(source_name, feed_url, ok=False, error=exc)
             print(f"[{source_name}]   -> error: {exc}")
@@ -1490,6 +1595,82 @@ def consolidate_events(strikes: list) -> list:
     return consolidated
 
 
+def exact_duplicate_key(s: dict) -> str:
+    employer_key = normalize_employer_name(s.get("employer", ""))
+    state = (s.get("state") or "").upper() or "NA"
+    city = clean_text(s.get("city") or "").upper() or "STATEWIDE"
+    start_day = parse_date_str(s.get("startDate") or "") or "unknown"
+    action = (s.get("actionType") or "strike").lower()
+    source = (s.get("source") or "").lower()
+    source_url = clean_text(s.get("sourceUrl") or "").lower()
+    return f"{source}|{employer_key}|{state}|{city}|{start_day}|{action}|{source_url}"
+
+
+def summarize_duplicate_groups(strikes: list, key_fn):
+    groups = {}
+    for s in strikes:
+        key = key_fn(s)
+        groups.setdefault(key, []).append(s)
+    dup_items = [items for items in groups.values() if len(items) > 1]
+    dup_items.sort(key=lambda items: len(items), reverse=True)
+    samples = []
+    by_source = {}
+    for items in dup_items[:12]:
+        top = sorted(
+            items,
+            key=lambda row: (
+                source_weight(row.get("source")),
+                parse_workers(row.get("workers") or 0),
+                status_rank(row.get("status")),
+            ),
+            reverse=True,
+        )[0]
+        sample_sources = sorted({row.get("source") for row in items if row.get("source")})
+        sample = {
+            "employer": top.get("employer") or "Unknown",
+            "state": top.get("state") or "",
+            "city": top.get("city") or "",
+            "startDate": top.get("startDate") or "",
+            "actionType": top.get("actionType") or "strike",
+            "recordsInGroup": len(items),
+            "sources": sample_sources,
+        }
+        samples.append(sample)
+        for source in sample_sources:
+            by_source[source] = by_source.get(source, 0) + 1
+    return {
+        "groupCount": len(dup_items),
+        "extraRecordCount": sum(max(0, len(items) - 1) for items in dup_items),
+        "samples": samples,
+        "sourceGroupCount": by_source,
+    }
+
+
+def build_duplicate_report(pre_consolidation: list, post_consolidation: list) -> dict:
+    exact = summarize_duplicate_groups(pre_consolidation, exact_duplicate_key)
+    canonical = summarize_duplicate_groups(pre_consolidation, canonical_event_key)
+    post_exact = summarize_duplicate_groups(post_consolidation, exact_duplicate_key)
+    return {
+        "preConsolidationCount": len(pre_consolidation),
+        "postConsolidationCount": len(post_consolidation),
+        "collapsedByConsolidation": max(0, len(pre_consolidation) - len(post_consolidation)),
+        "preConsolidation": {
+            "exactDuplicateGroups": exact["groupCount"],
+            "exactDuplicateRecords": exact["extraRecordCount"],
+            "canonicalDuplicateGroups": canonical["groupCount"],
+            "canonicalDuplicateRecords": canonical["extraRecordCount"],
+            "sourceGroupCount": exact["sourceGroupCount"],
+            "samples": canonical["samples"],
+        },
+        "postConsolidation": {
+            "exactDuplicateGroups": post_exact["groupCount"],
+            "exactDuplicateRecords": post_exact["extraRecordCount"],
+            "sourceGroupCount": post_exact["sourceGroupCount"],
+            "samples": post_exact["samples"],
+        },
+    }
+
+
 def apply_quality_filters(strikes: list):
     """
     Remove stale low-signal entries so the alert feed remains actionable while
@@ -1677,6 +1858,9 @@ def main():
     google_news = fetch_google_news_rss()
     fetched.extend(google_news)
 
+    healthcare_news = fetch_healthcare_news_rss()
+    fetched.extend(healthcare_news)
+
     print(f"[Strikes] Fetched {len(fetched)} records across live sources")
 
     existing = load_existing()
@@ -1691,6 +1875,7 @@ def main():
         print(f"[Strikes] Removed {dropped_non_us} non-U.S. strike records")
     verified = apply_verification_rules(merged)
     consolidated = consolidate_events(verified)
+    duplicate_report = build_duplicate_report(verified, consolidated)
     quality_filtered, quality_dropped = apply_quality_filters(consolidated)
     all_strikes = sort_strikes(quality_filtered)
 
@@ -1711,12 +1896,15 @@ def main():
         ),
         "sources": [
             "cornell_ilr", "aflcio", "nurse_org",
-            "nnu_rss", "nysna_rss", "massnurses_rss", "hpae_rss", "mnnurses_rss", "pasnap_rss", "seiu_rss",
+            "nnu_rss", "nysna_rss", "unacuhcp_rss", "massnurses_rss", "hpae_rss", "mnnurses_rss", "pasnap_rss", "seiu_rss",
             "google_news_nurse_strike", "google_news_healthcare_strike", "google_news_nurses_vote_strike",
+            "google_news_rn_strike_notice", "google_news_nurse_walkout",
+            "healthcaredive_rss", "fiercehealthcare_rss", "kffhealthnews_rss",
             "curated",
         ],
         "sourceHealth": SOURCE_HEALTH,
         "verificationSummary": verification_summary,
+        "duplicateStats": duplicate_report,
         "qualityStats": summarize_quality(all_strikes, quality_dropped),
         "strikes": all_strikes,
     }
@@ -1727,6 +1915,13 @@ def main():
 
     print(f"[Strikes] Wrote {len(all_strikes)} strikes -> {OUTPUT_FILE}")
     print(f"[Strikes]   Active: {active} | Pending: {pending} | Resolved: {len(all_strikes) - active - pending}")
+    print(
+        "[Strikes]   Duplicates: "
+        f"pre-exact groups={duplicate_report['preConsolidation']['exactDuplicateGroups']} "
+        f"(+{duplicate_report['preConsolidation']['exactDuplicateRecords']} records), "
+        f"post-exact groups={duplicate_report['postConsolidation']['exactDuplicateGroups']} "
+        f"(+{duplicate_report['postConsolidation']['exactDuplicateRecords']} records)"
+    )
     print(f"[Strikes]   Verification: {verification_summary}")
 
 
