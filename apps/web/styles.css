@@ -3742,6 +3742,18 @@ body.modal-open {
   gap: 1.5rem;
 }
 
+.insight-premium-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.insight-premium-row .insight-card {
+  height: auto;
+  min-height: 420px;
+}
+
 .insight-row-half {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -3754,6 +3766,14 @@ body.modal-open {
 }
 
 @media (max-width: 900px) {
+  .insight-premium-row {
+    grid-template-columns: 1fr;
+  }
+
+  .insight-premium-row .insight-card {
+    min-height: 0;
+  }
+
   .insight-row-half {
     grid-template-columns: 1fr;
   }
