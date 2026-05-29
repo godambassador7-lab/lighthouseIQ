@@ -1,6 +1,11 @@
-import { getNotices, isHealthcareNotice } from '../_lib/data.js';
+import { getNotices, isHealthcareNotice, readJson } from '../_lib/data.js';
 
 export default function handler(_req, res) {
+  const snapshot = readJson('geo.json', null);
+  if (snapshot && Array.isArray(snapshot.locations)) {
+    return res.status(200).json(snapshot);
+  }
+
   const geo = new Map();
   for (const n of getNotices().filter(isHealthcareNotice)) {
     const state = String(n.state || '').toUpperCase();

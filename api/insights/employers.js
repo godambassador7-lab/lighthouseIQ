@@ -1,6 +1,11 @@
-import { getNotices, isHealthcareNotice } from '../_lib/data.js';
+import { getNotices, isHealthcareNotice, readJson } from '../_lib/data.js';
 
 export default function handler(_req, res) {
+  const snapshot = readJson('employers.json', null);
+  if (snapshot && Array.isArray(snapshot.employers)) {
+    return res.status(200).json(snapshot);
+  }
+
   const byEmployer = new Map();
   for (const n of getNotices().filter(isHealthcareNotice)) {
     const employerName = n.employer_name || n.employerName || 'Unknown';

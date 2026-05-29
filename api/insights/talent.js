@@ -1,6 +1,15 @@
-import { getNotices, isHealthcareNotice } from '../_lib/data.js';
+import { getNotices, isHealthcareNotice, readJson } from '../_lib/data.js';
 
 export default function handler(_req, res) {
+  const snapshot = readJson('talent.json', null);
+  if (snapshot && Array.isArray(snapshot.opportunities)) {
+    return res.status(200).json({
+      opportunities: snapshot.opportunities,
+      count: Number(snapshot.count || snapshot.opportunities.length || 0),
+      lastUpdated: snapshot.lastUpdated || null
+    });
+  }
+
   const byLocation = new Map();
   for (const n of getNotices().filter(isHealthcareNotice)) {
     const state = String(n.state || '').toUpperCase();

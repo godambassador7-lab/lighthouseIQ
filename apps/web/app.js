@@ -46,6 +46,16 @@ const heatmapList = document.getElementById('heatmap-list');
 const talentList = document.getElementById('talent-list');
 const employerList = document.getElementById('employer-list');
 const specialtySurplusList = document.getElementById('specialty-surplus-list');
+const strikeList = document.getElementById('strike-list');
+const strikeFooter = document.getElementById('strike-footer');
+const strikeCountLabel = document.getElementById('strike-count-label');
+const strikeLiveBadge = document.getElementById('strike-live-badge');
+const strikeStateFilter = document.getElementById('strike-state-filter');
+const strikeDateFilter = document.getElementById('strike-date-filter');
+const strikeStatusFilter = document.getElementById('strike-status-filter');
+const strikeConfidenceFilter = document.getElementById('strike-confidence-filter');
+const strikeModeFilter = document.getElementById('strike-mode-filter');
+const strikeSourceNote = document.querySelector('.strike-source-note');
 const forecastBeds = document.getElementById('forecast-beds');
 const forecastSetting = document.getElementById('forecast-setting');
 const forecastHorizon = document.getElementById('forecast-horizon');
@@ -275,6 +285,8 @@ let taRolloutState = {};
 let latestTalentOpportunities = [];
 let specialtySurplusMode = 'unavailable';
 let latestTalentUpdatedAt = null;
+let strikeAlertsData = [];
+let strikeAlertsMeta = { lastUpdated: null, sources: [], sourceHealth: [] };
 let recruitmentIntel = null;
 let strategicData = null;
 let relocationData = null;
@@ -1896,7 +1908,7 @@ const renderSpecialtySurplus = () => {
       unmappedRows += 1;
       return;
     }
-    if (buckets.length && buckets.length < SPECIALTY_SURPLUS_MIN_BUCKET_SAMPLES && est < 25) {
+    if (!buckets.length || est < 5) {
       excludedRows += 1;
       return;
     }
@@ -6189,6 +6201,179 @@ const initMapToggle = () => {
 // ==================== END MAP/CHART VIEW TOGGLE ====================
 
 // =============================================================================
+// Strike Alerts
+// =============================================================================
+const parseStrikeDate = (value) => {
+  if (!value) return null;
+  const d = new Date(value);
+  return Number.isNaN(d.getTime()) ? null : d;
+};
+
+const normalizeStrikeStatus = (value) => {
+  const s = String(value || '').trim().toLowerCase();
+  if (!s) return 'unknown';
+  if (s.includes('active')) return 'active';
+  if (s.includes('pending') || s.includes('planned') || s.includes('upcoming')) return 'pending';
+  if (s.includes('resolved') || s.includes('ended') || s.includes('closed')) return 'resolved';
+  return s;
+};
+
+const normalizeStrikeConfidence = (row) => {
+  const label = String(row?.confidenceLabel || '').trim().toLowerCase();
+  if (label === 'high' || label === 'medium' || label === 'low') return label;
+  const score = Number(row?.confidenceScore || 0);
+  if (score >= 80) return 'high';
+  if (score >= 60) return 'medium';
+  return 'low';
+};
+
+const getFilteredStrikeAlerts = () => {
+  const state = String(strikeStateFilter?.value || '').trim().toUpperCase();
+  const dateFilter = String(strikeDateFilter?.value || '').trim();
+  const status = String(strikeStatusFilter?.value || '').trim().toLowerCase();
+  const confidence = String(strikeConfidenceFilter?.value || '').trim().toLowerCase();
+  const mode = String(strikeModeFilter?.value || 'operational').trim().toLowerCase();
+  const now = new Date();
+
+  return strikeAlertsData.filter((row) => {
+    const rowState = String(row?.state || '').trim().toUpperCase();
+    if (state && rowState !== state) return false;
+
+    const normalizedStatus = normalizeStrikeStatus(row?.status);
+    if (status && normalizedStatus !== status) return false;
+
+    const normalizedConfidence = normalizeStrikeConfidence(row);
+    if (confidence === 'high' && normalizedConfidence !== 'high') return false;
+    if (confidence === 'medium' && !(normalizedConfidence === 'high' || normalizedConfidence === 'medium')) return false;
+    if (confidence === 'low' && normalizedConfidence !== 'low') return false;
+
+    const strikeDate = parseStrikeDate(row?.startDate || row?.date || row?.publishedAt);
+    if (dateFilter) {
+      if (!strikeDate) return false;
+      if (dateFilter === '6m') {
+        const cutoff = new Date(now);
+        cutoff.setMonth(cutoff.getMonth() - 6);
+        if (strikeDate < cutoff) return false;
+      } else if (dateFilter === '12m') {
+        const cutoff = new Date(now);
+        cutoff.setFullYear(cutoff.getFullYear() - 1);
+        if (strikeDate < cutoff) return false;
+      } else if (/^\d{4}$/.test(dateFilter)) {
+        if (strikeDate.getUTCFullYear() !== Number(dateFilter)) return false;
+      }
+    }
+
+    if (mode === 'operational') {
+      const travel = Boolean(row?.isTravelOpportunity);
+      if (!(travel || normalizedStatus === 'active' || normalizedStatus === 'pending')) return false;
+    }
+    return true;
+  });
+};
+
+const renderStrikeAlerts = () => {
+  if (!strikeList) return;
+  const rows = getFilteredStrikeAlerts()
+    .sort((a, b) => {
+      const aDate = parseStrikeDate(a?.startDate || a?.date || a?.publishedAt)?.getTime() || 0;
+      const bDate = parseStrikeDate(b?.startDate || b?.date || b?.publishedAt)?.getTime() || 0;
+      return bDate - aDate;
+    })
+    .slice(0, 30);
+
+  if (!rows.length) {
+    strikeList.innerHTML = '<div class="empty-state">No strike alerts match your filters.</div>';
+    if (strikeFooter) strikeFooter.style.display = 'none';
+    if (strikeLiveBadge) strikeLiveBadge.style.display = 'none';
+    return;
+  }
+
+  strikeList.innerHTML = rows.map((row) => {
+    const status = normalizeStrikeStatus(row?.status);
+    const confidence = normalizeStrikeConfidence(row);
+    const workers = Number(row?.workers || 0);
+    const city = String(row?.city || '').trim();
+    const state = String(row?.state || '').trim().toUpperCase();
+    const location = [city, state].filter(Boolean).join(', ') || state || 'Unknown location';
+    const date = row?.startDate || row?.date || 'Date unknown';
+    const source = String(row?.source || '').replace(/_/g, ' ').trim();
+    return `
+      <div class="insight-row">
+        <div>
+          <div class="insight-title">${escapeHtml(row?.employer || 'Unknown employer')}</div>
+          <div class="insight-meta">${escapeHtml(location)} • ${escapeHtml(date)} • ${escapeHtml(status)}</div>
+          <div class="insight-meta">${escapeHtml(String(row?.reason || 'No reason provided'))}</div>
+        </div>
+        <div>
+          <div class="insight-pill">${workers > 0 ? workers.toLocaleString() : '--'}</div>
+          <div class="insight-meta">${escapeHtml(confidence)} confidence${source ? ` • ${escapeHtml(source)}` : ''}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  if (strikeCountLabel) {
+    strikeCountLabel.textContent = `${rows.length} alert${rows.length === 1 ? '' : 's'} shown`;
+  }
+  if (strikeFooter) strikeFooter.style.display = 'flex';
+  if (strikeLiveBadge) strikeLiveBadge.style.display = 'inline-flex';
+};
+
+const hydrateStrikeFilters = () => {
+  if (strikeStateFilter) {
+    const existing = strikeStateFilter.value;
+    const states = Array.from(new Set(
+      strikeAlertsData.map((row) => String(row?.state || '').trim().toUpperCase()).filter(Boolean)
+    )).sort();
+    strikeStateFilter.innerHTML = '<option value="">All States</option>' +
+      states.map((state) => `<option value="${state}">${state}</option>`).join('');
+    if (states.includes(existing)) strikeStateFilter.value = existing;
+  }
+
+  if (strikeSourceNote) {
+    const healthy = Array.isArray(strikeAlertsMeta.sourceHealth)
+      ? strikeAlertsMeta.sourceHealth.filter((source) => source?.ok).map((source) => String(source.source || '').replace(/_/g, ' '))
+      : [];
+    if (healthy.length) {
+      strikeSourceNote.textContent = `Sources: ${healthy.slice(0, 5).join(' • ')} (validated)`;
+    }
+  }
+};
+
+const loadStrikeAlerts = async () => {
+  if (!strikeList) return;
+  try {
+    const data = await fetchJson(`/data/strikes.json?ts=${Date.now()}`);
+    const rows = Array.isArray(data) ? data : (Array.isArray(data?.strikes) ? data.strikes : []);
+    strikeAlertsData = rows;
+    strikeAlertsMeta = {
+      lastUpdated: data?.lastUpdated || null,
+      sources: data?.sources || [],
+      sourceHealth: data?.sourceHealth || []
+    };
+    hydrateStrikeFilters();
+    renderStrikeAlerts();
+  } catch (err) {
+    console.warn('Strike alerts unavailable:', err?.message || err);
+    strikeAlertsData = [];
+    strikeList.innerHTML = '<div class="empty-state">Strike alerts unavailable.</div>';
+    if (strikeFooter) strikeFooter.style.display = 'none';
+    if (strikeLiveBadge) strikeLiveBadge.style.display = 'none';
+  }
+};
+
+const initStrikeAlerts = () => {
+  [
+    strikeStateFilter,
+    strikeDateFilter,
+    strikeStatusFilter,
+    strikeConfidenceFilter,
+    strikeModeFilter
+  ].forEach((el) => el?.addEventListener('change', renderStrikeAlerts));
+  loadStrikeAlerts();
+};
+
+// =============================================================================
 // Daily News Feed
 // =============================================================================
 let newsArticles = [];
@@ -6832,6 +7017,7 @@ const initApp = () => {
   safeInit(initProgramsModule, 'programsModule');
   safeInit(initStateBeacon, 'stateBeacon');
   safeInit(initMasterExport, 'masterExport');
+  safeInit(initStrikeAlerts, 'strikeAlerts');
   safeInit(initNewsFeed, 'newsFeed');
   safeInit(initTalentCommandCenter, 'talentCommandCenter');
   loadHealth();
