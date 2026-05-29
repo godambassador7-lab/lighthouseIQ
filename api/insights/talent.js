@@ -31,7 +31,25 @@ const rankSpecialties = (counts, limit = 3) => {
 
 const BASELINE_SPECIALTY_KEY_MAP = {
   MED_SURG: 'MED SURG',
-  L_AND_D: 'L&D'
+  L_AND_D: 'L&D',
+  ER: 'ED'
+};
+
+const stableHash = (value) => {
+  const text = String(value || '');
+  let hash = 0;
+  for (let i = 0; i < text.length; i += 1) {
+    hash = ((hash << 5) - hash + text.charCodeAt(i)) | 0;
+  }
+  return Math.abs(hash);
+};
+
+const rotateList = (values, offset) => {
+  const list = Array.isArray(values) ? values : [];
+  if (!list.length) return [];
+  const start = Math.abs(Number(offset) || 0) % list.length;
+  if (start === 0) return [...list];
+  return [...list.slice(start), ...list.slice(0, start)];
 };
 
 const getBaselineSpecialties = () => {
@@ -115,7 +133,9 @@ const enrichSnapshotOpportunities = (opportunities, notices, baselineSpecialties
     const stateKey = locationKey(state, 'STATEWIDE');
     const inferred = rankSpecialties(byCity.get(cityKey), 3);
     const fallback = rankSpecialties(byState.get(stateKey), 3);
-    const baselineFallback = baselineSpecialties.slice(0, 4);
+    const seed = `${state}|${city}|${Number(row?.estimated_nurses_available || 0)}|${Number(row?.notices_count || 0)}`;
+    const baselineOffset = baselineSpecialties.length ? stableHash(seed) % baselineSpecialties.length : 0;
+    const baselineFallback = rotateList(baselineSpecialties, baselineOffset);
     const merged = [...existing];
 
     const addUnique = (values) => {
@@ -127,12 +147,12 @@ const enrichSnapshotOpportunities = (opportunities, notices, baselineSpecialties
 
     if (merged.length === 0) {
       addUnique(inferred);
-      if (!merged.length) addUnique(fallback);
-      if (!merged.length) addUnique(baselineFallback);
-    } else if (merged.length < 2) {
-      addUnique(inferred);
-      addUnique(fallback);
       addUnique(baselineFallback);
+      addUnique(fallback);
+    } else if (merged.length < 3) {
+      addUnique(inferred);
+      addUnique(baselineFallback);
+      addUnique(fallback);
     }
 
     return {
