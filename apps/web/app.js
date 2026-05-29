@@ -53,6 +53,7 @@ const heatmapList = document.getElementById('heatmap-list');
 const talentList = document.getElementById('talent-list');
 const employerList = document.getElementById('employer-list');
 const specialtySurplusList = document.getElementById('specialty-surplus-list');
+const specialtyRegionFilter = document.getElementById('specialty-region-filter');
 const strikeList = document.getElementById('strike-list');
 const strikeFooter = document.getElementById('strike-footer');
 const strikeCountLabel = document.getElementById('strike-count-label');
@@ -2085,6 +2086,10 @@ const loadFacilityMarketFeatures = async () => {
 
 const renderSpecialtySurplus = () => {
   if (!specialtySurplusList) return;
+  const selectedRegion = String(specialtyRegionFilter?.value || '').trim();
+  const regionStates = selectedRegion && REGION_STATES[selectedRegion]
+    ? new Set(REGION_STATES[selectedRegion])
+    : null;
   const ageHours = getSpecialtySurplusAgeHours();
   const isStale = ageHours !== null && ageHours > SPECIALTY_SURPLUS_MAX_STALE_HOURS;
   if (!Array.isArray(latestTalentOpportunities) || !latestTalentOpportunities.length || isStale) {
@@ -2120,6 +2125,9 @@ const renderSpecialtySurplus = () => {
 
   dedupeMap.forEach((entry) => {
     const state = String(entry?.state || '').trim().toUpperCase();
+    if (regionStates && (!state || !regionStates.has(state))) {
+      return;
+    }
     const estBase = Number(entry?.estimated_nurses_available || 0);
     const stateWeight = Number(freeMarketSignals?.stateFactors?.[state]?.combinedWeight || 1);
     const facilityStateWeight = Number(facilityMarketFeatures?.stateFeatures?.[state]?.distressWeight || 1);
@@ -2164,6 +2172,12 @@ const renderSpecialtySurplus = () => {
     });
   });
 
+  if (totalRows === 0) {
+    const regionMessage = selectedRegion ? ` for ${selectedRegion}` : '';
+    specialtySurplusList.innerHTML = `<div class="empty-state">No live specialty surplus records${regionMessage} right now.</div>`;
+    return;
+  }
+
   const mappingCoverage = totalRows > 0 ? mappedRows / totalRows : 0;
   const sourceHealthBonus = getSourceHealthBonus();
 
@@ -2197,7 +2211,8 @@ const renderSpecialtySurplus = () => {
     .slice(0, 8);
 
   if (!ranked.length) {
-    specialtySurplusList.innerHTML = `<div class="empty-state">Insufficient live specialty sample size. Need ${SPECIALTY_SURPLUS_MIN_BUCKET_SAMPLES}+ mapped records per specialty.</div>`;
+    const regionMessage = selectedRegion ? ` for ${selectedRegion}` : '';
+    specialtySurplusList.innerHTML = `<div class="empty-state">Insufficient live specialty sample size${regionMessage}. Need ${SPECIALTY_SURPLUS_MIN_BUCKET_SAMPLES}+ mapped records per specialty.</div>`;
     return;
   }
 
@@ -2223,10 +2238,11 @@ const renderSpecialtySurplus = () => {
   }).join('');
 
   const freshnessLabel = ageHours === null ? 'age unknown' : `${ageHours}h old`;
+  const regionLabel = selectedRegion || 'All regions';
   const sourceLine = freeMarketSignals?.sources
     ? `HRSA ${freeMarketSignals.sources.hrsa || 'unknown'}, BLS ${freeMarketSignals.sources.bls || 'unknown'}, NCSBN ${freeMarketSignals.sources.ncsbn || 'unknown'}, CMS ${freeMarketSignals.sources.cms || 'unknown'}`
     : 'HRSA/BLS/NCSBN/CMS source health unavailable';
-  specialtySurplusList.innerHTML += `<div class="specialty-surplus-meta">Source: Live talent opportunities | Coverage ${Math.round(mappingCoverage * 100)}% | Mapped ${mappedRows}/${totalRows || 0} | Unmapped ${unmappedRows} | Duplicates removed ${duplicateRows} | Excluded ${excludedRows} | Freshness ${freshnessLabel}</div>`;
+  specialtySurplusList.innerHTML += `<div class="specialty-surplus-meta">Source: Live talent opportunities | Region ${regionLabel} | Coverage ${Math.round(mappingCoverage * 100)}% | Mapped ${mappedRows}/${totalRows || 0} | Unmapped ${unmappedRows} | Duplicates removed ${duplicateRows} | Excluded ${excludedRows} | Freshness ${freshnessLabel}</div>`;
   if (modeledRows > 0) {
     specialtySurplusList.innerHTML += `<div class="specialty-surplus-meta">Modeled backfill: ${modeledRows} unmapped rows allocated across specialties using HRSA baseline (${Math.round(modeledEstimate).toLocaleString()} est. nurses).</div>`;
   }
@@ -7294,6 +7310,7 @@ const initTalentCommandCenter = () => {
   taSpecialtyFilter?.addEventListener('change', renderTalentActions);
   taCampaignSignal?.addEventListener('change', renderTalentCampaignTemplate);
   taCampaignSpecialty?.addEventListener('change', renderTalentCampaignTemplate);
+  specialtyRegionFilter?.addEventListener('change', renderSpecialtySurplus);
 
   refreshTalentCommandCenter();
   renderSpecialtySurplus();

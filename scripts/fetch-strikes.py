@@ -126,6 +126,7 @@ STATE_ABBREVS = {
 }
 
 STATE_ABBR_SET = set(STATE_ABBREVS.values())
+US_STRIKE_STATE_ABBRS = set(STATE_ABBREVS.values()) | {"PR"}
 STATE_ABBR_PATTERN = "|".join(sorted(STATE_ABBR_SET, key=len, reverse=True))
 STATE_FULL_PATTERN = "|".join(sorted((re.escape(name) for name in STATE_ABBREVS), key=len, reverse=True))
 LOCATION_CANDIDATE_RE = re.compile(
@@ -304,6 +305,10 @@ def normalize_state(raw: str) -> str:
     if len(raw) == 2:
         return raw.upper()
     return STATE_ABBREVS.get(raw.title(), raw[:2].upper())
+
+
+def is_us_strike_state(value: str) -> bool:
+    return normalize_state(value or "") in US_STRIKE_STATE_ABBRS
 
 
 def parse_workers(raw) -> int:
@@ -734,6 +739,29 @@ def enrich_missing_locations(strikes: list) -> list:
             })
 
     return enriched
+
+
+def filter_us_strikes(strikes: list):
+    """
+    Keep only U.S.-located strike records. Any record without a resolvable U.S.
+    state code is removed so downstream UI remains U.S.-only.
+    """
+    filtered = []
+    dropped = 0
+    for strike in strikes:
+        s = dict(strike)
+        state = normalize_state(s.get("state") or "")
+        if not state:
+            context = clean_text(
+                f"{s.get('employer', '')} {s.get('city', '')} {s.get('notes', '')} {s.get('publisherSourceName', '')}"
+            )
+            state = extract_state_from_text(context)
+        if state and is_us_strike_state(state):
+            s["state"] = state
+            filtered.append(s)
+        else:
+            dropped += 1
+    return filtered, dropped
 
 
 def infer_hc_type(employer: str, union: str, reason: str) -> str:
@@ -1658,6 +1686,9 @@ def main():
     missing_after = sum(1 for s in merged if not clean_text(s.get("city") or "") and not normalize_state(s.get("state") or ""))
     if missing_before != missing_after:
         print(f"[Strikes] Location enrichment: unresolved {missing_before} -> {missing_after}")
+    merged, dropped_non_us = filter_us_strikes(merged)
+    if dropped_non_us:
+        print(f"[Strikes] Removed {dropped_non_us} non-U.S. strike records")
     verified = apply_verification_rules(merged)
     consolidated = consolidate_events(verified)
     quality_filtered, quality_dropped = apply_quality_filters(consolidated)
