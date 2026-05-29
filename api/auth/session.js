@@ -1,4 +1,4 @@
-import { buildUser, hasSession } from './_lib.js';
+import { getSessionUser, hasSession } from './_lib.js';
 
 export default function handler(req, res) {
   if (!hasSession(req)) {
@@ -7,7 +7,7 @@ export default function handler(req, res) {
 
   return res.status(200).json({
     success: true,
-    user: buildUser('admin@example.com')
+    user: getSessionUser(req)
   });
 }
 

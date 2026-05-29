@@ -1,4 +1,4 @@
-import { hasSession, setSessionCookie } from './_lib.js';
+import { getSessionUser, hasSession, setSessionCookie } from './_lib.js';
 
 export default function handler(req, res) {
   if (req.method !== 'POST') {
@@ -7,7 +7,7 @@ export default function handler(req, res) {
   if (!hasSession(req)) {
     return res.status(401).json({ success: false, error: 'No active session' });
   }
-  setSessionCookie(res);
+  setSessionCookie(res, getSessionUser(req));
   return res.status(200).json({ success: true });
 }
 

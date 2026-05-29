@@ -17,7 +17,7 @@
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=5.2" />
+    <link rel="stylesheet" href="./styles.css?v=5.3" />
   </head>
   <body>
     <!-- Login Overlay -->
@@ -28,14 +28,28 @@
         </div>
         <p class="login-version">Version 5.0</p>
         <p class="login-subtitle">Sign in to your account</p>
+        <div class="login-mode-toggle" role="tablist" aria-label="Authentication mode">
+          <button type="button" class="login-mode-btn active" id="auth-mode-signin" role="tab" aria-selected="true">Sign In</button>
+          <button type="button" class="login-mode-btn" id="auth-mode-create" role="tab" aria-selected="false">Create Account</button>
+        </div>
         <form id="login-form">
+          <div class="passcode-input-wrapper auth-create-only" data-auth-mode="create">
+            <input type="text" id="name-input" placeholder="Full name (optional)" autocomplete="name" maxlength="120" />
+          </div>
           <div class="passcode-input-wrapper">
             <input type="email" id="email-input" placeholder="Work email" autocomplete="username" maxlength="120" required />
           </div>
           <div class="passcode-input-wrapper">
             <input type="password" id="password-input" placeholder="Password" autocomplete="current-password" maxlength="120" required />
           </div>
-          <button type="submit" class="btn primary login-btn">Access Dashboard</button>
+          <div class="passcode-input-wrapper auth-create-only" data-auth-mode="create">
+            <input type="password" id="password-confirm-input" placeholder="Confirm password" autocomplete="new-password" maxlength="120" />
+          </div>
+          <div class="passcode-input-wrapper auth-create-only" data-auth-mode="create">
+            <input type="password" id="invite-code-input" placeholder="Invite code" autocomplete="one-time-code" maxlength="120" />
+          </div>
+          <button type="submit" class="btn primary login-btn" id="login-submit-btn">Access Dashboard</button>
+          <p class="login-helper" id="login-helper">Use your work email and dashboard password.</p>
           <p class="login-error" id="login-error"></p>
         </form>
       </div>
@@ -1868,7 +1882,7 @@
       </div>
     </div>
 
-    <script src="./app.js?v=5.5"></script>
+    <script src="./app.js?v=5.6"></script>
   </body>
 </html>
 

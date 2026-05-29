@@ -3,6 +3,13 @@ const loginOverlay = document.getElementById('login-overlay');
 const loginForm = document.getElementById('login-form');
 const emailInput = document.getElementById('email-input');
 const passwordInput = document.getElementById('password-input');
+const nameInput = document.getElementById('name-input');
+const passwordConfirmInput = document.getElementById('password-confirm-input');
+const inviteCodeInput = document.getElementById('invite-code-input');
+const authModeSigninBtn = document.getElementById('auth-mode-signin');
+const authModeCreateBtn = document.getElementById('auth-mode-create');
+const loginSubmitBtn = document.getElementById('login-submit-btn');
+const loginHelper = document.getElementById('login-helper');
 const loginError = document.getElementById('login-error');
 
 // App elements
@@ -340,6 +347,7 @@ const clearAuthState = () => {
   sessionStorage.removeItem(SESSION_KEY);
   sessionStorage.removeItem(SESSION_USER_KEY);
   loginOverlay.classList.remove('hidden');
+  setAuthMode('signin');
 };
 
 const getCsrfToken = () => {
@@ -352,6 +360,8 @@ let authApiReachable = true;
 const STATIC_PASSCODE = 'IUH126';
 const staticPasscodeAllowed = (passcode) => String(passcode || '').trim() === STATIC_PASSCODE;
 const API_BASE_STORAGE_KEY = 'lni_api_base';
+const LOCAL_ACCOUNTS_KEY = 'lni_local_accounts';
+let authMode = 'signin';
 
 const refreshSession = async () => {
   if (!authApiReachable) return false;
@@ -388,6 +398,105 @@ const setLoginError = (message) => {
   loginError.textContent = message || '';
 };
 
+const pulseLoginError = () => {
+  if (!loginError) return;
+  loginError.classList.remove('shake');
+  void loginError.offsetWidth;
+  loginError.classList.add('shake');
+};
+
+const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || '').trim().toLowerCase());
+
+const hashLocalPassword = (value) => {
+  const text = String(value || '');
+  let hash = 5381;
+  for (let i = 0; i < text.length; i += 1) {
+    hash = ((hash << 5) + hash) + text.charCodeAt(i);
+    hash |= 0;
+  }
+  return String(hash >>> 0);
+};
+
+const getLocalAccounts = () => {
+  try {
+    const raw = localStorage.getItem(LOCAL_ACCOUNTS_KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    if (!Array.isArray(parsed)) return [];
+    return parsed
+      .map((row) => ({
+        email: String(row?.email || '').trim().toLowerCase(),
+        name: String(row?.name || '').trim(),
+        passwordHash: String(row?.passwordHash || ''),
+        updatedAt: String(row?.updatedAt || '')
+      }))
+      .filter((row) => row.email && row.passwordHash);
+  } catch {
+    return [];
+  }
+};
+
+const saveLocalAccounts = (accounts) => {
+  try {
+    localStorage.setItem(LOCAL_ACCOUNTS_KEY, JSON.stringify(accounts.slice(0, 12)));
+  } catch {
+    // ignore storage failures
+  }
+};
+
+const upsertLocalAccount = ({ email, name, password }) => {
+  const normalizedEmail = String(email || '').trim().toLowerCase();
+  if (!normalizedEmail || !password) return null;
+  const next = {
+    email: normalizedEmail,
+    name: String(name || '').trim(),
+    passwordHash: hashLocalPassword(password),
+    updatedAt: new Date().toISOString()
+  };
+  const existing = getLocalAccounts().filter((row) => row.email !== normalizedEmail);
+  saveLocalAccounts([next, ...existing]);
+  return next;
+};
+
+const resolveLocalAccountUser = (email, password) => {
+  const normalizedEmail = String(email || '').trim().toLowerCase();
+  const account = getLocalAccounts().find((row) => row.email === normalizedEmail);
+  if (!account) return null;
+  if (account.passwordHash !== hashLocalPassword(password)) return null;
+  return {
+    id: `local-${normalizedEmail}`,
+    email: normalizedEmail,
+    name: account.name,
+    role: 'member'
+  };
+};
+
+const setAuthMode = (mode) => {
+  authMode = mode === 'create' ? 'create' : 'signin';
+  if (loginForm) loginForm.dataset.mode = authMode;
+  authModeSigninBtn?.classList.toggle('active', authMode === 'signin');
+  authModeCreateBtn?.classList.toggle('active', authMode === 'create');
+  authModeSigninBtn?.setAttribute('aria-selected', String(authMode === 'signin'));
+  authModeCreateBtn?.setAttribute('aria-selected', String(authMode === 'create'));
+  if (loginSubmitBtn) {
+    loginSubmitBtn.textContent = authMode === 'create' ? 'Create Account' : 'Access Dashboard';
+  }
+  if (loginHelper) {
+    loginHelper.textContent = authMode === 'create'
+      ? 'Create account requires your invite code.'
+      : 'Use your work email and dashboard password.';
+  }
+  if (passwordInput) {
+    passwordInput.autocomplete = authMode === 'create' ? 'new-password' : 'current-password';
+  }
+  if (passwordConfirmInput) {
+    passwordConfirmInput.required = authMode === 'create';
+  }
+  if (inviteCodeInput) {
+    inviteCodeInput.required = authMode === 'create';
+  }
+  setLoginError('');
+};
+
 const markLoginSuccess = (user) => {
   sessionStorage.setItem(SESSION_KEY, 'true');
   if (user && typeof user === 'object') {
@@ -397,6 +506,8 @@ const markLoginSuccess = (user) => {
   }
   loginOverlay.classList.add('hidden');
   if (passwordInput) passwordInput.value = '';
+  if (passwordConfirmInput) passwordConfirmInput.value = '';
+  if (inviteCodeInput) inviteCodeInput.value = '';
   setLoginError('');
   initApp();
 };
@@ -404,50 +515,111 @@ const markLoginSuccess = (user) => {
 const handleLogin = async (e) => {
   e.preventDefault();
   const form = e?.currentTarget || loginForm || document.getElementById('login-form');
+  const mode = authMode === 'create' ? 'create' : 'signin';
   const emailField = emailInput
     || form?.querySelector('#email-input')
     || form?.querySelector('input[type="email"]');
   const passwordField = passwordInput
     || form?.querySelector('#password-input')
     || form?.querySelector('input[type="password"]');
+  const nameField = nameInput || form?.querySelector('#name-input');
+  const passwordConfirmField = passwordConfirmInput || form?.querySelector('#password-confirm-input');
+  const inviteCodeField = inviteCodeInput || form?.querySelector('#invite-code-input');
   const legacyPasscodeField = form?.querySelector('#passcode-input');
   const email = readFieldValue(emailField).trim().toLowerCase();
   const password = readFieldValue(passwordField) || readFieldValue(legacyPasscodeField);
+  const name = readFieldValue(nameField).trim();
+  const confirmPassword = readFieldValue(passwordConfirmField);
+  const inviteCode = readFieldValue(inviteCodeField).trim();
   const loginBtn = form?.querySelector('button[type="submit"]');
+
+  if (!isValidEmail(email)) {
+    setLoginError('Please enter a valid work email.');
+    pulseLoginError();
+    return;
+  }
+  if (!password) {
+    setLoginError(mode === 'create' ? 'Create a password.' : 'Please enter your password.');
+    pulseLoginError();
+    return;
+  }
+  if (mode === 'create') {
+    if (password.length < 8) {
+      setLoginError('Password must be at least 8 characters.');
+      pulseLoginError();
+      return;
+    }
+    if (password !== confirmPassword) {
+      setLoginError('Passwords do not match.');
+      pulseLoginError();
+      return;
+    }
+    if (!inviteCode) {
+      setLoginError('Invite code is required to create an account.');
+      pulseLoginError();
+      return;
+    }
+  }
+
+  const localMemberUser = () => ({
+    id: `local-${email}`,
+    email,
+    name,
+    role: 'member'
+  });
+  const applyLoginError = (message) => {
+    setLoginError(message);
+    pulseLoginError();
+    if (passwordInput) passwordInput.value = '';
+    if (mode === 'create' && passwordConfirmInput) passwordConfirmInput.value = '';
+    passwordInput?.focus();
+  };
 
   if (!email || !password) {
     setLoginError('Please enter your work email and passcode.');
     return;
   }
 
-  // Disable button during request
   if (loginBtn) {
     loginBtn.disabled = true;
-    loginBtn.textContent = 'Verifying...';
+    loginBtn.textContent = mode === 'create' ? 'Creating Account...' : 'Verifying...';
   }
 
   try {
-    const response = await fetchWithApiBaseFallback('/auth/login', {
+    const endpoint = mode === 'create' ? '/auth/register' : '/auth/login';
+    const payload = mode === 'create'
+      ? { email, name, password, confirmPassword, inviteCode }
+      : { email, password };
+
+    const response = await fetchWithApiBaseFallback(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
-      body: JSON.stringify({ email, password })
+      body: JSON.stringify(payload)
     });
 
     if (response.status === 404) {
       authApiReachable = false;
+      if (mode === 'create') {
+        if (staticPasscodeAllowed(inviteCode)) {
+          upsertLocalAccount({ email, name, password });
+          markLoginSuccess(localMemberUser());
+          setAuthMode('signin');
+          return;
+        }
+        applyLoginError('Account creation unavailable right now. Verify invite code and retry.');
+        return;
+      }
       if (staticPasscodeAllowed(password)) {
         markLoginSuccess({ id: 'static-passcode', email, role: 'admin' });
         return;
       }
-      setLoginError('Invalid email or passcode.');
-      if (loginError) {
-        loginError.classList.remove('shake');
-        void loginError.offsetWidth;
-        loginError.classList.add('shake');
+      const localUser = resolveLocalAccountUser(email, password);
+      if (localUser) {
+        markLoginSuccess(localUser);
+        return;
       }
-      if (passwordInput) passwordInput.value = '';
-      passwordInput?.focus();
+      applyLoginError('Invalid email or password.');
       return;
     }
 
@@ -455,28 +627,40 @@ const handleLogin = async (e) => {
     const data = await response.json().catch(() => ({}));
 
     if (data.success) {
+      if (mode === 'create') {
+        upsertLocalAccount({ email, name, password });
+        setAuthMode('signin');
+      }
       markLoginSuccess(data.user);
     } else {
-      setLoginError(data.error || 'Invalid email or password.');
-      if (loginError) {
-        loginError.classList.remove('shake');
-        void loginError.offsetWidth; // Trigger reflow for animation
-        loginError.classList.add('shake');
-      }
-      if (passwordInput) passwordInput.value = '';
-      passwordInput?.focus();
+      applyLoginError(data.error || 'Invalid email or password.');
     }
   } catch (err) {
     authApiReachable = false;
+    if (mode === 'create') {
+      if (staticPasscodeAllowed(inviteCode)) {
+        upsertLocalAccount({ email, name, password });
+        markLoginSuccess(localMemberUser());
+        setAuthMode('signin');
+        return;
+      }
+      applyLoginError('Connection error. Unable to create account.');
+      return;
+    }
     if (staticPasscodeAllowed(password)) {
       markLoginSuccess({ id: 'static-passcode', email, role: 'admin' });
       return;
     }
-    setLoginError('Connection error. Please try again.');
+    const localUser = resolveLocalAccountUser(email, password);
+    if (localUser) {
+      markLoginSuccess(localUser);
+      return;
+    }
+    applyLoginError('Connection error. Please try again.');
   } finally {
     if (loginBtn) {
       loginBtn.disabled = false;
-      loginBtn.textContent = 'Access Dashboard';
+      loginBtn.textContent = mode === 'create' ? 'Create Account' : 'Access Dashboard';
     }
   }
 };
@@ -502,6 +686,9 @@ const bootstrapAuth = async () => {
 };
 
 loginForm.addEventListener('submit', handleLogin);
+authModeSigninBtn?.addEventListener('click', () => setAuthMode('signin'));
+authModeCreateBtn?.addEventListener('click', () => setAuthMode('create'));
+setAuthMode('signin');
 
 const REGIONS = ['Northeast', 'Midwest', 'South', 'West'];
 
@@ -6676,6 +6863,32 @@ const renderNewsCoverageMetrics = () => {
     : '<div class="news-source-card"><div class="news-source-name">No source health data</div><div class="news-source-meta">Will populate on next export.</div></div>';
 };
 
+const applyNewsFeedWindow = (list) => {
+  if (!list) return;
+  const cards = list.querySelectorAll('.news-card');
+  if (cards.length <= NEWS_WINDOW_COUNT) {
+    list.style.maxHeight = '';
+    list.classList.remove('news-feed-windowed');
+    return;
+  }
+
+  let measuredHeight = 0;
+  for (let i = 0; i < Math.min(NEWS_WINDOW_COUNT, cards.length); i += 1) {
+    measuredHeight += cards[i].getBoundingClientRect().height;
+  }
+
+  const viewportFallback = Math.max(320, Math.min(620, Math.round((window.innerHeight || 900) * 0.52)));
+  const baseHeight = measuredHeight > 0 ? Math.ceil(measuredHeight + (NEWS_WINDOW_COUNT - 1)) : viewportFallback;
+  list.style.maxHeight = `${baseHeight}px`;
+  list.classList.add('news-feed-windowed');
+};
+
+const refreshNewsFeedWindow = () => {
+  const list = document.getElementById('news-feed-list');
+  if (!list) return;
+  requestAnimationFrame(() => applyNewsFeedWindow(list));
+};
+
 const renderNewsFeed = () => {
   const list = document.getElementById('news-feed-list');
   if (!list) return;
@@ -6711,27 +6924,7 @@ const renderNewsFeed = () => {
     </a>
   `).join('');
 
-  // Apply scroll window
-  requestAnimationFrame(() => {
-    const cards = list.querySelectorAll('.news-card');
-    if (cards.length <= NEWS_WINDOW_COUNT) {
-      list.style.maxHeight = '';
-      list.classList.remove('news-feed-windowed');
-      return;
-    }
-    let height = 0;
-    for (let i = 0; i < Math.min(NEWS_WINDOW_COUNT, cards.length); i++) {
-      height += cards[i].getBoundingClientRect().height;
-    }
-    if (height === 0) {
-      list.style.maxHeight = '';
-      list.classList.remove('news-feed-windowed');
-      return;
-    }
-    height += NEWS_WINDOW_COUNT - 1;
-    list.style.maxHeight = `${Math.ceil(height)}px`;
-    list.classList.add('news-feed-windowed');
-  });
+  refreshNewsFeedWindow();
 
   renderNewsCoverageMetrics();
   renderNewsFeedHealth();
