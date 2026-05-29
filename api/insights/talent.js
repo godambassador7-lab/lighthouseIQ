@@ -1,18 +1,37 @@
 import { getNotices, isHealthcareNotice, readJson } from '../_lib/data.js';
 
 const SPECIALTY_RULES = [
-  { specialty: 'OR', patterns: [/\bOR\b/i, /operating room/i, /perioperative/i, /\bsurgical\b/i] },
-  { specialty: 'ED', patterns: [/\bED\b/i, /\bER\b/i, /emergency department/i, /\bemergency\b/i] },
-  { specialty: 'ICU', patterns: [/\bICU\b/i, /critical care/i, /intensive care/i] },
+  { specialty: 'OR', patterns: [/\bOR\b/, /operating room/i, /peri[-\s]?operative/i] },
+  { specialty: 'ED', patterns: [/\bED\b/, /\bER\b/, /emergency department/i, /emergency room/i] },
+  { specialty: 'ICU', patterns: [/\bICU\b/, /critical care/i, /intensive care/i] },
   { specialty: 'MED SURG', patterns: [/med[\s-]?surg/i, /medical surgical/i] },
-  { specialty: 'L&D', patterns: [/labor and delivery/i, /\bL&D\b/i, /\bobstetric/i, /\bmaternity\b/i] },
-  { specialty: 'TELE', patterns: [/\btelemetry\b/i, /\btele\b/i] },
-  { specialty: 'PCU', patterns: [/\bPCU\b/i, /progressive care/i, /step[\s-]?down/i] }
+  { specialty: 'L&D', patterns: [/\bL&D\b/, /labor and delivery/i, /inpatient obstetric/i] },
+  { specialty: 'TELE', patterns: [/\bTELE\b/, /telemetry/i] },
+  { specialty: 'PCU', patterns: [/\bPCU\b/, /progressive care/i, /step[\s-]?down/i] }
 ];
+
+const RN_CONTEXT_PATTERN = /\b(RN|REGISTERED NURSE|NURSE|NURSING|LPN|LVN|CNA|CRNA)\b/i;
+const RN_BASELINE_SPECIALTY_SET = new Set(['ED', 'OR', 'ICU', 'MED SURG', 'L&D', 'TELE', 'PCU']);
 
 const normalizeState = (value) => String(value || '').trim().toUpperCase();
 const normalizeCity = (value) => String(value || '').trim().toUpperCase();
 const locationKey = (state, city) => `${normalizeState(state)}::${normalizeCity(city || 'STATEWIDE')}`;
+const normalizeSpecialtyText = (value) => String(value || '').toUpperCase().replace(/[^A-Z&\s-]/g, ' ').replace(/\s+/g, ' ').trim();
+
+const mapSpecialtyToCanonical = (value) => {
+  const normalized = normalizeSpecialtyText(value);
+  if (!normalized) return '';
+  if (/\b(ER|ED)\b/.test(normalized) || normalized.includes('EMERGENCY DEPARTMENT') || normalized.includes('EMERGENCY ROOM')) return 'ED';
+  if (/\bOR\b/.test(normalized) || normalized.includes('OPERATING ROOM') || normalized.includes('PERIOPERATIVE')) return 'OR';
+  if (/\bICU\b/.test(normalized) || normalized.includes('CRITICAL CARE') || normalized.includes('INTENSIVE CARE')) return 'ICU';
+  if (/MED[\s-]?SURG/.test(normalized) || normalized.includes('MEDICAL SURGICAL')) return 'MED SURG';
+  if (/\bL&D\b/.test(normalized) || normalized.includes('LABOR AND DELIVERY') || normalized.includes('INPATIENT OBSTETRIC')) return 'L&D';
+  if (/\bTELE\b/.test(normalized) || normalized.includes('TELEMETRY')) return 'TELE';
+  if (/\bPCU\b/.test(normalized) || normalized.includes('PROGRESSIVE CARE') || normalized.includes('STEP DOWN')) return 'PCU';
+  if (/\bPEDS\b/.test(normalized) || normalized.includes('PEDIATRIC')) return 'PEDS';
+  if (normalized.includes('BEHAVIORAL HEALTH') || normalized.includes('PSYCHIATR')) return 'BEHAVIORAL';
+  return '';
+};
 
 const addCount = (map, key, specialty) => {
   if (!key || !specialty) return;
@@ -62,12 +81,13 @@ const getBaselineSpecialties = () => {
       value: Number(value)
     }))
     .filter((entry) => Number.isFinite(entry.value) && entry.value > 0)
+    .filter((entry) => RN_BASELINE_SPECIALTY_SET.has(entry.specialty))
     .sort((a, b) => b.value - a.value)
     .map((entry) => entry.specialty);
 };
 
 const extractSpecialtiesFromNotice = (notice) => {
-  const explicit = [
+  const explicitRaw = [
     ...(Array.isArray(notice?.nursing_specialties) ? notice.nursing_specialties : []),
     ...(Array.isArray(notice?.nursingSpecialties) ? notice.nursingSpecialties : []),
     ...(Array.isArray(notice?.nursingImpact?.specialties) ? notice.nursingImpact.specialties : []),
@@ -76,6 +96,9 @@ const extractSpecialtiesFromNotice = (notice) => {
     .map((value) => String(value || '').trim())
     .filter(Boolean);
 
+  const explicit = explicitRaw
+    .map(mapSpecialtyToCanonical)
+    .filter(Boolean);
   const detected = new Set(explicit);
   const text = [
     notice?.reason,
@@ -86,6 +109,10 @@ const extractSpecialtiesFromNotice = (notice) => {
   ]
     .filter(Boolean)
     .join(' ');
+  const score = Number(notice?.nursing_score ?? notice?.nursingImpact?.score ?? 0);
+  const hasRnContext = explicit.length > 0 || RN_CONTEXT_PATTERN.test(text) || score >= 60;
+
+  if (!hasRnContext) return Array.from(detected);
 
   for (const rule of SPECIALTY_RULES) {
     if (rule.patterns.some((pattern) => pattern.test(text))) {
