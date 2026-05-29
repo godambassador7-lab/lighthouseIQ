@@ -2682,6 +2682,72 @@ body.modal-open {
   color: var(--muted);
   margin-top: 0.2rem;
 }
+
+.specialty-hospital-controls {
+  margin-top: 0.4rem;
+}
+
+.specialty-hospital-toggle {
+  border: 1px solid rgba(26, 54, 93, 0.2);
+  background: rgba(26, 54, 93, 0.05);
+  color: var(--navy);
+  border-radius: 8px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  cursor: pointer;
+}
+
+.specialty-hospital-toggle:hover {
+  background: rgba(26, 54, 93, 0.12);
+}
+
+.specialty-hospital-list {
+  margin-top: 0.55rem;
+  border: 1px solid rgba(26, 54, 93, 0.1);
+  border-radius: 10px;
+  padding: 0.45rem;
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.specialty-hospital-item {
+  display: grid;
+  grid-template-columns: 26px 1fr auto;
+  gap: 0.5rem;
+  align-items: flex-start;
+  padding: 0.35rem 0.2rem;
+  border-bottom: 1px solid rgba(26, 54, 93, 0.08);
+}
+
+.specialty-hospital-item:last-child {
+  border-bottom: none;
+}
+
+.specialty-hospital-rank {
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-weight: 700;
+  margin-top: 0.1rem;
+}
+
+.specialty-hospital-name {
+  font-size: 0.82rem;
+  color: var(--navy);
+  font-weight: 600;
+}
+
+.specialty-hospital-score {
+  font-size: 0.7rem;
+  color: var(--navy);
+  background: rgba(26, 54, 93, 0.08);
+  border-radius: 999px;
+  padding: 0.16rem 0.45rem;
+  white-space: nowrap;
+}
+
+.specialty-hospital-empty {
+  margin-top: 0.45rem;
+}
 @media (max-width: 900px) {
   .beacon-filters-grid {
     grid-template-columns: repeat(3, 1fr);
