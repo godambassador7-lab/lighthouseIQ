@@ -1840,6 +1840,38 @@ const getSourceHealthBonus = () => {
   return (score / (keys.length * 12)) + (metricScore / (Math.max(1, metricStatuses.length) * 18));
 };
 
+const getSpecialtyBaselineWeights = () => {
+  const baseline = freeMarketSignals?.hrsaSpecialtyBaseline || {};
+  const rawWeights = new Map();
+  let total = 0;
+  SURPLUS_SPECIALTY_ORDER.forEach((bucket) => {
+    const value = Number(baseline?.[bucket]);
+    if (Number.isFinite(value) && value > 0) {
+      rawWeights.set(bucket, value);
+      total += value;
+    }
+  });
+  if (total <= 0) {
+    const uniform = 1 / SURPLUS_SPECIALTY_ORDER.length;
+    return new Map(SURPLUS_SPECIALTY_ORDER.map((bucket) => [bucket, uniform]));
+  }
+  return new Map(Array.from(rawWeights.entries()).map(([bucket, value]) => [bucket, value / total]));
+};
+
+const formatTalentLocation = (entry) => {
+  const state = String(entry?.state || '').trim().toUpperCase();
+  const cityRaw = String(entry?.city || '').trim();
+  const city = cityRaw && cityRaw.toLowerCase() !== 'statewide' ? cityRaw : '';
+  if (city && state) return `${city}, ${state}`;
+  return state || city || 'Unknown';
+};
+
+const addLocationContribution = (bucketLocationTotals, bucket, location, amount) => {
+  const locationMap = bucketLocationTotals.get(bucket);
+  if (!locationMap || !location || !Number.isFinite(amount) || amount <= 0) return;
+  locationMap.set(location, (locationMap.get(location) || 0) + amount);
+};
+
 const loadMarketReadinessIntegration = async () => {
   try {
     marketReadinessIntegration = await fetchJson('/data/market-readiness-integration.json');
@@ -1877,11 +1909,16 @@ const renderSpecialtySurplus = () => {
 
   const totals = new Map(SURPLUS_SPECIALTY_ORDER.map((key) => [key, 0]));
   const bucketSampleCounts = new Map(SURPLUS_SPECIALTY_ORDER.map((key) => [key, 0]));
+  const bucketModeledWeights = new Map(SURPLUS_SPECIALTY_ORDER.map((key) => [key, 0]));
   const bucketNoticeCounts = new Map(SURPLUS_SPECIALTY_ORDER.map((key) => [key, 0]));
+  const bucketLocationTotals = new Map(SURPLUS_SPECIALTY_ORDER.map((key) => [key, new Map()]));
+  const baselineWeights = getSpecialtyBaselineWeights();
   const dedupeMap = new Map();
   let duplicateRows = 0;
   let totalRows = 0;
   let mappedRows = 0;
+  let modeledRows = 0;
+  let modeledEstimate = 0;
   let excludedRows = 0;
   let unmappedRows = 0;
 
@@ -1902,13 +1939,28 @@ const renderSpecialtySurplus = () => {
     const est = Math.max(0, Math.round(estBase * stateWeight * facilityStateWeight));
     if (est <= 0) return;
     totalRows += 1;
+    const location = formatTalentLocation(entry);
     const specialties = Array.isArray(entry?.specialties) ? entry.specialties : [];
     const buckets = [...new Set(specialties.map(findSpecialtyBucket).filter(Boolean))];
     if (!buckets.length) {
       unmappedRows += 1;
+      modeledRows += 1;
+      modeledEstimate += est;
+      const noticeBase = Number(entry?.notices_count || 0);
+      baselineWeights.forEach((weight, bucket) => {
+        const alloc = Math.max(0, Math.round(est * weight));
+        if (alloc <= 0) return;
+        totals.set(bucket, (totals.get(bucket) || 0) + alloc);
+        bucketModeledWeights.set(bucket, (bucketModeledWeights.get(bucket) || 0) + weight);
+        bucketNoticeCounts.set(
+          bucket,
+          (bucketNoticeCounts.get(bucket) || 0) + Math.max(0, Math.round(noticeBase * weight))
+        );
+        addLocationContribution(bucketLocationTotals, bucket, location, alloc);
+      });
       return;
     }
-    if (!buckets.length || est < 5) {
+    if (est < 5) {
       excludedRows += 1;
       return;
     }
@@ -1921,6 +1973,7 @@ const renderSpecialtySurplus = () => {
       totals.set(bucket, (totals.get(bucket) || 0) + base + plus);
       bucketSampleCounts.set(bucket, (bucketSampleCounts.get(bucket) || 0) + 1);
       bucketNoticeCounts.set(bucket, (bucketNoticeCounts.get(bucket) || 0) + Number(entry?.notices_count || 0));
+      addLocationContribution(bucketLocationTotals, bucket, location, base + plus);
     });
   });
 
@@ -1932,10 +1985,27 @@ const renderSpecialtySurplus = () => {
       bucket,
       count: totals.get(bucket) || 0,
       samples: bucketSampleCounts.get(bucket) || 0,
+      modeledWeight: bucketModeledWeights.get(bucket) || 0,
       noticeCount: bucketNoticeCounts.get(bucket) || 0,
-      confidenceScore: computeSpecialtyConfidenceScore(bucketSampleCounts.get(bucket) || 0, mappingCoverage, ageHours, sourceHealthBonus)
+      topLocations: Array.from((bucketLocationTotals.get(bucket) || new Map()).entries())
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 3)
+        .map(([name, value]) => `${name} (${Math.round(value).toLocaleString()})`)
     }))
-    .filter((row) => row.count > 0 && row.samples >= SPECIALTY_SURPLUS_MIN_BUCKET_SAMPLES)
+    .map((row) => {
+      const modeledSampleEstimate = Math.max(0, Math.round(row.modeledWeight));
+      const confidenceBase = computeSpecialtyConfidenceScore(row.samples, mappingCoverage, ageHours, sourceHealthBonus);
+      const modeledShare = (row.samples + row.modeledWeight) > 0
+        ? row.modeledWeight / (row.samples + row.modeledWeight)
+        : 0;
+      const confidencePenalty = Math.round(modeledShare * 25);
+      return {
+        ...row,
+        modeledSamples: modeledSampleEstimate,
+        confidenceScore: Math.max(0, Math.min(100, confidenceBase - confidencePenalty))
+      };
+    })
+    .filter((row) => row.count > 0 && (row.samples >= SPECIALTY_SURPLUS_MIN_BUCKET_SAMPLES || row.modeledSamples > 0))
     .sort((a, b) => b.count - a.count)
     .slice(0, 8);
 
@@ -1946,11 +2016,16 @@ const renderSpecialtySurplus = () => {
 
   specialtySurplusList.innerHTML = ranked.map((row) => {
     const interval = specialtyConfidenceInterval(row.count, row.confidenceScore);
+    const modeledLabel = row.modeledSamples > 0 ? ` + ${row.modeledSamples} modeled` : '';
+    const locationLine = row.topLocations.length
+      ? `Top locations: ${row.topLocations.join(' • ')}`
+      : 'Top locations unavailable';
     return `
       <div class="insight-row">
         <div>
           <div class="insight-title">${SURPLUS_SPECIALTY_LABELS[row.bucket] || row.bucket}</div>
-          <div class="specialty-surplus-meta">${row.samples} mapped records | ${row.noticeCount} notices | Confidence ${specialtyConfidenceLabel(row.confidenceScore)}</div>
+          <div class="specialty-surplus-meta">${row.samples} mapped records${modeledLabel} | ${row.noticeCount} notices | Confidence ${specialtyConfidenceLabel(row.confidenceScore)}</div>
+          <div class="specialty-surplus-meta">${locationLine}</div>
         </div>
         <div>
           <div class="insight-pill">${Math.round(row.count).toLocaleString()}</div>
@@ -1965,6 +2040,9 @@ const renderSpecialtySurplus = () => {
     ? `HRSA ${freeMarketSignals.sources.hrsa || 'unknown'}, BLS ${freeMarketSignals.sources.bls || 'unknown'}, NCSBN ${freeMarketSignals.sources.ncsbn || 'unknown'}, CMS ${freeMarketSignals.sources.cms || 'unknown'}`
     : 'HRSA/BLS/NCSBN/CMS source health unavailable';
   specialtySurplusList.innerHTML += `<div class="specialty-surplus-meta">Source: Live talent opportunities | Coverage ${Math.round(mappingCoverage * 100)}% | Mapped ${mappedRows}/${totalRows || 0} | Unmapped ${unmappedRows} | Duplicates removed ${duplicateRows} | Excluded ${excludedRows} | Freshness ${freshnessLabel}</div>`;
+  if (modeledRows > 0) {
+    specialtySurplusList.innerHTML += `<div class="specialty-surplus-meta">Modeled backfill: ${modeledRows} unmapped rows allocated across specialties using HRSA baseline (${Math.round(modeledEstimate).toLocaleString()} est. nurses).</div>`;
+  }
   specialtySurplusList.innerHTML += `<div class="specialty-surplus-meta">Source health: ${sourceLine}</div>`;
   if (facilityMarketFeatures?.summary) {
     specialtySurplusList.innerHTML += `<div class="specialty-surplus-meta">Facility joins: ${Number(facilityMarketFeatures.summary.matchedFacilities || 0).toLocaleString()}/${Number(facilityMarketFeatures.summary.totalFacilities || 0).toLocaleString()} matched (top facilities indexed)</div>`;
