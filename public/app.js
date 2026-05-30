@@ -1,4 +1,4 @@
-﻿// Login elements
+// Login elements
 const loginOverlay = document.getElementById('login-overlay');
 const loginForm = document.getElementById('login-form');
 const emailInput = document.getElementById('email-input');
@@ -2062,6 +2062,15 @@ const getSpecialtyBaselineWeights = () => {
   return new Map(Array.from(rawWeights.entries()).map(([bucket, value]) => [bucket, value / total]));
 };
 
+const getStateRnDemandGap = (state) => {
+  const stateKey = String(state || '').trim().toUpperCase();
+  if (!stateKey) return 0;
+  const salaryData = strategicData?.salaryData;
+  const projectedGap = Number(salaryData?.[stateKey]?.projectedGap);
+  if (!Number.isFinite(projectedGap) || projectedGap >= 0) return 0;
+  return Math.abs(projectedGap);
+};
+
 const formatTalentLocation = (entry) => {
   const state = String(entry?.state || '').trim().toUpperCase();
   const cityRaw = String(entry?.city || '').trim();
@@ -2073,6 +2082,12 @@ const formatTalentLocation = (entry) => {
 const addLocationContribution = (bucketLocationTotals, bucket, location, amount) => {
   const locationMap = bucketLocationTotals.get(bucket);
   if (!locationMap || !location || !Number.isFinite(amount) || amount <= 0) return;
+  locationMap.set(location, (locationMap.get(location) || 0) + amount);
+};
+
+const addSignedLocationContribution = (bucketLocationTotals, bucket, location, amount) => {
+  const locationMap = bucketLocationTotals.get(bucket);
+  if (!locationMap || !location || !Number.isFinite(amount) || amount === 0) return;
   locationMap.set(location, (locationMap.get(location) || 0) + amount);
 };
 
@@ -2223,10 +2238,14 @@ const renderSpecialtySurplus = () => {
   }
 
   const totals = new Map(SURPLUS_SPECIALTY_ORDER.map((key) => [key, 0]));
+  const demandTotals = new Map(SURPLUS_SPECIALTY_ORDER.map((key) => [key, 0]));
   const bucketSampleCounts = new Map(SURPLUS_SPECIALTY_ORDER.map((key) => [key, 0]));
   const bucketModeledWeights = new Map(SURPLUS_SPECIALTY_ORDER.map((key) => [key, 0]));
   const bucketNoticeCounts = new Map(SURPLUS_SPECIALTY_ORDER.map((key) => [key, 0]));
   const bucketLocationTotals = new Map(SURPLUS_SPECIALTY_ORDER.map((key) => [key, new Map()]));
+  const bucketNetLocationTotals = new Map(SURPLUS_SPECIALTY_ORDER.map((key) => [key, new Map()]));
+  const demandRows = [];
+  const stateDemandWeightTotals = new Map();
   const baselineWeights = getSpecialtyBaselineWeights();
   const dedupeMap = new Map();
   let duplicateRows = 0;
@@ -2258,41 +2277,69 @@ const renderSpecialtySurplus = () => {
     if (est <= 0) return;
     totalRows += 1;
     const location = formatTalentLocation(entry);
+    const noticesCount = Math.max(0, Number(entry?.notices_count || 0));
+    const demandWeight = Math.max(1, noticesCount);
     const specialties = Array.isArray(entry?.specialties) ? entry.specialties : [];
     const buckets = [...new Set(specialties.map(findSpecialtyBucket).filter(Boolean))];
+
     if (!buckets.length) {
       unmappedRows += 1;
       modeledRows += 1;
       modeledEstimate += est;
-      const noticeBase = Number(entry?.notices_count || 0);
+      const rowBucketSupply = new Map();
       baselineWeights.forEach((weight, bucket) => {
         const alloc = Math.max(0, Math.round(est * weight));
         if (alloc <= 0) return;
         totals.set(bucket, (totals.get(bucket) || 0) + alloc);
+        rowBucketSupply.set(bucket, alloc);
         bucketModeledWeights.set(bucket, (bucketModeledWeights.get(bucket) || 0) + weight);
-        bucketNoticeCounts.set(
-          bucket,
-          (bucketNoticeCounts.get(bucket) || 0) + Math.max(0, Math.round(noticeBase * weight))
-        );
+        bucketNoticeCounts.set(bucket, (bucketNoticeCounts.get(bucket) || 0) + Math.max(0, Math.round(noticesCount * weight)));
         addLocationContribution(bucketLocationTotals, bucket, location, alloc);
+        addSignedLocationContribution(bucketNetLocationTotals, bucket, location, alloc);
       });
+      const rowAssigned = Array.from(rowBucketSupply.values()).reduce((sum, value) => sum + value, 0);
+      if (rowAssigned > 0) {
+        demandRows.push({
+          state,
+          location,
+          demandWeight,
+          totalSupplyAssigned: rowAssigned,
+          bucketSupply: rowBucketSupply,
+        });
+        stateDemandWeightTotals.set(state, (stateDemandWeightTotals.get(state) || 0) + demandWeight);
+      }
       return;
     }
+
     if (est < 5) {
       excludedRows += 1;
       return;
     }
+
     mappedRows += 1;
+    const rowBucketSupply = new Map();
     const base = Math.floor(est / buckets.length);
     let remainder = est % buckets.length;
     buckets.forEach((bucket) => {
       const plus = remainder > 0 ? 1 : 0;
       if (remainder > 0) remainder -= 1;
-      totals.set(bucket, (totals.get(bucket) || 0) + base + plus);
+      const alloc = base + plus;
+      totals.set(bucket, (totals.get(bucket) || 0) + alloc);
+      rowBucketSupply.set(bucket, alloc);
       bucketSampleCounts.set(bucket, (bucketSampleCounts.get(bucket) || 0) + 1);
-      bucketNoticeCounts.set(bucket, (bucketNoticeCounts.get(bucket) || 0) + Number(entry?.notices_count || 0));
-      addLocationContribution(bucketLocationTotals, bucket, location, base + plus);
+      bucketNoticeCounts.set(bucket, (bucketNoticeCounts.get(bucket) || 0) + noticesCount);
+      addLocationContribution(bucketLocationTotals, bucket, location, alloc);
+      addSignedLocationContribution(bucketNetLocationTotals, bucket, location, alloc);
     });
+
+    demandRows.push({
+      state,
+      location,
+      demandWeight,
+      totalSupplyAssigned: est,
+      bucketSupply: rowBucketSupply,
+    });
+    stateDemandWeightTotals.set(state, (stateDemandWeightTotals.get(state) || 0) + demandWeight);
   });
 
   if (totalRows === 0) {
@@ -2303,43 +2350,93 @@ const renderSpecialtySurplus = () => {
 
   const mappingCoverage = totalRows > 0 ? mappedRows / totalRows : 0;
   const sourceHealthBonus = getSourceHealthBonus();
+  const representedStates = [...new Set(demandRows.map((row) => row.state).filter(Boolean))];
+  const stateDemandGaps = new Map();
+  representedStates.forEach((state) => {
+    const gap = getStateRnDemandGap(state);
+    if (gap > 0) stateDemandGaps.set(state, gap);
+  });
+  const totalSupplySignal = Array.from(totals.values()).reduce((sum, value) => sum + value, 0);
+  const totalDemandRaw = Array.from(stateDemandGaps.values()).reduce((sum, value) => sum + value, 0);
+  const demandScale = totalDemandRaw > 0 && totalSupplySignal > 0
+    ? Math.min(1.25, Math.max(0.06, totalSupplySignal / totalDemandRaw))
+    : 0;
 
-  const ranked = SURPLUS_SPECIALTY_ORDER
+  if (demandScale > 0) {
+    demandRows.forEach((row) => {
+      const stateDemandGap = stateDemandGaps.get(row.state) || 0;
+      if (stateDemandGap <= 0) return;
+      const stateWeightTotal = Math.max(1, Number(stateDemandWeightTotals.get(row.state) || 0));
+      const rowDemand = stateDemandGap * demandScale * (row.demandWeight / stateWeightTotal);
+      const rowSupplyAssigned = Math.max(1, Number(row.totalSupplyAssigned || 0));
+      row.bucketSupply.forEach((bucketSupply, bucket) => {
+        const share = Math.max(0, Number(bucketSupply || 0)) / rowSupplyAssigned;
+        if (share <= 0) return;
+        const bucketDemand = rowDemand * share;
+        if (bucketDemand <= 0) return;
+        demandTotals.set(bucket, (demandTotals.get(bucket) || 0) + bucketDemand);
+        addSignedLocationContribution(bucketNetLocationTotals, bucket, row.location, -bucketDemand);
+      });
+    });
+  }
+
+  const rankedAll = SURPLUS_SPECIALTY_ORDER
     .map((bucket) => ({
       bucket,
-      count: totals.get(bucket) || 0,
+      supplyCount: totals.get(bucket) || 0,
+      demandCount: demandTotals.get(bucket) || 0,
       samples: bucketSampleCounts.get(bucket) || 0,
       modeledWeight: bucketModeledWeights.get(bucket) || 0,
       noticeCount: bucketNoticeCounts.get(bucket) || 0,
-      topLocationRows: Array.from((bucketLocationTotals.get(bucket) || new Map()).entries())
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 3)
-        .map(([name, value]) => {
-          const parsed = parseSurplusLocation(name);
-          return {
-            ...parsed,
-            label: `${name} (${Math.round(value).toLocaleString()})`,
-            value: Math.round(value),
-          };
-        }),
+      topLocationRows: (() => {
+        const netRows = Array.from((bucketNetLocationTotals.get(bucket) || new Map()).entries())
+          .filter(([, value]) => Number(value) > 0)
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, 3);
+        const sourceRows = netRows.length
+          ? netRows
+          : Array.from((bucketLocationTotals.get(bucket) || new Map()).entries())
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 3);
+        const source = netRows.length ? 'net' : 'supply';
+        return sourceRows
+          .map(([name, value]) => {
+            const parsed = parseSurplusLocation(name);
+            return {
+              ...parsed,
+              source,
+              label: `${name} (${Math.max(0, Math.round(value)).toLocaleString()})`,
+              value: Math.max(0, Math.round(value)),
+            };
+          })
+          .filter((loc) => loc.value > 0);
+      })(),
     }))
     .map((row) => {
+      const netCount = row.supplyCount - row.demandCount;
       const modeledSampleEstimate = Math.max(0, Math.round(row.modeledWeight));
       const confidenceBase = computeSpecialtyConfidenceScore(row.samples, mappingCoverage, ageHours, sourceHealthBonus);
       const modeledShare = (row.samples + row.modeledWeight) > 0
         ? row.modeledWeight / (row.samples + row.modeledWeight)
         : 0;
       const confidencePenalty = Math.round(modeledShare * 25);
+      const topLocationSource = row.topLocationRows[0]?.source || 'supply';
       return {
         ...row,
+        count: netCount,
+        netCount,
         modeledSamples: modeledSampleEstimate,
         confidenceScore: Math.max(0, Math.min(100, confidenceBase - confidencePenalty)),
+        topLocationSource,
         topLocations: row.topLocationRows.map((loc) => loc.label),
       };
     })
-    .filter((row) => row.count > 0 && (row.samples >= SPECIALTY_SURPLUS_MIN_BUCKET_SAMPLES || row.modeledSamples > 0))
-    .sort((a, b) => b.count - a.count)
-    .slice(0, 8);
+    .filter((row) => row.supplyCount > 0 && (row.samples >= SPECIALTY_SURPLUS_MIN_BUCKET_SAMPLES || row.modeledSamples > 0))
+    .sort((a, b) => b.netCount - a.netCount || b.supplyCount - a.supplyCount);
+
+  const rankedPositive = rankedAll.filter((row) => row.netCount > 0);
+  const ranked = (rankedPositive.length ? rankedPositive : rankedAll).slice(0, 8);
+  const showingOpportunityFallback = rankedPositive.length === 0 && rankedAll.length > 0;
 
   if (!ranked.length) {
     const regionMessage = selectedRegion ? ` for ${selectedRegion}` : '';
@@ -2347,12 +2444,13 @@ const renderSpecialtySurplus = () => {
     return;
   }
 
-    specialtySurplusList.innerHTML = ranked.map((row) => {
-    const interval = specialtyConfidenceInterval(row.count, row.confidenceScore);
+  specialtySurplusList.innerHTML = ranked.map((row) => {
+    const interval = specialtyConfidenceInterval(Math.max(0, Math.round(row.netCount)), row.confidenceScore);
     const modeledLabel = row.modeledSamples > 0 ? ` + ${row.modeledSamples} modeled` : '';
+    const locationLead = row.topLocationSource === 'net' ? 'Highest net locations' : 'Top opportunity locations';
     const locationLine = row.topLocations.length
-      ? `Top locations: ${row.topLocations.join(' | ')}`
-      : 'Top locations unavailable';
+      ? `${locationLead}: ${row.topLocations.join(' | ')}`
+      : 'Locations unavailable';
     const expanded = specialtySurplusExpandedBucket === row.bucket;
     const hospitalTargets = expanded ? getSpecialtyHospitalTargets(row) : [];
     const hospitalPanel = expanded
@@ -2382,7 +2480,7 @@ const renderSpecialtySurplus = () => {
       <div class="insight-row">
         <div>
           <div class="insight-title">${SURPLUS_SPECIALTY_LABELS[row.bucket] || row.bucket}</div>
-          <div class="specialty-surplus-meta">${row.samples} mapped records${modeledLabel} | ${row.noticeCount} notices | Confidence ${specialtyConfidenceLabel(row.confidenceScore)}</div>
+          <div class="specialty-surplus-meta">${row.samples} mapped records${modeledLabel} | ${row.noticeCount} notices | RN demand proxy ${Math.round(row.demandCount).toLocaleString()} | Confidence ${specialtyConfidenceLabel(row.confidenceScore)}</div>
           <div class="specialty-surplus-meta">${locationLine}</div>
           <div class="specialty-hospital-controls">
             <button type="button" class="specialty-hospital-toggle" data-specialty-bucket="${row.bucket}" aria-expanded="${expanded ? 'true' : 'false'}">
@@ -2392,13 +2490,14 @@ const renderSpecialtySurplus = () => {
           ${hospitalPanel}
         </div>
         <div>
-          <div class="insight-pill">${Math.round(row.count).toLocaleString()}</div>
+          <div class="insight-pill">${Math.round(row.netCount).toLocaleString()}</div>
           <div class="specialty-surplus-meta">${interval.low.toLocaleString()}-${interval.high.toLocaleString()}</div>
         </div>
       </div>
     `;
   }).join('');
 
+  specialtySurplusMode = 'live_rn_net';
   const freshnessLabel = ageHours === null ? 'age unknown' : `${ageHours}h old`;
   const regionLabel = selectedRegion || 'All regions';
   const sourceLine = freeMarketSignals?.sources
@@ -2422,8 +2521,12 @@ const renderSpecialtySurplus = () => {
     const pendingLine = pending.length ? ` | Pending: ${pending.join(', ')}` : '';
     specialtySurplusList.innerHTML += `<div class="specialty-surplus-meta">Required dataset integration: ${completion}%${pendingLine}</div>`;
   }
+  const demandScalePct = demandScale > 0 ? Math.round(demandScale * 100) : 0;
+  specialtySurplusList.innerHTML += `<div class="specialty-surplus-meta">RN net model: supply signal - demand proxy. Demand proxy uses state projected RN gap weighted by live notice concentration (${demandScalePct}% scale across ${stateDemandGaps.size} states).</div>`;
+  if (showingOpportunityFallback) {
+    specialtySurplusList.innerHTML += '<div class="specialty-surplus-meta">No positive net RN surplus pockets in this window; showing highest opportunity specialties by live signal.</div>';
+  }
 };
-
 const handleSpecialtyHospitalToggle = (event) => {
   const button = event.target.closest('button[data-specialty-bucket]');
   if (!button || !specialtySurplusList?.contains(button)) return;
