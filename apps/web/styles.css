@@ -6589,6 +6589,8 @@ input[type="range"] {
 .notice-list {
   display: grid;
   gap: 20px;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .notice-list.windowed {
@@ -6637,6 +6639,9 @@ input[type="range"] {
   box-sizing: border-box;
   justify-content: flex-start;
   isolation: isolate;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
 }
 
 .notice-card:hover {
@@ -6759,6 +6764,18 @@ input[type="range"] {
   z-index: 1;
   text-decoration: none !important;
   white-space: nowrap;
+}
+
+.notice-list ::selection {
+  background: rgba(43, 108, 176, 0.22);
+  color: inherit;
+  text-shadow: none;
+}
+
+.notice-list ::-moz-selection {
+  background: rgba(43, 108, 176, 0.22);
+  color: inherit;
+  text-shadow: none;
 }
 
 .detail-shell {
