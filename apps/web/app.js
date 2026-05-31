@@ -1305,8 +1305,13 @@ const scoreFromStateMetric = (state, metricGetter, invert = false, defaultScore 
   return clampScore(Math.round(value * 100) / 10);
 };
 
-const getCalibrationSalaryData = () =>
-  recruitmentIntel?.salaryBenchmarks || strategicData?.salaryData || NURSING_SALARY_DATA || {};
+const getCalibrationSalaryData = () => {
+  if (recruitmentIntel?.salaryBenchmarks) return recruitmentIntel.salaryBenchmarks;
+  if (strategicData?.salaryData) return strategicData.salaryData;
+  const legacySalaryData = typeof globalThis !== 'undefined' ? globalThis.NURSING_SALARY_DATA : null;
+  if (legacySalaryData && typeof legacySalaryData === 'object') return legacySalaryData;
+  return {};
+};
 
 const getCalibrationStateProfiles = () => recruitmentIntel?.stateProfiles || {};
 
