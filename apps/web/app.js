@@ -3333,6 +3333,102 @@ const formatCurrency = (value, { signed = false } = {}) => {
   return `${sign}$${abs}`;
 };
 
+const roundToStep = (value, step) => {
+  const n = Number(value);
+  const s = Number(step);
+  if (!Number.isFinite(n) || !Number.isFinite(s) || s <= 0) return 0;
+  return Math.round(n / s) * s;
+};
+
+const clampValue = (value, min, max) => {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return min;
+  return Math.max(min, Math.min(max, n));
+};
+
+const extractNumericValues = (text) => {
+  const raw = String(text || '');
+  const matches = raw.match(/\$?\s*\d[\d,]*(?:\.\d+)?/g) || [];
+  return matches
+    .map((token) => Number(String(token).replace(/[^0-9.]/g, '')))
+    .filter((value) => Number.isFinite(value) && value > 0);
+};
+
+const averageOf = (values) => {
+  if (!Array.isArray(values) || !values.length) return null;
+  const valid = values.filter((value) => Number.isFinite(value));
+  if (!valid.length) return null;
+  return valid.reduce((sum, value) => sum + value, 0) / valid.length;
+};
+
+const getHomeStateCompensationHints = (stateAbbrev) => {
+  const entry = stateBeaconData?.states?.[stateAbbrev];
+  const compensation = entry?.compensation && typeof entry.compensation === 'object'
+    ? entry.compensation
+    : {};
+  return {
+    signOnText: compensation.signOn || '',
+    shiftDiffsText: compensation.shiftDiffs || '',
+    relocationText: compensation.relocation || compensation.relocationSupport || '',
+    relocationPreference: Number(entry?.candidateModel?.relocationPreference)
+  };
+};
+
+const estimateHomeStatePackageAverages = (stateAbbrev) => {
+  const salaryRow = (getCalibrationSalaryData() || {})[stateAbbrev] || {};
+  const staffAnnual = getSalaryAnnualValue(salaryRow) || 91076;
+  const staffHourly = parsePositiveNumber(
+    salaryRow.staffHourly,
+    Math.max(28, Math.min(75, staffAnnual / 2080))
+  );
+  const relocationScale = parsePositiveNumber(relocationData?.relocationScale?.[stateAbbrev], 0);
+  const hints = getHomeStateCompensationHints(stateAbbrev);
+
+  const signOnFromHints = averageOf(extractNumericValues(hints.signOnText));
+  const diffFromHints = averageOf(extractNumericValues(hints.shiftDiffsText));
+  const relocationFromHints = averageOf(extractNumericValues(hints.relocationText));
+
+  const modeledSignOn = clampValue(staffAnnual * 0.08, 4000, 22000);
+  const modeledDiffHourly = clampValue(staffHourly * 0.1, 2, 8);
+  const relocationPreference = Number.isFinite(hints.relocationPreference)
+    ? clampValue(hints.relocationPreference, 0, 1)
+    : 0;
+  const modeledRelocation = clampValue(
+    3000 + (relocationScale * 45) + (relocationPreference * 6000),
+    2500,
+    12000
+  );
+
+  return {
+    signOn: roundToStep(signOnFromHints || modeledSignOn, 500),
+    differentialHourly: Math.round((diffFromHints || modeledDiffHourly) * 4) / 4,
+    relocation: roundToStep(relocationFromHints || modeledRelocation, 500)
+  };
+};
+
+const hasCustomHomeStatePackageInputs = () => {
+  const signOn = parsePositiveNumber(bonusFactorSignonInput?.value, 0);
+  const relocation = parsePositiveNumber(bonusFactorRelocationInput?.value, 0);
+  const diffs = readBonusFactorDiffRows();
+  return signOn > 0 || relocation > 0 || diffs.length > 0;
+};
+
+const applyHomeStatePackageAverages = (stateAbbrev, { replaceDiffRows = true } = {}) => {
+  if (!ALL_STATES.includes(stateAbbrev)) return;
+  const averages = estimateHomeStatePackageAverages(stateAbbrev);
+  if (bonusFactorSignonInput) bonusFactorSignonInput.value = String(averages.signOn);
+  if (bonusFactorRelocationInput) bonusFactorRelocationInput.value = String(averages.relocation);
+  if (replaceDiffRows && bonusFactorDiffsList) {
+    bonusFactorDiffsList.innerHTML = '';
+    createBonusFactorDiffRow({
+      label: `${stateAbbrev} avg shift differential`,
+      amount: averages.differentialHourly,
+      unit: 'hourly',
+      hours: 12
+    });
+  }
+};
+
 const createBonusFactorDiffRow = ({ label = '', amount = 0, unit = 'hourly', hours = 12 } = {}) => {
   if (!bonusFactorDiffsList) return;
   const row = document.createElement('div');
@@ -3407,29 +3503,36 @@ const getBonusFactorInputs = () => {
 const getBonusFactorStateTotals = (stateAbbrev, inputs) => {
   const salaryData = getCalibrationSalaryData() || {};
   const baseAnnualRaw = getSalaryAnnualValue(salaryData[stateAbbrev] || {});
+  const isHomeState = stateAbbrev === inputs.homeState;
   if (!Number.isFinite(baseAnnualRaw)) {
     return {
       baseAnnual: null,
       oneTimeAnnual: 0,
       differentialAnnual: 0,
-      totalAnnual: null
+      totalAnnual: null,
+      adjustmentsApplied: false
     };
   }
   const baseAnnual = baseAnnualRaw * (inputs.hoursPerYear / 2080);
-  const relocationAnnual = inputs.relocation; // amortized over 12 months
-  const signOnAnnual = (inputs.signOn / inputs.contractMonths) * 12;
+  const relocationAnnual = isHomeState ? inputs.relocation : 0; // amortized over 12 months
+  const signOnAnnual = isHomeState ? ((inputs.signOn / inputs.contractMonths) * 12) : 0;
   const oneTimeAnnual = relocationAnnual + signOnAnnual;
-  const differentialValues = inputs.differentials.map((diff) => (
-    calculateBonusFactorDifferentialAnnual(diff, baseAnnual)
-  ));
-  const differentialAnnual = inputs.stackable
-    ? differentialValues.reduce((sum, value) => sum + value, 0)
-    : (differentialValues.length ? Math.max(...differentialValues) : 0);
+  const differentialValues = isHomeState
+    ? inputs.differentials.map((diff) => (
+      calculateBonusFactorDifferentialAnnual(diff, baseAnnual)
+    ))
+    : [];
+  const differentialAnnual = isHomeState
+    ? (inputs.stackable
+      ? differentialValues.reduce((sum, value) => sum + value, 0)
+      : (differentialValues.length ? Math.max(...differentialValues) : 0))
+    : 0;
   return {
     baseAnnual,
     oneTimeAnnual,
     differentialAnnual,
-    totalAnnual: baseAnnual + oneTimeAnnual + differentialAnnual
+    totalAnnual: baseAnnual + oneTimeAnnual + differentialAnnual,
+    adjustmentsApplied: isHomeState
   };
 };
 
@@ -3484,8 +3587,8 @@ const renderBonusFactorBreakdown = () => {
   });
   const focusState = bonusFactorSelectedState;
   bonusFactorBreakdownSubtitle.textContent = bonusFactorViewMode === 'delta'
-    ? `Delta vs ${STATE_NAMES[inputs.homeState] || inputs.homeState} using annualized package assumptions.`
-    : `Projected annual compensation package by state (home: ${STATE_NAMES[inputs.homeState] || inputs.homeState}).`;
+    ? `Delta vs ${STATE_NAMES[inputs.homeState] || inputs.homeState}; package adjustments apply to home state only.`
+    : `Projected annual compensation package by state; adjustments apply to home state only (${STATE_NAMES[inputs.homeState] || inputs.homeState}).`;
   bonusFactorBreakdownTableWrap.innerHTML = `
     <table class="bf-breakdown-table">
       <thead>
@@ -3504,12 +3607,14 @@ const renderBonusFactorBreakdown = () => {
           const isFocused = focusState && row.stateAbbrev === focusState;
           const deltaClass = row.delta > 0 ? 'bf-delta-positive' : row.delta < 0 ? 'bf-delta-negative' : '';
           const stateLabel = `${row.stateAbbrev} - ${row.stateName}${isFocused ? ' (selected)' : ''}`;
+          const oneTimeDisplay = row.adjustmentsApplied ? formatCurrency(row.oneTimeAnnual) : '--';
+          const differentialDisplay = row.adjustmentsApplied ? formatCurrency(row.differentialAnnual) : '--';
           return `
             <tr class="${isHome ? 'bf-home-row' : ''}">
               <td>${escapeHtml(stateLabel)}</td>
               <td>${formatCurrency(row.baseAnnual)}</td>
-              <td>${formatCurrency(row.oneTimeAnnual)}</td>
-              <td>${formatCurrency(row.differentialAnnual)}</td>
+              <td>${oneTimeDisplay}</td>
+              <td>${differentialDisplay}</td>
               <td>${formatCurrency(row.totalAnnual)}</td>
               <td class="${deltaClass}">${formatCurrency(row.delta, { signed: true })}</td>
             </tr>
@@ -7853,6 +7958,16 @@ const openBonusFactorModal = (stateAbbrev = '') => {
   if (bonusFactorHomeStateInput && ALL_STATES.includes(fallback)) {
     bonusFactorHomeStateInput.value = fallback;
   }
+  if (!hasCustomHomeStatePackageInputs()) {
+    applyHomeStatePackageAverages(fallback, { replaceDiffRows: true });
+    loadStateBeaconData()
+      .then(() => {
+        applyHomeStatePackageAverages(fallback, { replaceDiffRows: true });
+        renderBonusFactorBreakdown();
+        if (bonusFactorEnabled && activeMapTab === 'salary') updateWeatherMap();
+      })
+      .catch(() => {});
+  }
   bonusFactorSelectedState = ALL_STATES.includes(nextState) ? nextState : '';
   ensureBonusFactorDiffSeed();
   renderBonusFactorBreakdown();
@@ -7887,6 +8002,13 @@ const initBonusFactor = () => {
   setBonusFactorButtonState();
   setBonusFactorViewMode('projected');
   setBonusFactorBreakdownCollapsed(false);
+  const defaultHomeState = ALL_STATES.includes(String(bonusFactorHomeStateInput?.value || ''))
+    ? String(bonusFactorHomeStateInput.value)
+    : 'IN';
+  if (bonusFactorHomeStateInput && ALL_STATES.includes(defaultHomeState)) {
+    bonusFactorHomeStateInput.value = defaultHomeState;
+  }
+  applyHomeStatePackageAverages(defaultHomeState, { replaceDiffRows: true });
 
   mapBonusFactorBtn?.addEventListener('click', () => {
     openBonusFactorModal();
@@ -7925,8 +8047,22 @@ const initBonusFactor = () => {
     setBonusFactorBreakdownCollapsed(!bonusFactorBreakdownCollapsed);
   });
 
+  bonusFactorHomeStateInput?.addEventListener('change', () => {
+    const state = String(bonusFactorHomeStateInput?.value || '').trim().toUpperCase();
+    if (!ALL_STATES.includes(state)) return;
+    applyHomeStatePackageAverages(state, { replaceDiffRows: true });
+    renderBonusFactorBreakdown();
+    if (bonusFactorEnabled && activeMapTab === 'salary') updateWeatherMap();
+    loadStateBeaconData()
+      .then(() => {
+        applyHomeStatePackageAverages(state, { replaceDiffRows: true });
+        renderBonusFactorBreakdown();
+        if (bonusFactorEnabled && activeMapTab === 'salary') updateWeatherMap();
+      })
+      .catch(() => {});
+  });
+
   [
-    bonusFactorHomeStateInput,
     bonusFactorContractMonthsInput,
     bonusFactorHoursPerYearInput,
     bonusFactorRelocationInput,
