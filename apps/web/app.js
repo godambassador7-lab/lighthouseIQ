@@ -168,6 +168,7 @@ const programsSourceNote = document.getElementById('programs-source-note');
 const programsExportCsv = document.getElementById('programs-export-csv');
 const programsExportExcel = document.getElementById('programs-export-excel');
 const programsExportPdf = document.getElementById('programs-export-pdf');
+const programsRefreshLive = document.getElementById('programs-refresh-live');
 const programsLoading = document.getElementById('programs-loading');
 const programsProgressBar = document.getElementById('programs-progress-bar');
 const programsProgressText = document.getElementById('programs-progress-text');
@@ -304,6 +305,8 @@ let programsMeta = { lastUpdated: null, sources: [] };
 let programsLoaded = false;
 let programsModuleInitialized = false;
 let programsRefreshPrompted = false;
+let programsLastLiveRefreshAt = 0;
+const PROGRAMS_LIVE_REFRESH_MS = 20 * 60 * 1000;
 let programsIsolatedSchool = '';
 let stateBeaconData = null;
 let stateBeaconLoaded = false;
@@ -1381,7 +1384,7 @@ const buildQuery = () => {
 let staticDataMode = false;
 let staticNoticesCache = null;
 let staticStatesCache = null;
-const API_ROUTE_PATTERN = /^\/(health|states|notices|fetch)(\?|$)/i;
+const API_ROUTE_PATTERN = /^\/(health|states|notices|fetch|programs)(\?|$)/i;
 const API_OR_AUTH_ROUTE_PATTERN = /^\/(auth\/|health|states|notices|fetch|insights\/)(\?|$)/i;
 
 const unique = (values) => Array.from(new Set(values.filter(Boolean)));
@@ -1591,6 +1594,9 @@ const fetchStaticFallback = async (path) => {
     }
     const allNotices = await loadStaticNotices();
     return { states: buildStateCountsFromNotices(allNotices) };
+  }
+  if (base === '/programs') {
+    return fetchJson(`/data/programs.json?ts=${Date.now()}`);
   }
   throw new Error(`No static fallback for ${base}`);
 };
@@ -5294,6 +5300,18 @@ const exportProgramsPdf = () => {
   showExportToast('Programs PDF opened.');
 };
 
+const fetchProgramsPayload = async (refreshLive = false) => {
+  const query = new URLSearchParams({ ts: String(Date.now()) });
+  if (refreshLive) query.set('refresh', '1');
+
+  try {
+    return await fetchJson(`/programs?${query.toString()}`);
+  } catch (apiErr) {
+    console.warn('Programs API unavailable, falling back to static data:', apiErr?.message || apiErr);
+    return fetchJson(`/data/programs.json?ts=${Date.now()}`);
+  }
+};
+
 const loadPrograms = async (force = false) => {
   if (programsLoaded && !force) return;
   programsLoaded = true;
@@ -5301,13 +5319,16 @@ const loadPrograms = async (force = false) => {
   try {
     programsLoading?.classList.add('active');
     updateProgramsLoading(0, 1);
-    const data = await fetchJson(`/data/programs.json?ts=${Date.now()}`);
+    const data = await fetchProgramsPayload(force);
 
     nursingPrograms = Array.isArray(data) ? data : (data.programs ?? []);
     programsMeta = {
       lastUpdated: data.lastUpdated ?? null,
       sources: data.sources ?? []
     };
+    if (data?.mode === 'live') {
+      programsLastLiveRefreshAt = Date.now();
+    }
 
     if (programsUpdated) {
       programsUpdated.textContent = programsMeta.lastUpdated
@@ -5320,6 +5341,11 @@ const loadPrograms = async (force = false) => {
       programsSourceNote.textContent = sourceNames.length
         ? `Sources: ${sourceNames.join(' + ')}`
         : '';
+      if (data?.mode === 'live') {
+        programsSourceNote.textContent += `${programsSourceNote.textContent ? ' • ' : ''}Live refresh active`;
+      } else if (data?.mode === 'fallback-after-live-failure') {
+        programsSourceNote.textContent += `${programsSourceNote.textContent ? ' • ' : ''}Live refresh failed; using local snapshot`;
+      }
     }
 
     const accreditorSet = getLoadedAccreditors(nursingPrograms);
@@ -5352,7 +5378,9 @@ const openProgramsModal = () => {
   closeModulesMenu();
   programsIsolatedSchool = '';
   setProgramsSchoolInsight(PROGRAMS_SCHOOL_INSIGHT_DEFAULT);
-  loadPrograms();
+  const shouldLiveRefresh =
+    !programsLoaded || (Date.now() - programsLastLiveRefreshAt > PROGRAMS_LIVE_REFRESH_MS);
+  loadPrograms(shouldLiveRefresh);
   programsSearch?.focus();
 };
 
@@ -5400,7 +5428,23 @@ const initProgramsModule = () => {
   programsExportCsv?.addEventListener('click', exportProgramsCsv);
   programsExportExcel?.addEventListener('click', exportProgramsExcel);
   programsExportPdf?.addEventListener('click', exportProgramsPdf);
-  loadPrograms(true);
+  programsRefreshLive?.addEventListener('click', async () => {
+    if (programsRefreshLive.disabled) return;
+    const originalLabel = programsRefreshLive.textContent;
+    programsRefreshLive.disabled = true;
+    programsRefreshLive.textContent = 'Refreshing...';
+    try {
+      await loadPrograms(true);
+      renderProgramsTable(getFilteredPrograms());
+      showExportToast('Programs refreshed from live sources.');
+    } catch (err) {
+      console.error('Programs live refresh failed:', err);
+      setStatus('Programs live refresh failed. Showing latest snapshot.', true);
+    } finally {
+      programsRefreshLive.textContent = originalLabel || 'Refresh Live';
+      programsRefreshLive.disabled = false;
+    }
+  });
 };
 
 // ==================== END ACCREDITED PROGRAMS MODULE ====================
@@ -5451,7 +5495,7 @@ const getStateNewsFeed = (state, entry) => {
 const ensureProgramsDataForBeacon = async () => {
   if (nursingPrograms.length) return;
   try {
-    const data = await fetchJson(`/data/programs.json?ts=${Date.now()}`);
+    const data = await fetchProgramsPayload(false);
     nursingPrograms = Array.isArray(data) ? data : (data.programs ?? []);
     programsMeta = {
       lastUpdated: data.lastUpdated ?? null,
