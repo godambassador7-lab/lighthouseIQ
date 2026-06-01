@@ -642,7 +642,7 @@
                 <span class="map-target-mode-status" aria-hidden="true">Off</span>
               </button>
               <button class="map-control-btn map-target-state-btn" id="map-target-state-btn" type="button" title="Open Target State" style="display: none;">Target State</button>
-              <button class="map-control-btn map-bonus-factor-btn" id="map-bonus-factor-btn" type="button" title="Offer Builder: analyze sign-on, relo, and differentials" style="display:none;">Bonus Factor</button>
+              <button class="map-control-btn map-bonus-factor-btn" id="map-bonus-factor-btn" type="button" title="Total Compensation Package Calculator" style="display:none;">Bonus Factor</button>
               <button class="map-control-btn map-factors-btn" id="map-factors-btn" type="button" title="Out of State Factors">Factors</button>
               <button class="map-control-btn map-clear-btn" id="map-clear-btn" type="button" title="Clear selected states">Clear</button>
             </div>
@@ -692,12 +692,12 @@
     <div id="bf-breakdown-section" class="bf-breakdown-section" style="display:none;">
       <div class="bf-breakdown-header">
         <div class="bf-breakdown-header-text">
-          <h4 class="bf-breakdown-title">Offer Builder - State Breakdown</h4>
+          <h4 class="bf-breakdown-title">Total Compensation Package Calculator - State Breakdown</h4>
           <p class="bf-breakdown-subtitle" id="bf-breakdown-subtitle"></p>
         </div>
         <button type="button" class="bf-breakdown-toggle" id="bf-breakdown-toggle">
           <span id="bf-toggle-label">Collapse</span>
-          <span class="bf-toggle-icon" id="bf-toggle-icon">âˆ’</span>
+          <span class="bf-toggle-icon" id="bf-toggle-icon">-</span>
         </button>
       </div>
       <div class="bf-breakdown-body" id="bf-breakdown-body">
@@ -1825,7 +1825,7 @@
     <div class="modal-overlay" id="bonus-factor-modal">
       <div class="modal-card bf-modal-card">
         <div class="modal-header">
-          <h3>Bonus Factor - Offer Builder</h3>
+          <h3>Total Compensation Package Calculator</h3>
           <button class="modal-close" id="bf-modal-close">&times;</button>
         </div>
         <div class="modal-body">
@@ -1835,7 +1835,7 @@
             <div class="bf-row">
               <div class="bf-field bf-field-lg">
                 <label class="bf-label">Home State</label>
-                <select id="bf-home-state"><option value="">Select stateâ€¦</option></select>
+                <select id="bf-home-state"><option value="">Select state...</option></select>
               </div>
               <div class="bf-field bf-field-sm">
                 <label class="bf-label">Contract (mo)</label>
@@ -1893,7 +1893,7 @@
       </div>
     </div>
 
-    <script src="./app.js?v=5.16"></script>
+    <script src="./app.js?v=5.17"></script>
   </body>
 </html>
 

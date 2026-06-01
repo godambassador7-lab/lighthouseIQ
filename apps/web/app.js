@@ -61,11 +61,33 @@ const mapHospitalSearchResults = document.getElementById('map-hospital-search-re
 const mapTabLayoffsBtn = document.getElementById('map-tab-layoffs');
 const mapTabRuralBtn = document.getElementById('map-tab-rural');
 const mapTabSalaryBtn = document.getElementById('map-tab-salary');
+const mapBonusFactorBtn = document.getElementById('map-bonus-factor-btn');
 const ruralClosuresPanel = document.getElementById('rural-closures-panel');
 const ruralClosuresTitle = document.getElementById('rural-closures-title');
 const ruralClosuresSubtitle = document.getElementById('rural-closures-subtitle');
 const ruralClosuresList = document.getElementById('rural-closures-list');
 const ruralClosuresClose = document.getElementById('rural-closures-close');
+const bonusFactorModal = document.getElementById('bonus-factor-modal');
+const bonusFactorCloseBtn = document.getElementById('bf-modal-close');
+const bonusFactorHomeStateInput = document.getElementById('bf-home-state');
+const bonusFactorContractMonthsInput = document.getElementById('bf-contract-months');
+const bonusFactorHoursPerYearInput = document.getElementById('bf-hours-per-year');
+const bonusFactorRelocationInput = document.getElementById('bf-relo');
+const bonusFactorSignonInput = document.getElementById('bf-signon');
+const bonusFactorStackableInput = document.getElementById('bf-stackable');
+const bonusFactorDiffsList = document.getElementById('bf-diffs-list');
+const bonusFactorAddDiffBtn = document.getElementById('bf-add-diff-btn');
+const bonusFactorViewProjectedBtn = document.getElementById('bf-view-projected');
+const bonusFactorViewDeltaBtn = document.getElementById('bf-view-delta');
+const bonusFactorClearBtn = document.getElementById('bf-clear-btn');
+const bonusFactorApplyBtn = document.getElementById('bf-apply-btn');
+const bonusFactorBreakdownSection = document.getElementById('bf-breakdown-section');
+const bonusFactorBreakdownSubtitle = document.getElementById('bf-breakdown-subtitle');
+const bonusFactorBreakdownTableWrap = document.getElementById('bf-breakdown-table-wrap');
+const bonusFactorBreakdownToggle = document.getElementById('bf-breakdown-toggle');
+const bonusFactorBreakdownBody = document.getElementById('bf-breakdown-body');
+const bonusFactorToggleLabel = document.getElementById('bf-toggle-label');
+const bonusFactorToggleIcon = document.getElementById('bf-toggle-icon');
 const alertsList = document.getElementById('alerts-list');
 const heatmapList = document.getElementById('heatmap-list');
 const talentList = document.getElementById('talent-list');
@@ -270,6 +292,10 @@ let activeMapTab = 'layoffs'; // 'layoffs' | 'rural' | 'salary'
 let ruralClosuresData = {};
 let ruralClosuresLoadedAt = 0;
 let shapeSalaryAnnualValues = {};
+let bonusFactorEnabled = false;
+let bonusFactorViewMode = 'projected';
+let bonusFactorSelectedState = '';
+let bonusFactorBreakdownCollapsed = false;
 const NOTICE_MAX_COUNT = 100;
 const NOTICE_WINDOW_COUNT = 5;
 let calibrationStats = { minCount: 0, maxCount: 0 };
@@ -3293,6 +3319,207 @@ const getSalaryAnnualValue = (row = {}) => {
   return null;
 };
 
+const parsePositiveNumber = (value, fallback = 0) => {
+  const n = Number(value);
+  return Number.isFinite(n) ? Math.max(0, n) : fallback;
+};
+
+const formatCurrency = (value, { signed = false } = {}) => {
+  if (!Number.isFinite(value)) return '--';
+  const rounded = Math.round(value);
+  const abs = Math.abs(rounded).toLocaleString();
+  if (!signed) return `$${abs}`;
+  const sign = rounded > 0 ? '+' : rounded < 0 ? '-' : '';
+  return `${sign}$${abs}`;
+};
+
+const createBonusFactorDiffRow = ({ label = '', amount = 0, unit = 'hourly', hours = 12 } = {}) => {
+  if (!bonusFactorDiffsList) return;
+  const row = document.createElement('div');
+  row.className = 'bf-diff-row';
+  row.innerHTML = `
+    <input type="text" class="bf-diff-label" placeholder="Label" value="${escapeHtml(label)}" />
+    <input type="number" class="bf-diff-value" min="0" step="0.25" value="${parsePositiveNumber(amount, 0)}" />
+    <select class="bf-diff-unit">
+      <option value="hourly">/hr</option>
+      <option value="weekly">/wk</option>
+      <option value="monthly">/mo</option>
+      <option value="annual">annual</option>
+      <option value="percent">% base</option>
+    </select>
+    <input type="number" class="bf-diff-hours" min="1" max="24" step="1" value="${parsePositiveNumber(hours, 12)}" title="Hours per week for hourly diff" />
+    <button type="button" class="bf-diff-remove" aria-label="Remove differential">x</button>
+  `;
+  const unitSelect = row.querySelector('.bf-diff-unit');
+  if (unitSelect) unitSelect.value = ['hourly', 'weekly', 'monthly', 'annual', 'percent'].includes(unit) ? unit : 'hourly';
+  row.querySelector('.bf-diff-remove')?.addEventListener('click', () => {
+    row.remove();
+    renderBonusFactorBreakdown();
+  });
+  row.querySelectorAll('input, select').forEach((el) => {
+    el.addEventListener('input', renderBonusFactorBreakdown);
+    el.addEventListener('change', renderBonusFactorBreakdown);
+  });
+  bonusFactorDiffsList.appendChild(row);
+};
+
+const ensureBonusFactorDiffSeed = () => {
+  if (!bonusFactorDiffsList || bonusFactorDiffsList.children.length > 0) return;
+  createBonusFactorDiffRow({ label: 'Shift differential', amount: 0, unit: 'hourly', hours: 12 });
+};
+
+const readBonusFactorDiffRows = () => {
+  if (!bonusFactorDiffsList) return [];
+  return Array.from(bonusFactorDiffsList.querySelectorAll('.bf-diff-row')).map((row) => ({
+    label: String(row.querySelector('.bf-diff-label')?.value || '').trim(),
+    amount: parsePositiveNumber(row.querySelector('.bf-diff-value')?.value, 0),
+    unit: String(row.querySelector('.bf-diff-unit')?.value || 'hourly').trim(),
+    hours: parsePositiveNumber(row.querySelector('.bf-diff-hours')?.value, 12)
+  })).filter((row) => row.amount > 0);
+};
+
+const calculateBonusFactorDifferentialAnnual = (diff, baseAnnual) => {
+  const amount = parsePositiveNumber(diff?.amount, 0);
+  if (!amount) return 0;
+  const unit = String(diff?.unit || 'hourly').toLowerCase();
+  if (unit === 'weekly') return amount * 52;
+  if (unit === 'monthly') return amount * 12;
+  if (unit === 'annual') return amount;
+  if (unit === 'percent') return baseAnnual * (amount / 100);
+  const weeklyHours = Math.max(1, parsePositiveNumber(diff?.hours, 12));
+  return amount * weeklyHours * 52;
+};
+
+const getBonusFactorInputs = () => {
+  ensureBonusFactorDiffSeed();
+  const homeState = String(bonusFactorHomeStateInput?.value || '').trim().toUpperCase();
+  return {
+    homeState: ALL_STATES.includes(homeState) ? homeState : '',
+    contractMonths: Math.max(1, Math.min(60, Math.round(parsePositiveNumber(bonusFactorContractMonthsInput?.value, 24)))),
+    hoursPerYear: Math.max(500, Math.min(3000, Math.round(parsePositiveNumber(bonusFactorHoursPerYearInput?.value, 1872)))),
+    relocation: parsePositiveNumber(bonusFactorRelocationInput?.value, 0),
+    signOn: parsePositiveNumber(bonusFactorSignonInput?.value, 0),
+    stackable: Boolean(bonusFactorStackableInput?.checked),
+    differentials: readBonusFactorDiffRows()
+  };
+};
+
+const getBonusFactorStateTotals = (stateAbbrev, inputs) => {
+  const salaryData = getCalibrationSalaryData() || {};
+  const baseAnnualRaw = getSalaryAnnualValue(salaryData[stateAbbrev] || {});
+  if (!Number.isFinite(baseAnnualRaw)) {
+    return {
+      baseAnnual: null,
+      oneTimeAnnual: 0,
+      differentialAnnual: 0,
+      totalAnnual: null
+    };
+  }
+  const baseAnnual = baseAnnualRaw * (inputs.hoursPerYear / 2080);
+  const relocationAnnual = inputs.relocation; // amortized over 12 months
+  const signOnAnnual = (inputs.signOn / inputs.contractMonths) * 12;
+  const oneTimeAnnual = relocationAnnual + signOnAnnual;
+  const differentialValues = inputs.differentials.map((diff) => (
+    calculateBonusFactorDifferentialAnnual(diff, baseAnnual)
+  ));
+  const differentialAnnual = inputs.stackable
+    ? differentialValues.reduce((sum, value) => sum + value, 0)
+    : (differentialValues.length ? Math.max(...differentialValues) : 0);
+  return {
+    baseAnnual,
+    oneTimeAnnual,
+    differentialAnnual,
+    totalAnnual: baseAnnual + oneTimeAnnual + differentialAnnual
+  };
+};
+
+const getBonusFactorMapValue = (stateAbbrev) => {
+  const inputs = getBonusFactorInputs();
+  if (!inputs.homeState) return null;
+  const totals = getBonusFactorStateTotals(stateAbbrev, inputs);
+  if (!Number.isFinite(totals.totalAnnual)) return null;
+  if (bonusFactorViewMode === 'delta') {
+    const homeTotals = getBonusFactorStateTotals(inputs.homeState, inputs);
+    if (!Number.isFinite(homeTotals.totalAnnual)) return null;
+    return totals.totalAnnual - homeTotals.totalAnnual;
+  }
+  return totals.totalAnnual;
+};
+
+const getSalaryMapValue = (stateAbbrev) => {
+  const salaryData = getCalibrationSalaryData() || {};
+  if (bonusFactorEnabled && activeMapTab === 'salary') {
+    return getBonusFactorMapValue(stateAbbrev);
+  }
+  return getSalaryAnnualValue(salaryData[stateAbbrev] || {});
+};
+
+const renderBonusFactorBreakdown = () => {
+  if (!bonusFactorBreakdownTableWrap || !bonusFactorBreakdownSubtitle) return;
+  const inputs = getBonusFactorInputs();
+  if (!inputs.homeState) {
+    bonusFactorBreakdownSubtitle.textContent = 'Select a home state to compute compensation packages.';
+    bonusFactorBreakdownTableWrap.innerHTML = '<div class="empty-state">Pick a home state to generate the compensation table.</div>';
+    return;
+  }
+  const rows = ALL_STATES.map((stateAbbrev) => {
+    const totals = getBonusFactorStateTotals(stateAbbrev, inputs);
+    return {
+      stateAbbrev,
+      stateName: STATE_NAMES[stateAbbrev] || stateAbbrev,
+      ...totals
+    };
+  });
+  const homeRow = rows.find((row) => row.stateAbbrev === inputs.homeState) || null;
+  const homeTotal = homeRow?.totalAnnual;
+  rows.forEach((row) => {
+    row.delta = Number.isFinite(row.totalAnnual) && Number.isFinite(homeTotal)
+      ? row.totalAnnual - homeTotal
+      : null;
+  });
+  rows.sort((a, b) => {
+    const left = bonusFactorViewMode === 'delta' ? (a.delta ?? -Infinity) : (a.totalAnnual ?? -Infinity);
+    const right = bonusFactorViewMode === 'delta' ? (b.delta ?? -Infinity) : (b.totalAnnual ?? -Infinity);
+    return right - left;
+  });
+  const focusState = bonusFactorSelectedState;
+  bonusFactorBreakdownSubtitle.textContent = bonusFactorViewMode === 'delta'
+    ? `Delta vs ${STATE_NAMES[inputs.homeState] || inputs.homeState} using annualized package assumptions.`
+    : `Projected annual compensation package by state (home: ${STATE_NAMES[inputs.homeState] || inputs.homeState}).`;
+  bonusFactorBreakdownTableWrap.innerHTML = `
+    <table class="bf-breakdown-table">
+      <thead>
+        <tr>
+          <th>State</th>
+          <th>Base RN</th>
+          <th>One-Time</th>
+          <th>Differentials</th>
+          <th>Total Package</th>
+          <th>Delta vs Home</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${rows.map((row) => {
+          const isHome = row.stateAbbrev === inputs.homeState;
+          const isFocused = focusState && row.stateAbbrev === focusState;
+          const deltaClass = row.delta > 0 ? 'bf-delta-positive' : row.delta < 0 ? 'bf-delta-negative' : '';
+          const stateLabel = `${row.stateAbbrev} - ${row.stateName}${isFocused ? ' (selected)' : ''}`;
+          return `
+            <tr class="${isHome ? 'bf-home-row' : ''}">
+              <td>${escapeHtml(stateLabel)}</td>
+              <td>${formatCurrency(row.baseAnnual)}</td>
+              <td>${formatCurrency(row.oneTimeAnnual)}</td>
+              <td>${formatCurrency(row.differentialAnnual)}</td>
+              <td>${formatCurrency(row.totalAnnual)}</td>
+              <td class="${deltaClass}">${formatCurrency(row.delta, { signed: true })}</td>
+            </tr>
+          `;
+        }).join('')}
+      </tbody>
+    </table>
+  `;
+};
+
 const getRuralDataMap = () => {
   if (ruralClosuresData && Object.keys(ruralClosuresData).length) return ruralClosuresData;
   if (typeof RURAL_HOSPITAL_CLOSURES !== 'undefined' && RURAL_HOSPITAL_CLOSURES) {
@@ -3400,14 +3627,16 @@ const setMapTab = async (tab) => {
     if (mapSectionTitle) mapSectionTitle.textContent = 'Rural Hospital Vulnerability Map';
     setMapDescriptionText('States are colored by rural closure pressure and at-risk hospital counts. Click a state for details.');
     mapScopeToggle && (mapScopeToggle.style.display = 'none');
+    if (mapBonusFactorBtn) mapBonusFactorBtn.style.display = 'none';
     setMapLegendLayout('rural');
     await loadRuralClosuresDataLocal();
     if (currentMapView !== 'map') toggleMapView('map');
   } else if (next === 'salary') {
     if (ruralClosuresPanel) ruralClosuresPanel.style.display = 'none';
     if (mapSectionTitle) mapSectionTitle.textContent = 'RN Salary Benchmark Map';
-    setMapDescriptionText('States are bucketed by RN compensation benchmarks (staff RN annualized value).');
+    setMapDescriptionText('States are bucketed by RN compensation benchmarks (staff RN annualized value). Click a state to open the Total Compensation Package Calculator.');
     mapScopeToggle && (mapScopeToggle.style.display = 'none');
+    if (mapBonusFactorBtn) mapBonusFactorBtn.style.display = 'inline-flex';
     setMapLegendLayout('salary');
     if (currentMapView !== 'map') toggleMapView('map');
   } else {
@@ -3415,6 +3644,7 @@ const setMapTab = async (tab) => {
     if (mapSectionTitle) mapSectionTitle.textContent = 'Interactive Layoff Weather Map';
     setMapDescriptionText('Fog intensity shows layoff activity by state. Darker = more layoffs in the current scope.', { showScopeNote: true });
     mapScopeToggle && (mapScopeToggle.style.display = '');
+    if (mapBonusFactorBtn) mapBonusFactorBtn.style.display = 'none';
     setMapLegendLayout('layoffs');
   }
   updateWeatherMap();
@@ -3499,6 +3729,10 @@ const initWeatherMap = async () => {
         renderRuralClosuresForState(stateId);
         return;
       }
+      if (activeMapTab === 'salary') {
+        openBonusFactorModal(stateId);
+        return;
+      }
       stateSelect.value = stateId;
       loadNotices();
     });
@@ -3527,9 +3761,16 @@ const showTooltip = (e, stateAbbrev) => {
   const stateName = STATE_NAMES[stateAbbrev] || stateAbbrev;
   if (activeMapTab === 'salary') {
     const salaryAnnual = shapeSalaryAnnualValues[stateAbbrev];
+    const salaryLabel = bonusFactorEnabled
+      ? (Number.isFinite(salaryAnnual)
+          ? (bonusFactorViewMode === 'delta'
+              ? `${formatCurrency(salaryAnnual, { signed: true })} vs home package`
+              : `${formatCurrency(salaryAnnual)} projected package`)
+          : 'Compensation package unavailable')
+      : (salaryAnnual ? `$${Math.round(salaryAnnual).toLocaleString()} staff RN (annualized)` : 'Salary benchmark unavailable');
     mapTooltip.innerHTML = `
       <div class="tooltip-state">${stateName}</div>
-      <div class="tooltip-count">${salaryAnnual ? `$${Math.round(salaryAnnual).toLocaleString()} staff RN (annualized)` : 'Salary benchmark unavailable'}</div>
+      <div class="tooltip-count">${salaryLabel}</div>
     `;
   } else if (activeMapTab === 'rural') {
     const rural = getRuralStateEntry(stateAbbrev);
@@ -3709,10 +3950,9 @@ const updateWeatherMap = () => {
   if (!shapes?.length) return;
 
   if (activeMapTab === 'salary') {
-    const salaryData = getCalibrationSalaryData() || {};
     shapeSalaryAnnualValues = {};
     const values = ALL_STATES
-      .map((state) => getSalaryAnnualValue(salaryData[state]))
+      .map((state) => getSalaryMapValue(state))
       .filter((value) => Number.isFinite(value));
     const minValue = values.length ? Math.min(...values) : 0;
     const maxValue = values.length ? Math.max(...values) : 0;
@@ -3721,7 +3961,7 @@ const updateWeatherMap = () => {
     shapes.forEach((shape) => {
       const stateAbbrev = shape.getAttribute('data-state');
       clearMapModeClasses(shape);
-      const salaryAnnual = getSalaryAnnualValue(salaryData[stateAbbrev]);
+      const salaryAnnual = getSalaryMapValue(stateAbbrev);
       shapeSalaryAnnualValues[stateAbbrev] = salaryAnnual;
       if (salaryAnnual === null) {
         shape.style.fill = '#e5e7eb';
@@ -7573,6 +7813,137 @@ const initMapToggle = () => {
 
 // ==================== END MAP/CHART VIEW TOGGLE ====================
 
+const setBonusFactorButtonState = () => {
+  if (!mapBonusFactorBtn) return;
+  mapBonusFactorBtn.classList.toggle('bf-active', bonusFactorEnabled);
+};
+
+const setBonusFactorViewMode = (mode) => {
+  bonusFactorViewMode = mode === 'delta' ? 'delta' : 'projected';
+  bonusFactorViewProjectedBtn?.classList.toggle('active', bonusFactorViewMode === 'projected');
+  bonusFactorViewDeltaBtn?.classList.toggle('active', bonusFactorViewMode === 'delta');
+  renderBonusFactorBreakdown();
+  if (bonusFactorEnabled && activeMapTab === 'salary') {
+    updateWeatherMap();
+  }
+};
+
+const setBonusFactorBreakdownCollapsed = (collapsed) => {
+  bonusFactorBreakdownCollapsed = Boolean(collapsed);
+  if (bonusFactorBreakdownBody) {
+    bonusFactorBreakdownBody.style.display = bonusFactorBreakdownCollapsed ? 'none' : '';
+  }
+  if (bonusFactorToggleLabel) {
+    bonusFactorToggleLabel.textContent = bonusFactorBreakdownCollapsed ? 'Expand' : 'Collapse';
+  }
+  if (bonusFactorToggleIcon) {
+    bonusFactorToggleIcon.textContent = bonusFactorBreakdownCollapsed ? '+' : '-';
+  }
+};
+
+const openBonusFactorModal = (stateAbbrev = '') => {
+  if (!bonusFactorModal) return;
+  if (bonusFactorHomeStateInput && bonusFactorHomeStateInput.options.length <= 1) {
+    bonusFactorHomeStateInput.innerHTML = '<option value="">Select state...</option>' +
+      ALL_STATES.map((state) => `<option value="${state}">${state} - ${STATE_NAMES[state] || state}</option>`).join('');
+  }
+  const nextState = String(stateAbbrev || '').trim().toUpperCase();
+  const savedHome = getMapHomeState();
+  const fallback = nextState || savedHome || bonusFactorHomeStateInput?.value || 'IN';
+  if (bonusFactorHomeStateInput && ALL_STATES.includes(fallback)) {
+    bonusFactorHomeStateInput.value = fallback;
+  }
+  bonusFactorSelectedState = ALL_STATES.includes(nextState) ? nextState : '';
+  ensureBonusFactorDiffSeed();
+  renderBonusFactorBreakdown();
+  bonusFactorModal.classList.add('active');
+  document.body.classList.add('modal-open');
+};
+
+const closeBonusFactorModal = () => {
+  if (!bonusFactorModal) return;
+  bonusFactorModal.classList.remove('active');
+  document.body.classList.remove('modal-open');
+};
+
+const resetBonusFactorInputs = () => {
+  if (bonusFactorContractMonthsInput) bonusFactorContractMonthsInput.value = '24';
+  if (bonusFactorHoursPerYearInput) bonusFactorHoursPerYearInput.value = '1872';
+  if (bonusFactorRelocationInput) bonusFactorRelocationInput.value = '0';
+  if (bonusFactorSignonInput) bonusFactorSignonInput.value = '0';
+  if (bonusFactorStackableInput) bonusFactorStackableInput.checked = true;
+  if (bonusFactorDiffsList) bonusFactorDiffsList.innerHTML = '';
+  ensureBonusFactorDiffSeed();
+  setBonusFactorViewMode('projected');
+  renderBonusFactorBreakdown();
+  if (bonusFactorEnabled && activeMapTab === 'salary') {
+    updateWeatherMap();
+  }
+};
+
+const initBonusFactor = () => {
+  if (!bonusFactorModal) return;
+  ensureBonusFactorDiffSeed();
+  setBonusFactorButtonState();
+  setBonusFactorViewMode('projected');
+  setBonusFactorBreakdownCollapsed(false);
+
+  mapBonusFactorBtn?.addEventListener('click', () => {
+    openBonusFactorModal();
+  });
+  bonusFactorCloseBtn?.addEventListener('click', closeBonusFactorModal);
+  bonusFactorModal?.addEventListener('click', (event) => {
+    if (event.target === bonusFactorModal) closeBonusFactorModal();
+  });
+  bonusFactorAddDiffBtn?.addEventListener('click', () => {
+    createBonusFactorDiffRow();
+    renderBonusFactorBreakdown();
+  });
+  bonusFactorViewProjectedBtn?.addEventListener('click', () => setBonusFactorViewMode('projected'));
+  bonusFactorViewDeltaBtn?.addEventListener('click', () => setBonusFactorViewMode('delta'));
+  bonusFactorClearBtn?.addEventListener('click', () => {
+    bonusFactorEnabled = false;
+    setBonusFactorButtonState();
+    if (bonusFactorBreakdownSection) bonusFactorBreakdownSection.style.display = 'none';
+    resetBonusFactorInputs();
+    updateWeatherMap();
+  });
+  bonusFactorApplyBtn?.addEventListener('click', () => {
+    const inputs = getBonusFactorInputs();
+    if (!inputs.homeState) {
+      bonusFactorBreakdownSubtitle.textContent = 'Home state is required before applying the calculator.';
+      return;
+    }
+    bonusFactorEnabled = true;
+    setBonusFactorButtonState();
+    renderBonusFactorBreakdown();
+    if (bonusFactorBreakdownSection) bonusFactorBreakdownSection.style.display = 'block';
+    updateWeatherMap();
+    closeBonusFactorModal();
+  });
+  bonusFactorBreakdownToggle?.addEventListener('click', () => {
+    setBonusFactorBreakdownCollapsed(!bonusFactorBreakdownCollapsed);
+  });
+
+  [
+    bonusFactorHomeStateInput,
+    bonusFactorContractMonthsInput,
+    bonusFactorHoursPerYearInput,
+    bonusFactorRelocationInput,
+    bonusFactorSignonInput,
+    bonusFactorStackableInput
+  ].forEach((input) => {
+    input?.addEventListener('input', () => {
+      renderBonusFactorBreakdown();
+      if (bonusFactorEnabled && activeMapTab === 'salary') updateWeatherMap();
+    });
+    input?.addEventListener('change', () => {
+      renderBonusFactorBreakdown();
+      if (bonusFactorEnabled && activeMapTab === 'salary') updateWeatherMap();
+    });
+  });
+};
+
 // =============================================================================
 // Strike Alerts
 // =============================================================================
@@ -8427,6 +8798,7 @@ const initApp = () => {
   safeInit(initMapScopeToggle, 'mapScopeToggle');
   safeInit(initMapFactors, 'mapFactors');
   safeInit(initHospitalSearch, 'hospitalSearch');
+  safeInit(initBonusFactor, 'bonusFactor');
   safeInit(initStateMultiSelect, 'stateMultiSelect');
   safeInit(initForecast, 'forecast');
   safeInit(initProgramsModule, 'programsModule');
