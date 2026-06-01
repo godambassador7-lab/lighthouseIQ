@@ -16,6 +16,7 @@ const loginError = document.getElementById('login-error');
 const apiDot = document.getElementById('api-dot');
 const apiStatus = document.getElementById('api-status');
 const logoutBtn = document.getElementById('logout-btn');
+const welcomeUser = document.getElementById('welcome-user');
 const regionSelect = document.getElementById('filter-region');
 const stateSelect = document.getElementById('filter-state'); // Hidden input for state values
 const stateMultiSelect = document.getElementById('state-multi-select');
@@ -362,6 +363,26 @@ const getSessionUser = () => {
   }
 };
 
+const resolveWelcomeName = (user) => {
+  const explicitName = String(user?.name || '').trim();
+  if (explicitName) return explicitName;
+  const email = String(user?.email || '').trim();
+  if (!email) return 'User';
+  const localPart = email.split('@')[0].replace(/[._-]+/g, ' ').trim();
+  if (!localPart) return email;
+  return localPart
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ');
+};
+
+const setWelcomeUserLabel = (user) => {
+  if (!welcomeUser) return;
+  welcomeUser.textContent = `Welcome ${resolveWelcomeName(user)}!`;
+  welcomeUser.style.display = 'inline-flex';
+};
+
 const getUserStorageScope = () => {
   const user = getSessionUser();
   if (user?.id) return String(user.id);
@@ -377,6 +398,10 @@ const clearAuthState = () => {
   sessionStorage.removeItem(SESSION_KEY);
   sessionStorage.removeItem(SESSION_USER_KEY);
   if (logoutBtn) logoutBtn.style.display = 'none';
+  if (welcomeUser) {
+    welcomeUser.textContent = '';
+    welcomeUser.style.display = 'none';
+  }
   loginOverlay.classList.remove('hidden');
   setAuthMode('signin');
 };
@@ -536,9 +561,10 @@ const setAuthMode = (mode) => {
 };
 
 const markLoginSuccess = (user) => {
+  const resolvedUser = user && typeof user === 'object' ? user : getSessionUser();
   sessionStorage.setItem(SESSION_KEY, 'true');
-  if (user && typeof user === 'object') {
-    sessionStorage.setItem(SESSION_USER_KEY, JSON.stringify(user));
+  if (resolvedUser && typeof resolvedUser === 'object') {
+    sessionStorage.setItem(SESSION_USER_KEY, JSON.stringify(resolvedUser));
   } else {
     sessionStorage.removeItem(SESSION_USER_KEY);
   }
@@ -548,6 +574,7 @@ const markLoginSuccess = (user) => {
   if (inviteCodeInput) inviteCodeInput.value = '';
   setLoginError('');
   if (logoutBtn) logoutBtn.style.display = 'inline-flex';
+  if (resolvedUser) setWelcomeUserLabel(resolvedUser);
   initApp();
 };
 

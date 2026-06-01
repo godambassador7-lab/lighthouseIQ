@@ -138,6 +138,11 @@
   font-size: 1rem;
 }
 
+#login-form[data-mode="create"] #password-confirm-input {
+  text-align: center;
+  letter-spacing: 0.15em;
+}
+
 .login-btn {
   margin-top: 0.5rem;
   padding: 1rem 2rem;
@@ -307,6 +312,13 @@ select {
   justify-content: flex-end;
   gap: 16px;
   flex-wrap: wrap;
+}
+
+.welcome-user {
+  color: var(--navy);
+  font-size: 0.95rem;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 .logout-btn {
