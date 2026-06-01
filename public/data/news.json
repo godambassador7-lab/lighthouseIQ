@@ -1,74 +1,81 @@
 {
-  "lastUpdated": "2026-06-01T06:08:59.738Z",
+  "lastUpdated": "2026-06-01T12:43:34.962Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
-    "totalSources": 9,
-    "staleSources": 5,
-    "healthySources": 4,
+    "totalSources": 10,
+    "staleSources": 3,
+    "healthySources": 7,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 215,
+        "articleCount": 205,
         "latestPublishedAt": "2026-06-01T00:00:00.000Z",
-        "staleHours": 6,
+        "staleHours": 12,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 145,
-        "latestPublishedAt": "2026-05-29T00:00:00.000Z",
-        "staleHours": 78,
-        "status": "stale"
+        "articleCount": 146,
+        "latestPublishedAt": "2026-06-01T00:00:00.000Z",
+        "staleHours": 12,
+        "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 61,
-        "latestPublishedAt": "2026-05-31T00:00:00.000Z",
-        "staleHours": 30,
+        "articleCount": 67,
+        "latestPublishedAt": "2026-06-01T00:00:00.000Z",
+        "staleHours": 12,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 38,
         "latestPublishedAt": "2026-06-01T00:00:00.000Z",
-        "staleHours": 6,
+        "staleHours": 12,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
-        "articleCount": 15,
-        "latestPublishedAt": "2026-05-29T00:00:00.000Z",
-        "staleHours": 78,
-        "status": "stale"
+        "articleCount": 17,
+        "latestPublishedAt": "2026-06-01T00:00:00.000Z",
+        "staleHours": 12,
+        "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 13,
         "latestPublishedAt": "2026-05-29T00:00:00.000Z",
-        "staleHours": 78,
+        "staleHours": 84,
         "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 10,
         "latestPublishedAt": "2026-05-29T00:00:00.000Z",
-        "staleHours": 78,
+        "staleHours": 84,
         "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 2,
         "latestPublishedAt": "2026-06-01T00:00:00.000Z",
-        "staleHours": 6,
+        "staleHours": 12,
+        "status": "ok"
+      },
+      {
+        "source": "SEC Healthcare Filings",
+        "articleCount": 1,
+        "latestPublishedAt": "2026-06-01T00:00:00.000Z",
+        "staleHours": 12,
         "status": "ok"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 1,
         "latestPublishedAt": "2026-05-26T00:00:00.000Z",
-        "staleHours": 150,
+        "staleHours": 156,
         "status": "stale"
       }
     ]
@@ -80,7 +87,7 @@
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 38
+      "count": 36
     },
     "labor_unions": {
       "label": "Labor & Unions",
@@ -88,7 +95,7 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 39
+      "count": 38
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -104,7 +111,7 @@
     },
     "general_market": {
       "label": "General Market",
-      "count": 223
+      "count": 226
     }
   },
   "quality": {
@@ -115,12 +122,12 @@
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
-        "actual": 9,
+        "actual": 10,
         "pass": true
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 42,
+        "actual": 54,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -130,7 +137,7 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 5,
+        "actual": 3,
         "pass": false
       }
     }
@@ -317,6 +324,117 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "HUM 8-K filing - Humana Inc.",
+      "summary": "Humana Inc. filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/49071/000004907126000027/hum-20260601.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-06-01",
+      "category": "general_market",
+      "relevance": 85,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "The workforce equation: 5 resources on labor, learning and the data behind them",
+      "url": "https://www.beckershospitalreview.com/workforce/the-workforce-equation-5-resources-on-labor-learning-and-the-data-behind-them/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-01",
+      "summary": "Conversations around workforce have become the operating equation health systems are building their futures around. Labor costs, retention, language access, learning and the data that ties them all together are increasingly boardroom conversations defining short and long-term strategy.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Servier to buy Edgewise Therapeutics&#8217; muscular dystrophy drug",
+      "url": "https://www.statnews.com/2026/06/01/servier-edgewise-therapeutics-muscular-dystrophy-drug-sevasemten/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-01",
+      "summary": "The French pharma firm Servier is buying an experimental muscular dystrophy drug from Edgewise Therapeutics for $1.55 billion upfront.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: No Surprises Act arbitration rule could worsen flood of provider disputes",
+      "url": "https://www.statnews.com/2026/06/01/no-surprises-act-new-arbitration-rules-providers-gaming-system/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-01",
+      "summary": "The arbitration process has protected patients but generated financial windfalls for some clinicians.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "The hidden history of BPC-157, a favorite MAHA peptide",
+      "url": "https://www.statnews.com/2026/06/01/bpc-157-researcher-predrag-sikiric-addesses-skeptics-questions/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-01",
+      "summary": "A compound named “substance God help me” by its longtime champion could benefit from RFK Jr.'s favorable views on using peptides.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Medicare still won’t say how much covering obesity drugs will cost",
+      "url": "https://www.statnews.com/2026/06/01/medicare-50-dollar-weight-loss-drugs-glp-1-bridge-program-cost-estimate/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-01",
+      "summary": "Older adults on Medicare can get Wegovy and Zepbound for $50 a month, starting in July. But the agency still is not sharing how much this will cost taxpayers.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "STAT+: Executives reveal tech initiatives at Summa Health, eight months after General Catalyst acquisition",
+      "url": "https://www.statnews.com/2026/06/01/summa-health-tech-initiatives-after-general-catalyst-acquisition/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-01",
+      "summary": "Two years after General Catalyst said it was buying Ohio safety-net hospital Summa Health, executives shed light on how the “transformation” is going.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Opinion: Medical schools diversified. So where are all the diverse doctors?",
+      "url": "https://www.statnews.com/2026/06/01/residency-diversity-med-school-disciplinary-action-dei-equity-black-latino/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-01",
+      "summary": "Why are residency programs disciplining and dismissing trainees in a system funded to train them?",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Opinion: The military’s medical corps has a serious recruitment problem",
+      "url": "https://www.statnews.com/2026/06/01/us-military-medical-corps-recruitment-incentives/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-01",
+      "summary": "Congress must incentivize more physicians (and their employers) to join the military medical corps, writes the former attending physician to Congress.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Beyond the clinical note: why the next decade of EHR success is financial",
+      "url": "https://www.healthcaredive.com/spons/beyond-the-clinical-note-why-the-next-decade-of-ehr-success-is-financial/821404/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-06-01",
+      "summary": "<p>Why EHR success is shifting from clinical notes to owning the \"financial layer\" of the practice.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "How long does hospital credentialing take? The quiet cost of provider readiness delays",
+      "url": "https://www.healthcaredive.com/spons/how-long-does-hospital-credentialing-take-the-quiet-cost-of-provider-readi/821200/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-06-01",
+      "summary": "<p>Patients can&rsquo;t wait &mdash; but provider credentialing delays are getting longer.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Enzo Health launches agentic EHR for home health agencies",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/enzo-health-launches-ai-driven-enzo-ehr-first-agentic-system-home-health",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-01",
+      "summary": "With the platform, organizations can seamlessly run all operations, including intake, scheduling, visits, quality compliance, billing and visibility for patients, the company said.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
       "title": "Amidst vaccine confusion, we must follow the evidence to protect against meningococcal disease",
       "url": "https://www.fiercehealthcare.com/sponsored/amidst-vaccine-confusion-we-must-follow-evidence-protect-against-meningococcal-disease",
       "source": "Fierce Healthcare",
@@ -461,15 +579,6 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Teladoc Health inks partnership with Walmart to expand virtual care services",
-      "url": "https://www.fiercehealthcare.com/health-tech/teladoc-health-inks-partnership-walmart-expand-virtual-care-access",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-01",
-      "summary": "Teladoc Health is expanding its retail partnerships with a new tie-up with Walmart to offer its virtual care services through the company's Better Care Services platform.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
       "title": "Hospitals again ask FTC, DOJ for exemption from expanded premerger notification filings",
       "url": "https://www.fiercehealthcare.com/regulatory/hospital-again-ask-ftc-doj-exemption-expanded-premerger-notification-filings",
       "source": "Fierce Healthcare",
@@ -477,6 +586,15 @@
       "summary": "As regulators explore an update to the Hart-Scott-Rodino form that would survive court scrutiny, the American Hospital Association argues that the existing process is doing the job.",
       "category": "mergers_mna",
       "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Teladoc Health inks partnership with Walmart to expand virtual care services",
+      "url": "https://www.fiercehealthcare.com/health-tech/teladoc-health-inks-partnership-walmart-expand-virtual-care-access",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-01",
+      "summary": "Teladoc Health is expanding its retail partnerships with a new tie-up with Walmart to offer its virtual care services through the company's Better Care Services platform.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "Amazon taps Roy Schoenberg to lead healthcare business as Neil Lindsay plans to step down",
@@ -1196,18 +1314,6 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "Dexcom Uncovers Theft of Scrapped Product, Notifies Potentially Impacted Users",
-      "summary": "SAN DIEGO – MAY 26, 2026 – DexCom, Inc. (Nasdaq: DXCM), the global leader in glucose biosensing, announced today through ongoing quality and accounting reviews it recently identified certain lots of Dexcom G7 sensors originally designated as scrap and intended for destruction were stolen during the",
-      "url": "http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/dexcom-uncovers-theft-scrapped-product-notifies-potentially-impacted-users",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-05-29",
-      "category": "quality_safety",
-      "relevance": 100,
-      "categoryLabel": "Quality & Safety"
-    },
-    {
       "title": "Pediatric Care Bed Correction: KayserBetten Issues Correction for KayserBett IDA Beds",
       "summary": "If the hand controls to adjust the bed are not locked, children could adjust the bed and become entrapped.",
       "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/pediatric-care-bed-correction-kayserbetten-issues-correction-kayserbett-ida-beds",
@@ -1218,6 +1324,18 @@
       "category": "capacity_expansion",
       "relevance": 100,
       "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "Dexcom Uncovers Theft of Scrapped Product, Notifies Potentially Impacted Users",
+      "summary": "SAN DIEGO – MAY 26, 2026 – DexCom, Inc. (Nasdaq: DXCM), the global leader in glucose biosensing, announced today through ongoing quality and accounting reviews it recently identified certain lots of Dexcom G7 sensors originally designated as scrap and intended for destruction were stolen during the",
+      "url": "http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/dexcom-uncovers-theft-scrapped-product-notifies-potentially-impacted-users",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-05-29",
+      "category": "quality_safety",
+      "relevance": 100,
+      "categoryLabel": "Quality & Safety"
     },
     {
       "title": "Agency Information Collection Activities: Proposed Collection; Comment Request",
@@ -2863,7 +2981,7 @@
     {
       "title": "Early Alert: Heart Pump Issue from Abiomed",
       "summary": "Specific Impella CP Sets are out of specification; use may result in low purge pressure events from the onset of the case",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-heart-pump-issue-abiomed-0",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-heart-pump-issue-abiomed",
       "source": "FDA MedWatch RSS",
       "sourceType": "rss",
       "sourceId": "fda_medwatch_rss",
@@ -2875,7 +2993,7 @@
     {
       "title": "Early Alert: Heart Pump Issue from Abiomed",
       "summary": "Specific Impella CP Sets are out of specification; use may result in low purge pressure events from the onset of the case",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-heart-pump-issue-abiomed",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-heart-pump-issue-abiomed-0",
       "source": "FDA MedWatch RSS",
       "sourceType": "rss",
       "sourceId": "fda_medwatch_rss",
@@ -4717,114 +4835,6 @@
       "source": "Fierce Healthcare",
       "publishedAt": "2026-05-26",
       "summary": "Employers are set to significantly increase their use of AI in health benefits, a new survey shows, even as they continue to face barriers to rolling out the tech.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "'Missed risk': Women's Heart Health Summit explores gaps in research, treatment",
-      "url": "https://www.fiercehealthcare.com/providers/missed-risk-womens-heart-health-summit-explores-gaps-research-treatment",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-26",
-      "summary": "The event, in its third year, brings together stakeholders across healthcare, including clinicians, researchers, employers, advocates and more, to share learnings and facilitate partnerships to advance women’s health.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "House and Senate Democrats move to overturn CMS’ WISeR AI prior auth pilot",
-      "url": "https://www.fiercehealthcare.com/regulatory/legislators-introduce-resolution-seek-congressional-disapproval-cms-wiser-ai-prior-auth",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-26",
-      "summary": "The resolution comes after the GAO ruled the model is subject to a vote under the Congressional Review Act.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Democratic senators share plans for Medicare home care benefit, long-term care reform",
-      "url": "https://www.fiercehealthcare.com/payers/democratic-senators-share-plans-medicare-home-care-benefit-long-term-care-reform",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-26",
-      "summary": "Access to affordable long-term care, including home care, is the next healthcare pitch from minority party lawmakers ahead of midterms.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "GHO Capital, CBC Group plan to merge, forming $21B healthcare investment firm",
-      "url": "https://www.fiercehealthcare.com/finance/gho-capital-cbc-group-plan-merge-forming-21b-healthcare-investment-firm",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-26",
-      "summary": "London-based Global Healthcare Opportunities and Singapore-based CBC Group announced plans to merge, creating what they called the largest healthcare-focused investment manager, with over $21 billion in assets.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "STAT+: Eli Lilly says Verve’s gene editor lowers cholesterol levels in early study",
-      "url": "https://www.statnews.com/2026/05/25/eli-lilly-verv-102-gene-editing-cholesterol-phase-1-trial-data/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-05-25",
-      "summary": "Eli Lilly said Monday that a high dose of its gene-editing therapy reduced cholesterol levels by 62% in participants in a clinical trial.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "How specialty practices can get more out of technology investments",
-      "url": "https://www.fiercehealthcare.com/sponsored/how-specialty-practices-can-get-more-out-technology-investments",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-25",
-      "summary": "NextGen Healthcare on why specialty practices that connect their technology are seeing real gains in efficiency, patient experience and revenue.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Chutes & Ladders—Abridge taps former Slack exec as new CTO; Alignment Healthcare shuffles leadership team",
-      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-25",
-      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "ACAP warns final ACA rule adds further uncertainty to a market in flux",
-      "url": "https://www.fiercehealthcare.com/regulatory/acap-warns-final-aca-rule-adds-further-uncertainty-market-flux",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-25",
-      "summary": "The Trump administration recently finalized a major regulation governing the Affordable Care Act's marketplaces, and community health plans are expressing concern about the impact the changes could have on consumers.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Quorum Health transitioning to nonprofit for financial pickup",
-      "url": "https://www.fiercehealthcare.com/providers/quorum-health-transitioning-nonprofit-financial-pickup",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-25",
-      "summary": "The 11-hospital system made it clear that its transaction, set to close in the fall, is in pursuit of new streams of financial support.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Innovaccer picks up CaduceusHealth to offer end-to-end revenue cycle management",
-      "url": "https://www.fiercehealthcare.com/health-tech/innovaccer-picks-caduceushealth-offer-end-end-revenue-cycle-management",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-25",
-      "summary": "Innovaccer acquired CaduceusHealth to combine its AI platform with the company's revenue cycle management services and staff to serve ambulatory care providers.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Women's Health Capitol Hill Day: Advocates lobby to advance budget priorities",
-      "url": "https://www.fiercehealthcare.com/regulatory/womens-health-capitol-hill-day-advocates-lobby-advance-budget-priorities",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-25",
-      "summary": "A Thursday gathering on Capitol Hill was organized by Women’s Health Advocates (WHA), a rapidly growing bipartisan group founded by lobbyist Liz Powell.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Ksana Health awarded $17.9M to build behavioral health foundation model",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/ksana-health-awarded-179m-build-behavioral-health-llm",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-25",
-      "summary": "The software company is partnering with several health systems, including Providence, on the initiative to train AI models from smartphone and wearable data for mental health.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
     }
