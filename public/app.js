@@ -48,6 +48,19 @@ const mapFactorsSubtitle = document.getElementById('map-factors-subtitle');
 const mapScopeHealthcareBtn = document.getElementById('map-scope-healthcare');
 const mapScopeAllBtn = document.getElementById('map-scope-all');
 const mapScopeLabel = document.getElementById('map-scope-label');
+const mapScopeToggle = document.getElementById('map-scope-toggle');
+const mapScopeNote = document.querySelector('.map-scope-note');
+const mapSectionTitle = document.getElementById('map-section-title');
+const mapSectionDesc = document.getElementById('map-section-desc');
+const mapLegend = document.getElementById('map-legend');
+const mapTabLayoffsBtn = document.getElementById('map-tab-layoffs');
+const mapTabRuralBtn = document.getElementById('map-tab-rural');
+const mapTabSalaryBtn = document.getElementById('map-tab-salary');
+const ruralClosuresPanel = document.getElementById('rural-closures-panel');
+const ruralClosuresTitle = document.getElementById('rural-closures-title');
+const ruralClosuresSubtitle = document.getElementById('rural-closures-subtitle');
+const ruralClosuresList = document.getElementById('rural-closures-list');
+const ruralClosuresClose = document.getElementById('rural-closures-close');
 const alertsList = document.getElementById('alerts-list');
 const heatmapList = document.getElementById('heatmap-list');
 const talentList = document.getElementById('talent-list');
@@ -248,6 +261,10 @@ let isFetching = false;
 let currentMapView = 'map'; // 'map' or 'chart'
 let selectedStates = []; // Multi-select states
 let mapScope = 'healthcare'; // 'healthcare' or 'all'
+let activeMapTab = 'layoffs'; // 'layoffs' | 'rural' | 'salary'
+let ruralClosuresData = {};
+let ruralClosuresLoadedAt = 0;
+let shapeSalaryAnnualValues = {};
 const NOTICE_MAX_COUNT = 100;
 const NOTICE_WINDOW_COUNT = 5;
 let calibrationStats = { minCount: 0, maxCount: 0 };
@@ -1464,6 +1481,10 @@ const updateStateCalibration = () => {
       </tr>
     `;
   }).join('');
+
+  if (activeMapTab === 'salary') {
+    updateWeatherMap();
+  }
 };
 
 // =============================================================================
@@ -2893,6 +2914,200 @@ const getActivityColor = (ratio) => {
   return MAP_ACTIVITY_COLOR_STOPS[MAP_ACTIVITY_COLOR_STOPS.length - 1].color;
 };
 
+const LAYOFF_CLASS_NAMES = Array.from({ length: 10 }, (_, i) => `layoff-${i}`);
+const SALARY_CLASS_NAMES = Array.from({ length: 10 }, (_, i) => `salary-${i}`);
+const RURAL_CLASS_NAMES = ['rural-critical', 'rural-warning', 'rural-stable'];
+
+const clearMapModeClasses = (shape) => {
+  [...LAYOFF_CLASS_NAMES, ...SALARY_CLASS_NAMES, ...RURAL_CLASS_NAMES].forEach((name) => {
+    shape.classList.remove(name);
+  });
+  for (let i = 0; i <= 7; i += 1) {
+    shape.classList.remove(`fog-${i}`);
+  }
+};
+
+const setMapLegendLayout = (mode) => {
+  if (!mapLegend) return;
+  if (mode === 'salary') {
+    mapLegend.innerHTML = `
+      <span class="legend-label">Lower RN Pay</span>
+      <div class="legend-gradient" style="background: linear-gradient(to right, #e3f2fd 0%, #42a5f5 50%, #0d47a1 100%);"></div>
+      <span class="legend-label">Higher RN Pay</span>
+    `;
+    return;
+  }
+  if (mode === 'rural') {
+    mapLegend.innerHTML = `
+      <span class="rural-legend-item"><span class="rural-legend-dot stable"></span> Stable</span>
+      <span class="rural-legend-item"><span class="rural-legend-dot at-risk"></span> At Risk</span>
+      <span class="rural-legend-item"><span class="rural-legend-dot closures"></span> High Closure Pressure</span>
+    `;
+    return;
+  }
+  mapLegend.innerHTML = `
+    <span class="legend-label">Low activity</span>
+    <div class="legend-gradient"></div>
+    <span class="legend-label">High activity</span>
+  `;
+};
+
+const parseNumericValue = (value) => {
+  if (typeof value === 'number') return Number.isFinite(value) ? value : null;
+  if (typeof value !== 'string') return null;
+  const cleaned = value.replace(/[^0-9.-]/g, '');
+  if (!cleaned) return null;
+  const parsed = Number(cleaned);
+  return Number.isFinite(parsed) ? parsed : null;
+};
+
+const getSalaryAnnualValue = (row = {}) => {
+  const annual = parseNumericValue(row.staffRN);
+  if (annual !== null) return annual;
+  const hourly = parseNumericValue(row.staffHourly);
+  if (hourly !== null) return hourly * 2080;
+  const weeklyTravel = parseNumericValue(row.travelWeekly);
+  if (weeklyTravel !== null) return weeklyTravel * 52;
+  return null;
+};
+
+const getRuralDataMap = () => {
+  if (ruralClosuresData && Object.keys(ruralClosuresData).length) return ruralClosuresData;
+  if (typeof RURAL_HOSPITAL_CLOSURES !== 'undefined' && RURAL_HOSPITAL_CLOSURES) {
+    return RURAL_HOSPITAL_CLOSURES;
+  }
+  return {};
+};
+
+const getRuralStateEntry = (stateAbbrev) => {
+  const map = getRuralDataMap();
+  return map?.[stateAbbrev] || { count: 0, recent: 0, atRisk: 0, atRiskHospitals: [], closedHospitals: [] };
+};
+
+const computeRuralRiskClass = (entry) => {
+  const closures = Number(entry?.count || 0);
+  const recent = Number(entry?.recent || 0);
+  const atRisk = Number(entry?.atRisk || 0);
+  if (atRisk >= 5 || recent >= 2 || closures >= 6) return 'rural-critical';
+  if (atRisk > 0 || recent > 0 || closures >= 2) return 'rural-warning';
+  return 'rural-stable';
+};
+
+const loadRuralClosuresDataLocal = async (force = false) => {
+  if (!force && ruralClosuresLoadedAt && (Date.now() - ruralClosuresLoadedAt) < (6 * 60 * 60 * 1000)) {
+    return getRuralDataMap();
+  }
+  try {
+    const res = await fetch(`/data/rural-closures.json?ts=${Date.now()}`, { credentials: 'omit' });
+    if (!res.ok) throw new Error(`rural data failed: ${res.status}`);
+    const payload = await res.json();
+    ruralClosuresData = payload?.states || {};
+    ruralClosuresLoadedAt = Date.now();
+  } catch {
+    // keep any existing in-memory/global fallback
+  }
+  return getRuralDataMap();
+};
+
+const renderRuralClosuresForState = (stateAbbrev) => {
+  if (!ruralClosuresPanel || !ruralClosuresList) return;
+  const stateName = STATE_NAMES[stateAbbrev] || stateAbbrev;
+  const entry = getRuralStateEntry(stateAbbrev);
+  const atRiskHospitals = Array.isArray(entry.atRiskHospitals) ? entry.atRiskHospitals : [];
+  const closedHospitals = Array.isArray(entry.closedHospitals) ? entry.closedHospitals : [];
+
+  if (ruralClosuresTitle) ruralClosuresTitle.textContent = `Rural Hospital Risk - ${stateName}`;
+  if (ruralClosuresSubtitle) {
+    ruralClosuresSubtitle.textContent = `${entry.count || 0} closures | ${entry.recent || 0} recent | ${entry.atRisk || 0} at risk`;
+  }
+
+  const atRiskHtml = atRiskHospitals.length
+    ? atRiskHospitals.slice(0, 10).map((hospital) => `
+      <div class="rural-hospital-row">
+        <div class="rural-hospital-info">
+          <div class="rural-hospital-name">${escapeHtml(hospital.name || 'Unknown')}</div>
+          <div class="rural-hospital-location">${escapeHtml([hospital.city, hospital.county].filter(Boolean).join(', ') || stateName)}</div>
+        </div>
+        <span class="rural-hospital-badge ${String(hospital.risk || '').toLowerCase() === 'high' ? 'risk-high' : 'risk-moderate'}">${escapeHtml((hospital.risk || 'moderate').toString())}</span>
+      </div>
+    `).join('')
+    : '<div class="rural-empty">No at-risk hospitals listed for this state.</div>';
+
+  const closedHtml = closedHospitals.length
+    ? closedHospitals.slice(0, 10).map((hospital) => `
+      <div class="rural-hospital-row">
+        <div class="rural-hospital-info">
+          <div class="rural-hospital-name">${escapeHtml(hospital.name || 'Unknown')}</div>
+          <div class="rural-hospital-location">${escapeHtml([hospital.city, hospital.county].filter(Boolean).join(', ') || stateName)}${hospital.year ? ` | ${escapeHtml(String(hospital.year))}` : ''}</div>
+        </div>
+        <span class="rural-hospital-badge type-${hospital.type === 'converted' ? 'converted' : 'closed'}">${hospital.type === 'converted' ? 'Converted' : 'Closed'}</span>
+      </div>
+    `).join('')
+    : '<div class="rural-empty">No closures listed for this state.</div>';
+
+  ruralClosuresList.innerHTML = `
+    <div class="rural-section-header"><span class="rural-section-icon">!</span> At-Risk Hospitals</div>
+    <div class="rural-hospital-list">${atRiskHtml}</div>
+    <div class="rural-section-header"><span class="rural-section-icon">x</span> Recent/Recorded Closures</div>
+    <div class="rural-hospital-list">${closedHtml}</div>
+  `;
+  ruralClosuresPanel.style.display = 'block';
+};
+
+const setMapDescriptionText = (text, { showScopeNote = false } = {}) => {
+  if (!mapSectionDesc) return;
+  const textNode = Array.from(mapSectionDesc.childNodes).find((node) => node.nodeType === Node.TEXT_NODE);
+  if (textNode) {
+    textNode.nodeValue = `${text} `;
+  } else {
+    mapSectionDesc.prepend(document.createTextNode(`${text} `));
+  }
+  if (mapScopeNote) {
+    mapScopeNote.style.display = showScopeNote ? 'inline-flex' : 'none';
+  }
+};
+
+const setMapTab = async (tab) => {
+  const next = tab === 'rural' || tab === 'salary' ? tab : 'layoffs';
+  activeMapTab = next;
+  mapTabLayoffsBtn?.classList.toggle('active', next === 'layoffs');
+  mapTabRuralBtn?.classList.toggle('active', next === 'rural');
+  mapTabSalaryBtn?.classList.toggle('active', next === 'salary');
+
+  if (next === 'rural') {
+    if (mapSectionTitle) mapSectionTitle.textContent = 'Rural Hospital Vulnerability Map';
+    setMapDescriptionText('States are colored by rural closure pressure and at-risk hospital counts. Click a state for details.');
+    mapScopeToggle && (mapScopeToggle.style.display = 'none');
+    setMapLegendLayout('rural');
+    await loadRuralClosuresDataLocal();
+    if (currentMapView !== 'map') toggleMapView('map');
+  } else if (next === 'salary') {
+    if (ruralClosuresPanel) ruralClosuresPanel.style.display = 'none';
+    if (mapSectionTitle) mapSectionTitle.textContent = 'RN Salary Benchmark Map';
+    setMapDescriptionText('States are bucketed by RN compensation benchmarks (staff RN annualized value).');
+    mapScopeToggle && (mapScopeToggle.style.display = 'none');
+    setMapLegendLayout('salary');
+    if (currentMapView !== 'map') toggleMapView('map');
+  } else {
+    if (ruralClosuresPanel) ruralClosuresPanel.style.display = 'none';
+    if (mapSectionTitle) mapSectionTitle.textContent = 'Interactive Layoff Weather Map';
+    setMapDescriptionText('Fog intensity shows layoff activity by state. Darker = more layoffs in the current scope.', { showScopeNote: true });
+    mapScopeToggle && (mapScopeToggle.style.display = '');
+    setMapLegendLayout('layoffs');
+  }
+  updateWeatherMap();
+};
+
+const initMapTabs = () => {
+  mapTabLayoffsBtn?.addEventListener('click', () => { setMapTab('layoffs'); });
+  mapTabRuralBtn?.addEventListener('click', () => { setMapTab('rural'); });
+  mapTabSalaryBtn?.addEventListener('click', () => { setMapTab('salary'); });
+  ruralClosuresClose?.addEventListener('click', () => {
+    if (ruralClosuresPanel) ruralClosuresPanel.style.display = 'none';
+  });
+  setMapTab(activeMapTab);
+};
+
 // Get fog level (0-7) based on notice count
 const getFogLevel = (count, maxCount) => {
   if (count === 0) return 0;
@@ -2958,6 +3173,10 @@ const initWeatherMap = async () => {
         }
         return;
       }
+      if (activeMapTab === 'rural') {
+        renderRuralClosuresForState(stateId);
+        return;
+      }
       stateSelect.value = stateId;
       loadNotices();
     });
@@ -2984,13 +3203,26 @@ const initWeatherMap = async () => {
 // Show tooltip
 const showTooltip = (e, stateAbbrev) => {
   const stateName = STATE_NAMES[stateAbbrev] || stateAbbrev;
-  const data = mapStateData[stateAbbrev] || { count: 0 };
-  const scopeLabel = mapScope === 'all' ? 'total notices' : 'healthcare notices';
-
-  mapTooltip.innerHTML = `
-    <div class="tooltip-state">${stateName}</div>
-    <div class="tooltip-count">${data.count} ${scopeLabel}</div>
-  `;
+  if (activeMapTab === 'salary') {
+    const salaryAnnual = shapeSalaryAnnualValues[stateAbbrev];
+    mapTooltip.innerHTML = `
+      <div class="tooltip-state">${stateName}</div>
+      <div class="tooltip-count">${salaryAnnual ? `$${Math.round(salaryAnnual).toLocaleString()} staff RN (annualized)` : 'Salary benchmark unavailable'}</div>
+    `;
+  } else if (activeMapTab === 'rural') {
+    const rural = getRuralStateEntry(stateAbbrev);
+    mapTooltip.innerHTML = `
+      <div class="tooltip-state">${stateName}</div>
+      <div class="tooltip-count">${rural.count || 0} closures | ${rural.atRisk || 0} at risk</div>
+    `;
+  } else {
+    const data = mapStateData[stateAbbrev] || { count: 0 };
+    const scopeLabel = mapScope === 'all' ? 'total notices' : 'healthcare notices';
+    mapTooltip.innerHTML = `
+      <div class="tooltip-state">${stateName}</div>
+      <div class="tooltip-count">${data.count} ${scopeLabel}</div>
+    `;
+  }
   mapTooltip.classList.add('visible');
   moveTooltip(e);
 };
@@ -3151,23 +3383,67 @@ const runZeroProtocol = async () => {
 
 // Update weather map colors based on state data
 const updateWeatherMap = () => {
-  const counts = Object.values(mapStateData).map(s => s.count || 0);
-  const maxCount = Math.max(...counts, 1);
-
   const shapes = usMapContainer.querySelectorAll('[data-state]');
-  shapes.forEach(shape => {
+  if (!shapes?.length) return;
+
+  if (activeMapTab === 'salary') {
+    const salaryData = getCalibrationSalaryData() || {};
+    shapeSalaryAnnualValues = {};
+    const values = ALL_STATES
+      .map((state) => getSalaryAnnualValue(salaryData[state]))
+      .filter((value) => Number.isFinite(value));
+    const minValue = values.length ? Math.min(...values) : 0;
+    const maxValue = values.length ? Math.max(...values) : 0;
+    const span = Math.max(1, maxValue - minValue);
+
+    shapes.forEach((shape) => {
+      const stateAbbrev = shape.getAttribute('data-state');
+      clearMapModeClasses(shape);
+      const salaryAnnual = getSalaryAnnualValue(salaryData[stateAbbrev]);
+      shapeSalaryAnnualValues[stateAbbrev] = salaryAnnual;
+      if (salaryAnnual === null) {
+        shape.style.fill = '#e5e7eb';
+        shape.style.fillOpacity = '1';
+        return;
+      }
+      const ratio = (salaryAnnual - minValue) / span;
+      const bucket = Math.max(0, Math.min(9, Math.round(ratio * 9)));
+      shape.classList.add(`salary-${bucket}`);
+      shape.style.fill = '';
+      shape.style.fillOpacity = '1';
+    });
+    return;
+  }
+
+  if (activeMapTab === 'rural') {
+    const ruralMap = getRuralDataMap();
+    shapes.forEach((shape) => {
+      const stateAbbrev = shape.getAttribute('data-state');
+      const entry = ruralMap?.[stateAbbrev] || { count: 0, recent: 0, atRisk: 0 };
+      const ruralClass = computeRuralRiskClass(entry);
+      clearMapModeClasses(shape);
+      shape.classList.add(ruralClass);
+      shape.style.fill = '';
+      shape.style.fillOpacity = '1';
+    });
+    return;
+  }
+
+  const counts = Object.values(mapStateData).map((s) => s.count || 0);
+  const maxCount = Math.max(...counts, 1);
+  shapes.forEach((shape) => {
     const stateAbbrev = shape.getAttribute('data-state');
     const count = mapStateData[stateAbbrev]?.count || 0;
     const fogLevel = getFogLevel(count, maxCount);
     const ratio = maxCount > 0 ? (count / maxCount) : 0;
+    clearMapModeClasses(shape);
+    shape.classList.add(`layoff-${Math.max(0, Math.min(9, Math.round(ratio * 9)))}`);
     shape.style.fill = getActivityColor(ratio);
     shape.style.fillOpacity = '1';
 
-    // Remove all fog classes
     for (let i = 0; i <= 7; i++) {
       shape.classList.remove(`fog-${i}`);
     }
-    // Add the appropriate fog class
     shape.classList.add(`fog-${fogLevel}`);
   });
 };
@@ -7737,6 +8013,7 @@ const initApp = () => {
   safeInit(initCollapsibleSections, 'collapsibleSections');
   safeInit(initStrategicReview, 'strategicReview');
   safeInit(initMapToggle, 'mapToggle');
+  safeInit(initMapTabs, 'mapTabs');
   safeInit(initMapScopeToggle, 'mapScopeToggle');
   safeInit(initMapFactors, 'mapFactors');
   safeInit(initStateMultiSelect, 'stateMultiSelect');
