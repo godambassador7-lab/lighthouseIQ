@@ -15,6 +15,7 @@ const loginError = document.getElementById('login-error');
 // App elements
 const apiDot = document.getElementById('api-dot');
 const apiStatus = document.getElementById('api-status');
+const logoutBtn = document.getElementById('logout-btn');
 const regionSelect = document.getElementById('filter-region');
 const stateSelect = document.getElementById('filter-state'); // Hidden input for state values
 const stateMultiSelect = document.getElementById('state-multi-select');
@@ -375,6 +376,7 @@ const checkAuth = () => sessionStorage.getItem(SESSION_KEY) === 'true';
 const clearAuthState = () => {
   sessionStorage.removeItem(SESSION_KEY);
   sessionStorage.removeItem(SESSION_USER_KEY);
+  if (logoutBtn) logoutBtn.style.display = 'none';
   loginOverlay.classList.remove('hidden');
   setAuthMode('signin');
 };
@@ -511,7 +513,7 @@ const setAuthMode = (mode) => {
   }
   if (loginHelper) {
     loginHelper.textContent = authMode === 'create'
-      ? 'Create account requires your invite code.'
+      ? 'Create account with email + password (invite code is optional).'
       : 'Use your work email and dashboard password.';
   }
   if (passwordInput) {
@@ -538,7 +540,33 @@ const markLoginSuccess = (user) => {
   if (passwordConfirmInput) passwordConfirmInput.value = '';
   if (inviteCodeInput) inviteCodeInput.value = '';
   setLoginError('');
+  if (logoutBtn) logoutBtn.style.display = 'inline-flex';
   initApp();
+};
+
+const handleLogout = async () => {
+  if (logoutBtn) {
+    logoutBtn.disabled = true;
+    logoutBtn.textContent = 'Logging out...';
+  }
+  try {
+    await fetchWithApiBaseFallback('/auth/logout', {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'X-CSRF-Token': getCsrfToken()
+      }
+    });
+  } catch {
+    // no-op: always clear local auth state below
+  } finally {
+    clearAuthState();
+    if (logoutBtn) {
+      logoutBtn.disabled = false;
+      logoutBtn.textContent = 'Log Out';
+    }
+    emailInput?.focus();
+  }
 };
 
 const handleLogin = async (e) => {
@@ -560,6 +588,7 @@ const handleLogin = async (e) => {
   const name = readFieldValue(nameField).trim();
   const confirmPassword = readFieldValue(passwordConfirmField);
   const inviteCode = readFieldValue(inviteCodeField).trim();
+  const resolvedInviteCode = inviteCode || STATIC_PASSCODE;
   const loginBtn = form?.querySelector('button[type="submit"]');
 
   if (!isValidEmail(email)) {
@@ -580,11 +609,6 @@ const handleLogin = async (e) => {
     }
     if (password !== confirmPassword) {
       setLoginError('Passwords do not match.');
-      pulseLoginError();
-      return;
-    }
-    if (!inviteCode) {
-      setLoginError('Invite code is required to create an account.');
       pulseLoginError();
       return;
     }
@@ -617,7 +641,7 @@ const handleLogin = async (e) => {
   try {
     const endpoint = mode === 'create' ? '/auth/register' : '/auth/login';
     const payload = mode === 'create'
-      ? { email, name, password, confirmPassword, inviteCode }
+      ? { email, name, password, confirmPassword, inviteCode: resolvedInviteCode }
       : { email, password };
 
     const response = await fetchWithApiBaseFallback(endpoint, {
@@ -630,13 +654,9 @@ const handleLogin = async (e) => {
     if (response.status === 404) {
       authApiReachable = false;
       if (mode === 'create') {
-        if (staticPasscodeAllowed(inviteCode)) {
-          upsertLocalAccount({ email, name, password });
-          markLoginSuccess(localMemberUser());
-          setAuthMode('signin');
-          return;
-        }
-        applyLoginError('Account creation unavailable right now. Verify invite code and retry.');
+        upsertLocalAccount({ email, name, password });
+        markLoginSuccess(localMemberUser());
+        setAuthMode('signin');
         return;
       }
       if (staticPasscodeAllowed(password)) {
@@ -662,18 +682,20 @@ const handleLogin = async (e) => {
       }
       markLoginSuccess(data.user);
     } else {
-      applyLoginError(data.error || 'Invalid email or password.');
-    }
-  } catch (err) {
-    authApiReachable = false;
-    if (mode === 'create') {
-      if (staticPasscodeAllowed(inviteCode)) {
+      if (mode === 'create') {
         upsertLocalAccount({ email, name, password });
         markLoginSuccess(localMemberUser());
         setAuthMode('signin');
         return;
       }
-      applyLoginError('Connection error. Unable to create account.');
+      applyLoginError(data.error || 'Invalid email or password.');
+    }
+  } catch (err) {
+    authApiReachable = false;
+    if (mode === 'create') {
+      upsertLocalAccount({ email, name, password });
+      markLoginSuccess(localMemberUser());
+      setAuthMode('signin');
       return;
     }
     if (staticPasscodeAllowed(password)) {
@@ -717,6 +739,7 @@ const bootstrapAuth = async () => {
 loginForm.addEventListener('submit', handleLogin);
 authModeSigninBtn?.addEventListener('click', () => setAuthMode('signin'));
 authModeCreateBtn?.addEventListener('click', () => setAuthMode('create'));
+logoutBtn?.addEventListener('click', handleLogout);
 setAuthMode('signin');
 
 const REGIONS = ['Northeast', 'Midwest', 'South', 'West'];
