@@ -276,6 +276,7 @@ let programsMeta = { lastUpdated: null, sources: [] };
 let programsLoaded = false;
 let programsModuleInitialized = false;
 let programsRefreshPrompted = false;
+let programsIsolatedSchool = '';
 let stateBeaconData = null;
 let stateBeaconLoaded = false;
 let stateBeaconLoadedAt = 0;
@@ -4616,6 +4617,18 @@ const setProgramsSchoolInsight = (html) => {
   programsSchoolInsight.innerHTML = html;
 };
 
+const isolateProgramsBySchool = (schoolNameRaw) => {
+  const normalized = cleanProgramText(schoolNameRaw).toLowerCase();
+  programsIsolatedSchool = normalized;
+  if (programsSearch) programsSearch.value = '';
+  renderProgramsTable(getFilteredPrograms());
+};
+
+const clearProgramsSchoolIsolation = () => {
+  programsIsolatedSchool = '';
+  renderProgramsTable(getFilteredPrograms());
+};
+
 const getPreferredPipelineBaseline = () => {
   const healthcare = stateDataHealthcare && Object.keys(stateDataHealthcare).length ? stateDataHealthcare : null;
   const all = stateDataAll && Object.keys(stateDataAll).length ? stateDataAll : null;
@@ -4679,7 +4692,7 @@ const renderProgramSchoolInsight = (schoolNameRaw, schoolStateRaw) => {
     ? ` (${escapeHtml(resolvedState)})`
     : ' (state unverified; showing national baseline)';
   setProgramsSchoolInsight(
-    `<strong>${escapeHtml(schoolName)}</strong>${stateLabel} top pipeline states: ${chips.join(' | ')}`
+    `<strong>${escapeHtml(schoolName)}</strong>${stateLabel} top pipeline states: ${chips.join(' | ')} <button type="button" class="programs-show-all" data-action="clear-school-isolation">Show all schools</button>`
   );
 };
 
@@ -4726,6 +4739,7 @@ const getFilteredPrograms = () => {
 
   return nursingPrograms.filter((program) => {
     const entry = normalizeProgram(program);
+    if (programsIsolatedSchool && entry.institution.toLowerCase() !== programsIsolatedSchool) return false;
     if (stateFilter && entry.state !== stateFilter) return false;
     if (selectedLevels.length > 0 && !selectedLevels.includes(entry.level)) return false;
     if (!query) return true;
@@ -4934,6 +4948,7 @@ const closeModulesMenu = () => {
 const openProgramsModal = () => {
   programsModal?.classList.add('active');
   closeModulesMenu();
+  programsIsolatedSchool = '';
   setProgramsSchoolInsight(PROGRAMS_SCHOOL_INSIGHT_DEFAULT);
   loadPrograms();
   programsSearch?.focus();
@@ -4959,7 +4974,10 @@ const initProgramsModule = () => {
     if (event.target === programsModal) closeProgramsModal();
   });
 
-  programsSearch?.addEventListener('input', () => renderProgramsTable(getFilteredPrograms()));
+  programsSearch?.addEventListener('input', () => {
+    if (programsIsolatedSchool) programsIsolatedSchool = '';
+    renderProgramsTable(getFilteredPrograms());
+  });
   programsStateFilter?.addEventListener('change', () => renderProgramsTable(getFilteredPrograms()));
   // Add change listeners to all level checkboxes
   programsLevelFilter?.querySelectorAll('input[type="checkbox"]').forEach(cb => {
@@ -4968,7 +4986,14 @@ const initProgramsModule = () => {
   programsList?.addEventListener('click', (event) => {
     const schoolBtn = event.target.closest('.program-school-link');
     if (!schoolBtn) return;
+    isolateProgramsBySchool(schoolBtn.dataset.school);
     renderProgramSchoolInsight(schoolBtn.dataset.school, schoolBtn.dataset.state);
+  });
+  programsSchoolInsight?.addEventListener('click', (event) => {
+    const clearBtn = event.target.closest('[data-action="clear-school-isolation"]');
+    if (!clearBtn) return;
+    clearProgramsSchoolIsolation();
+    setProgramsSchoolInsight(PROGRAMS_SCHOOL_INSIGHT_DEFAULT);
   });
   programsExportCsv?.addEventListener('click', exportProgramsCsv);
   programsExportExcel?.addEventListener('click', exportProgramsExcel);
