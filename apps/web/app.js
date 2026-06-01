@@ -1384,7 +1384,7 @@ const buildQuery = () => {
 let staticDataMode = false;
 let staticNoticesCache = null;
 let staticStatesCache = null;
-const API_ROUTE_PATTERN = /^\/(health|states|notices|fetch|programs)(\?|$)/i;
+const API_ROUTE_PATTERN = /^\/(health|states|notices|fetch)(\?|$)/i;
 const API_OR_AUTH_ROUTE_PATTERN = /^\/(auth\/|health|states|notices|fetch|insights\/)(\?|$)/i;
 
 const unique = (values) => Array.from(new Set(values.filter(Boolean)));
@@ -1575,6 +1575,9 @@ const fetchStaticFallback = async (path) => {
     return { ok: true, db: false, mode: 'static' };
   }
   if (base === '/fetch') {
+    if (String(params.get('resource') || '').toLowerCase() === 'programs') {
+      return fetchJson(`/data/programs.json?ts=${Date.now()}`);
+    }
     return { success: false, error: 'Live fetch unavailable in static mode' };
   }
   if (base === '/notices') {
@@ -1594,9 +1597,6 @@ const fetchStaticFallback = async (path) => {
     }
     const allNotices = await loadStaticNotices();
     return { states: buildStateCountsFromNotices(allNotices) };
-  }
-  if (base === '/programs') {
-    return fetchJson(`/data/programs.json?ts=${Date.now()}`);
   }
   throw new Error(`No static fallback for ${base}`);
 };
@@ -5302,10 +5302,11 @@ const exportProgramsPdf = () => {
 
 const fetchProgramsPayload = async (refreshLive = false) => {
   const query = new URLSearchParams({ ts: String(Date.now()) });
+  query.set('resource', 'programs');
   if (refreshLive) query.set('refresh', '1');
 
   try {
-    return await fetchJson(`/programs?${query.toString()}`);
+    return await fetchJson(`/fetch?${query.toString()}`);
   } catch (apiErr) {
     console.warn('Programs API unavailable, falling back to static data:', apiErr?.message || apiErr);
     return fetchJson(`/data/programs.json?ts=${Date.now()}`);
