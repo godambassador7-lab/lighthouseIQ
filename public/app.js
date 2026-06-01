@@ -550,7 +550,7 @@ const handleLogout = async () => {
     logoutBtn.textContent = 'Logging out...';
   }
   try {
-    await fetchWithApiBaseFallback('/auth/logout', {
+    await fetchWithApiBaseFallback('/auth/session', {
       method: 'POST',
       credentials: 'include',
       headers: {
