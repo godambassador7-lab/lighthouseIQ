@@ -53,6 +53,9 @@ const mapScopeNote = document.querySelector('.map-scope-note');
 const mapSectionTitle = document.getElementById('map-section-title');
 const mapSectionDesc = document.getElementById('map-section-desc');
 const mapLegend = document.getElementById('map-legend');
+const mapHospitalSearchInput = document.getElementById('map-hospital-search');
+const hospitalSearchDropdown = document.getElementById('hospital-search-dropdown');
+const mapHospitalSearchResults = document.getElementById('map-hospital-search-results');
 const mapTabLayoffsBtn = document.getElementById('map-tab-layoffs');
 const mapTabRuralBtn = document.getElementById('map-tab-rural');
 const mapTabSalaryBtn = document.getElementById('map-tab-salary');
@@ -322,6 +325,10 @@ let marketRequiredMetrics = null;
 let facilityMarketFeatures = null;
 let providerMasterData = null;
 let specialtySurplusExpandedBucket = '';
+let hospitalSearchIndex = [];
+let hospitalSearchMatches = [];
+let hospitalSearchResultRows = [];
+let hospitalSearchActiveIndex = -1;
 
 const SPECIALTY_SURPLUS_MAX_STALE_HOURS = 24;
 const SPECIALTY_SURPLUS_MIN_BUCKET_SAMPLES = 3;
@@ -851,6 +858,260 @@ const escapeHtml = (value) => {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
+};
+
+const HOSPITAL_SEARCH_HINTS = [
+  'hospital',
+  'medical',
+  'health',
+  'clinic',
+  'nursing',
+  'rehab',
+  'healthcare',
+  'memorial',
+  'regional',
+  'center',
+  'centre'
+];
+
+const getHospitalSearchName = (notice) => {
+  const candidates = [
+    notice?.employer_name,
+    notice?.employerName,
+    notice?.facility_name,
+    notice?.business_name
+  ]
+    .map((value) => String(value || '').replace(/\s+/g, ' ').trim())
+    .filter(Boolean);
+
+  if (!candidates.length) return '';
+  const preferred = candidates.find((name) => HOSPITAL_SEARCH_HINTS.some((hint) => name.toLowerCase().includes(hint)));
+  return preferred || candidates[0];
+};
+
+const rebuildHospitalSearchIndex = (notices = currentNotices) => {
+  const grouped = new Map();
+  (Array.isArray(notices) ? notices : []).forEach((notice) => {
+    if (!isHealthcareNotice(notice)) return;
+
+    const name = getHospitalSearchName(notice);
+    if (!name || name.length < 3) return;
+
+    const state = String(notice?.state || '').trim().toUpperCase();
+    const city = String(notice?.city || '').trim();
+    const dateRaw = notice?.notice_date ?? notice?.noticeDate ?? notice?.retrieved_at ?? notice?.createdAt ?? '';
+    const dateMs = Date.parse(dateRaw);
+    const affected = Number(notice?.employees_affected ?? notice?.affectedCount ?? 0);
+    const key = `${name.toLowerCase()}|${state}`;
+
+    const existing = grouped.get(key);
+    if (!existing) {
+      grouped.set(key, {
+        key,
+        name,
+        state,
+        city,
+        noticeCount: 1,
+        affectedTotal: Number.isFinite(affected) && affected > 0 ? affected : 0,
+        latestDateRaw: dateRaw,
+        latestDateMs: Number.isFinite(dateMs) ? dateMs : 0
+      });
+      return;
+    }
+
+    existing.noticeCount += 1;
+    if (Number.isFinite(affected) && affected > 0) {
+      existing.affectedTotal += affected;
+    }
+    if (Number.isFinite(dateMs) && dateMs > existing.latestDateMs) {
+      existing.latestDateMs = dateMs;
+      existing.latestDateRaw = dateRaw;
+      if (city) existing.city = city;
+    }
+  });
+
+  hospitalSearchIndex = Array.from(grouped.values()).sort((a, b) => (
+    (b.noticeCount - a.noticeCount)
+    || (b.latestDateMs - a.latestDateMs)
+    || a.name.localeCompare(b.name)
+  ));
+};
+
+const scoreHospitalSearchRow = (row, query, tokens) => {
+  const name = String(row?.name || '').toLowerCase();
+  if (!name) return -1;
+
+  let score = 0;
+  if (name === query) score += 120;
+  if (name.startsWith(query)) score += 70;
+  if (name.includes(query)) score += 35;
+  if (!name.includes(query) && !tokens.some((token) => name.includes(token))) return -1;
+
+  for (const token of tokens) {
+    if (!name.includes(token)) return -1;
+    score += 10;
+  }
+
+  score += Math.min(Number(row?.noticeCount || 0), 25);
+  score += Math.min(Math.floor(Number(row?.affectedTotal || 0) / 100), 15);
+  return score;
+};
+
+const getHospitalSearchMatches = (queryRaw) => {
+  const query = String(queryRaw || '').trim().toLowerCase();
+  if (query.length < 2) return [];
+
+  const tokens = query.split(/\s+/).filter(Boolean);
+  return hospitalSearchIndex
+    .map((row) => ({ row, score: scoreHospitalSearchRow(row, query, tokens) }))
+    .filter((entry) => entry.score >= 0)
+    .sort((a, b) => b.score - a.score)
+    .map((entry) => entry.row)
+    .slice(0, 10);
+};
+
+const hideHospitalSearchDropdown = () => {
+  hospitalSearchActiveIndex = -1;
+  if (hospitalSearchDropdown) {
+    hospitalSearchDropdown.style.display = 'none';
+  }
+};
+
+const renderHospitalSearchDropdown = () => {
+  if (!hospitalSearchDropdown) return;
+  if (!hospitalSearchMatches.length) {
+    hospitalSearchDropdown.innerHTML = '<div class="hospital-dropdown-loading">No matching hospitals found.</div>';
+    hospitalSearchDropdown.style.display = 'block';
+    return;
+  }
+
+  hospitalSearchDropdown.innerHTML = hospitalSearchMatches.map((row, idx) => `
+    <div class="hospital-dropdown-item${idx === hospitalSearchActiveIndex ? ' active' : ''}" data-hospital-match-index="${idx}">
+      <div class="hdi-name">${escapeHtml(row.name)}</div>
+      <div class="hdi-meta">${escapeHtml([row.city, row.state].filter(Boolean).join(', ') || row.state || 'Unknown location')} | ${escapeHtml(String(row.noticeCount))} notice${row.noticeCount === 1 ? '' : 's'}</div>
+    </div>
+  `).join('');
+  hospitalSearchDropdown.style.display = 'block';
+};
+
+const renderHospitalSearchResults = (rows, queryRaw = '') => {
+  if (!mapHospitalSearchResults) return;
+  const query = String(queryRaw || '').trim();
+  if (!query) {
+    hospitalSearchResultRows = [];
+    mapHospitalSearchResults.innerHTML = '';
+    return;
+  }
+
+  if (!rows.length) {
+    hospitalSearchResultRows = [];
+    mapHospitalSearchResults.innerHTML = '<div class="empty-state">No hospitals match this search yet.</div>';
+    return;
+  }
+
+  hospitalSearchResultRows = rows.slice(0, 6);
+  mapHospitalSearchResults.innerHTML = hospitalSearchResultRows.map((row, idx) => `
+    <button type="button" class="hospital-search-card hospital-search-open" data-hospital-result-index="${idx}">
+      <div class="hospital-search-title">${escapeHtml(row.name)}</div>
+      <div class="hospital-search-meta">
+        ${escapeHtml([row.city, row.state].filter(Boolean).join(', ') || row.state || 'Unknown location')} | ${escapeHtml(formatDate(row.latestDateRaw))} | ${escapeHtml(String(row.noticeCount))} notice${row.noticeCount === 1 ? '' : 's'}
+      </div>
+    </button>
+  `).join('');
+};
+
+const applyHospitalSearchSelection = (row) => {
+  if (!row) return;
+
+  if (mapHospitalSearchInput) mapHospitalSearchInput.value = row.name;
+  if (orgInput) orgInput.value = row.name;
+  if (regionSelect) regionSelect.value = '';
+
+  if (row.state) {
+    selectedStates = [row.state];
+    updateStateOptions();
+    updateStateDisplay();
+  }
+
+  hideHospitalSearchDropdown();
+  loadNotices();
+};
+
+const updateHospitalSearchFromInput = () => {
+  if (!mapHospitalSearchInput) return;
+  const query = String(mapHospitalSearchInput.value || '').trim();
+  if (query.length < 2) {
+    hospitalSearchMatches = [];
+    hideHospitalSearchDropdown();
+    renderHospitalSearchResults([], query);
+    return;
+  }
+
+  hospitalSearchMatches = getHospitalSearchMatches(query);
+  hospitalSearchActiveIndex = hospitalSearchMatches.length ? 0 : -1;
+  renderHospitalSearchDropdown();
+  renderHospitalSearchResults(hospitalSearchMatches, query);
+};
+
+const initHospitalSearch = () => {
+  if (!mapHospitalSearchInput || !hospitalSearchDropdown || !mapHospitalSearchResults) return;
+  if (mapHospitalSearchInput.dataset.hospitalSearchBound === '1') return;
+
+  mapHospitalSearchInput.addEventListener('input', updateHospitalSearchFromInput);
+  mapHospitalSearchInput.addEventListener('focus', () => {
+    if (String(mapHospitalSearchInput.value || '').trim().length >= 2) {
+      updateHospitalSearchFromInput();
+    }
+  });
+  mapHospitalSearchInput.addEventListener('keydown', (event) => {
+    if (!hospitalSearchMatches.length) return;
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      hospitalSearchActiveIndex = Math.min(hospitalSearchActiveIndex + 1, hospitalSearchMatches.length - 1);
+      renderHospitalSearchDropdown();
+      return;
+    }
+    if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      hospitalSearchActiveIndex = Math.max(hospitalSearchActiveIndex - 1, 0);
+      renderHospitalSearchDropdown();
+      return;
+    }
+    if (event.key === 'Enter' && hospitalSearchActiveIndex >= 0) {
+      event.preventDefault();
+      applyHospitalSearchSelection(hospitalSearchMatches[hospitalSearchActiveIndex]);
+      return;
+    }
+    if (event.key === 'Escape') {
+      hideHospitalSearchDropdown();
+    }
+  });
+  mapHospitalSearchInput.addEventListener('blur', () => {
+    setTimeout(() => hideHospitalSearchDropdown(), 120);
+  });
+
+  hospitalSearchDropdown.addEventListener('mousedown', (event) => {
+    const item = event.target.closest('[data-hospital-match-index]');
+    if (!item) return;
+    event.preventDefault();
+    const idx = Number(item.dataset.hospitalMatchIndex);
+    applyHospitalSearchSelection(hospitalSearchMatches[idx]);
+  });
+
+  mapHospitalSearchResults.addEventListener('click', (event) => {
+    const item = event.target.closest('[data-hospital-result-index]');
+    if (!item) return;
+    const idx = Number(item.dataset.hospitalResultIndex);
+    applyHospitalSearchSelection(hospitalSearchResultRows[idx]);
+  });
+
+  document.addEventListener('click', (event) => {
+    if (!hospitalSearchDropdown || hospitalSearchDropdown.style.display === 'none') return;
+    if (mapHospitalSearchInput.contains(event.target) || hospitalSearchDropdown.contains(event.target)) return;
+    hideHospitalSearchDropdown();
+  });
+
+  mapHospitalSearchInput.dataset.hospitalSearchBound = '1';
 };
 
 const downloadFile = (content, filename, type) => {
@@ -1524,7 +1785,7 @@ const initLightworker = () => {
       ALL_STATES.forEach(s => {
         const opt = document.createElement('option');
         opt.value = s;
-        opt.textContent = `${s} â€” ${STATE_NAMES[s] || s}`;
+        opt.textContent = `${s} Ã¢â‚¬â€ ${STATE_NAMES[s] || s}`;
         homeSelect.appendChild(opt);
       });
     }
@@ -1690,11 +1951,13 @@ const loadStates = async () => {
 };
 
 const renderNotices = (notices) => {
+  rebuildHospitalSearchIndex(notices);
   const visibleNotices = notices.slice(0, NOTICE_MAX_COUNT);
 
   if (!visibleNotices.length) {
     noticeList.innerHTML = `<div class="empty-state">No notices match these filters yet.</div>`;
     refreshNoticeListWindow(0);
+    updateHospitalSearchFromInput();
     refreshTalentCommandCenter();
   renderSpecialtySurplus();
     return;
@@ -1780,6 +2043,7 @@ const renderNotices = (notices) => {
   });
 
   refreshNoticeListWindow(visibleNotices.length);
+  updateHospitalSearchFromInput();
   refreshTalentCommandCenter();
   renderSpecialtySurplus();
 };
@@ -4296,15 +4560,52 @@ const updateProgramsLoading = (loaded, total) => {
   programsProgressText.textContent = `Loading programs... ${percent}%`;
 };
 
+const decodeHtmlEntities = (value) => {
+  const text = String(value ?? '');
+  if (!text.includes('&')) return text;
+  if (!decodeHtmlEntities._decoder) {
+    decodeHtmlEntities._decoder = document.createElement('textarea');
+  }
+  decodeHtmlEntities._decoder.innerHTML = text;
+  return decodeHtmlEntities._decoder.value;
+};
+
+const cleanProgramText = (value, fallback = '') => {
+  const decoded = decodeHtmlEntities(value);
+  const cleaned = String(decoded || '')
+    .replace(/\uFFFD/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return cleaned || fallback;
+};
+
+const STATE_NAME_TO_CODE = Object.fromEntries(
+  Object.entries(STATE_NAMES).map(([code, name]) => [String(name || '').toLowerCase(), code])
+);
+
+const normalizeProgramState = (value) => {
+  const cleaned = cleanProgramText(value).toUpperCase();
+  if (!cleaned) return '';
+  if (ALL_STATES.includes(cleaned)) return cleaned;
+  const compact = cleaned.replace(/[^A-Z]/g, '');
+  if (ALL_STATES.includes(compact)) return compact;
+  const byName = STATE_NAME_TO_CODE[cleaned.toLowerCase()];
+  if (byName) return byName;
+  return '';
+};
+
 const normalizeProgram = (program) => {
+  const rawState = cleanProgramText(program.state ?? '');
+  const normalizedState = normalizeProgramState(rawState);
   return {
-    institution: program.institution ?? program.institution_name ?? program.school ?? 'Unknown',
-    campus: program.campus ?? program.campus_name ?? '-',
-    city: program.city ?? '',
-    state: program.state ?? '',
-    level: program.level ?? program.program_level ?? '',
-    accreditor: program.accreditor ?? program.accreditation ?? '',
-    credentialNotes: program.credential_notes ?? program.credentialNotes ?? ''
+    institution: cleanProgramText(program.institution ?? program.institution_name ?? program.school, 'Unknown'),
+    campus: cleanProgramText(program.campus ?? program.campus_name, '-'),
+    city: cleanProgramText(program.city ?? ''),
+    state: normalizedState || rawState,
+    stateCode: normalizedState,
+    level: cleanProgramText(program.level ?? program.program_level, ''),
+    accreditor: cleanProgramText(program.accreditor ?? program.accreditation, ''),
+    credentialNotes: cleanProgramText(program.credential_notes ?? program.credentialNotes, '')
   };
 };
 
@@ -4315,16 +4616,44 @@ const setProgramsSchoolInsight = (html) => {
   programsSchoolInsight.innerHTML = html;
 };
 
-const getPipelineTargetsForSchoolState = (homeState, limit = 3) => {
-  if (!ALL_STATES.includes(homeState)) return [];
-  const dynamicTargets = getRecruitingTargets(homeState, Math.max(limit, 8));
-  const rankedDynamic = dynamicTargets.filter((entry) => (entry.noticeCount || 0) > 0);
-  if (rankedDynamic.length >= limit) return rankedDynamic.slice(0, limit);
+const getPreferredPipelineBaseline = () => {
+  const healthcare = stateDataHealthcare && Object.keys(stateDataHealthcare).length ? stateDataHealthcare : null;
+  const all = stateDataAll && Object.keys(stateDataAll).length ? stateDataAll : null;
+  const map = mapStateData && Object.keys(mapStateData).length ? mapStateData : null;
+  if (mapScope === 'all') {
+    return all || map || healthcare || buildStateCountsMapFromNotices(currentNotices || []);
+  }
+  return healthcare || all || map || buildStateCountsMapFromNotices(currentNotices || []);
+};
 
-  const baseline = mapScope === 'all' ? stateDataAll : (Object.keys(stateDataHealthcare || {}).length ? stateDataHealthcare : stateDataAll);
-  const homeRegion = getRegionForState(homeState);
+const resolveProgramSchoolState = (schoolNameRaw, schoolStateRaw) => {
+  const direct = normalizeProgramState(schoolStateRaw);
+  if (direct) return direct;
+
+  const schoolName = cleanProgramText(schoolNameRaw).toLowerCase();
+  if (schoolName) {
+    const byState = new Map();
+    nursingPrograms.forEach((program) => {
+      const entry = normalizeProgram(program);
+      if (entry.institution.toLowerCase() !== schoolName) return;
+      if (!entry.stateCode) return;
+      byState.set(entry.stateCode, (byState.get(entry.stateCode) || 0) + 1);
+    });
+    const topState = Array.from(byState.entries()).sort((a, b) => b[1] - a[1])[0]?.[0] || '';
+    if (topState) return topState;
+  }
+
+  const filterState = normalizeProgramState(programsStateFilter?.value || '');
+  if (filterState) return filterState;
+  return '';
+};
+
+const getPipelineTargetsForSchoolState = (homeState, limit = 3) => {
+  const resolvedHome = normalizeProgramState(homeState);
+  const baseline = getPreferredPipelineBaseline();
+  const homeRegion = resolvedHome ? getRegionForState(resolvedHome) : null;
   const fallback = ALL_STATES
-    .filter((state) => state !== homeState)
+    .filter((state) => state !== resolvedHome)
     .map((state) => {
       const noticeCount = baseline?.[state]?.count ?? 0;
       const targetRegion = getRegionForState(state);
@@ -4336,22 +4665,21 @@ const getPipelineTargetsForSchoolState = (homeState, limit = 3) => {
 };
 
 const renderProgramSchoolInsight = (schoolNameRaw, schoolStateRaw) => {
-  const schoolName = String(schoolNameRaw || 'Selected school').trim() || 'Selected school';
-  const schoolState = String(schoolStateRaw || '').trim().toUpperCase();
-  if (!ALL_STATES.includes(schoolState)) {
-    setProgramsSchoolInsight(`Top pipeline states unavailable for <strong>${escapeHtml(schoolName)}</strong>: missing valid school state.`);
-    return;
-  }
-  const targets = getPipelineTargetsForSchoolState(schoolState, 3);
+  const schoolName = cleanProgramText(schoolNameRaw, 'Selected school');
+  const resolvedState = resolveProgramSchoolState(schoolNameRaw, schoolStateRaw);
+  const targets = getPipelineTargetsForSchoolState(resolvedState, 3);
   if (!targets.length) {
-    setProgramsSchoolInsight(`No pipeline state signal available yet for <strong>${escapeHtml(schoolName)}</strong> (${escapeHtml(schoolState)}).`);
+    setProgramsSchoolInsight(`No pipeline state signal available yet for <strong>${escapeHtml(schoolName)}</strong>.`);
     return;
   }
   const chips = targets.map((target, idx) => (
     `${idx + 1}. <strong>${escapeHtml(target.state)}</strong> (${escapeHtml(STATE_NAMES[target.state] || target.state)}) - ${target.noticeCount} notices`
   ));
+  const stateLabel = resolvedState
+    ? ` (${escapeHtml(resolvedState)})`
+    : ' (state unverified; showing national baseline)';
   setProgramsSchoolInsight(
-    `<strong>${escapeHtml(schoolName)}</strong> (${escapeHtml(schoolState)}) top pipeline states: ${chips.join(' | ')}`
+    `<strong>${escapeHtml(schoolName)}</strong>${stateLabel} top pipeline states: ${chips.join(' | ')}`
   );
 };
 
@@ -8016,6 +8344,7 @@ const initApp = () => {
   safeInit(initMapTabs, 'mapTabs');
   safeInit(initMapScopeToggle, 'mapScopeToggle');
   safeInit(initMapFactors, 'mapFactors');
+  safeInit(initHospitalSearch, 'hospitalSearch');
   safeInit(initStateMultiSelect, 'stateMultiSelect');
   safeInit(initForecast, 'forecast');
   safeInit(initProgramsModule, 'programsModule');

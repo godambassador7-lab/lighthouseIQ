@@ -3070,10 +3070,12 @@ body.modal-open {
 
 .hospital-search-panel {
   margin-top: 0.6rem;
+  width: min(100%, 640px);
 }
 
 .hospital-search-input-wrap {
   position: relative;
+  width: 100%;
 }
 
 .hospital-search-panel input {
@@ -3081,8 +3083,10 @@ body.modal-open {
   box-sizing: border-box;
   border: 1px solid rgba(26, 54, 93, 0.2);
   border-radius: 10px;
-  padding: 0.55rem 0.7rem;
-  font-size: 0.85rem;
+  min-height: 44px;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.95rem;
+  line-height: 1.2;
 }
 
 .hospital-search-dropdown {
@@ -5429,9 +5433,16 @@ input[type="range"] {
 
 .weather-map-section .section-header {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: flex-start;
+  gap: 12px 20px;
   margin-bottom: 20px;
+}
+
+.weather-map-section .section-header-text {
+  flex: 1 1 420px;
+  min-width: 280px;
 }
 
 .weather-map-section .section-header-text h3 {
@@ -5441,6 +5452,16 @@ input[type="range"] {
 .weather-map-section .section-header-text p {
   margin: 4px 0 0;
   color: var(--muted);
+}
+
+.weather-map-section .map-controls {
+  margin-left: auto;
+  flex: 0 0 auto;
+}
+
+.weather-map-section .hospital-search-panel,
+.weather-map-section .hospital-search-results {
+  flex: 1 1 100%;
 }
 
 .map-tab-switcher {
@@ -7119,6 +7140,20 @@ input[type="range"] {
 
   .legend-gradient {
     width: 140px;
+  }
+
+  .weather-map-section .map-controls {
+    width: 100%;
+    align-items: flex-start;
+  }
+
+  .weather-map-section .map-controls-row {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  .weather-map-section .hospital-search-panel {
+    width: 100%;
   }
 }
 
