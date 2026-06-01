@@ -131,6 +131,7 @@ const programsExportPdf = document.getElementById('programs-export-pdf');
 const programsLoading = document.getElementById('programs-loading');
 const programsProgressBar = document.getElementById('programs-progress-bar');
 const programsProgressText = document.getElementById('programs-progress-text');
+const programsSchoolInsight = document.getElementById('programs-school-insight');
 const openStateBeaconBtn = document.getElementById('open-state-beacon');
 const stateBeaconModal = document.getElementById('state-beacon-modal');
 const stateBeaconCloseBtn = document.getElementById('state-beacon-close');
@@ -2644,6 +2645,7 @@ const loadNotices = async () => {
     notices = sortNoticesByNewest(notices);
 
     currentNotices = notices;
+    syncMapStateDataToVisibleNotices();
     renderNotices(currentNotices);
     updateStats(currentNotices);
     if (!currentNotices.length) {
@@ -2656,9 +2658,12 @@ const loadNotices = async () => {
     // Still show custom notices even if API fails
     if (customNotices.length > 0) {
       currentNotices = sortNoticesByNewest([...customNotices]);
+      syncMapStateDataToVisibleNotices();
       renderNotices(currentNotices);
       updateStats(currentNotices);
     } else {
+      currentNotices = [];
+      syncMapStateDataToVisibleNotices();
       setLoading('Unable to load notices. Is the API running?');
       statTotal.textContent = '0';
     }
@@ -2837,18 +2842,55 @@ const US_STATES_SVG = `
 </svg>
 `;
 
-const MAP_PALETTE = [
-  '#ef476f', '#ffd166', '#06d6a0', '#118ab2', '#f8961e',
-  '#8ecae6', '#fb8500', '#9b5de5', '#f15bb5', '#00bbf9',
-  '#90be6d', '#f3722c'
+const MAP_ACTIVITY_COLOR_STOPS = [
+  { stop: 0, color: '#e8f5e9' },
+  { stop: 0.2, color: '#a5d6a7' },
+  { stop: 0.4, color: '#fff176' },
+  { stop: 0.55, color: '#ffcc80' },
+  { stop: 0.75, color: '#ef9a9a' },
+  { stop: 1, color: '#c62828' }
 ];
 
-const getStateColor = (abbrev) => {
-  let hash = 0;
-  for (let i = 0; i < abbrev.length; i++) {
-    hash = (hash * 31 + abbrev.charCodeAt(i)) % MAP_PALETTE.length;
+const clampUnit = (value) => Math.max(0, Math.min(1, Number(value) || 0));
+
+const hexToRgb = (hex) => {
+  const normalized = String(hex || '').replace('#', '').trim();
+  if (!/^[0-9a-fA-F]{6}$/.test(normalized)) return { r: 232, g: 245, b: 233 };
+  return {
+    r: Number.parseInt(normalized.slice(0, 2), 16),
+    g: Number.parseInt(normalized.slice(2, 4), 16),
+    b: Number.parseInt(normalized.slice(4, 6), 16)
+  };
+};
+
+const rgbToHex = ({ r, g, b }) => {
+  const toHex = (n) => Math.max(0, Math.min(255, Math.round(n))).toString(16).padStart(2, '0');
+  return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+};
+
+const mixColor = (startHex, endHex, t) => {
+  const start = hexToRgb(startHex);
+  const end = hexToRgb(endHex);
+  const ratio = clampUnit(t);
+  return rgbToHex({
+    r: start.r + ((end.r - start.r) * ratio),
+    g: start.g + ((end.g - start.g) * ratio),
+    b: start.b + ((end.b - start.b) * ratio)
+  });
+};
+
+const getActivityColor = (ratio) => {
+  const safeRatio = clampUnit(ratio);
+  for (let i = 0; i < MAP_ACTIVITY_COLOR_STOPS.length - 1; i += 1) {
+    const start = MAP_ACTIVITY_COLOR_STOPS[i];
+    const end = MAP_ACTIVITY_COLOR_STOPS[i + 1];
+    if (safeRatio <= end.stop) {
+      const span = end.stop - start.stop;
+      const localRatio = span <= 0 ? 0 : (safeRatio - start.stop) / span;
+      return mixColor(start.color, end.color, localRatio);
+    }
   }
-  return MAP_PALETTE[hash];
+  return MAP_ACTIVITY_COLOR_STOPS[MAP_ACTIVITY_COLOR_STOPS.length - 1].color;
 };
 
 // Get fog level (0-7) based on notice count
@@ -2899,9 +2941,9 @@ const initWeatherMap = async () => {
 
   stateShapes.forEach((shape) => {
     const stateId = shape.getAttribute('data-state');
-    const baseColor = getStateColor(stateId);
+    const baseColor = getActivityColor(0);
     shape.style.fill = baseColor;
-    shape.style.fillOpacity = '0.28';
+    shape.style.fillOpacity = '1';
     shape.setAttribute('data-base-fill', baseColor);
     shape.addEventListener('mouseenter', (e) => showTooltip(e, stateId));
     shape.addEventListener('mousemove', (e) => moveTooltip(e));
@@ -3117,9 +3159,9 @@ const updateWeatherMap = () => {
     const stateAbbrev = shape.getAttribute('data-state');
     const count = mapStateData[stateAbbrev]?.count || 0;
     const fogLevel = getFogLevel(count, maxCount);
-    const baseFill = shape.getAttribute('data-base-fill');
-    shape.style.fill = baseFill || getStateColor(stateAbbrev);
-    shape.style.fillOpacity = `${0.22 + fogLevel * 0.08}`;
+    const ratio = maxCount > 0 ? (count / maxCount) : 0;
+    shape.style.fill = getActivityColor(ratio);
+    shape.style.fillOpacity = '1';
 
     // Remove all fog classes
     for (let i = 0; i <= 7; i++) {
@@ -3143,6 +3185,30 @@ const normalizeStateCounts = (states) => {
     normalized[state] = { count };
   });
   return normalized;
+};
+
+const buildStateCountsMapFromNotices = (notices) => {
+  const normalized = {};
+  ALL_STATES.forEach((state) => {
+    normalized[state] = { count: 0 };
+  });
+  notices.forEach((notice) => {
+    const state = String(notice?.state || '').trim().toUpperCase();
+    if (!ALL_STATES.includes(state)) return;
+    normalized[state].count += 1;
+  });
+  return normalized;
+};
+
+const syncMapStateDataToVisibleNotices = () => {
+  mapStateData = buildStateCountsMapFromNotices(currentNotices);
+  updateWeatherMap();
+  if (currentMapView === 'chart') {
+    renderBarChart();
+  }
+  if (mapFactorsPanel && mapFactorsPanel.style.display !== 'none') {
+    renderMapFactors();
+  }
 };
 
 // Modified loadStates to also update weather map
@@ -3966,15 +4032,70 @@ const normalizeProgram = (program) => {
   };
 };
 
+const PROGRAMS_SCHOOL_INSIGHT_DEFAULT = 'Click a school name to see its top 3 destination states.';
+
+const setProgramsSchoolInsight = (html) => {
+  if (!programsSchoolInsight) return;
+  programsSchoolInsight.innerHTML = html;
+};
+
+const getPipelineTargetsForSchoolState = (homeState, limit = 3) => {
+  if (!ALL_STATES.includes(homeState)) return [];
+  const dynamicTargets = getRecruitingTargets(homeState, Math.max(limit, 8));
+  const rankedDynamic = dynamicTargets.filter((entry) => (entry.noticeCount || 0) > 0);
+  if (rankedDynamic.length >= limit) return rankedDynamic.slice(0, limit);
+
+  const baseline = mapScope === 'all' ? stateDataAll : (Object.keys(stateDataHealthcare || {}).length ? stateDataHealthcare : stateDataAll);
+  const homeRegion = getRegionForState(homeState);
+  const fallback = ALL_STATES
+    .filter((state) => state !== homeState)
+    .map((state) => {
+      const noticeCount = baseline?.[state]?.count ?? 0;
+      const targetRegion = getRegionForState(state);
+      const regionBonus = homeRegion && targetRegion && homeRegion === targetRegion ? 2 : 0;
+      return { state, noticeCount, targetRegion, score: noticeCount + regionBonus };
+    })
+    .sort((a, b) => b.score - a.score);
+  return fallback.slice(0, limit);
+};
+
+const renderProgramSchoolInsight = (schoolNameRaw, schoolStateRaw) => {
+  const schoolName = String(schoolNameRaw || 'Selected school').trim() || 'Selected school';
+  const schoolState = String(schoolStateRaw || '').trim().toUpperCase();
+  if (!ALL_STATES.includes(schoolState)) {
+    setProgramsSchoolInsight(`Top pipeline states unavailable for <strong>${escapeHtml(schoolName)}</strong>: missing valid school state.`);
+    return;
+  }
+  const targets = getPipelineTargetsForSchoolState(schoolState, 3);
+  if (!targets.length) {
+    setProgramsSchoolInsight(`No pipeline state signal available yet for <strong>${escapeHtml(schoolName)}</strong> (${escapeHtml(schoolState)}).`);
+    return;
+  }
+  const chips = targets.map((target, idx) => (
+    `${idx + 1}. <strong>${escapeHtml(target.state)}</strong> (${escapeHtml(STATE_NAMES[target.state] || target.state)}) - ${target.noticeCount} notices`
+  ));
+  setProgramsSchoolInsight(
+    `<strong>${escapeHtml(schoolName)}</strong> (${escapeHtml(schoolState)}) top pipeline states: ${chips.join(' | ')}`
+  );
+};
+
 const buildProgramRow = (program) => {
   const entry = normalizeProgram(program);
   const credential = entry.credentialNotes
     ? `<span class="programs-credential">${escapeHtml(entry.credentialNotes)}</span>`
     : '';
+  const institutionHtml = `
+    <button type="button"
+      class="program-school-link"
+      data-school="${escapeHtml(entry.institution)}"
+      data-state="${escapeHtml(entry.state)}">
+      ${escapeHtml(entry.institution)}
+    </button>
+  `;
 
   return `
     <tr>
-      <td><strong>${escapeHtml(entry.institution)}</strong>${credential}</td>
+      <td>${institutionHtml}${credential}</td>
       <td>${escapeHtml(entry.campus || '-')}</td>
       <td>${escapeHtml(entry.city || '-')}</td>
       <td>${escapeHtml(entry.state || '-')}</td>
@@ -4209,6 +4330,7 @@ const closeModulesMenu = () => {
 const openProgramsModal = () => {
   programsModal?.classList.add('active');
   closeModulesMenu();
+  setProgramsSchoolInsight(PROGRAMS_SCHOOL_INSIGHT_DEFAULT);
   loadPrograms();
   programsSearch?.focus();
 };
@@ -4238,6 +4360,11 @@ const initProgramsModule = () => {
   // Add change listeners to all level checkboxes
   programsLevelFilter?.querySelectorAll('input[type="checkbox"]').forEach(cb => {
     cb.addEventListener('change', () => renderProgramsTable(getFilteredPrograms()));
+  });
+  programsList?.addEventListener('click', (event) => {
+    const schoolBtn = event.target.closest('.program-school-link');
+    if (!schoolBtn) return;
+    renderProgramSchoolInsight(schoolBtn.dataset.school, schoolBtn.dataset.state);
   });
   programsExportCsv?.addEventListener('click', exportProgramsCsv);
   programsExportExcel?.addEventListener('click', exportProgramsExcel);
