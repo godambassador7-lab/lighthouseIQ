@@ -1682,7 +1682,6 @@ const renderNotices = (notices) => {
   visibleNotices.forEach((notice, idx) => {
     const card = document.createElement('article');
     card.className = notice.isCustom ? 'notice-card custom-notice' : 'notice-card';
-    card.style.animationDelay = `${idx * 35}ms`;
     card.dataset.noticeId = notice.id;
 
     // Handle both API format and custom notice format
