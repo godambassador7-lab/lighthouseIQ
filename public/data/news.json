@@ -1,74 +1,74 @@
 {
-  "lastUpdated": "2026-06-01T00:12:37.777Z",
+  "lastUpdated": "2026-06-01T06:08:59.738Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 9,
-    "staleSources": 1,
-    "healthySources": 8,
+    "staleSources": 5,
+    "healthySources": 4,
     "sources": [
       {
         "source": "Fierce Healthcare",
         "articleCount": 215,
         "latestPublishedAt": "2026-06-01T00:00:00.000Z",
-        "staleHours": 0,
+        "staleHours": 6,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
         "articleCount": 145,
         "latestPublishedAt": "2026-05-29T00:00:00.000Z",
-        "staleHours": 72,
-        "status": "ok"
+        "staleHours": 78,
+        "status": "stale"
       },
       {
         "source": "STAT News",
         "articleCount": 61,
         "latestPublishedAt": "2026-05-31T00:00:00.000Z",
-        "staleHours": 24,
+        "staleHours": 30,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 38,
         "latestPublishedAt": "2026-06-01T00:00:00.000Z",
-        "staleHours": 0,
+        "staleHours": 6,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 15,
         "latestPublishedAt": "2026-05-29T00:00:00.000Z",
-        "staleHours": 72,
-        "status": "ok"
+        "staleHours": 78,
+        "status": "stale"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 13,
         "latestPublishedAt": "2026-05-29T00:00:00.000Z",
-        "staleHours": 72,
-        "status": "ok"
+        "staleHours": 78,
+        "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 10,
         "latestPublishedAt": "2026-05-29T00:00:00.000Z",
-        "staleHours": 72,
-        "status": "ok"
+        "staleHours": 78,
+        "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 2,
         "latestPublishedAt": "2026-06-01T00:00:00.000Z",
-        "staleHours": 0,
+        "staleHours": 6,
         "status": "ok"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 1,
         "latestPublishedAt": "2026-05-26T00:00:00.000Z",
-        "staleHours": 144,
+        "staleHours": 150,
         "status": "stale"
       }
     ]
@@ -108,8 +108,10 @@
     }
   },
   "quality": {
-    "status": "pass",
-    "failedChecks": [],
+    "status": "warning",
+    "failedChecks": [
+      "maxStaleSources"
+    ],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -118,7 +120,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 40,
+        "actual": 42,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -128,8 +130,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 1,
-        "pass": true
+        "actual": 5,
+        "pass": false
       }
     }
   },
@@ -315,6 +317,15 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "Amidst vaccine confusion, we must follow the evidence to protect against meningococcal disease",
+      "url": "https://www.fiercehealthcare.com/sponsored/amidst-vaccine-confusion-we-must-follow-evidence-protect-against-meningococcal-disease",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-01",
+      "summary": "Routine vaccination against IMD is essential to sustaining immunity during the years when young people are at greatest risk.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
       "title": "CMS grants Elevance Health a reprieve from Medicare Advantage sanctions",
       "url": "https://www.fiercehealthcare.com/payers/cms-set-suspend-enrollment-elevance-healths-medicare-advantage-plans",
       "source": "Fierce Healthcare",
@@ -349,6 +360,15 @@
       "summary": "UnitedHealthcare is set to eliminate close to two-thirds of pediatric prior authorization requirements by the end of the year.",
       "category": "general_market",
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "CVS, Walgreens and Walmart defeat opioid lawsuit brought by Florida hospitals",
+      "url": "https://www.fiercehealthcare.com/retail/cvs-walgreens-and-walmart-defeat-opioid-lawsuit-brought-florida-hospitals",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-01",
+      "summary": "A Florida judge ruled in favor of CVS, Walgreens and Walmart in a lawsuit brought by 16 hospitals accusing the pharmacy retailers of flooding the state with opioids.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "Industry Voices—Patients are building a new healthcare system. The industry is finally catching up",
@@ -441,15 +461,6 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Hospitals again ask FTC, DOJ for exemption from expanded premerger notification filings",
-      "url": "https://www.fiercehealthcare.com/regulatory/hospital-again-ask-ftc-doj-exemption-expanded-premerger-notification-filings",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-01",
-      "summary": "As regulators explore an update to the Hart-Scott-Rodino form that would survive court scrutiny, the American Hospital Association argues that the existing process is doing the job.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
       "title": "Teladoc Health inks partnership with Walmart to expand virtual care services",
       "url": "https://www.fiercehealthcare.com/health-tech/teladoc-health-inks-partnership-walmart-expand-virtual-care-access",
       "source": "Fierce Healthcare",
@@ -457,6 +468,15 @@
       "summary": "Teladoc Health is expanding its retail partnerships with a new tie-up with Walmart to offer its virtual care services through the company's Better Care Services platform.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Hospitals again ask FTC, DOJ for exemption from expanded premerger notification filings",
+      "url": "https://www.fiercehealthcare.com/regulatory/hospital-again-ask-ftc-doj-exemption-expanded-premerger-notification-filings",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-01",
+      "summary": "As regulators explore an update to the Hart-Scott-Rodino form that would survive court scrutiny, the American Hospital Association argues that the existing process is doing the job.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
     },
     {
       "title": "Amazon taps Roy Schoenberg to lead healthcare business as Neil Lindsay plans to step down",
@@ -4805,24 +4825,6 @@
       "source": "Fierce Healthcare",
       "publishedAt": "2026-05-25",
       "summary": "The software company is partnering with several health systems, including Providence, on the initiative to train AI models from smartphone and wearable data for mental health.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Industry Voices—From claims to compassion: Reclaiming patient advocacy in revenue cycle",
-      "url": "https://www.fiercehealthcare.com/providers/industry-voices-claims-compassion-reclaiming-patient-advocacy-revenue-cycle",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-25",
-      "summary": "Working with payers to ensure every patient is covered at the appropriate level of care isn't a back-office function—it's the place where revenue cycle managers can show up for patients who aren't in the room.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Health Tech Weekly Rundown: Prime Healthcare expands virtual sitting tech; CVS Health studies seniors' digital health needs",
-      "url": "https://www.fiercehealthcare.com/health-tech/health-tech-weekly-rundown-prime-healthcare-collette-health-partner-virtual-sitting",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-25",
-      "summary": "Stay up to date on the latest in health tech, digital health and health AI news with this weekly brief.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
     }
