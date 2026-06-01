@@ -501,6 +501,12 @@ const resolveLocalAccountUser = (email, password) => {
   };
 };
 
+const toSigninPasscodeMessage = (message, fallback = 'Invalid email or passcode.') => {
+  const base = String(message || '').trim();
+  if (!base) return fallback;
+  return base.replace(/password/gi, 'passcode');
+};
+
 const setAuthMode = (mode) => {
   authMode = mode === 'create' ? 'create' : 'signin';
   if (loginForm) loginForm.dataset.mode = authMode;
@@ -514,10 +520,11 @@ const setAuthMode = (mode) => {
   if (loginHelper) {
     loginHelper.textContent = authMode === 'create'
       ? 'Create account with email + password (invite code is optional).'
-      : 'Use your work email and dashboard password.';
+      : 'Use your work email and dashboard passcode.';
   }
   if (passwordInput) {
     passwordInput.autocomplete = authMode === 'create' ? 'new-password' : 'current-password';
+    passwordInput.placeholder = authMode === 'create' ? 'Password' : 'Passcode';
   }
   if (passwordConfirmInput) {
     passwordConfirmInput.required = authMode === 'create';
@@ -597,7 +604,7 @@ const handleLogin = async (e) => {
     return;
   }
   if (!password) {
-    setLoginError(mode === 'create' ? 'Create a password.' : 'Please enter your password.');
+    setLoginError(mode === 'create' ? 'Create a password.' : 'Please enter your passcode.');
     pulseLoginError();
     return;
   }
@@ -668,7 +675,7 @@ const handleLogin = async (e) => {
         markLoginSuccess(localUser);
         return;
       }
-      applyLoginError('Invalid email or password.');
+      applyLoginError('Invalid email or passcode.');
       return;
     }
 
@@ -688,7 +695,7 @@ const handleLogin = async (e) => {
         setAuthMode('signin');
         return;
       }
-      applyLoginError(data.error || 'Invalid email or password.');
+      applyLoginError(toSigninPasscodeMessage(data.error, 'Invalid email or passcode.'));
     }
   } catch (err) {
     authApiReachable = false;
