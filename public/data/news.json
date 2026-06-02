@@ -1,105 +1,105 @@
 {
-  "lastUpdated": "2026-06-02T15:00:15.536Z",
+  "lastUpdated": "2026-06-02T18:45:38.147Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 3,
-    "healthySources": 7,
+    "staleSources": 2,
+    "healthySources": 8,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 208,
+        "articleCount": 202,
         "latestPublishedAt": "2026-06-02T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 140,
+        "articleCount": 150,
         "latestPublishedAt": "2026-06-02T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 68,
+        "articleCount": 69,
         "latestPublishedAt": "2026-06-02T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 36,
         "latestPublishedAt": "2026-06-02T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
-        "articleCount": 17,
+        "articleCount": 18,
         "latestPublishedAt": "2026-06-02T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
-        "articleCount": 15,
+        "articleCount": 12,
         "latestPublishedAt": "2026-05-29T00:00:00.000Z",
-        "staleHours": 111,
+        "staleHours": 114,
         "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
-        "articleCount": 10,
+        "articleCount": 7,
         "latestPublishedAt": "2026-05-29T00:00:00.000Z",
-        "staleHours": 111,
+        "staleHours": 114,
         "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 4,
         "latestPublishedAt": "2026-06-02T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 18,
+        "status": "ok"
+      },
+      {
+        "source": "National Nurses United RSS",
+        "articleCount": 1,
+        "latestPublishedAt": "2026-06-02T00:00:00.000Z",
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 1,
         "latestPublishedAt": "2026-06-01T00:00:00.000Z",
-        "staleHours": 39,
+        "staleHours": 42,
         "status": "ok"
-      },
-      {
-        "source": "National Nurses United RSS",
-        "articleCount": 1,
-        "latestPublishedAt": "2026-05-26T00:00:00.000Z",
-        "staleHours": 183,
-        "status": "stale"
       }
     ]
   },
   "categoryCoverage": {
     "closures_layoffs": {
       "label": "Closures & Layoffs",
-      "count": 15
+      "count": 16
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 34
+      "count": 35
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 2
+      "count": 3
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 47
+      "count": 51
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 12
+      "count": 13
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
@@ -111,14 +111,12 @@
     },
     "general_market": {
       "label": "General Market",
-      "count": 219
+      "count": 211
     }
   },
   "quality": {
-    "status": "warning",
-    "failedChecks": [
-      "maxStaleSources"
-    ],
+    "status": "pass",
+    "failedChecks": [],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -127,7 +125,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 51,
+        "actual": 68,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -137,8 +135,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 3,
-        "pass": false
+        "actual": 2,
+        "pass": true
       }
     }
   },
@@ -204,6 +202,18 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
+      "title": "Catholic hospitals lead nation in pediatric unit closures, new report from NNU finds",
+      "summary": "A new report from National Nurses United finds that three major Catholic hospital systems have spent the last decade leading the health care industry in the closures of pediatric care units. Among the country’s ten biggest hospital chains, three Catholic systems (Ascension, CommonSpirit, and Trinity) shuttered pediatric units at the highest rates of any major systems.",
+      "url": "https://www.nationalnursesunited.org/press/catholic-hospitals-lead-nation-in-pediatric-unit-closures-new-report-from-nnu-finds",
+      "source": "National Nurses United RSS",
+      "sourceType": "rss",
+      "sourceId": "nnu_rss",
+      "publishedAt": "2026-06-02",
+      "category": "closures_layoffs",
+      "relevance": 100,
+      "categoryLabel": "Closures & Layoffs"
+    },
+    {
       "title": "Center for Scientific Review; Notice of Closed Meetings",
       "summary": "",
       "url": "https://www.federalregister.gov/documents/2026/06/02/2026-11018/center-for-scientific-review-notice-of-closed-meetings",
@@ -249,6 +259,276 @@
       "publishedAt": "2026-06-02",
       "category": "general_market",
       "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "100 great community hospitals &#124; 2026",
+      "url": "https://www.beckershospitalreview.com/hospital-management-administration/100-great-community-hospitals-2026/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-02",
+      "summary": "Some of the most exceptional care in the country is delivered close to home, in the community hospitals that serve as trusted anchors for neighborhoods, towns and regions across America. Becker&#8217;s is proud to release the 2026 edition of its &#8220;Great Community Hospitals&#8221; list, celebrating the institutions that bring accessible, affordable, high-quality care to patients [&#8230;] The post 100 great community hospitals | 2026 appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "quality_safety",
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "California psychiatric staffing law takes effect: 8 notes for health systems",
+      "url": "https://www.beckershospitalreview.com/workforce/california-psychiatric-staffing-law-takes-effect-8-notes-for-health-systems/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-02",
+      "summary": "California enacted&#160;new staffing rules&#160;for psychiatric hospitals June 1, establishing minimum nurse-to-patient ratios and financial penalties for facilities that fail to comply. The emergency regulations, issued by the California Department of Public Health, were developed after a&#160;San Francisco Chronicle&#160;investigation into dysfunction, abuse and understaffing at California behavioral health hospitals that was published in February 2025.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Health systems using AI: 50 examples",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/health-systems-using-ai-50-examples/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-02",
+      "summary": "Health systems across the country are well past the pilot stage and deploying AI across clinical, operational and financial functions. Below are 50 examples of health systems using AI in 2026, as covered by Becker&#8217;s: Ambient AI and clinical documentation AI agents and automation Clinical AI and diagnostics Financial and operational AI AI in the [&#8230;] The post Health systems using AI: 50 examples appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Leading differently: How health system CEOs are recalibrating their executive teams",
+      "url": "https://www.beckershospitalreview.com/hospital-management-administration/leading-differently-how-health-system-ceos-are-recalibrating-their-executive-teams/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-02",
+      "summary": "Health systems are navigating a moment that resists the old playbooks — with federal budget pressure, AI adoption, workforce strain and shifting reimbursement all intensifying at once. For many executive teams, the response has reached beyond strategy into something more fundamental: how leaders work together, make decisions and hold each other accountable has become as [&#8230;] The post Leading differently: How health system CEOs are recalibrating their executive teams appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Days cash on hand at 35 health systems",
+      "url": "https://www.beckershospitalreview.com/finance/days-cash-on-hand-at-35-health-systems-3/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-02",
+      "summary": "As health systems continue to grapple with financial pressures from rising labor and supply costs and reimbursement challenges, days cash on hand remains an important measure of financial stability.&#160; Here are days cash on hand figures for 35 health systems as of March 31, according to their most recent financial reports: The post Days cash on hand at 35 health systems appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Beyond the Pharmacy: Three Key Areas of Oversight for a Successful 340B Program",
+      "url": "https://www.beckershospitalreview.com/pharmacy/beyond-the-pharmacy-three-key-areas-of-oversight-for-a-successful-340b-program/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-02",
+      "summary": "At a time when healthcare executives are being asked to stretch scarce federal resources as far as possible, the 340B Drug Pricing Program is a much-appreciated lifeline. Despite the program being around for over three decades, the need for its key benefits—providing critical services to geographical areas in the most need, passing along drug savings [&#8230;] The post Beyond the Pharmacy: Three Key Areas of Oversight for a Successful 340B Program appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Why Mount Nittany Health chose to implement Epic independently",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/why-mount-nittany-health-chose-to-implement-epic-independently/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-02",
+      "summary": "Mount Nittany Health has completed its Epic go-live after choosing an uncommon path for a smaller health system: implementing the EHR independently rather than through a larger health system&#8217;s Community Connect program. The State College, Pa.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Indiana system names chief medical information officer",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/indiana-system-names-chief-medical-information-officer/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-02",
+      "summary": "Terre Haute, Ind.-based Union Health has named Joseph Scuorzo, DO, as chief medical information officer.",
+      "category": "labor_unions",
+      "categoryLabel": "Labor & Unions"
+    },
+    {
+      "title": "Eli Lilly gives hospitals 5 days to comply with 340B policy",
+      "url": "https://www.beckershospitalreview.com/finance/eli-lilly-gives-hospitals-5-days-to-comply-with-340b-policy/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-02",
+      "summary": "Eli Lilly has given some 340B hospitals five business days to begin submitting claims-level data or risk losing access to discounted drug pricing, escalating a growing dispute over transparency requirements in the federal drug discount program. In a June 1 letter to HHS&#8217; Health Resources and Services Administration and shared with Becker&#8217;s, Lilly said it [&#8230;] The post Eli Lilly gives hospitals 5 days to comply with 340B policy appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "$300B patent cliff could reshape hospital drug spending: Moody&#8217;s",
+      "url": "https://www.beckershospitalreview.com/pharmacy/300b-patent-cliff-could-reshape-hospital-drug-spending-moodys/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-02",
+      "summary": "About $300 billion in revenue generated by rated pharmaceutical companies is expected to face generic and biosimilar competition through 2031 — a shift with direct implications for how hospitals and health systems manage their drug budgets over the next several years, according to a June 1 Moody&#8217;s report. Moody&#8217;s estimates the revenue at risk represents [&#8230;] The post $300B patent cliff could reshape hospital drug spending: Moody&#8217;s appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Longevity startup NewLimit raises $435 million ahead of first clinical trial",
+      "url": "https://www.statnews.com/2026/06/02/longevity-startup-newlimit-announces-435-million-clinical-trial-financing/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-02",
+      "summary": "Longevity startup NewLimit plans to launch its first clinical trial of a liver medicine after raising a staggering $435 million in new funding.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "STAT+: Radiopharmaceutical shows promise in post-Pluvicto setting",
+      "url": "https://www.statnews.com/2026/06/02/biotech-news-radiopharmaceutical-shows-promise-in-post-pluvicto/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-02",
+      "summary": "Abivax's ulcerative colitis data, Fulcrum's scrapped sickle cell drug, and more biotech news from The Readout",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Pharmalittle: We&#8217;re reading about a Lilly threat to 340B hospitals, Ebola vaccine funding, and more",
+      "url": "https://www.statnews.com/pharmalot/2026/06/02/lilly-threat-to-340b-hospitals-ebola-vaccine-funding/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-02",
+      "summary": "Lilly gave hospitals participating in a federal drug discount program five days to submit claims data or it will stop the price breaks",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "How one state’s medical meal program lowered health care costs",
+      "url": "https://www.statnews.com/2026/06/02/health-news-testing-one-state-medical-meal-progra/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-02",
+      "summary": "Medicaid work requirements, fast-tracked funding for experimental Ebola vaccines, and more health news from Morning Rounds",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "STAT+: Online care is caught in the crossfire as states crack down on corporate medicine",
+      "url": "https://www.statnews.com/2026/06/02/telehealth-virtual-rx-boom-corporate-practice-of-medicine-laws/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-02",
+      "summary": "Growing legislative scrutiny across multiple states targets the corporate structure underlying most direct-to-consumer telehealth businesses.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Opinion: The virtual end of the doctor’s office waiting room",
+      "url": "https://www.statnews.com/2026/06/02/doctors-office-waiting-room-telehealth-virtual-care/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-02",
+      "summary": "It’s time to rethink and redesign how patients enter the health care system altogether, writes emergency physician Iyesatta Massaquoi Emeli.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "AI adoption surges, but providers worry about deskilling",
+      "url": "https://www.healthcaredive.com/news/healthcare-ai-adoption-accelerates-provider-worries-deskilling-wolters-kluwer/821653/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-06-02",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Eli Lilly issues data sharing ultimatum to 340B hospitals",
+      "url": "https://www.healthcaredive.com/news/eli-lilly-340b-hospital-ultimatum-data-sharing-hrsa/821698/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-06-02",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "FTC clears Ascension's $3.9B AmSurg purchase, but requires some ASC divestitures",
+      "url": "https://www.fiercehealthcare.com/providers/ftc-clears-ascensions-39b-amsurg-purchase-requires-some-asc-divestitures",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-02",
+      "summary": "The federal regulator said it will permit a deal to create the country's third-largest ASC platform to go forward, so long as seven specific ASCs in threatened markets are divested.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Eli Lilly's ultimatum to hospitals: Send 340B claims data by June 8 or lose discounts",
+      "url": "https://www.fiercehealthcare.com/providers/eli-lillys-ultimatum-hospitals-send-340b-claims-data-june-1-or-lose-discounts",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-02",
+      "summary": "The drugmaker has issued a June 8 ultimatum to an unspecified number of hospitals that have resisted a data submission policy it implemented in February. Furious hospital industry groups are pushing back, calling the decision unlawful and urging the administration to intervene.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Wolters Kluwer Health survey examines AI use and concerns among clinicians, patients in 2026",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/wolts-kluwer-health-survey-examines-ai-use-concerns-among-clinicians",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-02",
+      "summary": "For physicians, repeated daily AI use tripled between 2025 and 2026 while use among nurses doubled during the same period.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Northwell's firearm injury risk screener now widely available within Epic",
+      "url": "https://www.fiercehealthcare.com/hospitals/northwells-firearm-injury-risk-screener-now-widely-available-within-epic",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-02",
+      "summary": "The screening tool, now in the electronic health record, combines assessment of firearm access and community violence risk.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "AI-powered medical imaging startup Subtle Medical picks up $33M and taps new CEO",
+      "url": "https://www.fiercehealthcare.com/health-tech/ai-powered-medical-imaging-startup-subtle-medical-picks-33m-and-taps-new-ceo",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-02",
+      "summary": "Subtle Medical's AI software improves image quality and accelerates scans on existing imaging systems, helping providers increase throughput without purchasing new hardware.",
+      "category": "quality_safety",
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "CMS outlines national framework to support rollout of Medicaid work requirements",
+      "url": "https://www.fiercehealthcare.com/regulatory/cms-outlines-national-framework-support-rollout-medicaid-work-requirements",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-02",
+      "summary": "The Trump administration has finalized a rule that delineates key details for states in the nationwide rollout of work requirements in Medicaid.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "CDC: 2025's uninsured rate stayed flat at 8.3%",
+      "url": "https://www.fiercehealthcare.com/payers/cdc-uninsured-rate-stayed-flat-2025-83",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-02",
+      "summary": "An annual federal survey found about 28 million uninsured individuals in 2025, up from 27.2 million in the previous year.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Patients with treatment-resistant depression are costing Medicare big",
+      "url": "https://www.fiercehealthcare.com/finance/patients-treatment-resistant-depression-cost-medicare-more-those-managed-symptoms",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-02",
+      "summary": "The report found that treatment-resistant depression patients cost Medicare about $46,000 annually, with the majority of costs attributed to hospitalizations and prescription costs.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "New Connecticut private equity law bans hospital sale-leasebacks",
+      "url": "https://www.fiercehealthcare.com/providers/new-connecticut-private-equity-law-bans-hospital-sale-leasebacks",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-02",
+      "summary": "The state law, replete with restrictions on private equity investors' role in hospital ownership and influence, is the nation's first with an explicit ban on a wealth extraction tactic associated with recent high-profile health system bankruptcies.",
+      "category": "closures_layoffs",
+      "categoryLabel": "Closures & Layoffs"
+    },
+    {
+      "title": "Trump signs off on HHS overhaul of childhood vaccine schedule with new executive order",
+      "url": "https://www.fiercehealthcare.com/regulatory/trump-signs-hhs-overhaul-childhood-vaccine-schedule-new-executive-order",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-02",
+      "summary": "President Donald Trump has endorsed a decision by the Department of Health and Human Services to cut down the number of required vaccinations for children, directing federal agencies to align their policies with HHS' assessment.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Nursing associations sue to block stiffened federal student loan caps",
+      "url": "https://www.fiercehealthcare.com/providers/coalition-attorneys-general-sue-block-federal-student-loan-caps",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-02",
+      "summary": "Ten national nursing associations have now joined 26 attorneys general in opposing the Department of Education's recently finalized restrictions on federal student loans they say will hamper the clinical workforce pipeline.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Community Health System sells 4 Arkansas hospitals to Freeman Health System for $110M",
+      "url": "https://www.fiercehealthcare.com/providers/community-health-system-selling-4-arkansas-hospitals-freeman-health-system-112m",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-02",
+      "summary": "Another CHS divestiture doubles the hospital count of Freeman Health System, a Missouri-based nonprofit.",
+      "category": "general_market",
       "categoryLabel": "General Market"
     },
     {
@@ -338,132 +618,6 @@
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-06-02",
       "summary": "An experimental oral cancer drug has shown signs of effectiveness across six types of solid tumors in patients whose cancers had stopped responding to immunotherapy. The therapy, GRWD5769, was evaluated in combination with cemiplimab in patients with secondary anti-PD-1 resistance or microsatellite stable colorectal cancer without liver metastases, according to a May 22 news release [&#8230;] The post New oral drug shows responses across 6 tumor types appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Pharmalittle: We&#8217;re reading about a Lilly threat to 340B hospitals, Ebola vaccine funding, and more",
-      "url": "https://www.statnews.com/pharmalot/2026/06/02/lilly-threat-to-340b-hospitals-ebola-vaccine-funding/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-06-02",
-      "summary": "Lilly gave hospitals participating in a federal drug discount program five days to submit claims data or it will stop the price breaks",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "How one state’s medical meal program lowered health care costs",
-      "url": "https://www.statnews.com/2026/06/02/health-news-testing-one-state-medical-meal-progra/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-06-02",
-      "summary": "Medicaid work requirements, fast-tracked funding for experimental Ebola vaccines, and more health news from Morning Rounds",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "STAT+: Online care is caught in the crossfire as states crack down on corporate medicine",
-      "url": "https://www.statnews.com/2026/06/02/telehealth-virtual-rx-boom-corporate-practice-of-medicine-laws/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-06-02",
-      "summary": "Growing legislative scrutiny across multiple states targets the corporate structure underlying most direct-to-consumer telehealth businesses.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Opinion: The virtual end of the doctor’s office waiting room",
-      "url": "https://www.statnews.com/2026/06/02/doctors-office-waiting-room-telehealth-virtual-care/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-06-02",
-      "summary": "It’s time to rethink and redesign how patients enter the health care system altogether, writes emergency physician Iyesatta Massaquoi Emeli.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "AI adoption surges, but providers worry about deskilling",
-      "url": "https://www.healthcaredive.com/news/healthcare-ai-adoption-accelerates-provider-worries-deskilling-wolters-kluwer/821653/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-06-02",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Wolters Kluwer Health survey examines AI use and concerns among clinicians, patients in 2026",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/wolts-kluwer-health-survey-examines-ai-use-concerns-among-clinicians",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-02",
-      "summary": "For physicians, repeated daily AI use tripled between 2025 and 2026 while use among nurses doubled during the same period.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "AI-powered medical imaging startup Subtle Medical picks up $33M and taps new CEO",
-      "url": "https://www.fiercehealthcare.com/health-tech/ai-powered-medical-imaging-startup-subtle-medical-picks-33m-and-taps-new-ceo",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-02",
-      "summary": "Subtle Medical's AI software improves image quality and accelerates scans on existing imaging systems, helping providers increase throughput without purchasing new hardware.",
-      "category": "quality_safety",
-      "categoryLabel": "Quality & Safety"
-    },
-    {
-      "title": "CMS outlines national framework to support rollout of Medicaid work requirements",
-      "url": "https://www.fiercehealthcare.com/regulatory/cms-outlines-national-framework-support-rollout-medicaid-work-requirements",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-02",
-      "summary": "The Trump administration has finalized a rule that delineates key details for states in the nationwide rollout of work requirements in Medicaid.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "CDC: 2025's uninsured rate stayed flat at 8.3%",
-      "url": "https://www.fiercehealthcare.com/payers/cdc-uninsured-rate-stayed-flat-2025-83",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-02",
-      "summary": "An annual federal survey found about 28 million uninsured individuals in 2025, up from 27.2 million in the previous year.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Patients with treatment-resistant depression are costing Medicare big",
-      "url": "https://www.fiercehealthcare.com/finance/patients-treatment-resistant-depression-cost-medicare-more-those-managed-symptoms",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-02",
-      "summary": "The report found that treatment-resistant depression patients cost Medicare about $46,000 annually, with the majority of costs attributed to hospitalizations and prescription costs.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "New Connecticut private equity law bans hospital sale-leasebacks",
-      "url": "https://www.fiercehealthcare.com/providers/new-connecticut-private-equity-law-bans-hospital-sale-leasebacks",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-02",
-      "summary": "The state law, replete with restrictions on private equity investors' role in hospital ownership and influence, is the nation's first with an explicit ban on a wealth extraction tactic associated with recent high-profile health system bankruptcies.",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "Trump signs off on HHS overhaul of childhood vaccine schedule with new executive order",
-      "url": "https://www.fiercehealthcare.com/regulatory/trump-signs-hhs-overhaul-childhood-vaccine-schedule-new-executive-order",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-02",
-      "summary": "President Donald Trump has endorsed a decision by the Department of Health and Human Services to cut down the number of required vaccinations for children, directing federal agencies to align their policies with HHS' assessment.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Nursing associations sue to block stiffened federal student loan caps",
-      "url": "https://www.fiercehealthcare.com/providers/coalition-attorneys-general-sue-block-federal-student-loan-caps",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-02",
-      "summary": "Ten national nursing associations have now joined 26 attorneys general in opposing the Department of Education's recently finalized restrictions on federal student loans they say will hamper the clinical workforce pipeline.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Community Health System sells 4 Arkansas hospitals to Freeman Health System for $110M",
-      "url": "https://www.fiercehealthcare.com/providers/community-health-system-selling-4-arkansas-hospitals-freeman-health-system-112m",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-02",
-      "summary": "Another CHS divestiture doubles the hospital count of Freeman Health System, a Missouri-based nonprofit.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
@@ -4669,180 +4823,6 @@
       "summary": "The for-profit spent about $260 million on outpatient purchases during this year's first quarter, and expects a favorable acquisition environment for these sites to continue despite potential policy headwinds, leadership said Wednesday.",
       "category": "mergers_mna",
       "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Study: Brokers increasingly recommending ICHRA to employers",
-      "url": "https://www.fiercehealthcare.com/payers/study-brokers-increasingly-recommending-ichra-employers",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-27",
-      "summary": "ICHRA has been gaining steam, and a new survey suggests that these plans may be hitting the mainstream.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Allina Health, Sutter Health move closer to $26B combination",
-      "url": "https://www.fiercehealthcare.com/providers/allina-health-join-sutter-health-26b-proposed-merger",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-27",
-      "summary": "The cross-regional proposed deal to create a 39-hospital nonprofit system now has a signed definitive agreement in hand. It is expected to close before the end of the year, pending regulatory approvals.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Providence to shutter most health plan operations next year",
-      "url": "https://www.fiercehealthcare.com/payers/providence-mulling-sale-its-health-plan-amid-financial-pressure",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-27",
-      "summary": "After exploring options for the future, including a sale, Providence Health Plan announced this week that it will cease operations for most of its insurance businesses next year.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "CMS proposes rule aimed at limiting Medicaid state-directed payments",
-      "url": "https://www.fiercehealthcare.com/regulatory/cms-proposes-rule-aimed-limiting-medicaid-state-directed-payments",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-27",
-      "summary": "The Trump administration's proposed caps on supplemental Medicaid payments go beyond the services outlined in last year's sweeping tax bill, drawing pushback and alarm from the hospital industry.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Canvas Medical unveils Canvas Studio, a customizable EMR workflow tool for clinicians",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/canvas-medical-unveils-canvas-studio-customizable-emr-workflow-tool",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-27",
-      "summary": "Electronic medical record company Canvas Medical launched Canvas Studio Thursday, a no-code interface that allows clinicians and other healthcare professionals to build custom EMR workflows.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "OpenEvidence launches hands-free voice AI feature, expands hospital footprint with Cedars-Sinai tie-up",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/openevidence-launches-hands-free-voice-ai-feature-expands-hospital",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-27",
-      "summary": "OpenEvidence built out a voice AI feature as part of its popular medical search engine that gives physicians a hands-free way to ask questions and get evidence-based answers.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "&#8216;Are we just going to give up and die like every other generation?&#8217;",
-      "url": "https://www.statnews.com/2026/05/27/longevity-movement-shift-fringe-idea-to-big-business/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-05-27",
-      "summary": "Inside the longevity conference that brings together founders, investors, biohackers, and the generally death-averse to discuss how to forestall — or even beat — our demise.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Judi Health taps Clear for its identity verification tech",
-      "url": "https://www.fiercehealthcare.com/payers/judi-health-taps-clear-its-identity-verification-tech",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-27",
-      "summary": "Judi Health is teaming up with Clear to embed identity verification tech in its enterprise healthcare platform.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "MetroHealth partners with Artisight on smart hospital platform rollout",
-      "url": "https://www.fiercehealthcare.com/hospitals/metrohealth-partners-artisight-smart-hospital-platform-rollout",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-27",
-      "summary": "Cleveland-based MetroHealth and Artisight partnered to deploy the health tech company's smart hospital platform across multiple facilities within the safety net health system.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Kennedy dismisses leaders of US Preventive Services Task Force",
-      "url": "https://www.fiercehealthcare.com/regulatory/kennedy-dismisses-leaders-us-preventive-services-task-force",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-27",
-      "summary": "HHS Secretary Robert F. Kennedy Jr.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Insulet Initiates Voluntary Medical Device Correction for Certain Omnipod® Pods in the U.S. and Affected International Markets",
-      "summary": "ACTON, Mass.--(BUSINESS WIRE)-- Insulet Corporation, Inc. (NASDAQ: PODD) (“Insulet” or the “Company”) today announced a voluntary Medical Device Correction for specific lots of Omnipod® 5, Omnipod DASH®, and Omnipod® Insulin Management System (Omnipod Eros) Pods due to a manufacturing issue, identif",
-      "url": "http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/insulet-initiates-voluntary-medical-device-correction-certain-omnipodr-pods-us-and-affected",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-05-26",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Dialysis Catheter Kit Recall: Arrow International Removes Dialysis Catheter Kits Containing Merit Medical Splittable Sheath Introducers",
-      "summary": "Arrow International is removing dialysis catheter kits containing recalled Merit Medical Splittable Sheath Introducers",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/dialysis-catheter-kit-recall-arrow-international-removes-dialysis-catheter-kits-containing-merit",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-05-26",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "New data shows there is a nurse retention crisis, not a nurse shortage",
-      "summary": "Nearly 1.15 million registered nurses (RNs) with active licenses are not working as nurses, announced National Nurses United (NNU). NNU reached this number by comparing the latest Bureau of Labor Statistics data, released on May 15, with data covering the same period from the National Council of the State Boards of Nursing.",
-      "url": "https://www.nationalnursesunited.org/press/new-data-shows-there-is-a-nurse-retention-crisis-not-a-nurse-shortage",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "2026-05-26",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Manifold Recall: Medline Removes Namic Star Off Handle Manifolds",
-      "summary": "Particulates have the potential to be introduced into blood circulation and become lodged within blood vessels.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/manifold-recall-medline-removes-namic-star-handle-manifolds",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-05-26",
-      "category": "general_market",
-      "relevance": 98,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Advisory Committee; Pulmonary-Allergy Drugs Advisory Committee; Renewal",
-      "summary": "The Food and Drug Administration (FDA) is announcing the renewal of the Pulmonary-Allergy Drugs Advisory Committee by the Commissioner of Food and Drugs (the Commissioner). The Commissioner has determined that it is in the public interest to renew the Pulmonary- Allergy Drugs Advisory Committee for an additional 2 years beyond the charter expiration date. The new charter will be in effect until the May 30, 2028, expiration date.",
-      "url": "https://www.federalregister.gov/documents/2026/05/26/2026-10410/advisory-committee-pulmonary-allergy-drugs-advisory-committee-renewal",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-05-26",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Agency Information Collection Activities; Proposed Collection; Comment Request; Human Drug Compounding Under Sections 503A and 503B of the Federal Food, Drug, and Cosmetic Act",
-      "summary": "The Food and Drug Administration (FDA or Agency) is announcing an opportunity for public comment on the proposed collection of certain information by the Agency. Under the Paperwork Reduction Act of 1995 (PRA), Federal Agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension of an existing collection of information, and to allow 60 days for public comment in response to the notice. This notice solicits comments on information collection relating to human drug compounding.",
-      "url": "https://www.federalregister.gov/documents/2026/05/26/2026-10372/agency-information-collection-activities-proposed-collection-comment-request-human-drug-compounding",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-05-26",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Advisory Committee; Drug Safety and Risk Management Advisory Committee; Renewal",
-      "summary": "The Food and Drug Administration (FDA) is announcing the renewal of the Drug Safety and Risk Management Advisory Committee by the Commissioner of Food and Drugs (the Commissioner). The Commissioner has determined that it is in the public interest to renew the Drug Safety and Risk Management Advisory Committee for an additional 2 years beyond the charter expiration date. The new charter will be in effect until the May 31, 2028, expiration date.",
-      "url": "https://www.federalregister.gov/documents/2026/05/26/2026-10371/advisory-committee-drug-safety-and-risk-management-advisory-committee-renewal",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-05-26",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
     }
   ]
 }
