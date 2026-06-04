@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-03T23:51:57.760Z",
+  "lastUpdated": "2026-06-04T04:18:46.276Z",
   "scope": "US healthcare",
   "sourceManifestVersion": "1.0.0",
   "sourceHealth": [
@@ -7,25 +7,28 @@
       "source": "Federal Register - CMS",
       "id": "federal_register_cms",
       "type": "federal_register",
-      "ok": true,
-      "status": 200,
-      "records": 20
+      "ok": false,
+      "status": 0,
+      "records": 0,
+      "error": "Unexpected token '<', \"<html>\r\n<h\"... is not valid JSON"
     },
     {
       "source": "Federal Register - HHS",
       "id": "federal_register_hhs",
       "type": "federal_register",
-      "ok": true,
-      "status": 200,
-      "records": 20
+      "ok": false,
+      "status": 0,
+      "records": 0,
+      "error": "Unexpected token '<', \"<html>\r\n<h\"... is not valid JSON"
     },
     {
       "source": "Federal Register - FDA",
       "id": "federal_register_fda",
       "type": "federal_register",
-      "ok": true,
-      "status": 200,
-      "records": 20
+      "ok": false,
+      "status": 0,
+      "records": 0,
+      "error": "Unexpected token '<', \"<html>\r\n<h\"... is not valid JSON"
     },
     {
       "source": "FDA MedWatch RSS",
@@ -33,7 +36,7 @@
       "type": "rss",
       "ok": true,
       "status": 200,
-      "records": 20
+      "records": 19
     },
     {
       "source": "DOJ Antitrust News",
@@ -204,108 +207,9 @@
   ],
   "articles": [
     {
-      "title": "Medicaid Program; Community Engagement Requirement for Certain Individuals",
-      "summary": "This interim final rule with comment period (IFC) interprets and implements the community engagement requirement in Medicaid under section 1902(xx) of the Social Security Act. States are required to implement the new requirement no later than January 1, 2027. This IFC specifies the requirements and expectations for States, including the Medicaid applicants and beneficiaries who must demonstrate community engagement as a condition of their eligibility, the types of qualifying activities that satisfy the community engagement requirement, the criteria to meet an exception from the requirement (that is, be deemed compliant), and the criteria to meet a specified exclusion from the requirement. It also specifies requirements for verification of qualifying activities, outreach to affected populations, steps States must take if they determine individuals are noncompliant, and additional operational considerations for States. Finally, this IFC specifies implementation timing and establishes new State reporting requirements.",
-      "url": "https://www.federalregister.gov/documents/2026/06/03/2026-11094/medicaid-program-community-engagement-requirement-for-certain-individuals",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-06-03",
-      "category": "policy_reimbursement",
-      "relevance": 100
-    },
-    {
-      "title": "M15 General Principles for Model-Informed Drug Development; International Council for Harmonisation; Guidance for Industry; Availability",
-      "summary": "The Food and Drug Administration (FDA or Agency) is announcing the availability of a final guidance for industry entitled \"M15 General Principles for Model-Informed Drug Development.\" The guidance was prepared under the auspices of the International Council for Harmonisation of Technical Requirements for Pharmaceuticals for Human Use (ICH). The guidance provides general recommendations for the planning, model evaluation, and documentation of evidence derived from model-informed drug development (MIDD). It establishes a harmonized assessment framework (including the associated terminology) for the MIDD evidence. It also provides recommendations for related regulatory interactions, reporting, and submission. This guideline is intended to facilitate a multidisciplinary understanding of MIDD and associated evidence generation. The guidance finalizes the draft guidance of the same title issued on December 30, 2024.",
-      "url": "https://www.federalregister.gov/documents/2026/06/03/2026-11112/m15-general-principles-for-model-informed-drug-development-international-council-for-harmonisation",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-06-03",
-      "category": "ai_tech",
-      "relevance": 100
-    },
-    {
-      "title": "New Animal Drugs; Approval of New Animal Drug Applications; Withdrawal of Approval of New Animal Drug Applications; Change of Sponsor; Change of Sponsor Address; Correction",
-      "summary": "The Food and Drug Administration (FDA or we) is amending the final rule that published in the Federal Register of April 16, 2026. That final rule updated regulations to reflect application-related actions for new animal drug applications and abbreviated new animal drug applications during October, November, and December of 2025. The final rule published with some inadvertent errors in the instructions for technical amendments. This document corrects those errors.",
-      "url": "https://www.federalregister.gov/documents/2026/06/03/2026-11104/new-animal-drugs-approval-of-new-animal-drug-applications-withdrawal-of-approval-of-new-animal-drug",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-06-03",
-      "category": "policy_reimbursement",
-      "relevance": 100
-    },
-    {
-      "title": "Third Annual Animal Drug User Fee Educational Conference; Public Meeting",
-      "summary": "The Food and Drug Administration (FDA, the Agency, or we) is announcing the following educational conference (public meeting) entitled \"Third Annual Animal Drug User Fee Educational Conference.\" This is the third of five annual educational conferences FDA will host as described in the \"Animal Drug User Fee Act Reauthorization Performance Goals and Procedures Fiscal Years 2024 Through 2028.\" The purpose of this series of conferences is to provide educational sessions for stakeholders who are interested in the new animal drug approval process.",
-      "url": "https://www.federalregister.gov/documents/2026/06/03/2026-11101/third-annual-animal-drug-user-fee-educational-conference-public-meeting",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-06-03",
-      "category": "policy_reimbursement",
-      "relevance": 100
-    },
-    {
-      "title": "Elite Laboratories, Inc. et al.; Withdrawal of Approval of 16 Abbreviated New Drug Applications",
-      "summary": "The Food and Drug Administration (FDA or Agency) is withdrawing approval of 16 abbreviated new drug applications (ANDAs) from multiple applicants. The applicants notified the Agency in writing that the drug products were no longer marketed and requested that the approval of the applications be withdrawn.",
-      "url": "https://www.federalregister.gov/documents/2026/06/03/2026-11062/elite-laboratories-inc-et-al-withdrawal-of-approval-of-16-abbreviated-new-drug-applications",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-06-03",
-      "category": "policy_reimbursement",
-      "relevance": 100
-    },
-    {
-      "title": "Drug and Device Manufacturer Communications With Payors, Formulary Committees, and Similar Entities-Questions and Answers; Revised Draft Guidance for Industry; Availability",
-      "summary": "The Food and Drug Administration (FDA or Agency) is announcing the availability of a revised draft guidance for industry titled \"Drug and Device Manufacturer Communications With Payors, Formulary Committees, and Similar Entities--Questions and Answers.\" This revised draft guidance, when finalized, will provide answers to common questions regarding the communication of health care economic information (HCEI) about approved prescription drugs and approved/ cleared (as defined in the guidance) medical devices (collectively referred to in the guidance as approved/cleared medical products) by medical product manufacturers, packers, distributors, and their representatives (collectively referred to as firms) to payors, formulary committees, or other similar entities with knowledge and expertise in the area of health care economic analysis, carrying out their responsibilities for the selection of medical products for coverage or reimbursement (collectively referred to as payors). This revised draft guidance also provides answers to common questions about firms' dissemination of information to payors about medical products that are not yet approved/cleared for any use (collectively referred to as unapproved medical products) and firms' dissemination of information to payors about unapproved uses of approved/cleared medical products.",
-      "url": "https://www.federalregister.gov/documents/2026/06/03/2026-11060/drug-and-device-manufacturer-communications-with-payors-formulary-committees-and-similar",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-06-03",
-      "category": "policy_reimbursement",
-      "relevance": 100
-    },
-    {
-      "title": "Leveraging Prior Knowledge in the Development of Human Gene Therapy Products Incorporating Genome Editing; Draft Guidance for Industry; Availability",
-      "summary": "The Food and Drug Administration (FDA, Agency, or we) is announcing the availability of a draft document entitled \"Leveraging Prior Knowledge in the Development of Human Gene Therapy Products Incorporating Genome Editing.\" The draft guidance document provides sponsors engaged in the development of human gene therapy (GT) products incorporating ex-vivo and in vivo genome editing (GE) of human somatic cells (GE products) with FDA's recommendations on the type of prior knowledge that may be scientifically appropriate to leverage to advance product development.",
-      "url": "https://www.federalregister.gov/documents/2026/06/03/2026-11054/leveraging-prior-knowledge-in-the-development-of-human-gene-therapy-products-incorporating-genome",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-06-03",
-      "category": "ai_tech",
-      "relevance": 100
-    },
-    {
-      "title": "Vanda Pharmaceuticals, Inc.; Grant of Hearing Request Regarding a Proposal To Refuse To Approve a Supplemental New Drug Application for HETLIOZ (Tasimelteon)",
-      "summary": "The Food and Drug Administration (FDA or the Agency) is announcing a formal evidentiary public hearing on the proposal to refuse to approve the supplemental new drug application (sNDA) 205677- 004, submitted by Vanda Pharmaceuticals Inc. (Vanda) for HETLIOZ (tasimelteon) capsules, 20 milligrams (mg), to treat jet lag disorder. On October 11, 2022, the Director of FDA's Center for Drug Evaluation and Research (CDER) published a notice of opportunity for hearing on a proposal to refuse to approve sNDA 205677-004. Vanda submitted a timely request for hearing on that proposal. This notice of hearing provides factual and legal information concerning CDER's proposal to refuse to approve sNDA 205677-004 and identifies the factual issues that will be the subject of the evidentiary hearing.",
-      "url": "https://www.federalregister.gov/documents/2026/06/03/2026-11046/vanda-pharmaceuticals-inc-grant-of-hearing-request-regarding-a-proposal-to-refuse-to-approve-a",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-06-03",
-      "category": "policy_reimbursement",
-      "relevance": 100
-    },
-    {
-      "title": "Submission for OMB Review; 30-Day Comment Request Regular Clearance for the National Institute of Mental Health Data Archive (NDA), (NIMH)",
-      "summary": "In compliance with the requirement of the Paperwork Reduction Act of 1995, the National Institutes of Health (NIH) has submitted to the Office of Management and Budget (OMB) a request for review and approval of the information collection listed below.",
-      "url": "https://www.federalregister.gov/documents/2026/06/03/2026-11045/submission-for-omb-review-30-day-comment-request-regular-clearance-for-the-national-institute-of",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-06-03",
-      "category": "policy_reimbursement",
-      "relevance": 100
-    },
-    {
-      "title": "UPDATE: Hintermann Series H3 Total Ankle Replacement Has a Higher-Than-Expected Risk of Device Failure: FDA Safety Communication",
-      "summary": "Learn more about recommendations for patients who are considering a Hintermann Series H3 TAR system or who have one; recommendations for health care providers.",
-      "url": "http://www.fda.gov/medical-devices/safety-communications/update-hintermann-series-h3-total-ankle-replacement-has-higher-expected-risk-device-failure-fda",
+      "title": "2024 Safety Communications",
+      "summary": "Listing of Medical Device 2024 Safety Communications",
+      "url": "http://www.fda.gov/medical-devices/safety-communications/2024-safety-communications",
       "source": "FDA MedWatch RSS",
       "sourceType": "rss",
       "sourceId": "fda_medwatch_rss",
@@ -314,9 +218,9 @@
       "relevance": 100
     },
     {
-      "title": "2024 Safety Communications",
-      "summary": "Listing of Medical Device 2024 Safety Communications",
-      "url": "http://www.fda.gov/medical-devices/safety-communications/2024-safety-communications",
+      "title": "UPDATE: Hintermann Series H3 Total Ankle Replacement Has a Higher-Than-Expected Risk of Device Failure: FDA Safety Communication",
+      "summary": "Learn more about recommendations for patients who are considering a Hintermann Series H3 TAR system or who have one; recommendations for health care providers.",
+      "url": "http://www.fda.gov/medical-devices/safety-communications/update-hintermann-series-h3-total-ankle-replacement-has-higher-expected-risk-device-failure-fda",
       "source": "FDA MedWatch RSS",
       "sourceType": "rss",
       "sourceId": "fda_medwatch_rss",
@@ -334,61 +238,6 @@
       "publishedAt": "2026-06-03",
       "category": "ai_tech",
       "relevance": 98
-    },
-    {
-      "title": "Notice of Vacatur Regarding Certain Provisions of the 2024 Nondiscrimination in Health Programs and Activities Final Rule",
-      "summary": "This is to inform the public that, on October 22, 2025, the United States District Court for the Southern District of Mississippi issued an order in Tennessee v. Kennedy, No. 1:24-cv-161-LG-BWR (S.D. Miss. Oct. 22, 2025), vacating portions of the final rule titled \"Nondiscrimination in Health Programs and Activities,\" published May 6, 2024 (89 FR 37522). Specifically, the court vacated certain provisions of the regulation to the extent they expand Title IX's definition of sex discrimination to include gender-identity discrimination. Pursuant to the court's order, the vacated provisions are legally void. The other provisions of the Section 1557 Rule remain in force.",
-      "url": "https://www.federalregister.gov/documents/2026/06/02/2026-11015/notice-of-vacatur-regarding-certain-provisions-of-the-2024-nondiscrimination-in-health-programs-and",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-06-02",
-      "category": "policy_reimbursement",
-      "relevance": 100
-    },
-    {
-      "title": "Agency Information Collection Activities: Submission for OMB Review; Comment Request",
-      "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension or reinstatement of an existing collection of information, and to allow a second opportunity for public comment on the notice. Interested persons are invited to send comments regarding the burden estimate or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
-      "url": "https://www.federalregister.gov/documents/2026/06/02/2026-10934/agency-information-collection-activities-submission-for-omb-review-comment-request",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-06-02",
-      "category": "policy_reimbursement",
-      "relevance": 100
-    },
-    {
-      "title": "Proposed Data Collection Submitted for Public Comment and Recommendations",
-      "summary": "The Centers for Disease Control and Prevention (CDC), as part of its continuing effort to reduce public burden and maximize the utility of government information, invites the general public and other federal agencies the opportunity to comment on a proposed information collection, as required by the Paperwork Reduction Act of 1995. This notice invites comment on a proposed information collection project titled 2026 Ebola Entry Screening, Monitoring, & Traveler Feedback. This data collection will be used to assess risk for infection or exposure to Ebola in travelers coming to the United States from areas affected by an outbreak of Ebola originating in the Democratic Republic of the Congo (DRC) and Uganda.",
-      "url": "https://www.federalregister.gov/documents/2026/06/02/2026-11013/proposed-data-collection-submitted-for-public-comment-and-recommendations",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-06-02",
-      "category": "quality_safety",
-      "relevance": 100
-    },
-    {
-      "title": "Proposed Data Collection Submitted for Public Comment and Recommendations",
-      "summary": "The Centers for Disease Control and Prevention (CDC), as part of its continuing effort to reduce public burden and maximize the utility of government information, invites the general public and other federal agencies the opportunity to comment on a continuing information collection, as required by the Paperwork Reduction Act of 1995. This notice invites comment on a proposed information collection project titled National Survey of Syringe Services Programs (NSSSP). This program was created to assess and monitor SSP operational characteristics and services, funding resources, community relations, and key operational and programmatic successes and challenges, and to support timely analysis and dissemination of national program evaluation survey findings.",
-      "url": "https://www.federalregister.gov/documents/2026/06/02/2026-11012/proposed-data-collection-submitted-for-public-comment-and-recommendations",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-06-02",
-      "category": "policy_reimbursement",
-      "relevance": 100
-    },
-    {
-      "title": "Proposed Data Collection Submitted for Public Comment and Recommendations",
-      "summary": "The Centers for Disease Control and Prevention (CDC), as part of its continuing effort to reduce public burden and maximize the utility of government information, invites the general public and other federal agencies the opportunity to comment on a continuing information collection, as required by the Paperwork Reduction Act of 1995. This notice invites comment on a proposed information collection project titled Use of the Cyclosporiasis National Hypothesis Generating Questionnaire (CNHGQ) During Investigations of Foodborne Disease Clusters and Outbreaks. The CNHGQ facilitates the collection of standard data during investigation of outbreaks of cyclosporiasis, thereby increasing the likelihood that outbreaks will be recognized, and sources will be identified.",
-      "url": "https://www.federalregister.gov/documents/2026/06/02/2026-11011/proposed-data-collection-submitted-for-public-comment-and-recommendations",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-06-02",
-      "category": "ai_tech",
-      "relevance": 100
     },
     {
       "title": "Nurses at Research Medical Center to hold rally demanding immediate action on unsafe patient care conditions",
@@ -424,160 +273,6 @@
       "relevance": 98
     },
     {
-      "title": "Center for Scientific Review; Notice of Closed Meetings",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/06/02/2026-11018/center-for-scientific-review-notice-of-closed-meetings",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-06-02",
-      "category": "policy_reimbursement",
-      "relevance": 96
-    },
-    {
-      "title": "Agency Forms Undergoing Paperwork Reduction Act Review",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/06/02/2026-11010/agency-forms-undergoing-paperwork-reduction-act-review",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-06-02",
-      "category": "policy_reimbursement",
-      "relevance": 96
-    },
-    {
-      "title": "Agency Forms Undergoing Paperwork Reduction Act Review",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/06/02/2026-11009/agency-forms-undergoing-paperwork-reduction-act-review",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-06-02",
-      "category": "policy_reimbursement",
-      "relevance": 96
-    },
-    {
-      "title": "Center for Scientific Review; Notice of Closed Meetings",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/06/02/2026-10956/center-for-scientific-review-notice-of-closed-meetings",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-06-02",
-      "category": "policy_reimbursement",
-      "relevance": 96
-    },
-    {
-      "title": "Medicare Program; Alternative Payment Model Updates and the Increasing Organ Transplant Access (IOTA) Model",
-      "summary": "This final rule will update and revise the Increasing Organ Transplant Access (IOTA) Model for Performance Year (PY) 2. This final rule also includes a technical correction to the regulatory text.",
-      "url": "https://www.federalregister.gov/documents/2026/06/01/2026-10890/medicare-program-alternative-payment-model-updates-and-the-increasing-organ-transplant-access-iota",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-06-01",
-      "category": "policy_reimbursement",
-      "relevance": 100
-    },
-    {
-      "title": "Medical Devices; General Hospital and Personal Use Devices; Classification of the Rigid Sterilization Container With Electronic Monitoring",
-      "summary": "The Food and Drug Administration (FDA) is classifying the rigid sterilization container with electronic monitoring into class II (special controls). The special controls that apply to the device type are identified in this order and will be part of the codified language for classification of the rigid sterilization container with electronic monitoring. We are taking this action because we have determined that classifying the device into class II will provide a reasonable assurance of safety and effectiveness of the device. We believe this action will also enhance patients' access to beneficial innovative devices, in part by reducing regulatory burdens.",
-      "url": "https://www.federalregister.gov/documents/2026/06/01/2026-10908/medical-devices-general-hospital-and-personal-use-devices-classification-of-the-rigid-sterilization",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-06-01",
-      "category": "quality_safety",
-      "relevance": 100
-    },
-    {
-      "title": "Medical Devices; Anesthesiology Devices; Classification of the Real-Time Ultrasound Anatomy Visualization and Labeling Device for Ultrasound Guided Regional Anesthesia",
-      "summary": "The Food and Drug Administration (FDA) is classifying the real-time ultrasound anatomy visualization and labeling device for ultrasound guided regional anesthesia into class II (special controls). The special controls that apply to the device type are identified in this order and will be part of the codified language for classification of the real-time ultrasound anatomy visualization and labeling device for ultrasound guided regional anesthesia. We are taking this action because we have determined that classifying the device into class II will provide a reasonable assurance of safety and effectiveness of the device. We believe this action will also enhance patients' access to beneficial innovative devices, in part by reducing regulatory burdens.",
-      "url": "https://www.federalregister.gov/documents/2026/06/01/2026-10907/medical-devices-anesthesiology-devices-classification-of-the-real-time-ultrasound-anatomy",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-06-01",
-      "category": "quality_safety",
-      "relevance": 100
-    },
-    {
-      "title": "Medical Devices; Anesthesiology Devices; Classification of the Adjunctive Pain Measurement Device for Anesthesiology",
-      "summary": "The Food and Drug Administration (FDA) is classifying the adjunctive pain measurement device for anesthesiology into class II (special controls). The special controls that apply to the device type are identified in this order and will be part of the codified language for classification of the adjunctive pain measurement device for anesthesiology. We are taking this action because we have determined that classifying the device into class II will provide a reasonable assurance of safety and effectiveness of the device. We believe this action will also enhance patients' access to beneficial innovative devices, in part by reducing regulatory burdens.",
-      "url": "https://www.federalregister.gov/documents/2026/06/01/2026-10905/medical-devices-anesthesiology-devices-classification-of-the-adjunctive-pain-measurement-device-for",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-06-01",
-      "category": "quality_safety",
-      "relevance": 100
-    },
-    {
-      "title": "Medical Devices; Gastroenterology-Urology Devices; Classification of the Orally Ingested Transient Device for Constipation",
-      "summary": "The Food and Drug Administration (FDA) is classifying the orally ingested transient device for constipation into class II (special controls). The special controls that apply to the device type are identified in this order and will be part of the codified language for classification of the orally ingested transient device for constipation. We are taking this action because we have determined that classifying the device into class II will provide a reasonable assurance of safety and effectiveness of the device. We believe this action will also enhance patients' access to beneficial innovative devices, in part by reducing regulatory burdens.",
-      "url": "https://www.federalregister.gov/documents/2026/06/01/2026-10904/medical-devices-gastroenterology-urology-devices-classification-of-the-orally-ingested-transient",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-06-01",
-      "category": "quality_safety",
-      "relevance": 100
-    },
-    {
-      "title": "Medical Devices; Dental Devices; Classification of the Intraoral Cooling Device",
-      "summary": "The Food and Drug Administration (FDA) is classifying the intraoral cooling device into class II (special controls). The special controls that apply to the device type are identified in this order and will be part of the codified language for classification of the intraoral cooling device. We are taking this action because we have determined that classifying the device into class II will provide a reasonable assurance of safety and effectiveness of the device. We believe this action will also enhance patients' access to beneficial innovative devices, in part by reducing regulatory burdens.",
-      "url": "https://www.federalregister.gov/documents/2026/06/01/2026-10899/medical-devices-dental-devices-classification-of-the-intraoral-cooling-device",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-06-01",
-      "category": "quality_safety",
-      "relevance": 100
-    },
-    {
-      "title": "Medical Devices; Hematology and Pathology Devices; Classification of the Von Willebrand Factor Assay",
-      "summary": "The Food and Drug Administration (FDA) is classifying the von Willebrand factor assay into class II (special controls). The special controls that apply to the device type are identified in this order and will be part of the codified language for classification of the von Willebrand factor assay. We are taking this action because we have determined that classifying the device into class II will provide a reasonable assurance of safety and effectiveness of the device. We believe this action will also enhance patients' access to beneficial innovative devices, in part by reducing regulatory burdens.",
-      "url": "https://www.federalregister.gov/documents/2026/06/01/2026-10898/medical-devices-hematology-and-pathology-devices-classification-of-the-von-willebrand-factor-assay",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-06-01",
-      "category": "quality_safety",
-      "relevance": 100
-    },
-    {
-      "title": "Medical Devices; Ear, Nose, and Throat Devices; Classification of the Oropharyngeal Electrical Stimulator",
-      "summary": "The Food and Drug Administration (FDA) is classifying the oropharyngeal electrical stimulator into class II (special controls). The special controls that apply to the device type are identified in this order and will be part of the codified language for classification of the oropharyngeal electrical stimulator. We are taking this action because we have determined that classifying the device into class II will provide a reasonable assurance of safety and effectiveness of the device. We believe this action will also enhance patients' access to beneficial innovative devices, in part by reducing regulatory burdens.",
-      "url": "https://www.federalregister.gov/documents/2026/06/01/2026-10894/medical-devices-ear-nose-and-throat-devices-classification-of-the-oropharyngeal-electrical",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-06-01",
-      "category": "quality_safety",
-      "relevance": 100
-    },
-    {
-      "title": "Oncology Pharmaceuticals: Streamlined Nonclinical Safety Studies for Biologics and Conjugated Products; Draft Guidance for Industry; Availability",
-      "summary": "The Food and Drug Administration (FDA, the Agency, or we) is announcing the availability of a draft guidance for industry entitled \"Oncology Pharmaceuticals: Streamlined Nonclinical Safety Studies for Biologics and Conjugated Products.\" When finalized, this guidance will assist sponsors in implementing streamlined approaches for general toxicology, for nonclinical safety assessments of certain oncology pharmaceuticals. The guidance is intended to facilitate drug development for biological products and conjugated products for the treatment of cancer while avoiding unnecessary animal use. The recommendations in this draft guidance are informed by data analysis of general toxicology studies and practices developed during the COVID-19 pandemic to reduce use of non-human primates.",
-      "url": "https://www.federalregister.gov/documents/2026/06/01/2026-10873/oncology-pharmaceuticals-streamlined-nonclinical-safety-studies-for-biologics-and-conjugated",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-06-01",
-      "category": "quality_safety",
-      "relevance": 100
-    },
-    {
-      "title": "Center for Scientific Review; Notice of Closed Meetings",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/06/01/2026-10931/center-for-scientific-review-notice-of-closed-meetings",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-06-01",
-      "category": "policy_reimbursement",
-      "relevance": 96
-    },
-    {
       "title": "HUM 8-K filing - Humana Inc.",
       "summary": "Humana Inc. filed 8-K with the SEC.",
       "url": "https://www.sec.gov/Archives/edgar/data/49071/000004907126000027/hum-20260601.htm",
@@ -589,67 +284,12 @@
       "relevance": 85
     },
     {
-      "title": "Agency Information Collection Activities: Submission for OMB Review; Comment Request",
-      "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension or reinstatement of an existing collection of information, and to allow a second opportunity for public comment on the notice. Interested persons are invited to send comments regarding the burden estimate or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
-      "url": "https://www.federalregister.gov/documents/2026/05/29/2026-10777/agency-information-collection-activities-submission-for-omb-review-comment-request",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-05-29",
-      "category": "policy_reimbursement",
-      "relevance": 100
-    },
-    {
-      "title": "Patient-Focused Drug Development for Nonhealing Chronic Wounds; Public Meeting; Request for Comments",
-      "summary": "The Food and Drug Administration (FDA, the Agency, or we) is announcing the following public meeting entitled \"Patient-Focused Drug Development for Nonhealing Chronic Wounds.\" The purpose of the public meeting is to obtain patient perspectives about the impact of nonhealing chronic wounds on daily life, patient views on treatment approaches, factors to consider when selecting a treatment, and what they consider when determining whether to participate in a clinical trial.",
-      "url": "https://www.federalregister.gov/documents/2026/05/29/2026-10752/patient-focused-drug-development-for-nonhealing-chronic-wounds-public-meeting-request-for-comments",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-05-29",
-      "category": "ai_tech",
-      "relevance": 100
-    },
-    {
-      "title": "Content of Human Factors Information in Medical Device Marketing Submissions; Guidance for Industry and Food and Drug Administration Staff; Availability",
-      "summary": "The Food and Drug Administration (FDA or Agency) is announcing the availability of a final guidance titled \"Content of Human Factors Information in Medical Device Marketing Submissions.\" This guidance provides a risk-based framework to guide manufacturers and FDA staff on the human factors information that should be included in a marketing submission to the Center for Devices and Radiological Health (CDRH) to facilitate the efficiency of the FDA review process.",
-      "url": "https://www.federalregister.gov/documents/2026/05/29/2026-10734/content-of-human-factors-information-in-medical-device-marketing-submissions-guidance-for-industry",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-05-29",
-      "category": "ai_tech",
-      "relevance": 100
-    },
-    {
-      "title": "Statistical Approaches To Establishing Bioequivalence; Guidance for Industry; Availability",
-      "summary": "The Food and Drug Administration (FDA or Agency) is announcing the availability of a final guidance for industry entitled \"Statistical Approaches to Establishing Bioequivalence.\" This guidance provides recommendations to sponsors and applicants planning to use equivalence criteria in analyzing bioequivalence (BE) studies for investigational new drug applications (INDs), new drug applications (NDAs), abbreviated new drug applications (ANDAs), and amendments and supplements to these applications. The guidance discusses statistical approaches for BE comparisons and focuses on how to use these approaches both generally and in specific situations. This guidance finalizes the draft guidance of the same title issued on December 5, 2022, and replaces the guidance of the same title issued on February 2, 2001.",
-      "url": "https://www.federalregister.gov/documents/2026/05/29/2026-10705/statistical-approaches-to-establishing-bioequivalence-guidance-for-industry-availability",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-05-29",
-      "category": "ai_tech",
-      "relevance": 100
-    },
-    {
-      "title": "Bioequivalence Studies With Pharmacokinetic Endpoints for Drugs Submitted Under an Abbreviated New Drug Application; Guidance for Industry; Availability",
-      "summary": "The Food and Drug Administration (FDA or Agency) is announcing the availability of a final guidance for industry entitled \"Bioequivalence Studies With Pharmacokinetic Endpoints for Drugs Submitted Under an ANDA.\" This guidance provides recommendations to applicants planning to include bioequivalence (BE) information in abbreviated new drug applications (ANDAs), ANDA amendments, and ANDA supplements. In addition, this guidance describes how to meet the BE requirements set forth in the Federal Food, Drug, and Cosmetic Act (FD&C Act) and FDA regulations. This guidance finalizes the draft guidance for industry of the same title issued on August 23, 2021.",
-      "url": "https://www.federalregister.gov/documents/2026/05/29/2026-10703/bioequivalence-studies-with-pharmacokinetic-endpoints-for-drugs-submitted-under-an-abbreviated-new",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-05-29",
-      "category": "ai_tech",
-      "relevance": 100
-    },
-    {
-      "title": "Medical Devices; Neurological Devices; Classification of the Transcutaneous Electrical Nerve Stimulator To Treat Fibromyalgia Symptoms",
-      "summary": "The Food and Drug Administration (FDA) is classifying the transcutaneous electrical nerve stimulator to treat fibromyalgia symptoms into class II (special controls). The special controls that apply to the device type are identified in this order and will be part of the codified language for classification of the transcutaneous electrical nerve stimulator to treat fibromyalgia symptoms. We are taking this action because we have determined that classifying the device into class II will provide a reasonable assurance of safety and effectiveness of the device. We believe this action will also enhance patients' access to beneficial innovative devices, in part by reducing regulatory burdens.",
-      "url": "https://www.federalregister.gov/documents/2026/05/29/2026-10675/medical-devices-neurological-devices-classification-of-the-transcutaneous-electrical-nerve",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
+      "title": "Dexcom Uncovers Theft of Scrapped Product, Notifies Potentially Impacted Users",
+      "summary": "SAN DIEGO – MAY 26, 2026 – DexCom, Inc. (Nasdaq: DXCM), the global leader in glucose biosensing, announced today through ongoing quality and accounting reviews it recently identified certain lots of Dexcom G7 sensors originally designated as scrap and intended for destruction were stolen during the",
+      "url": "http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/dexcom-uncovers-theft-scrapped-product-notifies-potentially-impacted-users",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
       "publishedAt": "2026-05-29",
       "category": "quality_safety",
       "relevance": 100
@@ -666,15 +306,15 @@
       "relevance": 100
     },
     {
-      "title": "Dexcom Uncovers Theft of Scrapped Product, Notifies Potentially Impacted Users",
-      "summary": "SAN DIEGO – MAY 26, 2026 – DexCom, Inc. (Nasdaq: DXCM), the global leader in glucose biosensing, announced today through ongoing quality and accounting reviews it recently identified certain lots of Dexcom G7 sensors originally designated as scrap and intended for destruction were stolen during the",
-      "url": "http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/dexcom-uncovers-theft-scrapped-product-notifies-potentially-impacted-users",
+      "title": "Ventilator Correction: Philips Issues Correction for Trilogy Evo Platform Ventilators",
+      "summary": "Philips Trilogy Evo Ventilators may not function as intended if used with certain nebulizers.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/ventilator-correction-philips-issues-correction-trilogy-evo-platform-ventilators",
       "source": "FDA MedWatch RSS",
       "sourceType": "rss",
       "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-05-29",
-      "category": "quality_safety",
-      "relevance": 100
+      "publishedAt": "2026-05-28",
+      "category": "ai_tech",
+      "relevance": 98
     },
     {
       "title": "Cryoprobe Recall: Erbe USA Removes Flexible Cryoprobes",
@@ -685,17 +325,6 @@
       "sourceId": "fda_medwatch_rss",
       "publishedAt": "2026-05-28",
       "category": "quality_safety",
-      "relevance": 98
-    },
-    {
-      "title": "Ventilator Correction: Philips Issues Correction for Trilogy Evo Platform Ventilators",
-      "summary": "Philips Trilogy Evo Ventilators may not function as intended if used with certain nebulizers.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/ventilator-correction-philips-issues-correction-trilogy-evo-platform-ventilators",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-05-28",
-      "category": "ai_tech",
       "relevance": 98
     },
     {
@@ -712,7 +341,7 @@
     {
       "title": "Early Alert: Heart Pump Issue from Abiomed",
       "summary": "Specific Impella CP Sets are out of specification; use may result in low purge pressure events from the onset of the case",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-heart-pump-issue-abiomed",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-heart-pump-issue-abiomed-0",
       "source": "FDA MedWatch RSS",
       "sourceType": "rss",
       "sourceId": "fda_medwatch_rss",
@@ -763,28 +392,6 @@
       "publishedAt": "2026-05-26",
       "category": "quality_safety",
       "relevance": 98
-    },
-    {
-      "title": "Medicaid Program; Medicaid Managed Care State Directed Payments and Medicaid Fee-for-Service Targeted Medicaid Practitioner Payments",
-      "summary": "This proposed rule describes alternatives to modify the limit on the total payment rate and other requirements for State directed payments in Medicaid managed care. We propose these changes based on our authority to interpret and implement section 1902(a)(4) of the Social Security Act (the Act) with respect to prepaid inpatient health plans and prepaid ambulatory health plans, and section 1903(m)(2)(A)(iii) of the Act, which require that contracts between States and managed care organizations to provide payments under a risk- based contract for services and associated administrative costs that are actuarially sound. This rule also proposes to set a limit for certain targeted Medicaid payments in Medicaid fee-for-service. We propose this change based on our authority to interpret and implement section 1902(a)(30)(A) of the Act with respect to certain targeted Medicaid payments which require that payments be consistent with efficiency, economy, and quality of care and are sufficient to enlist enough providers so that care and services are available under the plan at least to the extent that such care and services are available to the general population in the geographic area.",
-      "url": "https://www.federalregister.gov/documents/2026/05/22/2026-10292/medicaid-program-medicaid-managed-care-state-directed-payments-and-medicaid-fee-for-service-targeted",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-05-22",
-      "category": "policy_reimbursement",
-      "relevance": 100
-    },
-    {
-      "title": "Medicare Program; Hospital Inpatient Prospective Payment Systems for Acute Care Hospitals (IPPS) and the Long-Term Care Hospital Prospective Payment System and Policy Changes and Fiscal Year (FY) 2027 Rates; Requirements for Quality Programs; and Other Policy Changes; Correction",
-      "summary": "This document corrects technical and typographical errors in the proposed rule that appeared in the April 14, 2026 Federal Register titled \"Medicare Program; Hospital Inpatient Prospective Payment Systems for Acute Care Hospitals (IPPS) and the Long-Term Care Hospital Prospective Payment System and Policy Changes and Fiscal Year (FY) 2027 Rates; Requirements for Quality Programs; and Other Policy Changes.\"",
-      "url": "https://www.federalregister.gov/documents/2026/05/22/2026-10276/medicare-program-hospital-inpatient-prospective-payment-systems-for-acute-care-hospitals-ipps-and",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-05-22",
-      "category": "policy_reimbursement",
-      "relevance": 100
     },
     {
       "title": "UHS 8-K filing - Universal Health Services, Inc.",
@@ -842,39 +449,6 @@
       "relevance": 90
     },
     {
-      "title": "Agency Information Collection Activities: Proposed Collection; Comment Request",
-      "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information (including each proposed extension or reinstatement of an existing collection of information) and to allow 60 days for public comment on the proposed action. Interested persons are invited to send comments regarding our burden estimates or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
-      "url": "https://www.federalregister.gov/documents/2026/05/20/2026-10102/agency-information-collection-activities-proposed-collection-comment-request",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-05-20",
-      "category": "policy_reimbursement",
-      "relevance": 100
-    },
-    {
-      "title": "Medicaid and Children's Health Insurance Program (CHIP) Generic Information Collection Activities: Proposed Collection; Comment Request",
-      "summary": "On May 28, 2010, the Office of Management and Budget (OMB) issued Paperwork Reduction Act (PRA) guidance related to the \"generic\" clearance process. Generally, this is an expedited process by which agencies may obtain OMB's approval of collection of information requests that are \"usually voluntary, low-burden, and uncontroversial collections,\" do not raise any substantive or policy issues, and do not require policy or methodological review. The process requires the submission of an overarching plan that defines the scope of the individual collections that would fall under its umbrella. On October 23, 2011, OMB approved our initial request to use the generic clearance process under control number 0938-1148 (CMS-10398). It was last approved on April 26, 2021, via the standard PRA process which included the publication of 60- and 30-day Federal Register notices. The scope of the April 2021 umbrella accounts for Medicaid and CHIP State plan amendments, waivers, demonstrations, and reporting. This Federal Register notice seeks public comment on one or more of our collection of information requests that we believe are generic and fall within the scope of the umbrella. Interested persons are invited to submit comments regarding our burden estimates or any other aspect of this collection of information, including: the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
-      "url": "https://www.federalregister.gov/documents/2026/05/20/2026-10097/medicaid-and-childrens-health-insurance-program-chip-generic-information-collection-activities",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-05-20",
-      "category": "policy_reimbursement",
-      "relevance": 100
-    },
-    {
-      "title": "Patient Protection and Affordable Care Act, HHS Notice of Benefit and Payment Parameters for 2027; and Basic Health Program",
-      "summary": "This final rule contains provisions to improve implementation of the Patient Protection and Affordable Care Act, including payment parameters and provisions related to the HHS-operated risk adjustment and risk adjustment data validation (HHS-RADV) programs, as well as 2027 user fee rates for issuers offering qualified health plans (QHPs) through Federally-facilitated Exchanges (FFEs) and State-based Exchanges on the Federal platform (SBE-FPs). This final rule also includes provisions related to civil money penalties (CMPs) for noncompliant issuers and other responsible entities; standards governing agents, brokers, and web-brokers; the expansion and codification of hardship exemption eligibility; implementation of the State Exchange Improper Payment Measurement (SEIPM); provider access standards and essential community provider standards for QHP certification; QHP certification of non-network plans; a prohibition on issuers from including routine non-pediatric dental services as an Essential Health Benefit (EHB); requirements related to defrayal for the cost of any State-required benefits in addition to the EHB; cost- sharing flexibilities for catastrophic and individual market bronze plans; establishment of catastrophic plans with plan terms of up to 10 consecutive plan years; QHP issuer quality improvement strategies (QISs); and revisions affecting which enrollees are included in Federal Basic Health Program (BHP) payment calculations to States. This final rule also includes amendments to implement certain provisions of the Working Families Tax Cut (WFTC) legislation.",
-      "url": "https://www.federalregister.gov/documents/2026/05/20/2026-10050/patient-protection-and-affordable-care-act-hhs-notice-of-benefit-and-payment-parameters-for-2027-and",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-05-20",
-      "category": "policy_reimbursement",
-      "relevance": 100
-    },
-    {
       "title": "Thoracic Stent Graft Recall: Bolton Medical Removes Relay Pro System",
       "summary": "Affected grafts may not unclasp from the delivery system. This may require conversion to open surgical repair and can result in patient death.",
       "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/thoracic-stent-graft-recall-bolton-medical-removes-relay-pro-system",
@@ -919,17 +493,6 @@
       "relevance": 85
     },
     {
-      "title": "Agency Information Collection Activities: Proposed Collection; Comment Request",
-      "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information (including each proposed extension or reinstatement of an existing collection of information) and to allow 60 days for public comment on the proposed action. Interested persons are invited to send comments regarding our burden estimates or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
-      "url": "https://www.federalregister.gov/documents/2026/05/18/2026-09832/agency-information-collection-activities-proposed-collection-comment-request",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-05-18",
-      "category": "policy_reimbursement",
-      "relevance": 100
-    },
-    {
       "title": "CVS 8-K filing - CVS Health Corporation",
       "summary": "CVS Health Corporation filed 8-K with the SEC.",
       "url": "https://www.sec.gov/Archives/edgar/data/64803/000006480326000082/cvs-20260514.htm",
@@ -941,50 +504,6 @@
       "relevance": 90
     },
     {
-      "title": "Agency Information Collection Activities: Proposed Collection; Comment Request",
-      "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information (including each proposed extension or reinstatement of an existing collection of information) and to allow 60 days for public comment on the proposed action. Interested persons are invited to send comments regarding our burden estimates or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
-      "url": "https://www.federalregister.gov/documents/2026/05/15/2026-09747/agency-information-collection-activities-proposed-collection-comment-request",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-05-15",
-      "category": "policy_reimbursement",
-      "relevance": 100
-    },
-    {
-      "title": "Medicare, Medicaid, and Children's Health Insurance Programs: Announcement of Nationwide Temporary Moratorium on Enrollment of Hospices",
-      "summary": "This notice announces the imposition of a 6-month nationwide moratorium on the Medicare enrollment of hospices.",
-      "url": "https://www.federalregister.gov/documents/2026/05/15/2026-09718/medicare-medicaid-and-childrens-health-insurance-programs-announcement-of-nationwide-temporary",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-05-15",
-      "category": "policy_reimbursement",
-      "relevance": 100
-    },
-    {
-      "title": "Medicare, Medicaid, and Children's Health Insurance Programs: Announcement of Nationwide Temporary Moratoria on Enrollment of Home Health Agencies (HHAs)",
-      "summary": "This notice announces the imposition of a 6-month nationwide moratorium on the Medicare enrollment of home health agencies (HHAs).",
-      "url": "https://www.federalregister.gov/documents/2026/05/15/2026-09717/medicare-medicaid-and-childrens-health-insurance-programs-announcement-of-nationwide-temporary",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-05-15",
-      "category": "policy_reimbursement",
-      "relevance": 100
-    },
-    {
-      "title": "Early Alert: Anesthesia Machine Issue from Draeger, Inc.",
-      "summary": "Draeger is correcting additional anesthesia workstations due to a manufacturing error that may cause the ventilator to fail before or during use.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-anesthesia-machine-issue-draeger-inc",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-05-15",
-      "category": "ai_tech",
-      "relevance": 98
-    },
-    {
       "title": "CNC 8-K filing - Centene Corporation",
       "summary": "Centene Corporation filed 8-K with the SEC.",
       "url": "https://www.sec.gov/Archives/edgar/data/1071739/000107173926000117/cnc-20260512.htm",
@@ -994,28 +513,6 @@
       "publishedAt": "2026-05-15",
       "category": "policy_reimbursement",
       "relevance": 85
-    },
-    {
-      "title": "Medicare and Medicaid Programs; Quarterly Listing of Program Issuances-January through March 2026",
-      "summary": "This quarterly notice lists Centers for Medicare & Medicaid Services (CMS) manual instructions, substantive and interpretive regulations, and other Federal Register notices that were published in the 3-month period, relating to the Medicare and Medicaid programs and other programs administered by CMS.",
-      "url": "https://www.federalregister.gov/documents/2026/05/14/2026-09630/medicare-and-medicaid-programs-quarterly-listing-of-program-issuances-january-through-march-2026",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-05-14",
-      "category": "policy_reimbursement",
-      "relevance": 100
-    },
-    {
-      "title": "Healthcare Advisory Committee (HAC); Announcement of the HAC Meeting-May 18, 2026",
-      "summary": "This meeting notice announces the first public meeting of the Healthcare Advisory Committee (HAC or Committee). The purpose of the Committee is to advise the Secretary of HHS and the CMS Administrator on programs and policies that can improve the United States (U.S.) healthcare system consistent with the Executive Order Establishing the President's Make American Healthy Again Commission. This virtual meeting is open to the public.",
-      "url": "https://www.federalregister.gov/documents/2026/05/13/2026-09444/healthcare-advisory-committee-hac-announcement-of-the-hac-meeting-may-18-2026",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-05-13",
-      "category": "policy_reimbursement",
-      "relevance": 100
     },
     {
       "title": "ELV 8-K filing - Elevance Health, Inc.",
@@ -1040,28 +537,6 @@
       "relevance": 85
     },
     {
-      "title": "Agency Information Collection Activities: Submission for OMB Review; Comment Request",
-      "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension or reinstatement of an existing collection of information, and to allow a second opportunity for public comment on the notice. Interested persons are invited to send comments regarding the burden estimate or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
-      "url": "https://www.federalregister.gov/documents/2026/05/12/2026-09330/agency-information-collection-activities-submission-for-omb-review-comment-request",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-05-12",
-      "category": "policy_reimbursement",
-      "relevance": 100
-    },
-    {
-      "title": "Medicaid and Children's Health Insurance Program (CHIP) Generic Information Collection Activities: Proposed Collection; Reopening of Comment Period",
-      "summary": "The Centers for Medicare & Medicaid Services (CMS) is reopening the comment period for a limited time for a collection of information notice that published in the Federal Register on April 22, 2026. The notice is entitled \"Medicaid and Children's Health Insurance Program (CHIP) Generic Information Collection Activities: Proposed Collection; Comment Request\". CMS is taking this action to address an inadvertent issue with posting one of the collection's revised templates (S89--Citizenship and Noncitizen Eligibility) under Medicaid State Plan Eligibility. While the April 22 notice provided the public with 14-days to comment, we are reopening the comment period for 12 days--the duration of the inaccurate posting.",
-      "url": "https://www.federalregister.gov/documents/2026/05/12/2026-09329/medicaid-and-childrens-health-insurance-program-chip-generic-information-collection-activities",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-05-12",
-      "category": "policy_reimbursement",
-      "relevance": 100
-    },
-    {
       "title": "UNH 8-K filing - UnitedHealth Group Incorporated",
       "summary": "UnitedHealth Group Incorporated filed 8-K with the SEC.",
       "url": "https://www.sec.gov/Archives/edgar/data/731766/000073176626000129/unh-20260511.htm",
@@ -1071,28 +546,6 @@
       "publishedAt": "2026-05-11",
       "category": "policy_reimbursement",
       "relevance": 90
-    },
-    {
-      "title": "Agency Information Collection Activities: Submission for OMB Review; Comment Request",
-      "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension or reinstatement of an existing collection of information, and to allow a second opportunity for public comment on the notice. Interested persons are invited to send comments regarding the burden estimate or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
-      "url": "https://www.federalregister.gov/documents/2026/05/08/2026-09167/agency-information-collection-activities-submission-for-omb-review-comment-request",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-05-08",
-      "category": "policy_reimbursement",
-      "relevance": 100
-    },
-    {
-      "title": "Agency Information Collection Activities: Proposed Collection; Comment Request",
-      "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information (including each proposed extension or reinstatement of an existing collection of information) and to allow 60 days for public comment on the proposed action. Interested persons are invited to send comments regarding our burden estimates or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
-      "url": "https://www.federalregister.gov/documents/2026/05/07/2026-09096/agency-information-collection-activities-proposed-collection-comment-request",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-05-07",
-      "category": "policy_reimbursement",
-      "relevance": 100
     },
     {
       "title": "UHS 10-Q filing - Universal Health Services, Inc.",

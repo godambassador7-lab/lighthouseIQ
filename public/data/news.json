@@ -1,93 +1,93 @@
 {
-  "lastUpdated": "2026-06-03T23:51:57.824Z",
+  "lastUpdated": "2026-06-04T04:18:46.340Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 0,
-    "healthySources": 10,
+    "staleSources": 2,
+    "healthySources": 8,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 195,
-        "latestPublishedAt": "2026-06-03T00:00:00.000Z",
-        "staleHours": 23,
+        "articleCount": 209,
+        "latestPublishedAt": "2026-06-04T00:00:00.000Z",
+        "staleHours": 4,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 155,
+        "articleCount": 140,
         "latestPublishedAt": "2026-06-03T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 28,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 71,
-        "latestPublishedAt": "2026-06-03T00:00:00.000Z",
-        "staleHours": 23,
+        "articleCount": 72,
+        "latestPublishedAt": "2026-06-04T00:00:00.000Z",
+        "staleHours": 4,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 27,
         "latestPublishedAt": "2026-06-03T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 28,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 18,
         "latestPublishedAt": "2026-06-03T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 28,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 18,
         "latestPublishedAt": "2026-06-01T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 76,
+        "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 8,
         "latestPublishedAt": "2026-06-03T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 28,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 5,
         "latestPublishedAt": "2026-06-03T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 28,
         "status": "ok"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 2,
         "latestPublishedAt": "2026-06-02T00:00:00.000Z",
-        "staleHours": 47,
+        "staleHours": 52,
         "status": "ok"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 1,
         "latestPublishedAt": "2026-06-01T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 76,
+        "status": "stale"
       }
     ]
   },
   "categoryCoverage": {
     "closures_layoffs": {
       "label": "Closures & Layoffs",
-      "count": 16
+      "count": 17
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 29
+      "count": 27
     },
     "labor_unions": {
       "label": "Labor & Unions",
@@ -95,23 +95,23 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 58
+      "count": 64
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 17
+      "count": 19
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
-      "count": 18
+      "count": 17
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 154
+      "count": 153
     },
     "general_market": {
       "label": "General Market",
-      "count": 206
+      "count": 201
     }
   },
   "quality": {
@@ -125,7 +125,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 95,
+        "actual": 26,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -135,12 +135,318 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 0,
+        "actual": 2,
         "pass": true
       }
     }
   },
   "articles": [
+    {
+      "title": "STAT+: Trump administration to strip job protections of top NIH officials, grants staff",
+      "url": "https://www.statnews.com/2026/06/03/trump-administration-to-strip-job-protections-of-top-nih-officials-grants-research/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-04",
+      "summary": "Among the affected positions, which the White House estimates to be 8,000, are high-level officials who oversee research grants from the NIH.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Commonwealth Fund: 21% of adults experienced a coverage denial in the past year",
+      "url": "https://www.fiercehealthcare.com/payers/commonwealth-fund-21-adults-experienced-coverage-denial-past-year",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-04",
+      "summary": "One in five adults with private insurance coverage said that they or a family member had a medical service denied in the past year, even though it was recommended by their physician.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Fierce Healthcare Layoff Tracker—Centra restructure hits 90 workers; Optum cuts 58 jobs in New Jersey",
+      "url": "https://www.fiercehealthcare.com/finance/fierce-healthcare-layoff-tracker-2026-job-cuts-eliminations-health-systems-hospitals",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-04",
+      "summary": "Stick with this tracker for the latest layoff and workforce updates from across healthcare.",
+      "category": "closures_layoffs",
+      "categoryLabel": "Closures & Layoffs"
+    },
+    {
+      "title": "Fierce Healthcare Fundraising Tracker '26: Novellia picks up $18M; Lassie nabs $35M to build AI agents for practices",
+      "url": "https://www.fiercehealthcare.com/health-tech/fierce-healthcare-fundraising-tracker-26",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-04",
+      "summary": "Keep up with all the venture capital dollars being funneled into the health tech and digital health industries.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Presbyterian Healthcare Services to discontinue MA plans in 2027, cut 150 jobs",
+      "url": "https://www.fiercehealthcare.com/payers/presbyterian-healthcare-services-discontinue-ma-plans-2027",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-04",
+      "summary": "New Mexico-based health system Presbyterian Healthcare Services will discontinue most of its Medicare Advantage plans, a spokesperson confirmed to Fierce Healthcare.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Department of Labor's proposed foreign worker wage increases are more tough news for healthcare staffing",
+      "url": "https://www.fiercehealthcare.com/providers/department-labors-proposed-foreign-worker-wage-increases-are-more-tough-news-healthcare",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-04",
+      "summary": "A plan to raise the floor for foreign workers' wages, intended to bolster hiring of American workers, threatens to raise costs and reduce labor supply for healthcare employers, particularly in rural and underserved areas, industry sources say.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "AHA lays out blueprint to improve affordability, care access and quality",
+      "url": "https://www.fiercehealthcare.com/hospitals/aha-lays-out-blueprint-improve-affordability-care-access-and-quality",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-04",
+      "summary": "The report is focused on five key areas, including improving individual and community health, reducing administrative waste and transforming care delivery.",
+      "category": "quality_safety",
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "WVU Health System, Independence Health System target late 2026 for merger",
+      "url": "https://www.fiercehealthcare.com/providers/western-pennylvanias-independence-health-system-join-wvu-health-system-2026",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-04",
+      "summary": "The five-hospital nonprofit will receive an $800 million investment from the academic health system under the terms of their deal, which now has a definitive agreement in hand.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "The watchdog overseeing the integrity of HHS programs",
+      "url": "https://www.fiercehealthcare.com/hospitals/watchdog-overseeing-integrity-hhs-programs",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-04",
+      "summary": "HHS’ Office of Inspector General has a broad mandate to root out fraud, waste and abuse. Senior Writer Anastassia Gliadkovskaya talks with Assistant Regional Inspector General Scott Perry about the agency’s work, recent audit findings and what providers should know about compliance.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Athenahealth rolls out over 80 new, expanded AI RCM features in ‘roadmap’ on athenaOne platform",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/athenahealth-rolls-out-over-80-new-expanded-ai-rcm-features-roadmap",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-04",
+      "summary": "New and expanded AI-native capabilities include automated insurance selection, AI copay, voice AI, express coding and more.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Chutes & Ladders—Ardent Health appoints new CEO; KFF Founding President, CEO to retire",
+      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-04",
+      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Microsoft, Mayo Clinic plan to build frontier AI model for healthcare",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/microsoft-mayo-clinic-plan-build-frontier-ai-model-healthcare",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-04",
+      "summary": "Mayo Clinic plans to develop and deploy a frontier AI model specifically designed for healthcare in collaboration with Microsoft.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Industry groups say final Medicaid work requirements rule imposes onerous documentation burden",
+      "url": "https://www.fiercehealthcare.com/regulatory/industry-groups-say-final-medicaid-work-requirements-rule-imposes-onerous-documentation",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-04",
+      "summary": "On Monday, the Trump administration finalized a key rule that establishes national guidelines for the rollout of work requirements in Medicaid. Industry groups warn that the regulation could prove burdensome to enrollees and state programs.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "OIG: Feds may have overpaid MA plans by millions due to unsupported stroke diagnoses",
+      "url": "https://www.fiercehealthcare.com/regulatory/oig-feds-may-have-overpaid-ma-plans-millions-due-unsupported-stroke-diagnoses",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-04",
+      "summary": "A new federal report suggests that Medicare Advantage plans may have earned millions in overpayments tied to unsupported stroke diagnoses.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "A look at wearable adoption trends and who's using 'smart' devices: Rock Health",
+      "url": "https://www.fiercehealthcare.com/health-tech/health-wearable-ownership-33-past-decade-rock-health-survey",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-04",
+      "summary": "Forty-six percent of respondents in the 2025 Consumer Adoption of Digital Health Survey reported owning a wearable specifically, and 57% of respondents reported owning at least one wearable or other connected device.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "FTC clears Ascension's $3.9B AmSurg purchase, but requires some ASC divestitures",
+      "url": "https://www.fiercehealthcare.com/providers/ftc-clears-ascensions-39b-amsurg-purchase-requires-some-asc-divestitures",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-04",
+      "summary": "The federal regulator said it will permit a deal to create the country's third-largest ASC platform to go forward, so long as seven specific ASCs in threatened markets are divested.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Joint Commission launches voluntary AI certification program for healthcare organizations",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/joint-commission-launches-voluntary-ai-certification-program-healthcare",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-04",
+      "summary": "Any healthcare organization may apply for the certification, and interested organizations do not have to be accredited by the Joint Commission.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Eli Lilly's ultimatum to hospitals: Send 340B claims data by June 8 or lose discounts",
+      "url": "https://www.fiercehealthcare.com/providers/eli-lillys-ultimatum-hospitals-send-340b-claims-data-june-1-or-lose-discounts",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-04",
+      "summary": "The drugmaker has issued a June 8 ultimatum to an unspecified number of hospitals that have resisted a data submission policy it implemented in February. Furious hospital industry groups are pushing back, calling the decision unlawful and urging the administration to intervene.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Wolters Kluwer Health survey examines AI use and concerns among clinicians, patients in 2026",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/wolts-kluwer-health-survey-examines-ai-use-concerns-among-clinicians",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-04",
+      "summary": "For physicians, repeated daily AI use tripled between 2025 and 2026 while use among nurses doubled during the same period.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Northwell's firearm injury risk screener now widely available within Epic",
+      "url": "https://www.fiercehealthcare.com/hospitals/northwells-firearm-injury-risk-screener-now-widely-available-within-epic",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-04",
+      "summary": "The screening tool, now in the electronic health record, combines assessment of firearm access and community violence risk.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "AI-powered medical imaging startup Subtle Medical picks up $33M and taps new CEO",
+      "url": "https://www.fiercehealthcare.com/health-tech/ai-powered-medical-imaging-startup-subtle-medical-picks-33m-and-taps-new-ceo",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-04",
+      "summary": "Subtle Medical's AI software improves image quality and accelerates scans on existing imaging systems, helping providers increase throughput without purchasing new hardware.",
+      "category": "quality_safety",
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "CMS outlines national framework to support rollout of Medicaid work requirements",
+      "url": "https://www.fiercehealthcare.com/regulatory/cms-outlines-national-framework-support-rollout-medicaid-work-requirements",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-04",
+      "summary": "The Trump administration has finalized a rule that delineates key details for states in the nationwide rollout of work requirements in Medicaid.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "CDC: 2025's uninsured rate stayed flat at 8.3%",
+      "url": "https://www.fiercehealthcare.com/payers/cdc-uninsured-rate-stayed-flat-2025-83",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-04",
+      "summary": "An annual federal survey found about 28 million uninsured individuals in 2025, up from 27.2 million in the previous year.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Patients with treatment-resistant depression are costing Medicare big",
+      "url": "https://www.fiercehealthcare.com/finance/patients-treatment-resistant-depression-cost-medicare-more-those-managed-symptoms",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-04",
+      "summary": "The report found that treatment-resistant depression patients cost Medicare about $46,000 annually, with the majority of costs attributed to hospitalizations and prescription costs.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "New Connecticut private equity law bans hospital sale-leasebacks",
+      "url": "https://www.fiercehealthcare.com/providers/new-connecticut-private-equity-law-bans-hospital-sale-leasebacks",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-04",
+      "summary": "The state law, replete with restrictions on private equity investors' role in hospital ownership and influence, is the nation's first with an explicit ban on a wealth extraction tactic associated with recent high-profile health system bankruptcies.",
+      "category": "closures_layoffs",
+      "categoryLabel": "Closures & Layoffs"
+    },
+    {
+      "title": "Trump signs off on HHS overhaul of childhood vaccine schedule with new executive order",
+      "url": "https://www.fiercehealthcare.com/regulatory/trump-signs-hhs-overhaul-childhood-vaccine-schedule-new-executive-order",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-04",
+      "summary": "President Donald Trump has endorsed a decision by the Department of Health and Human Services to cut down the number of required vaccinations for children, directing federal agencies to align their policies with HHS' assessment.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "2024 Safety Communications",
+      "summary": "Listing of Medical Device 2024 Safety Communications",
+      "url": "http://www.fda.gov/medical-devices/safety-communications/2024-safety-communications",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-06-03",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "UPDATE: Hintermann Series H3 Total Ankle Replacement Has a Higher-Than-Expected Risk of Device Failure: FDA Safety Communication",
+      "summary": "Learn more about recommendations for patients who are considering a Hintermann Series H3 TAR system or who have one; recommendations for health care providers.",
+      "url": "http://www.fda.gov/medical-devices/safety-communications/update-hintermann-series-h3-total-ankle-replacement-has-higher-expected-risk-device-failure-fda",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-06-03",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Anesthesia Kit Correction: Becton Dickinson Issues Correction for BD Spinal Trays Containing Bupivacaine Ampules",
+      "summary": "BD is correcting affected Spinal Trays by removing Bupivacaine ampule components",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/anesthesia-kit-correction-becton-dickinson-issues-correction-bd-spinal-trays-containing-bupivacaine",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-06-03",
+      "category": "ai_tech",
+      "relevance": 98,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Mercyhealth opens retail pharmacy",
+      "url": "https://www.beckershospitalreview.com/pharmacy/mercyhealth-opens-retail-pharmacy/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-03",
+      "summary": "Rockford, Ill.-based Mercyhealth has opened a retail pharmacy in Beloit, Wis.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "WMCHealth expands post-discharge care coordination",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/wmchealth-expands-post-discharge-care-coordination/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-03",
+      "summary": "Valhalla, N.Y.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "North Carolina system earns AHA rural innovation recognition",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/innovation/north-carolina-system-earns-aha-rural-innovation-recognition/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-03",
+      "summary": "Laurinburg, N.C.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "15 health systems that have signed enterprise AI deals in 2026",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/15-health-systems-that-have-signed-enterprise-ai-deals-in-2026/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-03",
+      "summary": "Health systems across the country have been committing to enterprise-scale AI partnerships throughout 2026, moving beyond isolated pilots toward systemwide deployments spanning clinical documentation, decision support, virtual care and workforce management. Below are notable enterprise AI deals announced so far this year, according to Becker&#8217;s reporting and other sources: January February March April May Editor&#8217;s [&#8230;] The post 15 health systems that have signed enterprise AI deals in 2026 appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
     {
       "title": "Medicaid Program; Community Engagement Requirement for Certain Individuals",
       "summary": "This interim final rule with comment period (IFC) interprets and implements the community engagement requirement in Medicaid under section 1902(xx) of the Social Security Act. States are required to implement the new requirement no later than January 1, 2027. This IFC specifies the requirements and expectations for States, including the Medicaid applicants and beneficiaries who must demonstrate community engagement as a condition of their eligibility, the types of qualifying activities that satisfy the community engagement requirement, the criteria to meet an exception from the requirement (that is, be deemed compliant), and the criteria to meet a specified exclusion from the requirement. It also specifies requirements for verification of qualifying activities, outreach to affected populations, steps States must take if they determine individuals are noncompliant, and additional operational considerations for States. Finally, this IFC specifies implementation timing and establishes new State reporting requirements.",
@@ -248,78 +554,6 @@
       "category": "general_market",
       "relevance": 100,
       "categoryLabel": "General Market"
-    },
-    {
-      "title": "UPDATE: Hintermann Series H3 Total Ankle Replacement Has a Higher-Than-Expected Risk of Device Failure: FDA Safety Communication",
-      "summary": "Learn more about recommendations for patients who are considering a Hintermann Series H3 TAR system or who have one; recommendations for health care providers.",
-      "url": "http://www.fda.gov/medical-devices/safety-communications/update-hintermann-series-h3-total-ankle-replacement-has-higher-expected-risk-device-failure-fda",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-06-03",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "2024 Safety Communications",
-      "summary": "Listing of Medical Device 2024 Safety Communications",
-      "url": "http://www.fda.gov/medical-devices/safety-communications/2024-safety-communications",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-06-03",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Anesthesia Kit Correction: Becton Dickinson Issues Correction for BD Spinal Trays Containing Bupivacaine Ampules",
-      "summary": "BD is correcting affected Spinal Trays by removing Bupivacaine ampule components",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/anesthesia-kit-correction-becton-dickinson-issues-correction-bd-spinal-trays-containing-bupivacaine",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-06-03",
-      "category": "ai_tech",
-      "relevance": 98,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Mercyhealth opens retail pharmacy",
-      "url": "https://www.beckershospitalreview.com/pharmacy/mercyhealth-opens-retail-pharmacy/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-03",
-      "summary": "Rockford, Ill.-based Mercyhealth has opened a retail pharmacy in Beloit, Wis.",
-      "category": "capacity_expansion",
-      "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "WMCHealth expands post-discharge care coordination",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/wmchealth-expands-post-discharge-care-coordination/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-03",
-      "summary": "Valhalla, N.Y.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "North Carolina system earns AHA rural innovation recognition",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/innovation/north-carolina-system-earns-aha-rural-innovation-recognition/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-03",
-      "summary": "Laurinburg, N.C.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "15 health systems that have signed enterprise AI deals in 2026",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/15-health-systems-that-have-signed-enterprise-ai-deals-in-2026/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-03",
-      "summary": "Health systems across the country have been committing to enterprise-scale AI partnerships throughout 2026, moving beyond isolated pilots toward systemwide deployments spanning clinical documentation, decision support, virtual care and workforce management. Below are notable enterprise AI deals announced so far this year, according to Becker&#8217;s reporting and other sources: January February March April May Editor&#8217;s [&#8230;] The post 15 health systems that have signed enterprise AI deals in 2026 appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "Providence tracked 1,547 clinicians using ambient AI — here&#8217;s what the EHR data showed",
@@ -1033,6 +1267,42 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
+      "title": "Nurses at Research Medical Center to hold rally demanding immediate action on unsafe patient care conditions",
+      "summary": "RNs at Research Medical Center in Kansas City, Mo., will hold a rally on Thursday, June 4 to demand immediate action to address what nurses describe as dangerous patient care conditions impacting emergency and surgical services following the Sept. 8, 2025 closure of units that provide labor and delivery, neonatal intensive care, and obstetrics emergency care services.",
+      "url": "https://www.nationalnursesunited.org/press/nurses-at-research-medical-center-to-hold-rally-demanding-immediate-action-on-unsafe-patient-care-conditions",
+      "source": "National Nurses United RSS",
+      "sourceType": "rss",
+      "sourceId": "nnu_rss",
+      "publishedAt": "2026-06-02",
+      "category": "closures_layoffs",
+      "relevance": 100,
+      "categoryLabel": "Closures & Layoffs"
+    },
+    {
+      "title": "Catholic hospitals lead nation in pediatric unit closures, new report from NNU finds",
+      "summary": "A new report from National Nurses United finds that three major Catholic hospital systems have spent the last decade leading the health care industry in the closures of pediatric care units. Among the country’s ten biggest hospital chains, three Catholic systems (Ascension, CommonSpirit, and Trinity) shuttered pediatric units at the highest rates of any major systems.",
+      "url": "https://www.nationalnursesunited.org/press/catholic-hospitals-lead-nation-in-pediatric-unit-closures-new-report-from-nnu-finds",
+      "source": "National Nurses United RSS",
+      "sourceType": "rss",
+      "sourceId": "nnu_rss",
+      "publishedAt": "2026-06-02",
+      "category": "closures_layoffs",
+      "relevance": 100,
+      "categoryLabel": "Closures & Layoffs"
+    },
+    {
+      "title": "Early Alert: Catheter Introducer Kit Issue from Abiomed",
+      "summary": "Prolonged use of the Abiomed 14Fr Low Profile Introducer may lead to thrombus formation",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-catheter-introducer-kit-issue-abiomed",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-06-02",
+      "category": "general_market",
+      "relevance": 98,
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "Notice of Vacatur Regarding Certain Provisions of the 2024 Nondiscrimination in Health Programs and Activities Final Rule",
       "summary": "This is to inform the public that, on October 22, 2025, the United States District Court for the Southern District of Mississippi issued an order in Tennessee v. Kennedy, No. 1:24-cv-161-LG-BWR (S.D. Miss. Oct. 22, 2025), vacating portions of the final rule titled \"Nondiscrimination in Health Programs and Activities,\" published May 6, 2024 (89 FR 37522). Specifically, the court vacated certain provisions of the regulation to the extent they expand Title IX's definition of sex discrimination to include gender-identity discrimination. Pursuant to the court's order, the vacated provisions are legally void. The other provisions of the Section 1557 Rule remain in force.",
       "url": "https://www.federalregister.gov/documents/2026/06/02/2026-11015/notice-of-vacatur-regarding-certain-provisions-of-the-2024-nondiscrimination-in-health-programs-and",
@@ -1091,42 +1361,6 @@
       "category": "ai_tech",
       "relevance": 100,
       "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Nurses at Research Medical Center to hold rally demanding immediate action on unsafe patient care conditions",
-      "summary": "RNs at Research Medical Center in Kansas City, Mo., will hold a rally on Thursday, June 4 to demand immediate action to address what nurses describe as dangerous patient care conditions impacting emergency and surgical services following the Sept. 8, 2025 closure of units that provide labor and delivery, neonatal intensive care, and obstetrics emergency care services.",
-      "url": "https://www.nationalnursesunited.org/press/nurses-at-research-medical-center-to-hold-rally-demanding-immediate-action-on-unsafe-patient-care-conditions",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "2026-06-02",
-      "category": "closures_layoffs",
-      "relevance": 100,
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "Catholic hospitals lead nation in pediatric unit closures, new report from NNU finds",
-      "summary": "A new report from National Nurses United finds that three major Catholic hospital systems have spent the last decade leading the health care industry in the closures of pediatric care units. Among the country’s ten biggest hospital chains, three Catholic systems (Ascension, CommonSpirit, and Trinity) shuttered pediatric units at the highest rates of any major systems.",
-      "url": "https://www.nationalnursesunited.org/press/catholic-hospitals-lead-nation-in-pediatric-unit-closures-new-report-from-nnu-finds",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "2026-06-02",
-      "category": "closures_layoffs",
-      "relevance": 100,
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "Early Alert: Catheter Introducer Kit Issue from Abiomed",
-      "summary": "Prolonged use of the Abiomed 14Fr Low Profile Introducer may lead to thrombus formation",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-catheter-introducer-kit-issue-abiomed",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-06-02",
-      "category": "general_market",
-      "relevance": 98,
-      "categoryLabel": "General Market"
     },
     {
       "title": "Center for Scientific Review; Notice of Closed Meetings",
@@ -1843,6 +2077,18 @@
       "categoryLabel": "Policy & Reimbursement"
     },
     {
+      "title": "HUM 8-K filing - Humana Inc.",
+      "summary": "Humana Inc. filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/49071/000004907126000027/hum-20260601.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-06-01",
+      "category": "general_market",
+      "relevance": 85,
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "Medicare Program; Alternative Payment Model Updates and the Increasing Organ Transplant Access (IOTA) Model",
       "summary": "This final rule will update and revise the Increasing Organ Transplant Access (IOTA) Model for Performance Year (PY) 2. This final rule also includes a technical correction to the regulatory text.",
       "url": "https://www.federalregister.gov/documents/2026/06/01/2026-10890/medicare-program-alternative-payment-model-updates-and-the-increasing-organ-transplant-access-iota",
@@ -1960,18 +2206,6 @@
       "publishedAt": "2026-06-01",
       "category": "general_market",
       "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "HUM 8-K filing - Humana Inc.",
-      "summary": "Humana Inc. filed 8-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/49071/000004907126000027/hum-20260601.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-06-01",
-      "category": "general_market",
-      "relevance": 85,
       "categoryLabel": "General Market"
     },
     {
@@ -3268,6 +3502,30 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "Dexcom Uncovers Theft of Scrapped Product, Notifies Potentially Impacted Users",
+      "summary": "SAN DIEGO – MAY 26, 2026 – DexCom, Inc. (Nasdaq: DXCM), the global leader in glucose biosensing, announced today through ongoing quality and accounting reviews it recently identified certain lots of Dexcom G7 sensors originally designated as scrap and intended for destruction were stolen during the",
+      "url": "http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/dexcom-uncovers-theft-scrapped-product-notifies-potentially-impacted-users",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-05-29",
+      "category": "quality_safety",
+      "relevance": 100,
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "Pediatric Care Bed Correction: KayserBetten Issues Correction for KayserBett IDA Beds",
+      "summary": "If the hand controls to adjust the bed are not locked, children could adjust the bed and become entrapped.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/pediatric-care-bed-correction-kayserbetten-issues-correction-kayserbett-ida-beds",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-05-29",
+      "category": "capacity_expansion",
+      "relevance": 100,
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
       "title": "Agency Information Collection Activities: Submission for OMB Review; Comment Request",
       "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension or reinstatement of an existing collection of information, and to allow a second opportunity for public comment on the notice. Interested persons are invited to send comments regarding the burden estimate or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
       "url": "https://www.federalregister.gov/documents/2026/05/29/2026-10777/agency-information-collection-activities-submission-for-omb-review-comment-request",
@@ -3338,30 +3596,6 @@
       "category": "general_market",
       "relevance": 100,
       "categoryLabel": "General Market"
-    },
-    {
-      "title": "Pediatric Care Bed Correction: KayserBetten Issues Correction for KayserBett IDA Beds",
-      "summary": "If the hand controls to adjust the bed are not locked, children could adjust the bed and become entrapped.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/pediatric-care-bed-correction-kayserbetten-issues-correction-kayserbett-ida-beds",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-05-29",
-      "category": "capacity_expansion",
-      "relevance": 100,
-      "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "Dexcom Uncovers Theft of Scrapped Product, Notifies Potentially Impacted Users",
-      "summary": "SAN DIEGO – MAY 26, 2026 – DexCom, Inc. (Nasdaq: DXCM), the global leader in glucose biosensing, announced today through ongoing quality and accounting reviews it recently identified certain lots of Dexcom G7 sensors originally designated as scrap and intended for destruction were stolen during the",
-      "url": "http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/dexcom-uncovers-theft-scrapped-product-notifies-potentially-impacted-users",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-05-29",
-      "category": "quality_safety",
-      "relevance": 100,
-      "categoryLabel": "Quality & Safety"
     },
     {
       "title": "Advisory Committee; Psychopharmacologic Drugs Advisory Committee; Renewal",
@@ -4036,18 +4270,6 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Cryoprobe Recall: Erbe USA Removes Flexible Cryoprobes",
-      "summary": "Erbe Cryoprobes may rupture during activation, leading to potential hearing loss, tinnitus, injury, or burns.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/cryoprobe-recall-erbe-usa-removes-flexible-cryoprobes",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-05-28",
-      "category": "general_market",
-      "relevance": 98,
-      "categoryLabel": "General Market"
-    },
-    {
       "title": "Ventilator Correction: Philips Issues Correction for Trilogy Evo Platform Ventilators",
       "summary": "Philips Trilogy Evo Ventilators may not function as intended if used with certain nebulizers.",
       "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/ventilator-correction-philips-issues-correction-trilogy-evo-platform-ventilators",
@@ -4058,6 +4280,18 @@
       "category": "ai_tech",
       "relevance": 98,
       "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Cryoprobe Recall: Erbe USA Removes Flexible Cryoprobes",
+      "summary": "Erbe Cryoprobes may rupture during activation, leading to potential hearing loss, tinnitus, injury, or burns.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/cryoprobe-recall-erbe-usa-removes-flexible-cryoprobes",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-05-28",
+      "category": "general_market",
+      "relevance": 98,
+      "categoryLabel": "General Market"
     },
     {
       "title": "Medical Devices; Gastroenterology-Urology Devices; Classification of the Endoscopic Suturing Device for Altering Gastric Anatomy for Weight Loss",
@@ -4589,240 +4823,6 @@
       "summary": "Tallahassee (Fla.) Memorial HealthCare has entered into a multi-year agreement with Inspirity Health Partners to expand and integrate its supply chain operations.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "The nation&#8217;s most complex health system is ambient AI&#8217;s ultimate proving ground",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/the-nations-most-complex-health-system-is-ambient-ais-ultimate-proving-ground/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-28",
-      "summary": "At the VA, the case for ambient AI is being made at scale — and the bar for what works is unlike anywhere else.&#160; The U.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Why the SaaS-to-SaS shift in healthcare starts with physicians",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/why-the-saas-to-sas-shift-in-healthcare-starts-with-physicians/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-28",
-      "summary": "I have spent most of my career building software that helps physicians take care of patients. Too much of what the HCIT industry has built serves billing, compliance, and documentation requirements — all real needs, but not the core need of helping a doctor engage with a patient and help that patient get better or [&#8230;] The post Why the SaaS-to-SaS shift in healthcare starts with physicians appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "When clinical judgment meets AI: What healthcare leaders must get right to build trust at the point of care",
-      "url": "https://www.beckershospitalreview.com/digital-health/when-clinical-judgment-meets-ai-what-healthcare-leaders-must-get-right-to-build-trust-at-the-point-of-care/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-28",
-      "summary": "At the Becker’s Annual Meeting, Elsevier sponsored a roundtable that drew clinical and informatics leaders from health systems across the U.S.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Penn Medicine, K Health partner to deploy AI clinical agents",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/penn-medicine-k-health-partner-deploy-clinical-ai-clinical-agents",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-28",
-      "summary": "The agents will first be deployed across the system’s virtual urgent care program, with plans to expand to in-person primary care and certain specialties.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "CMS finalizes changes to No Surprises Act dispute resolution process",
-      "url": "https://www.fiercehealthcare.com/regulatory/cms-finalizes-changes-no-surprises-act-dispute-resolution-process",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-28",
-      "summary": "A new federal rule aims to overhaul the No Surprises Act protocols, particularly as large volumes of disputes are pushed to arbitration.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "CVS expands partnership with Salesforce for greater call center personalization",
-      "url": "https://www.fiercehealthcare.com/payers/cvs-expands-partnership-salesforce-greater-call-center-personalization",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-28",
-      "summary": "CVS Health is growing its partnership with Salesforce, leveraging its agentic AI-driven Agentforce Health to boost personalization in its call centers.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Georgia authorizes pharmacists to prescribe HIV prevention drugs",
-      "url": "https://www.beckershospitalreview.com/pharmacy/georgia-authorizes-pharmacists-to-prescribe-hiv-prevention-drugs/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-28",
-      "summary": "Georgia pharmacists will be allowed to prescribe HIV prevention medications beginning July 1 under a new law, according to a May 27 report from Atlanta News First. Georgia joins more than 20 states that already allow pharmacists to prescribe the medications.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "From Adoption to Accountability: What AI Maturity Actually Demands of Hospital Leaders",
-      "url": "https://www.beckershospitalreview.com/leadership/from-adoption-to-accountability-what-ai-maturity-actually-demands-of-hospital-leaders/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-28",
-      "summary": "The conversation around AI in healthcare is moving fast — but not evenly. A growing segment of utilization management and revenue cycle leaders has already moved past the adoption question, into harder territory: how to scale what&#8217;s working, prove its value to skeptical clinicians, and build the governance structures that make it last.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Teladoc Health inks partnership with Walmart to expand virtual care services",
-      "url": "https://www.fiercehealthcare.com/health-tech/teladoc-health-inks-partnership-walmart-expand-virtual-care-access",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-28",
-      "summary": "Teladoc Health is expanding its retail partnerships with a new tie-up with Walmart to offer its virtual care services through the company's Better Care Services platform.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Innovaccer acquires RCM company",
-      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/innovaccer-acquires-rcm-company/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-28",
-      "summary": "Healthcare technology company Innovaccer has acquired revenue cycle management company CaduceusHealth.&#160; The acquisition brings CaduceusHealth&#8217;s deep ambulatory RCM expertise and client relationships directly into Innovaccer&#8217;s agentic revenue cycle platform, according to a May 21 news release.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "A sharp rise in CEO age: Study",
-      "url": "https://www.beckershospitalreview.com/hospital-management-administration/a-sharp-rise-in-ceo-age-study/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-28",
-      "summary": "The average age of newly appointed CEOs has increased sharply over the past few decades, according to an April 2026 research paper from the National Bureau of Economic Research. The cross-industry study used data from BoardEx, including 50,510 U.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Feds finalize No Surprises dispute portal, payer registry: 5 things to know",
-      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/feds-finalize-no-surprises-dispute-portal-payer-registry-5-things-to-know/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-28",
-      "summary": "The Trump administration has finalized an overhaul of the No Surprises Act&#8217;s independent dispute resolution process, establishing a centralized disputes gateway, creating a new federal payer registry, and reducing administrative fees. The final rule, issued jointly by HHS, the Labor Department, Treasury and the Office of Personnel Management on May 28, comes as the IDR [&#8230;] The post Feds finalize No Surprises dispute portal, payer registry: 5 things to know appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "5 revenue cycle leaders to know",
-      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/5-revenue-cycle-leaders-to-know-6/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-28",
-      "summary": "Health systems across the U.S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Why health systems aren&#8217;t relying solely on EHR vendors for AI",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/why-health-systems-arent-waiting-for-ehr-ai-tools/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-28",
-      "summary": "Major EHR vendors are racing to dominate healthcare AI, but IT leaders at health systems say their AI strategies extend far beyond their EHR vendors. Epic, Oracle Health and Meditech, the three largest EHR vendors in the U.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "10 states&#8217; residents spending the most, least on healthcare",
-      "url": "https://www.beckershospitalreview.com/finance/10-states-residents-spending-the-most-least-on-healthcare/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-28",
-      "summary": "Alaska residents spend the largest share of their household income on healthcare among all 50 states, according to a WalletHub analysis published May 28. The personal finance company compared the costs of five healthcare-related expenses in each state: physician, dentist and optometrist visits, along with ibuprofen and Lipitor prices.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Health systems face cyber risks from agentic AI: 5 updates",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/cybersecurity/health-systems-face-cyber-risks-from-agentic-ai-5-updates/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-28",
-      "summary": "Hospitals and health systems face a growing cyberattack surface because of the increasing use of largely autonomous agentic AI. Here are five updates: 1.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "TriStar Tennessee hospital gets OK to build $21M freestanding ED",
-      "url": "https://www.beckershospitalreview.com/capital/tristar-tennessee-hospital-gets-ok-to-build-21m-freestanding-ed/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-28",
-      "summary": "Dickson, Tenn.-based TriStar Horizon Medical Center, part of Nashville, Tenn.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Physician specialties ranked by greatest shortages in 2038",
-      "url": "https://www.beckershospitalreview.com/quality/hospital-physician-relationships/physician-specialties-ranked-by-greatest-shortages-in-2038/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-28",
-      "summary": "Vascular surgery is projected to have the highest shortages of physicians, while emergency medicine physicians are projected to have the greatest surplus by 2038, the Health Resources and Services Administration&#8217;s National Center for Health Workforce Analysis found. The HRSA workforce simulation model assesses the adequacy of the nation&#8217;s projected workforce supply for 35 physician specialties [&#8230;] The post Physician specialties ranked by greatest shortages in 2038 appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "The physicians with the highest burnout rates, job stress",
-      "url": "https://www.beckershospitalreview.com/quality/hospital-physician-relationships/the-physicians-with-the-highest-burnout-rates-job-stress/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-05-28",
-      "summary": "Midcareer physicians report the highest levels of burnout and job stress and the lowest rates of job satisfaction and feeling valued, the American Medical Association found. The 2025 AMA Organizational Biopsy surveyed nearly 19,000 physicians across 38 states and 106 health systems and organizations.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Hospitals again ask FTC, DOJ for exemption from expanded premerger notification filings",
-      "url": "https://www.fiercehealthcare.com/regulatory/hospital-again-ask-ftc-doj-exemption-expanded-premerger-notification-filings",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-28",
-      "summary": "As regulators explore an update to the Hart-Scott-Rodino form that would survive court scrutiny, the American Hospital Association argues that the existing process is doing the job.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Amazon taps Roy Schoenberg to lead healthcare business as Neil Lindsay plans to step down",
-      "url": "https://www.fiercehealthcare.com/health-tech/amazon-taps-roy-schoenberg-lead-healthcare-business-neil-lindsay-steps-down",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-28",
-      "summary": "Amazon tapped digital health executive Roy Schoenberg, M.D.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Chutes & Ladders—KFF Founding President, CEO to retire; Visory Health promotes growth, tech execs",
-      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-28",
-      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Fierce Healthcare Layoff Tracker—Care New England restructure hits 30+ jobs; Intermountain cuts 93 clinic staff",
-      "url": "https://www.fiercehealthcare.com/finance/fierce-healthcare-layoff-tracker-2026-job-cuts-eliminations-health-systems-hospitals",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-28",
-      "summary": "Stick with this tracker for the latest layoff and workforce updates from across healthcare.",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "GoodRx launches subscription program for low-cost generic medications, telehealth services",
-      "url": "https://www.fiercehealthcare.com/telehealth/goodrx-launches-subscription-program-lower-common-healthcare-costs",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-28",
-      "summary": "Users can access discounted medications, telehealth care and other savings through the $14.99 per-month subscription service.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "George Washington University locks deal to hand off debt-ridden physician practice to UHS",
-      "url": "https://www.fiercehealthcare.com/providers/george-washington-university-locks-deal-hand-debt-ridden-physician-practice-uhs",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-28",
-      "summary": "The university will offload the financial responsibility of its medical group, which has lost over $450 million since 2022, to the for-profit system that already owns its affiliated hospitals. The five-year agreement commits the institution to hundreds of millions in additional investment and absorbed loans, but preserves care as well as the academic, training and research arrangements between clinicians and its medical school.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Humana invests $83M in new Florida pharmacy distribution center",
-      "url": "https://www.fiercehealthcare.com/payers/humana-invests-83m-new-florida-pharmacy-distribution-center",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-28",
-      "summary": "The company announced Wednesday that the new facility will build out the company's prescription delivery infrastructure in the state, offering an easier and more coordinated experience for members and CenterWell patients.",
-      "category": "capacity_expansion",
-      "categoryLabel": "Capacity & Expansion"
     }
   ]
 }
