@@ -1396,25 +1396,35 @@ let staticNoticesCache = null;
 let staticStatesCache = null;
 const API_ROUTE_PATTERN = /^\/(health|states|notices|fetch)(\?|$)/i;
 const API_OR_AUTH_ROUTE_PATTERN = /^\/(auth\/|health|states|notices|fetch|insights\/)(\?|$)/i;
+const LOCAL_API_HOST_PATTERN = /^(localhost|127(?:\.\d{1,3}){3}|0\.0\.0\.0|\[?::1\]?|.*\.localhost)$/i;
 
 const unique = (values) => Array.from(new Set(values.filter(Boolean)));
 
-const sanitizeApiBaseForHost = (rawBase, isVercelHost) => {
+const isLocalApiHost = (host = '') => LOCAL_API_HOST_PATTERN.test(String(host || '').trim().toLowerCase());
+
+const sanitizeApiBaseForHost = (rawBase, host = window.location.hostname) => {
   const normalized = String(rawBase || '').trim().replace(/\/$/, '');
   if (!normalized) return '';
-  if (isVercelHost && /\/\/api\.[^/]*vercel\.app/i.test(normalized)) {
-    return '';
+  const currentHost = String(host || '').toLowerCase();
+  const isVercelHost = currentHost.endsWith('vercel.app');
+  try {
+    const parsed = new URL(normalized);
+    const apiHost = parsed.hostname.toLowerCase();
+    if (apiHost === 'api.localhost') return '';
+    if (isVercelHost && (isLocalApiHost(apiHost) || /(^|\.)vercel\.app$/i.test(apiHost))) return '';
+    if (!isLocalApiHost(currentHost) && isLocalApiHost(apiHost)) return '';
+  } catch {
+    if (/api\.localhost/i.test(normalized)) return '';
   }
   return normalized;
 };
 
 const getConfiguredApiBase = () => {
   const host = window.location.hostname;
-  const isVercelHost = host.endsWith('vercel.app');
   try {
     const qsBase = new URLSearchParams(window.location.search).get('apiBase');
     if (qsBase !== null) {
-      const normalizedQs = sanitizeApiBaseForHost(qsBase, isVercelHost);
+      const normalizedQs = sanitizeApiBaseForHost(qsBase, host);
       if (normalizedQs) {
         localStorage.setItem(API_BASE_STORAGE_KEY, normalizedQs);
       } else {
@@ -1426,12 +1436,12 @@ const getConfiguredApiBase = () => {
     // ignore query parsing/storage failures
   }
   if (typeof window !== 'undefined' && typeof window.__LNI_API_BASE__ === 'string' && window.__LNI_API_BASE__.trim()) {
-    return sanitizeApiBaseForHost(window.__LNI_API_BASE__, isVercelHost);
+    return sanitizeApiBaseForHost(window.__LNI_API_BASE__, host);
   }
   try {
     const persisted = localStorage.getItem(API_BASE_STORAGE_KEY);
     if (persisted && persisted.trim()) {
-      const normalized = sanitizeApiBaseForHost(persisted, isVercelHost);
+      const normalized = sanitizeApiBaseForHost(persisted, host);
       if (!normalized) {
         localStorage.removeItem(API_BASE_STORAGE_KEY);
         return '';
@@ -1449,10 +1459,10 @@ const getApiBaseCandidates = () => {
   const host = window.location.hostname;
   const protocol = window.location.protocol;
   const candidates = [
-    '',
-    configured
+    ''
   ];
-  if (host && !host.startsWith('api.') && !host.endsWith('vercel.app')) {
+  if (configured) candidates.push(configured);
+  if (host && !host.startsWith('api.') && !host.endsWith('vercel.app') && !isLocalApiHost(host)) {
     candidates.push(`${protocol}//api.${host}`);
   }
   return unique(candidates.map((v) => String(v || '').trim().replace(/\/$/, '')));
@@ -10442,5 +10452,4 @@ if (document.fonts && document.fonts.ready) {
 
 // Auto-init if already authenticated
 bootstrapAuth();
-
 

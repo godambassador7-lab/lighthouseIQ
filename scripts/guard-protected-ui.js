@@ -26,7 +26,7 @@ const requirements = [
       'flight-view-btn',
       'RN Flight Pattern',
       'id="rn-flight"',
-      'app.js?v=6.6',
+      'app.js?v=6.7',
       'styles.css?v=5.12'
     ]
   },
