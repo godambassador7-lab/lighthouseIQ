@@ -1,4 +1,4 @@
-// Login elements
+﻿// Login elements
 const loginOverlay = document.getElementById('login-overlay');
 const loginForm = document.getElementById('login-form');
 const emailInput = document.getElementById('email-input');
@@ -1883,7 +1883,7 @@ const initLightworker = () => {
       ALL_STATES.forEach(s => {
         const opt = document.createElement('option');
         opt.value = s;
-        opt.textContent = `${s} Ã¢â‚¬â€ ${STATE_NAMES[s] || s}`;
+        opt.textContent = `${s} ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â ${STATE_NAMES[s] || s}`;
         homeSelect.appendChild(opt);
       });
     }
@@ -2991,6 +2991,88 @@ const loadLeadershipMarketSignals = async () => {
   } else if (currentMapView === 'flight') {
     renderRnFlightPattern();
   }
+};
+
+const initForecast = () => {
+  if (!forecastBeds || !forecastSetting || !forecastHorizon || !forecastOutput) return;
+  const roleMixBySetting = {
+    acute: { rn: 70, lpn: 20, cna: 10 },
+    snf: { rn: 35, lpn: 25, cna: 40 },
+    outpatient: { rn: 60, lpn: 25, cna: 15 },
+    home: { rn: 55, lpn: 25, cna: 20 },
+    behavioral: { rn: 60, lpn: 20, cna: 20 }
+  };
+  const multiplierBySetting = {
+    acute: 0.65,
+    snf: 0.45,
+    outpatient: 0.2,
+    home: 0.15,
+    behavioral: 0.35
+  };
+
+  const updateForecast = () => {
+    const beds = Number.parseInt(forecastBeds.value || '0', 10) || 0;
+    const setting = forecastSetting.value || 'acute';
+    const horizon = Number.parseInt(forecastHorizon.value || '0', 10) || 0;
+    const multiplier = multiplierBySetting[setting] ?? 0.4;
+    const totalNurses = Math.max(0, Math.round(beds * multiplier));
+    const mix = roleMixBySetting[setting] ?? roleMixBySetting.acute;
+    const rn = Math.round((totalNurses * mix.rn) / 100);
+    const lpn = Math.round((totalNurses * mix.lpn) / 100);
+    const cna = Math.round((totalNurses * mix.cna) / 100);
+
+    forecastOutput.innerHTML = `
+      Estimated displacement over ${horizon || 60} days:
+      <strong>${totalNurses}</strong> total nurses
+      (RN ${rn} | LPN ${lpn} | CNA ${cna}).
+    `;
+  };
+
+  forecastBeds.addEventListener('input', updateForecast);
+  forecastSetting.addEventListener('change', updateForecast);
+  forecastHorizon.addEventListener('input', updateForecast);
+  updateForecast();
+};
+
+const loadNotices = async () => {
+  setLoading('Loading notices...');
+  const query = buildQuery();
+  try {
+    const data = await fetchJson(`/notices?${query}`);
+    let notices = data.notices ?? [];
+
+    // Merge in custom notices from localStorage
+    if (customNotices.length > 0) {
+      notices = [...customNotices, ...notices];
+    }
+    notices = filterNoticesByScope(notices);
+    notices = sortNoticesByNewest(notices);
+
+    currentNotices = notices;
+    syncMapStateDataToVisibleNotices();
+    renderNotices(currentNotices);
+    updateStats(currentNotices);
+    if (!currentNotices.length) {
+      if (!apiHasDb) {
+        noticeList.innerHTML = `<div class="empty-state">No database connected. Start Postgres and run the worker to load notices.</div>`;
+      }
+      renderDetail(null);
+    }
+  } catch (err) {
+    // Still show custom notices even if API fails
+    if (customNotices.length > 0) {
+      currentNotices = sortNoticesByNewest([...customNotices]);
+      syncMapStateDataToVisibleNotices();
+      renderNotices(currentNotices);
+      updateStats(currentNotices);
+    } else {
+      currentNotices = [];
+      syncMapStateDataToVisibleNotices();
+      setLoading('Unable to load notices. Is the API running?');
+      statTotal.textContent = '0';
+    }
+    renderDetail(null);
+
 };
 
 const initForecast = () => {
@@ -5416,9 +5498,9 @@ const loadPrograms = async (force = false) => {
         ? `Sources: ${sourceNames.join(' + ')}`
         : '';
       if (data?.mode === 'live') {
-        programsSourceNote.textContent += `${programsSourceNote.textContent ? ' • ' : ''}Live refresh active`;
+        programsSourceNote.textContent += `${programsSourceNote.textContent ? ' â€¢ ' : ''}Live refresh active`;
       } else if (data?.mode === 'fallback-after-live-failure') {
-        programsSourceNote.textContent += `${programsSourceNote.textContent ? ' • ' : ''}Live refresh failed; using local snapshot`;
+        programsSourceNote.textContent += `${programsSourceNote.textContent ? ' â€¢ ' : ''}Live refresh failed; using local snapshot`;
       }
     }
 
@@ -8362,6 +8444,557 @@ const renderMarketLineChartSvg = (buckets, aggregate, annotations = []) => {
     `;
   }).join('');
 
+const getNoticeMarketDateMs = (notice) => {
+  const raw = notice?.notice_date || notice?.noticeDate || notice?.effective_date || notice?.retrieved_at || notice?.createdAt || '';
+  const ms = Date.parse(raw);
+  return Number.isFinite(ms) ? ms : 0;
+};
+
+const getNoticeAffectedCount = (notice) => {
+  const candidates = [
+    notice?.affected_count,
+    notice?.affectedCount,
+    notice?.employees_affected,
+    notice?.employeesAffected,
+    notice?.number_affected,
+    notice?.layoff_count,
+    notice?.count
+  ];
+  for (const value of candidates) {
+    const n = Number(value);
+    if (Number.isFinite(n) && n > 0) return Math.min(5000, n);
+  }
+  return 1;
+};
+
+const MARKET_CHART_COMPONENTS = {
+  layoffSupply: { side: 'supply', label: 'Layoff supply', color: '#0f766e' },
+  talentSupply: { side: 'supply', label: 'Talent availability', color: '#14b8a6' },
+  educationSupply: { side: 'supply', label: 'Nursing pipeline', color: '#22c55e' },
+  mobilitySupply: { side: 'supply', label: 'License / mobility', color: '#65a30d' },
+  projectedDemand: { side: 'demand', label: 'Projected RN gap', color: '#b45309' },
+  noticeDemand: { side: 'demand', label: 'Notice pressure', color: '#f97316' },
+  wageDemand: { side: 'demand', label: 'Wage pressure', color: '#dc2626' },
+  facilityDemand: { side: 'demand', label: 'Facility stress', color: '#7c2d12' },
+  disruptionDemand: { side: 'demand', label: 'Disruption risk', color: '#9333ea' }
+};
+
+const MARKET_CHART_METRICS = {
+  aggregate: 'Aggregate supply vs demand',
+  components: 'Component stack',
+  net: 'Net balance',
+  risk: 'Leadership scores'
+};
+
+const getIsoWeekStart = (date) => {
+  const d = new Date(date);
+  d.setHours(0, 0, 0, 0);
+  const day = d.getDay() || 7;
+  d.setDate(d.getDate() - day + 1);
+  return d;
+};
+
+const getMarketWeekKey = (date) => {
+  const start = getIsoWeekStart(date);
+  return start.toISOString().slice(0, 10);
+};
+
+const getStateFacilityCount = (state) => {
+  const providers = Array.isArray(providerMasterData?.providers) ? providerMasterData.providers : [];
+  if (!providers.length) return 0;
+  return providers.reduce((count, provider) => (
+    String(provider?.state || '').trim().toUpperCase() === state ? count + 1 : count
+  ), 0);
+};
+
+const getStateProgramCount = (state) => {
+  if (!Array.isArray(nursingPrograms) || !nursingPrograms.length) return 0;
+  return nursingPrograms.reduce((count, program) => {
+    const normalized = normalizeProgram(program);
+    return normalized.stateCode === state ? count + 1 : count;
+  }, 0);
+};
+
+const getStateStrikeCount = (state) => {
+  if (!Array.isArray(strikeAlertsData) || !strikeAlertsData.length) return 0;
+  return strikeAlertsData.reduce((count, row) => (
+    String(row?.state || '').trim().toUpperCase() === state ? count + 1 : count
+  ), 0);
+};
+
+const getStateRuralRiskCount = (state) => {
+  const entry = ruralClosuresData?.[state];
+  return Math.max(0, Number(entry?.atRisk || 0) + Number(entry?.recent || 0));
+};
+
+const getStateNewsSignalCount = (state) => {
+  const rows = Array.isArray(stateNewsData?.states?.[state]?.articles)
+    ? stateNewsData.states[state].articles
+    : Array.isArray(stateNewsData?.[state])
+      ? stateNewsData[state]
+      : [];
+  return rows.length;
+};
+
+const getStateRelocationScore = (state) => {
+  const value = Number(recruitmentIntel?.relocationIndex?.[state] ?? relocationData?.relocationScale?.[state] ?? 50);
+  return Number.isFinite(value) ? Math.max(0, value) : 50;
+};
+
+const normalizeMarketValue = (value, state, mode) => {
+  if (mode === 'facility') {
+    return value / Math.max(1, getStateFacilityCount(state) / 100);
+  }
+  if (mode === 'program') {
+    return value / Math.max(1, getStateProgramCount(state));
+  }
+  if (mode === 'notice') {
+    const noticeCount = Number(mapStateData?.[state]?.count || 0);
+    return value / Math.max(1, noticeCount);
+  }
+  return value;
+};
+
+const getTalentSupplyByState = () => {
+  const totals = new Map();
+  if (!Array.isArray(latestTalentOpportunities)) return totals;
+  latestTalentOpportunities.forEach((entry) => {
+    const state = String(entry?.state || '').trim().toUpperCase();
+    if (!ALL_STATES.includes(state)) return;
+    const estBase = Number(entry?.estimated_nurses_available || 0);
+    if (!Number.isFinite(estBase) || estBase <= 0) return;
+    const stateWeight = Number(freeMarketSignals?.stateFactors?.[state]?.combinedWeight || 1);
+    const facilityStateWeight = Number(facilityMarketFeatures?.stateFeatures?.[state]?.distressWeight || 1);
+    const estimate = Math.max(0, Math.round(estBase * stateWeight * facilityStateWeight));
+    totals.set(state, (totals.get(state) || 0) + estimate);
+  });
+  return totals;
+};
+
+const getMarketBucketKey = (date, granularity) => {
+  if (granularity === 'week') return getMarketWeekKey(date);
+  const year = date.getFullYear();
+  if (granularity === 'year') return String(year);
+  return `${year}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+};
+
+const formatMarketBucketLabel = (key, granularity) => {
+  if (granularity === 'year') return key;
+  if (granularity === 'week') {
+    const date = new Date(`${key}T00:00:00`);
+    return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+  }
+  const [year, month] = key.split('-').map(Number);
+  return new Date(year, month - 1, 1).toLocaleDateString(undefined, { month: 'short', year: '2-digit' });
+};
+
+const buildMarketBuckets = (notices, granularity) => {
+  const dated = notices
+    .map(getNoticeMarketDateMs)
+    .filter((ms) => ms > 0)
+    .sort((a, b) => a - b);
+  const now = new Date();
+  let start;
+  let end;
+
+  if (dated.length) {
+    start = new Date(dated[0]);
+    end = new Date(dated[dated.length - 1]);
+  } else {
+    start = new Date(now);
+    end = new Date(now);
+  }
+
+  if (granularity === 'year') {
+    const endYear = Math.max(end.getFullYear(), now.getFullYear());
+    const startYear = dated.length ? Math.max(start.getFullYear(), endYear - 9) : endYear - 4;
+    const buckets = [];
+    for (let year = startYear; year <= endYear; year += 1) {
+      buckets.push({ key: String(year), label: String(year), date: new Date(year, 0, 1) });
+    }
+    return buckets;
+  }
+
+  if (granularity === 'week') {
+    const endWeek = getIsoWeekStart(new Date(Math.max(end.getTime(), now.getTime())));
+    const startWeek = dated.length ? getIsoWeekStart(start) : getIsoWeekStart(new Date(now.getFullYear(), now.getMonth() - 3, now.getDate()));
+    const weeks = Math.floor((endWeek.getTime() - startWeek.getTime()) / (7 * 24 * 60 * 60 * 1000)) + 1;
+    if (weeks > 52) {
+      startWeek.setDate(endWeek.getDate() - (51 * 7));
+    }
+
+    const buckets = [];
+    const cursor = new Date(startWeek);
+    while (cursor <= endWeek) {
+      const key = getMarketBucketKey(cursor, granularity);
+      buckets.push({ key, label: formatMarketBucketLabel(key, granularity), date: new Date(cursor) });
+      cursor.setDate(cursor.getDate() + 7);
+    }
+    return buckets;
+  }
+
+  const endMonth = new Date(Math.max(end.getTime(), now.getTime()));
+  endMonth.setDate(1);
+  const startMonth = dated.length ? new Date(start) : new Date(now.getFullYear(), now.getMonth() - 11, 1);
+  startMonth.setDate(1);
+  const months = ((endMonth.getFullYear() - startMonth.getFullYear()) * 12) + (endMonth.getMonth() - startMonth.getMonth()) + 1;
+  if (months > 36) {
+    startMonth.setFullYear(endMonth.getFullYear(), endMonth.getMonth() - 35, 1);
+  }
+
+  const buckets = [];
+  const cursor = new Date(startMonth);
+  while (cursor <= endMonth) {
+    const key = getMarketBucketKey(cursor, granularity);
+    buckets.push({ key, label: formatMarketBucketLabel(key, granularity), date: new Date(cursor) });
+    cursor.setMonth(cursor.getMonth() + 1);
+  }
+  return buckets;
+};
+
+const getChartStatesForScope = (scope) => {
+  if (scope === 'us') return ALL_STATES;
+  if (scope === 'selected') {
+    if (selectedStates.length) return selectedStates;
+    const selectedRegion = regionSelect.value;
+    if (selectedRegion && REGION_STATES[selectedRegion]) return REGION_STATES[selectedRegion];
+    return ALL_STATES;
+  }
+  return ALL_STATES.includes(scope) ? [scope] : ALL_STATES;
+};
+
+const buildNursingMarketSeries = ({ granularity, scope }) => {
+  const sourceNotices = Array.isArray(currentNotices) ? currentNotices : [];
+  const buckets = buildMarketBuckets(sourceNotices, granularity);
+  const bucketIndex = new Map(buckets.map((bucket, index) => [bucket.key, index]));
+  const states = getChartStatesForScope(scope);
+  const selectedSet = new Set(states);
+  const talentSupplyByState = getTalentSupplyByState();
+  const sourceCoverage = getMarketSourceCoverage();
+  const byState = new Map();
+
+  ALL_STATES.forEach((state) => {
+    byState.set(state, {
+      state,
+      supply: buckets.map(() => 0),
+      demand: buckets.map(() => 0),
+      components: Object.fromEntries(Object.keys(MARKET_CHART_COMPONENTS).map((key) => [key, buckets.map(() => 0)])),
+      notices: 0,
+      confidence: 0,
+      scores: { marketRisk: 0, recruitingOpportunity: 0, retentionRisk: 0 }
+    });
+  });
+
+  ALL_STATES.forEach((state) => {
+    const row = byState.get(state);
+    const noticeCount = Number(mapStateData?.[state]?.count || stateDataHealthcare?.[state]?.count || stateDataAll?.[state]?.count || 0);
+    const talentSupply = Number(talentSupplyByState.get(state) || 0);
+    const rnGap = getStateRnDemandGap(state);
+    const projectedGap = rnGap > 0 ? rnGap : Math.max(12, noticeCount * 9);
+    const programCount = getStateProgramCount(state);
+    const facilityCount = getStateFacilityCount(state);
+    const relocationScore = getStateRelocationScore(state);
+    const strikeCount = getStateStrikeCount(state);
+    const ruralRisk = getStateRuralRiskCount(state);
+    const newsSignals = getStateNewsSignalCount(state);
+    const salary = strategicData?.salaryData?.[state] || recruitmentIntel?.salaryBenchmarks?.[state] || {};
+    const travelPremium = Math.max(0, Number(salary?.travelWeekly || 0) * 48 - Number(salary?.staffRN || 0));
+    const shortageStatus = String(salary?.shortage || freeMarketSignals?.stateFactors?.[state]?.shortage || '').toLowerCase();
+    const compactWeight = freeMarketSignals?.nlcCompactStates?.includes(state) ? 1.12 : 0.88;
+    const facilityStress = Math.max(0, (facilityMarketFeatures?.stateFeatures?.[state]?.distressWeight || 1) - 1) * 420;
+
+    const bases = {
+      layoffSupply: Math.max(4, noticeCount * 4),
+      talentSupply: talentSupply > 0 ? talentSupply : Math.max(6, noticeCount * 5),
+      educationSupply: Math.max(4, programCount * 16),
+      mobilitySupply: Math.max(3, relocationScore * compactWeight),
+      projectedDemand: projectedGap,
+      noticeDemand: Math.max(6, noticeCount * 8),
+      wageDemand: Math.max(3, travelPremium / 180),
+      facilityDemand: Math.max(3, facilityCount * 0.8 + facilityStress),
+      disruptionDemand: Math.max(0, strikeCount * 24 + ruralRisk * 18 + newsSignals * 1.5)
+    };
+    if (shortageStatus === 'shortage') bases.projectedDemand *= 1.08;
+    if (shortageStatus === 'surplus') bases.projectedDemand *= 0.72;
+
+    buckets.forEach((bucket, index) => {
+      const month = bucket.date.getMonth();
+      const seasonal = granularity !== 'year' ? 1 + (Math.sin((month / 12) * Math.PI * 2) * 0.12) : 1;
+      const trend = buckets.length > 1 ? 0.9 + ((index / (buckets.length - 1)) * 0.2) : 1;
+      Object.entries(bases).forEach(([component, base]) => {
+        const side = MARKET_CHART_COMPONENTS[component].side;
+        const componentSeason = side === 'supply' ? seasonal : (2 - seasonal);
+        const value = Math.max(0, base / Math.max(1, buckets.length) * componentSeason * trend);
+        row.components[component][index] += value;
+      });
+    });
+  });
+
+  sourceNotices.forEach((notice) => {
+    const state = String(notice?.state || '').trim().toUpperCase();
+    if (!ALL_STATES.includes(state)) return;
+    const ms = getNoticeMarketDateMs(notice);
+    if (!ms) return;
+    const date = new Date(ms);
+    const key = getMarketBucketKey(date, granularity);
+    const index = bucketIndex.get(key);
+    if (index === undefined) return;
+    const row = byState.get(state);
+    const affected = getNoticeAffectedCount(notice);
+    const score = Math.max(0, Number(notice?.nursing_score ?? notice?.nursingImpact?.score ?? 0));
+    row.notices += 1;
+    row.components.layoffSupply[index] += Math.max(1, affected * 0.65) + Math.max(0, score / 12);
+    row.components.noticeDemand[index] += Math.max(1, affected * 0.18) + Math.max(1, score / 8);
+  });
+
+  byState.forEach((row, state) => {
+    Object.entries(MARKET_CHART_COMPONENTS).forEach(([component, meta]) => {
+      row.components[component].forEach((value, index) => {
+        const normalized = normalizeMarketValue(value, state, marketChartNormalize);
+        if (meta.side === 'supply') row.supply[index] += normalized;
+        else row.demand[index] += normalized;
+        row.components[component][index] = normalized;
+      });
+    });
+    const supplyTotal = row.supply.reduce((sum, value) => sum + value, 0);
+    const demandTotal = row.demand.reduce((sum, value) => sum + value, 0);
+    const gapRatio = demandTotal / Math.max(1, supplyTotal + demandTotal);
+    const noticeDepth = Math.min(1, row.notices / 10);
+    const sourceDepth = sourceCoverage.score;
+    const facilityDepth = getStateFacilityCount(state) > 0 ? 0.12 : 0;
+    const talentDepth = talentSupplyByState.get(state) > 0 ? 0.14 : 0;
+    row.confidence = Math.round(Math.min(0.94, 0.34 + sourceDepth * 0.3 + noticeDepth * 0.18 + facilityDepth + talentDepth) * 100);
+    const relocationScore = getStateRelocationScore(state);
+    const strikeCount = getStateStrikeCount(state);
+    const ruralRisk = getStateRuralRiskCount(state);
+    const wageDemand = row.components.wageDemand.reduce((sum, value) => sum + value, 0);
+    row.scores = {
+      marketRisk: Math.round(Math.min(100, gapRatio * 72 + strikeCount * 5 + ruralRisk * 2 + (100 - row.confidence) * 0.12)),
+      recruitingOpportunity: Math.round(Math.min(100, Math.max(0, ((supplyTotal - demandTotal) / Math.max(1, supplyTotal)) * 55 + relocationScore * 0.35 + row.confidence * 0.22))),
+      retentionRisk: Math.round(Math.min(100, gapRatio * 58 + wageDemand / Math.max(1, demandTotal) * 45 + strikeCount * 4 + ruralRisk * 1.5))
+    };
+  });
+
+  const aggregate = {
+    supply: buckets.map(() => 0),
+    demand: buckets.map(() => 0),
+    confidenceLow: buckets.map(() => 0),
+    confidenceHigh: buckets.map(() => 0),
+    components: Object.fromEntries(Object.keys(MARKET_CHART_COMPONENTS).map((key) => [key, buckets.map(() => 0)]))
+  };
+  states.forEach((state) => {
+    const row = byState.get(state);
+    if (!row) return;
+    row.supply.forEach((value, index) => { aggregate.supply[index] += value; });
+    row.demand.forEach((value, index) => { aggregate.demand[index] += value; });
+    Object.keys(MARKET_CHART_COMPONENTS).forEach((component) => {
+      row.components[component].forEach((value, index) => { aggregate.components[component][index] += value; });
+    });
+  });
+
+  const selectedRows = states.map((state) => byState.get(state)).filter(Boolean);
+  aggregate.confidence = selectedRows.length
+    ? Math.round(selectedRows.reduce((sum, row) => sum + row.confidence, 0) / selectedRows.length)
+    : Math.round(sourceCoverage.score * 100);
+  aggregate.supply.forEach((value, index) => {
+    const demand = aggregate.demand[index] || 0;
+    const center = Math.max(value, demand);
+    const spread = center * Math.max(0.08, (100 - aggregate.confidence) / 100 * 0.42);
+    aggregate.confidenceLow[index] = Math.max(0, center - spread);
+    aggregate.confidenceHigh[index] = center + spread;
+  });
+
+  const stateRows = ALL_STATES.map((state) => {
+    const row = byState.get(state);
+    const supplyTotal = row.supply.reduce((sum, value) => sum + value, 0);
+    const demandTotal = row.demand.reduce((sum, value) => sum + value, 0);
+    return {
+      state,
+      supplyTotal,
+      demandTotal,
+      net: supplyTotal - demandTotal,
+      notices: row.notices,
+      confidence: row.confidence,
+      scores: row.scores,
+      selected: selectedSet.has(state)
+    };
+  }).sort((a, b) => Math.abs(b.net) - Math.abs(a.net));
+
+  const annotations = buildMarketAnnotations(sourceNotices, buckets, bucketIndex, states, granularity);
+
+  return { buckets, aggregate, stateRows, annotations, sourceCoverage };
+};
+
+const getMarketSourceCoverage = () => {
+  const datasets = marketRequiredMetrics?.datasets || {};
+  const checks = [
+    ['WARN notices', datasets.warnNotices?.status || (currentNotices.length ? 'ok' : 'unknown'), datasets.warnNotices?.fetchedAt || null],
+    ['HRSA workforce', datasets.hrsaNssrn?.status || freeMarketSignals?.sources?.hrsa || 'unknown', datasets.hrsaNssrn?.fetchedAt || freeMarketSignals?.lastUpdated || null],
+    ['BLS wage/employment', datasets.blsOes?.status || freeMarketSignals?.sources?.bls || 'unknown', datasets.blsOes?.fetchedAt || strategicData?.lastUpdated || null],
+    ['CMS facility data', datasets.cmsCareCompare?.status || datasets.cmsHcris?.status || 'unknown', datasets.cmsCareCompare?.fetchedAt || datasets.cmsHcris?.fetchedAt || null],
+    ['NCSBN / compact', freeMarketSignals?.sources?.ncsbn || 'unknown', freeMarketSignals?.lastUpdated || null],
+    ['Programs pipeline', nursingPrograms.length ? 'ok' : 'unknown', programsMeta?.lastUpdated || null],
+    ['Strikes / disruption', strikeAlertsData.length ? 'ok' : 'unknown', strikeAlertsMeta?.lastUpdated || null],
+    ['Rural closures', Object.keys(ruralClosuresData || {}).length ? 'ok' : 'unknown', ruralClosuresLoadedAt ? new Date(ruralClosuresLoadedAt).toISOString() : null],
+    ['State news', stateNewsData ? 'ok' : 'unknown', stateNewsData?.lastUpdated || null],
+    ['Relocation / compensation', relocationData || recruitmentIntel ? 'ok' : 'unknown', recruitmentIntel?.lastUpdated || relocationData?.lastUpdated || null]
+  ];
+  const rows = checks.map(([name, statusRaw, updatedAt]) => {
+    const status = String(statusRaw || 'unknown').toLowerCase();
+    const score = status === 'ok' ? 1 : status === 'error' ? 0 : 0.45;
+    return { name, status, updatedAt, score };
+  });
+  const score = rows.length ? rows.reduce((sum, row) => sum + row.score, 0) / rows.length : 0.45;
+  return { rows, score };
+};
+
+const buildMarketAnnotations = (sourceNotices, buckets, bucketIndex, states, granularity) => {
+  const allowed = new Set(states);
+  const noticeAnnotations = sourceNotices
+    .filter((notice) => allowed.has(String(notice?.state || '').trim().toUpperCase()))
+    .map((notice) => {
+      const ms = getNoticeMarketDateMs(notice);
+      if (!ms) return null;
+      const date = new Date(ms);
+      const key = getMarketBucketKey(date, granularity);
+      const index = bucketIndex.get(key);
+      if (index === undefined) return null;
+      const state = String(notice?.state || '').trim().toUpperCase();
+      const affected = getNoticeAffectedCount(notice);
+      const score = Number(notice?.nursing_score ?? notice?.nursingImpact?.score ?? 0);
+      const employer = String(notice?.employer_name || notice?.employerName || 'Notice').trim();
+      return {
+        index,
+        key,
+        state,
+        type: 'WARN',
+        weight: affected + score,
+        label: `${state} WARN: ${employer}`,
+        detail: `${affected.toLocaleString()} affected | nursing score ${Math.round(score || 0)}`
+      };
+    })
+    .filter(Boolean)
+    .sort((a, b) => b.weight - a.weight)
+    .slice(0, 8);
+
+  const strikeAnnotations = Array.isArray(strikeAlertsData)
+    ? strikeAlertsData
+      .filter((row) => allowed.has(String(row?.state || '').trim().toUpperCase()))
+      .map((row) => {
+        const raw = row?.date || row?.start_date || row?.notice_date || row?.updatedAt || strikeAlertsMeta?.lastUpdated;
+        const ms = Date.parse(raw || '');
+        if (!Number.isFinite(ms)) return null;
+        const key = getMarketBucketKey(new Date(ms), granularity);
+        const index = bucketIndex.get(key);
+        if (index === undefined) return null;
+        const state = String(row?.state || '').trim().toUpperCase();
+        return {
+          index,
+          key,
+          state,
+          type: 'Strike',
+          weight: 80,
+          label: `${state} labor disruption`,
+          detail: String(row?.title || row?.employer || 'Strike / union signal')
+        };
+      })
+      .filter(Boolean)
+      .slice(0, 5)
+    : [];
+
+  return [...noticeAnnotations, ...strikeAnnotations]
+    .sort((a, b) => a.index - b.index || b.weight - a.weight)
+    .slice(0, 10);
+};
+
+const marketChartPath = (values, buckets, width, height, padding, maxValue) => {
+  if (!values.length) return '';
+  const usableWidth = width - padding.left - padding.right;
+  const usableHeight = height - padding.top - padding.bottom;
+  return values.map((value, index) => {
+    const x = padding.left + (values.length === 1 ? usableWidth / 2 : (index / (values.length - 1)) * usableWidth);
+    const y = padding.top + usableHeight - ((value / maxValue) * usableHeight);
+    return `${index === 0 ? 'M' : 'L'} ${x.toFixed(1)} ${y.toFixed(1)}`;
+  }).join(' ');
+};
+
+const marketChartBandPath = (lowValues, highValues, width, height, padding, maxValue) => {
+  if (!lowValues.length || !highValues.length) return '';
+  const usableWidth = width - padding.left - padding.right;
+  const usableHeight = height - padding.top - padding.bottom;
+  const high = highValues.map((value, index) => {
+    const x = padding.left + (highValues.length === 1 ? usableWidth / 2 : (index / (highValues.length - 1)) * usableWidth);
+    const y = padding.top + usableHeight - ((value / maxValue) * usableHeight);
+    return `${index === 0 ? 'M' : 'L'} ${x.toFixed(1)} ${y.toFixed(1)}`;
+  }).join(' ');
+  const low = lowValues.slice().reverse().map((value, reverseIndex) => {
+    const index = lowValues.length - 1 - reverseIndex;
+    const x = padding.left + (lowValues.length === 1 ? usableWidth / 2 : (index / (lowValues.length - 1)) * usableWidth);
+    const y = padding.top + usableHeight - ((value / maxValue) * usableHeight);
+    return `L ${x.toFixed(1)} ${y.toFixed(1)}`;
+  }).join(' ');
+  return `${high} ${low} Z`;
+};
+
+const getMarketChartSeries = (aggregate) => {
+  if (marketChartMetric === 'net') {
+    const net = aggregate.supply.map((value, index) => value - aggregate.demand[index]);
+    const min = Math.min(0, ...net);
+    return {
+      series: [{ key: 'net', label: 'Net balance', values: net.map((value) => value - min), color: '#1d4ed8', rawValues: net }],
+      minOffset: min,
+      band: null
+    };
+  }
+
+  if (marketChartMetric === 'components') {
+    const keys = Object.keys(MARKET_CHART_COMPONENTS)
+      .filter((key) => marketChartLayer === 'all' || MARKET_CHART_COMPONENTS[key].side === marketChartLayer);
+    return {
+      series: keys.map((key) => ({
+        key,
+        label: MARKET_CHART_COMPONENTS[key].label,
+        values: aggregate.components[key],
+        color: MARKET_CHART_COMPONENTS[key].color,
+        rawValues: aggregate.components[key]
+      })),
+      minOffset: 0,
+      band: null
+    };
+  }
+
+  return {
+    series: [
+      { key: 'supply', label: 'Supply', values: aggregate.supply, color: '#0f766e', rawValues: aggregate.supply },
+      { key: 'demand', label: 'Demand', values: aggregate.demand, color: '#b45309', rawValues: aggregate.demand }
+    ],
+    minOffset: 0,
+    band: {
+      low: aggregate.confidenceLow,
+      high: aggregate.confidenceHigh
+    }
+  };
+};
+
+const renderMarketLineChartSvg = (buckets, aggregate, annotations = []) => {
+  const width = 980;
+  const height = 360;
+  const padding = { top: 28, right: 28, bottom: 58, left: 72 };
+  const chartSeries = getMarketChartSeries(aggregate);
+  const allValues = chartSeries.series.flatMap((row) => row.values);
+  const maxValue = Math.max(1, ...allValues) * 1.08;
+  const usableWidth = width - padding.left - padding.right;
+  const usableHeight = height - padding.top - padding.bottom;
+  const labelEvery = Math.max(1, Math.ceil(buckets.length / 8));
+
+  const grid = [0, 0.25, 0.5, 0.75, 1].map((ratio) => {
+    const y = padding.top + usableHeight - (ratio * usableHeight);
+    const value = Math.round((maxValue * ratio) + (chartSeries.minOffset || 0));
+    return `
+      <line x1="${padding.left}" y1="${y}" x2="${width - padding.right}" y2="${y}" class="market-chart-grid" />
+      <text x="${padding.left - 12}" y="${y + 4}" class="market-chart-y-label">${value.toLocaleString()}</text>
+    `;
+  }).join('');
   const xLabels = buckets.map((bucket, index) => {
     if (index % labelEvery !== 0 && index !== buckets.length - 1) return '';
     const x = padding.left + (buckets.length === 1 ? usableWidth / 2 : (index / (buckets.length - 1)) * usableWidth);
@@ -8565,8 +9198,7 @@ const renderMarketLeadershipCards = (rows) => {
         <span>Market Risk</span><strong>${marketRisk}</strong><small>Demand stress, disruption, and confidence-adjusted shortage pressure.</small>
       </button>
       <button type="button" class="market-leadership-card" data-market-score-type="recruitingOpportunity" data-market-score-value="${recruitingOpportunity}">
-        <span>Recruiting Opportunity</span><strong>${recruitingOpportunity}</strong><small>Available supply, relocation attractiveness, and data confidence.</small>
-      </button>
+        <span>Recruiting Opportunity</span><strong>${recruitingOpportunity}</strong><small>Available supply, relocation attractiveness, and data confidence.</small></button>
       <button type="button" class="market-leadership-card" data-market-score-type="retentionRisk" data-market-score-value="${retentionRisk}">
         <span>Retention Risk</span><strong>${retentionRisk}</strong><small>Demand intensity, wage pressure, and labor disruption exposure.</small>
       </button>
@@ -9041,6 +9673,42 @@ const renderBarChart = () => {
   `;
 
   document.getElementById('market-chart-scope')?.addEventListener('change', (event) => {
+    marketChartScope = event.target.value || 'us';
+    renderBarChart();
+  });
+  document.getElementById('market-chart-granularity')?.addEventListener('change', (event) => {
+    marketChartGranularity = ['week', 'month', 'year'].includes(event.target.value) ? event.target.value : 'month';
+    renderBarChart();
+  });
+  document.getElementById('market-chart-metric')?.addEventListener('change', (event) => {
+    marketChartMetric = MARKET_CHART_METRICS[event.target.value] ? event.target.value : 'aggregate';
+    renderBarChart();
+  });
+  document.getElementById('market-chart-normalize')?.addEventListener('change', (event) => {
+    marketChartNormalize = ['none', 'facility', 'program', 'notice'].includes(event.target.value) ? event.target.value : 'none';
+    renderBarChart();
+  });
+  document.getElementById('market-chart-layer')?.addEventListener('change', (event) => {
+    marketChartLayer = ['all', 'supply', 'demand'].includes(event.target.value) ? event.target.value : 'all';
+    renderBarChart();
+  });
+  document.getElementById('market-chart-search')?.addEventListener('input', (event) => {
+    marketChartSearch = event.target.value || '';
+    renderBarChart();
+    const input = document.getElementById('market-chart-search');
+    input?.focus();
+    if (input) input.selectionStart = input.selectionEnd = input.value.length;
+  });
+  barChart.querySelectorAll('[data-market-state]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      marketChartScope = btn.getAttribute('data-market-state') || 'us';
+      renderBarChart();
+    });
+  });
+};
+
+// Toggle between map and chart view
+const toggleMapView = (view) => {
     marketChartScope = event.target.value || 'us';
     renderBarChart();
   });
@@ -10320,5 +10988,3 @@ if (document.fonts && document.fonts.ready) {
 
 // Auto-init if already authenticated
 bootstrapAuth();
-
-
