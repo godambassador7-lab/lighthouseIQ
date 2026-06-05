@@ -6023,10 +6023,25 @@ input[type="range"] {
   color: #d97706;
 }
 
+.rural-risk-badge.type-closed {
+  background: rgba(107, 114, 128, 0.1);
+  color: #6b7280;
+}
+
+.rural-risk-badge.type-converted {
+  background: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+}
+
 .rural-hospital-financials {
   display: flex;
   gap: 8px;
   margin-bottom: 4px;
+}
+
+.rural-hospital-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .rural-financial-item {
@@ -6548,6 +6563,20 @@ input[type="range"] {
 .market-source-grid {
   display: grid;
   gap: 0;
+  max-height: 236px;
+  overflow-y: auto;
+  padding-right: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(26, 54, 93, 0.28) transparent;
+}
+
+.market-source-grid::-webkit-scrollbar {
+  width: 6px;
+}
+
+.market-source-grid::-webkit-scrollbar-thumb {
+  background: rgba(26, 54, 93, 0.28);
+  border-radius: 999px;
 }
 
 .market-source-row.ok strong {

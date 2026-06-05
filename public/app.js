@@ -3700,6 +3700,35 @@ const renderRuralClosuresForState = (stateAbbrev) => {
   const entry = getRuralStateEntry(stateAbbrev);
   const atRiskHospitals = Array.isArray(entry.atRiskHospitals) ? entry.atRiskHospitals : [];
   const closedHospitals = Array.isArray(entry.closedHospitals) ? entry.closedHospitals : [];
+  const formatRuralNumber = (value, fallback = 'Unavailable') => {
+    const n = Number(value);
+    return Number.isFinite(n) ? n.toLocaleString() : fallback;
+  };
+  const formatRuralMargin = (value) => {
+    const n = Number(value);
+    return Number.isFinite(n) ? `${n.toFixed(1)}%` : 'Unavailable';
+  };
+  const renderRuralMetrics = (hospital) => `
+    <div class="rural-hospital-financials rural-hospital-metrics">
+      <div class="rural-financial-item">
+        <span class="rural-financial-label">Beds</span>
+        <span class="rural-financial-value">${escapeHtml(formatRuralNumber(hospital?.beds))}</span>
+      </div>
+      <div class="rural-financial-item">
+        <span class="rural-financial-label">Avg daily patients</span>
+        <span class="rural-financial-value">${escapeHtml(formatRuralNumber(hospital?.dailyCensus))}</span>
+      </div>
+      <div class="rural-financial-item">
+        <span class="rural-financial-label">Operating margin</span>
+        <span class="rural-financial-value ${Number(hospital?.operatingMargin) < -7 ? 'risk-high' : Number(hospital?.operatingMargin) < 0 ? 'risk-medium' : 'risk-low'}">${escapeHtml(formatRuralMargin(hospital?.operatingMargin))}</span>
+      </div>
+    </div>
+  `;
+  const renderRiskFactors = (hospital) => {
+    const factors = Array.isArray(hospital?.riskFactors) ? hospital.riskFactors : [];
+    if (!factors.length) return '';
+    return `<ul class="rural-risk-factors">${factors.slice(0, 3).map((factor) => `<li>${escapeHtml(factor)}</li>`).join('')}</ul>`;
+  };
 
   if (ruralClosuresTitle) ruralClosuresTitle.textContent = `Rural Hospital Risk - ${stateName}`;
   if (ruralClosuresSubtitle) {
@@ -3708,24 +3737,31 @@ const renderRuralClosuresForState = (stateAbbrev) => {
 
   const atRiskHtml = atRiskHospitals.length
     ? atRiskHospitals.slice(0, 10).map((hospital) => `
-      <div class="rural-hospital-row">
-        <div class="rural-hospital-info">
-          <div class="rural-hospital-name">${escapeHtml(hospital.name || 'Unknown')}</div>
-          <div class="rural-hospital-location">${escapeHtml([hospital.city, hospital.county].filter(Boolean).join(', ') || stateName)}</div>
+      <div class="rural-hospital-card">
+        <div class="rural-hospital-header">
+          <div class="rural-hospital-info">
+            <div class="rural-hospital-name">${escapeHtml(hospital.name || 'Unknown')}</div>
+            <div class="rural-hospital-location">${escapeHtml([hospital.city, hospital.county].filter(Boolean).join(', ') || stateName)}</div>
+          </div>
+          <span class="rural-risk-badge ${String(hospital.risk || '').toLowerCase() === 'high' ? 'risk-high' : 'risk-moderate'}">${escapeHtml((hospital.risk || 'moderate').toString())}</span>
         </div>
-        <span class="rural-hospital-badge ${String(hospital.risk || '').toLowerCase() === 'high' ? 'risk-high' : 'risk-moderate'}">${escapeHtml((hospital.risk || 'moderate').toString())}</span>
+        ${renderRuralMetrics(hospital)}
+        ${renderRiskFactors(hospital)}
       </div>
     `).join('')
     : '<div class="rural-empty">No at-risk hospitals listed for this state.</div>';
 
   const closedHtml = closedHospitals.length
     ? closedHospitals.slice(0, 10).map((hospital) => `
-      <div class="rural-hospital-row">
-        <div class="rural-hospital-info">
-          <div class="rural-hospital-name">${escapeHtml(hospital.name || 'Unknown')}</div>
-          <div class="rural-hospital-location">${escapeHtml([hospital.city, hospital.county].filter(Boolean).join(', ') || stateName)}${hospital.year ? ` | ${escapeHtml(String(hospital.year))}` : ''}</div>
+      <div class="rural-hospital-card">
+        <div class="rural-hospital-header">
+          <div class="rural-hospital-info">
+            <div class="rural-hospital-name">${escapeHtml(hospital.name || 'Unknown')}</div>
+            <div class="rural-hospital-location">${escapeHtml([hospital.city, hospital.county].filter(Boolean).join(', ') || stateName)}${hospital.year ? ` | ${escapeHtml(String(hospital.year))}` : ''}</div>
+          </div>
+          <span class="rural-risk-badge type-${hospital.type === 'converted' ? 'converted' : 'closed'}">${hospital.type === 'converted' ? 'Converted' : 'Closed'}</span>
         </div>
-        <span class="rural-hospital-badge type-${hospital.type === 'converted' ? 'converted' : 'closed'}">${hospital.type === 'converted' ? 'Converted' : 'Closed'}</span>
+        ${renderRuralMetrics(hospital)}
       </div>
     `).join('')
     : '<div class="rural-empty">No closures listed for this state.</div>';
