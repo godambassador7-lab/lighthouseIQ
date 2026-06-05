@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-05T18:02:51.313Z",
+  "lastUpdated": "2026-06-05T20:08:21.919Z",
   "scope": "US healthcare",
   "sourceManifestVersion": "1.0.0",
   "sourceHealth": [
@@ -111,9 +111,10 @@
       "source": "NYSNA RSS",
       "id": "nysna_rss",
       "type": "rss",
-      "ok": true,
-      "status": 200,
-      "records": 12
+      "ok": false,
+      "status": 0,
+      "records": 0,
+      "error": "fetch failed"
     },
     {
       "source": "SEIU RSS",
@@ -245,6 +246,17 @@
       "sourceId": "federal_register_hhs",
       "publishedAt": "2026-06-05",
       "category": "quality_safety",
+      "relevance": 100
+    },
+    {
+      "title": "Early Alert: Infant Resuscitation System Issue from GE HealthCare",
+      "summary": "The air-oxygen blender knob shaft on certain integrated and stand-alone Resuscitation systems can loosen, affecting the delivered oxygen concentration",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-infant-resuscitation-system-issue-ge-healthcare",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-06-05",
+      "category": "ai_tech",
       "relevance": 100
     },
     {
@@ -897,17 +909,6 @@
       "relevance": 100
     },
     {
-      "title": "Thoracic Stent Graft Recall: Bolton Medical Removes Relay Pro System",
-      "summary": "Affected grafts may not unclasp from the delivery system. This may require conversion to open surgical repair and can result in patient death.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/thoracic-stent-graft-recall-bolton-medical-removes-relay-pro-system",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-05-20",
-      "category": "quality_safety",
-      "relevance": 100
-    },
-    {
       "title": "HUM 8-K filing - Humana Inc.",
       "summary": "Humana Inc. filed 8-K with the SEC.",
       "url": "https://www.sec.gov/Archives/edgar/data/49071/000004907126000025/hum-20260515.htm",
@@ -1524,7 +1525,7 @@
       "relevance": 100
     },
     {
-      "title": "Hospitals Are Leading Efforts to Make Health Care More Affordable",
+      "title": "Hospitals Are Leading Efforts to Make Healthcare More Affordable",
       "summary": "",
       "url": "https://www.aha.org/news/perspective/2026-06-05-hospitals-are-leading-efforts-make-health-care-more-affordable",
       "source": "AHA News",
@@ -1744,39 +1745,6 @@
       "relevance": 100
     },
     {
-      "title": "Save Healthcare Services",
-      "summary": "",
-      "url": "https://www.nysna.org/campaigns/save-healthcare-services",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 100
-    },
-    {
-      "title": "CVPH Healthcare Workers Continue Fight for Fair Contract",
-      "summary": "",
-      "url": "https://www.nysna.org/news/cvph-healthcare-workers-continue-fight-fair-contract",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "ai_tech",
-      "relevance": 100
-    },
-    {
-      "title": "Hundreds of UVM-CVPH Nurses and Healthcare Workers March and Speak Out Outside the Hospital",
-      "summary": "",
-      "url": "https://www.nysna.org/press/hundreds-uvm-cvph-nurses-and-healthcare-workers-march-and-speak-out-outside-hospital",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 100
-    },
-    {
       "title": "Vulnerability Disclosure",
       "summary": "",
       "url": "https://www.justice.gov/jmd/vulnerability-disclosure-policy",
@@ -1829,28 +1797,6 @@
       "sourceId": "ftc_press_releases",
       "publishedAt": "",
       "category": "mergers_mna",
-      "relevance": 98
-    },
-    {
-      "title": "NYSNA Nurses Succeed in Keeping the Dangerous Hospital at Home Program Out of New York State Budget",
-      "summary": "",
-      "url": "https://www.nysna.org/press/nysna-nurses-succeed-keeping-dangerous-hospital-home-program-out-new-york-state-budget",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 98
-    },
-    {
-      "title": "NYSNA Nurses Hold Candlelight Vigil at NYP-Brooklyn Methodist Hospital to Highlight Workplace Violence",
-      "summary": "",
-      "url": "https://www.nysna.org/press/nysna-nurses-hold-candlelight-vigil-nyp-brooklyn-methodist-hospital-highlight-workplace",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
       "relevance": 98
     },
     {
@@ -2011,6 +1957,17 @@
       "title": "AHA Rural Health Care Leadership Conference",
       "summary": "",
       "url": "https://ruralconference.aha.org/",
+      "source": "AHA News",
+      "sourceType": "html",
+      "sourceId": "aha_news",
+      "publishedAt": "",
+      "category": "policy_reimbursement",
+      "relevance": 96
+    },
+    {
+      "title": "AHA, West Health launch learning collaborative on aging care",
+      "summary": "",
+      "url": "https://www.aha.org/news/headline/2026-06-05-aha-west-health-launch-learning-collaborative-aging-care",
       "source": "AHA News",
       "sourceType": "html",
       "sourceId": "aha_news",
@@ -2283,50 +2240,6 @@
       "relevance": 93
     },
     {
-      "title": "Journal of the New York State Nurses Association",
-      "summary": "",
-      "url": "https://www.nysna.org/nursing-resources/journal-new-york-state-nurses-association",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 93
-    },
-    {
-      "title": "Statewide Peer Assistance for Nurses",
-      "summary": "",
-      "url": "https://www.statewidepeerassistance.org/",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 93
-    },
-    {
-      "title": "Health Equity and Social Justice",
-      "summary": "",
-      "url": "https://www.nysna.org/campaigns/health-equity-and-social-justice",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 93
-    },
-    {
-      "title": "NYSNA Nurses Protect Nurse Practice in New York State Budget",
-      "summary": "",
-      "url": "https://www.nysna.org/news/nysna-nurses-protect-nurse-practice-new-york-state-budget",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 93
-    },
-    {
       "title": "Read more about Federal Independent Dispute Resolution Operations Final Rule",
       "summary": "",
       "url": "https://www.cms.gov/newsroom/fact-sheets/federal-independent-dispute-resolution-operations-final-rule",
@@ -2448,17 +2361,6 @@
       "relevance": 91
     },
     {
-      "title": "The Value of Health Systems",
-      "summary": "",
-      "url": "https://www.aha.org/hospital-mergers",
-      "source": "AHA News",
-      "sourceType": "html",
-      "sourceId": "aha_news",
-      "publishedAt": "",
-      "category": "policy_reimbursement",
-      "relevance": 91
-    },
-    {
       "title": "Skip directly to site content",
       "summary": "",
       "url": "https://www.cdc.gov/media/index.html#content",
@@ -2523,39 +2425,6 @@
       "publishedAt": "",
       "category": "ai_tech",
       "relevance": 90
-    },
-    {
-      "title": "NYSNA Update: May 29, 2026",
-      "summary": "",
-      "url": "https://www.nysna.org/news/nysna-update-may-29-2026",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 88
-    },
-    {
-      "title": "NYSNA Update: May 22, 2026",
-      "summary": "",
-      "url": "https://www.nysna.org/news/nysna-update-may-22-2026",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 88
-    },
-    {
-      "title": "See All Photos and Videos",
-      "summary": "",
-      "url": "https://www.nysna.org/news/gallery",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 88
     }
   ]
 }
