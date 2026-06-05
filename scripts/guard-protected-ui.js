@@ -15,6 +15,9 @@ const pairs = FILES.map((file) => ({
   webPath: path.join(ROOT, 'apps', 'web', file)
 }));
 
+const requireWebCopy = process.env.PROTECTED_UI_REQUIRE_WEB === '1'
+  || fs.existsSync(path.join(ROOT, 'apps', 'web'));
+
 const requirements = [
   {
     file: 'index.html',
@@ -69,23 +72,25 @@ pairs.forEach(({ file, publicPath, webPath }) => {
   let webText = '';
   try {
     publicText = read(publicPath);
-    webText = read(webPath);
+    if (requireWebCopy) {
+      webText = read(webPath);
+    }
   } catch (error) {
     failures.push(error.message);
     return;
   }
 
-  if (normalize(publicText) !== normalize(webText)) {
+  if (requireWebCopy && normalize(publicText) !== normalize(webText)) {
     failures.push(`Frontend drift detected: public/${file} does not match apps/web/${file}. Update both copies before deploying.`);
   }
 
   const requirement = requirements.find((entry) => entry.file === file);
   if (!requirement) return;
 
-  [
-    { label: `public/${file}`, text: publicText },
-    { label: `apps/web/${file}`, text: webText }
-  ].forEach(({ label, text }) => {
+  const targets = [{ label: `public/${file}`, text: publicText }];
+  if (requireWebCopy) targets.push({ label: `apps/web/${file}`, text: webText });
+
+  targets.forEach(({ label, text }) => {
     requirement.markers.forEach((marker) => {
       if (!text.includes(marker)) {
         failures.push(`${label} is missing protected UI marker: ${marker}`);

@@ -182,6 +182,8 @@ jobs:
 
       - name: Guard protected UI modules
         run: npm run guard:ui
+        env:
+          PROTECTED_UI_REQUIRE_WEB: "1"
 
       - name: List generated files
         run: |
