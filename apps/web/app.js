@@ -293,6 +293,8 @@ let marketChartMetric = 'aggregate';
 let marketChartNormalize = 'none';
 let marketChartLayer = 'all';
 let marketChartSearch = '';
+let rnFlightOriginState = 'IN';
+let rnFlightTiming = 'next90';
 let selectedStates = []; // Multi-select states
 let mapScope = 'healthcare'; // 'healthcare' or 'all'
 let activeMapTab = 'layoffs'; // 'layoffs' | 'rural' | 'salary'
@@ -2986,6 +2988,8 @@ const loadLeadershipMarketSignals = async () => {
   ]);
   if (currentMapView === 'chart') {
     renderBarChart();
+  } else if (currentMapView === 'flight') {
+    renderRnFlightPattern();
   }
 };
 
@@ -3143,8 +3147,10 @@ clearBtn.addEventListener('click', () => {
   // Update map highlights and reload
   if (currentMapView === 'map') {
     updateMapHighlights();
-  } else {
+  } else if (currentMapView === 'chart') {
     renderBarChart();
+  } else if (currentMapView === 'flight') {
+    renderRnFlightPattern();
   }
   loadNotices();
 });
@@ -3155,8 +3161,10 @@ regionSelect.addEventListener('change', () => {
   // Update map/chart highlights
   if (currentMapView === 'map') {
     updateMapHighlights();
-  } else {
+  } else if (currentMapView === 'chart') {
     renderBarChart();
+  } else if (currentMapView === 'flight') {
+    renderRnFlightPattern();
   }
   // Trigger data reload
   loadNotices();
@@ -4215,6 +4223,8 @@ const syncMapStateDataToVisibleNotices = () => {
   updateWeatherMap();
   if (currentMapView === 'chart') {
     renderBarChart();
+  } else if (currentMapView === 'flight') {
+    renderRnFlightPattern();
   }
   if (mapFactorsPanel && mapFactorsPanel.style.display !== 'none') {
     renderMapFactors();
@@ -4365,8 +4375,10 @@ const toggleStateSelection = (state) => {
 const onStateSelectionChange = () => {
   if (currentMapView === 'map') {
     updateMapHighlights();
-  } else {
+  } else if (currentMapView === 'chart') {
     renderBarChart();
+  } else if (currentMapView === 'flight') {
+    renderRnFlightPattern();
   }
   loadNotices();
 };
@@ -8435,6 +8447,104 @@ const renderMarketChartLegend = (aggregate) => {
   )).join('');
 };
 
+const MARKET_SCORE_EXPLANATIONS = {
+  marketRisk: {
+    title: 'Market Risk',
+    plain: 'How likely this market is to get harder, tighter, or unstable.',
+    good: '0-39 is good: the market looks relatively stable.',
+    watch: '40-64 means watch it: there is meaningful pressure, but not emergency-level.',
+    bad: '65-100 is bad: leadership should expect shortage pressure, disruption, or instability.',
+    drivers: [
+      'Demand is high compared with supply.',
+      'Strike or labor disruption signals are present.',
+      'Rural hospitals are at risk.',
+      'Lower source confidence adds a small penalty.'
+    ]
+  },
+  recruitingOpportunity: {
+    title: 'Recruiting Opportunity',
+    plain: 'How good this market looks for finding available nurses.',
+    good: '65-100 is good: prioritize recruiting here.',
+    watch: '35-64 is mixed: recruit selectively and compare nearby markets.',
+    bad: '0-34 is weak: demand is probably eating up available supply.',
+    drivers: [
+      'Available supply is higher than demand.',
+      'The state is attractive for relocation.',
+      'The data confidence is strong.',
+      'A shortage-heavy market can push this score down to zero.'
+    ]
+  },
+  retentionRisk: {
+    title: 'Retention Risk',
+    plain: 'How likely nurses are to be hard to keep, ask for more pay, or leave.',
+    good: '0-39 is good: retention pressure looks manageable.',
+    watch: '40-64 means watch it: managers should monitor pay and workload pressure.',
+    bad: '65-100 is bad: leadership should act on retention, pay pressure, or staffing stability.',
+    drivers: [
+      'Demand intensity is high.',
+      'Wage or travel-pay pressure is high.',
+      'Strike or labor disruption signals exist.',
+      'Rural hospital instability adds pressure.'
+    ]
+  }
+};
+
+const getMarketScoreBand = (score, type) => {
+  const value = Number(score || 0);
+  if (type === 'recruitingOpportunity') {
+    if (value >= 65) return { label: 'Good', className: 'good' };
+    if (value >= 35) return { label: 'Mixed', className: 'watch' };
+    return { label: 'Weak', className: 'bad' };
+  }
+  if (value >= 65) return { label: 'Bad', className: 'bad' };
+  if (value >= 40) return { label: 'Watch', className: 'watch' };
+  return { label: 'Good', className: 'good' };
+};
+
+const showMarketScoreModal = (type, score) => {
+  const info = MARKET_SCORE_EXPLANATIONS[type];
+  if (!info) return;
+  const band = getMarketScoreBand(score, type);
+  const existing = document.getElementById('market-score-modal');
+  if (existing) existing.remove();
+  const modal = document.createElement('div');
+  modal.className = 'market-score-modal-overlay';
+  modal.id = 'market-score-modal';
+  modal.innerHTML = `
+    <div class="market-score-modal" role="dialog" aria-modal="true" aria-labelledby="market-score-modal-title">
+      <button type="button" class="market-score-modal-close" aria-label="Close score explanation">&times;</button>
+      <div class="market-score-modal-header">
+        <span>Score explanation</span>
+        <h3 id="market-score-modal-title">${escapeHtml(info.title)}</h3>
+      </div>
+      <div class="market-score-modal-score">
+        <strong>${Math.round(Number(score || 0))}</strong>
+        <span class="${band.className}">${escapeHtml(band.label)}</span>
+      </div>
+      <p>${escapeHtml(info.plain)}</p>
+      <div class="market-score-thresholds">
+        <div class="good"><strong>Good</strong><span>${escapeHtml(info.good)}</span></div>
+        <div class="watch"><strong>Watch</strong><span>${escapeHtml(info.watch)}</span></div>
+        <div class="bad"><strong>Bad</strong><span>${escapeHtml(info.bad)}</span></div>
+      </div>
+      <div class="market-score-drivers">
+        <h4>What moves this number?</h4>
+        <ul>${info.drivers.map((driver) => `<li>${escapeHtml(driver)}</li>`).join('')}</ul>
+      </div>
+    </div>
+  `;
+  const close = () => {
+    modal.remove();
+    document.body.classList.remove('modal-open');
+  };
+  modal.addEventListener('click', (event) => {
+    if (event.target === modal) close();
+  });
+  modal.querySelector('.market-score-modal-close')?.addEventListener('click', close);
+  document.body.appendChild(modal);
+  document.body.classList.add('modal-open');
+};
+
 const renderMarketLeadershipCards = (rows) => {
   const selectedRows = rows.filter((row) => row.selected);
   const sourceRows = selectedRows.length ? selectedRows : rows;
@@ -8451,9 +8561,15 @@ const renderMarketLeadershipCards = (rows) => {
         : 'Maintain monitoring cadence and compare peer states.';
   return `
     <div class="market-leadership-grid">
-      <div><span>Market Risk</span><strong>${marketRisk}</strong><small>Demand stress, disruption, and confidence-adjusted shortage pressure.</small></div>
-      <div><span>Recruiting Opportunity</span><strong>${recruitingOpportunity}</strong><small>Available supply, relocation attractiveness, and data confidence.</small></div>
-      <div><span>Retention Risk</span><strong>${retentionRisk}</strong><small>Demand intensity, wage pressure, and labor disruption exposure.</small></div>
+      <button type="button" class="market-leadership-card" data-market-score-type="marketRisk" data-market-score-value="${marketRisk}">
+        <span>Market Risk</span><strong>${marketRisk}</strong><small>Demand stress, disruption, and confidence-adjusted shortage pressure.</small>
+      </button>
+      <button type="button" class="market-leadership-card" data-market-score-type="recruitingOpportunity" data-market-score-value="${recruitingOpportunity}">
+        <span>Recruiting Opportunity</span><strong>${recruitingOpportunity}</strong><small>Available supply, relocation attractiveness, and data confidence.</small>
+      </button>
+      <button type="button" class="market-leadership-card" data-market-score-type="retentionRisk" data-market-score-value="${retentionRisk}">
+        <span>Retention Risk</span><strong>${retentionRisk}</strong><small>Demand intensity, wage pressure, and labor disruption exposure.</small>
+      </button>
       <div><span>Next Action</span><strong>${escapeHtml(recommendation)}</strong><small>${escapeHtml(getMarketChartScopeLabel(marketChartScope))} | ${escapeHtml(getMarketNormalizeLabel())}</small></div>
     </div>
   `;
@@ -8577,6 +8693,218 @@ const renderProjectedForecast = (forecast) => {
       <p>${escapeHtml(forecast.action)}</p>
     </div>
   `;
+};
+
+const getStateNoticeCount = (state) => Number(mapStateData?.[state]?.count || stateDataHealthcare?.[state]?.count || stateDataAll?.[state]?.count || 0);
+
+const getStateSalaryData = (state) => strategicData?.salaryData?.[state] || recruitmentIntel?.salaryBenchmarks?.[state] || {};
+
+const getStateTravelAnnual = (state) => {
+  const salary = getStateSalaryData(state);
+  const weekly = Number(salary?.travelWeekly || 0);
+  return Number.isFinite(weekly) && weekly > 0 ? weekly * 48 : 0;
+};
+
+const getStateStaffAnnual = (state) => {
+  const salary = getStateSalaryData(state);
+  const staff = Number(salary?.staffRN || 0);
+  return Number.isFinite(staff) ? staff : 0;
+};
+
+const getRegionalNeighborBoost = (origin, target) => {
+  const originRegion = getRegionForState(origin);
+  const targetRegion = getRegionForState(target);
+  if (!originRegion || !targetRegion) return 0;
+  return originRegion === targetRegion ? 12 : 0;
+};
+
+const getRnFlightPushScore = (origin) => {
+  const noticeCount = getStateNoticeCount(origin);
+  const ruralRisk = getStateRuralRiskCount(origin);
+  const strikeCount = getStateStrikeCount(origin);
+  const salary = getStateSalaryData(origin);
+  const staffAnnual = getStateStaffAnnual(origin);
+  const travelAnnual = getStateTravelAnnual(origin);
+  const projectedGap = Number(salary?.projectedGap || 0);
+  const localDemandPenalty = projectedGap < 0 ? Math.min(20, Math.abs(projectedGap) / 700) : 0;
+  const wagePush = Math.max(0, 18 - (staffAnnual / 7000));
+  const travelPullAtHome = Math.max(0, (travelAnnual - staffAnnual) / 5000);
+  const raw = noticeCount * 1.8 + ruralRisk * 2.2 + strikeCount * 6 + wagePush + travelPullAtHome - localDemandPenalty;
+  return Math.max(0, Math.min(100, Math.round(raw)));
+};
+
+const getRnFlightDestinationRows = (origin) => {
+  const originStaff = getStateStaffAnnual(origin);
+  const originTravel = getStateTravelAnnual(origin);
+  const originRegion = getRegionForState(origin);
+  const pushScore = getRnFlightPushScore(origin);
+  const originCompact = freeMarketSignals?.nlcCompactStates?.includes(origin);
+
+  return ALL_STATES
+    .filter((state) => state !== origin)
+    .map((state) => {
+      const staff = getStateStaffAnnual(state);
+      const travel = getStateTravelAnnual(state);
+      const salaryLift = Math.max(0, (staff - originStaff) / 2500);
+      const travelLift = Math.max(0, (travel - originTravel) / 3200);
+      const demandGap = getStateRnDemandGap(state);
+      const demandPull = Math.min(28, demandGap / 650);
+      const noticePull = Math.min(14, getStateNoticeCount(state) * 1.2);
+      const relocation = Math.min(22, getStateRelocationScore(state) * 0.22);
+      const compact = originCompact && freeMarketSignals?.nlcCompactStates?.includes(state) ? 10 : 0;
+      const regionBoost = getRegionalNeighborBoost(origin, state);
+      const ruralDrag = Math.min(10, getStateRuralRiskCount(state) * 0.8);
+      const strikeDrag = Math.min(8, getStateStrikeCount(state) * 2);
+      const timingBoost = rnFlightTiming === 'next30'
+        ? noticePull * 0.45 + compact * 0.25
+        : rnFlightTiming === 'seasonal'
+          ? travelLift * 0.35 + relocation * 0.2
+          : demandPull * 0.2 + noticePull * 0.2;
+      const score = Math.max(0, Math.min(100, Math.round(
+        pushScore * 0.24
+        + salaryLift
+        + travelLift
+        + demandPull
+        + noticePull
+        + relocation
+        + compact
+        + regionBoost
+        + timingBoost
+        - ruralDrag
+        - strikeDrag
+      )));
+      const reasons = [
+        salaryLift > 4 ? 'higher staff pay' : '',
+        travelLift > 4 ? 'higher travel pay' : '',
+        demandPull > 8 ? 'shortage pull' : '',
+        noticePull > 4 ? 'active hiring signal' : '',
+        compact ? 'compact-friendly' : '',
+        regionBoost ? `same ${originRegion} region` : '',
+        ruralDrag > 4 ? 'rural instability drag' : '',
+      ].filter(Boolean);
+      return {
+        state,
+        stateName: STATE_NAMES[state] || state,
+        score,
+        salaryLift,
+        travelLift,
+        demandPull,
+        noticePull,
+        relocation,
+        compact,
+        reasons
+      };
+    })
+    .sort((a, b) => b.score - a.score || b.demandPull - a.demandPull)
+    .slice(0, 10);
+};
+
+const renderRnFlightMapSvg = (origin, destinations) => {
+  const top = new Map(destinations.map((row, index) => [row.state, { ...row, rank: index + 1 }]));
+  return US_STATES_SVG
+    .replace('<svg ', '<svg class="rn-flight-map-svg" ')
+    .replace(/<(path|circle)([^>]*?)id="([A-Z]{2})"([^>]*?)\/>/g, (match, tag, before, state, after) => {
+      const dest = top.get(state);
+      const classes = ['rn-flight-state'];
+      let extra = '';
+      if (state === origin) {
+        classes.push('rn-flight-origin');
+        extra = `<title>${STATE_NAMES[state] || state}: origin state</title>`;
+      } else if (dest) {
+        classes.push('rn-flight-destination');
+        classes.push(`rn-flight-intensity-${Math.max(1, Math.ceil(dest.score / 20))}`);
+        extra = `<title>${dest.rank}. ${STATE_NAMES[state] || state}: mobility likelihood ${dest.score}</title>`;
+      }
+      return `<${tag}${before}id="${state}"${after} class="${classes.join(' ')}" data-flight-state="${state}">${extra}</${tag}>`;
+    });
+};
+
+const renderRnFlightPattern = () => {
+  const container = document.getElementById('rn-flight');
+  if (!container) return;
+  if (!ALL_STATES.includes(rnFlightOriginState)) rnFlightOriginState = 'IN';
+  const origin = rnFlightOriginState;
+  const pushScore = getRnFlightPushScore(origin);
+  const destinations = getRnFlightDestinationRows(origin);
+  const topDestination = destinations[0];
+  const stateOptions = ALL_STATES.map((state) => (
+    `<option value="${state}" ${state === origin ? 'selected' : ''}>${escapeHtml(STATE_NAMES[state] || state)} (${state})</option>`
+  )).join('');
+
+  container.innerHTML = `
+    <div class="rn-flight-shell">
+      <div class="rn-flight-toolbar">
+        <div>
+          <h4>RN Flight Pattern</h4>
+          <p>Modeled state-to-state RN mobility likelihood. This estimates market-level movement, not individual nurse tracking.</p>
+        </div>
+        <div class="rn-flight-controls">
+          <label><span>Origin</span><select id="rn-flight-origin">${stateOptions}</select></label>
+          <label>
+            <span>Timing</span>
+            <select id="rn-flight-timing">
+              <option value="next30" ${rnFlightTiming === 'next30' ? 'selected' : ''}>Next 30 days</option>
+              <option value="next90" ${rnFlightTiming === 'next90' ? 'selected' : ''}>Next 90 days</option>
+              <option value="seasonal" ${rnFlightTiming === 'seasonal' ? 'selected' : ''}>Seasonal window</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <div class="rn-flight-kpis">
+        <div><span>Origin push</span><strong>${pushScore}</strong><small>${escapeHtml(STATE_NAMES[origin] || origin)} outbound pressure</small></div>
+        <div><span>Top destination</span><strong>${escapeHtml(topDestination?.state || '--')}</strong><small>${topDestination ? `${escapeHtml(topDestination.stateName)} | Score ${topDestination.score}` : 'No destination ranked'}</small></div>
+        <div><span>Best window</span><strong>${rnFlightTiming === 'next30' ? '30d' : rnFlightTiming === 'seasonal' ? 'Seasonal' : '90d'}</strong><small>Based on pay, demand, compact, and disruption signals</small></div>
+      </div>
+      <div class="rn-flight-body">
+        <div class="rn-flight-map">
+          ${renderRnFlightMapSvg(origin, destinations)}
+          <div class="rn-flight-map-legend"><span>Origin</span><i class="origin"></i><span>Likely destination</span><i class="destination"></i></div>
+        </div>
+        <div class="rn-flight-rankings">
+          <div class="rn-flight-rankings-header">
+            <h5>Likely Destination States</h5>
+            <span>Click a row to focus the main chart</span>
+          </div>
+          ${destinations.map((row, index) => `
+            <button type="button" class="rn-flight-row" data-flight-target="${row.state}">
+              <span class="rn-flight-rank">${index + 1}</span>
+              <div class="rn-flight-row-main">
+                <strong>${escapeHtml(row.stateName)} (${row.state})</strong>
+                <small>${escapeHtml(row.reasons.join(' | ') || 'balanced destination signal')}</small>
+                <div class="rn-flight-bar"><i style="width:${row.score}%"></i></div>
+              </div>
+              <span class="rn-flight-score">${row.score}</span>
+            </button>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('rn-flight-origin')?.addEventListener('change', (event) => {
+    rnFlightOriginState = event.target.value || 'IN';
+    renderRnFlightPattern();
+  });
+  document.getElementById('rn-flight-timing')?.addEventListener('change', (event) => {
+    rnFlightTiming = ['next30', 'next90', 'seasonal'].includes(event.target.value) ? event.target.value : 'next90';
+    renderRnFlightPattern();
+  });
+  container.querySelectorAll('[data-flight-target]').forEach((button) => {
+    button.addEventListener('click', () => {
+      marketChartScope = button.getAttribute('data-flight-target') || 'us';
+      marketChartSearch = marketChartScope;
+      toggleMapView('chart');
+    });
+  });
+  container.querySelectorAll('[data-flight-state]').forEach((shape) => {
+    shape.addEventListener('click', () => {
+      const state = shape.getAttribute('data-flight-state');
+      if (!state || state === origin) return;
+      marketChartScope = state;
+      marketChartSearch = state;
+      toggleMapView('chart');
+    });
+  });
 };
 
 // Render chart view
@@ -8745,6 +9073,11 @@ const renderBarChart = () => {
       renderBarChart();
     });
   });
+  barChart.querySelectorAll('[data-market-score-type]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      showMarketScoreModal(btn.getAttribute('data-market-score-type'), btn.getAttribute('data-market-score-value'));
+    });
+  });
 };
 
 // Toggle between map and chart view
@@ -8752,23 +9085,38 @@ const toggleMapView = (view) => {
   currentMapView = view;
   const mapContainer = document.getElementById('us-map');
   const barChart = document.getElementById('bar-chart');
+  const rnFlight = document.getElementById('rn-flight');
   const mapLegend = document.getElementById('map-legend');
   const mapViewBtn = document.getElementById('map-view-btn');
   const chartViewBtn = document.getElementById('chart-view-btn');
+  const flightViewBtn = document.getElementById('flight-view-btn');
 
   if (view === 'map') {
     mapContainer.style.display = 'block';
     barChart.style.display = 'none';
+    if (rnFlight) rnFlight.style.display = 'none';
     mapLegend.style.display = 'flex';
     mapViewBtn.classList.add('active');
     chartViewBtn.classList.remove('active');
+    flightViewBtn?.classList.remove('active');
     updateMapHighlights();
+  } else if (view === 'flight') {
+    mapContainer.style.display = 'none';
+    barChart.style.display = 'none';
+    if (rnFlight) rnFlight.style.display = 'block';
+    mapLegend.style.display = 'none';
+    mapViewBtn.classList.remove('active');
+    chartViewBtn.classList.remove('active');
+    flightViewBtn?.classList.add('active');
+    renderRnFlightPattern();
   } else {
     mapContainer.style.display = 'none';
     barChart.style.display = 'block';
+    if (rnFlight) rnFlight.style.display = 'none';
     mapLegend.style.display = 'none';
     mapViewBtn.classList.remove('active');
     chartViewBtn.classList.add('active');
+    flightViewBtn?.classList.remove('active');
     renderBarChart();
   }
 };
@@ -8821,6 +9169,8 @@ const setMapScope = (scope, { reloadNotices = false } = {}) => {
   updateWeatherMap();
   if (currentMapView === 'chart') {
     renderBarChart();
+  } else if (currentMapView === 'flight') {
+    renderRnFlightPattern();
   }
   if (reloadNotices) {
     loadNotices();
@@ -8912,9 +9262,11 @@ const initMapFactors = () => {
 const initMapToggle = () => {
   const mapViewBtn = document.getElementById('map-view-btn');
   const chartViewBtn = document.getElementById('chart-view-btn');
+  const flightViewBtn = document.getElementById('flight-view-btn');
 
   mapViewBtn?.addEventListener('click', () => toggleMapView('map'));
   chartViewBtn?.addEventListener('click', () => toggleMapView('chart'));
+  flightViewBtn?.addEventListener('click', () => toggleMapView('flight'));
 
   ensureMapTargetModeListener();
 };
