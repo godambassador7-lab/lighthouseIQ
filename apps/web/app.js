@@ -293,8 +293,6 @@ let marketChartMetric = 'aggregate';
 let marketChartNormalize = 'none';
 let marketChartLayer = 'all';
 let marketChartSearch = '';
-let rnFlightOriginState = 'IN';
-let rnFlightTiming = 'next90';
 let selectedStates = []; // Multi-select states
 let mapScope = 'healthcare'; // 'healthcare' or 'all'
 let activeMapTab = 'layoffs'; // 'layoffs' | 'rural' | 'salary'
@@ -2988,91 +2986,7 @@ const loadLeadershipMarketSignals = async () => {
   ]);
   if (currentMapView === 'chart') {
     renderBarChart();
-  } else if (currentMapView === 'flight') {
-    renderRnFlightPattern();
   }
-};
-
-const initForecast = () => {
-  if (!forecastBeds || !forecastSetting || !forecastHorizon || !forecastOutput) return;
-  const roleMixBySetting = {
-    acute: { rn: 70, lpn: 20, cna: 10 },
-    snf: { rn: 35, lpn: 25, cna: 40 },
-    outpatient: { rn: 60, lpn: 25, cna: 15 },
-    home: { rn: 55, lpn: 25, cna: 20 },
-    behavioral: { rn: 60, lpn: 20, cna: 20 }
-  };
-  const multiplierBySetting = {
-    acute: 0.65,
-    snf: 0.45,
-    outpatient: 0.2,
-    home: 0.15,
-    behavioral: 0.35
-  };
-
-  const updateForecast = () => {
-    const beds = Number.parseInt(forecastBeds.value || '0', 10) || 0;
-    const setting = forecastSetting.value || 'acute';
-    const horizon = Number.parseInt(forecastHorizon.value || '0', 10) || 0;
-    const multiplier = multiplierBySetting[setting] ?? 0.4;
-    const totalNurses = Math.max(0, Math.round(beds * multiplier));
-    const mix = roleMixBySetting[setting] ?? roleMixBySetting.acute;
-    const rn = Math.round((totalNurses * mix.rn) / 100);
-    const lpn = Math.round((totalNurses * mix.lpn) / 100);
-    const cna = Math.round((totalNurses * mix.cna) / 100);
-
-    forecastOutput.innerHTML = `
-      Estimated displacement over ${horizon || 60} days:
-      <strong>${totalNurses}</strong> total nurses
-      (RN ${rn} | LPN ${lpn} | CNA ${cna}).
-    `;
-  };
-
-  forecastBeds.addEventListener('input', updateForecast);
-  forecastSetting.addEventListener('change', updateForecast);
-  forecastHorizon.addEventListener('input', updateForecast);
-  updateForecast();
-};
-
-const loadNotices = async () => {
-  setLoading('Loading notices...');
-  const query = buildQuery();
-  try {
-    const data = await fetchJson(`/notices?${query}`);
-    let notices = data.notices ?? [];
-
-    // Merge in custom notices from localStorage
-    if (customNotices.length > 0) {
-      notices = [...customNotices, ...notices];
-    }
-    notices = filterNoticesByScope(notices);
-    notices = sortNoticesByNewest(notices);
-
-    currentNotices = notices;
-    syncMapStateDataToVisibleNotices();
-    renderNotices(currentNotices);
-    updateStats(currentNotices);
-    if (!currentNotices.length) {
-      if (!apiHasDb) {
-        noticeList.innerHTML = `<div class="empty-state">No database connected. Start Postgres and run the worker to load notices.</div>`;
-      }
-      renderDetail(null);
-    }
-  } catch (err) {
-    // Still show custom notices even if API fails
-    if (customNotices.length > 0) {
-      currentNotices = sortNoticesByNewest([...customNotices]);
-      syncMapStateDataToVisibleNotices();
-      renderNotices(currentNotices);
-      updateStats(currentNotices);
-    } else {
-      currentNotices = [];
-      syncMapStateDataToVisibleNotices();
-      setLoading('Unable to load notices. Is the API running?');
-      statTotal.textContent = '0';
-    }
-    renderDetail(null);
-
 };
 
 const initForecast = () => {
@@ -3229,10 +3143,8 @@ clearBtn.addEventListener('click', () => {
   // Update map highlights and reload
   if (currentMapView === 'map') {
     updateMapHighlights();
-  } else if (currentMapView === 'chart') {
+  } else {
     renderBarChart();
-  } else if (currentMapView === 'flight') {
-    renderRnFlightPattern();
   }
   loadNotices();
 });
@@ -3243,10 +3155,8 @@ regionSelect.addEventListener('change', () => {
   // Update map/chart highlights
   if (currentMapView === 'map') {
     updateMapHighlights();
-  } else if (currentMapView === 'chart') {
+  } else {
     renderBarChart();
-  } else if (currentMapView === 'flight') {
-    renderRnFlightPattern();
   }
   // Trigger data reload
   loadNotices();
@@ -4305,8 +4215,6 @@ const syncMapStateDataToVisibleNotices = () => {
   updateWeatherMap();
   if (currentMapView === 'chart') {
     renderBarChart();
-  } else if (currentMapView === 'flight') {
-    renderRnFlightPattern();
   }
   if (mapFactorsPanel && mapFactorsPanel.style.display !== 'none') {
     renderMapFactors();
@@ -4457,10 +4365,8 @@ const toggleStateSelection = (state) => {
 const onStateSelectionChange = () => {
   if (currentMapView === 'map') {
     updateMapHighlights();
-  } else if (currentMapView === 'chart') {
+  } else {
     renderBarChart();
-  } else if (currentMapView === 'flight') {
-    renderRnFlightPattern();
   }
   loadNotices();
 };
@@ -8444,557 +8350,6 @@ const renderMarketLineChartSvg = (buckets, aggregate, annotations = []) => {
     `;
   }).join('');
 
-const getNoticeMarketDateMs = (notice) => {
-  const raw = notice?.notice_date || notice?.noticeDate || notice?.effective_date || notice?.retrieved_at || notice?.createdAt || '';
-  const ms = Date.parse(raw);
-  return Number.isFinite(ms) ? ms : 0;
-};
-
-const getNoticeAffectedCount = (notice) => {
-  const candidates = [
-    notice?.affected_count,
-    notice?.affectedCount,
-    notice?.employees_affected,
-    notice?.employeesAffected,
-    notice?.number_affected,
-    notice?.layoff_count,
-    notice?.count
-  ];
-  for (const value of candidates) {
-    const n = Number(value);
-    if (Number.isFinite(n) && n > 0) return Math.min(5000, n);
-  }
-  return 1;
-};
-
-const MARKET_CHART_COMPONENTS = {
-  layoffSupply: { side: 'supply', label: 'Layoff supply', color: '#0f766e' },
-  talentSupply: { side: 'supply', label: 'Talent availability', color: '#14b8a6' },
-  educationSupply: { side: 'supply', label: 'Nursing pipeline', color: '#22c55e' },
-  mobilitySupply: { side: 'supply', label: 'License / mobility', color: '#65a30d' },
-  projectedDemand: { side: 'demand', label: 'Projected RN gap', color: '#b45309' },
-  noticeDemand: { side: 'demand', label: 'Notice pressure', color: '#f97316' },
-  wageDemand: { side: 'demand', label: 'Wage pressure', color: '#dc2626' },
-  facilityDemand: { side: 'demand', label: 'Facility stress', color: '#7c2d12' },
-  disruptionDemand: { side: 'demand', label: 'Disruption risk', color: '#9333ea' }
-};
-
-const MARKET_CHART_METRICS = {
-  aggregate: 'Aggregate supply vs demand',
-  components: 'Component stack',
-  net: 'Net balance',
-  risk: 'Leadership scores'
-};
-
-const getIsoWeekStart = (date) => {
-  const d = new Date(date);
-  d.setHours(0, 0, 0, 0);
-  const day = d.getDay() || 7;
-  d.setDate(d.getDate() - day + 1);
-  return d;
-};
-
-const getMarketWeekKey = (date) => {
-  const start = getIsoWeekStart(date);
-  return start.toISOString().slice(0, 10);
-};
-
-const getStateFacilityCount = (state) => {
-  const providers = Array.isArray(providerMasterData?.providers) ? providerMasterData.providers : [];
-  if (!providers.length) return 0;
-  return providers.reduce((count, provider) => (
-    String(provider?.state || '').trim().toUpperCase() === state ? count + 1 : count
-  ), 0);
-};
-
-const getStateProgramCount = (state) => {
-  if (!Array.isArray(nursingPrograms) || !nursingPrograms.length) return 0;
-  return nursingPrograms.reduce((count, program) => {
-    const normalized = normalizeProgram(program);
-    return normalized.stateCode === state ? count + 1 : count;
-  }, 0);
-};
-
-const getStateStrikeCount = (state) => {
-  if (!Array.isArray(strikeAlertsData) || !strikeAlertsData.length) return 0;
-  return strikeAlertsData.reduce((count, row) => (
-    String(row?.state || '').trim().toUpperCase() === state ? count + 1 : count
-  ), 0);
-};
-
-const getStateRuralRiskCount = (state) => {
-  const entry = ruralClosuresData?.[state];
-  return Math.max(0, Number(entry?.atRisk || 0) + Number(entry?.recent || 0));
-};
-
-const getStateNewsSignalCount = (state) => {
-  const rows = Array.isArray(stateNewsData?.states?.[state]?.articles)
-    ? stateNewsData.states[state].articles
-    : Array.isArray(stateNewsData?.[state])
-      ? stateNewsData[state]
-      : [];
-  return rows.length;
-};
-
-const getStateRelocationScore = (state) => {
-  const value = Number(recruitmentIntel?.relocationIndex?.[state] ?? relocationData?.relocationScale?.[state] ?? 50);
-  return Number.isFinite(value) ? Math.max(0, value) : 50;
-};
-
-const normalizeMarketValue = (value, state, mode) => {
-  if (mode === 'facility') {
-    return value / Math.max(1, getStateFacilityCount(state) / 100);
-  }
-  if (mode === 'program') {
-    return value / Math.max(1, getStateProgramCount(state));
-  }
-  if (mode === 'notice') {
-    const noticeCount = Number(mapStateData?.[state]?.count || 0);
-    return value / Math.max(1, noticeCount);
-  }
-  return value;
-};
-
-const getTalentSupplyByState = () => {
-  const totals = new Map();
-  if (!Array.isArray(latestTalentOpportunities)) return totals;
-  latestTalentOpportunities.forEach((entry) => {
-    const state = String(entry?.state || '').trim().toUpperCase();
-    if (!ALL_STATES.includes(state)) return;
-    const estBase = Number(entry?.estimated_nurses_available || 0);
-    if (!Number.isFinite(estBase) || estBase <= 0) return;
-    const stateWeight = Number(freeMarketSignals?.stateFactors?.[state]?.combinedWeight || 1);
-    const facilityStateWeight = Number(facilityMarketFeatures?.stateFeatures?.[state]?.distressWeight || 1);
-    const estimate = Math.max(0, Math.round(estBase * stateWeight * facilityStateWeight));
-    totals.set(state, (totals.get(state) || 0) + estimate);
-  });
-  return totals;
-};
-
-const getMarketBucketKey = (date, granularity) => {
-  if (granularity === 'week') return getMarketWeekKey(date);
-  const year = date.getFullYear();
-  if (granularity === 'year') return String(year);
-  return `${year}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-};
-
-const formatMarketBucketLabel = (key, granularity) => {
-  if (granularity === 'year') return key;
-  if (granularity === 'week') {
-    const date = new Date(`${key}T00:00:00`);
-    return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
-  }
-  const [year, month] = key.split('-').map(Number);
-  return new Date(year, month - 1, 1).toLocaleDateString(undefined, { month: 'short', year: '2-digit' });
-};
-
-const buildMarketBuckets = (notices, granularity) => {
-  const dated = notices
-    .map(getNoticeMarketDateMs)
-    .filter((ms) => ms > 0)
-    .sort((a, b) => a - b);
-  const now = new Date();
-  let start;
-  let end;
-
-  if (dated.length) {
-    start = new Date(dated[0]);
-    end = new Date(dated[dated.length - 1]);
-  } else {
-    start = new Date(now);
-    end = new Date(now);
-  }
-
-  if (granularity === 'year') {
-    const endYear = Math.max(end.getFullYear(), now.getFullYear());
-    const startYear = dated.length ? Math.max(start.getFullYear(), endYear - 9) : endYear - 4;
-    const buckets = [];
-    for (let year = startYear; year <= endYear; year += 1) {
-      buckets.push({ key: String(year), label: String(year), date: new Date(year, 0, 1) });
-    }
-    return buckets;
-  }
-
-  if (granularity === 'week') {
-    const endWeek = getIsoWeekStart(new Date(Math.max(end.getTime(), now.getTime())));
-    const startWeek = dated.length ? getIsoWeekStart(start) : getIsoWeekStart(new Date(now.getFullYear(), now.getMonth() - 3, now.getDate()));
-    const weeks = Math.floor((endWeek.getTime() - startWeek.getTime()) / (7 * 24 * 60 * 60 * 1000)) + 1;
-    if (weeks > 52) {
-      startWeek.setDate(endWeek.getDate() - (51 * 7));
-    }
-
-    const buckets = [];
-    const cursor = new Date(startWeek);
-    while (cursor <= endWeek) {
-      const key = getMarketBucketKey(cursor, granularity);
-      buckets.push({ key, label: formatMarketBucketLabel(key, granularity), date: new Date(cursor) });
-      cursor.setDate(cursor.getDate() + 7);
-    }
-    return buckets;
-  }
-
-  const endMonth = new Date(Math.max(end.getTime(), now.getTime()));
-  endMonth.setDate(1);
-  const startMonth = dated.length ? new Date(start) : new Date(now.getFullYear(), now.getMonth() - 11, 1);
-  startMonth.setDate(1);
-  const months = ((endMonth.getFullYear() - startMonth.getFullYear()) * 12) + (endMonth.getMonth() - startMonth.getMonth()) + 1;
-  if (months > 36) {
-    startMonth.setFullYear(endMonth.getFullYear(), endMonth.getMonth() - 35, 1);
-  }
-
-  const buckets = [];
-  const cursor = new Date(startMonth);
-  while (cursor <= endMonth) {
-    const key = getMarketBucketKey(cursor, granularity);
-    buckets.push({ key, label: formatMarketBucketLabel(key, granularity), date: new Date(cursor) });
-    cursor.setMonth(cursor.getMonth() + 1);
-  }
-  return buckets;
-};
-
-const getChartStatesForScope = (scope) => {
-  if (scope === 'us') return ALL_STATES;
-  if (scope === 'selected') {
-    if (selectedStates.length) return selectedStates;
-    const selectedRegion = regionSelect.value;
-    if (selectedRegion && REGION_STATES[selectedRegion]) return REGION_STATES[selectedRegion];
-    return ALL_STATES;
-  }
-  return ALL_STATES.includes(scope) ? [scope] : ALL_STATES;
-};
-
-const buildNursingMarketSeries = ({ granularity, scope }) => {
-  const sourceNotices = Array.isArray(currentNotices) ? currentNotices : [];
-  const buckets = buildMarketBuckets(sourceNotices, granularity);
-  const bucketIndex = new Map(buckets.map((bucket, index) => [bucket.key, index]));
-  const states = getChartStatesForScope(scope);
-  const selectedSet = new Set(states);
-  const talentSupplyByState = getTalentSupplyByState();
-  const sourceCoverage = getMarketSourceCoverage();
-  const byState = new Map();
-
-  ALL_STATES.forEach((state) => {
-    byState.set(state, {
-      state,
-      supply: buckets.map(() => 0),
-      demand: buckets.map(() => 0),
-      components: Object.fromEntries(Object.keys(MARKET_CHART_COMPONENTS).map((key) => [key, buckets.map(() => 0)])),
-      notices: 0,
-      confidence: 0,
-      scores: { marketRisk: 0, recruitingOpportunity: 0, retentionRisk: 0 }
-    });
-  });
-
-  ALL_STATES.forEach((state) => {
-    const row = byState.get(state);
-    const noticeCount = Number(mapStateData?.[state]?.count || stateDataHealthcare?.[state]?.count || stateDataAll?.[state]?.count || 0);
-    const talentSupply = Number(talentSupplyByState.get(state) || 0);
-    const rnGap = getStateRnDemandGap(state);
-    const projectedGap = rnGap > 0 ? rnGap : Math.max(12, noticeCount * 9);
-    const programCount = getStateProgramCount(state);
-    const facilityCount = getStateFacilityCount(state);
-    const relocationScore = getStateRelocationScore(state);
-    const strikeCount = getStateStrikeCount(state);
-    const ruralRisk = getStateRuralRiskCount(state);
-    const newsSignals = getStateNewsSignalCount(state);
-    const salary = strategicData?.salaryData?.[state] || recruitmentIntel?.salaryBenchmarks?.[state] || {};
-    const travelPremium = Math.max(0, Number(salary?.travelWeekly || 0) * 48 - Number(salary?.staffRN || 0));
-    const shortageStatus = String(salary?.shortage || freeMarketSignals?.stateFactors?.[state]?.shortage || '').toLowerCase();
-    const compactWeight = freeMarketSignals?.nlcCompactStates?.includes(state) ? 1.12 : 0.88;
-    const facilityStress = Math.max(0, (facilityMarketFeatures?.stateFeatures?.[state]?.distressWeight || 1) - 1) * 420;
-
-    const bases = {
-      layoffSupply: Math.max(4, noticeCount * 4),
-      talentSupply: talentSupply > 0 ? talentSupply : Math.max(6, noticeCount * 5),
-      educationSupply: Math.max(4, programCount * 16),
-      mobilitySupply: Math.max(3, relocationScore * compactWeight),
-      projectedDemand: projectedGap,
-      noticeDemand: Math.max(6, noticeCount * 8),
-      wageDemand: Math.max(3, travelPremium / 180),
-      facilityDemand: Math.max(3, facilityCount * 0.8 + facilityStress),
-      disruptionDemand: Math.max(0, strikeCount * 24 + ruralRisk * 18 + newsSignals * 1.5)
-    };
-    if (shortageStatus === 'shortage') bases.projectedDemand *= 1.08;
-    if (shortageStatus === 'surplus') bases.projectedDemand *= 0.72;
-
-    buckets.forEach((bucket, index) => {
-      const month = bucket.date.getMonth();
-      const seasonal = granularity !== 'year' ? 1 + (Math.sin((month / 12) * Math.PI * 2) * 0.12) : 1;
-      const trend = buckets.length > 1 ? 0.9 + ((index / (buckets.length - 1)) * 0.2) : 1;
-      Object.entries(bases).forEach(([component, base]) => {
-        const side = MARKET_CHART_COMPONENTS[component].side;
-        const componentSeason = side === 'supply' ? seasonal : (2 - seasonal);
-        const value = Math.max(0, base / Math.max(1, buckets.length) * componentSeason * trend);
-        row.components[component][index] += value;
-      });
-    });
-  });
-
-  sourceNotices.forEach((notice) => {
-    const state = String(notice?.state || '').trim().toUpperCase();
-    if (!ALL_STATES.includes(state)) return;
-    const ms = getNoticeMarketDateMs(notice);
-    if (!ms) return;
-    const date = new Date(ms);
-    const key = getMarketBucketKey(date, granularity);
-    const index = bucketIndex.get(key);
-    if (index === undefined) return;
-    const row = byState.get(state);
-    const affected = getNoticeAffectedCount(notice);
-    const score = Math.max(0, Number(notice?.nursing_score ?? notice?.nursingImpact?.score ?? 0));
-    row.notices += 1;
-    row.components.layoffSupply[index] += Math.max(1, affected * 0.65) + Math.max(0, score / 12);
-    row.components.noticeDemand[index] += Math.max(1, affected * 0.18) + Math.max(1, score / 8);
-  });
-
-  byState.forEach((row, state) => {
-    Object.entries(MARKET_CHART_COMPONENTS).forEach(([component, meta]) => {
-      row.components[component].forEach((value, index) => {
-        const normalized = normalizeMarketValue(value, state, marketChartNormalize);
-        if (meta.side === 'supply') row.supply[index] += normalized;
-        else row.demand[index] += normalized;
-        row.components[component][index] = normalized;
-      });
-    });
-    const supplyTotal = row.supply.reduce((sum, value) => sum + value, 0);
-    const demandTotal = row.demand.reduce((sum, value) => sum + value, 0);
-    const gapRatio = demandTotal / Math.max(1, supplyTotal + demandTotal);
-    const noticeDepth = Math.min(1, row.notices / 10);
-    const sourceDepth = sourceCoverage.score;
-    const facilityDepth = getStateFacilityCount(state) > 0 ? 0.12 : 0;
-    const talentDepth = talentSupplyByState.get(state) > 0 ? 0.14 : 0;
-    row.confidence = Math.round(Math.min(0.94, 0.34 + sourceDepth * 0.3 + noticeDepth * 0.18 + facilityDepth + talentDepth) * 100);
-    const relocationScore = getStateRelocationScore(state);
-    const strikeCount = getStateStrikeCount(state);
-    const ruralRisk = getStateRuralRiskCount(state);
-    const wageDemand = row.components.wageDemand.reduce((sum, value) => sum + value, 0);
-    row.scores = {
-      marketRisk: Math.round(Math.min(100, gapRatio * 72 + strikeCount * 5 + ruralRisk * 2 + (100 - row.confidence) * 0.12)),
-      recruitingOpportunity: Math.round(Math.min(100, Math.max(0, ((supplyTotal - demandTotal) / Math.max(1, supplyTotal)) * 55 + relocationScore * 0.35 + row.confidence * 0.22))),
-      retentionRisk: Math.round(Math.min(100, gapRatio * 58 + wageDemand / Math.max(1, demandTotal) * 45 + strikeCount * 4 + ruralRisk * 1.5))
-    };
-  });
-
-  const aggregate = {
-    supply: buckets.map(() => 0),
-    demand: buckets.map(() => 0),
-    confidenceLow: buckets.map(() => 0),
-    confidenceHigh: buckets.map(() => 0),
-    components: Object.fromEntries(Object.keys(MARKET_CHART_COMPONENTS).map((key) => [key, buckets.map(() => 0)]))
-  };
-  states.forEach((state) => {
-    const row = byState.get(state);
-    if (!row) return;
-    row.supply.forEach((value, index) => { aggregate.supply[index] += value; });
-    row.demand.forEach((value, index) => { aggregate.demand[index] += value; });
-    Object.keys(MARKET_CHART_COMPONENTS).forEach((component) => {
-      row.components[component].forEach((value, index) => { aggregate.components[component][index] += value; });
-    });
-  });
-
-  const selectedRows = states.map((state) => byState.get(state)).filter(Boolean);
-  aggregate.confidence = selectedRows.length
-    ? Math.round(selectedRows.reduce((sum, row) => sum + row.confidence, 0) / selectedRows.length)
-    : Math.round(sourceCoverage.score * 100);
-  aggregate.supply.forEach((value, index) => {
-    const demand = aggregate.demand[index] || 0;
-    const center = Math.max(value, demand);
-    const spread = center * Math.max(0.08, (100 - aggregate.confidence) / 100 * 0.42);
-    aggregate.confidenceLow[index] = Math.max(0, center - spread);
-    aggregate.confidenceHigh[index] = center + spread;
-  });
-
-  const stateRows = ALL_STATES.map((state) => {
-    const row = byState.get(state);
-    const supplyTotal = row.supply.reduce((sum, value) => sum + value, 0);
-    const demandTotal = row.demand.reduce((sum, value) => sum + value, 0);
-    return {
-      state,
-      supplyTotal,
-      demandTotal,
-      net: supplyTotal - demandTotal,
-      notices: row.notices,
-      confidence: row.confidence,
-      scores: row.scores,
-      selected: selectedSet.has(state)
-    };
-  }).sort((a, b) => Math.abs(b.net) - Math.abs(a.net));
-
-  const annotations = buildMarketAnnotations(sourceNotices, buckets, bucketIndex, states, granularity);
-
-  return { buckets, aggregate, stateRows, annotations, sourceCoverage };
-};
-
-const getMarketSourceCoverage = () => {
-  const datasets = marketRequiredMetrics?.datasets || {};
-  const checks = [
-    ['WARN notices', datasets.warnNotices?.status || (currentNotices.length ? 'ok' : 'unknown'), datasets.warnNotices?.fetchedAt || null],
-    ['HRSA workforce', datasets.hrsaNssrn?.status || freeMarketSignals?.sources?.hrsa || 'unknown', datasets.hrsaNssrn?.fetchedAt || freeMarketSignals?.lastUpdated || null],
-    ['BLS wage/employment', datasets.blsOes?.status || freeMarketSignals?.sources?.bls || 'unknown', datasets.blsOes?.fetchedAt || strategicData?.lastUpdated || null],
-    ['CMS facility data', datasets.cmsCareCompare?.status || datasets.cmsHcris?.status || 'unknown', datasets.cmsCareCompare?.fetchedAt || datasets.cmsHcris?.fetchedAt || null],
-    ['NCSBN / compact', freeMarketSignals?.sources?.ncsbn || 'unknown', freeMarketSignals?.lastUpdated || null],
-    ['Programs pipeline', nursingPrograms.length ? 'ok' : 'unknown', programsMeta?.lastUpdated || null],
-    ['Strikes / disruption', strikeAlertsData.length ? 'ok' : 'unknown', strikeAlertsMeta?.lastUpdated || null],
-    ['Rural closures', Object.keys(ruralClosuresData || {}).length ? 'ok' : 'unknown', ruralClosuresLoadedAt ? new Date(ruralClosuresLoadedAt).toISOString() : null],
-    ['State news', stateNewsData ? 'ok' : 'unknown', stateNewsData?.lastUpdated || null],
-    ['Relocation / compensation', relocationData || recruitmentIntel ? 'ok' : 'unknown', recruitmentIntel?.lastUpdated || relocationData?.lastUpdated || null]
-  ];
-  const rows = checks.map(([name, statusRaw, updatedAt]) => {
-    const status = String(statusRaw || 'unknown').toLowerCase();
-    const score = status === 'ok' ? 1 : status === 'error' ? 0 : 0.45;
-    return { name, status, updatedAt, score };
-  });
-  const score = rows.length ? rows.reduce((sum, row) => sum + row.score, 0) / rows.length : 0.45;
-  return { rows, score };
-};
-
-const buildMarketAnnotations = (sourceNotices, buckets, bucketIndex, states, granularity) => {
-  const allowed = new Set(states);
-  const noticeAnnotations = sourceNotices
-    .filter((notice) => allowed.has(String(notice?.state || '').trim().toUpperCase()))
-    .map((notice) => {
-      const ms = getNoticeMarketDateMs(notice);
-      if (!ms) return null;
-      const date = new Date(ms);
-      const key = getMarketBucketKey(date, granularity);
-      const index = bucketIndex.get(key);
-      if (index === undefined) return null;
-      const state = String(notice?.state || '').trim().toUpperCase();
-      const affected = getNoticeAffectedCount(notice);
-      const score = Number(notice?.nursing_score ?? notice?.nursingImpact?.score ?? 0);
-      const employer = String(notice?.employer_name || notice?.employerName || 'Notice').trim();
-      return {
-        index,
-        key,
-        state,
-        type: 'WARN',
-        weight: affected + score,
-        label: `${state} WARN: ${employer}`,
-        detail: `${affected.toLocaleString()} affected | nursing score ${Math.round(score || 0)}`
-      };
-    })
-    .filter(Boolean)
-    .sort((a, b) => b.weight - a.weight)
-    .slice(0, 8);
-
-  const strikeAnnotations = Array.isArray(strikeAlertsData)
-    ? strikeAlertsData
-      .filter((row) => allowed.has(String(row?.state || '').trim().toUpperCase()))
-      .map((row) => {
-        const raw = row?.date || row?.start_date || row?.notice_date || row?.updatedAt || strikeAlertsMeta?.lastUpdated;
-        const ms = Date.parse(raw || '');
-        if (!Number.isFinite(ms)) return null;
-        const key = getMarketBucketKey(new Date(ms), granularity);
-        const index = bucketIndex.get(key);
-        if (index === undefined) return null;
-        const state = String(row?.state || '').trim().toUpperCase();
-        return {
-          index,
-          key,
-          state,
-          type: 'Strike',
-          weight: 80,
-          label: `${state} labor disruption`,
-          detail: String(row?.title || row?.employer || 'Strike / union signal')
-        };
-      })
-      .filter(Boolean)
-      .slice(0, 5)
-    : [];
-
-  return [...noticeAnnotations, ...strikeAnnotations]
-    .sort((a, b) => a.index - b.index || b.weight - a.weight)
-    .slice(0, 10);
-};
-
-const marketChartPath = (values, buckets, width, height, padding, maxValue) => {
-  if (!values.length) return '';
-  const usableWidth = width - padding.left - padding.right;
-  const usableHeight = height - padding.top - padding.bottom;
-  return values.map((value, index) => {
-    const x = padding.left + (values.length === 1 ? usableWidth / 2 : (index / (values.length - 1)) * usableWidth);
-    const y = padding.top + usableHeight - ((value / maxValue) * usableHeight);
-    return `${index === 0 ? 'M' : 'L'} ${x.toFixed(1)} ${y.toFixed(1)}`;
-  }).join(' ');
-};
-
-const marketChartBandPath = (lowValues, highValues, width, height, padding, maxValue) => {
-  if (!lowValues.length || !highValues.length) return '';
-  const usableWidth = width - padding.left - padding.right;
-  const usableHeight = height - padding.top - padding.bottom;
-  const high = highValues.map((value, index) => {
-    const x = padding.left + (highValues.length === 1 ? usableWidth / 2 : (index / (highValues.length - 1)) * usableWidth);
-    const y = padding.top + usableHeight - ((value / maxValue) * usableHeight);
-    return `${index === 0 ? 'M' : 'L'} ${x.toFixed(1)} ${y.toFixed(1)}`;
-  }).join(' ');
-  const low = lowValues.slice().reverse().map((value, reverseIndex) => {
-    const index = lowValues.length - 1 - reverseIndex;
-    const x = padding.left + (lowValues.length === 1 ? usableWidth / 2 : (index / (lowValues.length - 1)) * usableWidth);
-    const y = padding.top + usableHeight - ((value / maxValue) * usableHeight);
-    return `L ${x.toFixed(1)} ${y.toFixed(1)}`;
-  }).join(' ');
-  return `${high} ${low} Z`;
-};
-
-const getMarketChartSeries = (aggregate) => {
-  if (marketChartMetric === 'net') {
-    const net = aggregate.supply.map((value, index) => value - aggregate.demand[index]);
-    const min = Math.min(0, ...net);
-    return {
-      series: [{ key: 'net', label: 'Net balance', values: net.map((value) => value - min), color: '#1d4ed8', rawValues: net }],
-      minOffset: min,
-      band: null
-    };
-  }
-
-  if (marketChartMetric === 'components') {
-    const keys = Object.keys(MARKET_CHART_COMPONENTS)
-      .filter((key) => marketChartLayer === 'all' || MARKET_CHART_COMPONENTS[key].side === marketChartLayer);
-    return {
-      series: keys.map((key) => ({
-        key,
-        label: MARKET_CHART_COMPONENTS[key].label,
-        values: aggregate.components[key],
-        color: MARKET_CHART_COMPONENTS[key].color,
-        rawValues: aggregate.components[key]
-      })),
-      minOffset: 0,
-      band: null
-    };
-  }
-
-  return {
-    series: [
-      { key: 'supply', label: 'Supply', values: aggregate.supply, color: '#0f766e', rawValues: aggregate.supply },
-      { key: 'demand', label: 'Demand', values: aggregate.demand, color: '#b45309', rawValues: aggregate.demand }
-    ],
-    minOffset: 0,
-    band: {
-      low: aggregate.confidenceLow,
-      high: aggregate.confidenceHigh
-    }
-  };
-};
-
-const renderMarketLineChartSvg = (buckets, aggregate, annotations = []) => {
-  const width = 980;
-  const height = 360;
-  const padding = { top: 28, right: 28, bottom: 58, left: 72 };
-  const chartSeries = getMarketChartSeries(aggregate);
-  const allValues = chartSeries.series.flatMap((row) => row.values);
-  const maxValue = Math.max(1, ...allValues) * 1.08;
-  const usableWidth = width - padding.left - padding.right;
-  const usableHeight = height - padding.top - padding.bottom;
-  const labelEvery = Math.max(1, Math.ceil(buckets.length / 8));
-
-  const grid = [0, 0.25, 0.5, 0.75, 1].map((ratio) => {
-    const y = padding.top + usableHeight - (ratio * usableHeight);
-    const value = Math.round((maxValue * ratio) + (chartSeries.minOffset || 0));
-    return `
-      <line x1="${padding.left}" y1="${y}" x2="${width - padding.right}" y2="${y}" class="market-chart-grid" />
-      <text x="${padding.left - 12}" y="${y + 4}" class="market-chart-y-label">${value.toLocaleString()}</text>
-    `;
-  }).join('');
   const xLabels = buckets.map((bucket, index) => {
     if (index % labelEvery !== 0 && index !== buckets.length - 1) return '';
     const x = padding.left + (buckets.length === 1 ? usableWidth / 2 : (index / (buckets.length - 1)) * usableWidth);
@@ -9080,104 +8435,6 @@ const renderMarketChartLegend = (aggregate) => {
   )).join('');
 };
 
-const MARKET_SCORE_EXPLANATIONS = {
-  marketRisk: {
-    title: 'Market Risk',
-    plain: 'How likely this market is to get harder, tighter, or unstable.',
-    good: '0-39 is good: the market looks relatively stable.',
-    watch: '40-64 means watch it: there is meaningful pressure, but not emergency-level.',
-    bad: '65-100 is bad: leadership should expect shortage pressure, disruption, or instability.',
-    drivers: [
-      'Demand is high compared with supply.',
-      'Strike or labor disruption signals are present.',
-      'Rural hospitals are at risk.',
-      'Lower source confidence adds a small penalty.'
-    ]
-  },
-  recruitingOpportunity: {
-    title: 'Recruiting Opportunity',
-    plain: 'How good this market looks for finding available nurses.',
-    good: '65-100 is good: prioritize recruiting here.',
-    watch: '35-64 is mixed: recruit selectively and compare nearby markets.',
-    bad: '0-34 is weak: demand is probably eating up available supply.',
-    drivers: [
-      'Available supply is higher than demand.',
-      'The state is attractive for relocation.',
-      'The data confidence is strong.',
-      'A shortage-heavy market can push this score down to zero.'
-    ]
-  },
-  retentionRisk: {
-    title: 'Retention Risk',
-    plain: 'How likely nurses are to be hard to keep, ask for more pay, or leave.',
-    good: '0-39 is good: retention pressure looks manageable.',
-    watch: '40-64 means watch it: managers should monitor pay and workload pressure.',
-    bad: '65-100 is bad: leadership should act on retention, pay pressure, or staffing stability.',
-    drivers: [
-      'Demand intensity is high.',
-      'Wage or travel-pay pressure is high.',
-      'Strike or labor disruption signals exist.',
-      'Rural hospital instability adds pressure.'
-    ]
-  }
-};
-
-const getMarketScoreBand = (score, type) => {
-  const value = Number(score || 0);
-  if (type === 'recruitingOpportunity') {
-    if (value >= 65) return { label: 'Good', className: 'good' };
-    if (value >= 35) return { label: 'Mixed', className: 'watch' };
-    return { label: 'Weak', className: 'bad' };
-  }
-  if (value >= 65) return { label: 'Bad', className: 'bad' };
-  if (value >= 40) return { label: 'Watch', className: 'watch' };
-  return { label: 'Good', className: 'good' };
-};
-
-const showMarketScoreModal = (type, score) => {
-  const info = MARKET_SCORE_EXPLANATIONS[type];
-  if (!info) return;
-  const band = getMarketScoreBand(score, type);
-  const existing = document.getElementById('market-score-modal');
-  if (existing) existing.remove();
-  const modal = document.createElement('div');
-  modal.className = 'market-score-modal-overlay';
-  modal.id = 'market-score-modal';
-  modal.innerHTML = `
-    <div class="market-score-modal" role="dialog" aria-modal="true" aria-labelledby="market-score-modal-title">
-      <button type="button" class="market-score-modal-close" aria-label="Close score explanation">&times;</button>
-      <div class="market-score-modal-header">
-        <span>Score explanation</span>
-        <h3 id="market-score-modal-title">${escapeHtml(info.title)}</h3>
-      </div>
-      <div class="market-score-modal-score">
-        <strong>${Math.round(Number(score || 0))}</strong>
-        <span class="${band.className}">${escapeHtml(band.label)}</span>
-      </div>
-      <p>${escapeHtml(info.plain)}</p>
-      <div class="market-score-thresholds">
-        <div class="good"><strong>Good</strong><span>${escapeHtml(info.good)}</span></div>
-        <div class="watch"><strong>Watch</strong><span>${escapeHtml(info.watch)}</span></div>
-        <div class="bad"><strong>Bad</strong><span>${escapeHtml(info.bad)}</span></div>
-      </div>
-      <div class="market-score-drivers">
-        <h4>What moves this number?</h4>
-        <ul>${info.drivers.map((driver) => `<li>${escapeHtml(driver)}</li>`).join('')}</ul>
-      </div>
-    </div>
-  `;
-  const close = () => {
-    modal.remove();
-    document.body.classList.remove('modal-open');
-  };
-  modal.addEventListener('click', (event) => {
-    if (event.target === modal) close();
-  });
-  modal.querySelector('.market-score-modal-close')?.addEventListener('click', close);
-  document.body.appendChild(modal);
-  document.body.classList.add('modal-open');
-};
-
 const renderMarketLeadershipCards = (rows) => {
   const selectedRows = rows.filter((row) => row.selected);
   const sourceRows = selectedRows.length ? selectedRows : rows;
@@ -9194,14 +8451,9 @@ const renderMarketLeadershipCards = (rows) => {
         : 'Maintain monitoring cadence and compare peer states.';
   return `
     <div class="market-leadership-grid">
-      <button type="button" class="market-leadership-card" data-market-score-type="marketRisk" data-market-score-value="${marketRisk}">
-        <span>Market Risk</span><strong>${marketRisk}</strong><small>Demand stress, disruption, and confidence-adjusted shortage pressure.</small>
-      </button>
-      <button type="button" class="market-leadership-card" data-market-score-type="recruitingOpportunity" data-market-score-value="${recruitingOpportunity}">
-        <span>Recruiting Opportunity</span><strong>${recruitingOpportunity}</strong><small>Available supply, relocation attractiveness, and data confidence.</small></button>
-      <button type="button" class="market-leadership-card" data-market-score-type="retentionRisk" data-market-score-value="${retentionRisk}">
-        <span>Retention Risk</span><strong>${retentionRisk}</strong><small>Demand intensity, wage pressure, and labor disruption exposure.</small>
-      </button>
+      <div><span>Market Risk</span><strong>${marketRisk}</strong><small>Demand stress, disruption, and confidence-adjusted shortage pressure.</small></div>
+      <div><span>Recruiting Opportunity</span><strong>${recruitingOpportunity}</strong><small>Available supply, relocation attractiveness, and data confidence.</small></div>
+      <div><span>Retention Risk</span><strong>${retentionRisk}</strong><small>Demand intensity, wage pressure, and labor disruption exposure.</small></div>
       <div><span>Next Action</span><strong>${escapeHtml(recommendation)}</strong><small>${escapeHtml(getMarketChartScopeLabel(marketChartScope))} | ${escapeHtml(getMarketNormalizeLabel())}</small></div>
     </div>
   `;
@@ -9325,218 +8577,6 @@ const renderProjectedForecast = (forecast) => {
       <p>${escapeHtml(forecast.action)}</p>
     </div>
   `;
-};
-
-const getStateNoticeCount = (state) => Number(mapStateData?.[state]?.count || stateDataHealthcare?.[state]?.count || stateDataAll?.[state]?.count || 0);
-
-const getStateSalaryData = (state) => strategicData?.salaryData?.[state] || recruitmentIntel?.salaryBenchmarks?.[state] || {};
-
-const getStateTravelAnnual = (state) => {
-  const salary = getStateSalaryData(state);
-  const weekly = Number(salary?.travelWeekly || 0);
-  return Number.isFinite(weekly) && weekly > 0 ? weekly * 48 : 0;
-};
-
-const getStateStaffAnnual = (state) => {
-  const salary = getStateSalaryData(state);
-  const staff = Number(salary?.staffRN || 0);
-  return Number.isFinite(staff) ? staff : 0;
-};
-
-const getRegionalNeighborBoost = (origin, target) => {
-  const originRegion = getRegionForState(origin);
-  const targetRegion = getRegionForState(target);
-  if (!originRegion || !targetRegion) return 0;
-  return originRegion === targetRegion ? 12 : 0;
-};
-
-const getRnFlightPushScore = (origin) => {
-  const noticeCount = getStateNoticeCount(origin);
-  const ruralRisk = getStateRuralRiskCount(origin);
-  const strikeCount = getStateStrikeCount(origin);
-  const salary = getStateSalaryData(origin);
-  const staffAnnual = getStateStaffAnnual(origin);
-  const travelAnnual = getStateTravelAnnual(origin);
-  const projectedGap = Number(salary?.projectedGap || 0);
-  const localDemandPenalty = projectedGap < 0 ? Math.min(20, Math.abs(projectedGap) / 700) : 0;
-  const wagePush = Math.max(0, 18 - (staffAnnual / 7000));
-  const travelPullAtHome = Math.max(0, (travelAnnual - staffAnnual) / 5000);
-  const raw = noticeCount * 1.8 + ruralRisk * 2.2 + strikeCount * 6 + wagePush + travelPullAtHome - localDemandPenalty;
-  return Math.max(0, Math.min(100, Math.round(raw)));
-};
-
-const getRnFlightDestinationRows = (origin) => {
-  const originStaff = getStateStaffAnnual(origin);
-  const originTravel = getStateTravelAnnual(origin);
-  const originRegion = getRegionForState(origin);
-  const pushScore = getRnFlightPushScore(origin);
-  const originCompact = freeMarketSignals?.nlcCompactStates?.includes(origin);
-
-  return ALL_STATES
-    .filter((state) => state !== origin)
-    .map((state) => {
-      const staff = getStateStaffAnnual(state);
-      const travel = getStateTravelAnnual(state);
-      const salaryLift = Math.max(0, (staff - originStaff) / 2500);
-      const travelLift = Math.max(0, (travel - originTravel) / 3200);
-      const demandGap = getStateRnDemandGap(state);
-      const demandPull = Math.min(28, demandGap / 650);
-      const noticePull = Math.min(14, getStateNoticeCount(state) * 1.2);
-      const relocation = Math.min(22, getStateRelocationScore(state) * 0.22);
-      const compact = originCompact && freeMarketSignals?.nlcCompactStates?.includes(state) ? 10 : 0;
-      const regionBoost = getRegionalNeighborBoost(origin, state);
-      const ruralDrag = Math.min(10, getStateRuralRiskCount(state) * 0.8);
-      const strikeDrag = Math.min(8, getStateStrikeCount(state) * 2);
-      const timingBoost = rnFlightTiming === 'next30'
-        ? noticePull * 0.45 + compact * 0.25
-        : rnFlightTiming === 'seasonal'
-          ? travelLift * 0.35 + relocation * 0.2
-          : demandPull * 0.2 + noticePull * 0.2;
-      const score = Math.max(0, Math.min(100, Math.round(
-        pushScore * 0.24
-        + salaryLift
-        + travelLift
-        + demandPull
-        + noticePull
-        + relocation
-        + compact
-        + regionBoost
-        + timingBoost
-        - ruralDrag
-        - strikeDrag
-      )));
-      const reasons = [
-        salaryLift > 4 ? 'higher staff pay' : '',
-        travelLift > 4 ? 'higher travel pay' : '',
-        demandPull > 8 ? 'shortage pull' : '',
-        noticePull > 4 ? 'active hiring signal' : '',
-        compact ? 'compact-friendly' : '',
-        regionBoost ? `same ${originRegion} region` : '',
-        ruralDrag > 4 ? 'rural instability drag' : '',
-      ].filter(Boolean);
-      return {
-        state,
-        stateName: STATE_NAMES[state] || state,
-        score,
-        salaryLift,
-        travelLift,
-        demandPull,
-        noticePull,
-        relocation,
-        compact,
-        reasons
-      };
-    })
-    .sort((a, b) => b.score - a.score || b.demandPull - a.demandPull)
-    .slice(0, 10);
-};
-
-const renderRnFlightMapSvg = (origin, destinations) => {
-  const top = new Map(destinations.map((row, index) => [row.state, { ...row, rank: index + 1 }]));
-  return US_STATES_SVG
-    .replace('<svg ', '<svg class="rn-flight-map-svg" ')
-    .replace(/<(path|circle)([^>]*?)id="([A-Z]{2})"([^>]*?)\/>/g, (match, tag, before, state, after) => {
-      const dest = top.get(state);
-      const classes = ['rn-flight-state'];
-      let extra = '';
-      if (state === origin) {
-        classes.push('rn-flight-origin');
-        extra = `<title>${STATE_NAMES[state] || state}: origin state</title>`;
-      } else if (dest) {
-        classes.push('rn-flight-destination');
-        classes.push(`rn-flight-intensity-${Math.max(1, Math.ceil(dest.score / 20))}`);
-        extra = `<title>${dest.rank}. ${STATE_NAMES[state] || state}: mobility likelihood ${dest.score}</title>`;
-      }
-      return `<${tag}${before}id="${state}"${after} class="${classes.join(' ')}" data-flight-state="${state}">${extra}</${tag}>`;
-    });
-};
-
-const renderRnFlightPattern = () => {
-  const container = document.getElementById('rn-flight');
-  if (!container) return;
-  if (!ALL_STATES.includes(rnFlightOriginState)) rnFlightOriginState = 'IN';
-  const origin = rnFlightOriginState;
-  const pushScore = getRnFlightPushScore(origin);
-  const destinations = getRnFlightDestinationRows(origin);
-  const topDestination = destinations[0];
-  const stateOptions = ALL_STATES.map((state) => (
-    `<option value="${state}" ${state === origin ? 'selected' : ''}>${escapeHtml(STATE_NAMES[state] || state)} (${state})</option>`
-  )).join('');
-
-  container.innerHTML = `
-    <div class="rn-flight-shell">
-      <div class="rn-flight-toolbar">
-        <div>
-          <h4>RN Flight Pattern</h4>
-          <p>Modeled state-to-state RN mobility likelihood. This estimates market-level movement, not individual nurse tracking.</p>
-        </div>
-        <div class="rn-flight-controls">
-          <label><span>Origin</span><select id="rn-flight-origin">${stateOptions}</select></label>
-          <label>
-            <span>Timing</span>
-            <select id="rn-flight-timing">
-              <option value="next30" ${rnFlightTiming === 'next30' ? 'selected' : ''}>Next 30 days</option>
-              <option value="next90" ${rnFlightTiming === 'next90' ? 'selected' : ''}>Next 90 days</option>
-              <option value="seasonal" ${rnFlightTiming === 'seasonal' ? 'selected' : ''}>Seasonal window</option>
-            </select>
-          </label>
-        </div>
-      </div>
-      <div class="rn-flight-kpis">
-        <div><span>Origin push</span><strong>${pushScore}</strong><small>${escapeHtml(STATE_NAMES[origin] || origin)} outbound pressure</small></div>
-        <div><span>Top destination</span><strong>${escapeHtml(topDestination?.state || '--')}</strong><small>${topDestination ? `${escapeHtml(topDestination.stateName)} | Score ${topDestination.score}` : 'No destination ranked'}</small></div>
-        <div><span>Best window</span><strong>${rnFlightTiming === 'next30' ? '30d' : rnFlightTiming === 'seasonal' ? 'Seasonal' : '90d'}</strong><small>Based on pay, demand, compact, and disruption signals</small></div>
-      </div>
-      <div class="rn-flight-body">
-        <div class="rn-flight-map">
-          ${renderRnFlightMapSvg(origin, destinations)}
-          <div class="rn-flight-map-legend"><span>Origin</span><i class="origin"></i><span>Likely destination</span><i class="destination"></i></div>
-        </div>
-        <div class="rn-flight-rankings">
-          <div class="rn-flight-rankings-header">
-            <h5>Likely Destination States</h5>
-            <span>Click a row to focus the main chart</span>
-          </div>
-          ${destinations.map((row, index) => `
-            <button type="button" class="rn-flight-row" data-flight-target="${row.state}">
-              <span class="rn-flight-rank">${index + 1}</span>
-              <div class="rn-flight-row-main">
-                <strong>${escapeHtml(row.stateName)} (${row.state})</strong>
-                <small>${escapeHtml(row.reasons.join(' | ') || 'balanced destination signal')}</small>
-                <div class="rn-flight-bar"><i style="width:${row.score}%"></i></div>
-              </div>
-              <span class="rn-flight-score">${row.score}</span>
-            </button>
-          `).join('')}
-        </div>
-      </div>
-    </div>
-  `;
-
-  document.getElementById('rn-flight-origin')?.addEventListener('change', (event) => {
-    rnFlightOriginState = event.target.value || 'IN';
-    renderRnFlightPattern();
-  });
-  document.getElementById('rn-flight-timing')?.addEventListener('change', (event) => {
-    rnFlightTiming = ['next30', 'next90', 'seasonal'].includes(event.target.value) ? event.target.value : 'next90';
-    renderRnFlightPattern();
-  });
-  container.querySelectorAll('[data-flight-target]').forEach((button) => {
-    button.addEventListener('click', () => {
-      marketChartScope = button.getAttribute('data-flight-target') || 'us';
-      marketChartSearch = marketChartScope;
-      toggleMapView('chart');
-    });
-  });
-  container.querySelectorAll('[data-flight-state]').forEach((shape) => {
-    shape.addEventListener('click', () => {
-      const state = shape.getAttribute('data-flight-state');
-      if (!state || state === origin) return;
-      marketChartScope = state;
-      marketChartSearch = state;
-      toggleMapView('chart');
-    });
-  });
 };
 
 // Render chart view
@@ -9709,82 +8749,26 @@ const renderBarChart = () => {
 
 // Toggle between map and chart view
 const toggleMapView = (view) => {
-    marketChartScope = event.target.value || 'us';
-    renderBarChart();
-  });
-  document.getElementById('market-chart-granularity')?.addEventListener('change', (event) => {
-    marketChartGranularity = ['week', 'month', 'year'].includes(event.target.value) ? event.target.value : 'month';
-    renderBarChart();
-  });
-  document.getElementById('market-chart-metric')?.addEventListener('change', (event) => {
-    marketChartMetric = MARKET_CHART_METRICS[event.target.value] ? event.target.value : 'aggregate';
-    renderBarChart();
-  });
-  document.getElementById('market-chart-normalize')?.addEventListener('change', (event) => {
-    marketChartNormalize = ['none', 'facility', 'program', 'notice'].includes(event.target.value) ? event.target.value : 'none';
-    renderBarChart();
-  });
-  document.getElementById('market-chart-layer')?.addEventListener('change', (event) => {
-    marketChartLayer = ['all', 'supply', 'demand'].includes(event.target.value) ? event.target.value : 'all';
-    renderBarChart();
-  });
-  document.getElementById('market-chart-search')?.addEventListener('input', (event) => {
-    marketChartSearch = event.target.value || '';
-    renderBarChart();
-    const input = document.getElementById('market-chart-search');
-    input?.focus();
-    if (input) input.selectionStart = input.selectionEnd = input.value.length;
-  });
-  barChart.querySelectorAll('[data-market-state]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      marketChartScope = btn.getAttribute('data-market-state') || 'us';
-      renderBarChart();
-    });
-  });
-  barChart.querySelectorAll('[data-market-score-type]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      showMarketScoreModal(btn.getAttribute('data-market-score-type'), btn.getAttribute('data-market-score-value'));
-    });
-  });
-};
-
-// Toggle between map and chart view
-const toggleMapView = (view) => {
   currentMapView = view;
   const mapContainer = document.getElementById('us-map');
   const barChart = document.getElementById('bar-chart');
-  const rnFlight = document.getElementById('rn-flight');
   const mapLegend = document.getElementById('map-legend');
   const mapViewBtn = document.getElementById('map-view-btn');
   const chartViewBtn = document.getElementById('chart-view-btn');
-  const flightViewBtn = document.getElementById('flight-view-btn');
 
   if (view === 'map') {
     mapContainer.style.display = 'block';
     barChart.style.display = 'none';
-    if (rnFlight) rnFlight.style.display = 'none';
     mapLegend.style.display = 'flex';
     mapViewBtn.classList.add('active');
     chartViewBtn.classList.remove('active');
-    flightViewBtn?.classList.remove('active');
     updateMapHighlights();
-  } else if (view === 'flight') {
-    mapContainer.style.display = 'none';
-    barChart.style.display = 'none';
-    if (rnFlight) rnFlight.style.display = 'block';
-    mapLegend.style.display = 'none';
-    mapViewBtn.classList.remove('active');
-    chartViewBtn.classList.remove('active');
-    flightViewBtn?.classList.add('active');
-    renderRnFlightPattern();
   } else {
     mapContainer.style.display = 'none';
     barChart.style.display = 'block';
-    if (rnFlight) rnFlight.style.display = 'none';
     mapLegend.style.display = 'none';
     mapViewBtn.classList.remove('active');
     chartViewBtn.classList.add('active');
-    flightViewBtn?.classList.remove('active');
     renderBarChart();
   }
 };
@@ -9837,8 +8821,6 @@ const setMapScope = (scope, { reloadNotices = false } = {}) => {
   updateWeatherMap();
   if (currentMapView === 'chart') {
     renderBarChart();
-  } else if (currentMapView === 'flight') {
-    renderRnFlightPattern();
   }
   if (reloadNotices) {
     loadNotices();
@@ -9930,11 +8912,9 @@ const initMapFactors = () => {
 const initMapToggle = () => {
   const mapViewBtn = document.getElementById('map-view-btn');
   const chartViewBtn = document.getElementById('chart-view-btn');
-  const flightViewBtn = document.getElementById('flight-view-btn');
 
   mapViewBtn?.addEventListener('click', () => toggleMapView('map'));
   chartViewBtn?.addEventListener('click', () => toggleMapView('chart'));
-  flightViewBtn?.addEventListener('click', () => toggleMapView('flight'));
 
   ensureMapTargetModeListener();
 };
@@ -10988,3 +9968,5 @@ if (document.fonts && document.fonts.ready) {
 
 // Auto-init if already authenticated
 bootstrapAuth();
+
+
