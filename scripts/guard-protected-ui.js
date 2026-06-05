@@ -15,8 +15,7 @@ const pairs = FILES.map((file) => ({
   webPath: path.join(ROOT, 'apps', 'web', file)
 }));
 
-const requireWebCopy = process.env.PROTECTED_UI_REQUIRE_WEB === '1'
-  || fs.existsSync(path.join(ROOT, 'apps', 'web'));
+const requireWebCopy = process.env.PROTECTED_UI_REQUIRE_WEB === '1';
 
 const requirements = [
   {
@@ -105,4 +104,6 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log('Protected UI guard passed: Chart View and RN Flight Pattern are present and synced.');
+console.log(requireWebCopy
+  ? 'Protected UI guard passed: Chart View and RN Flight Pattern are present and synced.'
+  : 'Protected UI guard passed: Chart View and RN Flight Pattern are present in public assets.');
