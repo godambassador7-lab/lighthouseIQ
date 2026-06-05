@@ -8435,6 +8435,104 @@ const renderMarketChartLegend = (aggregate) => {
   )).join('');
 };
 
+const MARKET_SCORE_EXPLANATIONS = {
+  marketRisk: {
+    title: 'Market Risk',
+    plain: 'How likely this market is to get harder, tighter, or unstable.',
+    good: '0-39 is good: the market looks relatively stable.',
+    watch: '40-64 means watch it: there is meaningful pressure, but not emergency-level.',
+    bad: '65-100 is bad: leadership should expect shortage pressure, disruption, or instability.',
+    drivers: [
+      'Demand is high compared with supply.',
+      'Strike or labor disruption signals are present.',
+      'Rural hospitals are at risk.',
+      'Lower source confidence adds a small penalty.'
+    ]
+  },
+  recruitingOpportunity: {
+    title: 'Recruiting Opportunity',
+    plain: 'How good this market looks for finding available nurses.',
+    good: '65-100 is good: prioritize recruiting here.',
+    watch: '35-64 is mixed: recruit selectively and compare nearby markets.',
+    bad: '0-34 is weak: demand is probably eating up available supply.',
+    drivers: [
+      'Available supply is higher than demand.',
+      'The state is attractive for relocation.',
+      'The data confidence is strong.',
+      'A shortage-heavy market can push this score down to zero.'
+    ]
+  },
+  retentionRisk: {
+    title: 'Retention Risk',
+    plain: 'How likely nurses are to be hard to keep, ask for more pay, or leave.',
+    good: '0-39 is good: retention pressure looks manageable.',
+    watch: '40-64 means watch it: managers should monitor pay and workload pressure.',
+    bad: '65-100 is bad: leadership should act on retention, pay pressure, or staffing stability.',
+    drivers: [
+      'Demand intensity is high.',
+      'Wage or travel-pay pressure is high.',
+      'Strike or labor disruption signals exist.',
+      'Rural hospital instability adds pressure.'
+    ]
+  }
+};
+
+const getMarketScoreBand = (score, type) => {
+  const value = Number(score || 0);
+  if (type === 'recruitingOpportunity') {
+    if (value >= 65) return { label: 'Good', className: 'good' };
+    if (value >= 35) return { label: 'Mixed', className: 'watch' };
+    return { label: 'Weak', className: 'bad' };
+  }
+  if (value >= 65) return { label: 'Bad', className: 'bad' };
+  if (value >= 40) return { label: 'Watch', className: 'watch' };
+  return { label: 'Good', className: 'good' };
+};
+
+const showMarketScoreModal = (type, score) => {
+  const info = MARKET_SCORE_EXPLANATIONS[type];
+  if (!info) return;
+  const band = getMarketScoreBand(score, type);
+  const existing = document.getElementById('market-score-modal');
+  if (existing) existing.remove();
+  const modal = document.createElement('div');
+  modal.className = 'market-score-modal-overlay';
+  modal.id = 'market-score-modal';
+  modal.innerHTML = `
+    <div class="market-score-modal" role="dialog" aria-modal="true" aria-labelledby="market-score-modal-title">
+      <button type="button" class="market-score-modal-close" aria-label="Close score explanation">&times;</button>
+      <div class="market-score-modal-header">
+        <span>Score explanation</span>
+        <h3 id="market-score-modal-title">${escapeHtml(info.title)}</h3>
+      </div>
+      <div class="market-score-modal-score">
+        <strong>${Math.round(Number(score || 0))}</strong>
+        <span class="${band.className}">${escapeHtml(band.label)}</span>
+      </div>
+      <p>${escapeHtml(info.plain)}</p>
+      <div class="market-score-thresholds">
+        <div class="good"><strong>Good</strong><span>${escapeHtml(info.good)}</span></div>
+        <div class="watch"><strong>Watch</strong><span>${escapeHtml(info.watch)}</span></div>
+        <div class="bad"><strong>Bad</strong><span>${escapeHtml(info.bad)}</span></div>
+      </div>
+      <div class="market-score-drivers">
+        <h4>What moves this number?</h4>
+        <ul>${info.drivers.map((driver) => `<li>${escapeHtml(driver)}</li>`).join('')}</ul>
+      </div>
+    </div>
+  `;
+  const close = () => {
+    modal.remove();
+    document.body.classList.remove('modal-open');
+  };
+  modal.addEventListener('click', (event) => {
+    if (event.target === modal) close();
+  });
+  modal.querySelector('.market-score-modal-close')?.addEventListener('click', close);
+  document.body.appendChild(modal);
+  document.body.classList.add('modal-open');
+};
+
 const renderMarketLeadershipCards = (rows) => {
   const selectedRows = rows.filter((row) => row.selected);
   const sourceRows = selectedRows.length ? selectedRows : rows;
@@ -8451,9 +8549,15 @@ const renderMarketLeadershipCards = (rows) => {
         : 'Maintain monitoring cadence and compare peer states.';
   return `
     <div class="market-leadership-grid">
-      <div><span>Market Risk</span><strong>${marketRisk}</strong><small>Demand stress, disruption, and confidence-adjusted shortage pressure.</small></div>
-      <div><span>Recruiting Opportunity</span><strong>${recruitingOpportunity}</strong><small>Available supply, relocation attractiveness, and data confidence.</small></div>
-      <div><span>Retention Risk</span><strong>${retentionRisk}</strong><small>Demand intensity, wage pressure, and labor disruption exposure.</small></div>
+      <button type="button" class="market-leadership-card" data-market-score-type="marketRisk" data-market-score-value="${marketRisk}">
+        <span>Market Risk</span><strong>${marketRisk}</strong><small>Demand stress, disruption, and confidence-adjusted shortage pressure.</small>
+      </button>
+      <button type="button" class="market-leadership-card" data-market-score-type="recruitingOpportunity" data-market-score-value="${recruitingOpportunity}">
+        <span>Recruiting Opportunity</span><strong>${recruitingOpportunity}</strong><small>Available supply, relocation attractiveness, and data confidence.</small>
+      </button>
+      <button type="button" class="market-leadership-card" data-market-score-type="retentionRisk" data-market-score-value="${retentionRisk}">
+        <span>Retention Risk</span><strong>${retentionRisk}</strong><small>Demand intensity, wage pressure, and labor disruption exposure.</small>
+      </button>
       <div><span>Next Action</span><strong>${escapeHtml(recommendation)}</strong><small>${escapeHtml(getMarketChartScopeLabel(marketChartScope))} | ${escapeHtml(getMarketNormalizeLabel())}</small></div>
     </div>
   `;
@@ -8743,6 +8847,11 @@ const renderBarChart = () => {
     btn.addEventListener('click', () => {
       marketChartScope = btn.getAttribute('data-market-state') || 'us';
       renderBarChart();
+    });
+  });
+  barChart.querySelectorAll('[data-market-score-type]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      showMarketScoreModal(btn.getAttribute('data-market-score-type'), btn.getAttribute('data-market-score-value'));
     });
   });
 };
