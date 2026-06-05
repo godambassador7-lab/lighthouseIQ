@@ -294,6 +294,8 @@ let marketChartNormalize = 'none';
 let marketChartLayer = 'all';
 let marketChartSearch = '';
 let rnFlightOriginState = 'IN';
+let rnFlightTargetState = 'IN';
+let rnFlightMode = 'outbound';
 let rnFlightTiming = 'next90';
 let selectedStates = []; // Multi-select states
 let mapScope = 'healthcare'; // 'healthcare' or 'all'
@@ -8733,71 +8735,95 @@ const getRnFlightPushScore = (origin) => {
   return Math.max(0, Math.min(100, Math.round(raw)));
 };
 
-const getRnFlightDestinationRows = (origin) => {
+const getRnFlightRouteScore = (origin, state) => {
+  if (origin === state) return null;
   const originStaff = getStateStaffAnnual(origin);
   const originTravel = getStateTravelAnnual(origin);
   const originRegion = getRegionForState(origin);
   const pushScore = getRnFlightPushScore(origin);
   const originCompact = freeMarketSignals?.nlcCompactStates?.includes(origin);
+  const staff = getStateStaffAnnual(state);
+  const travel = getStateTravelAnnual(state);
+  const salaryLift = Math.max(0, (staff - originStaff) / 2500);
+  const travelLift = Math.max(0, (travel - originTravel) / 3200);
+  const demandGap = getStateRnDemandGap(state);
+  const demandPull = Math.min(28, demandGap / 650);
+  const noticePull = Math.min(14, getStateNoticeCount(state) * 1.2);
+  const relocation = Math.min(22, getStateRelocationScore(state) * 0.22);
+  const compact = originCompact && freeMarketSignals?.nlcCompactStates?.includes(state) ? 10 : 0;
+  const regionBoost = getRegionalNeighborBoost(origin, state);
+  const ruralDrag = Math.min(10, getStateRuralRiskCount(state) * 0.8);
+  const strikeDrag = Math.min(8, getStateStrikeCount(state) * 2);
+  const timingBoost = rnFlightTiming === 'next30'
+    ? noticePull * 0.45 + compact * 0.25
+    : rnFlightTiming === 'seasonal'
+      ? travelLift * 0.35 + relocation * 0.2
+      : demandPull * 0.2 + noticePull * 0.2;
+  const score = Math.max(0, Math.min(100, Math.round(
+    pushScore * 0.24
+    + salaryLift
+    + travelLift
+    + demandPull
+    + noticePull
+    + relocation
+    + compact
+    + regionBoost
+    + timingBoost
+    - ruralDrag
+    - strikeDrag
+  )));
+  const reasons = [
+    salaryLift > 4 ? 'higher staff pay' : '',
+    travelLift > 4 ? 'higher travel pay' : '',
+    demandPull > 8 ? 'shortage pull' : '',
+    noticePull > 4 ? 'active hiring signal' : '',
+    compact ? 'compact-friendly' : '',
+    regionBoost ? `same ${originRegion} region` : '',
+    ruralDrag > 4 ? 'rural instability drag' : '',
+  ].filter(Boolean);
+  return {
+    state,
+    stateName: STATE_NAMES[state] || state,
+    origin,
+    originName: STATE_NAMES[origin] || origin,
+    score,
+    pushScore,
+    salaryLift,
+    travelLift,
+    demandPull,
+    noticePull,
+    relocation,
+    compact,
+    reasons
+  };
+};
 
-  return ALL_STATES
-    .filter((state) => state !== origin)
+const getRnFlightDestinationRows = (origin) => (
+  ALL_STATES
+    .map((state) => getRnFlightRouteScore(origin, state))
+    .filter(Boolean)
+    .sort((a, b) => b.score - a.score || b.demandPull - a.demandPull)
+    .slice(0, 10)
+);
+
+const getRnFlightOriginRows = (target) => (
+  ALL_STATES
+    .filter((state) => state !== target)
     .map((state) => {
-      const staff = getStateStaffAnnual(state);
-      const travel = getStateTravelAnnual(state);
-      const salaryLift = Math.max(0, (staff - originStaff) / 2500);
-      const travelLift = Math.max(0, (travel - originTravel) / 3200);
-      const demandGap = getStateRnDemandGap(state);
-      const demandPull = Math.min(28, demandGap / 650);
-      const noticePull = Math.min(14, getStateNoticeCount(state) * 1.2);
-      const relocation = Math.min(22, getStateRelocationScore(state) * 0.22);
-      const compact = originCompact && freeMarketSignals?.nlcCompactStates?.includes(state) ? 10 : 0;
-      const regionBoost = getRegionalNeighborBoost(origin, state);
-      const ruralDrag = Math.min(10, getStateRuralRiskCount(state) * 0.8);
-      const strikeDrag = Math.min(8, getStateStrikeCount(state) * 2);
-      const timingBoost = rnFlightTiming === 'next30'
-        ? noticePull * 0.45 + compact * 0.25
-        : rnFlightTiming === 'seasonal'
-          ? travelLift * 0.35 + relocation * 0.2
-          : demandPull * 0.2 + noticePull * 0.2;
-      const score = Math.max(0, Math.min(100, Math.round(
-        pushScore * 0.24
-        + salaryLift
-        + travelLift
-        + demandPull
-        + noticePull
-        + relocation
-        + compact
-        + regionBoost
-        + timingBoost
-        - ruralDrag
-        - strikeDrag
-      )));
-      const reasons = [
-        salaryLift > 4 ? 'higher staff pay' : '',
-        travelLift > 4 ? 'higher travel pay' : '',
-        demandPull > 8 ? 'shortage pull' : '',
-        noticePull > 4 ? 'active hiring signal' : '',
-        compact ? 'compact-friendly' : '',
-        regionBoost ? `same ${originRegion} region` : '',
-        ruralDrag > 4 ? 'rural instability drag' : '',
-      ].filter(Boolean);
+      const route = getRnFlightRouteScore(state, target);
+      if (!route) return null;
       return {
-        state,
-        stateName: STATE_NAMES[state] || state,
-        score,
-        salaryLift,
-        travelLift,
-        demandPull,
-        noticePull,
-        relocation,
-        compact,
-        reasons
+        ...route,
+        state: route.origin,
+        stateName: route.originName,
+        target,
+        targetName: STATE_NAMES[target] || target
       };
     })
-    .sort((a, b) => b.score - a.score || b.demandPull - a.demandPull)
-    .slice(0, 10);
-};
+    .filter(Boolean)
+    .sort((a, b) => b.score - a.score || b.pushScore - a.pushScore)
+    .slice(0, 10)
+);
 
 const getRnFlightSourceSvg = () => {
   const liveSvg = usMapContainer?.querySelector('svg');
@@ -8815,10 +8841,10 @@ const getSvgStateAbbrev = (shape) => {
   return /^[A-Z]{2}$/.test(abbrev) ? abbrev : '';
 };
 
-const renderRnFlightMapSvg = (origin, destinations) => {
+const renderRnFlightMapSvg = ({ focusState, rows, mode }) => {
   const svg = getRnFlightSourceSvg();
   if (!svg) return '';
-  const top = new Map(destinations.map((row, index) => [row.state, { ...row, rank: index + 1 }]));
+  const top = new Map(rows.map((row, index) => [row.state, { ...row, rank: index + 1 }]));
   svg.classList.add('rn-flight-map-svg');
   svg.removeAttribute('style');
   svg.querySelectorAll('.state-rank-label').forEach((label) => label.remove());
@@ -8832,8 +8858,18 @@ const renderRnFlightMapSvg = (origin, destinations) => {
 
     const dest = top.get(state);
     const classes = ['rn-flight-state'];
-    if (state === origin) {
+    if (mode === 'inbound') {
+      if (state === focusState) {
+        classes.push('rn-flight-destination');
+        classes.push('rn-flight-focus-destination');
+      } else if (dest) {
+        classes.push('rn-flight-origin');
+        classes.push('rn-flight-origin-candidate');
+        classes.push(`rn-flight-origin-intensity-${Math.max(1, Math.ceil(dest.score / 20))}`);
+      }
+    } else if (state === focusState) {
       classes.push('rn-flight-origin');
+      classes.push('rn-flight-focus-origin');
     } else if (dest) {
       classes.push('rn-flight-destination');
       classes.push(`rn-flight-intensity-${Math.max(1, Math.ceil(dest.score / 20))}`);
@@ -8847,11 +8883,19 @@ const renderRnFlightMapSvg = (origin, destinations) => {
     shape.querySelectorAll('title').forEach((title) => title.remove());
 
     const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
-    title.textContent = state === origin
-      ? `${STATE_NAMES[state] || state}: origin state`
-      : dest
-        ? `${dest.rank}. ${STATE_NAMES[state] || state}: mobility likelihood ${dest.score}`
-        : `${STATE_NAMES[state] || state}: not in top destinations`;
+    if (mode === 'inbound') {
+      title.textContent = state === focusState
+        ? `${STATE_NAMES[state] || state}: flight-to state`
+        : dest
+          ? `${dest.rank}. ${STATE_NAMES[state] || state}: likely origin into ${STATE_NAMES[focusState] || focusState}, score ${dest.score}`
+          : `${STATE_NAMES[state] || state}: not in top origin states`;
+    } else {
+      title.textContent = state === focusState
+        ? `${STATE_NAMES[state] || state}: origin state`
+        : dest
+          ? `${dest.rank}. ${STATE_NAMES[state] || state}: mobility likelihood ${dest.score}`
+          : `${STATE_NAMES[state] || state}: not in top destinations`;
+    }
     shape.appendChild(title);
   });
 
@@ -8862,23 +8906,42 @@ const renderRnFlightPattern = () => {
   const container = document.getElementById('rn-flight');
   if (!container) return;
   if (!ALL_STATES.includes(rnFlightOriginState)) rnFlightOriginState = 'IN';
-  const origin = rnFlightOriginState;
-  const pushScore = getRnFlightPushScore(origin);
-  const destinations = getRnFlightDestinationRows(origin);
-  const topDestination = destinations[0];
+  if (!ALL_STATES.includes(rnFlightTargetState)) rnFlightTargetState = 'IN';
+  rnFlightMode = rnFlightMode === 'inbound' ? 'inbound' : 'outbound';
+  const isInbound = rnFlightMode === 'inbound';
+  const focusState = isInbound ? rnFlightTargetState : rnFlightOriginState;
+  const rows = isInbound ? getRnFlightOriginRows(focusState) : getRnFlightDestinationRows(focusState);
+  const topRow = rows[0];
+  const pushScore = getRnFlightPushScore(focusState);
+  const inboundPullScore = Math.max(0, Math.min(100, Math.round(
+    (getStateRnDemandGap(focusState) / 650)
+    + (getStateNoticeCount(focusState) * 1.5)
+    + (getStateRelocationScore(focusState) * 0.18)
+  )));
   const stateOptions = ALL_STATES.map((state) => (
-    `<option value="${state}" ${state === origin ? 'selected' : ''}>${escapeHtml(STATE_NAMES[state] || state)} (${state})</option>`
+    `<option value="${state}" ${state === focusState ? 'selected' : ''}>${escapeHtml(STATE_NAMES[state] || state)} (${state})</option>`
   )).join('');
+  const focusName = STATE_NAMES[focusState] || focusState;
+  const rankingTitle = isInbound ? 'Likely Origin States' : 'Likely Destination States';
+  const rankingHint = isInbound ? 'Origins likely to move into the flight-to state' : 'Click a row to focus the main chart';
+  const focusLabel = isInbound ? 'Flight-to State' : 'Origin';
 
   container.innerHTML = `
     <div class="rn-flight-shell">
       <div class="rn-flight-toolbar">
         <div>
           <h4>RN Flight Pattern</h4>
-          <p>Modeled state-to-state RN mobility likelihood. This estimates market-level movement, not individual nurse tracking.</p>
+          <p>Modeled state-to-state RN mobility likelihood. Right-click any map state to flip into inbound view for that state.</p>
         </div>
         <div class="rn-flight-controls">
-          <label><span>Origin</span><select id="rn-flight-origin">${stateOptions}</select></label>
+          <label>
+            <span>Direction</span>
+            <select id="rn-flight-mode">
+              <option value="outbound" ${!isInbound ? 'selected' : ''}>Outbound from state</option>
+              <option value="inbound" ${isInbound ? 'selected' : ''}>Inbound to state</option>
+            </select>
+          </label>
+          <label><span>${focusLabel}</span><select id="rn-flight-state">${stateOptions}</select></label>
           <label>
             <span>Timing</span>
             <select id="rn-flight-timing">
@@ -8890,26 +8953,29 @@ const renderRnFlightPattern = () => {
         </div>
       </div>
       <div class="rn-flight-kpis">
-        <div><span>Origin push</span><strong>${pushScore}</strong><small>${escapeHtml(STATE_NAMES[origin] || origin)} outbound pressure</small></div>
-        <div><span>Top destination</span><strong>${escapeHtml(topDestination?.state || '--')}</strong><small>${topDestination ? `${escapeHtml(topDestination.stateName)} | Score ${topDestination.score}` : 'No destination ranked'}</small></div>
+        <div><span>${isInbound ? 'Inbound pull' : 'Origin push'}</span><strong>${isInbound ? inboundPullScore : pushScore}</strong><small>${escapeHtml(focusName)} ${isInbound ? 'destination demand pressure' : 'outbound pressure'}</small></div>
+        <div><span>${isInbound ? 'Top origin' : 'Top destination'}</span><strong>${escapeHtml(topRow?.state || '--')}</strong><small>${topRow ? `${escapeHtml(topRow.stateName)} | Score ${topRow.score}` : 'No state ranked'}</small></div>
         <div><span>Best window</span><strong>${rnFlightTiming === 'next30' ? '30d' : rnFlightTiming === 'seasonal' ? 'Seasonal' : '90d'}</strong><small>Based on pay, demand, compact, and disruption signals</small></div>
       </div>
       <div class="rn-flight-body">
         <div class="rn-flight-map">
-          ${renderRnFlightMapSvg(origin, destinations)}
-          <div class="rn-flight-map-legend"><span>Origin</span><i class="origin"></i><span>Likely destination</span><i class="destination"></i></div>
+          ${renderRnFlightMapSvg({ focusState, rows, mode: rnFlightMode })}
+          <div class="rn-flight-map-legend">
+            <span>${isInbound ? 'Likely origin' : 'Origin'}</span><i class="origin"></i>
+            <span>${isInbound ? 'Flight-to state' : 'Likely destination'}</span><i class="destination"></i>
+          </div>
         </div>
         <div class="rn-flight-rankings">
           <div class="rn-flight-rankings-header">
-            <h5>Likely Destination States</h5>
-            <span>Click a row to focus the main chart</span>
+            <h5>${rankingTitle}</h5>
+            <span>${rankingHint}</span>
           </div>
-          ${destinations.map((row, index) => `
+          ${rows.map((row, index) => `
             <button type="button" class="rn-flight-row" data-flight-target="${row.state}">
               <span class="rn-flight-rank">${index + 1}</span>
               <div class="rn-flight-row-main">
                 <strong>${escapeHtml(row.stateName)} (${row.state})</strong>
-                <small>${escapeHtml(row.reasons.join(' | ') || 'balanced destination signal')}</small>
+                <small>${escapeHtml(row.reasons.join(' | ') || (isInbound ? `balanced origin signal into ${focusState}` : 'balanced destination signal'))}</small>
                 <div class="rn-flight-bar"><i style="width:${row.score}%"></i></div>
               </div>
               <span class="rn-flight-score">${row.score}</span>
@@ -8920,8 +8986,17 @@ const renderRnFlightPattern = () => {
     </div>
   `;
 
-  document.getElementById('rn-flight-origin')?.addEventListener('change', (event) => {
-    rnFlightOriginState = event.target.value || 'IN';
+  document.getElementById('rn-flight-mode')?.addEventListener('change', (event) => {
+    rnFlightMode = event.target.value === 'inbound' ? 'inbound' : 'outbound';
+    renderRnFlightPattern();
+  });
+  document.getElementById('rn-flight-state')?.addEventListener('change', (event) => {
+    const state = event.target.value || 'IN';
+    if (rnFlightMode === 'inbound') {
+      rnFlightTargetState = state;
+    } else {
+      rnFlightOriginState = state;
+    }
     renderRnFlightPattern();
   });
   document.getElementById('rn-flight-timing')?.addEventListener('change', (event) => {
@@ -8938,10 +9013,18 @@ const renderRnFlightPattern = () => {
   container.querySelectorAll('[data-flight-state]').forEach((shape) => {
     shape.addEventListener('click', () => {
       const state = shape.getAttribute('data-flight-state');
-      if (!state || state === origin) return;
+      if (!state || state === focusState) return;
       marketChartScope = state;
       marketChartSearch = state;
       toggleMapView('chart');
+    });
+    shape.addEventListener('contextmenu', (event) => {
+      event.preventDefault();
+      const state = shape.getAttribute('data-flight-state');
+      if (!state) return;
+      rnFlightMode = 'inbound';
+      rnFlightTargetState = state;
+      renderRnFlightPattern();
     });
   });
 };
