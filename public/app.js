@@ -293,6 +293,8 @@ let marketChartMetric = 'aggregate';
 let marketChartNormalize = 'none';
 let marketChartLayer = 'all';
 let marketChartSearch = '';
+let rnFlightOriginState = 'IN';
+let rnFlightTiming = 'next90';
 let selectedStates = []; // Multi-select states
 let mapScope = 'healthcare'; // 'healthcare' or 'all'
 let activeMapTab = 'layoffs'; // 'layoffs' | 'rural' | 'salary'
@@ -2986,6 +2988,8 @@ const loadLeadershipMarketSignals = async () => {
   ]);
   if (currentMapView === 'chart') {
     renderBarChart();
+  } else if (currentMapView === 'flight') {
+    renderRnFlightPattern();
   }
 };
 
@@ -3143,8 +3147,10 @@ clearBtn.addEventListener('click', () => {
   // Update map highlights and reload
   if (currentMapView === 'map') {
     updateMapHighlights();
-  } else {
+  } else if (currentMapView === 'chart') {
     renderBarChart();
+  } else if (currentMapView === 'flight') {
+    renderRnFlightPattern();
   }
   loadNotices();
 });
@@ -3155,8 +3161,10 @@ regionSelect.addEventListener('change', () => {
   // Update map/chart highlights
   if (currentMapView === 'map') {
     updateMapHighlights();
-  } else {
+  } else if (currentMapView === 'chart') {
     renderBarChart();
+  } else if (currentMapView === 'flight') {
+    renderRnFlightPattern();
   }
   // Trigger data reload
   loadNotices();
@@ -4215,6 +4223,8 @@ const syncMapStateDataToVisibleNotices = () => {
   updateWeatherMap();
   if (currentMapView === 'chart') {
     renderBarChart();
+  } else if (currentMapView === 'flight') {
+    renderRnFlightPattern();
   }
   if (mapFactorsPanel && mapFactorsPanel.style.display !== 'none') {
     renderMapFactors();
@@ -4365,8 +4375,10 @@ const toggleStateSelection = (state) => {
 const onStateSelectionChange = () => {
   if (currentMapView === 'map') {
     updateMapHighlights();
-  } else {
+  } else if (currentMapView === 'chart') {
     renderBarChart();
+  } else if (currentMapView === 'flight') {
+    renderRnFlightPattern();
   }
   loadNotices();
 };
@@ -8683,6 +8695,218 @@ const renderProjectedForecast = (forecast) => {
   `;
 };
 
+const getStateNoticeCount = (state) => Number(mapStateData?.[state]?.count || stateDataHealthcare?.[state]?.count || stateDataAll?.[state]?.count || 0);
+
+const getStateSalaryData = (state) => strategicData?.salaryData?.[state] || recruitmentIntel?.salaryBenchmarks?.[state] || {};
+
+const getStateTravelAnnual = (state) => {
+  const salary = getStateSalaryData(state);
+  const weekly = Number(salary?.travelWeekly || 0);
+  return Number.isFinite(weekly) && weekly > 0 ? weekly * 48 : 0;
+};
+
+const getStateStaffAnnual = (state) => {
+  const salary = getStateSalaryData(state);
+  const staff = Number(salary?.staffRN || 0);
+  return Number.isFinite(staff) ? staff : 0;
+};
+
+const getRegionalNeighborBoost = (origin, target) => {
+  const originRegion = getRegionForState(origin);
+  const targetRegion = getRegionForState(target);
+  if (!originRegion || !targetRegion) return 0;
+  return originRegion === targetRegion ? 12 : 0;
+};
+
+const getRnFlightPushScore = (origin) => {
+  const noticeCount = getStateNoticeCount(origin);
+  const ruralRisk = getStateRuralRiskCount(origin);
+  const strikeCount = getStateStrikeCount(origin);
+  const salary = getStateSalaryData(origin);
+  const staffAnnual = getStateStaffAnnual(origin);
+  const travelAnnual = getStateTravelAnnual(origin);
+  const projectedGap = Number(salary?.projectedGap || 0);
+  const localDemandPenalty = projectedGap < 0 ? Math.min(20, Math.abs(projectedGap) / 700) : 0;
+  const wagePush = Math.max(0, 18 - (staffAnnual / 7000));
+  const travelPullAtHome = Math.max(0, (travelAnnual - staffAnnual) / 5000);
+  const raw = noticeCount * 1.8 + ruralRisk * 2.2 + strikeCount * 6 + wagePush + travelPullAtHome - localDemandPenalty;
+  return Math.max(0, Math.min(100, Math.round(raw)));
+};
+
+const getRnFlightDestinationRows = (origin) => {
+  const originStaff = getStateStaffAnnual(origin);
+  const originTravel = getStateTravelAnnual(origin);
+  const originRegion = getRegionForState(origin);
+  const pushScore = getRnFlightPushScore(origin);
+  const originCompact = freeMarketSignals?.nlcCompactStates?.includes(origin);
+
+  return ALL_STATES
+    .filter((state) => state !== origin)
+    .map((state) => {
+      const staff = getStateStaffAnnual(state);
+      const travel = getStateTravelAnnual(state);
+      const salaryLift = Math.max(0, (staff - originStaff) / 2500);
+      const travelLift = Math.max(0, (travel - originTravel) / 3200);
+      const demandGap = getStateRnDemandGap(state);
+      const demandPull = Math.min(28, demandGap / 650);
+      const noticePull = Math.min(14, getStateNoticeCount(state) * 1.2);
+      const relocation = Math.min(22, getStateRelocationScore(state) * 0.22);
+      const compact = originCompact && freeMarketSignals?.nlcCompactStates?.includes(state) ? 10 : 0;
+      const regionBoost = getRegionalNeighborBoost(origin, state);
+      const ruralDrag = Math.min(10, getStateRuralRiskCount(state) * 0.8);
+      const strikeDrag = Math.min(8, getStateStrikeCount(state) * 2);
+      const timingBoost = rnFlightTiming === 'next30'
+        ? noticePull * 0.45 + compact * 0.25
+        : rnFlightTiming === 'seasonal'
+          ? travelLift * 0.35 + relocation * 0.2
+          : demandPull * 0.2 + noticePull * 0.2;
+      const score = Math.max(0, Math.min(100, Math.round(
+        pushScore * 0.24
+        + salaryLift
+        + travelLift
+        + demandPull
+        + noticePull
+        + relocation
+        + compact
+        + regionBoost
+        + timingBoost
+        - ruralDrag
+        - strikeDrag
+      )));
+      const reasons = [
+        salaryLift > 4 ? 'higher staff pay' : '',
+        travelLift > 4 ? 'higher travel pay' : '',
+        demandPull > 8 ? 'shortage pull' : '',
+        noticePull > 4 ? 'active hiring signal' : '',
+        compact ? 'compact-friendly' : '',
+        regionBoost ? `same ${originRegion} region` : '',
+        ruralDrag > 4 ? 'rural instability drag' : '',
+      ].filter(Boolean);
+      return {
+        state,
+        stateName: STATE_NAMES[state] || state,
+        score,
+        salaryLift,
+        travelLift,
+        demandPull,
+        noticePull,
+        relocation,
+        compact,
+        reasons
+      };
+    })
+    .sort((a, b) => b.score - a.score || b.demandPull - a.demandPull)
+    .slice(0, 10);
+};
+
+const renderRnFlightMapSvg = (origin, destinations) => {
+  const top = new Map(destinations.map((row, index) => [row.state, { ...row, rank: index + 1 }]));
+  return US_STATES_SVG
+    .replace('<svg ', '<svg class="rn-flight-map-svg" ')
+    .replace(/<(path|circle)([^>]*?)id="([A-Z]{2})"([^>]*?)\/>/g, (match, tag, before, state, after) => {
+      const dest = top.get(state);
+      const classes = ['rn-flight-state'];
+      let extra = '';
+      if (state === origin) {
+        classes.push('rn-flight-origin');
+        extra = `<title>${STATE_NAMES[state] || state}: origin state</title>`;
+      } else if (dest) {
+        classes.push('rn-flight-destination');
+        classes.push(`rn-flight-intensity-${Math.max(1, Math.ceil(dest.score / 20))}`);
+        extra = `<title>${dest.rank}. ${STATE_NAMES[state] || state}: mobility likelihood ${dest.score}</title>`;
+      }
+      return `<${tag}${before}id="${state}"${after} class="${classes.join(' ')}" data-flight-state="${state}">${extra}</${tag}>`;
+    });
+};
+
+const renderRnFlightPattern = () => {
+  const container = document.getElementById('rn-flight');
+  if (!container) return;
+  if (!ALL_STATES.includes(rnFlightOriginState)) rnFlightOriginState = 'IN';
+  const origin = rnFlightOriginState;
+  const pushScore = getRnFlightPushScore(origin);
+  const destinations = getRnFlightDestinationRows(origin);
+  const topDestination = destinations[0];
+  const stateOptions = ALL_STATES.map((state) => (
+    `<option value="${state}" ${state === origin ? 'selected' : ''}>${escapeHtml(STATE_NAMES[state] || state)} (${state})</option>`
+  )).join('');
+
+  container.innerHTML = `
+    <div class="rn-flight-shell">
+      <div class="rn-flight-toolbar">
+        <div>
+          <h4>RN Flight Pattern</h4>
+          <p>Modeled state-to-state RN mobility likelihood. This estimates market-level movement, not individual nurse tracking.</p>
+        </div>
+        <div class="rn-flight-controls">
+          <label><span>Origin</span><select id="rn-flight-origin">${stateOptions}</select></label>
+          <label>
+            <span>Timing</span>
+            <select id="rn-flight-timing">
+              <option value="next30" ${rnFlightTiming === 'next30' ? 'selected' : ''}>Next 30 days</option>
+              <option value="next90" ${rnFlightTiming === 'next90' ? 'selected' : ''}>Next 90 days</option>
+              <option value="seasonal" ${rnFlightTiming === 'seasonal' ? 'selected' : ''}>Seasonal window</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <div class="rn-flight-kpis">
+        <div><span>Origin push</span><strong>${pushScore}</strong><small>${escapeHtml(STATE_NAMES[origin] || origin)} outbound pressure</small></div>
+        <div><span>Top destination</span><strong>${escapeHtml(topDestination?.state || '--')}</strong><small>${topDestination ? `${escapeHtml(topDestination.stateName)} | Score ${topDestination.score}` : 'No destination ranked'}</small></div>
+        <div><span>Best window</span><strong>${rnFlightTiming === 'next30' ? '30d' : rnFlightTiming === 'seasonal' ? 'Seasonal' : '90d'}</strong><small>Based on pay, demand, compact, and disruption signals</small></div>
+      </div>
+      <div class="rn-flight-body">
+        <div class="rn-flight-map">
+          ${renderRnFlightMapSvg(origin, destinations)}
+          <div class="rn-flight-map-legend"><span>Origin</span><i class="origin"></i><span>Likely destination</span><i class="destination"></i></div>
+        </div>
+        <div class="rn-flight-rankings">
+          <div class="rn-flight-rankings-header">
+            <h5>Likely Destination States</h5>
+            <span>Click a row to focus the main chart</span>
+          </div>
+          ${destinations.map((row, index) => `
+            <button type="button" class="rn-flight-row" data-flight-target="${row.state}">
+              <span class="rn-flight-rank">${index + 1}</span>
+              <div class="rn-flight-row-main">
+                <strong>${escapeHtml(row.stateName)} (${row.state})</strong>
+                <small>${escapeHtml(row.reasons.join(' | ') || 'balanced destination signal')}</small>
+                <div class="rn-flight-bar"><i style="width:${row.score}%"></i></div>
+              </div>
+              <span class="rn-flight-score">${row.score}</span>
+            </button>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('rn-flight-origin')?.addEventListener('change', (event) => {
+    rnFlightOriginState = event.target.value || 'IN';
+    renderRnFlightPattern();
+  });
+  document.getElementById('rn-flight-timing')?.addEventListener('change', (event) => {
+    rnFlightTiming = ['next30', 'next90', 'seasonal'].includes(event.target.value) ? event.target.value : 'next90';
+    renderRnFlightPattern();
+  });
+  container.querySelectorAll('[data-flight-target]').forEach((button) => {
+    button.addEventListener('click', () => {
+      marketChartScope = button.getAttribute('data-flight-target') || 'us';
+      marketChartSearch = marketChartScope;
+      toggleMapView('chart');
+    });
+  });
+  container.querySelectorAll('[data-flight-state]').forEach((shape) => {
+    shape.addEventListener('click', () => {
+      const state = shape.getAttribute('data-flight-state');
+      if (!state || state === origin) return;
+      marketChartScope = state;
+      marketChartSearch = state;
+      toggleMapView('chart');
+    });
+  });
+};
+
 // Render chart view
 const renderBarChart = () => {
   const barChart = document.getElementById('bar-chart');
@@ -8861,23 +9085,38 @@ const toggleMapView = (view) => {
   currentMapView = view;
   const mapContainer = document.getElementById('us-map');
   const barChart = document.getElementById('bar-chart');
+  const rnFlight = document.getElementById('rn-flight');
   const mapLegend = document.getElementById('map-legend');
   const mapViewBtn = document.getElementById('map-view-btn');
   const chartViewBtn = document.getElementById('chart-view-btn');
+  const flightViewBtn = document.getElementById('flight-view-btn');
 
   if (view === 'map') {
     mapContainer.style.display = 'block';
     barChart.style.display = 'none';
+    if (rnFlight) rnFlight.style.display = 'none';
     mapLegend.style.display = 'flex';
     mapViewBtn.classList.add('active');
     chartViewBtn.classList.remove('active');
+    flightViewBtn?.classList.remove('active');
     updateMapHighlights();
+  } else if (view === 'flight') {
+    mapContainer.style.display = 'none';
+    barChart.style.display = 'none';
+    if (rnFlight) rnFlight.style.display = 'block';
+    mapLegend.style.display = 'none';
+    mapViewBtn.classList.remove('active');
+    chartViewBtn.classList.remove('active');
+    flightViewBtn?.classList.add('active');
+    renderRnFlightPattern();
   } else {
     mapContainer.style.display = 'none';
     barChart.style.display = 'block';
+    if (rnFlight) rnFlight.style.display = 'none';
     mapLegend.style.display = 'none';
     mapViewBtn.classList.remove('active');
     chartViewBtn.classList.add('active');
+    flightViewBtn?.classList.remove('active');
     renderBarChart();
   }
 };
@@ -8930,6 +9169,8 @@ const setMapScope = (scope, { reloadNotices = false } = {}) => {
   updateWeatherMap();
   if (currentMapView === 'chart') {
     renderBarChart();
+  } else if (currentMapView === 'flight') {
+    renderRnFlightPattern();
   }
   if (reloadNotices) {
     loadNotices();
@@ -9021,9 +9262,11 @@ const initMapFactors = () => {
 const initMapToggle = () => {
   const mapViewBtn = document.getElementById('map-view-btn');
   const chartViewBtn = document.getElementById('chart-view-btn');
+  const flightViewBtn = document.getElementById('flight-view-btn');
 
   mapViewBtn?.addEventListener('click', () => toggleMapView('map'));
   chartViewBtn?.addEventListener('click', () => toggleMapView('chart'));
+  flightViewBtn?.addEventListener('click', () => toggleMapView('flight'));
 
   ensureMapTargetModeListener();
 };
