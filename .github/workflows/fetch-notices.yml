@@ -180,6 +180,9 @@ jobs:
           # Remove any server-side files if present
           rm -f public/*.ts public/tsconfig.json 2>/dev/null || true
 
+      - name: Guard protected UI modules
+        run: npm run guard:ui
+
       - name: List generated files
         run: |
           echo "Generated data files:"
