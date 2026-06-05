@@ -7097,7 +7097,9 @@ button.market-chart-state-row:hover,
 
 .rn-flight-map-svg {
   width: 100%;
-  min-height: 360px;
+  height: auto;
+  aspect-ratio: 1.6 / 1;
+  max-height: 520px;
   display: block;
 }
 
@@ -7293,7 +7295,7 @@ button.market-chart-state-row:hover,
   }
 
   .rn-flight-map-svg {
-    min-height: 260px;
+    max-height: none;
   }
 
   .rn-flight-rankings-header span {

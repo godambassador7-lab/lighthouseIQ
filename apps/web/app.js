@@ -8799,24 +8799,63 @@ const getRnFlightDestinationRows = (origin) => {
     .slice(0, 10);
 };
 
+const getRnFlightSourceSvg = () => {
+  const liveSvg = usMapContainer?.querySelector('svg');
+  if (liveSvg) return liveSvg.cloneNode(true);
+  const template = document.createElement('template');
+  template.innerHTML = US_STATES_SVG.trim();
+  return template.content.querySelector('svg')?.cloneNode(true) || null;
+};
+
+const getSvgStateAbbrev = (shape) => {
+  const classList = Array.from(shape.classList || []);
+  const stateClass = classList.find((c) => c.length === 2 && /^[a-z]{2}$/i.test(c));
+  const rawId = shape.getAttribute('data-state') || shape.getAttribute('id') || stateClass || '';
+  const abbrev = String(rawId).trim().toUpperCase();
+  return /^[A-Z]{2}$/.test(abbrev) ? abbrev : '';
+};
+
 const renderRnFlightMapSvg = (origin, destinations) => {
+  const svg = getRnFlightSourceSvg();
+  if (!svg) return '';
   const top = new Map(destinations.map((row, index) => [row.state, { ...row, rank: index + 1 }]));
-  return US_STATES_SVG
-    .replace('<svg ', '<svg class="rn-flight-map-svg" ')
-    .replace(/<(path|circle)([^>]*?)id="([A-Z]{2})"([^>]*?)\/>/g, (match, tag, before, state, after) => {
-      const dest = top.get(state);
-      const classes = ['rn-flight-state'];
-      let extra = '';
-      if (state === origin) {
-        classes.push('rn-flight-origin');
-        extra = `<title>${STATE_NAMES[state] || state}: origin state</title>`;
-      } else if (dest) {
-        classes.push('rn-flight-destination');
-        classes.push(`rn-flight-intensity-${Math.max(1, Math.ceil(dest.score / 20))}`);
-        extra = `<title>${dest.rank}. ${STATE_NAMES[state] || state}: mobility likelihood ${dest.score}</title>`;
-      }
-      return `<${tag}${before}id="${state}"${after} class="${classes.join(' ')}" data-flight-state="${state}">${extra}</${tag}>`;
-    });
+  svg.classList.add('rn-flight-map-svg');
+  svg.removeAttribute('style');
+  svg.querySelectorAll('.state-rank-label').forEach((label) => label.remove());
+
+  svg.querySelectorAll('path, circle').forEach((shape) => {
+    const state = getSvgStateAbbrev(shape);
+    if (!ALL_STATES.includes(state)) {
+      shape.remove();
+      return;
+    }
+
+    const dest = top.get(state);
+    const classes = ['rn-flight-state'];
+    if (state === origin) {
+      classes.push('rn-flight-origin');
+    } else if (dest) {
+      classes.push('rn-flight-destination');
+      classes.push(`rn-flight-intensity-${Math.max(1, Math.ceil(dest.score / 20))}`);
+    }
+
+    shape.removeAttribute('style');
+    shape.removeAttribute('data-base-fill');
+    shape.removeAttribute('data-state');
+    shape.setAttribute('data-flight-state', state);
+    shape.setAttribute('class', classes.join(' '));
+    shape.querySelectorAll('title').forEach((title) => title.remove());
+
+    const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+    title.textContent = state === origin
+      ? `${STATE_NAMES[state] || state}: origin state`
+      : dest
+        ? `${dest.rank}. ${STATE_NAMES[state] || state}: mobility likelihood ${dest.score}`
+        : `${STATE_NAMES[state] || state}: not in top destinations`;
+    shape.appendChild(title);
+  });
+
+  return svg.outerHTML;
 };
 
 const renderRnFlightPattern = () => {
