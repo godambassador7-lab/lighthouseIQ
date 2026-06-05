@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-06-05T20:08:21.983Z",
+  "lastUpdated": "2026-06-05T22:20:56.881Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 3,
-    "healthySources": 7,
+    "staleSources": 2,
+    "healthySources": 8,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 207,
+        "articleCount": 205,
         "latestPublishedAt": "2026-06-05T00:00:00.000Z",
-        "staleHours": 20,
+        "staleHours": 22,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
         "articleCount": 150,
         "latestPublishedAt": "2026-06-05T00:00:00.000Z",
-        "staleHours": 20,
+        "staleHours": 22,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 73,
+        "articleCount": 74,
         "latestPublishedAt": "2026-06-05T00:00:00.000Z",
-        "staleHours": 20,
+        "staleHours": 22,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 32,
         "latestPublishedAt": "2026-06-05T00:00:00.000Z",
-        "staleHours": 20,
+        "staleHours": 22,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 15,
         "latestPublishedAt": "2026-06-05T00:00:00.000Z",
-        "staleHours": 20,
+        "staleHours": 22,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 8,
         "latestPublishedAt": "2026-06-05T00:00:00.000Z",
-        "staleHours": 20,
+        "staleHours": 22,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 8,
         "latestPublishedAt": "2026-06-01T00:00:00.000Z",
-        "staleHours": 116,
+        "staleHours": 118,
         "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 4,
         "latestPublishedAt": "2026-06-03T00:00:00.000Z",
-        "staleHours": 68,
+        "staleHours": 70,
+        "status": "ok"
+      },
+      {
+        "source": "SEC Healthcare Filings",
+        "articleCount": 2,
+        "latestPublishedAt": "2026-06-05T00:00:00.000Z",
+        "staleHours": 22,
         "status": "ok"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 2,
         "latestPublishedAt": "2026-06-02T00:00:00.000Z",
-        "staleHours": 92,
-        "status": "stale"
-      },
-      {
-        "source": "SEC Healthcare Filings",
-        "articleCount": 1,
-        "latestPublishedAt": "2026-06-01T00:00:00.000Z",
-        "staleHours": 116,
+        "staleHours": 94,
         "status": "stale"
       }
     ]
@@ -115,10 +115,8 @@
     }
   },
   "quality": {
-    "status": "warning",
-    "failedChecks": [
-      "maxStaleSources"
-    ],
+    "status": "pass",
+    "failedChecks": [],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -127,7 +125,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 73,
+        "actual": 75,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -137,8 +135,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 3,
-        "pass": false
+        "actual": 2,
+        "pass": true
       }
     }
   },
@@ -240,6 +238,18 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "UNH 8-K filing - UnitedHealth Group Incorporated",
+      "summary": "UnitedHealth Group Incorporated filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/731766/000073176626000138/unh-20260601.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-06-05",
+      "category": "general_market",
+      "relevance": 90,
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "The rise of the invisible patient experience",
       "url": "https://www.beckershospitalreview.com/patient-experience/the-rise-of-the-invisible-patient-experience/",
       "source": "Becker's Hospital Review",
@@ -330,11 +340,20 @@
       "categoryLabel": "Mergers & M&A"
     },
     {
+      "title": "STAT+: Newer GLP-1s, pushback on research cuts, and a protest",
+      "url": "https://www.statnews.com/2026/06/05/newer-glp-1s-pushback-on-research-cuts-and-a-protest-ada-in-30/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-05",
+      "summary": "You're reading the web edition of STAT's ADA in 30 Seconds, from the American Diabetes Association's annual conference in New Orleans.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "STAT+: What stripping civil service protections for thousands of federal workers will mean for HHS",
       "url": "https://www.statnews.com/2026/06/05/schedule-f-changes-impacts-nih-cdc-fda/?utm_campaign=rss",
       "source": "STAT News",
       "publishedAt": "2026-06-05",
-      "summary": "Thousands of HHS staff who shape policy have had their employment status changed to a designation that makes it easier for them to be fired",
+      "summary": "Thousands of HHS staff who shape policy have had their employment status changed to a designation that makes it easier for them to be fired.",
       "category": "policy_reimbursement",
       "categoryLabel": "Policy & Reimbursement"
     },
@@ -1809,18 +1828,6 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "UPDATE: Hintermann Series H3 Total Ankle Replacement Has a Higher-Than-Expected Risk of Device Failure: FDA Safety Communication",
-      "summary": "Learn more about recommendations for patients who are considering a Hintermann Series H3 TAR system or who have one; recommendations for health care providers.",
-      "url": "http://www.fda.gov/medical-devices/safety-communications/update-hintermann-series-h3-total-ankle-replacement-has-higher-expected-risk-device-failure-fda",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-06-03",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
       "title": "2024 Safety Communications",
       "summary": "Listing of Medical Device 2024 Safety Communications",
       "url": "http://www.fda.gov/medical-devices/safety-communications/2024-safety-communications",
@@ -1831,6 +1838,18 @@
       "category": "general_market",
       "relevance": 100,
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "UPDATE: Hintermann Series H3 Total Ankle Replacement Has a Higher-Than-Expected Risk of Device Failure: FDA Safety Communication",
+      "summary": "Learn more about recommendations for patients who are considering a Hintermann Series H3 TAR system or who have one; recommendations for health care providers.",
+      "url": "http://www.fda.gov/medical-devices/safety-communications/update-hintermann-series-h3-total-ankle-replacement-has-higher-expected-risk-device-failure-fda",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-06-03",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "Anesthesia Kit Correction: Becton Dickinson Issues Correction for BD Spinal Trays Containing Bupivacaine Ampules",
@@ -4789,24 +4808,6 @@
       "summary": "The company announced Wednesday that the new facility will build out the company's prescription delivery infrastructure in the state, offering an easier and more coordinated experience for members and CenterWell patients.",
       "category": "capacity_expansion",
       "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "An insider’s look at LillyDirect",
-      "url": "https://www.fiercehealthcare.com/digital-health/insiders-look-lillydirect",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-30",
-      "summary": "Senior Writer Anastassia Gliadkovskaya sat down with LillyDirect executive Jen Mazur to discuss the platform’s growth, consumer response and where Lilly’s direct-to-patient strategy is headed next.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Amid policy and pricing headwinds, US healthcare and life sci faces 'vast field of opportunity': survey",
-      "url": "https://www.fiercehealthcare.com/pharma/amid-policy-and-pricing-headwinds-us-healthcare-and-life-sci-faces-vast-field-opportunity",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-05-30",
-      "summary": "As regulatory, pricing and policy dynamics whipsaw in the United States, healthcare and life sciences firms are facing enormous pressures to keep profits rising, with those challenges now “becoming more acute by the quarter,” according to an inaugural industry distress survey from consulting firm AlixPartners.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
     }
   ]
 }
