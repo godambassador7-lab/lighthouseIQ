@@ -26,7 +26,7 @@ const requirements = [
       'flight-view-btn',
       'RN Flight Pattern',
       'id="rn-flight"',
-      'app.js?v=6.7',
+      'app.js?v=6.8',
       'styles.css?v=5.12'
     ]
   },
@@ -39,6 +39,8 @@ const requirements = [
       'rnFlightMode',
       'Inbound to state',
       'getRnFlightSourceSvg',
+      'getRnFlightVariableSnapshot',
+      'Forecast Variables',
       'contextmenu',
       'getRnFlightOriginRows'
     ]
@@ -49,6 +51,7 @@ const requirements = [
       'market-chart-shell',
       'market-line-chart',
       'rn-flight-shell',
+      'rn-flight-variable-panel',
       'rn-flight-focus-destination',
       'rn-flight-origin-intensity-5'
     ]

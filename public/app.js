@@ -8730,6 +8730,158 @@ const getRegionalNeighborBoost = (origin, target) => {
   return originRegion === targetRegion ? 12 : 0;
 };
 
+const scaleRnFlightMetric = (state, getter, maxScore = 100) => {
+  const values = ALL_STATES.map((abbr) => Number(getter(abbr) || 0)).filter((value) => Number.isFinite(value));
+  const max = Math.max(1, ...values);
+  const value = Number(getter(state) || 0);
+  return Math.max(0, Math.min(maxScore, (Number.isFinite(value) ? value : 0) / max * maxScore));
+};
+
+const getRnFlightSourceConfidence = () => {
+  const datasetScore = (statusRaw) => {
+    const status = String(statusRaw || 'unknown').toLowerCase();
+    if (status === 'ok') return 1;
+    if (status === 'error' || status === 'failed') return 0;
+    return 0.45;
+  };
+  const datasets = marketRequiredMetrics?.datasets || {};
+  const checks = [
+    datasetScore(datasets.hrsaNssrn?.status || freeMarketSignals?.sources?.hrsa),
+    datasetScore(datasets.blsOes?.status || freeMarketSignals?.sources?.bls),
+    datasetScore(datasets.cmsCareCompare?.status || datasets.cmsHcris?.status),
+    datasetScore(freeMarketSignals?.sources?.ncsbn),
+    nursingPrograms.length ? 1 : 0.45,
+    strikeAlertsData.length ? 1 : 0.45,
+    Object.keys(ruralClosuresData || {}).length ? 1 : 0.45,
+    stateNewsData ? 1 : 0.45,
+    relocationData || recruitmentIntel ? 1 : 0.45
+  ];
+  return Math.round((checks.reduce((sum, value) => sum + value, 0) / checks.length) * 100);
+};
+
+const getRnFlightProfileAverage = (state, keys) => {
+  const profile = getCalibrationStateProfiles()?.[state] || {};
+  const values = keys
+    .map((key) => Number(profile?.[key]))
+    .filter((value) => Number.isFinite(value));
+  return values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : 50;
+};
+
+const getRnFlightLicensureFriction = (origin, target) => {
+  const compactStates = freeMarketSignals?.nlcCompactStates || [];
+  const originCompact = compactStates.includes(origin);
+  const targetCompact = compactStates.includes(target);
+  if (originCompact && targetCompact) return 0;
+  if (targetCompact) return 4;
+  if (originCompact) return 7;
+  return 10;
+};
+
+const getRnFlightRealWageAdvantage = (origin, target) => {
+  const originStaff = getStateStaffAnnual(origin);
+  const targetStaff = getStateStaffAnnual(target);
+  const originRelocation = Math.max(20, getStateRelocationScore(origin));
+  const targetRelocation = Math.max(20, getStateRelocationScore(target));
+  if (!originStaff || !targetStaff) return 0;
+  const originRealWage = originStaff / originRelocation;
+  const targetRealWage = targetStaff / targetRelocation;
+  return Math.max(0, Math.min(18, (targetRealWage - originRealWage) / Math.max(1, originRealWage) * 90));
+};
+
+const getRnFlightOpeningsProxy = (state) => {
+  const demandGap = Math.max(0, getStateRnDemandGap(state));
+  const noticePull = getStateNoticeCount(state) * 8;
+  const facilityBase = Math.sqrt(Math.max(0, getStateFacilityCount(state))) * 2;
+  return Math.min(24, scaleRnFlightMetric(state, (abbr) => Math.max(0, getStateRnDemandGap(abbr)) + getStateNoticeCount(abbr) * 8 + Math.sqrt(Math.max(0, getStateFacilityCount(abbr))) * 2, 24)
+    || Math.min(24, demandGap / 650 + noticePull / 8 + facilityBase / 3));
+};
+
+const getRnFlightHospitalInstability = (state) => {
+  const ruralRisk = getStateRuralRiskCount(state);
+  const distressWeight = Number(facilityMarketFeatures?.stateFeatures?.[state]?.distressWeight || 1);
+  const newsSignals = getStateNewsSignalCount(state);
+  return Math.min(16, ruralRisk * 0.7 + Math.max(0, distressWeight - 1) * 8 + newsSignals * 0.12);
+};
+
+const getRnFlightHospitalQualityPull = (state) => {
+  const entry = getBeaconEntry(state);
+  const rankings = Array.isArray(entry?.hospitalRankings) ? entry.hospitalRankings : [];
+  if (!rankings.length) return Math.min(8, getStateFacilityCount(state) / 80);
+  const avg = rankings.slice(0, 8).reduce((sum, hospital) => sum + Number(hospital?.compositeScore || hospital?.baseScore || 0), 0) / Math.min(8, rankings.length);
+  return Math.max(0, Math.min(10, avg / 10));
+};
+
+const getRnFlightLaborClimateDrag = (state) => Math.min(12, getStateStrikeCount(state) * 2.6 + getStateNewsSignalCount(state) * 0.18);
+
+const getRnFlightWorkplaceQuality = (state) => getRnFlightProfileAverage(state, ['staffing', 'leadership', 'scheduling', 'safety', 'resources', 'respect']);
+
+const getRnFlightWorkplaceDrag = (state) => Math.max(0, Math.min(12, (62 - getRnFlightWorkplaceQuality(state)) * 0.32));
+
+const getRnFlightPipelinePressure = (state) => {
+  const demandGap = Math.max(0, getStateRnDemandGap(state));
+  const programCount = getStateProgramCount(state);
+  return Math.min(16, demandGap / Math.max(450, programCount * 180));
+};
+
+const getRnFlightMigrationHistoryPull = (origin, target) => {
+  const rnShare = Number(relocationData?.rnDestinationShare?.[target] || 0);
+  const clinicalShare = Number(relocationData?.clinicalDestinationShare?.[target] || 0);
+  const generalShare = Number(relocationData?.generalMigrationShare?.[target] || 0);
+  const relocation = getStateRelocationScore(target) / 100;
+  const region = getRegionalNeighborBoost(origin, target) ? 2.5 : 0;
+  return Math.min(14, rnShare * 2.2 + clinicalShare * 1.6 + generalShare * 0.7 + relocation * 8 + region);
+};
+
+const getRnFlightTravelMarketPull = (origin, target) => {
+  const lift = getStateTravelAnnual(target) - getStateTravelAnnual(origin);
+  return Math.max(0, Math.min(14, lift / 4200));
+};
+
+const getRnFlightVariableSnapshot = (origin, target) => {
+  const licensureFriction = getRnFlightLicensureFriction(origin, target);
+  const realWageAdvantage = getRnFlightRealWageAdvantage(origin, target);
+  const openingsProxy = getRnFlightOpeningsProxy(target);
+  const hospitalInstability = getRnFlightHospitalInstability(target);
+  const hospitalQuality = getRnFlightHospitalQualityPull(target);
+  const laborClimateDrag = getRnFlightLaborClimateDrag(target);
+  const workplaceDrag = getRnFlightWorkplaceDrag(target);
+  const workplaceQuality = getRnFlightWorkplaceQuality(target);
+  const pipelinePressure = getRnFlightPipelinePressure(target);
+  const migrationHistory = getRnFlightMigrationHistoryPull(origin, target);
+  const travelMarket = getRnFlightTravelMarketPull(origin, target);
+  const sourceConfidence = getRnFlightSourceConfidence();
+  const net = realWageAdvantage + openingsProxy + hospitalQuality + pipelinePressure + migrationHistory + travelMarket
+    - licensureFriction - hospitalInstability - laborClimateDrag - workplaceDrag;
+
+  return {
+    licensureFriction,
+    realWageAdvantage,
+    openingsProxy,
+    hospitalInstability,
+    hospitalQuality,
+    laborClimateDrag,
+    workplaceDrag,
+    workplaceQuality,
+    pipelinePressure,
+    migrationHistory,
+    travelMarket,
+    sourceConfidence,
+    net,
+    items: [
+      { label: 'License friction', value: licensureFriction, type: 'drag', note: 'NLC compact status and cross-state licensing drag' },
+      { label: 'Real wage proxy', value: realWageAdvantage, type: 'pull', note: 'Staff RN pay adjusted by relocation/COL proxy' },
+      { label: 'Openings proxy', value: openingsProxy, type: 'pull', note: 'Demand gap, WARN activity, and facility depth' },
+      { label: 'Hospital stability', value: Math.max(0, 16 - hospitalInstability), type: hospitalInstability > 7 ? 'drag' : 'pull', note: 'Rural closures, distress, and local news risk' },
+      { label: 'Labor climate', value: laborClimateDrag, type: 'drag', note: 'Strike and labor disruption signal' },
+      { label: 'Workplace quality', value: workplaceQuality, type: workplaceDrag > 4 ? 'drag' : 'pull', note: 'Staffing, safety, leadership, resources, respect' },
+      { label: 'Pipeline pressure', value: pipelinePressure, type: 'pull', note: 'Shortage gap compared with nursing program count' },
+      { label: 'Migration history', value: migrationHistory, type: 'pull', note: 'RN, clinical, and general relocation destination pull' },
+      { label: 'Travel market', value: travelMarket, type: 'pull', note: 'Travel-pay advantage versus origin' },
+      { label: 'Source confidence', value: sourceConfidence, type: 'neutral', note: 'Coverage across free/public source inputs' }
+    ]
+  };
+};
+
 const getRnFlightPushScore = (origin) => {
   const noticeCount = getStateNoticeCount(origin);
   const ruralRisk = getStateRuralRiskCount(origin);
@@ -8764,10 +8916,11 @@ const getRnFlightRouteScore = (origin, state) => {
   const regionBoost = getRegionalNeighborBoost(origin, state);
   const ruralDrag = Math.min(10, getStateRuralRiskCount(state) * 0.8);
   const strikeDrag = Math.min(8, getStateStrikeCount(state) * 2);
+  const variables = getRnFlightVariableSnapshot(origin, state);
   const timingBoost = rnFlightTiming === 'next30'
     ? noticePull * 0.45 + compact * 0.25
     : rnFlightTiming === 'seasonal'
-      ? travelLift * 0.35 + relocation * 0.2
+      ? (travelLift + variables.travelMarket) * 0.25 + relocation * 0.2 + variables.migrationHistory * 0.18
       : demandPull * 0.2 + noticePull * 0.2;
   const score = Math.max(0, Math.min(100, Math.round(
     pushScore * 0.24
@@ -8779,16 +8932,33 @@ const getRnFlightRouteScore = (origin, state) => {
     + compact
     + regionBoost
     + timingBoost
+    + variables.realWageAdvantage
+    + variables.openingsProxy * 0.65
+    + variables.hospitalQuality
+    + variables.pipelinePressure * 0.72
+    + variables.migrationHistory
+    + variables.travelMarket * 0.7
+    - variables.licensureFriction
+    - variables.hospitalInstability * 0.6
+    - variables.laborClimateDrag * 0.7
+    - variables.workplaceDrag
     - ruralDrag
     - strikeDrag
   )));
   const reasons = [
     salaryLift > 4 ? 'higher staff pay' : '',
     travelLift > 4 ? 'higher travel pay' : '',
+    variables.realWageAdvantage > 5 ? 'real wage edge' : '',
     demandPull > 8 ? 'shortage pull' : '',
     noticePull > 4 ? 'active hiring signal' : '',
+    variables.openingsProxy > 8 ? 'openings pressure' : '',
+    variables.pipelinePressure > 5 ? 'pipeline pressure' : '',
+    variables.migrationHistory > 5 ? 'migration pattern' : '',
     compact ? 'compact-friendly' : '',
+    variables.licensureFriction >= 7 ? 'license friction' : '',
     regionBoost ? `same ${originRegion} region` : '',
+    variables.hospitalInstability > 7 ? 'hospital instability drag' : '',
+    variables.workplaceDrag > 4 ? 'workplace quality drag' : '',
     ruralDrag > 4 ? 'rural instability drag' : '',
   ].filter(Boolean);
   return {
@@ -8804,6 +8974,8 @@ const getRnFlightRouteScore = (origin, state) => {
     noticePull,
     relocation,
     compact,
+    variables,
+    sourceConfidence: variables.sourceConfidence,
     reasons
   };
 };
@@ -8912,6 +9084,64 @@ const renderRnFlightMapSvg = ({ focusState, rows, mode }) => {
   return svg.outerHTML;
 };
 
+const renderRnFlightVariablePanel = (topRow, focusState, isInbound) => {
+  if (!topRow?.variables) {
+    return `
+      <div class="rn-flight-variable-panel">
+        <div class="rn-flight-variable-header">
+          <div>
+            <span>Forecast Variables</span>
+            <strong>No route selected yet</strong>
+          </div>
+          <small>Free/public source model</small>
+        </div>
+      </div>
+    `;
+  }
+  const routeLabel = isInbound
+    ? `${topRow.state} to ${focusState}`
+    : `${focusState} to ${topRow.state}`;
+  return `
+    <div class="rn-flight-variable-panel">
+      <div class="rn-flight-variable-header">
+        <div>
+          <span>Forecast Variables</span>
+          <strong>${escapeHtml(routeLabel)}</strong>
+        </div>
+        <small>${Math.round(topRow.sourceConfidence || 0)}% source confidence</small>
+      </div>
+      <div class="rn-flight-variable-grid">
+        ${topRow.variables.items.map((item) => {
+          const value = item.label === 'Source confidence'
+            ? `${Math.round(item.value)}%`
+            : Math.round(item.value).toLocaleString();
+          return `
+            <div class="rn-flight-variable-chip ${escapeHtml(item.type)}" title="${escapeHtml(item.note)}">
+              <span>${escapeHtml(item.label)}</span>
+              <strong>${escapeHtml(value)}</strong>
+              <small>${escapeHtml(item.note)}</small>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    </div>
+  `;
+};
+
+const renderRnFlightRowVariables = (row) => {
+  const variables = row?.variables;
+  if (!variables) return '';
+  return `
+    <div class="rn-flight-row-metrics">
+      <span>Wage +${Math.round(variables.realWageAdvantage)}</span>
+      <span>Jobs +${Math.round(variables.openingsProxy)}</span>
+      <span>License -${Math.round(variables.licensureFriction)}</span>
+      <span>Pipeline +${Math.round(variables.pipelinePressure)}</span>
+      <span>Conf ${Math.round(variables.sourceConfidence)}%</span>
+    </div>
+  `;
+};
+
 const renderRnFlightPattern = () => {
   const container = document.getElementById('rn-flight');
   if (!container) return;
@@ -8965,8 +9195,9 @@ const renderRnFlightPattern = () => {
       <div class="rn-flight-kpis">
         <div><span>${isInbound ? 'Inbound pull' : 'Origin push'}</span><strong>${isInbound ? inboundPullScore : pushScore}</strong><small>${escapeHtml(focusName)} ${isInbound ? 'destination demand pressure' : 'outbound pressure'}</small></div>
         <div><span>${isInbound ? 'Top origin' : 'Top destination'}</span><strong>${escapeHtml(topRow?.state || '--')}</strong><small>${topRow ? `${escapeHtml(topRow.stateName)} | Score ${topRow.score}` : 'No state ranked'}</small></div>
-        <div><span>Best window</span><strong>${rnFlightTiming === 'next30' ? '30d' : rnFlightTiming === 'seasonal' ? 'Seasonal' : '90d'}</strong><small>Based on pay, demand, compact, and disruption signals</small></div>
+        <div><span>Forecast confidence</span><strong>${Math.round(topRow?.sourceConfidence || getRnFlightSourceConfidence())}%</strong><small>Based on free/public data coverage and readiness</small></div>
       </div>
+      ${renderRnFlightVariablePanel(topRow, focusState, isInbound)}
       <div class="rn-flight-body">
         <div class="rn-flight-map">
           ${renderRnFlightMapSvg({ focusState, rows, mode: rnFlightMode })}
@@ -8986,6 +9217,7 @@ const renderRnFlightPattern = () => {
               <div class="rn-flight-row-main">
                 <strong>${escapeHtml(row.stateName)} (${row.state})</strong>
                 <small>${escapeHtml(row.reasons.join(' | ') || (isInbound ? `balanced origin signal into ${focusState}` : 'balanced destination signal'))}</small>
+                ${renderRnFlightRowVariables(row)}
                 <div class="rn-flight-bar"><i style="width:${row.score}%"></i></div>
               </div>
               <span class="rn-flight-score">${row.score}</span>
@@ -10452,4 +10684,3 @@ if (document.fonts && document.fonts.ready) {
 
 // Auto-init if already authenticated
 bootstrapAuth();
-
