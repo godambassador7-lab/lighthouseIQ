@@ -147,6 +147,8 @@ const calibrationTop = document.getElementById('calibration-top');
 const calibrationAvoid = document.getElementById('calibration-avoid');
 const calibrationRows = document.getElementById('calibration-rows');
 const calibrationScript = document.getElementById('calibration-script');
+const calibrationMetrics = document.getElementById('calibration-metrics');
+const calibrationPlaybook = document.getElementById('calibration-playbook');
 const modulesMenuBtn = document.getElementById('modules-menu-btn');
 const modulesMenu = document.getElementById('modules-menu');
 const openProgramsModuleBtn = document.getElementById('open-programs-module');
@@ -1784,6 +1786,121 @@ const formatDelta = (delta) => {
   return `${sign}${delta.toFixed(1)}`;
 };
 
+const formatCurrencyDelta = (value) => {
+  const sign = value > 0 ? '+' : value < 0 ? '-' : '';
+  return `${sign}$${Math.abs(Math.round(value)).toLocaleString()}`;
+};
+
+const getCalibrationRoute = (homeState, targetState) => {
+  if (typeof getRnFlightRouteScore !== 'function') return null;
+  return getRnFlightRouteScore(targetState, homeState);
+};
+
+const buildCalibrationSnapshot = (homeState, targetState, rsas) => {
+  const route = getCalibrationRoute(homeState, targetState);
+  const variables = route?.variables || null;
+  const homeStaff = getStateStaffAnnual(homeState);
+  const targetStaff = getStateStaffAnnual(targetState);
+  const wageDelta = homeStaff && targetStaff ? homeStaff - targetStaff : 0;
+  const homeTravel = getStateTravelAnnual(homeState);
+  const targetTravel = getStateTravelAnnual(targetState);
+  const travelDelta = homeTravel && targetTravel ? homeTravel - targetTravel : 0;
+  const demandGap = getStateRnDemandGap(homeState);
+  const licenseDrag = variables?.licensureFriction ?? getRnFlightLicensureFriction(targetState, homeState);
+  const sourceConfidence = route?.sourceConfidence ?? getRnFlightSourceConfidence();
+  const flightScore = route?.score ?? 0;
+  const readiness = Math.round(Math.min(100, (rsas * 0.42) + (flightScore * 0.38) + (sourceConfidence * 0.2)));
+  const compactStates = freeMarketSignals?.nlcCompactStates || [];
+  const compactText = compactStates.includes(homeState) && compactStates.includes(targetState)
+    ? 'compact-friendly'
+    : licenseDrag >= 7
+      ? 'license friction'
+      : 'verify license timing';
+
+  return {
+    route,
+    variables,
+    wageDelta,
+    travelDelta,
+    demandGap,
+    licenseDrag,
+    sourceConfidence,
+    flightScore,
+    readiness,
+    compactText
+  };
+};
+
+const renderCalibrationMetrics = (snapshot) => {
+  if (!calibrationMetrics) return;
+  const demandClass = snapshot.demandGap > 0 ? 'positive' : 'neutral';
+  const licenseClass = snapshot.licenseDrag >= 7 ? 'negative' : snapshot.licenseDrag <= 3 ? 'positive' : 'neutral';
+  calibrationMetrics.innerHTML = `
+    <div class="calibration-metric-card">
+      <span>Pitch readiness</span>
+      <strong>${snapshot.readiness}</strong>
+      <small>Blends advantage score, RN Flight likelihood, and source confidence.</small>
+    </div>
+    <div class="calibration-metric-card">
+      <span>RN Flight likelihood</span>
+      <strong>${snapshot.flightScore || '--'}</strong>
+      <small>Modeled movement from target RN state into recruiter state.</small>
+    </div>
+    <div class="calibration-metric-card ${snapshot.wageDelta >= 0 ? 'positive' : 'negative'}">
+      <span>Staff wage delta</span>
+      <strong>${formatCurrencyDelta(snapshot.wageDelta)}</strong>
+      <small>Recruiter state annual staff RN pay vs target RN state.</small>
+    </div>
+    <div class="calibration-metric-card ${licenseClass}">
+      <span>License friction</span>
+      <strong>${Math.round(snapshot.licenseDrag)}</strong>
+      <small>${escapeHtml(snapshot.compactText)}.</small>
+    </div>
+    <div class="calibration-metric-card ${demandClass}">
+      <span>Demand gap</span>
+      <strong>${Math.round(snapshot.demandGap).toLocaleString()}</strong>
+      <small>Projected RN shortage pressure in recruiter state.</small>
+    </div>
+    <div class="calibration-metric-card">
+      <span>Source confidence</span>
+      <strong>${snapshot.sourceConfidence}%</strong>
+      <small>Coverage across free/public workforce, wage, facility, and mobility inputs.</small>
+    </div>
+  `;
+};
+
+const renderCalibrationPlaybook = (homeState, targetState, snapshot, leadFactors, avoidFactors) => {
+  if (!calibrationPlaybook) return;
+  const homeName = STATE_NAMES[homeState] || homeState;
+  const targetName = STATE_NAMES[targetState] || targetState;
+  const actions = [];
+  if (snapshot.wageDelta > 2500) actions.push(`Lead with the ${formatCurrencyDelta(snapshot.wageDelta)} staff-pay edge before relocation details.`);
+  if (snapshot.travelDelta > 3000) actions.push(`Use travel-pay demand as proof that ${homeName} has near-term RN need.`);
+  if (snapshot.licenseDrag <= 3) actions.push('Position license timing as low-friction and move quickly on interview scheduling.');
+  if (snapshot.licenseDrag >= 7) actions.push('Do not lead with speed; explain licensing steps and timeline clearly.');
+  if (snapshot.demandGap > 0) actions.push(`Frame ${homeName} as a market with measurable shortage pressure, not just a generic opening.`);
+  if (snapshot.flightScore >= 70) actions.push(`Prioritize ${targetName} for outbound sourcing this week.`);
+  if (!actions.length) actions.push('Use unit-specific needs, manager quality, and schedule fit instead of a broad relocation pitch.');
+
+  const risks = [];
+  avoidFactors.forEach((factor) => risks.push(`Reframe ${factor.label.toLowerCase()} because ${targetName} may compare favorably.`));
+  if (snapshot.licenseDrag >= 7) risks.push('License transfer friction may slow conversion.');
+  if (snapshot.wageDelta < 0) risks.push(`${homeName} does not show a staff-pay advantage against ${targetName}.`);
+  if (snapshot.sourceConfidence < 65) risks.push('Treat the forecast as directional until source coverage improves.');
+  if (!risks.length) risks.push('No major pitch blockers detected from current source coverage.');
+
+  calibrationPlaybook.innerHTML = `
+    <div class="calibration-playbook-section">
+      <p class="calibration-label">Recommended next moves</p>
+      <ul>${actions.slice(0, 4).map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>
+    </div>
+    <div class="calibration-playbook-section">
+      <p class="calibration-label">Watch-outs</p>
+      <ul>${risks.slice(0, 4).map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>
+    </div>
+  `;
+};
+
 const updateStateCalibration = () => {
   if (!calibrationHome || !calibrationTarget || !calibrationRows) return;
   const homeState = calibrationHome.value;
@@ -1795,6 +1912,8 @@ const updateStateCalibration = () => {
     calibrationTop.innerHTML = '<li>Select two different states.</li>';
     calibrationAvoid.innerHTML = '<li>Select two different states.</li>';
     calibrationScript.textContent = '';
+    if (calibrationMetrics) calibrationMetrics.innerHTML = '';
+    if (calibrationPlaybook) calibrationPlaybook.innerHTML = '';
     return;
   }
 
@@ -1813,12 +1932,13 @@ const updateStateCalibration = () => {
     ? positiveDeltas.reduce((sum, entry) => sum + entry.delta, 0) / positiveDeltas.length
     : 0;
   const rsas = Math.round(clampScore(avgPositive) * 10);
+  const snapshot = buildCalibrationSnapshot(homeState, targetState, rsas);
 
   calibrationScore.textContent = rsas ? `${rsas}` : '0';
-  if (rsas >= 80) calibrationTier.textContent = 'Very strong relocation pitch.';
-  else if (rsas >= 60) calibrationTier.textContent = 'Solid opportunity. Emphasize strengths.';
-  else if (rsas >= 40) calibrationTier.textContent = 'Selective pitch. Focus on unit-specific needs.';
-  else calibrationTier.textContent = 'Use caution. Avoid leading with relocation.';
+  if (snapshot.readiness >= 80) calibrationTier.textContent = 'Very strong RN movement pitch. Prioritize this lane.';
+  else if (snapshot.readiness >= 60) calibrationTier.textContent = 'Solid opportunity. Lead with the strongest proof points.';
+  else if (snapshot.readiness >= 40) calibrationTier.textContent = 'Selective pitch. Keep it specialty and facility specific.';
+  else calibrationTier.textContent = 'Use caution. Do not lead with relocation.';
 
   const leadFactors = deltas.filter(entry => entry.delta >= 0.4).slice(0, 3);
   const avoidFactors = deltas.filter(entry => entry.delta <= -0.5).slice(0, 3);
@@ -1832,9 +1952,11 @@ const updateStateCalibration = () => {
 
   const scriptFactors = leadFactors.length ? leadFactors : deltas.sort((a, b) => b.delta - a.delta).slice(0, 2);
   const scriptLine = scriptFactors.length
-    ? `Nurses from ${targetState} tell us the biggest difference here is ${scriptFactors.map(f => f.pitch).join(' and ')}.`
-    : `We tailor outreach to what nurses in ${targetState} care about most.`;
+    ? `For RNs in ${STATE_NAMES[targetState] || targetState}, lead with ${scriptFactors.map(f => f.pitch).join(' and ')}. Then validate timing, license path, and whether the ${formatCurrencyDelta(snapshot.wageDelta)} staff-pay delta helps or hurts the move.`
+    : `For RNs in ${STATE_NAMES[targetState] || targetState}, keep the pitch specific to role fit, manager quality, schedule, and license timing.`;
   calibrationScript.textContent = scriptLine;
+  renderCalibrationMetrics(snapshot);
+  renderCalibrationPlaybook(homeState, targetState, snapshot, leadFactors, avoidFactors);
 
   calibrationRows.innerHTML = deltas.map(entry => {
     const deltaClass = entry.delta >= 0.5 ? 'positive' : entry.delta <= -0.5 ? 'negative' : '';

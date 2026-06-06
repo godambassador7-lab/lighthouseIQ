@@ -3534,6 +3534,60 @@ body.modal-open {
   font-weight: 600;
 }
 
+.calibration-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin-top: 0.75rem;
+}
+
+.calibration-metric-card {
+  border: 1px solid rgba(26, 54, 93, 0.1);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.72);
+  padding: 0.65rem 0.75rem;
+}
+
+.calibration-metric-card.positive {
+  background: rgba(220, 252, 231, 0.7);
+  border-color: rgba(22, 163, 74, 0.16);
+}
+
+.calibration-metric-card.negative {
+  background: rgba(254, 226, 226, 0.74);
+  border-color: rgba(220, 38, 38, 0.16);
+}
+
+.calibration-metric-card.neutral {
+  background: rgba(219, 234, 254, 0.62);
+  border-color: rgba(37, 99, 235, 0.14);
+}
+
+.calibration-metric-card span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.calibration-metric-card strong {
+  display: block;
+  margin-top: 0.2rem;
+  color: var(--navy);
+  font-size: 1.2rem;
+  line-height: 1.1;
+}
+
+.calibration-metric-card small {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--muted);
+  font-size: 0.68rem;
+  line-height: 1.25;
+}
+
 .calibration-summary {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -3564,6 +3618,32 @@ body.modal-open {
   padding: 0.75rem 1rem;
   font-size: 0.85rem;
   color: var(--navy);
+}
+
+.calibration-playbook {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.calibration-playbook-section {
+  border: 1px solid rgba(26, 54, 93, 0.1);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.68);
+  padding: 0.75rem;
+}
+
+.calibration-playbook-section ul {
+  margin: 0.45rem 0 0;
+  padding-left: 1rem;
+  color: var(--navy);
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+.calibration-playbook-section li + li {
+  margin-top: 0.35rem;
 }
 
 .calibration-table-wrap {
@@ -3844,7 +3924,9 @@ body.modal-open {
   }
 
   .calibration-controls,
-  .calibration-summary {
+  .calibration-summary,
+  .calibration-metrics,
+  .calibration-playbook {
     grid-template-columns: 1fr;
   }
 
