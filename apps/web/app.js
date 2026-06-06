@@ -42,11 +42,6 @@ const mapTooltip = document.getElementById('map-tooltip');
 const mapToast = document.getElementById('map-toast');
 const mapTargetModeBtn = document.getElementById('map-target-mode-btn');
 const mapTargetStateBtn = document.getElementById('map-target-state-btn');
-const mapFactorsBtn = document.getElementById('map-factors-btn');
-const mapFactorsPanel = document.getElementById('map-factors-panel');
-const mapFactorsClose = document.getElementById('map-factors-close');
-const mapFactorsList = document.getElementById('map-factors-list');
-const mapFactorsSubtitle = document.getElementById('map-factors-subtitle');
 const mapScopeHealthcareBtn = document.getElementById('map-scope-healthcare');
 const mapScopeAllBtn = document.getElementById('map-scope-all');
 const mapScopeLabel = document.getElementById('map-scope-label');
@@ -4238,9 +4233,6 @@ const syncMapStateDataToVisibleNotices = () => {
   } else if (currentMapView === 'flight') {
     renderRnFlightPattern();
   }
-  if (mapFactorsPanel && mapFactorsPanel.style.display !== 'none') {
-    renderMapFactors();
-  }
 };
 
 // Modified loadStates to also update weather map
@@ -4282,9 +4274,6 @@ const loadStatesWithMap = async () => {
 
     // Update the weather map colors
     updateWeatherMap();
-    if (mapFactorsPanel && mapFactorsPanel.style.display !== 'none') {
-      renderMapFactors();
-    }
     const counts = Object.values(stateData).map(entry => entry.count ?? 0);
     calibrationStats = {
       minCount: counts.length ? Math.min(...counts) : 0,
@@ -9566,62 +9555,6 @@ const getRegionForState = (state) => {
   return entry ? entry[0] : null;
 };
 
-const scoreOutOfStateTarget = (homeState, targetState) => {
-  const noticeCount = mapStateData?.[targetState]?.count ?? 0;
-  const homeRegion = getRegionForState(homeState);
-  const targetRegion = getRegionForState(targetState);
-  const regionBonus = homeRegion && targetRegion && homeRegion === targetRegion ? 2 : 0;
-  const score = noticeCount + regionBonus;
-  return { score, noticeCount, targetRegion };
-};
-
-const getRecruitingTargets = (homeState, count = 5) => (
-  Object.keys(mapStateData || {})
-    .filter((state) => state !== homeState)
-    .map((state) => ({ state, ...scoreOutOfStateTarget(homeState, state) }))
-    .sort((a, b) => b.score - a.score)
-    .slice(0, count)
-);
-
-const renderMapFactors = () => {
-  if (!mapFactorsList) return;
-  const homeState = getHomeStateForFactors();
-  const entries = getRecruitingTargets(homeState, 5);
-
-  if (mapFactorsSubtitle) {
-    mapFactorsSubtitle.textContent = homeState
-      ? `Top 5 recruiting targets from ${STATE_NAMES[homeState] || homeState}.`
-      : 'Select a Home State to rank recruiting targets.';
-  }
-
-  if (!entries.length) {
-    mapFactorsList.innerHTML = '<div class="empty-state">No state data available.</div>';
-    return;
-  }
-
-  mapFactorsList.innerHTML = entries.map((entry, idx) => `
-    <div class="map-factor-card">
-      <div class="map-factor-title">#${idx + 1} ${STATE_NAMES[entry.state] || entry.state}</div>
-      <div class="map-factor-meta">
-        Notices: ${entry.noticeCount} | Region: ${entry.targetRegion || 'n/a'}
-      </div>
-    </div>
-  `).join('');
-};
-
-const initMapFactors = () => {
-  mapFactorsBtn?.addEventListener('click', () => {
-    if (!mapFactorsPanel) return;
-    const isVisible = mapFactorsPanel.style.display !== 'none';
-    mapFactorsPanel.style.display = isVisible ? 'none' : 'block';
-    if (!isVisible) renderMapFactors();
-  });
-
-  mapFactorsClose?.addEventListener('click', () => {
-    if (mapFactorsPanel) mapFactorsPanel.style.display = 'none';
-  });
-};
-
 // Initialize map/chart toggle
 const initMapToggle = () => {
   const mapViewBtn = document.getElementById('map-view-btn');
@@ -10651,7 +10584,6 @@ const initApp = () => {
   safeInit(initMapToggle, 'mapToggle');
   safeInit(initMapTabs, 'mapTabs');
   safeInit(initMapScopeToggle, 'mapScopeToggle');
-  safeInit(initMapFactors, 'mapFactors');
   safeInit(initHospitalSearch, 'hospitalSearch');
   safeInit(initBonusFactor, 'bonusFactor');
   safeInit(initStateMultiSelect, 'stateMultiSelect');

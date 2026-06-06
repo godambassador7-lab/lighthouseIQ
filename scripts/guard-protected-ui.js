@@ -26,7 +26,7 @@ const requirements = [
       'flight-view-btn',
       'RN Flight Pattern',
       'id="rn-flight"',
-      'app.js?v=6.8',
+      'app.js?v=6.9',
       'styles.css?v=5.12'
     ]
   },
@@ -68,6 +68,13 @@ const read = (filePath) => {
 };
 
 const failures = [];
+const forbiddenMarkers = [
+  'map-factors-btn',
+  'map-factors-panel',
+  'Out of State Factors',
+  'renderMapFactors',
+  'initMapFactors'
+];
 
 pairs.forEach(({ file, publicPath, webPath }) => {
   let publicText = '';
@@ -96,6 +103,12 @@ pairs.forEach(({ file, publicPath, webPath }) => {
     requirement.markers.forEach((marker) => {
       if (!text.includes(marker)) {
         failures.push(`${label} is missing protected UI marker: ${marker}`);
+      }
+    });
+
+    forbiddenMarkers.forEach((marker) => {
+      if (text.includes(marker)) {
+        failures.push(`${label} still contains removed Out of State Factors marker: ${marker}`);
       }
     });
   });

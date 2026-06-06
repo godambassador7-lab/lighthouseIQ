@@ -5654,125 +5654,6 @@ input[type="range"] {
   background: #ffffff;
 }
 
-.map-factors-btn {
-  border: none;
-  border-radius: 8px;
-  padding: 0.5rem 0.85rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #1e3a8a;
-  background: rgba(191, 219, 254, 0.8);
-  box-shadow: 0 10px 20px rgba(30, 58, 138, 0.18);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
-}
-
-.map-factors-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 14px 24px rgba(30, 58, 138, 0.24);
-  filter: brightness(1.02);
-}
-
-
-.map-factors-panel {
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  width: min(360px, 90vw);
-  background: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.2);
-  border: 1px solid rgba(26, 54, 93, 0.1);
-  padding: 16px;
-  z-index: 12;
-}
-
-.map-factors-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 8px;
-}
-
-.map-factors-header h4 {
-  margin: 0;
-  font-size: 1rem;
-  color: var(--navy);
-}
-
-.map-factors-close {
-  border: none;
-  background: rgba(26, 54, 93, 0.08);
-  color: var(--navy);
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-.map-factors-subtitle {
-  font-size: 0.75rem;
-  color: var(--muted);
-  margin-bottom: 12px;
-}
-
-.map-factors-list {
-  display: grid;
-  gap: 10px;
-  max-height: 420px;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-}
-
-.map-factor-card {
-  border: 1px solid rgba(26, 54, 93, 0.08);
-  border-radius: 12px;
-  padding: 10px 12px;
-  background: rgba(248, 250, 252, 0.9);
-}
-
-.map-factor-title {
-  font-weight: 700;
-  color: var(--navy);
-  font-size: 0.9rem;
-  margin-bottom: 6px;
-}
-
-.map-factor-meta {
-  font-size: 0.72rem;
-  color: var(--muted);
-  line-height: 1.4;
-}
-
-.map-factor-meta .factor-row {
-  margin-bottom: 4px;
-  padding: 2px 0;
-}
-
-.map-factor-meta .factor-row:last-child {
-  margin-bottom: 0;
-}
-
-.map-factor-meta .factor-row strong {
-  color: var(--navy);
-  font-weight: 600;
-}
-
-.map-factor-meta .risk-high {
-  color: #dc2626;
-  font-weight: 600;
-}
-
-.map-factor-meta .risk-medium {
-  color: #d97706;
-  font-weight: 600;
-}
-
-.map-factor-meta .risk-low {
-  color: #16a34a;
-  font-weight: 600;
-}
-
 /* Rural Closures Panel (overlay inside map container) */
 .rural-closures-panel {
   position: absolute;
@@ -6150,12 +6031,6 @@ input[type="range"] {
   border-color: rgba(234, 179, 8, 0.45);
   background: linear-gradient(180deg, #fff6cc 0%, #ffe59a 100%);
   color: #8a5a00;
-}
-
-.map-factors-btn {
-  border-color: rgba(99, 102, 241, 0.35);
-  background: linear-gradient(180deg, #e0e7ff 0%, #c7d2fe 100%);
-  color: #3730a3;
 }
 
 .map-clear-btn {

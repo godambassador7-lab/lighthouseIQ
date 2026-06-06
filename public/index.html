@@ -345,8 +345,8 @@
               <dd>Toggle target-state workflow controls on the map.</dd>
               <dt>Home State / Target State Buttons</dt>
               <dd>Open dedicated modules directly from map controls when available.</dd>
-              <dt>Factors Panel</dt>
-              <dd>Open Out of State Factors to compare relocation and migration signals.</dd>
+              <dt>RN Flight Pattern</dt>
+              <dd>Use RN Flight Pattern to compare relocation, licensing, wage, demand, and source-confidence signals.</dd>
               <dt>Bonus Factor</dt>
               <dd>Launch Offer Builder for compensation package analysis.</dd>
               <dt>Hospital Search + Clear</dt>
@@ -653,7 +653,6 @@
               </button>
               <button class="map-control-btn map-target-state-btn" id="map-target-state-btn" type="button" title="Open Target State" style="display: none;">Target State</button>
               <button class="map-control-btn map-bonus-factor-btn" id="map-bonus-factor-btn" type="button" title="Total Compensation Package Calculator" style="display:none;">Bonus Factor</button>
-              <button class="map-control-btn map-factors-btn" id="map-factors-btn" type="button" title="Out of State Factors">Factors</button>
               <button class="map-control-btn map-clear-btn" id="map-clear-btn" type="button" title="Clear selected states">Clear</button>
             </div>
           </div>
@@ -680,14 +679,6 @@
           </div>
           <div class="rn-flight-container" id="rn-flight" style="display: none;">
             <!-- RN flight pattern module will be rendered here by JS -->
-          </div>
-          <div class="map-factors-panel" id="map-factors-panel" style="display: none;">
-            <div class="map-factors-header">
-              <h4>Out of State Factors</h4>
-              <button type="button" class="map-factors-close" id="map-factors-close">&times;</button>
-            </div>
-            <div class="map-factors-subtitle" id="map-factors-subtitle">Set a Home State and long-press it to rank targets.</div>
-            <div class="map-factors-list" id="map-factors-list"></div>
           </div>
           <div class="rural-closures-panel" id="rural-closures-panel" style="display: none;">
             <div class="rural-closures-header">
@@ -1907,7 +1898,7 @@
       </div>
     </div>
 
-    <script src="./app.js?v=6.8"></script>
+    <script src="./app.js?v=6.9"></script>
   </body>
 </html>
 
