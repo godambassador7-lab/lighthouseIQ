@@ -901,6 +901,15 @@
               Target RN state
               <select id="calibration-target"></select>
             </label>
+            <label>
+              Search target
+              <input id="calibration-target-search" list="calibration-target-list" placeholder="Type state or territory" autocomplete="off" />
+              <datalist id="calibration-target-list"></datalist>
+            </label>
+          </div>
+          <div class="calibration-actions">
+            <button type="button" id="calibration-swap">Swap States</button>
+            <button type="button" id="calibration-reset">Reset IN to FL</button>
           </div>
           <div class="calibration-score">
             <div>
@@ -1900,7 +1909,7 @@
       </div>
     </div>
 
-    <script src="./app.js?v=7.1"></script>
+    <script src="./app.js?v=7.2"></script>
   </body>
 </html>
 

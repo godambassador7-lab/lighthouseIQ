@@ -26,7 +26,8 @@ const requirements = [
       'flight-view-btn',
       'RN Flight Pattern',
       'id="rn-flight"',
-      'app.js?v=7.1',
+      'app.js?v=7.2',
+      'calibration-target-search',
       'styles.css?v=5.12'
     ]
   },
@@ -44,6 +45,7 @@ const requirements = [
       'buildCalibrationSnapshot',
       'TERRITORY_RN_ADVANTAGE_PROFILES',
       'CALIBRATION_JURISDICTIONS',
+      'resolveCalibrationJurisdiction',
       'contextmenu',
       'getRnFlightOriginRows'
     ]
