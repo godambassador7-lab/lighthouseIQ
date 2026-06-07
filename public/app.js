@@ -1908,6 +1908,87 @@ const formatCurrencyDelta = (value) => {
   return `${sign}$${Math.abs(Math.round(value)).toLocaleString()}`;
 };
 
+const MEDICAID_NON_EXPANSION_STATES = new Set(['AL', 'FL', 'GA', 'KS', 'MS', 'SC', 'TN', 'TX', 'WI', 'WY']);
+const MEDICAID_HIGH_DEPENDENCY_STATES = new Set(['AR', 'CA', 'DC', 'KY', 'LA', 'NM', 'NY', 'PR', 'WV']);
+const MEDICAID_ELEVATED_DEPENDENCY_STATES = new Set(['AZ', 'CO', 'IL', 'MA', 'MD', 'MI', 'MN', 'NV', 'OH', 'OR', 'PA', 'RI', 'VT', 'WA']);
+const MEDICARE_AGING_PRESSURE_STATES = new Set(['AZ', 'DE', 'FL', 'HI', 'ME', 'MT', 'PA', 'VT', 'WV']);
+const MEDICARE_ELEVATED_PRESSURE_STATES = new Set(['AL', 'AR', 'CT', 'IA', 'MI', 'MO', 'NH', 'NM', 'OH', 'OR', 'RI', 'SC', 'SD', 'WI']);
+
+const getPayerStateClass = (state) => {
+  if (getTerritoryRnProfile(state) && state !== 'PR') return 'territory';
+  if (state === 'PR') return 'territory-medicaid';
+  return MEDICAID_NON_EXPANSION_STATES.has(state) ? 'non-expansion' : 'expansion';
+};
+
+const getMedicaidDependencyTier = (state) => {
+  if (MEDICAID_HIGH_DEPENDENCY_STATES.has(state)) return 'High';
+  if (MEDICAID_ELEVATED_DEPENDENCY_STATES.has(state)) return 'Elevated';
+  if (MEDICAID_NON_EXPANSION_STATES.has(state)) return 'Coverage-gap pressure';
+  if (getTerritoryRnProfile(state)) return 'Territory-specific';
+  return 'Moderate';
+};
+
+const getMedicarePressureTier = (state) => {
+  if (MEDICARE_AGING_PRESSURE_STATES.has(state)) return 'High';
+  if (MEDICARE_ELEVATED_PRESSURE_STATES.has(state)) return 'Elevated';
+  if (getTerritoryRnProfile(state)) return 'Island/territory access pressure';
+  return 'Moderate';
+};
+
+const getCmsPayerSourceStatus = () => {
+  const datasets = marketRequiredMetrics?.datasets || {};
+  return {
+    hcris: String(datasets.cmsHcris?.status || freeMarketSignals?.sources?.cms || 'unknown').toLowerCase(),
+    careCompare: String(datasets.cmsCareCompare?.status || freeMarketSignals?.sources?.cms || 'unknown').toLowerCase()
+  };
+};
+
+const buildPayerContext = (state) => {
+  const stateName = STATE_NAMES[state] || state;
+  const payerClass = getPayerStateClass(state);
+  const medicaidTier = getMedicaidDependencyTier(state);
+  const medicareTier = getMedicarePressureTier(state);
+  const cmsStatus = getCmsPayerSourceStatus();
+  const ruralRisk = getStateRuralRiskCount(state);
+  const hospitalInstability = getRnFlightHospitalInstability(state);
+  const cmsReady = cmsStatus.hcris === 'ok' || cmsStatus.careCompare === 'ok';
+  const reimbursementRisk = Math.min(100, Math.round(
+    (payerClass === 'non-expansion' ? 26 : payerClass.includes('territory') ? 20 : 10)
+    + (medicaidTier === 'High' ? 18 : medicaidTier === 'Elevated' ? 12 : medicaidTier === 'Coverage-gap pressure' ? 16 : 8)
+    + (medicareTier === 'High' ? 18 : medicareTier === 'Elevated' ? 12 : 7)
+    + ruralRisk * 1.8
+    + hospitalInstability * 1.4
+    + (cmsReady ? 0 : 8)
+  ));
+  const medicaidLabel = payerClass === 'non-expansion'
+    ? 'Non-expansion Medicaid state'
+    : payerClass === 'territory' || payerClass === 'territory-medicaid'
+      ? 'Territory Medicaid financing'
+      : 'Medicaid expansion state';
+  const medicaidDetail = payerClass === 'non-expansion'
+    ? `${stateName} may carry more uncompensated-care pressure, which can tighten budgets but also keeps access-driven staffing needs visible.`
+    : payerClass === 'territory' || payerClass === 'territory-medicaid'
+      ? `${stateName} Medicaid financing is territory-specific; treat reimbursement pressure and federal funding caps as recruiter context.`
+      : `${stateName} expanded Medicaid, which can support coverage volume and stabilize demand for hospital, clinic, and care-management roles.`;
+  const medicareDetail = medicareTier === 'High'
+    ? `${stateName} has high aging/Medicare pressure, useful for selling chronic care, med-surg, ED, home health, and case-management demand.`
+    : medicareTier === 'Elevated'
+      ? `${stateName} has elevated Medicare pressure, supporting a pitch around stable older-adult care demand.`
+      : `${stateName} shows moderate Medicare pressure; use facility-level demand and specialty fit rather than Medicare alone.`;
+
+  return {
+    medicaidLabel,
+    medicaidDetail,
+    medicaidTier,
+    medicareTier,
+    medicareDetail,
+    reimbursementRisk,
+    cmsStatus,
+    cmsReady,
+    sourceLabel: 'KFF Medicaid expansion tracker, CMS Medicaid/CHIP enrollment, CMS HCRIS/Care Compare readiness'
+  };
+};
+
 const getCalibrationRoute = (homeState, targetState) => {
   if (typeof getRnFlightRouteScore !== 'function') return null;
   return getRnFlightRouteScore(targetState, homeState);
@@ -1926,8 +2007,9 @@ const buildCalibrationSnapshot = (homeState, targetState, rsas) => {
   const licenseDrag = variables?.licensureFriction ?? getRnFlightLicensureFriction(targetState, homeState);
   const sourceConfidence = route?.sourceConfidence ?? getRnFlightSourceConfidence();
   const flightScore = route?.score ?? 0;
+  const payerContext = buildPayerContext(homeState);
   const territoryCoveragePenalty = getTerritoryRnProfile(homeState) || getTerritoryRnProfile(targetState) ? 6 : 0;
-  const readiness = Math.round(Math.min(100, Math.max(0, (rsas * 0.42) + (flightScore * 0.38) + (sourceConfidence * 0.2) - territoryCoveragePenalty)));
+  const readiness = Math.round(Math.min(100, Math.max(0, (rsas * 0.4) + (flightScore * 0.35) + (sourceConfidence * 0.18) + (Math.min(18, payerContext.reimbursementRisk / 8)) - territoryCoveragePenalty)));
   const compactStates = freeMarketSignals?.nlcCompactStates || [];
   const compactText = compactStates.includes(homeState) && compactStates.includes(targetState)
     ? 'compact-friendly'
@@ -1946,6 +2028,7 @@ const buildCalibrationSnapshot = (homeState, targetState, rsas) => {
     flightScore,
     readiness,
     compactText,
+    payerContext,
     territoryMode: Boolean(getTerritoryRnProfile(homeState) || getTerritoryRnProfile(targetState))
   };
 };
@@ -1985,6 +2068,41 @@ const renderCalibrationMetrics = (snapshot) => {
       <strong>${Math.max(0, snapshot.sourceConfidence - (snapshot.territoryMode ? 6 : 0))}%</strong>
       <small>${snapshot.territoryMode ? 'Includes territory-modeled fallback profile.' : 'Coverage across free/public workforce, wage, facility, and mobility inputs.'}</small>
     </div>
+    <div class="calibration-metric-card ${snapshot.payerContext.reimbursementRisk >= 70 ? 'negative' : snapshot.payerContext.reimbursementRisk >= 45 ? 'neutral' : 'positive'}">
+      <span>Medicare/Medicaid pressure</span>
+      <strong>${snapshot.payerContext.reimbursementRisk}</strong>
+      <small>${escapeHtml(snapshot.payerContext.medicaidLabel)} | Medicare ${escapeHtml(snapshot.payerContext.medicareTier)}.</small>
+    </div>
+  `;
+};
+
+const renderPayerSellingPoints = (snapshot) => {
+  const payer = snapshot.payerContext;
+  return `
+    <div class="calibration-payer-panel">
+      <div class="calibration-payer-header">
+        <div>
+          <p class="calibration-label">Medicare / Medicaid Selling Context</p>
+          <strong>${escapeHtml(payer.medicaidLabel)}</strong>
+        </div>
+        <span>${payer.reimbursementRisk}/100 pressure</span>
+      </div>
+      <div class="calibration-payer-grid">
+        <div>
+          <span>Medicaid factor</span>
+          <p>${escapeHtml(payer.medicaidDetail)}</p>
+        </div>
+        <div>
+          <span>Medicare factor</span>
+          <p>${escapeHtml(payer.medicareDetail)}</p>
+        </div>
+        <div>
+          <span>CMS source readiness</span>
+          <p>HCRIS ${escapeHtml(payer.cmsStatus.hcris)} | Care Compare ${escapeHtml(payer.cmsStatus.careCompare)}.</p>
+        </div>
+      </div>
+      <small>${escapeHtml(payer.sourceLabel)}</small>
+    </div>
   `;
 };
 
@@ -1998,6 +2116,9 @@ const renderCalibrationPlaybook = (homeState, targetState, snapshot, leadFactors
   if (snapshot.licenseDrag <= 3) actions.push('Position license timing as low-friction and move quickly on interview scheduling.');
   if (snapshot.licenseDrag >= 7) actions.push('Do not lead with speed; explain licensing steps and timeline clearly.');
   if (snapshot.demandGap > 0) actions.push(`Frame ${homeName} as a market with measurable shortage pressure, not just a generic opening.`);
+  if (snapshot.payerContext.medicareTier === 'High') actions.push(`Tie the pitch to Medicare-heavy demand in ${homeName}: chronic care, med-surg, ED, case management, and home health.`);
+  if (snapshot.payerContext.medicaidLabel.startsWith('Medicaid expansion')) actions.push(`Use Medicaid expansion as a stability point: broader coverage can support sustained patient volume and care-management hiring.`);
+  if (snapshot.payerContext.medicaidLabel.startsWith('Non-expansion')) actions.push(`Use Medicaid pressure carefully: budget pressure is real, but access gaps can make RN staffing strategically important.`);
   if (snapshot.flightScore >= 70) actions.push(`Prioritize ${targetName} for outbound sourcing this week.`);
   if (!actions.length) actions.push('Use unit-specific needs, manager quality, and schedule fit instead of a broad relocation pitch.');
 
@@ -2005,10 +2126,13 @@ const renderCalibrationPlaybook = (homeState, targetState, snapshot, leadFactors
   avoidFactors.forEach((factor) => risks.push(`Reframe ${factor.label.toLowerCase()} because ${targetName} may compare favorably.`));
   if (snapshot.licenseDrag >= 7) risks.push('License transfer friction may slow conversion.');
   if (snapshot.wageDelta < 0) risks.push(`${homeName} does not show a staff-pay advantage against ${targetName}.`);
+  if (snapshot.payerContext.reimbursementRisk >= 70) risks.push('Medicare/Medicaid reimbursement pressure may affect budget, staffing ratios, or offer flexibility.');
+  if (!snapshot.payerContext.cmsReady) risks.push('CMS payer-data readiness is incomplete; validate facility finances before making reimbursement claims.');
   if (snapshot.sourceConfidence < 65) risks.push('Treat the forecast as directional until source coverage improves.');
   if (!risks.length) risks.push('No major pitch blockers detected from current source coverage.');
 
   calibrationPlaybook.innerHTML = `
+    ${renderPayerSellingPoints(snapshot)}
     <div class="calibration-playbook-section">
       <p class="calibration-label">Recommended next moves</p>
       <ul>${actions.slice(0, 4).map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>
