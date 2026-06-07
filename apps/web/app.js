@@ -819,7 +819,8 @@ const REGION_STATES = {
   Northeast: ['CT', 'ME', 'MA', 'NH', 'RI', 'VT', 'NJ', 'NY', 'PA'],
   Midwest: ['IL', 'IN', 'MI', 'OH', 'WI', 'IA', 'KS', 'MN', 'MO', 'NE', 'ND', 'SD'],
   South: ['DE', 'FL', 'GA', 'MD', 'NC', 'SC', 'VA', 'DC', 'WV', 'AL', 'KY', 'MS', 'TN', 'AR', 'LA', 'OK', 'TX'],
-  West: ['AZ', 'CO', 'ID', 'MT', 'NV', 'NM', 'UT', 'WY', 'AK', 'CA', 'HI', 'OR', 'WA']
+  West: ['AZ', 'CO', 'ID', 'MT', 'NV', 'NM', 'UT', 'WY', 'AK', 'CA', 'HI', 'OR', 'WA'],
+  Territories: ['AS', 'GU', 'MP', 'PR', 'VI']
 };
 
 const formatDate = (value) => {
@@ -1665,6 +1666,91 @@ const STATE_CALIBRATION_FACTORS = [
   { key: 'respect', label: 'Professional Respect', pitch: 'stronger voice in shared governance' }
 ];
 
+const TERRITORY_RN_ADVANTAGE_PROFILES = {
+  AS: {
+    staffing: 4.6,
+    leadership: 5.2,
+    scheduling: 4.8,
+    pay: 3.2,
+    safety: 5.0,
+    resources: 4.4,
+    growth: 4.1,
+    respect: 5.0,
+    staffRN: 54500,
+    travelWeekly: 1450,
+    projectedGap: 420,
+    relocationIndex: 34,
+    compact: false,
+    sourceNote: 'territory-modeled profile from public source fallbacks'
+  },
+  GU: {
+    staffing: 5.0,
+    leadership: 5.4,
+    scheduling: 4.9,
+    pay: 4.2,
+    safety: 5.1,
+    resources: 4.8,
+    growth: 4.6,
+    respect: 5.3,
+    staffRN: 70500,
+    travelWeekly: 1780,
+    projectedGap: 620,
+    relocationIndex: 42,
+    compact: false,
+    sourceNote: 'territory-modeled profile from public source fallbacks'
+  },
+  MP: {
+    staffing: 4.8,
+    leadership: 5.1,
+    scheduling: 4.7,
+    pay: 3.8,
+    safety: 5.0,
+    resources: 4.5,
+    growth: 4.3,
+    respect: 5.1,
+    staffRN: 65500,
+    travelWeekly: 1650,
+    projectedGap: 360,
+    relocationIndex: 38,
+    compact: false,
+    sourceNote: 'territory-modeled profile from public source fallbacks'
+  },
+  PR: {
+    staffing: 4.9,
+    leadership: 5.3,
+    scheduling: 5.0,
+    pay: 3.5,
+    safety: 5.2,
+    resources: 4.7,
+    growth: 4.8,
+    respect: 5.4,
+    staffRN: 42000,
+    travelWeekly: 1550,
+    projectedGap: 1800,
+    relocationIndex: 45,
+    compact: false,
+    sourceNote: 'territory-enhanced profile from public source fallbacks'
+  },
+  VI: {
+    staffing: 4.7,
+    leadership: 5.2,
+    scheduling: 4.8,
+    pay: 4.0,
+    safety: 5.0,
+    resources: 4.6,
+    growth: 4.4,
+    respect: 5.1,
+    staffRN: 68000,
+    travelWeekly: 1725,
+    projectedGap: 510,
+    relocationIndex: 40,
+    compact: false,
+    sourceNote: 'territory-modeled profile from public source fallbacks'
+  }
+};
+
+const getTerritoryRnProfile = (state) => TERRITORY_RN_ADVANTAGE_PROFILES[state] || null;
+
 const clampScore = (value) => Math.max(0, Math.min(10, value));
 
 const scoreFromCount = (state, invert = false) => {
@@ -1701,8 +1787,10 @@ const getCalibrationSalaryData = () => {
 
 const getCalibrationStateProfiles = () => recruitmentIntel?.stateProfiles || {};
 
-const getCalibrationRelocationIndex = () =>
-  recruitmentIntel?.relocationIndex || relocationData?.relocationScale || {};
+const getCalibrationRelocationIndex = () => ({
+  ...(recruitmentIntel?.relocationIndex || relocationData?.relocationScale || {}),
+  ...Object.fromEntries(Object.entries(TERRITORY_RN_ADVANTAGE_PROFILES).map(([state, profile]) => [state, profile.relocationIndex]))
+});
 
 const loadRecruitmentIntel = async () => {
   try {
@@ -1736,10 +1824,11 @@ const buildStateProfile = (state) => {
   const salaryData = getCalibrationSalaryData();
   const relocationIndex = getCalibrationRelocationIndex();
   const fetched = fetchedProfiles[state] || {};
+  const territory = getTerritoryRnProfile(state);
 
   const pay = scoreFromStateMetric(
     state,
-    (abbr) => salaryData?.[abbr]?.staffRN,
+    (abbr) => getTerritoryRnProfile(abbr)?.staffRN ?? salaryData?.[abbr]?.staffRN,
     false,
     5
   );
@@ -1750,15 +1839,16 @@ const buildStateProfile = (state) => {
     5
   );
 
-  const staffing = clampScore(Number(fetched.staffing ?? fallbackStaffing));
-  const leadership = clampScore(Number(fetched.leadership ?? (staffing * 0.85 + 1.2)));
-  const scheduling = clampScore(Number(fetched.scheduling ?? (staffing * 0.8 + 1)));
-  const safety = clampScore(Number(fetched.safety ?? (staffing * 0.7 + 2)));
-  const resources = clampScore(Number(fetched.resources ?? fallbackResources));
-  const growth = clampScore(Number(fetched.growth ?? fallbackGrowth));
+  const staffing = clampScore(Number(fetched.staffing ?? territory?.staffing ?? fallbackStaffing));
+  const leadership = clampScore(Number(fetched.leadership ?? territory?.leadership ?? (staffing * 0.85 + 1.2)));
+  const scheduling = clampScore(Number(fetched.scheduling ?? territory?.scheduling ?? (staffing * 0.8 + 1)));
+  const safety = clampScore(Number(fetched.safety ?? territory?.safety ?? (staffing * 0.7 + 2)));
+  const resources = clampScore(Number(fetched.resources ?? territory?.resources ?? fallbackResources));
+  const growth = clampScore(Number(fetched.growth ?? territory?.growth ?? fallbackGrowth));
   const respect = clampScore(
     Number(
       fetched.respect ??
+      territory?.respect ??
       (
         (leadership * 0.3) +
         (safety * 0.3) +
@@ -1809,7 +1899,8 @@ const buildCalibrationSnapshot = (homeState, targetState, rsas) => {
   const licenseDrag = variables?.licensureFriction ?? getRnFlightLicensureFriction(targetState, homeState);
   const sourceConfidence = route?.sourceConfidence ?? getRnFlightSourceConfidence();
   const flightScore = route?.score ?? 0;
-  const readiness = Math.round(Math.min(100, (rsas * 0.42) + (flightScore * 0.38) + (sourceConfidence * 0.2)));
+  const territoryCoveragePenalty = getTerritoryRnProfile(homeState) || getTerritoryRnProfile(targetState) ? 6 : 0;
+  const readiness = Math.round(Math.min(100, Math.max(0, (rsas * 0.42) + (flightScore * 0.38) + (sourceConfidence * 0.2) - territoryCoveragePenalty)));
   const compactStates = freeMarketSignals?.nlcCompactStates || [];
   const compactText = compactStates.includes(homeState) && compactStates.includes(targetState)
     ? 'compact-friendly'
@@ -1827,7 +1918,8 @@ const buildCalibrationSnapshot = (homeState, targetState, rsas) => {
     sourceConfidence,
     flightScore,
     readiness,
-    compactText
+    compactText,
+    territoryMode: Boolean(getTerritoryRnProfile(homeState) || getTerritoryRnProfile(targetState))
   };
 };
 
@@ -1863,8 +1955,8 @@ const renderCalibrationMetrics = (snapshot) => {
     </div>
     <div class="calibration-metric-card">
       <span>Source confidence</span>
-      <strong>${snapshot.sourceConfidence}%</strong>
-      <small>Coverage across free/public workforce, wage, facility, and mobility inputs.</small>
+      <strong>${Math.max(0, snapshot.sourceConfidence - (snapshot.territoryMode ? 6 : 0))}%</strong>
+      <small>${snapshot.territoryMode ? 'Includes territory-modeled fallback profile.' : 'Coverage across free/public workforce, wage, facility, and mobility inputs.'}</small>
     </div>
   `;
 };
@@ -2126,11 +2218,13 @@ const initLightworker = () => {
 
 const initStateCalibration = () => {
   if (!calibrationHome || !calibrationTarget) return;
-  const options = ALL_STATES.map(state => `<option value="${state}">${state}</option>`).join('');
-  calibrationHome.innerHTML = `<option value="">Select state</option>${options}`;
-  calibrationTarget.innerHTML = `<option value="">Select state</option>${options}`;
-  calibrationHome.value = ALL_STATES.includes('IN') ? 'IN' : ALL_STATES[0];
-  calibrationTarget.value = ALL_STATES.includes('FL') ? 'FL' : ALL_STATES[1];
+  const options = CALIBRATION_JURISDICTIONS
+    .map(state => `<option value="${state}">${escapeHtml(STATE_NAMES[state] || state)} (${state})</option>`)
+    .join('');
+  calibrationHome.innerHTML = `<option value="">Select state or territory</option>${options}`;
+  calibrationTarget.innerHTML = `<option value="">Select state or territory</option>${options}`;
+  calibrationHome.value = CALIBRATION_JURISDICTIONS.includes('IN') ? 'IN' : CALIBRATION_JURISDICTIONS[0];
+  calibrationTarget.value = CALIBRATION_JURISDICTIONS.includes('FL') ? 'FL' : CALIBRATION_JURISDICTIONS[1];
 
   calibrationHome.addEventListener('change', updateStateCalibration);
   calibrationTarget.addEventListener('change', updateStateCalibration);
@@ -2583,8 +2677,10 @@ const getStateRnDemandGap = (state) => {
   const stateKey = String(state || '').trim().toUpperCase();
   if (!stateKey) return 0;
   const salaryData = strategicData?.salaryData;
-  const projectedGap = Number(salaryData?.[stateKey]?.projectedGap);
-  if (!Number.isFinite(projectedGap) || projectedGap >= 0) return 0;
+  const projectedGap = Number(salaryData?.[stateKey]?.projectedGap ?? getTerritoryRnProfile(stateKey)?.projectedGap);
+  if (!Number.isFinite(projectedGap)) return 0;
+  if (getTerritoryRnProfile(stateKey)) return Math.abs(projectedGap);
+  if (projectedGap >= 0) return 0;
   return Math.abs(projectedGap);
 };
 
@@ -3319,7 +3415,11 @@ const STATE_NAMES = {
   OK: 'Oklahoma', OR: 'Oregon', PA: 'Pennsylvania', RI: 'Rhode Island', SC: 'South Carolina',
   SD: 'South Dakota', TN: 'Tennessee', TX: 'Texas', UT: 'Utah', VT: 'Vermont',
   VA: 'Virginia', WA: 'Washington', WV: 'West Virginia', WI: 'Wisconsin', WY: 'Wyoming',
+  AS: 'American Samoa',
+  GU: 'Guam',
+  MP: 'Northern Mariana Islands',
   PR: 'Puerto Rico',
+  VI: 'U.S. Virgin Islands',
   DC: 'District of Columbia'
 };
 
@@ -4575,7 +4675,7 @@ const initStateMultiSelect = () => {
   });
 };
 
-// All US states + DC + PR for dropdowns
+// All US states + DC + PR for map-backed dropdowns
 const ALL_STATES = [
   'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'GA',
   'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD',
@@ -4583,6 +4683,10 @@ const ALL_STATES = [
   'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'PR', 'RI', 'SC',
   'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
 ];
+
+const US_TERRITORIES = ['AS', 'GU', 'MP', 'PR', 'VI'];
+const CALIBRATION_JURISDICTIONS = Array.from(new Set([...ALL_STATES, ...US_TERRITORIES]))
+  .sort((a, b) => (STATE_NAMES[a] || a).localeCompare(STATE_NAMES[b] || b));
 
 // Populate custom state dropdown
 const populateCustomStateDropdown = () => {
@@ -8026,7 +8130,7 @@ const getStateNewsSignalCount = (state) => {
 };
 
 const getStateRelocationScore = (state) => {
-  const value = Number(recruitmentIntel?.relocationIndex?.[state] ?? relocationData?.relocationScale?.[state] ?? 50);
+  const value = Number(recruitmentIntel?.relocationIndex?.[state] ?? relocationData?.relocationScale?.[state] ?? getTerritoryRnProfile(state)?.relocationIndex ?? 50);
   return Number.isFinite(value) ? Math.max(0, value) : 50;
 };
 
@@ -8820,7 +8924,18 @@ const renderProjectedForecast = (forecast) => {
 
 const getStateNoticeCount = (state) => Number(mapStateData?.[state]?.count || stateDataHealthcare?.[state]?.count || stateDataAll?.[state]?.count || 0);
 
-const getStateSalaryData = (state) => strategicData?.salaryData?.[state] || recruitmentIntel?.salaryBenchmarks?.[state] || {};
+const getStateSalaryData = (state) => {
+  const territory = getTerritoryRnProfile(state);
+  return strategicData?.salaryData?.[state]
+    || recruitmentIntel?.salaryBenchmarks?.[state]
+    || (territory ? {
+      staffRN: territory.staffRN,
+      staffHourly: Math.round((territory.staffRN / 2080) * 10) / 10,
+      travelWeekly: territory.travelWeekly,
+      projectedGap: -Math.abs(territory.projectedGap || 0),
+      shortage: 'shortage'
+    } : {});
+};
 
 const getStateTravelAnnual = (state) => {
   const salary = getStateSalaryData(state);
@@ -8880,6 +8995,7 @@ const getRnFlightProfileAverage = (state, keys) => {
 
 const getRnFlightLicensureFriction = (origin, target) => {
   const compactStates = freeMarketSignals?.nlcCompactStates || [];
+  if (getTerritoryRnProfile(origin) || getTerritoryRnProfile(target)) return 10;
   const originCompact = compactStates.includes(origin);
   const targetCompact = compactStates.includes(target);
   if (originCompact && targetCompact) return 0;

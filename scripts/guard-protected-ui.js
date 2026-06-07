@@ -26,7 +26,7 @@ const requirements = [
       'flight-view-btn',
       'RN Flight Pattern',
       'id="rn-flight"',
-      'app.js?v=7.0',
+      'app.js?v=7.1',
       'styles.css?v=5.12'
     ]
   },
@@ -42,6 +42,8 @@ const requirements = [
       'getRnFlightVariableSnapshot',
       'Forecast Variables',
       'buildCalibrationSnapshot',
+      'TERRITORY_RN_ADVANTAGE_PROFILES',
+      'CALIBRATION_JURISDICTIONS',
       'contextmenu',
       'getRnFlightOriginRows'
     ]
