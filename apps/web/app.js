@@ -2016,8 +2016,94 @@ const getFacilityProofPoints = (state) => {
       row.metro || row.city || '',
       row.system || '',
       row.compositeScore ? `quality score ${Math.round(row.compositeScore)}` : ''
-    ].filter(Boolean).join(' | ') || 'Use as facility-specific proof point.'
+    ].filter(Boolean).join(' | ') || 'Use as facility-specific proof point.',
+    score: Math.round(Number(row.compositeScore || row.baseScore || 68))
   }));
+};
+
+const getMetroContext = (state) => {
+  const cached = typeof targetStateMetroDataCache !== 'undefined' ? targetStateMetroDataCache?.[state] : null;
+  const metros = Array.isArray(cached?.metros) ? cached.metros.slice(0, 3) : [];
+  if (metros.length) {
+    return metros.map((metro) => ({
+      name: metro.metro || metro.name || metro.city || 'Priority metro',
+      detail: `${Number(metro.noticeCount || metro.notices || 0)} notices | ${Number(metro.facilityCount || metro.facilities || 0)} facilities | ${Number(metro.programCount || metro.programs || 0)} programs`
+    }));
+  }
+  const facilities = getFacilityProofPoints(state);
+  return facilities.map((facility) => ({
+    name: facility.detail.split('|')[0]?.trim() || facility.title,
+    detail: `Facility-led metro proxy | ${facility.title}`
+  }));
+};
+
+const getSpecialtyForecast = (snapshot) => {
+  const demandBase = snapshot.demandGap / 650 + snapshot.payerContext.reimbursementRisk / 10 + snapshot.flightScore / 12;
+  const specialtyBoost = Math.round((snapshot.specialty.demand - 1) * 100);
+  const pressure = Math.max(0, Math.min(100, Math.round(demandBase + specialtyBoost)));
+  const outlook = pressure >= 72 ? 'Rising demand' : pressure >= 45 ? 'Steady demand' : 'Selective demand';
+  return {
+    pressure,
+    outlook,
+    detail: `${snapshot.specialty.label} outlook is ${outlook.toLowerCase()} based on shortage pressure, payer demand, and RN Flight signal.`
+  };
+};
+
+const buildRecruiterWorkflowTasks = (homeState, targetState, snapshot) => {
+  const tasks = [
+    `Verify ${STATE_NAMES[homeState] || homeState} license path for ${STATE_NAMES[targetState] || targetState} RN before promising start timing.`,
+    `Open with ${snapshot.specialty.label} fit and one facility proof point.`,
+    `Validate pay conversation using gross wage delta ${formatCurrencyDelta(snapshot.wageDelta)} and take-home proxy ${formatCurrencyDelta(snapshot.takeHome.estimatedTakeHomeDelta)}.`,
+    `Use Medicare/Medicaid context only as market proof, not as a facility-specific financial claim.`,
+    `Log replies and decline reasons after outreach so this lane can be compared later.`
+  ];
+  if (snapshot.recruitingDifficulty.score >= 72) tasks.unshift('Route this lane to a senior recruiter or use a warmer referral source.');
+  return tasks.slice(0, 6);
+};
+
+const buildCallScript = (homeState, targetState, snapshot) => {
+  const homeName = STATE_NAMES[homeState] || homeState;
+  const targetName = STATE_NAMES[targetState] || targetState;
+  return `Since you are in ${targetName} with ${snapshot.specialty.label} experience, ${homeName} may be worth a look because the market shows ${snapshot.specialtyForecast.outlook.toLowerCase()}, ${snapshot.licenseTimeline.label.toLowerCase()} license timing, and ${snapshot.takeHome.housingPressure.toLowerCase()} housing pressure. I would start by matching you to the right facility and schedule before asking you to think about relocation.`;
+};
+
+const getFreshnessRows = (snapshot) => {
+  const datasets = marketRequiredMetrics?.datasets || {};
+  return [
+    ['WARN notices', currentNotices.length ? 'ok' : 'unknown', datasets.warnNotices?.fetchedAt || statUpdated?.textContent || null],
+    ['BLS wage data', getStateStaffAnnual(calibrationHome?.value) ? 'ok' : 'modeled', datasets.blsOes?.fetchedAt || strategicData?.lastUpdated || null],
+    ['CMS HCRIS', snapshot.payerContext.cmsStatus.hcris, datasets.cmsHcris?.fetchedAt || null],
+    ['CMS Care Compare', snapshot.payerContext.cmsStatus.careCompare, datasets.cmsCareCompare?.fetchedAt || null],
+    ['KFF Medicaid', 'public', null],
+    ['State news', stateNewsData ? 'ok' : 'unknown', stateNewsData?.lastUpdated || null],
+    ['Territory fallback', snapshot.territoryMode ? 'modeled' : 'n/a', null]
+  ];
+};
+
+const exportLeadershipSummary = (homeState, targetState, snapshot) => {
+  const payload = [
+    `RN Advantage Leadership Summary`,
+    `Recruiter state: ${STATE_NAMES[homeState] || homeState} (${homeState})`,
+    `Target RN state: ${STATE_NAMES[targetState] || targetState} (${targetState})`,
+    `Specialty: ${snapshot.specialty.label}`,
+    `Pitch readiness: ${snapshot.readiness}`,
+    `Recruiting difficulty: ${snapshot.recruitingDifficulty.score} (${snapshot.recruitingDifficulty.label})`,
+    `RN Flight likelihood: ${snapshot.flightScore || 0}`,
+    `Wage delta: ${formatCurrencyDelta(snapshot.wageDelta)}`,
+    `Take-home proxy: ${formatCurrencyDelta(snapshot.takeHome.estimatedTakeHomeDelta)}`,
+    `License timeline: ${snapshot.licenseTimeline.label}`,
+    `Medicare/Medicaid pressure: ${snapshot.payerContext.reimbursementRisk}`,
+    `Specialty forecast: ${snapshot.specialtyForecast.outlook}`,
+    `Call script: ${snapshot.callScript}`,
+    `Workflow tasks:`,
+    ...snapshot.workflowTasks.map((task, index) => `${index + 1}. ${task}`),
+    `Source confidence: ${Math.max(0, snapshot.sourceConfidence - (snapshot.territoryMode ? 6 : 0))}%`
+  ].join('\n');
+  navigator.clipboard?.writeText(payload).then(() => {
+    showMapToast?.('RN Advantage leadership summary copied.');
+  }).catch(() => {
+    window.prompt('Copy leadership summary', payload);
+  });
 };
 
 const getSourceBadges = (snapshot) => {
@@ -2147,6 +2233,11 @@ const buildCalibrationSnapshot = (homeState, targetState, rsas) => {
   snapshot.facilityProofPoints = getFacilityProofPoints(homeState);
   snapshot.sourceBadges = getSourceBadges(snapshot);
   snapshot.recruitingDifficulty = getRecruitingDifficulty(snapshot, specialtyKey);
+  snapshot.metroContext = getMetroContext(homeState);
+  snapshot.specialtyForecast = getSpecialtyForecast(snapshot);
+  snapshot.workflowTasks = buildRecruiterWorkflowTasks(homeState, targetState, snapshot);
+  snapshot.callScript = buildCallScript(homeState, targetState, snapshot);
+  snapshot.freshnessRows = getFreshnessRows(snapshot);
   return snapshot;
 };
 
@@ -2259,6 +2350,11 @@ const renderCalibrationStrategy = (homeState, targetState, snapshot, leadFactors
       </div>
       <span>${escapeHtml(snapshot.recruitingDifficulty.label)}</span>
     </div>
+    <div class="calibration-confidence-warning ${snapshot.sourceConfidence < 65 || snapshot.territoryMode ? 'warn' : 'ok'}">
+      ${snapshot.sourceConfidence < 65 || snapshot.territoryMode
+        ? 'Directional model: validate facility finances, license timing, and current pay before using this with leadership.'
+        : 'High-confidence lane: core wage, source, payer, and facility signals are available.'}
+    </div>
     <div class="calibration-strategy-grid">
       <div>
         <span>Lead with</span>
@@ -2276,17 +2372,52 @@ const renderCalibrationStrategy = (homeState, targetState, snapshot, leadFactors
         <span>Do not pitch this way</span>
         <ul>${doNotPitch.slice(0, 5).map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>
       </div>
+      <div>
+        <span>Specialty forecast</span>
+        <p>${escapeHtml(snapshot.specialtyForecast.detail)} Pressure ${snapshot.specialtyForecast.pressure}/100.</p>
+      </div>
+      <div>
+        <span>Call script</span>
+        <p>${escapeHtml(snapshot.callScript)}</p>
+      </div>
+    </div>
+    <div class="calibration-workflow">
+      <div class="calibration-workflow-header">
+        <span>Recruiter workflow queue</span>
+        <button type="button" data-calibration-export="1">Copy Leadership Summary</button>
+      </div>
+      <ol>${snapshot.workflowTasks.map((task) => `<li>${escapeHtml(task)}</li>`).join('')}</ol>
     </div>
     <div class="calibration-facility-proof">
-      <span>Facility proof points</span>
+      <span>Facility fit scores</span>
       ${snapshot.facilityProofPoints.map((point) => `
         <div>
-          <strong>${escapeHtml(point.title)}</strong>
+          <strong>${escapeHtml(point.title)} <b>${Math.max(0, Math.min(100, point.score || 68))}</b></strong>
           <small>${escapeHtml(point.detail)}</small>
         </div>
       `).join('')}
     </div>
+    <div class="calibration-facility-proof">
+      <span>Metro context</span>
+      ${snapshot.metroContext.map((point) => `
+        <div>
+          <strong>${escapeHtml(point.name)}</strong>
+          <small>${escapeHtml(point.detail)}</small>
+        </div>
+      `).join('')}
+    </div>
+    <details class="calibration-explainability">
+      <summary>Explain this score</summary>
+      <ul>
+        <li>Raised by RN Flight likelihood ${Math.round(snapshot.flightScore || 0)}, specialty demand, payer pressure, and source confidence.</li>
+        <li>Lowered by license friction ${Math.round(snapshot.licenseDrag)}, recruiting difficulty ${snapshot.recruitingDifficulty.score}, and negative wage/COL signals when present.</li>
+        <li>Modeled inputs are labeled in the source badges and should be validated before executive use.</li>
+      </ul>
+    </details>
   `;
+  calibrationStrategy.querySelector('[data-calibration-export]')?.addEventListener('click', () => {
+    exportLeadershipSummary(homeState, targetState, snapshot);
+  });
 };
 
 const renderCalibrationSources = (snapshot) => {
@@ -2299,6 +2430,15 @@ const renderCalibrationSources = (snapshot) => {
     <div class="calibration-source-badges">
       ${snapshot.sourceBadges.map((badge) => `<span class="${escapeHtml(badge.status)}">${escapeHtml(badge.label)}: ${escapeHtml(badge.status)}</span>`).join('')}
     </div>
+    <div class="calibration-freshness-grid">
+      ${snapshot.freshnessRows.map(([label, status, updated]) => `
+        <div>
+          <span>${escapeHtml(label)}</span>
+          <strong>${escapeHtml(status || 'unknown')}</strong>
+          <small>${updated ? escapeHtml(formatDate(updated)) : 'No timestamp'}</small>
+        </div>
+      `).join('')}
+    </div>
   `;
 };
 
@@ -2306,7 +2446,7 @@ const renderCalibrationOutcomes = (homeState, targetState, snapshot) => {
   if (!calibrationOutcomes) return;
   const key = getCalibrationOutcomeKey(homeState, targetState, snapshot.specialtyKey);
   const outcomes = loadCalibrationOutcomes();
-  const row = outcomes[key] || { contacted: 0, replied: 0, screened: 0, submitted: 0, offered: 0, accepted: 0, declined: 0 };
+  const row = outcomes[key] || { contacted: 0, replied: 0, screened: 0, submitted: 0, offered: 0, accepted: 0, declined: 0, pay_declined: 0, license_declined: 0, housing_declined: 0, schedule_declined: 0, reputation_declined: 0 };
   calibrationOutcomes.innerHTML = `
     <div class="calibration-outcome-header">
       <div>
