@@ -26,7 +26,7 @@ const requirements = [
       'flight-view-btn',
       'RN Flight Pattern',
       'id="rn-flight"',
-      'app.js?v=7.5',
+      'app.js?v=7.6',
       'calibration-target-search',
       'calibration-specialty',
       'styles.css?v=5.12'
@@ -54,6 +54,12 @@ const requirements = [
       'Copy Leadership Summary',
       'Explain this score',
       'Specialty forecast',
+      'Compensation intelligence',
+      'Facility-level RN Advantage',
+      'Forecast accuracy tracking',
+      'rn-flight-specialty',
+      'Specialty fit',
+      'Source audit',
       'contextmenu',
       'getRnFlightOriginRows'
     ]
@@ -71,6 +77,10 @@ const requirements = [
       'calibration-source-badges',
       'calibration-freshness-grid',
       'calibration-workflow',
+      'calibration-comp-panel',
+      'calibration-source-audit',
+      'market-forecast-accuracy',
+      'rn-flight-source-audit',
       'rn-flight-focus-destination',
       'rn-flight-origin-intensity-5'
     ]

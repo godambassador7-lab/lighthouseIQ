@@ -302,6 +302,7 @@ let rnFlightOriginState = 'IN';
 let rnFlightTargetState = 'IN';
 let rnFlightMode = 'outbound';
 let rnFlightTiming = 'next90';
+let rnFlightSpecialty = 'general';
 let selectedStates = []; // Multi-select states
 let mapScope = 'healthcare'; // 'healthcare' or 'all'
 let activeMapTab = 'layoffs'; // 'layoffs' | 'rural' | 'salary'
@@ -1918,6 +1919,10 @@ const MEDICAID_ELEVATED_DEPENDENCY_STATES = new Set(['AZ', 'CO', 'IL', 'MA', 'MD
 const MEDICARE_AGING_PRESSURE_STATES = new Set(['AZ', 'DE', 'FL', 'HI', 'ME', 'MT', 'PA', 'VT', 'WV']);
 const MEDICARE_ELEVATED_PRESSURE_STATES = new Set(['AL', 'AR', 'CT', 'IA', 'MI', 'MO', 'NH', 'NM', 'OH', 'OR', 'RI', 'SC', 'SD', 'WI']);
 const CALIBRATION_OUTCOME_KEY = 'rn_advantage_outcomes_v1';
+const MARKET_FORECAST_HISTORY_KEY = 'market_forecast_history_v1';
+const STATE_TAX_NO_INCOME = new Set(['AK', 'FL', 'NV', 'NH', 'SD', 'TN', 'TX', 'WA', 'WY']);
+const STATE_TAX_HIGH = new Set(['CA', 'DC', 'HI', 'MD', 'MN', 'NJ', 'NY', 'OR', 'VT']);
+const STATE_TAX_ELEVATED = new Set(['CT', 'DE', 'IA', 'IL', 'MA', 'ME', 'NE', 'NM', 'RI', 'VA', 'WI']);
 const SPECIALTY_SELLING_CONTEXT = {
   general: { label: 'General RN', demand: 1, bestFit: 'flexible acute-care RN open to unit fit, scheduling, and relocation timing' },
   ICU: { label: 'ICU', demand: 1.18, bestFit: 'critical-care RN motivated by acuity, teaching hospitals, and staffing support' },
@@ -2080,6 +2085,90 @@ const getFreshnessRows = (snapshot) => {
   ];
 };
 
+const getStateTaxBurden = (state) => {
+  if (STATE_TAX_NO_INCOME.has(state)) return { tier: 'No wage income tax', rate: 0.018, note: 'No broad state wage income tax. Local taxes and payroll taxes still apply.' };
+  if (STATE_TAX_HIGH.has(state)) return { tier: 'High tax pressure', rate: 0.078, note: 'Higher state income-tax pressure can reduce take-home pay.' };
+  if (STATE_TAX_ELEVATED.has(state)) return { tier: 'Elevated tax pressure', rate: 0.058, note: 'State income-tax pressure should be included in take-home conversations.' };
+  if (getTerritoryRnProfile(state)) return { tier: 'Territory tax rules', rate: 0.06, note: 'Territory tax treatment should be manually verified before quoting take-home pay.' };
+  return { tier: 'Moderate tax pressure', rate: 0.042, note: 'Moderate state income-tax proxy; validate with payroll before final offer framing.' };
+};
+
+const getCompensationIntelligence = (homeState, targetState, snapshot) => {
+  const homeStaff = getStateStaffAnnual(homeState);
+  const targetStaff = getStateStaffAnnual(targetState);
+  const homeTravel = getStateTravelAnnual(homeState);
+  const targetTravel = getStateTravelAnnual(targetState);
+  const homeTax = getStateTaxBurden(homeState);
+  const targetTax = getStateTaxBurden(targetState);
+  const homeCol = Math.max(20, getStateRelocationScore(homeState));
+  const targetCol = Math.max(20, getStateRelocationScore(targetState));
+  const homeNet = Math.round((homeStaff || 0) * (1 - homeTax.rate) / (homeCol / 100));
+  const targetNet = Math.round((targetStaff || 0) * (1 - targetTax.rate) / (targetCol / 100));
+  const netDelta = homeNet - targetNet;
+  const travelDelta = homeTravel && targetTravel ? homeTravel - targetTravel : 0;
+  const signOnScore = Math.max(0, Math.min(100, Math.round(
+    42
+    + Math.max(0, snapshot.demandGap) / 900
+    + snapshot.recruitingDifficulty.score * 0.28
+    + (snapshot.payerContext.reimbursementRisk >= 70 ? -8 : 4)
+    + (snapshot.specialty.demand - 1) * 55
+  )));
+  const lead = netDelta >= 5000
+    ? 'Lead with take-home advantage before bonus or relocation.'
+    : snapshot.wageDelta >= 2500
+      ? 'Lead with gross pay, then validate rent, commute, and tax impact.'
+      : travelDelta >= 3000
+        ? 'Use travel demand as proof of market urgency, not as a staff-pay promise.'
+        : 'Lead with schedule, unit fit, manager quality, and total package clarity.';
+  return {
+    homeTax,
+    targetTax,
+    homeNet,
+    targetNet,
+    netDelta,
+    travelDelta,
+    signOnScore,
+    lead,
+    rows: [
+      ['Staff RN annual', formatCurrencyDelta(snapshot.wageDelta), homeStaff && targetStaff ? 'BLS/state salary benchmark' : 'Modeled salary fallback'],
+      ['COL/tax take-home proxy', formatCurrencyDelta(netDelta), `${homeTax.tier} vs ${targetTax.tier}`],
+      ['Travel market delta', formatCurrencyDelta(travelDelta), 'Travel pay proxy from available salary data'],
+      ['Sign-on leverage', `${signOnScore}/100`, signOnScore >= 70 ? 'Strong incentive case if budget allows' : signOnScore >= 45 ? 'Moderate incentive case' : 'Do not rely on bonus alone']
+    ]
+  };
+};
+
+const buildFacilityAdvantageRows = (homeState, targetState, snapshot) => {
+  const targetFacilities = getFacilityProofPoints(targetState).slice(0, 5);
+  const homeDemand = Math.max(0, snapshot.demandGap);
+  return targetFacilities.map((point) => {
+    const quality = Math.max(35, Math.min(100, Number(point.score || 68)));
+    const pay = Math.max(0, Math.min(100, 50 + snapshot.wageDelta / 900));
+    const license = Math.max(0, 100 - snapshot.licenseDrag * 8);
+    const specialty = Math.max(0, Math.min(100, 55 + (snapshot.specialty.demand - 1) * 140));
+    const demand = Math.max(0, Math.min(100, 45 + homeDemand / 260));
+    const score = Math.round((quality * 0.24) + (pay * 0.22) + (license * 0.18) + (specialty * 0.18) + (demand * 0.18));
+    return {
+      ...point,
+      score,
+      detail: `${point.detail} | ${snapshot.specialty.label} fit ${Math.round(specialty)} | license ease ${Math.round(license)}`
+    };
+  });
+};
+
+const getCalibrationSourceAuditRows = (snapshot) => {
+  const datasets = marketRequiredMetrics?.datasets || {};
+  return [
+    { source: 'BLS OEWS wage/employment', status: getStateStaffAnnual(calibrationHome?.value) ? 'ok' : 'modeled', use: 'Staff RN pay, wage delta, compensation pitch', updated: datasets.blsOes?.fetchedAt || strategicData?.lastUpdated, url: 'https://www.bls.gov/oes/' },
+    { source: 'CMS Care Compare', status: snapshot.payerContext.cmsStatus.careCompare, use: 'Facility quality and payer readiness', updated: datasets.cmsCareCompare?.fetchedAt, url: 'https://data.cms.gov/provider-data/' },
+    { source: 'CMS HCRIS', status: snapshot.payerContext.cmsStatus.hcris, use: 'Hospital finance and reimbursement context', updated: datasets.cmsHcris?.fetchedAt, url: 'https://www.cms.gov/data-research/statistics-trends-and-reports/cost-reports' },
+    { source: 'KFF Medicaid tracker', status: 'public', use: 'Medicaid expansion and coverage pressure', updated: null, url: 'https://www.kff.org/medicaid/issue-brief/status-of-state-medicaid-expansion-decisions-interactive-map/' },
+    { source: 'NCSBN Nurse Licensure Compact', status: snapshot.licenseDrag <= 3 ? 'ok' : 'verify', use: 'Cross-state license friction', updated: freeMarketSignals?.lastUpdated, url: 'https://www.nursecompact.com/' },
+    { source: 'HRSA nursing workforce', status: datasets.hrsaNssrn?.status || freeMarketSignals?.sources?.hrsa || 'unknown', use: 'Supply, workforce, and shortage context', updated: datasets.hrsaNssrn?.fetchedAt || freeMarketSignals?.lastUpdated, url: 'https://data.hrsa.gov/' },
+    { source: 'WARN and state news', status: currentNotices.length || stateNewsData ? 'ok' : 'limited', use: 'Market disruption and hiring pressure', updated: datasets.warnNotices?.fetchedAt || stateNewsData?.lastUpdated, url: 'https://www.dol.gov/agencies/eta/layoffs/warn' }
+  ];
+};
+
 const exportLeadershipSummary = (homeState, targetState, snapshot) => {
   const payload = [
     `RN Advantage Leadership Summary`,
@@ -2094,6 +2183,8 @@ const exportLeadershipSummary = (homeState, targetState, snapshot) => {
     `License timeline: ${snapshot.licenseTimeline.label}`,
     `Medicare/Medicaid pressure: ${snapshot.payerContext.reimbursementRisk}`,
     `Specialty forecast: ${snapshot.specialtyForecast.outlook}`,
+    `Compensation lead: ${snapshot.compensation.lead}`,
+    `Facility fit leader: ${snapshot.facilityAdvantageRows[0]?.title || 'Validate facility fit'}`,
     `Call script: ${snapshot.callScript}`,
     `Workflow tasks:`,
     ...snapshot.workflowTasks.map((task, index) => `${index + 1}. ${task}`),
@@ -2235,6 +2326,9 @@ const buildCalibrationSnapshot = (homeState, targetState, rsas) => {
   snapshot.recruitingDifficulty = getRecruitingDifficulty(snapshot, specialtyKey);
   snapshot.metroContext = getMetroContext(homeState);
   snapshot.specialtyForecast = getSpecialtyForecast(snapshot);
+  snapshot.compensation = getCompensationIntelligence(homeState, targetState, snapshot);
+  snapshot.facilityAdvantageRows = buildFacilityAdvantageRows(homeState, targetState, snapshot);
+  snapshot.sourceAuditRows = getCalibrationSourceAuditRows(snapshot);
   snapshot.workflowTasks = buildRecruiterWorkflowTasks(homeState, targetState, snapshot);
   snapshot.callScript = buildCallScript(homeState, targetState, snapshot);
   snapshot.freshnessRows = getFreshnessRows(snapshot);
@@ -2381,6 +2475,20 @@ const renderCalibrationStrategy = (homeState, targetState, snapshot, leadFactors
         <p>${escapeHtml(snapshot.callScript)}</p>
       </div>
     </div>
+    <div class="calibration-comp-panel">
+      <span>Compensation intelligence</span>
+      <strong>${escapeHtml(snapshot.compensation.lead)}</strong>
+      <div class="calibration-comp-grid">
+        ${snapshot.compensation.rows.map(([label, value, detail]) => `
+          <div>
+            <span>${escapeHtml(label)}</span>
+            <b>${escapeHtml(value)}</b>
+            <small>${escapeHtml(detail)}</small>
+          </div>
+        `).join('')}
+      </div>
+      <small>${escapeHtml(snapshot.compensation.homeTax.note)} Target-state comparison: ${escapeHtml(snapshot.compensation.targetTax.note)}</small>
+    </div>
     <div class="calibration-workflow">
       <div class="calibration-workflow-header">
         <span>Recruiter workflow queue</span>
@@ -2389,8 +2497,8 @@ const renderCalibrationStrategy = (homeState, targetState, snapshot, leadFactors
       <ol>${snapshot.workflowTasks.map((task) => `<li>${escapeHtml(task)}</li>`).join('')}</ol>
     </div>
     <div class="calibration-facility-proof">
-      <span>Facility fit scores</span>
-      ${snapshot.facilityProofPoints.map((point) => `
+      <span>Facility-level RN Advantage</span>
+      ${snapshot.facilityAdvantageRows.map((point) => `
         <div>
           <strong>${escapeHtml(point.title)} <b>${Math.max(0, Math.min(100, point.score || 68))}</b></strong>
           <small>${escapeHtml(point.detail)}</small>
@@ -2437,6 +2545,19 @@ const renderCalibrationSources = (snapshot) => {
           <strong>${escapeHtml(status || 'unknown')}</strong>
           <small>${updated ? escapeHtml(formatDate(updated)) : 'No timestamp'}</small>
         </div>
+      `).join('')}
+    </div>
+    <div class="calibration-source-audit">
+      <div class="calibration-source-audit-header">
+        <span>Source audit</span>
+        <strong>What each source is doing in the model</strong>
+      </div>
+      ${snapshot.sourceAuditRows.map((row) => `
+        <a class="calibration-source-audit-row ${escapeHtml(row.status || 'unknown')}" href="${escapeHtml(row.url)}" target="_blank" rel="noopener noreferrer">
+          <span>${escapeHtml(row.source)}</span>
+          <strong>${escapeHtml(row.status || 'unknown')}</strong>
+          <small>${escapeHtml(row.use)}${row.updated ? ` | Updated ${escapeHtml(formatDate(row.updated))}` : ''}</small>
+        </a>
       `).join('')}
     </div>
   `;
@@ -9470,8 +9591,75 @@ const getNextMonthForecast = (scope) => {
   };
 };
 
-const renderProjectedForecast = (forecast) => {
+const loadMarketForecastHistory = () => {
+  try {
+    return JSON.parse(localStorage.getItem(scopedStorageKey(MARKET_FORECAST_HISTORY_KEY)) || '{}');
+  } catch {
+    return {};
+  }
+};
+
+const saveMarketForecastHistory = (history) => {
+  try {
+    localStorage.setItem(scopedStorageKey(MARKET_FORECAST_HISTORY_KEY), JSON.stringify(history));
+  } catch {
+    // Forecast accuracy is helpful context, but storage failure should not block chart rendering.
+  }
+};
+
+const getMarketForecastAccuracy = (scope, forecast, actualNet) => {
+  const history = loadMarketForecastHistory();
+  const key = scope || 'us';
+  const rows = Array.isArray(history[key]) ? history[key] : [];
+  const prior = rows
+    .filter((row) => row?.label && row.label !== forecast.label)
+    .sort((a, b) => String(b.recordedAt || '').localeCompare(String(a.recordedAt || '')))[0];
+  const projectedNet = Number(prior?.net);
+  const currentActual = Number(actualNet || 0);
+  const accuracy = prior && Number.isFinite(projectedNet)
+    ? Math.max(0, Math.min(100, Math.round(100 - (Math.abs(projectedNet - currentActual) / Math.max(1, Math.abs(currentActual))) * 100)))
+    : null;
+  const current = {
+    label: forecast.label,
+    supply: Math.round(forecast.supply || 0),
+    demand: Math.round(forecast.demand || 0),
+    net: Math.round(forecast.net || 0),
+    confidence: Math.round(forecast.confidence || 0),
+    recordedAt: new Date().toISOString()
+  };
+  const merged = rows.filter((row) => row?.label !== current.label).concat(current).slice(-12);
+  history[key] = merged;
+  saveMarketForecastHistory(history);
+  return {
+    prior,
+    accuracy,
+    actualNet: Math.round(currentActual),
+    sampleCount: merged.length
+  };
+};
+
+const renderForecastAccuracyPanel = (accuracy) => {
+  if (!accuracy?.prior) {
+    return `
+      <div class="market-forecast-accuracy">
+        <span>Forecast accuracy tracking</span>
+        <strong>Learning period</strong>
+        <small>The app is saving monthly forecast snapshots for this scope. Accuracy appears after a prior forecast can be compared with the latest actual proxy.</small>
+      </div>
+    `;
+  }
+  return `
+    <div class="market-forecast-accuracy">
+      <span>Forecast accuracy tracking</span>
+      <strong>${accuracy.accuracy}% match</strong>
+      <small>Prior ${escapeHtml(accuracy.prior.label)} projected net ${Math.round(accuracy.prior.net).toLocaleString()} vs latest actual proxy ${accuracy.actualNet.toLocaleString()}. ${accuracy.sampleCount} saved snapshots.</small>
+    </div>
+  `;
+};
+
+const renderProjectedForecast = (forecast, scope = 'us', actualNet = 0) => {
   const netClass = forecast.net >= 0 ? 'positive' : 'negative';
+  const accuracy = getMarketForecastAccuracy(scope, forecast, actualNet);
   const driverList = (rows) => rows.map((row) => (
     `<span>${escapeHtml(row.label)} <strong>${Math.round(row.forecast).toLocaleString()}</strong></span>`
   )).join('');
@@ -9491,6 +9679,7 @@ const renderProjectedForecast = (forecast) => {
         <div><small>Demand drivers</small>${driverList(forecast.demandComponents)}</div>
         <div><small>Supply drivers</small>${driverList(forecast.supplyComponents)}</div>
       </div>
+      ${renderForecastAccuracyPanel(accuracy)}
       <p>${escapeHtml(forecast.action)}</p>
     </div>
   `;
@@ -9638,6 +9827,25 @@ const getRnFlightTravelMarketPull = (origin, target) => {
   return Math.max(0, Math.min(14, lift / 4200));
 };
 
+const getRnFlightSpecialtyContext = () => (
+  SPECIALTY_SELLING_CONTEXT[rnFlightSpecialty] || SPECIALTY_SELLING_CONTEXT.general
+);
+
+const getRnFlightSpecialtyPull = (target) => {
+  const specialty = getRnFlightSpecialtyContext();
+  const specialtyDemand = Math.max(0, (specialty.demand - 1) * 100);
+  const payerFit = specialty.label === 'Home Health' || specialty.label === 'Med-Surg'
+    ? buildPayerContext(target).reimbursementRisk / 12
+    : 0;
+  const acuityFit = ['ICU', 'Emergency Department', 'Operating Room', 'Labor & Delivery'].includes(specialty.label)
+    ? getRnFlightHospitalQualityPull(target) * 0.8
+    : 0;
+  const behavioralFit = specialty.label === 'Behavioral Health'
+    ? getStateNewsSignalCount(target) * 0.16 + getRnFlightOpeningsProxy(target) * 0.16
+    : 0;
+  return Math.max(0, Math.min(14, specialtyDemand * 0.08 + payerFit + acuityFit + behavioralFit));
+};
+
 const getRnFlightVariableSnapshot = (origin, target) => {
   const licensureFriction = getRnFlightLicensureFriction(origin, target);
   const realWageAdvantage = getRnFlightRealWageAdvantage(origin, target);
@@ -9650,8 +9858,9 @@ const getRnFlightVariableSnapshot = (origin, target) => {
   const pipelinePressure = getRnFlightPipelinePressure(target);
   const migrationHistory = getRnFlightMigrationHistoryPull(origin, target);
   const travelMarket = getRnFlightTravelMarketPull(origin, target);
+  const specialtyPull = getRnFlightSpecialtyPull(target);
   const sourceConfidence = getRnFlightSourceConfidence();
-  const net = realWageAdvantage + openingsProxy + hospitalQuality + pipelinePressure + migrationHistory + travelMarket
+  const net = realWageAdvantage + openingsProxy + hospitalQuality + pipelinePressure + migrationHistory + travelMarket + specialtyPull
     - licensureFriction - hospitalInstability - laborClimateDrag - workplaceDrag;
 
   return {
@@ -9666,6 +9875,7 @@ const getRnFlightVariableSnapshot = (origin, target) => {
     pipelinePressure,
     migrationHistory,
     travelMarket,
+    specialtyPull,
     sourceConfidence,
     net,
     items: [
@@ -9678,6 +9888,7 @@ const getRnFlightVariableSnapshot = (origin, target) => {
       { label: 'Pipeline pressure', value: pipelinePressure, type: 'pull', note: 'Shortage gap compared with nursing program count' },
       { label: 'Migration history', value: migrationHistory, type: 'pull', note: 'RN, clinical, and general relocation destination pull' },
       { label: 'Travel market', value: travelMarket, type: 'pull', note: 'Travel-pay advantage versus origin' },
+      { label: 'Specialty fit', value: specialtyPull, type: 'pull', note: `${getRnFlightSpecialtyContext().label} demand fit in the destination market` },
       { label: 'Source confidence', value: sourceConfidence, type: 'neutral', note: 'Coverage across free/public source inputs' }
     ]
   };
@@ -9739,6 +9950,7 @@ const getRnFlightRouteScore = (origin, state) => {
     + variables.pipelinePressure * 0.72
     + variables.migrationHistory
     + variables.travelMarket * 0.7
+    + variables.specialtyPull
     - variables.licensureFriction
     - variables.hospitalInstability * 0.6
     - variables.laborClimateDrag * 0.7
@@ -9755,6 +9967,7 @@ const getRnFlightRouteScore = (origin, state) => {
     variables.openingsProxy > 8 ? 'openings pressure' : '',
     variables.pipelinePressure > 5 ? 'pipeline pressure' : '',
     variables.migrationHistory > 5 ? 'migration pattern' : '',
+    variables.specialtyPull > 4 ? `${getRnFlightSpecialtyContext().label} fit` : '',
     compact ? 'compact-friendly' : '',
     variables.licensureFriction >= 7 ? 'license friction' : '',
     regionBoost ? `same ${originRegion} region` : '',
@@ -9936,12 +10149,41 @@ const renderRnFlightRowVariables = (row) => {
     <div class="rn-flight-row-metrics">
       <span>Wage +${Math.round(variables.realWageAdvantage)}</span>
       <span>Jobs +${Math.round(variables.openingsProxy)}</span>
+      <span>Spec +${Math.round(variables.specialtyPull || 0)}</span>
       <span>License -${Math.round(variables.licensureFriction)}</span>
       <span>Pipeline +${Math.round(variables.pipelinePressure)}</span>
       <span>Conf ${Math.round(variables.sourceConfidence)}%</span>
     </div>
   `;
 };
+
+const getRnFlightSourceAuditRows = () => {
+  const datasets = marketRequiredMetrics?.datasets || {};
+  return [
+    ['BLS wage/employment', datasets.blsOes?.status || freeMarketSignals?.sources?.bls || 'unknown', 'Real wage and travel-pay pull'],
+    ['NCSBN compact', freeMarketSignals?.sources?.ncsbn || 'unknown', 'License friction and start-timing drag'],
+    ['HRSA workforce', datasets.hrsaNssrn?.status || freeMarketSignals?.sources?.hrsa || 'unknown', 'Supply, shortage, and workforce pressure'],
+    ['CMS facility data', datasets.cmsCareCompare?.status || datasets.cmsHcris?.status || 'unknown', 'Hospital quality/stability context'],
+    ['WARN/news/rural', currentNotices.length || stateNewsData || Object.keys(ruralClosuresData || {}).length ? 'ok' : 'limited', 'Disruption, closures, and labor-climate drag'],
+    ['Nursing programs', nursingPrograms.length ? 'ok' : 'limited', 'Pipeline pressure versus local demand']
+  ];
+};
+
+const renderRnFlightSourceAudit = () => `
+  <div class="rn-flight-source-audit">
+    <div class="rn-flight-source-audit-header">
+      <span>Source audit</span>
+      <strong>Specialty, wage, license, facility, disruption, and pipeline signals</strong>
+    </div>
+    ${getRnFlightSourceAuditRows().map(([source, status, use]) => `
+      <div class="rn-flight-source-audit-row ${escapeHtml(status || 'unknown')}">
+        <span>${escapeHtml(source)}</span>
+        <strong>${escapeHtml(status || 'unknown')}</strong>
+        <small>${escapeHtml(use)}</small>
+      </div>
+    `).join('')}
+  </div>
+`;
 
 const renderRnFlightPattern = () => {
   const container = document.getElementById('rn-flight');
@@ -9961,6 +10203,10 @@ const renderRnFlightPattern = () => {
   )));
   const stateOptions = ALL_STATES.map((state) => (
     `<option value="${state}" ${state === focusState ? 'selected' : ''}>${escapeHtml(STATE_NAMES[state] || state)} (${state})</option>`
+  )).join('');
+  const specialty = getRnFlightSpecialtyContext();
+  const specialtyOptions = Object.entries(SPECIALTY_SELLING_CONTEXT).map(([key, item]) => (
+    `<option value="${escapeHtml(key)}" ${key === rnFlightSpecialty ? 'selected' : ''}>${escapeHtml(item.label)}</option>`
   )).join('');
   const focusName = STATE_NAMES[focusState] || focusState;
   const rankingTitle = isInbound ? 'Likely Origin States' : 'Likely Destination States';
@@ -9984,6 +10230,10 @@ const renderRnFlightPattern = () => {
           </label>
           <label><span>${focusLabel}</span><select id="rn-flight-state">${stateOptions}</select></label>
           <label>
+            <span>Specialty</span>
+            <select id="rn-flight-specialty">${specialtyOptions}</select>
+          </label>
+          <label>
             <span>Timing</span>
             <select id="rn-flight-timing">
               <option value="next30" ${rnFlightTiming === 'next30' ? 'selected' : ''}>Next 30 days</option>
@@ -9996,9 +10246,11 @@ const renderRnFlightPattern = () => {
       <div class="rn-flight-kpis">
         <div><span>${isInbound ? 'Inbound pull' : 'Origin push'}</span><strong>${isInbound ? inboundPullScore : pushScore}</strong><small>${escapeHtml(focusName)} ${isInbound ? 'destination demand pressure' : 'outbound pressure'}</small></div>
         <div><span>${isInbound ? 'Top origin' : 'Top destination'}</span><strong>${escapeHtml(topRow?.state || '--')}</strong><small>${topRow ? `${escapeHtml(topRow.stateName)} | Score ${topRow.score}` : 'No state ranked'}</small></div>
+        <div><span>Specialty lens</span><strong>${escapeHtml(specialty.label)}</strong><small>${escapeHtml(specialty.bestFit)}</small></div>
         <div><span>Forecast confidence</span><strong>${Math.round(topRow?.sourceConfidence || getRnFlightSourceConfidence())}%</strong><small>Based on free/public data coverage and readiness</small></div>
       </div>
       ${renderRnFlightVariablePanel(topRow, focusState, isInbound)}
+      ${renderRnFlightSourceAudit()}
       <div class="rn-flight-body">
         <div class="rn-flight-map">
           ${renderRnFlightMapSvg({ focusState, rows, mode: rnFlightMode })}
@@ -10044,6 +10296,10 @@ const renderRnFlightPattern = () => {
   });
   document.getElementById('rn-flight-timing')?.addEventListener('change', (event) => {
     rnFlightTiming = ['next30', 'next90', 'seasonal'].includes(event.target.value) ? event.target.value : 'next90';
+    renderRnFlightPattern();
+  });
+  document.getElementById('rn-flight-specialty')?.addEventListener('change', (event) => {
+    rnFlightSpecialty = SPECIALTY_SELLING_CONTEXT[event.target.value] ? event.target.value : 'general';
     renderRnFlightPattern();
   });
   container.querySelectorAll('[data-flight-target]').forEach((button) => {
@@ -10157,7 +10413,7 @@ const renderBarChart = () => {
         <div><span>Net balance</span><strong class="${net >= 0 ? 'positive' : 'negative'}">${net >= 0 ? '+' : ''}${Math.round(net).toLocaleString()}</strong></div>
         <div><span>Confidence</span><strong>${aggregate.confidence}%</strong></div>
       </div>
-      ${renderProjectedForecast(forecast)}
+      ${renderProjectedForecast(forecast, marketChartScope, net)}
       <div class="market-chart-legend">
         ${renderMarketChartLegend(aggregate)}
       </div>
