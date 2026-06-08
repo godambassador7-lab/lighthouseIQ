@@ -40,6 +40,7 @@ const statUpdated = document.getElementById('stat-updated');
 const usMapContainer = document.getElementById('us-map');
 const mapTooltip = document.getElementById('map-tooltip');
 const mapToast = document.getElementById('map-toast');
+const mapHomeStateBtn = document.getElementById('map-home-state-btn');
 const mapTargetModeBtn = document.getElementById('map-target-mode-btn');
 const mapTargetStateBtn = document.getElementById('map-target-state-btn');
 const mapScopeHealthcareBtn = document.getElementById('map-scope-healthcare');
@@ -4856,6 +4857,18 @@ const initWeatherMap = async () => {
       stateSelect.value = stateId;
       loadNotices();
     });
+    shape.addEventListener('contextmenu', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      if (activeMapTab === 'layoffs') {
+        setMapHomeState(stateId);
+      }
+    });
+    shape.addEventListener('dblclick', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      openStateBeacon(stateId);
+    });
   });
 
   const labelGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
@@ -4873,6 +4886,7 @@ const initWeatherMap = async () => {
   });
   svg.appendChild(labelGroup);
 
+  updateMapHomeStateHighlight();
   updateMapTargetStateHighlight();
 };
 
@@ -4949,6 +4963,31 @@ const getMapTargetState = () => {
   } catch {
     return null;
   }
+};
+
+const updateMapHomeStateHighlight = () => {
+  const homeState = getMapHomeState();
+  usMapContainer?.querySelectorAll('[data-state]').forEach(shape => {
+    shape.classList.remove('home-state-glow');
+    if (homeState && shape.getAttribute('data-state') === homeState) {
+      shape.classList.add('home-state-glow');
+    }
+  });
+  if (mapHomeStateBtn) {
+    mapHomeStateBtn.style.display = homeState ? 'inline-flex' : 'none';
+  }
+};
+
+const setMapHomeState = (stateAbbrev) => {
+  try {
+    localStorage.setItem(scopedStorageKey(MAP_HOME_STATE_BASE_KEY), stateAbbrev);
+  } catch {
+    // ignore
+  }
+  if (stateBeaconHomeSelect) stateBeaconHomeSelect.value = stateAbbrev;
+  if (bonusFactorHomeStateInput) bonusFactorHomeStateInput.value = stateAbbrev;
+  updateMapHomeStateHighlight();
+  showMapToast(`Home state set to ${STATE_NAMES[stateAbbrev] || stateAbbrev}`);
 };
 
 const updateMapTargetStateHighlight = () => {
@@ -10866,6 +10905,8 @@ const setMapScope = (scope, { reloadNotices = false } = {}) => {
   if (reloadNotices) {
     loadNotices();
   }
+  updateMapHomeStateHighlight();
+  updateMapTargetStateHighlight();
 };
 
 const initMapScopeToggle = () => {
@@ -10902,6 +10943,8 @@ const initMapToggle = () => {
   mapViewBtn?.addEventListener('click', () => toggleMapView('map'));
   chartViewBtn?.addEventListener('click', () => toggleMapView('chart'));
   flightViewBtn?.addEventListener('click', () => toggleMapView('flight'));
+  mapHomeStateBtn?.addEventListener('click', openHomeState);
+  mapTargetStateBtn?.addEventListener('click', openTargetState);
 
   ensureMapTargetModeListener();
 };

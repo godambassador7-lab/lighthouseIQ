@@ -26,7 +26,7 @@ const requirements = [
       'flight-view-btn',
       'RN Flight Pattern',
       'id="rn-flight"',
-      'app.js?v=7.7',
+      'app.js?v=7.8',
       'calibration-target-search',
       'calibration-specialty',
       'target-state-coverage',
@@ -67,6 +67,8 @@ const requirements = [
       'getStateCoverageRows',
       'getStateNewsFallbackLinks',
       'getProviderRowsForState',
+      'setMapHomeState',
+      'home-state-glow',
       'contextmenu',
       'getRnFlightOriginRows'
     ]
