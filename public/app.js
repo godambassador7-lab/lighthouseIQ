@@ -259,6 +259,11 @@ const targetStateStatHospitals = document.getElementById('target-state-stat-hosp
 const targetStateStatMetros = document.getElementById('target-state-stat-metros');
 const targetStateStatPrograms = document.getElementById('target-state-stat-programs');
 const targetStateStatCompact = document.getElementById('target-state-stat-compact');
+const targetStateCoverage = document.getElementById('target-state-coverage');
+const targetStateSchools = document.getElementById('target-state-schools');
+const targetStateSchoolCount = document.getElementById('target-state-school-count');
+const targetStateNews = document.getElementById('target-state-news');
+const targetStateNewsCount = document.getElementById('target-state-news-count');
 const targetStateMetroMap = document.getElementById('target-state-metro-map');
 const targetStateDetailPlaceholder = document.getElementById('target-state-detail-placeholder');
 const targetStatePlaceholderText = document.getElementById('target-state-placeholder-text');
@@ -278,7 +283,7 @@ const getTargetStateSelection = () => {
   const preferred = stateBeaconStateSelect?.value
     || targetStateSelect?.value
     || TARGET_STATE_DEFAULT;
-  return ALL_STATES.includes(preferred) ? preferred : TARGET_STATE_DEFAULT;
+  return CALIBRATION_JURISDICTIONS.includes(preferred) ? preferred : TARGET_STATE_DEFAULT;
 };
 
 let currentNotices = [];
@@ -372,6 +377,7 @@ let marketReadinessIntegration = null;
 let marketRequiredMetrics = null;
 let facilityMarketFeatures = null;
 let providerMasterData = null;
+let hospitalRankingsData = null;
 let specialtySurplusExpandedBucket = '';
 let hospitalSearchIndex = [];
 let hospitalSearchMatches = [];
@@ -3530,6 +3536,14 @@ const loadProviderMaster = async () => {
   }
 };
 
+const loadHospitalRankingsData = async () => {
+  try {
+    hospitalRankingsData = await fetchJson('/data/hospital-rankings.json');
+  } catch {
+    hospitalRankingsData = null;
+  }
+};
+
 const renderSpecialtySurplus = () => {
   if (!specialtySurplusList) return;
   const selectedRegion = String(specialtyRegionFilter?.value || '').trim();
@@ -3857,6 +3871,7 @@ const loadInsights = async () => {
   await loadMarketRequiredMetrics();
   await loadFacilityMarketFeatures();
   await loadProviderMaster();
+  await loadHospitalRankingsData();
   try {
     const [alerts, geo, talent, employers] = await Promise.all([
       fetchJson('/insights/alerts'),
@@ -3899,6 +3914,7 @@ const loadLeadershipMarketSignals = async () => {
     loadMarketRequiredMetrics(),
     loadFacilityMarketFeatures(),
     loadProviderMaster(),
+    loadHospitalRankingsData(),
     loadRecruitmentIntel(),
     loadStrategicData(),
     loadRelocationData(),
@@ -6485,7 +6501,121 @@ const getStateNewsFeed = (state, entry) => {
   const entryFeed = Array.isArray(entry.newsFeed) ? entry.newsFeed : [];
   if (entryFeed.length) return entryFeed;
   const stateFeed = stateNewsData?.states?.[state] || stateNewsData?.[state] || [];
-  return Array.isArray(stateFeed) ? stateFeed : [];
+  if (Array.isArray(stateFeed)) return stateFeed;
+  if (Array.isArray(stateFeed?.articles)) return stateFeed.articles;
+  return [];
+};
+
+const getStateNewsFallbackLinks = (state, stateName = STATE_NAMES[state] || state) => {
+  const query = encodeURIComponent(`"${stateName}" nurse hospital healthcare OR nursing`);
+  return [
+    {
+      title: `${stateName} nursing and hospital news search`,
+      source: 'Google News RSS',
+      publishedAt: 'Live search',
+      url: `https://news.google.com/rss/search?q=${query}&hl=en-US&gl=US&ceid=US:en`,
+      summary: 'Live fallback link when curated local state news has not loaded.'
+    },
+    {
+      title: `${stateName} health department news`,
+      source: 'State health source',
+      publishedAt: 'Verify current',
+      url: `https://www.google.com/search?q=${encodeURIComponent(`${stateName} department of health nursing hospital news`)}`,
+      summary: 'Use to verify state-level workforce, hospital, and public-health context.'
+    }
+  ];
+};
+
+const normalizeStateNewsRows = (state, entry, limit = 12) => {
+  const stateName = entry?.name || STATE_NAMES[state] || state;
+  const stateFeed = getStateNewsFeed(state, entry)
+    .map((article) => ({
+      title: article.title || article.headline || `${stateName} healthcare update`,
+      source: article.source || article.publisher || 'State news',
+      publishedAt: article.publishedAt || article.date || article.updatedAt || '',
+      url: article.url || article.link || '#',
+      summary: article.summary || article.description || ''
+    }))
+    .sort((a, b) => new Date(b.publishedAt || 0) - new Date(a.publishedAt || 0));
+
+  if (stateFeed.length) return stateFeed.slice(0, limit);
+
+  const keywords = (entry?.newsKeywords || [stateName, state]).map((word) => String(word || '').toLowerCase());
+  const matched = newsArticles.filter((article) => {
+    const haystack = `${article.title || ''} ${article.summary || ''}`.toLowerCase();
+    return keywords.some((word) => word && haystack.includes(word));
+  }).slice(0, limit);
+  if (matched.length) return matched;
+
+  return getStateNewsFallbackLinks(state, stateName).slice(0, limit);
+};
+
+const getProviderRowsForState = (state, limit = 240) => (
+  Array.isArray(providerMasterData?.providers)
+    ? providerMasterData.providers
+        .filter((provider) => String(provider?.state || '').toUpperCase() === state)
+        .sort((a, b) =>
+          Number(b?.score || 0) - Number(a?.score || 0)
+          || Number(b?.beds || 0) - Number(a?.beds || 0)
+          || String(a?.name || '').localeCompare(String(b?.name || ''))
+        )
+        .slice(0, limit)
+    : []
+);
+
+const getHospitalRankingRowsForState = (state) => {
+  const rows = hospitalRankingsData?.states?.[state]?.hospitalRankings || [];
+  return Array.isArray(rows) ? rows : [];
+};
+
+const getProgramsForState = (state) => (
+  nursingPrograms.filter((program) => normalizeProgram(program).state === state)
+);
+
+const getProgramSummaryRows = (programs, limit = 8) => (
+  programs
+    .map((program) => normalizeProgram(program))
+    .filter((program) => program.name)
+    .sort((a, b) => String(a.city || '').localeCompare(String(b.city || '')) || String(a.name || '').localeCompare(String(b.name || '')))
+    .slice(0, limit)
+);
+
+const getStateFacilityFallbackRows = (state) => {
+  const providerRows = getProviderRowsForState(state, 180);
+  if (providerRows.length) {
+    return providerRows.map((provider, idx) => ({
+      name: provider.name || 'Hospital',
+      system: provider.system || provider.name || 'Health system',
+      metro: provider.metro || provider.city || STATE_NAMES[state] || state,
+      county: provider.county || '',
+      beds: provider.beds || '--',
+      reviews: provider.npi ? 'NPI matched' : 'CMS provider',
+      baseScore: Number(provider.score || Math.max(60, 98 - idx)),
+      compositeScore: Number(provider.score || Math.max(60, 98 - idx)),
+      warnWeight: 1,
+      match: provider.normalized || provider.name,
+      flagship: idx < 8,
+      sources: provider.sources || ['provider-master']
+    }));
+  }
+  const rankingRows = getHospitalRankingRowsForState(state);
+  if (rankingRows.length) return rankingRows;
+  return [];
+};
+
+const getStateCoverageRows = (state, entry, programsInState, metros, newsRows) => {
+  const providerCount = getProviderRowsForState(state, 9999).length;
+  const rankingCount = getHospitalRankingRowsForState(state).length;
+  const fetchedMetroCount = targetStateMetrosData?.states?.[state]?.metros?.length || 0;
+  const sourceRows = [
+    ['CMS/provider facilities', providerCount ? 'ok' : 'limited', `${providerCount || 0} providers`],
+    ['Hospital rankings', rankingCount ? 'ok' : 'limited', `${rankingCount || 0} ranked facilities`],
+    ['Metro intelligence', fetchedMetroCount ? 'ok' : (metros?.length ? 'modeled' : 'limited'), `${metros?.length || 0} metros`],
+    ['Nursing schools', programsInState.length ? 'ok' : 'limited', `${programsInState.length} programs`],
+    ['Local news', newsRows.length && newsRows[0]?.source !== 'Google News RSS' ? 'ok' : 'fallback', `${newsRows.length} links`],
+    ['Territory profile', getTerritoryRnProfile(state) ? 'modeled' : 'n/a', getTerritoryRnProfile(state) ? 'territory fallback' : 'state profile']
+  ];
+  return sourceRows;
 };
 
 const ensureProgramsDataForBeacon = async () => {
@@ -6617,6 +6747,26 @@ const enrichBeaconEntry = (state, entry, notices, programsInState) => {
     county: item.county || '',
     flagship: idx < 5
   }));
+  const facilityFallbackRows = getStateFacilityFallbackRows(state);
+  const rankingFacilityRows = facilityFallbackRows.slice(0, 25).map((item, idx) => ({
+    name: item.name,
+    system: item.system || item.name,
+    metro: item.metro || stateName,
+    baseScore: Number(item.baseScore || item.compositeScore || item.score || Math.max(60, 98 - idx)),
+    compositeScore: Number(item.compositeScore || item.baseScore || item.score || Math.max(60, 98 - idx)),
+    warnWeight: Number(item.warnWeight || 1),
+    match: item.match || item.name,
+    sources: item.sources || []
+  }));
+  const registryFacilityRows = facilityFallbackRows.slice(0, 180).map((item, idx) => ({
+    name: item.name,
+    county: item.county || item.metro || '',
+    metro: item.metro || stateName,
+    system: item.system || item.name,
+    beds: item.beds || '--',
+    flagship: Boolean(item.flagship || idx < 8),
+    sources: item.sources || []
+  }));
   const clinicRegistryFallback = hospitalRegistryFallback
     .filter((item) => /clinic|outpatient|ambulatory|rehab|medical group|health center/i.test(item.name))
     .slice(0, 30)
@@ -6712,8 +6862,8 @@ const enrichBeaconEntry = (state, entry, notices, programsInState) => {
     talkingPoints: entry.talkingPoints?.length ? entry.talkingPoints : buildFallbackTalkingPoints(),
     objections: entry.objections?.length ? entry.objections : buildFallbackObjections(),
     warnMajorSystems: entry.warnMajorSystems?.length ? entry.warnMajorSystems : competitionSystems.map((s) => s.name),
-    hospitalRankings: entry.hospitalRankings?.length ? entry.hospitalRankings : rankingFallback,
-    hospitalRegistry: entry.hospitalRegistry?.length ? entry.hospitalRegistry : hospitalRegistryFallback,
+    hospitalRankings: entry.hospitalRankings?.length ? entry.hospitalRankings : (rankingFacilityRows.length ? rankingFacilityRows : rankingFallback),
+    hospitalRegistry: entry.hospitalRegistry?.length ? entry.hospitalRegistry : (registryFacilityRows.length ? registryFacilityRows : hospitalRegistryFallback),
     clinicRegistry: entry.clinicRegistry?.length ? entry.clinicRegistry : clinicRegistryFallback,
     candidateInsights: candidateInsightsWithIndiana,
     candidateMetroTable: candidateMetroWithIndiana,
@@ -7486,6 +7636,52 @@ const normalizeTargetMetro = (metro = {}, stateSalaryMeta = null) => ({
     : [{ text: 'Metro detail generated from available data sources.', type: 'neutral' }]
 });
 
+const renderTargetStateCoverage = (rows) => {
+  if (!targetStateCoverage) return;
+  targetStateCoverage.innerHTML = rows.map(([label, status, detail]) => `
+    <span class="target-state-coverage-chip ${escapeHtml(status || 'unknown')}">
+      <strong>${escapeHtml(label)}</strong>
+      <small>${escapeHtml(status || 'unknown')} | ${escapeHtml(detail || '')}</small>
+    </span>
+  `).join('');
+};
+
+const renderTargetStateSchools = (programsInState) => {
+  const rows = getProgramSummaryRows(programsInState, 10);
+  if (targetStateSchoolCount) targetStateSchoolCount.textContent = `${programsInState.length} loaded`;
+  if (!targetStateSchools) return;
+  targetStateSchools.innerHTML = rows.length
+    ? rows.map((program) => `
+      <div class="target-state-mini-item">
+        <strong>${escapeHtml(program.name)}</strong>
+        <span>${escapeHtml([program.city, program.level, program.accreditor].filter(Boolean).join(' | ') || 'Nursing program')}</span>
+      </div>
+    `).join('')
+    : '<div class="target-state-mini-item"><strong>State board verification needed</strong><span>No accredited program rows loaded for this jurisdiction yet. Use the source audit and state board before leadership use.</span></div>';
+};
+
+const renderTargetStateNews = (newsRows) => {
+  if (targetStateNewsCount) targetStateNewsCount.textContent = `${newsRows.length} current`;
+  if (!targetStateNews) return;
+  targetStateNews.innerHTML = newsRows.length
+    ? newsRows.slice(0, 8).map((article) => `
+      <a class="target-state-mini-item" href="${escapeHtml(article.url || '#')}" target="_blank" rel="noopener noreferrer">
+        <strong>${escapeHtml(article.title || 'Healthcare news')}</strong>
+        <span>${escapeHtml([article.source, article.publishedAt].filter(Boolean).join(' | ') || 'Source pending')}</span>
+      </a>
+    `).join('')
+    : '<div class="target-state-mini-item"><strong>No local news loaded</strong><span>Refresh news data or use the fallback search links.</span></div>';
+};
+
+const populateTargetStateSelector = () => {
+  if (!targetStateSelect) return;
+  const current = targetStateSelect.value || TARGET_STATE_DEFAULT;
+  targetStateSelect.innerHTML = CALIBRATION_JURISDICTIONS
+    .map((state) => `<option value="${state}">${escapeHtml(STATE_NAMES[state] || state)} (${state})</option>`)
+    .join('');
+  targetStateSelect.value = CALIBRATION_JURISDICTIONS.includes(current) ? current : TARGET_STATE_DEFAULT;
+};
+
 const buildTargetStateMetroRows = (stateAbbrev, notices) => {
   const stateName = STATE_NAMES[stateAbbrev] || stateAbbrev;
   const healthcare = (notices || []).filter((notice) => isHealthcareNotice(notice));
@@ -7495,6 +7691,49 @@ const buildTargetStateMetroRows = (stateAbbrev, notices) => {
     .slice(0, 8);
 
   if (!entries.length) {
+    const providerRows = getProviderRowsForState(stateAbbrev, 220);
+    const providerMetroRows = Array.from(groupBy(providerRows, (provider) => String(provider.metro || provider.city || stateName).trim() || stateName).entries())
+      .sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]))
+      .slice(0, 8);
+    if (providerMetroRows.length) {
+      return providerMetroRows.map(([metroName, providers]) => {
+        const hospitals = providers.slice(0, 12).map((provider, idx) => ({
+          name: provider.name || 'Hospital',
+          system: provider.system || provider.name || 'Health system',
+          score: provider.score || Math.max(60, 98 - idx),
+          beds: provider.beds || '--',
+          reviews: provider.npi ? 'NPI matched' : 'CMS provider'
+        }));
+        const systems = Array.from(groupBy(providers, (provider) => provider.system || provider.name || 'Health system').entries())
+          .map(([name, rows]) => ({
+            name,
+            facilities: rows.length,
+            marketShare: `${Math.round((rows.length / Math.max(1, providers.length)) * 100)}%`
+          }))
+          .sort((a, b) => b.facilities - a.facilities)
+          .slice(0, 6);
+        return {
+          name: metroName,
+          size: providers.length >= 20 ? 'major' : providers.length >= 8 ? 'medium' : 'small',
+          population: `${Math.max(80, providers.length * 35)}K est`,
+          competition: systems.length >= 4 ? 'high' : systems.length >= 2 ? 'medium' : 'low',
+          hospitals,
+          systems,
+          salary: {
+            staffRN: 'Market-based',
+            travelRN: 'Market-based',
+            signOn: 'Varies by system',
+            averageWage: 'Market-based',
+            breakdown: [
+              { label: 'Facility base', value: `${providers.length} CMS/provider rows`, note: 'Provider-master fallback' },
+              { label: 'Staff RN range', value: 'Market-based', note: 'Validate with current job postings and BLS benchmark' }
+            ],
+            sources: [{ name: 'CMS Provider Data Catalog / provider-master', url: 'https://data.cms.gov/provider-data/' }]
+          },
+          factors: [{ text: `Built from ${providers.length} CMS/provider facilities for ${stateName}`, type: 'positive' }]
+        };
+      });
+    }
     return [{
       name: `${stateName} Regional Hub`,
       size: 'medium',
@@ -7572,10 +7811,13 @@ const getTargetStateMetroData = async (stateAbbrev) => {
   const fetchedState = fetchedDataset?.states?.[stateAbbrev];
   if (fetchedState?.metros?.length) {
     const stateSalaryMeta = fetchedState?.salaryMeta || null;
-    return {
+    const normalized = {
       ...fetchedState,
       metros: fetchedState.metros.map((metro) => normalizeTargetMetro(metro, stateSalaryMeta))
     };
+    targetStateMetroDataCache[stateAbbrev] = normalized;
+    targetStateMetroDataLoadedAt[stateAbbrev] = Date.now();
+    return normalized;
   }
 
   const now = Date.now();
@@ -7594,11 +7836,17 @@ const getTargetStateMetroData = async (stateAbbrev) => {
 const renderTargetState = async (stateAbbrev = TARGET_STATE_DEFAULT) => {
   await loadStateBeaconData();
   await ensureProgramsDataForBeacon();
+  await loadStateNewsData();
+  await loadProviderMaster();
+  await loadHospitalRankingsData();
 
-  const entry = getBeaconEntry(stateAbbrev);
-  const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === stateAbbrev);
+  const notices = getStateNotices(stateAbbrev);
+  const programsInState = getProgramsForState(stateAbbrev);
+  const entry = enrichBeaconEntry(stateAbbrev, getBeaconEntry(stateAbbrev), notices, programsInState);
   const metroData = await getTargetStateMetroData(stateAbbrev);
   const metros = metroData?.metros?.length ? metroData.metros : buildTargetStateMetroRows(stateAbbrev, []);
+  const newsRows = normalizeStateNewsRows(stateAbbrev, entry, 10);
+  const coverageRows = getStateCoverageRows(stateAbbrev, entry, programsInState, metros, newsRows);
 
   if (targetStateName) targetStateName.textContent = entry.name;
   if (targetStateAbbr) targetStateAbbr.textContent = stateAbbrev;
@@ -7608,6 +7856,9 @@ const renderTargetState = async (stateAbbrev = TARGET_STATE_DEFAULT) => {
   if (targetStateStatMetros) targetStateStatMetros.textContent = metros.length || '--';
   if (targetStateStatPrograms) targetStateStatPrograms.textContent = programsInState.length || '--';
   if (targetStateStatCompact) targetStateStatCompact.textContent = entry.compact === null ? '--' : (entry.compact ? 'Yes' : 'No');
+  renderTargetStateCoverage(coverageRows);
+  renderTargetStateSchools(programsInState);
+  renderTargetStateNews(newsRows);
   if (targetStatePlaceholderText) {
     targetStatePlaceholderText.textContent = `Click on a city from the map to view detailed healthcare market information including hospitals, competition, and salary data for ${entry.name}.`;
   }
@@ -7770,13 +8021,16 @@ const closeTargetState = () => targetStateModal?.classList.remove('active');
 
 const buildTargetStateExport = async (stateAbbrev, options = {}) => {
   const { scope = 'all' } = options;
-  const entry = getBeaconEntry(stateAbbrev);
-  const programsInState = nursingPrograms.filter((program) => normalizeProgram(program).state === stateAbbrev);
+  const notices = getStateNotices(stateAbbrev);
+  const programsInState = getProgramsForState(stateAbbrev);
+  const entry = enrichBeaconEntry(stateAbbrev, getBeaconEntry(stateAbbrev), notices, programsInState);
   const metroData = await getTargetStateMetroData(stateAbbrev);
   const metros = metroData?.metros || [];
   const totalHospitals = metros.reduce((sum, metro) => sum + (metro.hospitals?.length || 0), 0);
   const selectedMetro = scope === 'selected' ? currentTargetStateMetro : null;
   const metrosForExport = scope === 'selected' && selectedMetro ? [selectedMetro] : metros;
+  const newsRows = normalizeStateNewsRows(stateAbbrev, entry, 12);
+  const coverageRows = getStateCoverageRows(stateAbbrev, entry, programsInState, metros, newsRows);
 
   return {
     generatedAt: new Date().toISOString(),
@@ -7784,8 +8038,11 @@ const buildTargetStateExport = async (stateAbbrev, options = {}) => {
     name: entry.name,
     compact: entry.compact,
     programsCount: programsInState.length,
+    programs: getProgramSummaryRows(programsInState, 30),
     metrosCount: metros.length,
     totalHospitals,
+    coverageRows,
+    newsRows,
     metros: metrosForExport,
     selectedMetro,
     exportScope: scope
@@ -7806,6 +8063,15 @@ const buildTargetStateExportRows = (data) => {
   pushRow('Overview', 'Programs', data.programsCount);
   pushRow('Overview', 'Metros', data.metrosCount);
   pushRow('Overview', 'Hospitals', data.totalHospitals);
+  (data.coverageRows || []).forEach(([label, status, detail]) => {
+    pushRow('Source Coverage', label, `${status} | ${detail}`);
+  });
+  (data.programs || []).forEach((program) => {
+    pushRow('Nursing Schools', program.name, [program.city, program.level, program.accreditor].filter(Boolean).join(' | '));
+  });
+  (data.newsRows || []).forEach((article) => {
+    pushRow('Local News', article.title || 'Healthcare news', [article.source, article.publishedAt, article.url].filter(Boolean).join(' | '));
+  });
 
   if (data.exportScope === 'all') {
     data.metros.forEach((metro) => {
@@ -7912,6 +8178,9 @@ const exportTargetState = async ({ format = 'csv', scope = 'all' } = {}) => {
   }
   await loadStateBeaconData();
   await ensureProgramsDataForBeacon();
+  await loadStateNewsData();
+  await loadProviderMaster();
+  await loadHospitalRankingsData();
   const data = await buildTargetStateExport(state, { scope });
   const rows = buildTargetStateExportRows(data);
   const scopeLabel = scope === 'selected' ? 'selected-metro' : 'all-metros';
@@ -8716,6 +8985,7 @@ const initStateBeacon = () => {
   openTargetStateBtn?.addEventListener('click', openTargetState);
   targetStateCloseBtn?.addEventListener('click', closeTargetState);
   targetStateCloseFooter?.addEventListener('click', closeTargetState);
+  populateTargetStateSelector();
   targetStateSelect?.addEventListener('change', () => {
     renderTargetState(targetStateSelect.value);
   });

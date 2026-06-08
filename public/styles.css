@@ -2497,6 +2497,53 @@ body.modal-open {
   letter-spacing: 0.5px;
 }
 
+.target-state-coverage {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+  width: 100%;
+  margin-top: 0.9rem;
+}
+
+.target-state-coverage-chip {
+  display: block;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.14);
+  padding: 0.5rem 0.6rem;
+}
+
+.target-state-coverage-chip strong,
+.target-state-coverage-chip small {
+  display: block;
+}
+
+.target-state-coverage-chip strong {
+  color: #fff;
+  font-size: 0.72rem;
+}
+
+.target-state-coverage-chip small {
+  margin-top: 0.18rem;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 0.64rem;
+  line-height: 1.25;
+}
+
+.target-state-coverage-chip.ok small {
+  color: #dcfce7;
+}
+
+.target-state-coverage-chip.modeled small,
+.target-state-coverage-chip.fallback small {
+  color: #fef3c7;
+}
+
+.target-state-coverage-chip.limited small,
+.target-state-coverage-chip.unknown small {
+  color: #fee2e2;
+}
+
 .target-state-content {
   display: grid;
   grid-template-columns: 340px 1fr;
@@ -2549,6 +2596,64 @@ body.modal-open {
   border-top: 1px solid rgba(26, 54, 93, 0.1);
   font-size: 0.7rem;
   color: var(--muted);
+}
+
+.target-state-mini-panel {
+  border: 1px solid rgba(26, 54, 93, 0.1);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.78);
+  padding: 0.75rem;
+  margin-top: 0.85rem;
+}
+
+.target-state-mini-list {
+  display: grid;
+  gap: 0.45rem;
+  max-height: 220px;
+  overflow-y: auto;
+  padding-right: 0.25rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(26, 54, 93, 0.28) transparent;
+}
+
+.target-state-mini-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.target-state-mini-list::-webkit-scrollbar-thumb {
+  background: rgba(26, 54, 93, 0.28);
+  border-radius: 999px;
+}
+
+.target-state-mini-item {
+  display: block;
+  border-radius: 8px;
+  background: rgba(248, 250, 252, 0.88);
+  padding: 0.55rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.target-state-mini-item strong,
+.target-state-mini-item span {
+  display: block;
+}
+
+.target-state-mini-item strong {
+  color: var(--navy);
+  font-size: 0.78rem;
+  line-height: 1.25;
+}
+
+.target-state-mini-item span {
+  margin-top: 0.2rem;
+  color: var(--muted);
+  font-size: 0.68rem;
+  line-height: 1.3;
+}
+
+.target-state-mini-list.news .target-state-mini-item:hover strong {
+  text-decoration: underline;
 }
 
 /* Detail Panel */
@@ -2651,6 +2756,10 @@ body.modal-open {
   .target-state-selector {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .target-state-coverage {
+    grid-template-columns: 1fr;
   }
 }
 

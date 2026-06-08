@@ -26,9 +26,12 @@ const requirements = [
       'flight-view-btn',
       'RN Flight Pattern',
       'id="rn-flight"',
-      'app.js?v=7.6',
+      'app.js?v=7.7',
       'calibration-target-search',
       'calibration-specialty',
+      'target-state-coverage',
+      'target-state-schools',
+      'target-state-news',
       'styles.css?v=5.12'
     ]
   },
@@ -60,6 +63,10 @@ const requirements = [
       'rn-flight-specialty',
       'Specialty fit',
       'Source audit',
+      'populateTargetStateSelector',
+      'getStateCoverageRows',
+      'getStateNewsFallbackLinks',
+      'getProviderRowsForState',
       'contextmenu',
       'getRnFlightOriginRows'
     ]
@@ -81,6 +88,8 @@ const requirements = [
       'calibration-source-audit',
       'market-forecast-accuracy',
       'rn-flight-source-audit',
+      'target-state-coverage-chip',
+      'target-state-mini-panel',
       'rn-flight-focus-destination',
       'rn-flight-origin-intensity-5'
     ]
