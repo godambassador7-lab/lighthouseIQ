@@ -26,8 +26,9 @@ const requirements = [
       'flight-view-btn',
       'RN Flight Pattern',
       'id="rn-flight"',
-      'app.js?v=7.3',
+      'app.js?v=7.4',
       'calibration-target-search',
+      'calibration-specialty',
       'styles.css?v=5.12'
     ]
   },
@@ -48,6 +49,8 @@ const requirements = [
       'resolveCalibrationJurisdiction',
       'buildPayerContext',
       'Medicare / Medicaid Selling Context',
+      'Recruiter Selling Strategy',
+      'CALIBRATION_OUTCOME_KEY',
       'contextmenu',
       'getRnFlightOriginRows'
     ]
@@ -61,6 +64,8 @@ const requirements = [
       'rn-flight-variable-panel',
       'calibration-metrics',
       'calibration-payer-panel',
+      'calibration-strategy',
+      'calibration-source-badges',
       'rn-flight-focus-destination',
       'rn-flight-origin-intensity-5'
     ]

@@ -906,6 +906,20 @@
               <input id="calibration-target-search" list="calibration-target-list" placeholder="Type state or territory" autocomplete="off" />
               <datalist id="calibration-target-list"></datalist>
             </label>
+            <label>
+              RN specialty
+              <select id="calibration-specialty">
+                <option value="general">General RN</option>
+                <option value="ICU">ICU</option>
+                <option value="ED">Emergency Department</option>
+                <option value="OR">Operating Room</option>
+                <option value="Med-Surg">Med-Surg</option>
+                <option value="L&D">Labor &amp; Delivery</option>
+                <option value="Behavioral Health">Behavioral Health</option>
+                <option value="Dialysis">Dialysis</option>
+                <option value="Home Health">Home Health</option>
+              </select>
+            </label>
           </div>
           <div class="calibration-actions">
             <button type="button" id="calibration-swap">Swap States</button>
@@ -931,6 +945,9 @@
           </div>
           <div class="calibration-script" id="calibration-script"></div>
           <div class="calibration-playbook" id="calibration-playbook"></div>
+          <div class="calibration-strategy" id="calibration-strategy"></div>
+          <div class="calibration-sources" id="calibration-sources"></div>
+          <div class="calibration-outcomes" id="calibration-outcomes"></div>
           <div class="calibration-table-wrap">
             <table class="calibration-table">
               <thead>
@@ -1909,7 +1926,7 @@
       </div>
     </div>
 
-    <script src="./app.js?v=7.3"></script>
+    <script src="./app.js?v=7.4"></script>
   </body>
 </html>
 

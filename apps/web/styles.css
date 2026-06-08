@@ -3740,6 +3740,179 @@ body.modal-open {
   margin-top: 0.35rem;
 }
 
+.calibration-strategy,
+.calibration-sources,
+.calibration-outcomes {
+  margin-top: 0.85rem;
+  border: 1px solid rgba(26, 54, 93, 0.1);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.68);
+  padding: 0.85rem;
+}
+
+.calibration-strategy-header,
+.calibration-source-header,
+.calibration-outcome-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.calibration-strategy-header strong,
+.calibration-outcome-header strong {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--navy);
+  font-size: 0.95rem;
+}
+
+.calibration-strategy-header span,
+.calibration-source-header span {
+  border-radius: 999px;
+  background: rgba(26, 54, 93, 0.08);
+  color: var(--navy);
+  padding: 0.3rem 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.calibration-strategy-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.calibration-strategy-grid > div,
+.calibration-facility-proof > div {
+  border-radius: 10px;
+  background: rgba(248, 250, 252, 0.84);
+  padding: 0.65rem;
+}
+
+.calibration-strategy-grid span,
+.calibration-facility-proof > span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.64rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.calibration-strategy-grid ul,
+.calibration-strategy-grid p {
+  margin: 0.35rem 0 0;
+  padding-left: 1rem;
+  color: var(--navy);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.calibration-strategy-grid p {
+  padding-left: 0;
+}
+
+.calibration-facility-proof {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin-top: 0.75rem;
+}
+
+.calibration-facility-proof > span {
+  grid-column: 1 / -1;
+}
+
+.calibration-facility-proof strong,
+.calibration-facility-proof small {
+  display: block;
+}
+
+.calibration-facility-proof strong {
+  color: var(--navy);
+  font-size: 0.82rem;
+}
+
+.calibration-facility-proof small {
+  margin-top: 0.25rem;
+  color: var(--muted);
+  font-size: 0.7rem;
+  line-height: 1.3;
+}
+
+.calibration-source-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.calibration-source-badges span {
+  border-radius: 999px;
+  background: rgba(226, 232, 240, 0.8);
+  color: var(--muted);
+  padding: 0.28rem 0.5rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+
+.calibration-source-badges .ok,
+.calibration-source-badges .public {
+  background: rgba(220, 252, 231, 0.78);
+  color: #166534;
+}
+
+.calibration-source-badges .modeled,
+.calibration-source-badges .verify {
+  background: rgba(254, 243, 199, 0.82);
+  color: #92400e;
+}
+
+.calibration-source-badges .limited,
+.calibration-source-badges .unknown,
+.calibration-source-badges .error {
+  background: rgba(254, 226, 226, 0.78);
+  color: #991b1b;
+}
+
+.calibration-outcome-header button {
+  border: 1px solid rgba(26, 54, 93, 0.14);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--navy);
+  padding: 0.36rem 0.6rem;
+  font-size: 0.7rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.calibration-outcome-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.calibration-outcome-grid label {
+  display: grid;
+  gap: 0.25rem;
+  color: var(--muted);
+  font-size: 0.64rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.calibration-outcome-grid input {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid rgba(26, 54, 93, 0.14);
+  border-radius: 8px;
+  padding: 0.4rem;
+  color: var(--navy);
+  font-size: 0.78rem;
+}
+
 .calibration-table-wrap {
   margin-top: 0.75rem;
   border-radius: 14px;
@@ -4021,7 +4194,10 @@ body.modal-open {
   .calibration-summary,
   .calibration-metrics,
   .calibration-playbook,
-  .calibration-payer-grid {
+  .calibration-payer-grid,
+  .calibration-strategy-grid,
+  .calibration-facility-proof,
+  .calibration-outcome-grid {
     grid-template-columns: 1fr;
   }
 

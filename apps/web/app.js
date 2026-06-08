@@ -153,6 +153,10 @@ const calibrationTargetSearch = document.getElementById('calibration-target-sear
 const calibrationTargetList = document.getElementById('calibration-target-list');
 const calibrationSwapBtn = document.getElementById('calibration-swap');
 const calibrationResetBtn = document.getElementById('calibration-reset');
+const calibrationSpecialty = document.getElementById('calibration-specialty');
+const calibrationStrategy = document.getElementById('calibration-strategy');
+const calibrationSources = document.getElementById('calibration-sources');
+const calibrationOutcomes = document.getElementById('calibration-outcomes');
 const modulesMenuBtn = document.getElementById('modules-menu-btn');
 const modulesMenu = document.getElementById('modules-menu');
 const openProgramsModuleBtn = document.getElementById('open-programs-module');
@@ -1913,6 +1917,18 @@ const MEDICAID_HIGH_DEPENDENCY_STATES = new Set(['AR', 'CA', 'DC', 'KY', 'LA', '
 const MEDICAID_ELEVATED_DEPENDENCY_STATES = new Set(['AZ', 'CO', 'IL', 'MA', 'MD', 'MI', 'MN', 'NV', 'OH', 'OR', 'PA', 'RI', 'VT', 'WA']);
 const MEDICARE_AGING_PRESSURE_STATES = new Set(['AZ', 'DE', 'FL', 'HI', 'ME', 'MT', 'PA', 'VT', 'WV']);
 const MEDICARE_ELEVATED_PRESSURE_STATES = new Set(['AL', 'AR', 'CT', 'IA', 'MI', 'MO', 'NH', 'NM', 'OH', 'OR', 'RI', 'SC', 'SD', 'WI']);
+const CALIBRATION_OUTCOME_KEY = 'rn_advantage_outcomes_v1';
+const SPECIALTY_SELLING_CONTEXT = {
+  general: { label: 'General RN', demand: 1, bestFit: 'flexible acute-care RN open to unit fit, scheduling, and relocation timing' },
+  ICU: { label: 'ICU', demand: 1.18, bestFit: 'critical-care RN motivated by acuity, teaching hospitals, and staffing support' },
+  ED: { label: 'Emergency Department', demand: 1.2, bestFit: 'ED RN who values throughput support, trauma exposure, and strong charge coverage' },
+  OR: { label: 'Operating Room', demand: 1.15, bestFit: 'perioperative RN looking for block scheduling, call structure, and surgical volume' },
+  'Med-Surg': { label: 'Med-Surg', demand: 1.12, bestFit: 'med-surg RN who wants predictable ratios, onboarding, and growth into specialty tracks' },
+  'L&D': { label: 'Labor & Delivery', demand: 1.08, bestFit: 'L&D RN motivated by birth volume, team culture, and safety resources' },
+  'Behavioral Health': { label: 'Behavioral Health', demand: 1.1, bestFit: 'behavioral health RN who values safety protocols, de-escalation support, and mission fit' },
+  Dialysis: { label: 'Dialysis', demand: 1.06, bestFit: 'dialysis RN looking for chronic-care demand, schedule predictability, and outpatient options' },
+  'Home Health': { label: 'Home Health', demand: 1.16, bestFit: 'home health RN who values autonomy, older-adult demand, and case-management pathways' }
+};
 
 const getPayerStateClass = (state) => {
   if (getTerritoryRnProfile(state) && state !== 'PR') return 'territory';
@@ -1941,6 +1957,96 @@ const getCmsPayerSourceStatus = () => {
     hcris: String(datasets.cmsHcris?.status || freeMarketSignals?.sources?.cms || 'unknown').toLowerCase(),
     careCompare: String(datasets.cmsCareCompare?.status || freeMarketSignals?.sources?.cms || 'unknown').toLowerCase()
   };
+};
+
+const getSelectedCalibrationSpecialty = () => (
+  SPECIALTY_SELLING_CONTEXT[calibrationSpecialty?.value] ? calibrationSpecialty.value : 'general'
+);
+
+const loadCalibrationOutcomes = () => {
+  try {
+    return JSON.parse(localStorage.getItem(scopedStorageKey(CALIBRATION_OUTCOME_KEY)) || '{}');
+  } catch {
+    return {};
+  }
+};
+
+const saveCalibrationOutcomes = (outcomes) => {
+  localStorage.setItem(scopedStorageKey(CALIBRATION_OUTCOME_KEY), JSON.stringify(outcomes));
+};
+
+const getCalibrationOutcomeKey = (homeState, targetState, specialty) => `${homeState}|${targetState}|${specialty}`;
+
+const getLicenseTimeline = (snapshot) => {
+  if (snapshot.territoryMode) return { label: 'Manual verify', detail: 'Territory licensing usually requires manual board validation before promising a start date.' };
+  if (snapshot.licenseDrag <= 2) return { label: 'Fast', detail: 'Compact-friendly lane. Recruiter can sell faster interview-to-start planning.' };
+  if (snapshot.licenseDrag <= 6) return { label: 'Moderate', detail: 'License path is workable, but verify endorsement timing before making speed claims.' };
+  return { label: 'Slow', detail: 'Do not lead with speed. Explain endorsement steps, fingerprints, and realistic start timing.' };
+};
+
+const getTakeHomeContext = (homeState, targetState, snapshot) => {
+  const homeRelocation = Math.max(20, getStateRelocationScore(homeState));
+  const targetRelocation = Math.max(20, getStateRelocationScore(targetState));
+  const colDelta = Math.round(homeRelocation - targetRelocation);
+  const estimatedTakeHomeDelta = Math.round(snapshot.wageDelta - (colDelta * 350));
+  const housingPressure = colDelta >= 15 ? 'Higher' : colDelta <= -10 ? 'Lower' : 'Similar';
+  return {
+    colDelta,
+    estimatedTakeHomeDelta,
+    housingPressure,
+    detail: housingPressure === 'Higher'
+      ? 'Higher relocation/COL proxy may absorb some wage advantage. Validate rent and commute before leading with pay.'
+      : housingPressure === 'Lower'
+        ? 'Lower relocation/COL proxy can strengthen the move even if gross pay is close.'
+        : 'Cost-of-living proxy is close enough that schedule, manager, and specialty fit may matter more.'
+  };
+};
+
+const getFacilityProofPoints = (state) => {
+  const entry = getBeaconEntry(state);
+  const hospitals = Array.isArray(entry?.hospitalRankings) ? entry.hospitalRankings : [];
+  const registry = Array.isArray(entry?.hospitalRegistry) ? entry.hospitalRegistry : [];
+  const rows = hospitals.length ? hospitals.slice(0, 3) : registry.slice(0, 3);
+  if (!rows.length) {
+    return [{ title: `${STATE_NAMES[state] || state} facility market`, detail: 'Use facility-level validation before naming specific employers.' }];
+  }
+  return rows.map((row) => ({
+    title: row.name || row.facility || row.system || 'Hospital system',
+    detail: [
+      row.metro || row.city || '',
+      row.system || '',
+      row.compositeScore ? `quality score ${Math.round(row.compositeScore)}` : ''
+    ].filter(Boolean).join(' | ') || 'Use as facility-specific proof point.'
+  }));
+};
+
+const getSourceBadges = (snapshot) => {
+  const badges = [
+    { label: 'BLS wage', status: getStateStaffAnnual(calibrationHome?.value) ? 'ok' : 'modeled' },
+    { label: 'RN Flight', status: snapshot.flightScore ? 'modeled' : 'limited' },
+    { label: 'NCSBN license', status: snapshot.licenseDrag <= 3 ? 'ok' : 'verify' },
+    { label: 'CMS HCRIS', status: snapshot.payerContext.cmsStatus.hcris },
+    { label: 'CMS Care Compare', status: snapshot.payerContext.cmsStatus.careCompare },
+    { label: 'KFF Medicaid', status: 'public' },
+    { label: 'WARN / news', status: getStateNoticeCount(calibrationHome?.value) || getStateNewsSignalCount(calibrationHome?.value) ? 'ok' : 'limited' }
+  ];
+  if (snapshot.territoryMode) badges.push({ label: 'Territory profile', status: 'modeled' });
+  return badges;
+};
+
+const getRecruitingDifficulty = (snapshot, specialtyKey) => {
+  const specialty = SPECIALTY_SELLING_CONTEXT[specialtyKey] || SPECIALTY_SELLING_CONTEXT.general;
+  const difficulty = Math.round(Math.max(0, Math.min(100,
+    46
+    + snapshot.licenseDrag * 3.2
+    + (snapshot.wageDelta < 0 ? 18 : snapshot.wageDelta < 2500 ? 8 : -8)
+    + (snapshot.payerContext.reimbursementRisk >= 70 ? 8 : 0)
+    + (specialty.demand > 1.15 ? 5 : 0)
+    - (snapshot.flightScore / 8)
+    - (snapshot.sourceConfidence / 12)
+  )));
+  const label = difficulty >= 72 ? 'Hard close' : difficulty >= 50 ? 'Moderate close' : 'Favorable close';
+  return { score: difficulty, label };
 };
 
 const buildPayerContext = (state) => {
@@ -1995,6 +2101,8 @@ const getCalibrationRoute = (homeState, targetState) => {
 };
 
 const buildCalibrationSnapshot = (homeState, targetState, rsas) => {
+  const specialtyKey = getSelectedCalibrationSpecialty();
+  const specialty = SPECIALTY_SELLING_CONTEXT[specialtyKey] || SPECIALTY_SELLING_CONTEXT.general;
   const route = getCalibrationRoute(homeState, targetState);
   const variables = route?.variables || null;
   const homeStaff = getStateStaffAnnual(homeState);
@@ -2008,8 +2116,9 @@ const buildCalibrationSnapshot = (homeState, targetState, rsas) => {
   const sourceConfidence = route?.sourceConfidence ?? getRnFlightSourceConfidence();
   const flightScore = route?.score ?? 0;
   const payerContext = buildPayerContext(homeState);
+  const specialtyDemandBoost = Math.round((specialty.demand - 1) * 18);
   const territoryCoveragePenalty = getTerritoryRnProfile(homeState) || getTerritoryRnProfile(targetState) ? 6 : 0;
-  const readiness = Math.round(Math.min(100, Math.max(0, (rsas * 0.4) + (flightScore * 0.35) + (sourceConfidence * 0.18) + (Math.min(18, payerContext.reimbursementRisk / 8)) - territoryCoveragePenalty)));
+  const readiness = Math.round(Math.min(100, Math.max(0, (rsas * 0.38) + (flightScore * 0.33) + (sourceConfidence * 0.16) + (Math.min(18, payerContext.reimbursementRisk / 8)) + specialtyDemandBoost - territoryCoveragePenalty)));
   const compactStates = freeMarketSignals?.nlcCompactStates || [];
   const compactText = compactStates.includes(homeState) && compactStates.includes(targetState)
     ? 'compact-friendly'
@@ -2017,9 +2126,11 @@ const buildCalibrationSnapshot = (homeState, targetState, rsas) => {
       ? 'license friction'
       : 'verify license timing';
 
-  return {
+  const snapshot = {
     route,
     variables,
+    specialtyKey,
+    specialty,
     wageDelta,
     travelDelta,
     demandGap,
@@ -2031,6 +2142,12 @@ const buildCalibrationSnapshot = (homeState, targetState, rsas) => {
     payerContext,
     territoryMode: Boolean(getTerritoryRnProfile(homeState) || getTerritoryRnProfile(targetState))
   };
+  snapshot.licenseTimeline = getLicenseTimeline(snapshot);
+  snapshot.takeHome = getTakeHomeContext(homeState, targetState, snapshot);
+  snapshot.facilityProofPoints = getFacilityProofPoints(homeState);
+  snapshot.sourceBadges = getSourceBadges(snapshot);
+  snapshot.recruitingDifficulty = getRecruitingDifficulty(snapshot, specialtyKey);
+  return snapshot;
 };
 
 const renderCalibrationMetrics = (snapshot) => {
@@ -2073,6 +2190,16 @@ const renderCalibrationMetrics = (snapshot) => {
       <strong>${snapshot.payerContext.reimbursementRisk}</strong>
       <small>${escapeHtml(snapshot.payerContext.medicaidLabel)} | Medicare ${escapeHtml(snapshot.payerContext.medicareTier)}.</small>
     </div>
+    <div class="calibration-metric-card ${snapshot.recruitingDifficulty.score >= 72 ? 'negative' : snapshot.recruitingDifficulty.score >= 50 ? 'neutral' : 'positive'}">
+      <span>Recruiting difficulty</span>
+      <strong>${snapshot.recruitingDifficulty.score}</strong>
+      <small>${escapeHtml(snapshot.recruitingDifficulty.label)} for ${escapeHtml(snapshot.specialty.label)}.</small>
+    </div>
+    <div class="calibration-metric-card ${snapshot.takeHome.estimatedTakeHomeDelta >= 0 ? 'positive' : 'negative'}">
+      <span>Take-home proxy</span>
+      <strong>${formatCurrencyDelta(snapshot.takeHome.estimatedTakeHomeDelta)}</strong>
+      <small>COL/relocation-adjusted pay signal. Housing pressure: ${escapeHtml(snapshot.takeHome.housingPressure)}.</small>
+    </div>
   `;
 };
 
@@ -2104,6 +2231,113 @@ const renderPayerSellingPoints = (snapshot) => {
       <small>${escapeHtml(payer.sourceLabel)}</small>
     </div>
   `;
+};
+
+const renderCalibrationStrategy = (homeState, targetState, snapshot, leadFactors, avoidFactors) => {
+  if (!calibrationStrategy) return;
+  const homeName = STATE_NAMES[homeState] || homeState;
+  const targetName = STATE_NAMES[targetState] || targetState;
+  const proofPoints = [
+    `${snapshot.specialty.label} fit: ${snapshot.specialty.bestFit}.`,
+    snapshot.licenseTimeline.detail,
+    snapshot.takeHome.detail,
+    snapshot.payerContext.medicareDetail
+  ];
+  const doNotPitch = [];
+  if (snapshot.wageDelta < 0) doNotPitch.push('Do not lead with gross pay; the target market may compare better.');
+  if (snapshot.licenseDrag >= 7) doNotPitch.push('Do not promise a fast start before license verification.');
+  if (snapshot.takeHome.housingPressure === 'Higher') doNotPitch.push('Do not ignore housing or commute pressure.');
+  if (snapshot.payerContext.reimbursementRisk >= 70) doNotPitch.push('Do not overstate budget flexibility; payer pressure may limit offers.');
+  avoidFactors.forEach((factor) => doNotPitch.push(`Do not lead with ${factor.label.toLowerCase()} unless you have facility-level proof.`));
+  if (!doNotPitch.length) doNotPitch.push('No major pitch warnings detected; still validate facility-level fit.');
+
+  calibrationStrategy.innerHTML = `
+    <div class="calibration-strategy-header">
+      <div>
+        <p class="calibration-label">Recruiter Selling Strategy</p>
+        <strong>${escapeHtml(snapshot.specialty.label)} pitch from ${escapeHtml(targetName)} to ${escapeHtml(homeName)}</strong>
+      </div>
+      <span>${escapeHtml(snapshot.recruitingDifficulty.label)}</span>
+    </div>
+    <div class="calibration-strategy-grid">
+      <div>
+        <span>Lead with</span>
+        <ul>${leadFactors.length ? leadFactors.map((factor) => `<li>${escapeHtml(factor.label)}</li>`).join('') : '<li>Specific unit fit, manager quality, and schedule clarity.</li>'}</ul>
+      </div>
+      <div>
+        <span>Proof points</span>
+        <ul>${proofPoints.slice(0, 4).map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>
+      </div>
+      <div>
+        <span>Best candidate type</span>
+        <p>${escapeHtml(snapshot.specialty.bestFit)}</p>
+      </div>
+      <div>
+        <span>Do not pitch this way</span>
+        <ul>${doNotPitch.slice(0, 5).map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>
+      </div>
+    </div>
+    <div class="calibration-facility-proof">
+      <span>Facility proof points</span>
+      ${snapshot.facilityProofPoints.map((point) => `
+        <div>
+          <strong>${escapeHtml(point.title)}</strong>
+          <small>${escapeHtml(point.detail)}</small>
+        </div>
+      `).join('')}
+    </div>
+  `;
+};
+
+const renderCalibrationSources = (snapshot) => {
+  if (!calibrationSources) return;
+  calibrationSources.innerHTML = `
+    <div class="calibration-source-header">
+      <p class="calibration-label">Confidence Explanation</p>
+      <span>${Math.max(0, snapshot.sourceConfidence - (snapshot.territoryMode ? 6 : 0))}% usable confidence</span>
+    </div>
+    <div class="calibration-source-badges">
+      ${snapshot.sourceBadges.map((badge) => `<span class="${escapeHtml(badge.status)}">${escapeHtml(badge.label)}: ${escapeHtml(badge.status)}</span>`).join('')}
+    </div>
+  `;
+};
+
+const renderCalibrationOutcomes = (homeState, targetState, snapshot) => {
+  if (!calibrationOutcomes) return;
+  const key = getCalibrationOutcomeKey(homeState, targetState, snapshot.specialtyKey);
+  const outcomes = loadCalibrationOutcomes();
+  const row = outcomes[key] || { contacted: 0, replied: 0, screened: 0, submitted: 0, offered: 0, accepted: 0, declined: 0 };
+  calibrationOutcomes.innerHTML = `
+    <div class="calibration-outcome-header">
+      <div>
+        <p class="calibration-label">Outcome Tracking</p>
+        <strong>${escapeHtml(snapshot.specialty.label)} lane: ${escapeHtml(targetState)} to ${escapeHtml(homeState)}</strong>
+      </div>
+      <button type="button" data-calibration-outcome-reset="1">Reset lane</button>
+    </div>
+    <div class="calibration-outcome-grid">
+      ${Object.entries(row).map(([name, value]) => `
+        <label>
+          <span>${escapeHtml(name)}</span>
+          <input type="number" min="0" value="${Number(value) || 0}" data-calibration-outcome="${escapeHtml(name)}" />
+        </label>
+      `).join('')}
+    </div>
+  `;
+  calibrationOutcomes.querySelectorAll('[data-calibration-outcome]').forEach((input) => {
+    input.addEventListener('change', () => {
+      const next = loadCalibrationOutcomes();
+      next[key] = next[key] || {};
+      next[key][input.getAttribute('data-calibration-outcome')] = Math.max(0, Number(input.value || 0));
+      saveCalibrationOutcomes(next);
+    });
+  });
+  calibrationOutcomes.querySelector('[data-calibration-outcome-reset]')?.addEventListener('click', () => {
+    const next = loadCalibrationOutcomes();
+    delete next[key];
+    saveCalibrationOutcomes(next);
+    renderCalibrationOutcomes(homeState, targetState, snapshot);
+  });
 };
 
 const renderCalibrationPlaybook = (homeState, targetState, snapshot, leadFactors, avoidFactors) => {
@@ -2157,6 +2391,9 @@ const updateStateCalibration = () => {
     calibrationScript.textContent = '';
     if (calibrationMetrics) calibrationMetrics.innerHTML = '';
     if (calibrationPlaybook) calibrationPlaybook.innerHTML = '';
+    if (calibrationStrategy) calibrationStrategy.innerHTML = '';
+    if (calibrationSources) calibrationSources.innerHTML = '';
+    if (calibrationOutcomes) calibrationOutcomes.innerHTML = '';
     return;
   }
 
@@ -2200,6 +2437,9 @@ const updateStateCalibration = () => {
   calibrationScript.textContent = scriptLine;
   renderCalibrationMetrics(snapshot);
   renderCalibrationPlaybook(homeState, targetState, snapshot, leadFactors, avoidFactors);
+  renderCalibrationStrategy(homeState, targetState, snapshot, leadFactors, avoidFactors);
+  renderCalibrationSources(snapshot);
+  renderCalibrationOutcomes(homeState, targetState, snapshot);
 
   calibrationRows.innerHTML = deltas.map(entry => {
     const deltaClass = entry.delta >= 0.5 ? 'positive' : entry.delta <= -0.5 ? 'negative' : '';
@@ -2421,6 +2661,7 @@ const initStateCalibration = () => {
     syncCalibrationTargetSearch();
     updateStateCalibration();
   });
+  calibrationSpecialty?.addEventListener('change', updateStateCalibration);
   updateStateCalibration();
   Promise.allSettled([
     loadRecruitmentIntel(),
