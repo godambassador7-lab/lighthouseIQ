@@ -13,7 +13,7 @@ const OUTPUT_PATH = path.join(DATA_DIR, 'news-us-extra.json');
 const MANIFEST_PATH = path.join(process.cwd(), 'scripts', 'data', 'us-health-news-sources.json');
 const MAX_PER_SOURCE = Number(process.env.US_NEWS_MAX_PER_SOURCE || 20);
 const REQUEST_TIMEOUT_MS = Number(process.env.US_NEWS_TIMEOUT_MS || 15000);
-const USER_AGENT = process.env.US_NEWS_USER_AGENT || 'LighthouseIQ/1.0 (US healthcare news fetcher)';
+const USER_AGENT = process.env.US_NEWS_USER_AGENT || 'LightkeeperHealthIQ/1.0 (US healthcare news fetcher)';
 
 function ensureDataDir() {
   if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });

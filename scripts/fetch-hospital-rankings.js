@@ -68,7 +68,7 @@ async function fetchText(url) {
     const res = await fetch(url, {
       signal: controller.signal,
       headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; LighthouseIQHospitalRankings/1.1)',
+        'User-Agent': 'Mozilla/5.0 (compatible; LightkeeperHealthIQHospitalRankings/1.1)',
         'Accept': 'text/html,application/xhtml+xml'
       }
     });

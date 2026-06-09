@@ -124,11 +124,11 @@ def load_pool() -> list[dict]:
 # ---------------------------------------------------------------------------
 # Email
 # ---------------------------------------------------------------------------
-EMAIL_SUBJECT = "LighthouseIQ Alert \u2014 New layoff notice in {state}"
+EMAIL_SUBJECT = "Lightkeeper HealthIQ Alert \u2014 New layoff notice in {state}"
 
 EMAIL_HTML = """\
 <html><body style="font-family:sans-serif;color:#1a365d;max-width:600px;margin:0 auto;padding:24px;">
-  <h2 style="color:#1a365d;">LighthouseIQ \u26a1 Lightworker Alert</h2>
+  <h2 style="color:#1a365d;">Lightkeeper HealthIQ \u26a1 Lightworker Alert</h2>
   <p>Hi {name},</p>
   <p>A new WARN notice was filed in your home state of <strong>{state}</strong>:</p>
   <table style="border-collapse:collapse;width:100%;margin:16px 0;">
@@ -142,15 +142,15 @@ EMAIL_HTML = """\
         <td style="padding:8px 12px;border-bottom:1px solid #e2e8f0;">{notice_date}</td></tr>
   </table>
   <p style="color:#4a5568;font-size:14px;">
-    This is an automated alert from LighthouseIQ&rsquo;s Lightworker Pool.<br>
+    This is an automated alert from Lightkeeper HealthIQ&rsquo;s Lightworker Pool.<br>
     You were added to this pool by a recruiter. Contact them to learn more about opportunities.
   </p>
   <hr style="border:none;border-top:1px solid #e2e8f0;margin:24px 0;">
-  <p style="color:#718096;font-size:12px;">&mdash; LighthouseIQ Lightworker Alerts</p>
+  <p style="color:#718096;font-size:12px;">&mdash; Lightkeeper HealthIQ Lightworker Alerts</p>
 </body></html>"""
 
 EMAIL_TEXT = """\
-LighthouseIQ Lightworker Alert
+Lightkeeper HealthIQ Lightworker Alert
 
 Hi {name},
 
@@ -161,10 +161,10 @@ Location:           {location}
 Employees Affected: {affected}
 Notice Date:        {notice_date}
 
-This is an automated alert from LighthouseIQ's Lightworker Pool.
+This is an automated alert from Lightkeeper HealthIQ's Lightworker Pool.
 You were added to this pool by a recruiter. Contact them for more information.
 
--- LighthouseIQ Lightworker Alerts
+-- Lightkeeper HealthIQ Lightworker Alerts
 """
 
 
@@ -188,7 +188,7 @@ def send_email(to_email: str, to_name: str, notice: dict) -> bool:
 
     msg = MIMEMultipart("alternative")
     msg["Subject"] = subject
-    msg["From"] = f"LighthouseIQ Alerts <{EMAIL_USER}>"
+    msg["From"] = f"Lightkeeper HealthIQ Alerts <{EMAIL_USER}>"
     msg["To"] = to_email
     msg.attach(MIMEText(text_body, "plain"))
     msg.attach(MIMEText(html_body, "html"))

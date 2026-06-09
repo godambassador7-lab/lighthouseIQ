@@ -1,4 +1,4 @@
-# Nursing Layoff Radar (LighthouseIQ)
+# Nursing Layoff Radar (Lightkeeper HealthIQ)
 
 A public UI for tracking WARN Act layoff notices in the healthcare/nursing sector across all US states.
 

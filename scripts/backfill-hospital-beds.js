@@ -79,7 +79,7 @@ async function fetchJsonWithTimeout(url) {
       signal: controller.signal,
       headers: {
         Accept: 'application/json,text/plain,*/*',
-        'User-Agent': 'LighthouseIQ-BedBackfill/1.0'
+        'User-Agent': 'LightkeeperHealthIQ-BedBackfill/1.0'
       }
     });
     if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
@@ -97,7 +97,7 @@ async function fetchTextWithTimeout(url) {
       signal: controller.signal,
       headers: {
         Accept: 'text/csv,text/plain,*/*',
-        'User-Agent': 'LighthouseIQ-BedBackfill/1.0'
+        'User-Agent': 'LightkeeperHealthIQ-BedBackfill/1.0'
       }
     });
     if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);

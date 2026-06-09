@@ -49,8 +49,8 @@ CURRENT_YEAR = NOW_UTC.year
 
 HEADERS = {
     "User-Agent": (
-        "Mozilla/5.0 (compatible; LighthouseIQ/1.0; "
-        "healthcare-intelligence-platform; +https://lighthouseiq.app)"
+        "Mozilla/5.0 (compatible; LightkeeperHealthIQ/1.0; "
+        "healthcare-intelligence-platform; +https://lightkeeperhealthiq.app)"
     ),
     "Accept": "application/json, text/html, */*",
 }
