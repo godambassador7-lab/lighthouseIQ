@@ -165,6 +165,12 @@ jobs:
           LNI_OUTPUT_DIR: ${{ github.workspace }}/public/data
           WORKFORCE_REFRESH_DAYS: 7
 
+      - name: Build target specialty summaries
+        run: node scripts/build-target-specialty-summary.js
+        env:
+          LNI_OUTPUT_DIR: ${{ github.workspace }}/public/data
+          TARGET_SPECIALTY_HOME_STATE: IN
+
       - name: Send Lightworker email alerts
         run: |
           pip install firebase-admin --quiet
