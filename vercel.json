@@ -1,6 +1,7 @@
 {
   "buildCommand": "npm run guard:ui",
   "rewrites": [
+    { "source": "/favicon.ico", "destination": "/favicon-32x32.png" },
     { "source": "/auth/:path*", "destination": "/api/auth/:path*" },
     { "source": "/insights/:path*", "destination": "/api/insights/:path*" },
     { "source": "/health", "destination": "/api/health" },
