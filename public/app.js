@@ -9060,6 +9060,39 @@ const getStateProgramCount = (state) => {
   }, 0);
 };
 
+const getRnFlightFocusState = () => (
+  rnFlightMode === 'inbound' ? rnFlightTargetState : rnFlightOriginState
+);
+
+const hasRnFlightCompactEvidence = () => (
+  Array.isArray(freeMarketSignals?.nlcCompactStates) && freeMarketSignals.nlcCompactStates.length > 0
+);
+
+const getRnFlightCompactAuditStatus = () => (
+  hasRnFlightCompactEvidence() ? 'ok' : (freeMarketSignals?.sources?.ncsbn || 'unknown')
+);
+
+const hasRnFlightProgramEvidence = (state) => {
+  const focusState = state || getRnFlightFocusState();
+  const cachedTargetMetro = targetStateMetroDataCache?.[focusState] || null;
+  const targetMetroEntry = targetStateMetrosData?.states?.[focusState] || cachedTargetMetro || {};
+  const beaconEntry = stateBeaconData?.states?.[focusState] || {};
+  const metroPipeline = targetMetroEntry.pipeline || {};
+  const beaconPipeline = beaconEntry.pipeline || {};
+  const educationBreakdown = beaconEntry.nursingEducation?.breakdown || {};
+
+  return nursingPrograms.length > 0
+    || getStateProgramCount(focusState) > 0
+    || Number(metroPipeline.programsCount || beaconPipeline.programsCount || 0) > 0
+    || (metroPipeline.majorPrograms || []).length > 0
+    || (beaconPipeline.majorPrograms || []).length > 0
+    || Object.values(educationBreakdown).some((group) => Number(group?.programs || group?.count || 0) > 0);
+};
+
+const getRnFlightProgramAuditStatus = (state) => (
+  hasRnFlightProgramEvidence(state) ? 'ok' : 'limited'
+);
+
 const getStateStrikeCount = (state) => {
   if (!Array.isArray(strikeAlertsData) || !strikeAlertsData.length) return 0;
   return strikeAlertsData.reduce((count, row) => (
@@ -9995,8 +10028,8 @@ const getRnFlightSourceConfidence = () => {
     datasetScore(datasets.hrsaNssrn?.status || freeMarketSignals?.sources?.hrsa),
     datasetScore(datasets.blsOes?.status || freeMarketSignals?.sources?.bls),
     datasetScore(datasets.cmsCareCompare?.status || datasets.cmsHcris?.status),
-    datasetScore(freeMarketSignals?.sources?.ncsbn),
-    nursingPrograms.length ? 1 : 0.45,
+    hasRnFlightCompactEvidence() ? 1 : datasetScore(freeMarketSignals?.sources?.ncsbn),
+    hasRnFlightProgramEvidence(getRnFlightFocusState()) ? 1 : 0.45,
     strikeAlertsData.length ? 1 : 0.45,
     Object.keys(ruralClosuresData || {}).length ? 1 : 0.45,
     stateNewsData ? 1 : 0.45,
@@ -10416,13 +10449,14 @@ const renderRnFlightRowVariables = (row) => {
 
 const getRnFlightSourceAuditRows = () => {
   const datasets = marketRequiredMetrics?.datasets || {};
+  const focusState = getRnFlightFocusState();
   return [
     ['BLS wage/employment', datasets.blsOes?.status || freeMarketSignals?.sources?.bls || 'unknown', 'Real wage and travel-pay pull'],
-    ['NCSBN compact', freeMarketSignals?.sources?.ncsbn || 'unknown', 'License friction and start-timing drag'],
+    ['NCSBN compact', getRnFlightCompactAuditStatus(), 'License friction and start-timing drag'],
     ['HRSA workforce', datasets.hrsaNssrn?.status || freeMarketSignals?.sources?.hrsa || 'unknown', 'Supply, shortage, and workforce pressure'],
     ['CMS facility data', datasets.cmsCareCompare?.status || datasets.cmsHcris?.status || 'unknown', 'Hospital quality/stability context'],
     ['WARN/news/rural', currentNotices.length || stateNewsData || Object.keys(ruralClosuresData || {}).length ? 'ok' : 'limited', 'Disruption, closures, and labor-climate drag'],
-    ['Nursing programs', nursingPrograms.length ? 'ok' : 'limited', 'Pipeline pressure versus local demand']
+    ['Nursing programs', getRnFlightProgramAuditStatus(focusState), 'Pipeline pressure versus local demand']
   ];
 };
 
