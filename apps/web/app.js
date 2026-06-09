@@ -150,8 +150,6 @@ const calibrationRows = document.getElementById('calibration-rows');
 const calibrationScript = document.getElementById('calibration-script');
 const calibrationMetrics = document.getElementById('calibration-metrics');
 const calibrationPlaybook = document.getElementById('calibration-playbook');
-const calibrationTargetSearch = document.getElementById('calibration-target-search');
-const calibrationTargetList = document.getElementById('calibration-target-list');
 const calibrationSwapBtn = document.getElementById('calibration-swap');
 const calibrationResetBtn = document.getElementById('calibration-reset');
 const calibrationSpecialty = document.getElementById('calibration-specialty');
@@ -1894,27 +1892,6 @@ const formatDelta = (delta) => {
 
 const formatCalibrationOption = (state) => `${STATE_NAMES[state] || state} (${state})`;
 
-const resolveCalibrationJurisdiction = (value) => {
-  const raw = String(value || '').trim();
-  if (!raw) return '';
-  const upper = raw.toUpperCase();
-  const parenMatch = upper.match(/\(([A-Z]{2})\)$/);
-  const candidate = parenMatch?.[1] || upper;
-  if (CALIBRATION_JURISDICTIONS.includes(candidate)) return candidate;
-  const lower = raw.toLowerCase();
-  return CALIBRATION_JURISDICTIONS.find((state) => (
-    String(STATE_NAMES[state] || state).toLowerCase() === lower
-    || formatCalibrationOption(state).toLowerCase() === lower
-  )) || '';
-};
-
-const syncCalibrationTargetSearch = () => {
-  if (!calibrationTargetSearch || !calibrationTarget) return;
-  calibrationTargetSearch.value = calibrationTarget.value
-    ? formatCalibrationOption(calibrationTarget.value)
-    : '';
-};
-
 const formatCurrencyDelta = (value) => {
   const sign = value > 0 ? '+' : value < 0 ? '-' : '';
   return `${sign}$${Math.abs(Math.round(value)).toLocaleString()}`;
@@ -2882,51 +2859,22 @@ const initStateCalibration = () => {
     .join('');
   calibrationHome.innerHTML = `<option value="">Select state or territory</option>${options}`;
   calibrationTarget.innerHTML = `<option value="">Select state or territory</option>${options}`;
-  if (calibrationTargetList) {
-    calibrationTargetList.innerHTML = CALIBRATION_JURISDICTIONS
-      .map(state => `<option value="${escapeHtml(formatCalibrationOption(state))}"></option>`)
-      .join('');
-  }
   calibrationHome.value = CALIBRATION_JURISDICTIONS.includes('IN') ? 'IN' : CALIBRATION_JURISDICTIONS[0];
   calibrationTarget.value = CALIBRATION_JURISDICTIONS.includes('FL') ? 'FL' : CALIBRATION_JURISDICTIONS[1];
-  syncCalibrationTargetSearch();
 
   calibrationHome.addEventListener('change', updateStateCalibration);
-  calibrationTarget.addEventListener('change', () => {
-    syncCalibrationTargetSearch();
-    updateStateCalibration();
-  });
-  calibrationTargetSearch?.addEventListener('change', () => {
-    const state = resolveCalibrationJurisdiction(calibrationTargetSearch.value);
-    if (!state) {
-      syncCalibrationTargetSearch();
-      return;
-    }
-    calibrationTarget.value = state;
-    updateStateCalibration();
-  });
-  calibrationTargetSearch?.addEventListener('keydown', (event) => {
-    if (event.key !== 'Enter') return;
-    event.preventDefault();
-    const state = resolveCalibrationJurisdiction(calibrationTargetSearch.value);
-    if (!state) return;
-    calibrationTarget.value = state;
-    syncCalibrationTargetSearch();
-    updateStateCalibration();
-  });
+  calibrationTarget.addEventListener('change', updateStateCalibration);
   calibrationSwapBtn?.addEventListener('click', () => {
     const homeState = calibrationHome.value;
     const targetState = calibrationTarget.value;
     if (!homeState || !targetState) return;
     calibrationHome.value = targetState;
     calibrationTarget.value = homeState;
-    syncCalibrationTargetSearch();
     updateStateCalibration();
   });
   calibrationResetBtn?.addEventListener('click', () => {
     calibrationHome.value = 'IN';
     calibrationTarget.value = 'FL';
-    syncCalibrationTargetSearch();
     updateStateCalibration();
   });
   calibrationSpecialty?.addEventListener('change', updateStateCalibration);
