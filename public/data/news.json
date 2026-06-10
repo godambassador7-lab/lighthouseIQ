@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-06-10T05:25:36.918Z",
+  "lastUpdated": "2026-06-10T10:09:25.834Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 3,
-    "healthySources": 7,
+    "staleSources": 2,
+    "healthySources": 8,
     "sources": [
       {
         "source": "Fierce Healthcare",
         "articleCount": 208,
         "latestPublishedAt": "2026-06-10T00:00:00.000Z",
-        "staleHours": 5,
+        "staleHours": 10,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 157,
+        "articleCount": 152,
         "latestPublishedAt": "2026-06-09T00:00:00.000Z",
-        "staleHours": 29,
+        "staleHours": 34,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 76,
-        "latestPublishedAt": "2026-06-09T00:00:00.000Z",
-        "staleHours": 29,
+        "articleCount": 80,
+        "latestPublishedAt": "2026-06-10T00:00:00.000Z",
+        "staleHours": 10,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 25,
         "latestPublishedAt": "2026-06-09T00:00:00.000Z",
-        "staleHours": 29,
+        "staleHours": 34,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 14,
         "latestPublishedAt": "2026-06-09T00:00:00.000Z",
-        "staleHours": 29,
+        "staleHours": 34,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 9,
         "latestPublishedAt": "2026-06-08T00:00:00.000Z",
-        "staleHours": 53,
+        "staleHours": 58,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 7,
         "latestPublishedAt": "2026-06-03T00:00:00.000Z",
-        "staleHours": 173,
+        "staleHours": 178,
         "status": "stale"
+      },
+      {
+        "source": "SEC Healthcare Filings",
+        "articleCount": 2,
+        "latestPublishedAt": "2026-06-10T00:00:00.000Z",
+        "staleHours": 10,
+        "status": "ok"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 2,
         "latestPublishedAt": "2026-06-09T00:00:00.000Z",
-        "staleHours": 29,
+        "staleHours": 34,
         "status": "ok"
-      },
-      {
-        "source": "SEC Healthcare Filings",
-        "articleCount": 1,
-        "latestPublishedAt": "2026-06-05T00:00:00.000Z",
-        "staleHours": 125,
-        "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 1,
         "latestPublishedAt": "2026-06-03T00:00:00.000Z",
-        "staleHours": 173,
+        "staleHours": 178,
         "status": "stale"
       }
     ]
@@ -87,7 +87,7 @@
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 22
+      "count": 21
     },
     "labor_unions": {
       "label": "Labor & Unions",
@@ -107,7 +107,7 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 164
+      "count": 165
     },
     "general_market": {
       "label": "General Market",
@@ -115,10 +115,8 @@
     }
   },
   "quality": {
-    "status": "warning",
-    "failedChecks": [
-      "maxStaleSources"
-    ],
+    "status": "pass",
+    "failedChecks": [],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -127,7 +125,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 28,
+        "actual": 33,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -137,12 +135,60 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 3,
-        "pass": false
+        "actual": 2,
+        "pass": true
       }
     }
   },
   "articles": [
+    {
+      "title": "ELV 8-K filing - Elevance Health, Inc.",
+      "summary": "Elevance Health, Inc. filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1156039/000115603926000049/elv-20260610.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-06-10",
+      "category": "general_market",
+      "relevance": 90,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Opinion: ‘They all think I’m insane’: What it’s like to start medical residency at 72",
+      "url": "https://www.statnews.com/2026/06/10/medical-residency-in-seventies-caribbean-medical-school-experience/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-10",
+      "summary": "“I know what I’m getting into”: Dawn Zuidgeest-Craft on starting medical residency at almost 73.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Opinion: Even in abortion-protecting states, teens face unnecessary barriers to care",
+      "url": "https://www.statnews.com/2026/06/10/parental-notification-laws-abortion-blue-states/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-10",
+      "summary": "“Legal protection for abortion does not mean equitable access for minors,” a pediatrics resident writes.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: As the U.S. looks on, European countries feel growing pressure on drug prices",
+      "url": "https://www.statnews.com/2026/06/10/european-drug-pricing-most-favored-nation-impact/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-10",
+      "summary": "In Europe, two divergent paths are emerging as countries grapple with what to do about drug prices, affecting both pharma and patients — and testing the influence of the U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Are Republicans turning against medications for treating opioid addiction?",
+      "url": "https://www.statnews.com/2026/06/10/medications-opioid-use-disorder-trump-moud-policy-change/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-10",
+      "summary": "Federal actions and proposals have reignited debate over methadone and buprenorphine, worrying addiction experts and patient groups.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
     {
       "title": "House Appropriations Committee takes aim at CMS' WISeR pilot",
       "url": "https://www.fiercehealthcare.com/regulatory/house-appropriations-committee-takes-aim-cms-wiser-pilot",
@@ -420,6 +466,15 @@
       "categoryLabel": "Labor & Unions"
     },
     {
+      "title": "&#8216;Much needed clarity and a path to restore trust&#8217;: Fairview, U of Minnesota, M Physicians close in on new 10-year deal",
+      "url": "https://www.beckershospitalreview.com/hospital-transactions-and-valuation/much-needed-clarity-and-a-path-to-restore-trust-fairview-u-of-minnesota-m-physicians-close-in-on-new-10-year-deal/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-09",
+      "summary": "Minneapolis-based University of Minnesota, Fairview Health Services and University of Minnesota Physicians have finalized agreements to cement a new 10-year partnership set to take effect Jan. 1, 2027.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
       "title": "Center for Scientific Review; Amended Notice of Meeting",
       "summary": "",
       "url": "https://www.federalregister.gov/documents/2026/06/09/2026-11541/center-for-scientific-review-amended-notice-of-meeting",
@@ -514,15 +569,6 @@
       "category": "general_market",
       "relevance": 96,
       "categoryLabel": "General Market"
-    },
-    {
-      "title": "&#8216;Much needed clarity and a path to restore trust&#8217;: Fairview, U of Minnesota, M Physicians close in on new 10-year deal",
-      "url": "https://www.beckershospitalreview.com/hospital-transactions-and-valuation/much-needed-clarity-and-a-path-to-restore-trust-fairview-u-of-minnesota-m-physicians-close-in-on-new-10-year-deal/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-09",
-      "summary": "Minneapolis-based University of Minnesota, Fairview Health Services and University of Minnesota Physicians have finalized agreements to cement a new 10-year partnership set to take effect Jan. 1, 2027.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "Physicians are not &#8216;providers&#8217;: AMA",
@@ -1299,6 +1345,30 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
+      "title": "Early Alert: Breathing Circuit Set Issue from Hamilton Medical",
+      "summary": "The ventilator breathing circuits are intended to connect a ventilator to a patient tube or mask. Obstruction may result in inadequate ventilation",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-breathing-circuit-set-issue-hamilton-medical",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-06-08",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "BD Issues Nationwide Recall for Specific Lots of ChloraPrep™ Clear Single Sterile 1 mL and FREPP™ Clear 1.5 mL Applicators Due to Microbial Contamination",
+      "summary": "FRANKLIN LAKES, N.J. (June 06, 2026) – BD (Becton, Dickinson and Company) is voluntarily recalling lot 4032183 of ChloraPrep™ Clear 1 mL Single Sterile and lot 4073005 of FREPP™ Clear 1.5 mL applicators with paper lidding to the consumer level. These products are being recalled due to fungal contami",
+      "url": "http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/bd-issues-nationwide-recall-specific-lots-chlorapreptm-clear-single-sterile-1-ml-and-frepptm-clear",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-06-08",
+      "category": "general_market",
+      "relevance": 98,
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "Eunice Kennedy Shriver National Institute of Child Health & Human Development; Notice of Meeting",
       "summary": "",
       "url": "https://www.federalregister.gov/documents/2026/06/08/2026-11461/eunice-kennedy-shriver-national-institute-of-child-health-and-human-development-notice-of-meeting",
@@ -1332,30 +1402,6 @@
       "publishedAt": "2026-06-08",
       "category": "general_market",
       "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Early Alert: Breathing Circuit Set Issue from Hamilton Medical",
-      "summary": "The ventilator breathing circuits are intended to connect a ventilator to a patient tube or mask. Obstruction may result in inadequate ventilation",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-breathing-circuit-set-issue-hamilton-medical",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-06-08",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "BD Issues Nationwide Recall for Specific Lots of ChloraPrep™ Clear Single Sterile 1 mL and FREPP™ Clear 1.5 mL Applicators Due to Microbial Contamination",
-      "summary": "FRANKLIN LAKES, N.J. (June 06, 2026) – BD (Becton, Dickinson and Company) is voluntarily recalling lot 4032183 of ChloraPrep™ Clear 1 mL Single Sterile and lot 4073005 of FREPP™ Clear 1.5 mL applicators with paper lidding to the consumer level. These products are being recalled due to fungal contami",
-      "url": "http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/bd-issues-nationwide-recall-specific-lots-chlorapreptm-clear-single-sterile-1-ml-and-frepptm-clear",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-06-08",
-      "category": "general_market",
-      "relevance": 98,
       "categoryLabel": "General Market"
     },
     {
@@ -2688,6 +2734,42 @@
       "categoryLabel": "Policy & Reimbursement"
     },
     {
+      "title": "Anesthesia Delivery Systems Recall: GE HealthCare Issues Correction for Certain Carestations due to Risk of Ineffective Ventilation When Used in Volume Control Ventilation (VCV) Mode",
+      "summary": "GE HealthCare is correcting Carestations that may not ventilate properly in VCV mode. The issue is clearly indicated by alarms; other modes remain effective.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/anesthesia-delivery-systems-recall-ge-healthcare-issues-correction-certain-carestations-due-risk",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-06-05",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Early Alert: Infant Resuscitation System Issue from GE HealthCare",
+      "summary": "The air-oxygen blender knob shaft on certain integrated and stand-alone Resuscitation systems can loosen, affecting the delivered oxygen concentration",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-infant-resuscitation-system-issue-ge-healthcare",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-06-05",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "UNH 8-K filing - UnitedHealth Group Incorporated",
+      "summary": "UnitedHealth Group Incorporated filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/731766/000073176626000138/unh-20260601.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-06-05",
+      "category": "general_market",
+      "relevance": 90,
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "Medical Devices; Orthopedic Devices; Classification of the Resorbable Calcium Salt Bone Void Filler Containing a Single Approved Aminoglycoside Antibacterial",
       "summary": "The Food and Drug Administration (FDA) is classifying the resorbable calcium salt bone void filler containing a single approved aminoglycoside antibacterial into class II (special controls). The special controls that apply to the product type are identified in this order and will be part of the codified language for classification of the resorbable calcium salt bone void filler containing a single approved aminoglycoside antibacterial. We are taking this action because we have determined that classifying the product into class II will provide a reasonable assurance of safety and effectiveness of the product. We believe this action will also enhance patients' access to beneficial innovative products, in part by reducing regulatory burdens.",
       "url": "https://www.federalregister.gov/documents/2026/06/05/2026-11308/medical-devices-orthopedic-devices-classification-of-the-resorbable-calcium-salt-bone-void-filler",
@@ -2736,30 +2818,6 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "Anesthesia Delivery Systems Recall: GE HealthCare Issues Correction for Certain Carestations due to Risk of Ineffective Ventilation When Used in Volume Control Ventilation (VCV) Mode",
-      "summary": "GE HealthCare is correcting Carestations that may not ventilate properly in VCV mode. The issue is clearly indicated by alarms; other modes remain effective.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/anesthesia-delivery-systems-recall-ge-healthcare-issues-correction-certain-carestations-due-risk",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-06-05",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Early Alert: Infant Resuscitation System Issue from GE HealthCare",
-      "summary": "The air-oxygen blender knob shaft on certain integrated and stand-alone Resuscitation systems can loosen, affecting the delivered oxygen concentration",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-infant-resuscitation-system-issue-ge-healthcare",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-06-05",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
       "title": "Center for Scientific Review; Notice of Closed Meetings",
       "summary": "",
       "url": "https://www.federalregister.gov/documents/2026/06/05/2026-11367/center-for-scientific-review-notice-of-closed-meetings",
@@ -2781,18 +2839,6 @@
       "publishedAt": "2026-06-05",
       "category": "general_market",
       "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "UNH 8-K filing - UnitedHealth Group Incorporated",
-      "summary": "UnitedHealth Group Incorporated filed 8-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/731766/000073176626000138/unh-20260601.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-06-05",
-      "category": "general_market",
-      "relevance": 90,
       "categoryLabel": "General Market"
     },
     {
@@ -4266,6 +4312,42 @@
       "categoryLabel": "Policy & Reimbursement"
     },
     {
+      "title": "UPDATE: Hintermann Series H3 Total Ankle Replacement Has a Higher-Than-Expected Risk of Device Failure: FDA Safety Communication",
+      "summary": "Learn more about recommendations for patients who are considering a Hintermann Series H3 TAR system or who have one; recommendations for health care providers.",
+      "url": "http://www.fda.gov/medical-devices/safety-communications/update-hintermann-series-h3-total-ankle-replacement-has-higher-expected-risk-device-failure-fda",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-06-03",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "2024 Safety Communications",
+      "summary": "Listing of Medical Device 2024 Safety Communications",
+      "url": "http://www.fda.gov/medical-devices/safety-communications/2024-safety-communications",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-06-03",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Anesthesia Kit Correction: Becton Dickinson Issues Correction for BD Spinal Trays Containing Bupivacaine Ampules",
+      "summary": "BD is correcting affected Spinal Trays by removing Bupivacaine ampule components",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/anesthesia-kit-correction-becton-dickinson-issues-correction-bd-spinal-trays-containing-bupivacaine",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-06-03",
+      "category": "ai_tech",
+      "relevance": 98,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
       "title": "Medicaid Program; Community Engagement Requirement for Certain Individuals",
       "summary": "This interim final rule with comment period (IFC) interprets and implements the community engagement requirement in Medicaid under section 1902(xx) of the Social Security Act. States are required to implement the new requirement no later than January 1, 2027. This IFC specifies the requirements and expectations for States, including the Medicaid applicants and beneficiaries who must demonstrate community engagement as a condition of their eligibility, the types of qualifying activities that satisfy the community engagement requirement, the criteria to meet an exception from the requirement (that is, be deemed compliant), and the criteria to meet a specified exclusion from the requirement. It also specifies requirements for verification of qualifying activities, outreach to affected populations, steps States must take if they determine individuals are noncompliant, and additional operational considerations for States. Finally, this IFC specifies implementation timing and establishes new State reporting requirements.",
       "url": "https://www.federalregister.gov/documents/2026/06/03/2026-11094/medicaid-program-community-engagement-requirement-for-certain-individuals",
@@ -4360,42 +4442,6 @@
       "category": "general_market",
       "relevance": 100,
       "categoryLabel": "General Market"
-    },
-    {
-      "title": "UPDATE: Hintermann Series H3 Total Ankle Replacement Has a Higher-Than-Expected Risk of Device Failure: FDA Safety Communication",
-      "summary": "Learn more about recommendations for patients who are considering a Hintermann Series H3 TAR system or who have one; recommendations for health care providers.",
-      "url": "http://www.fda.gov/medical-devices/safety-communications/update-hintermann-series-h3-total-ankle-replacement-has-higher-expected-risk-device-failure-fda",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-06-03",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "2024 Safety Communications",
-      "summary": "Listing of Medical Device 2024 Safety Communications",
-      "url": "http://www.fda.gov/medical-devices/safety-communications/2024-safety-communications",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-06-03",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Anesthesia Kit Correction: Becton Dickinson Issues Correction for BD Spinal Trays Containing Bupivacaine Ampules",
-      "summary": "BD is correcting affected Spinal Trays by removing Bupivacaine ampule components",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/anesthesia-kit-correction-becton-dickinson-issues-correction-bd-spinal-trays-containing-bupivacaine",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-06-03",
-      "category": "ai_tech",
-      "relevance": 98,
-      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "Submission for OMB Review; 30-Day Comment Request Regular Clearance for the National Institute of Mental Health Data Archive (NDA), (NIMH)",
@@ -4730,51 +4776,6 @@
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-06-03",
       "summary": "Multiple guidelines recommend ongoing breast cancer risk assessment for women, beginning by age 25, to identify individuals at increased risk who may need enhanced breast cancer screening.1,2.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "AdventHealth opens 28th Florida freestanding ER",
-      "url": "https://www.beckershospitalreview.com/capital/adventhealth-opens-28th-florida-freestanding-er/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-03",
-      "summary": "Altamonte Springs, Fla.-based AdventHealth opened a new freestanding emergency room, AdventHealth Ocoee ER, in Orlando, Fla.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Missouri system taps chief medical officer",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/missouri-system-taps-chief-medical-officer-3/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-03",
-      "summary": "Springfield, Mo.-based Jordan Valley Health named Clint Strong, MD, chief medical officer, Springfield News-Leader reported June 2.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "After nurses, PA groups sue over &#8216;professional degree&#8217; loan rule: 7 things to know",
-      "url": "https://www.beckershospitalreview.com/workforce/after-nurses-pa-groups-sue-over-professional-degree-loan-rule-7-things-to-know/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-03",
-      "summary": "The American Academy of Physician Associates and the PA Education Association sued the U.S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "The promises — and challenges — of the FDA’s real-time clinical trial model",
-      "url": "https://www.beckershospitalreview.com/pharmacy/the-promises-and-challenges-of-the-fdas-real-time-clinical-trial-model/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-03",
-      "summary": "In April, the FDA debuted a real-time clinical trial model that will allow the agency to monitor safety signals as the trial is being conducted. The first trials were launched in partnership with Houston-based University of Texas MD Anderson Cancer Center, Philadelphia-based University of Pennsylvania, AstraZeneca, Amgen and Paradigm Health.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "New York hospital names administrator of long-term care facility",
-      "url": "https://www.beckershospitalreview.com/post-acute/new-york-hospital-names-administrator-of-long-term-care-facility/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-03",
-      "summary": "Buffalo, N.Y.",
       "category": "general_market",
       "categoryLabel": "General Market"
     }
