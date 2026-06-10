@@ -4802,8 +4802,7 @@ const initWeatherMap = async () => {
         openBonusFactorModal(stateId);
         return;
       }
-      stateSelect.value = stateId;
-      loadNotices();
+      selectSingleStateFromMap(stateId);
     });
     shape.addEventListener('contextmenu', (event) => {
       event.preventDefault();
@@ -5288,6 +5287,17 @@ const toggleStateSelection = (state) => {
     option.classList.toggle('selected', selectedStates.includes(state));
   }
 
+  updateStateDisplay();
+  onStateSelectionChange();
+};
+
+const selectSingleStateFromMap = (state) => {
+  if (!state || !ALL_STATES.includes(state)) return;
+  selectedStates = [state];
+  stateSelect.value = state;
+  stateOptions?.querySelectorAll('[data-state]').forEach((option) => {
+    option.classList.toggle('selected', option.dataset.state === state);
+  });
   updateStateDisplay();
   onStateSelectionChange();
 };
