@@ -4607,6 +4607,12 @@ body.modal-open {
   min-height: 420px;
 }
 
+.insight-card.rn-advantage-card {
+  width: 100%;
+  height: auto;
+  margin-top: 1.5rem;
+}
+
 .insight-row-half {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -4867,6 +4873,38 @@ body.modal-open {
   gap: 0.55rem;
   max-height: 360px;
   overflow-y: auto;
+}
+
+.strike-scenario-calculator {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(26, 54, 93, 0.1);
+}
+
+.strike-scenario-calculator h4 {
+  margin-bottom: 0.2rem;
+}
+
+.strike-scenario-calculator .forecast-grid {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.strike-scenario-calculator .forecast-grid label {
+  font-size: 0.78rem;
+}
+
+.strike-scenario-calculator .forecast-grid input,
+.strike-scenario-calculator .forecast-grid select {
+  font-size: 0.84rem;
+  padding: 0.45rem 0.6rem;
+}
+
+.strike-scenario-calculator .forecast-output {
+  padding: 0.75rem;
+  font-size: 0.84rem;
 }
 
 .strike-item {
