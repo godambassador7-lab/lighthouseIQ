@@ -1295,7 +1295,7 @@ const initLightworker = () => {
       ALL_STATES.forEach(s => {
         const opt = document.createElement('option');
         opt.value = s;
-        opt.textContent = `${s} — ${STATE_NAMES[s] || s}`;
+        opt.textContent = `${s} ? ${STATE_NAMES[s] || s}`;
         homeSelect.appendChild(opt);
       });
     }
@@ -1579,7 +1579,7 @@ const renderDetail = (notice) => {
   detailBody.innerHTML = `
     <div class="detail-section">
       <h5>${notice.employer_name || 'Unknown employer'}</h5>
-      <p>${[notice.facility_name, notice.parent_system].filter(Boolean).join(' • ') || 'System unknown'}</p>
+      <p>${[notice.facility_name, notice.parent_system].filter(Boolean).join(' ? ') || 'System unknown'}</p>
       <p>${[notice.address, notice.city, notice.county, notice.state].filter(Boolean).join(', ') || 'Location unknown'}</p>
     </div>
     <div class="detail-section">
@@ -1592,7 +1592,7 @@ const renderDetail = (notice) => {
       <h5>Nursing Impact Breakdown</h5>
       <p>Care setting: ${careSetting}</p>
       <p>Lead time: ${leadTime !== null && leadTime !== undefined ? `${leadTime} days` : 'Unknown'}</p>
-      <p>Role mix: ${roleMix ? `RN ${roleMix.rn}% • LPN ${roleMix.lpn}% • CNA ${roleMix.cna}%` : 'Unavailable'}</p>
+      <p>Role mix: ${roleMix ? `RN ${roleMix.rn}% ? LPN ${roleMix.lpn}% ? CNA ${roleMix.cna}%` : 'Unavailable'}</p>
       <p>Specialties: ${specialties.length ? specialties.join(', ') : 'None detected'}</p>
     </div>
     <div class="detail-section">
@@ -1636,7 +1636,7 @@ const renderAlerts = (data) => {
     <div class="insight-row">
       <div>
         <div class="insight-title">${alert.employer_name || 'Unknown employer'}</div>
-        <div class="insight-meta">${[alert.state, alert.facility_name || alert.parent_system].filter(Boolean).join(' • ')}</div>
+        <div class="insight-meta">${[alert.state, alert.facility_name || alert.parent_system].filter(Boolean).join(' ? ')}</div>
       </div>
       <div>
         <div class="insight-pill ${alert.early_warning ? 'yellow' : ''}">${alert.early_warning ? 'Early' : 'Signal'}</div>
@@ -1663,7 +1663,7 @@ const renderHeatmap = (data) => {
     <div class="insight-row">
       <div>
         <div class="insight-title">${cityDisplay}</div>
-        <div class="insight-meta">${loc.state} • ${loc.notices_last_90_days} in 90d</div>
+        <div class="insight-meta">${loc.state} ? ${loc.notices_last_90_days} in 90d</div>
       </div>
       <div class="insight-pill ${loc.risk_level === 'red' ? 'red' : 'yellow'}">${loc.risk_level.toUpperCase()}</div>
     </div>
@@ -1692,7 +1692,7 @@ const renderTalent = (data) => {
     <div class="insight-row">
       <div>
         <div class="insight-title">${cityDisplay}</div>
-        <div class="insight-meta">${entry.state} • ${entry.notices_count} notices</div>
+        <div class="insight-meta">${entry.state} ? ${entry.notices_count} notices</div>
       </div>
       <div>
         <div class="insight-pill">${entry.estimated_nurses_available}</div>
@@ -1719,7 +1719,7 @@ const renderEmployers = (data) => {
     <div class="insight-row">
       <div>
         <div class="insight-title">${entry.employer_name || 'Unknown employer'}</div>
-        <div class="insight-meta">${entry.parent_system || entry.state} • ${entry.total_notices} notices</div>
+        <div class="insight-meta">${entry.parent_system || entry.state} ? ${entry.total_notices} notices</div>
       </div>
       <div class="insight-meta">${entry.avg_lead_time_days ?? 'n/a'}d avg lead</div>
     </div>
@@ -2060,7 +2060,7 @@ const initForecast = () => {
     forecastOutput.innerHTML = `
       Estimated displacement over ${horizon || 60} days:
       <strong>${totalNurses}</strong> total nurses
-      (RN ${rn} • LPN ${lpn} • CNA ${cna}).
+      (RN ${rn} ? LPN ${lpn} ? CNA ${cna}).
     `;
   };
 
@@ -2357,8 +2357,7 @@ const initWeatherMap = async () => {
         }
         return;
       }
-      stateSelect.value = stateId;
-      loadNotices();
+      selectSingleStateFromMap(stateId);
     });
   });
 
@@ -2726,6 +2725,18 @@ const toggleStateSelection = (state) => {
   onStateSelectionChange();
 };
 
+const selectSingleStateFromMap = (state) => {
+  if (!state || !ALL_STATES.includes(state)) return;
+  selectedStates = [state];
+  stateSelect.value = state;
+  stateOptions?.querySelectorAll('[data-state]').forEach((option) => {
+    option.classList.toggle('selected', option.dataset.state === state);
+  });
+  updateStateDisplay();
+  updateMapHighlights();
+  onStateSelectionChange();
+};
+
 // Handle state selection change - update map/chart and reload data
 const onStateSelectionChange = () => {
   if (currentMapView === 'map') {
@@ -3072,7 +3083,7 @@ const openProjectDetail = (projectId) => {
       <div class="project-notice-item" data-notice-id="${notice.id}">
         <div class="project-notice-item-info">
           <h5>${notice.employerName || notice.employer_name || 'Unknown'}</h5>
-          <span>${notice.state} • ${formatDate(notice.noticeDate || notice.notice_date)} • ${formatNumber(notice.affectedCount || notice.employees_affected)} affected</span>
+          <span>${notice.state} ? ${formatDate(notice.noticeDate || notice.notice_date)} ? ${formatNumber(notice.affectedCount || notice.employees_affected)} affected</span>
         </div>
         <button onclick="removeNoticeFromProject('${projectId}', '${notice.id}')" title="Remove from project">&times;</button>
       </div>
@@ -4087,7 +4098,7 @@ const renderStateBeacon = async (state) => {
     renderBeaconList(stateBeaconHospitals, hospitalItems, (item) => `
       <div class="state-beacon-item">
         <strong>${escapeHtml(item.name)}</strong>
-        <span>${escapeHtml(item.label)} • Score ${item.score.toFixed(1)} • WARN ${item.warnCount}</span>
+        <span>${escapeHtml(item.label)} ? Score ${item.score.toFixed(1)} ? WARN ${item.warnCount}</span>
       </div>
     `);
   } else {
@@ -4099,7 +4110,7 @@ const renderStateBeacon = async (state) => {
     renderBeaconList(stateBeaconHospitals, hospitalItems, (item) => `
       <div class="state-beacon-item">
         <strong>${escapeHtml(item.employer)}</strong>
-        <span>${escapeHtml(item.label)} • ${item.notices} notices</span>
+        <span>${escapeHtml(item.label)} ? ${item.notices} notices</span>
       </div>
     `);
   }
@@ -4121,7 +4132,7 @@ const renderStateBeacon = async (state) => {
       <strong>${escapeHtml(item.name)}</strong>
       <span>
         ${item.flagship ? '<span class="state-beacon-badge">Flagship</span>' : ''}
-        ${item.metro ? `• ${escapeHtml(item.metro)}` : ''}
+        ${item.metro ? `? ${escapeHtml(item.metro)}` : ''}
       </span>
     </div>
   `);
@@ -4135,7 +4146,7 @@ const renderStateBeacon = async (state) => {
   renderBeaconList(stateBeaconCompetition, competitionSystems, (system) => `
     <div class="state-beacon-item">
       <strong>${escapeHtml(system.name)}</strong>
-      <span>${escapeHtml(system.presence || '')} ${system.notes ? `• ${escapeHtml(system.notes)}` : ''}</span>
+      <span>${escapeHtml(system.presence || '')} ${system.notes ? `? ${escapeHtml(system.notes)}` : ''}</span>
     </div>
   `);
 
@@ -4208,7 +4219,7 @@ const renderStateBeacon = async (state) => {
   renderBeaconList(stateBeaconNews, newsMatches, (article) => `
     <a href="${article.url}" target="_blank" rel="noopener noreferrer">
       <strong>${escapeHtml(article.title)}</strong>
-      <div class="state-beacon-subtitle">${escapeHtml(article.source || '')}${article.publishedAt ? ` • ${escapeHtml(article.publishedAt)}` : ''}</div>
+      <div class="state-beacon-subtitle">${escapeHtml(article.source || '')}${article.publishedAt ? ` ? ${escapeHtml(article.publishedAt)}` : ''}</div>
     </a>
   `);
 
@@ -4271,7 +4282,7 @@ const renderStateBeacon = async (state) => {
 
   renderBeaconList(stateBeaconScript, entry.talkingPoints, (point) => `
     <div class="state-beacon-item">
-      <strong>•</strong>
+      <strong>?</strong>
       <span>${escapeHtml(replaceTokens(point, tokens))}</span>
     </div>
   `);
@@ -4414,7 +4425,7 @@ const renderHomeState = async (homeState) => {
     renderBeaconList(homeStateHospitals, hospitalItems, (item) => `
       <div class="state-beacon-item">
         <strong>${escapeHtml(item.name)}</strong>
-        <span>${escapeHtml(item.label)} • Score ${item.score.toFixed(1)} • WARN ${item.warnCount}</span>
+        <span>${escapeHtml(item.label)} ? Score ${item.score.toFixed(1)} ? WARN ${item.warnCount}</span>
       </div>
     `);
   } else {
@@ -4426,7 +4437,7 @@ const renderHomeState = async (homeState) => {
     renderBeaconList(homeStateHospitals, hospitalItems, (item) => `
       <div class="state-beacon-item">
         <strong>${escapeHtml(item.employer)}</strong>
-        <span>${escapeHtml(item.label)} • ${item.notices} notices</span>
+        <span>${escapeHtml(item.label)} ? ${item.notices} notices</span>
       </div>
     `);
   }
@@ -4440,7 +4451,7 @@ const renderHomeState = async (homeState) => {
   renderBeaconList(homeStateCompetition, competitionSystems, (system) => `
     <div class="state-beacon-item">
       <strong>${escapeHtml(system.name)}</strong>
-      <span>${escapeHtml(system.presence || '')} ${system.notes ? `• ${escapeHtml(system.notes)}` : ''}</span>
+      <span>${escapeHtml(system.presence || '')} ${system.notes ? `? ${escapeHtml(system.notes)}` : ''}</span>
     </div>
   `);
 
@@ -4478,7 +4489,7 @@ const renderHomeState = async (homeState) => {
   renderBeaconList(homeStateNews, newsMatches, (article) => `
     <a href="${article.url}" target="_blank" rel="noopener noreferrer">
       <strong>${escapeHtml(article.title)}</strong>
-      <div class="state-beacon-subtitle">${escapeHtml(article.source || '')}${article.publishedAt ? ` • ${escapeHtml(article.publishedAt)}` : ''}</div>
+      <div class="state-beacon-subtitle">${escapeHtml(article.source || '')}${article.publishedAt ? ` ? ${escapeHtml(article.publishedAt)}` : ''}</div>
     </a>
   `);
 
@@ -4572,7 +4583,7 @@ const buildHomeStateExportRows = (data) => {
   data.hospitals?.watchlist?.forEach((item) => pushRow('Hospitals Watchlist', item.employer, `${item.notices} notices`));
 
   data.competitionSystems?.forEach((system) => {
-    pushRow('Competition', system.name, [system.presence, system.notes].filter(Boolean).join(' • '));
+    pushRow('Competition', system.name, [system.presence, system.notes].filter(Boolean).join(' ? '));
   });
 
   pushRow('Pipeline', 'Programs count', data.programsCount);
@@ -4581,7 +4592,7 @@ const buildHomeStateExportRows = (data) => {
   (data.pipeline?.residencies || []).forEach((entry) => pushRow('Pipeline Residencies', entry, ''));
 
   data.newsFeed?.forEach((article) => {
-    const meta = [article.source, article.publishedAt || article.date].filter(Boolean).join(' • ');
+    const meta = [article.source, article.publishedAt || article.date].filter(Boolean).join(' ? ');
     pushRow('News', article.title || 'Untitled', meta);
   });
 
@@ -5755,7 +5766,7 @@ const buildStateBeaconExportRows = (data) => {
   Object.entries(data.market || {}).forEach(([key, value]) => pushRow('Market', key, Array.isArray(value) ? value.join('; ') : value));
 
   data.competition?.systems?.forEach((system) => {
-    pushRow('Competition', system.name, [system.presence, system.notes].filter(Boolean).join(' • '));
+    pushRow('Competition', system.name, [system.presence, system.notes].filter(Boolean).join(' ? '));
   });
 
   data.hospitals?.best?.forEach((item) => pushRow('Hospitals Best', item.employer, `${item.notices} notices`));
@@ -5796,7 +5807,7 @@ const exportStateBeaconCsv = () => {
   Object.entries(data.market || {}).forEach(([key, value]) => pushRow('Market', key, Array.isArray(value) ? value.join('; ') : value));
 
   data.competition?.systems?.forEach((system) => {
-    pushRow('Competition', system.name, [system.presence, system.notes].filter(Boolean).join(' • '));
+    pushRow('Competition', system.name, [system.presence, system.notes].filter(Boolean).join(' ? '));
   });
 
   data.hospitals?.best?.forEach((item) => pushRow('Hospitals Best', item.employer, `${item.notices} notices`));
@@ -6868,4 +6879,3 @@ if (document.fonts && document.fonts.ready) {
 
 // Auto-init if already authenticated
 bootstrapAuth();
-
