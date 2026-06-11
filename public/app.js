@@ -2740,7 +2740,7 @@ const initLightworker = () => {
       ALL_STATES.forEach(s => {
         const opt = document.createElement('option');
         opt.value = s;
-        opt.textContent = `${s} Ã¢â‚¬â€ ${STATE_NAMES[s] || s}`;
+        opt.textContent = `${s} ???????? ${STATE_NAMES[s] || s}`;
         homeSelect.appendChild(opt);
       });
     }
@@ -5299,6 +5299,7 @@ const selectSingleStateFromMap = (state) => {
     option.classList.toggle('selected', option.dataset.state === state);
   });
   updateStateDisplay();
+  updateMapHighlights();
   onStateSelectionChange();
 };
 
@@ -6351,9 +6352,9 @@ const loadPrograms = async (force = false) => {
         ? `Sources: ${sourceNames.join(' + ')}`
         : '';
       if (data?.mode === 'live') {
-        programsSourceNote.textContent += `${programsSourceNote.textContent ? ' • ' : ''}Live refresh active`;
+        programsSourceNote.textContent += `${programsSourceNote.textContent ? ' ? ' : ''}Live refresh active`;
       } else if (data?.mode === 'fallback-after-live-failure') {
-        programsSourceNote.textContent += `${programsSourceNote.textContent ? ' • ' : ''}Live refresh failed; using local snapshot`;
+        programsSourceNote.textContent += `${programsSourceNote.textContent ? ' ? ' : ''}Live refresh failed; using local snapshot`;
       }
     }
 
