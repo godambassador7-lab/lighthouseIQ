@@ -3086,6 +3086,30 @@ const renderInsightFallback = (element, message) => {
   element.innerHTML = `<div class="empty-state">${message}</div>`;
 };
 
+const insightSeverity = (score, warnAt = 50, criticalAt = 75) => {
+  if (score >= criticalAt) return { label: 'High', className: 'red' };
+  if (score >= warnAt) return { label: 'Watch', className: 'yellow' };
+  return { label: 'Stable', className: '' };
+};
+
+const renderInsightBrief = (title, metrics, action) => `
+  <div class="insight-exec-brief">
+    <div>
+      <span>Executive readout</span>
+      <strong>${escapeHtml(title)}</strong>
+    </div>
+    <div class="insight-exec-metrics">
+      ${metrics.map((metric) => `
+        <div>
+          <span>${escapeHtml(metric.label)}</span>
+          <strong>${escapeHtml(String(metric.value))}</strong>
+        </div>
+      `).join('')}
+    </div>
+    <p>${escapeHtml(action)}</p>
+  </div>
+`;
+
 const renderAlerts = (data) => {
   if (!alertsList) return;
   const alerts = data?.alerts ?? [];
@@ -3096,18 +3120,34 @@ const renderAlerts = (data) => {
   const top = alerts
     .sort((a, b) => (b.early_warning === true) - (a.early_warning === true))
     .slice(0, 8);
-  alertsList.innerHTML = top.map(alert => `
+  const earlyCount = alerts.filter((alert) => alert.early_warning).length;
+  const avgLead = Math.round(alerts.reduce((sum, alert) => sum + Number(alert.lead_time_days || 0), 0) / Math.max(1, alerts.length));
+  const executiveBrief = renderInsightBrief(
+    `${earlyCount} early-warning signals need recruiter review`,
+    [
+      { label: 'Signals', value: alerts.length.toLocaleString() },
+      { label: 'Early', value: earlyCount.toLocaleString() },
+      { label: 'Avg lead', value: `${avgLead || 'n/a'}d` }
+    ],
+    earlyCount ? 'Prioritize outreach against early-warning employers before effective dates compress the candidate window.' : 'Maintain weekly monitoring; no immediate early-warning spike detected.'
+  );
+  alertsList.innerHTML = executiveBrief + top.map(alert => {
+    const leadDays = Number(alert.lead_time_days ?? 0);
+    const severity = insightSeverity(alert.early_warning ? 80 : leadDays <= 30 ? 58 : 32);
+    return `
     <div class="insight-row">
       <div>
         <div class="insight-title">${alert.employer_name || 'Unknown employer'}</div>
         <div class="insight-meta">${[alert.state, alert.facility_name || alert.parent_system].filter(Boolean).join(' | ')}</div>
+        <div class="insight-action">Action: ${alert.early_warning ? 'source impacted RNs now' : 'monitor for conversion trigger'}</div>
       </div>
       <div>
-        <div class="insight-pill ${alert.early_warning ? 'yellow' : ''}">${alert.early_warning ? 'Early' : 'Signal'}</div>
+        <div class="insight-pill ${severity.className}">${severity.label}</div>
         <div class="insight-meta">${alert.lead_time_days ?? 'n/a'}d lead</div>
       </div>
     </div>
-  `).join('');
+  `;
+  }).join('');
 };
 
 const renderHeatmap = (data) => {
@@ -3121,15 +3161,30 @@ const renderHeatmap = (data) => {
     renderInsightFallback(heatmapList, 'No hotspots detected.');
     return;
   }
-  heatmapList.innerHTML = ranked.map(loc => {
+  const topState = ranked[0]?.state || 'n/a';
+  const redCount = locations.filter((loc) => loc.risk_level === 'red').length;
+  const total90 = ranked.reduce((sum, loc) => sum + Number(loc.notices_last_90_days || 0), 0);
+  const executiveBrief = renderInsightBrief(
+    `${topState} leads current workforce-risk concentration`,
+    [
+      { label: 'Hotspots', value: ranked.length },
+      { label: 'Red', value: redCount },
+      { label: '90d notices', value: total90.toLocaleString() }
+    ],
+    'Use this as the market-priority stack for sourcing capacity, competitor monitoring, and facility outreach.'
+  );
+  heatmapList.innerHTML = executiveBrief + ranked.map(loc => {
     const cityDisplay = loc.city && loc.city !== 'unknown' ? loc.city : `${loc.state} Statewide`;
+    const riskScore = loc.risk_level === 'red' ? 85 : loc.risk_level === 'yellow' ? 60 : 30;
+    const severity = insightSeverity(riskScore);
     return `
     <div class="insight-row">
       <div>
         <div class="insight-title">${cityDisplay}</div>
         <div class="insight-meta">${loc.state} | ${loc.notices_last_90_days} in 90d</div>
+        <div class="insight-action">Action: validate hospitals, commute radius, and specialty mix.</div>
       </div>
-      <div class="insight-pill ${loc.risk_level === 'red' ? 'red' : 'yellow'}">${loc.risk_level.toUpperCase()}</div>
+      <div class="insight-pill ${severity.className}">${severity.label}</div>
     </div>
   `;
   }).join('');
@@ -3150,16 +3205,31 @@ const renderTalent = (data) => {
     return;
   }
 
-  talentList.innerHTML = top.map(entry => {
+  const totalAvailable = top.reduce((sum, entry) => sum + Number(entry.estimated_nurses_available || 0), 0);
+  const topSpecialties = [...new Set(top.flatMap((entry) => Array.isArray(entry.specialties) ? entry.specialties : []))]
+    .slice(0, 4);
+  const executiveBrief = renderInsightBrief(
+    `${Math.round(totalAvailable).toLocaleString()} estimated RNs in top opportunity pockets`,
+    [
+      { label: 'Markets', value: opportunities.length.toLocaleString() },
+      { label: 'Top 8 supply', value: Math.round(totalAvailable).toLocaleString() },
+      { label: 'Specialties', value: topSpecialties.length || 'n/a' }
+    ],
+    `Lead with ${topSpecialties.join(', ') || 'general RN'} campaigns in the highest-supply cities before expanding to statewide sourcing.`
+  );
+  talentList.innerHTML = executiveBrief + top.map(entry => {
     const cityDisplay = entry.city && entry.city !== 'unknown' ? entry.city : `${entry.state} Statewide`;
+    const availability = Number(entry.estimated_nurses_available || 0);
+    const severity = insightSeverity(availability, 150, 350);
     return `
     <div class="insight-row">
       <div>
         <div class="insight-title">${cityDisplay}</div>
         <div class="insight-meta">${entry.state} | ${entry.notices_count} notices</div>
+        <div class="insight-action">Action: launch ${entry.specialties?.slice(0, 2).join('/') || 'RN'} sequence.</div>
       </div>
       <div>
-        <div class="insight-pill">${entry.estimated_nurses_available}</div>
+        <div class="insight-pill ${severity.className}">${Math.round(availability).toLocaleString()}</div>
         <div class="insight-meta">${entry.specialties?.slice(0, 2).join(', ') || 'General'}</div>
       </div>
     </div>
@@ -3179,15 +3249,34 @@ const renderEmployers = (data) => {
     renderInsightFallback(employerList, 'No employer profiles yet.');
     return;
   }
-  employerList.innerHTML = top.map(entry => `
+  const repeated = employers.filter((entry) => Number(entry.total_notices || 0) >= 3).length;
+  const totalAffected = employers.reduce((sum, entry) => sum + Number(entry.total_affected || 0), 0);
+  const executiveBrief = renderInsightBrief(
+    `${repeated} employers show repeated WARN behavior`,
+    [
+      { label: 'Employers', value: employers.length.toLocaleString() },
+      { label: 'Repeat', value: repeated.toLocaleString() },
+      { label: 'Affected', value: Math.round(totalAffected).toLocaleString() }
+    ],
+    'Use repeat employers as account-watch targets for displacement sourcing and competitive staffing intelligence.'
+  );
+  employerList.innerHTML = executiveBrief + top.map(entry => {
+    const noticeCount = Number(entry.total_notices || 0);
+    const severity = insightSeverity(noticeCount, 3, 8);
+    return `
     <div class="insight-row">
       <div>
         <div class="insight-title">${entry.employer_name || 'Unknown employer'}</div>
         <div class="insight-meta">${entry.parent_system || entry.state} | ${entry.total_notices} notices</div>
+        <div class="insight-action">Action: monitor ${entry.state || 'market'} recurrence and recruiter timing.</div>
       </div>
-      <div class="insight-meta">${entry.avg_lead_time_days ?? 'n/a'}d avg lead</div>
+      <div>
+        <div class="insight-pill ${severity.className}">${severity.label}</div>
+        <div class="insight-meta">${entry.avg_lead_time_days ?? 'n/a'}d avg lead</div>
+      </div>
     </div>
-  `).join('');
+  `;
+  }).join('');
 };
 
 const SURPLUS_SPECIALTY_MAP = {
@@ -3815,45 +3904,50 @@ const loadFreeMarketSignals = async () => {
   }
 };
 const loadInsights = async () => {
-  await loadFreeMarketSignals();
-  await loadMarketReadinessIntegration();
-  await loadMarketRequiredMetrics();
-  await loadFacilityMarketFeatures();
-  await loadProviderMaster();
-  await loadHospitalRankingsData();
-  try {
-    const [alerts, geo, talent, employers] = await Promise.all([
-      fetchJson('/insights/alerts'),
-      fetchJson('/insights/geo'),
-      fetchJson('/insights/talent'),
-      fetchJson('/insights/employers')
-    ]);
-    renderAlerts(alerts);
-    renderHeatmap(geo);
-    renderTalent(talent);
-    renderEmployers(employers);
-  } catch (err) {
+  const warmup = Promise.allSettled([
+    loadFreeMarketSignals(),
+    loadMarketReadinessIntegration(),
+    loadMarketRequiredMetrics(),
+    loadFacilityMarketFeatures(),
+    loadProviderMaster(),
+    loadHospitalRankingsData()
+  ]);
+  const getInsightFeed = async (apiPath, fallbackPath) => {
     try {
-      const [alerts, geo, talent, employers] = await Promise.all([
-        fetchJson('/data/alerts.json'),
-        fetchJson('/data/geo.json'),
-        fetchJson('/data/talent.json'),
-        fetchJson('/data/employers.json')
-      ]);
-      renderAlerts(alerts);
-      renderHeatmap(geo);
-      renderTalent(talent);
-      renderEmployers(employers);
-    } catch (fallbackErr) {
-      console.warn('Insights unavailable in API mode:', fallbackErr);
-      specialtySurplusMode = 'unavailable';
-      renderInsightFallback(alertsList, 'Insights unavailable.');
-      renderInsightFallback(heatmapList, 'Insights unavailable.');
-      renderInsightFallback(talentList, 'Insights unavailable.');
-      renderInsightFallback(employerList, 'Insights unavailable.');
-      renderInsightFallback(specialtySurplusList, 'Insights unavailable.');
+      return await fetchJson(apiPath);
+    } catch (apiErr) {
+      return fetchJson(fallbackPath);
     }
+  };
+  try {
+    const [alerts, geo, talent, employers] = await Promise.allSettled([
+      getInsightFeed('/insights/alerts', '/data/alerts.json'),
+      getInsightFeed('/insights/geo', '/data/geo.json'),
+      getInsightFeed('/insights/talent', '/data/talent.json'),
+      getInsightFeed('/insights/employers', '/data/employers.json')
+    ]);
+    if (alerts.status === 'fulfilled') renderAlerts(alerts.value);
+    else renderInsightFallback(alertsList, 'Alerts unavailable.');
+    if (geo.status === 'fulfilled') renderHeatmap(geo.value);
+    else renderInsightFallback(heatmapList, 'Hotspots unavailable.');
+    if (talent.status === 'fulfilled') renderTalent(talent.value);
+    else {
+      specialtySurplusMode = 'unavailable';
+      renderInsightFallback(talentList, 'Talent signals unavailable.');
+      renderInsightFallback(specialtySurplusList, 'Specialty surplus unavailable.');
+    }
+    if (employers.status === 'fulfilled') renderEmployers(employers.value);
+    else renderInsightFallback(employerList, 'Employer profiles unavailable.');
+  } catch (err) {
+    console.warn('Insights unavailable:', err);
+    specialtySurplusMode = 'unavailable';
+    renderInsightFallback(alertsList, 'Insights unavailable.');
+    renderInsightFallback(heatmapList, 'Insights unavailable.');
+    renderInsightFallback(talentList, 'Insights unavailable.');
+    renderInsightFallback(employerList, 'Insights unavailable.');
+    renderInsightFallback(specialtySurplusList, 'Insights unavailable.');
   }
+  warmup.then(() => renderSpecialtySurplus()).catch(() => {});
 };
 
 const loadLeadershipMarketSignals = async () => {
