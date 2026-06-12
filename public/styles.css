@@ -688,7 +688,7 @@ select {
   color: var(--muted);
 }
 
-/* ── Lightworker Pool ─────────────────────────────────────────────────── */
+/* ?? Lightworker Pool ??????????????????????????????????????????????????? */
 .lightworker-container {
   background: var(--card);
   border-radius: var(--radius-lg);
@@ -824,7 +824,7 @@ select {
 .lw-not-configured strong {
   color: #7c3aed;
 }
-/* ── end Lightworker ──────────────────────────────────────────────────── */
+/* ?? end Lightworker ???????????????????????????????????????????????????? */
 
 .form-error {
   display: none;
@@ -3292,7 +3292,7 @@ body.modal-open {
   line-height: 1.45;
 }
 
-/* ── Bonus Factor Button ── */
+/* ?? Bonus Factor Button ?? */
 .map-bonus-factor-btn {
   background: linear-gradient(135deg, #1a365d, #2b6cb0) !important;
   color: #fff !important;
@@ -3304,7 +3304,7 @@ body.modal-open {
   box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.45) !important;
 }
 
-/* ── Bonus Factor Modal ── */
+/* ?? Bonus Factor Modal ?? */
 .bf-modal-card { max-width: 640px; }
 
 .bf-section {
@@ -3454,7 +3454,7 @@ body.modal-open {
   border-color: var(--navy);
 }
 
-/* Delta mode map coloring — grey for below-home states */
+/* Delta mode map coloring ? grey for below-home states */
 #us-map.bf-delta-mode path.salary-0,
 #us-map.bf-delta-mode circle.salary-0 { fill: #d8d8d8; }
 #us-map.bf-delta-mode path.salary-1,
@@ -3467,7 +3467,7 @@ body.modal-open {
 #us-map.bf-delta-mode circle.salary-4 { fill: #8aa3b0; }
 /* salary-5 through salary-9 keep their existing blue hues for positive delta */
 
-/* ── Bonus Factor State Breakdown ── */
+/* ?? Bonus Factor State Breakdown ?? */
 .bf-breakdown-section {
   padding: 0 64px 28px;
 }
@@ -4719,6 +4719,63 @@ body.modal-open {
   border-bottom: 1px solid rgba(26, 54, 93, 0.08);
 }
 
+.insight-exec-brief {
+  border: 1px solid rgba(26, 54, 93, 0.12);
+  background: linear-gradient(180deg, rgba(248, 250, 252, 0.96), rgba(239, 246, 255, 0.72));
+  border-radius: 8px;
+  padding: 0.85rem;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.insight-exec-brief span,
+.insight-action {
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.insight-exec-brief strong {
+  color: var(--navy);
+  display: block;
+  font-size: 0.95rem;
+  line-height: 1.25;
+  margin-top: 0.15rem;
+}
+
+.insight-exec-brief p {
+  color: var(--text);
+  font-size: 0.82rem;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.insight-exec-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.insight-exec-metrics > div {
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(26, 54, 93, 0.08);
+  border-radius: 6px;
+  padding: 0.45rem;
+  min-width: 0;
+}
+
+.insight-exec-metrics strong {
+  font-size: 0.9rem;
+}
+
+.insight-action {
+  margin-top: 0.35rem;
+  text-transform: none;
+  font-weight: 600;
+}
+
 .insight-row > :first-child {
   min-width: 0;
   flex: 1 1 auto;
@@ -4818,7 +4875,7 @@ body.modal-open {
   }
 }
 
-/* ── Strike Alerts ──────────────────────────────────────────────────── */
+/* ?? Strike Alerts ???????????????????????????????????????????????????? */
 .strike-alerts-card { background: linear-gradient(135deg, rgba(220,38,38,0.04), rgba(255,255,255,0.98)); }
 
 .strike-alerts-header {
@@ -5431,7 +5488,7 @@ input[type="range"] {
 }
 
 .multi-select-option.selected .multi-select-checkbox::after {
-  content: '✓';
+  content: '?';
   color: #fff;
   font-size: 11px;
   font-weight: bold;
@@ -6333,7 +6390,7 @@ input[type="range"] {
   gap: 8px;
 }
 
-/* Mode buttons row — slightly more compact */
+/* Mode buttons row ? slightly more compact */
 .map-controls-modes .map-control-btn {
   padding: 6px 11px;
   font-size: 11px;
@@ -9009,7 +9066,7 @@ button.market-chart-state-row:hover,
 }
 
 .legal-section.expanded h4::after {
-  content: ' −';
+  content: ' ?';
 }
 
 .legal-section p {
