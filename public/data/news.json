@@ -1,82 +1,82 @@
 {
-  "lastUpdated": "2026-06-12T23:23:08.166Z",
+  "lastUpdated": "2026-06-13T04:03:16.380Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 1,
-    "healthySources": 9,
+    "staleSources": 3,
+    "healthySources": 7,
     "sources": [
       {
         "source": "Becker's Hospital Review",
         "articleCount": 186,
         "latestPublishedAt": "2026-06-12T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 28,
         "status": "ok"
       },
       {
         "source": "Fierce Healthcare",
-        "articleCount": 168,
-        "latestPublishedAt": "2026-06-12T00:00:00.000Z",
-        "staleHours": 23,
+        "articleCount": 170,
+        "latestPublishedAt": "2026-06-13T00:00:00.000Z",
+        "staleHours": 4,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 68,
+        "articleCount": 66,
         "latestPublishedAt": "2026-06-12T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 28,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 39,
         "latestPublishedAt": "2026-06-12T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 28,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 20,
         "latestPublishedAt": "2026-06-12T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 28,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 8,
         "latestPublishedAt": "2026-06-12T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 28,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 5,
         "latestPublishedAt": "2026-06-11T00:00:00.000Z",
-        "staleHours": 47,
+        "staleHours": 52,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 3,
         "latestPublishedAt": "2026-06-10T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 76,
+        "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 2,
         "latestPublishedAt": "2026-06-09T00:00:00.000Z",
-        "staleHours": 95,
+        "staleHours": 100,
         "status": "stale"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 1,
         "latestPublishedAt": "2026-06-10T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 76,
+        "status": "stale"
       }
     ]
   },
@@ -87,19 +87,19 @@
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 19
+      "count": 18
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 13
+      "count": 12
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 75
+      "count": 79
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 4
+      "count": 3
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
@@ -107,7 +107,7 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 161
+      "count": 160
     },
     "general_market": {
       "label": "General Market",
@@ -115,8 +115,10 @@
     }
   },
   "quality": {
-    "status": "pass",
-    "failedChecks": [],
+    "status": "warning",
+    "failedChecks": [
+      "maxStaleSources"
+    ],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -125,7 +127,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 96,
+        "actual": 25,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -135,12 +137,237 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 1,
-        "pass": true
+        "actual": 3,
+        "pass": false
       }
     }
   },
   "articles": [
+    {
+      "title": "Express Scripts files suit to challenge Tennessee PBM law",
+      "url": "https://www.fiercehealthcare.com/payers/cvs-sues-challenge-tennessees-new-pbm-law",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-13",
+      "summary": "On the heels of a legal challenge from CVS, Express Scripts has also sued to challenge Tennessee's new pharmacy benefit management law.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "CMS proposes permanent framework for Medicare drug price negotiations",
+      "url": "https://www.fiercehealthcare.com/regulatory/cms-proposes-permanent-framework-medicare-drug-price-negotiations",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-13",
+      "summary": "The Trump administration is floating a proposal to establish a permanent framework for the Medicare drug price negotiations, as enabled by the Inflation Reduction Act (IRA).",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Optum Rx, FTC posed for settlement in insulin pricing case",
+      "url": "https://www.fiercehealthcare.com/payers/optum-rx-ftc-posed-settlement-insulin-pricing-case",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-13",
+      "summary": "The Federal Trade Commission may be winding down its ongoing insulin case against the three largest pharmacy benefit managers, as court docs suggest the agency has reached an agreement with Optum Rx.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Nvidia, Abridge collaborate to develop healthcare-specific AI model",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/nvidia-abridge-collaborate-develop-healthcare-specific-ai-model",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-13",
+      "summary": "Chip giant Nvidia is working with startup Abridge to train a healthcare-specific artificial intelligence foundation model tailored to clinical conversations.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Healthcare conferences to put on your calendar for 2026-2027",
+      "url": "https://www.fiercehealthcare.com/special-reports/healthcare-conferences-put-your-calendar-2024-2025",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-13",
+      "summary": "Here's our roundup of some of the top events in healthcare scheduled in 2026 and 2027.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Mercer survey: Employers eye cost-shifting strategies as health benefit spend rises",
+      "url": "https://www.fiercehealthcare.com/payers/mercer-survey-employers-eye-cost-shifting-strategies-health-benefit-spend-rises",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-13",
+      "summary": "As medical costs continue to rise, employers are weighing a return to policies that shift additional expense to workers, according to a new survey.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Weekly Rundown: Karias Health launches AI companion; Mount Sinai, Wisp partner to expand PrEP access in NY",
+      "url": "https://www.fiercehealthcare.com/health-tech/weekly-rundown-karias-health-launches-ai-companion-mount-sinai-wisp-partner-expand-prep",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-13",
+      "summary": "Stay up to date on the latest in health tech, digital health and health AI news with this weekly brief.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Fierce Healthcare Layoff Tracker—Cuts at two Ardent Healthcare systems; UPMC lays off 200",
+      "url": "https://www.fiercehealthcare.com/finance/fierce-healthcare-layoff-tracker-2026-job-cuts-eliminations-health-systems-hospitals",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-13",
+      "summary": "Stick with this tracker for the latest layoff and workforce updates from across healthcare.",
+      "category": "closures_layoffs",
+      "categoryLabel": "Closures & Layoffs"
+    },
+    {
+      "title": "Industry Voices—Why health systems need physicians engaged in IT leadership",
+      "url": "https://www.fiercehealthcare.com/providers/industry-voices-why-health-systems-need-physicians-engaged-it-leadership",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-13",
+      "summary": "The next decade of healthcare transformation will be defined by health systems that bring together clinicians, CIOs and IT leaders as true partners in shaping technology, writes Phoenix Children's associate CMIO.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Healthcare costs poised to jump 9% in 2027 as health plans blame AI adoption, drug prices",
+      "url": "https://www.fiercehealthcare.com/payers/healthcare-costs-poised-jump-9-2027-health-plans-blame-ai-adoption-drug-prices",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-13",
+      "summary": "Health plans are projecting the highest medical cost trend in nearly two decades in 2027, with commercial health costs expected to rise 9%, according to a new analysis from PwC.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Virtual care tech companies launch 'out-of-the-box' RPM tool for pharmacies",
+      "url": "https://www.fiercehealthcare.com/digital-health/partners-launch-remote-patient-monitoring-solution-support-pharmacies",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-13",
+      "summary": "The program's goal is to empower pharmacies, particularly independent ones in rural areas, to oversee and support chronic care patients between scheduled office visits.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Provider groups file lawsuit against HHS over anti-trans Ryan White funding rules",
+      "url": "https://www.fiercehealthcare.com/providers/provider-groups-file-lawsuit-against-hhs-over-new-ryan-white-funding-rules",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-13",
+      "summary": "The new funding requirements mandate recipients of Ryan White funds to not acknowledge the identities of trans patients or use funds for gender-affirming care.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "AI use is surging across HHS, jumping 148% at the FDA in 2025, Bipartisan Policy Center data finds",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/all-hhs-agencies-saw-ai-use-case-increases-fy-2025-bipartisan-policy-center",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-13",
+      "summary": "There was a big uptick in the use of AI across all HHS agencies in 2025, though analysts note some use cases may “reflect new reporting requirements instead of new deployments.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Humana to sell off minority stake in end-of-life care provider Gentiva",
+      "url": "https://www.fiercehealthcare.com/payers/humana-sell-minority-stake-end-life-care-provider-gentiva",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-13",
+      "summary": "Humana announced this week that it intends to divest its minority stake in Gentiva, the largest provider of end-of-life care in the country.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "OIG: Frequent MA prior authorization denials for long-term care hospitals, inpatient rehab",
+      "url": "https://www.fiercehealthcare.com/payers/oig-look-ma-prior-authorization-denials-long-term-care-hospitals-inpatient-rehab",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-13",
+      "summary": "A new federal watchdog report dings the three largest Medicare Advantage insurers for frequent prior authorization denials for long-term care hospital and inpatient rehabilitation stays. Another found that initial denials among skilled-nursing facilities were near-unanimously overturned.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "From Medicaid work requirement exemptions to AI safeguards in coverage: New AMA policies from annual meeting",
+      "url": "https://www.fiercehealthcare.com/regulatory/medicaid-work-requirement-exemptions-ai-safeguards-coverage-decisions-look-new-ama",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-13",
+      "summary": "The organization released a series of new policy announcements, alongside a new president-elect, at its Annual Meeting of the House of Delegates.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Abridge picks up strategic investment from Eli Lilly, expands payer, research workflows",
+      "url": "https://www.fiercehealthcare.com/health-tech/abridge-expands-payment-research-workflows-build-out-full-scale-ai-clinical-assistant",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-13",
+      "summary": "Abridge secured a strategic investment from Eli Lilly and unveiled a major platform expansion to integrate payer and life sciences workflows. Described as an \"AI-native clinician intelligence platform,\" Abridge says it now connects care delivery, payment and evidence-based treatment.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "Fierce Healthcare Fundraising Tracker '26: Adaptive Innovations banks $50M for home health; Ilant Health nabs $15M",
+      "url": "https://www.fiercehealthcare.com/health-tech/fierce-healthcare-fundraising-tracker-26",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-13",
+      "summary": "Keep up with all the venture capital dollars being funneled into the health tech and digital health industries.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Hospital associations push CMS for higher 2027 pay bump, softer ramp-up for mandatory model",
+      "url": "https://www.fiercehealthcare.com/providers/hospital-associations-push-cms-higher-2027-pay-bump-softer-ramp-mandatory-model",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-13",
+      "summary": "Public comments submitted this week rule skewered a proposed 2.4% net rate increase as insufficient in light of substantial financial headwinds.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Chutes & Ladders— R1 taps former Humana exec as new CIO; Xealth names new chief revenue officer",
+      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-13",
+      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "AHIP 2026: Why Ascendiun CEO Paul Markovich is bullish on building out a digital health record for patients",
+      "url": "https://www.fiercehealthcare.com/payers/ahip-2026-why-ascendiun-ceo-paul-markovich-bullish-building-out-digital-health-record",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-13",
+      "summary": "LAS VEGAS — If Ascendiun CEO Paul Markovich could eliminate one buzzword from the healthcare dictionary, it would be \"interoperability.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Ardent Health's surprise CEO change reflected need for margin focus amid headwinds, CFO says",
+      "url": "https://www.fiercehealthcare.com/providers/ardent-healths-surprise-ceo-change-reflects-need-margin-focus-amid-headwinds-cfo-says",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-13",
+      "summary": "CFO Alfred Lumsdaine described the board's decision to immediately promote COO Dave Caspers as \"proactive, not reactive\" as inflationary and policy pressures mount. He also suggested that the softened patient volumes its seen during Q2 likely extend beyond Ardent's markets.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Trustees expect Medicare Trust Fund's reserves to run out in 2033",
+      "url": "https://www.fiercehealthcare.com/regulatory/trustees-expect-medicare-trust-funds-reserves-run-out-2033",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-13",
+      "summary": "A new report suggests that the Medicare Trust Fund's reserves will run dry in 2033, leaving the program unable to pay for all scheduled benefits.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "AMA issues policy urging exemptions in upcoming Medicaid work requirements",
+      "url": "https://www.fiercehealthcare.com/regulatory/ama-issues-policy-urging-exemptions-upcoming-medicaid-work-requirements",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-13",
+      "summary": "The organization says policymakers need to ensure upcoming requirements protect patients with serious medical conditions while minimizing potential administrative burden.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Vega Health licenses AI models from Parkland Center for Clinical Innovation to predict patient risks",
+      "url": "https://www.fiercehealthcare.com/health-tech/vega-health-licenses-ai-models-pcci-predict-patient-risks",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-13",
+      "summary": "Vega helps customers with testing, fine-tuning and deployment of AI. Since 2019, PCCI's models have identified nearly 3 million at-risk individuals.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
     {
       "title": "Submission for OMB Review; 30-Day Comment Request Regular Clearance for the National Institute of Mental Health Data Archive (NDA), (NIMH)",
       "summary": "",
@@ -4586,231 +4813,6 @@
       "url": "https://www.fiercehealthcare.com/providers/industry-voices-healthcare-experience-seamless-it-soulful",
       "source": "Fierce Healthcare",
       "publishedAt": "2026-06-08",
-      "summary": "Patients and their loved ones are too often navigating a fragmented system while carrying the emotional weight that comes with a diagnosis or uncertainty, writes Ascension SVP and Chief Experience Officer Carol Campbell.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "As pro-life pressure ramps up on Trump, FDA is investigating safety of abortion pill: WSJ",
-      "url": "https://www.fiercehealthcare.com/pharma/pro-life-pressure-ramps-trump-fda-investigating-safety-abortion-pill-wsj",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-08",
-      "summary": "The FDA is going forward with an investigation into the safety of the abortion pill mifepristone, an initiative that could allow the Trump administration to impose restrictions on its use, The Wall Street Journal reports.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Fullspan Health debuts Healthline AI companion to connect consumers to medical content and providers",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/fullspan-health-debuts-healthline-ai-companion-users-find-verified-health",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-08",
-      "summary": "The conversational AI agent pulls information from Fullspan’s medically reviewed properties, including Healthline and Psych Central.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "WellSpan Health strikes strategic partnership with Philips to deploy, co-develop new healthcare tech",
-      "url": "https://www.fiercehealthcare.com/health-tech/wellspan-health-strikes-strategic-partnership-philips-deploy-co-develop-new-healthcare",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-08",
-      "summary": "WellSpan Health inked a seven-year strategic alliance with Philips to drive advanced imaging technology across its network and co-develop new healthcare technology.",
-      "category": "labor_unions",
-      "categoryLabel": "Labor & Unions"
-    },
-    {
-      "title": "Ixlayer rolls out digital acute pain management platform in collaboration with Vertex Pharmaceuticals",
-      "url": "https://www.fiercehealthcare.com/health-tech/ixlayer-rolls-out-digital-acute-pain-management-platform-collaboration-vertex",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-08",
-      "summary": "The platform—dubbed Informed Pain Care—allows patients to connect with licensed clinicians virtually, providing symptom-based intake and eligibility screenings and treatment options.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Small businesses feel the squeeze as healthcare costs rise: Morgan Health",
-      "url": "https://www.fiercehealthcare.com/payers/small-businesses-feel-squeeze-healthcare-costs-rise-morgan-health",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-08",
-      "summary": "As healthcare costs continue to rise, smaller businesses are particularly vulnerable to the pressure, according to a new Morgan Health report.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Ascension closes its $3.9B AmSurg purchase following FTC's all-clear",
-      "url": "https://www.fiercehealthcare.com/providers/ftc-clears-ascensions-39b-amsurg-purchase-requires-some-asc-divestitures",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-08",
-      "summary": "The nonprofit health system is now the country's third-largest ambulatory surgery center (ASC) platform, with more than 300 such locations.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "ScionHealth sends 8 community hospitals to Lifepoint Health",
-      "url": "https://www.fiercehealthcare.com/providers/scionhealth-sends-8-community-hospitals-lifepoint-health",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-08",
-      "summary": "The deal between the nationwide sister systems grows Lifepoint Health to a network of 68 community hospital campuses, and allows ScionHealth to increase focus on its core business of specialty hospital services.",
-      "category": "capacity_expansion",
-      "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "Georgetown study: 2M children have dropped out of Medicaid, CHIP since January 2025",
-      "url": "https://www.fiercehealthcare.com/regulatory/georgetown-study-2m-children-have-dropped-out-medicaid-chip-january-2025",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-08",
-      "summary": "There are 2 million fewer children enrolled in either Medicaid or the Children's Health Insurance Program compared to January 2025, according to a new report.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Thyme Care expands cancer survivorship program to provide longitudinal support",
-      "url": "https://www.fiercehealthcare.com/health-tech/thyme-care-expands-cancer-survivorship-program-provide-longitudinal-support",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-08",
-      "summary": "Thyme Care has expanded its cancer survivorship program, called Next Chapter Care, to provide a personalized, longitudinal approach to survivorship support.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Anomaly Insights launches AI solution for managed care executives",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/anomaly-insights-launches-ai-solution-managed-care-executives",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-08",
-      "summary": "The Manage platform examines all claims across every payer in a health system’s contract, identifying behavior patterns and synthesizing complex data.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Commonwealth Fund: 21% of adults experienced a coverage denial in the past year",
-      "url": "https://www.fiercehealthcare.com/payers/commonwealth-fund-21-adults-experienced-coverage-denial-past-year",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-08",
-      "summary": "One in five adults with private insurance coverage said that they or a family member had a medical service denied in the past year, even though it was recommended by their physician.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Fierce Healthcare Layoff Tracker—Centra restructure hits 90 workers; Optum cuts 58 jobs in New Jersey",
-      "url": "https://www.fiercehealthcare.com/finance/fierce-healthcare-layoff-tracker-2026-job-cuts-eliminations-health-systems-hospitals",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-08",
-      "summary": "Stick with this tracker for the latest layoff and workforce updates from across healthcare.",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "Fierce Healthcare Fundraising Tracker '26: Novellia picks up $18M; Lassie nabs $35M to build AI agents for practices",
-      "url": "https://www.fiercehealthcare.com/health-tech/fierce-healthcare-fundraising-tracker-26",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-08",
-      "summary": "Keep up with all the venture capital dollars being funneled into the health tech and digital health industries.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Presbyterian Healthcare Services to discontinue MA plans in 2027, cut 150 jobs",
-      "url": "https://www.fiercehealthcare.com/payers/presbyterian-healthcare-services-discontinue-ma-plans-2027",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-08",
-      "summary": "New Mexico-based health system Presbyterian Healthcare Services will discontinue most of its Medicare Advantage plans, a spokesperson confirmed to Fierce Healthcare.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Department of Labor's proposed foreign worker wage increases are more tough news for healthcare staffing",
-      "url": "https://www.fiercehealthcare.com/providers/department-labors-proposed-foreign-worker-wage-increases-are-more-tough-news-healthcare",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-08",
-      "summary": "A plan to raise the floor for foreign workers' wages, intended to bolster hiring of American workers, threatens to raise costs and reduce labor supply for healthcare employers, particularly in rural and underserved areas, industry sources say.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "WVU Health System, Independence Health System target late 2026 for merger",
-      "url": "https://www.fiercehealthcare.com/providers/western-pennylvanias-independence-health-system-join-wvu-health-system-2026",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-08",
-      "summary": "The five-hospital nonprofit will receive an $800 million investment from the academic health system under the terms of their deal, which now has a definitive agreement in hand.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "AHA lays out blueprint to improve affordability, care access and quality",
-      "url": "https://www.fiercehealthcare.com/hospitals/aha-lays-out-blueprint-improve-affordability-care-access-and-quality",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-08",
-      "summary": "The report is focused on five key areas, including improving individual and community health, reducing administrative waste and transforming care delivery.",
-      "category": "quality_safety",
-      "categoryLabel": "Quality & Safety"
-    },
-    {
-      "title": "The watchdog overseeing the integrity of HHS programs",
-      "url": "https://www.fiercehealthcare.com/hospitals/watchdog-overseeing-integrity-hhs-programs",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-08",
-      "summary": "HHS’ Office of Inspector General has a broad mandate to root out fraud, waste and abuse. Senior Writer Anastassia Gliadkovskaya talks with Assistant Regional Inspector General Scott Perry about the agency’s work, recent audit findings and what providers should know about compliance.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Chutes & Ladders—Ardent Health appoints new CEO; KFF Founding President, CEO to retire",
-      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-08",
-      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Athenahealth rolls out over 80 new, expanded AI RCM features in ‘roadmap’ on athenaOne platform",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/athenahealth-rolls-out-over-80-new-expanded-ai-rcm-features-roadmap",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-08",
-      "summary": "New and expanded AI-native capabilities include automated insurance selection, AI copay, voice AI, express coding and more.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Microsoft, Mayo Clinic plan to build frontier AI model for healthcare",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/microsoft-mayo-clinic-plan-build-frontier-ai-model-healthcare",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-08",
-      "summary": "Mayo Clinic plans to develop and deploy a frontier AI model specifically designed for healthcare in collaboration with Microsoft.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Industry groups say final Medicaid work requirements rule imposes onerous documentation burden",
-      "url": "https://www.fiercehealthcare.com/regulatory/industry-groups-say-final-medicaid-work-requirements-rule-imposes-onerous-documentation",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-08",
-      "summary": "On Monday, the Trump administration finalized a key rule that establishes national guidelines for the rollout of work requirements in Medicaid. Industry groups warn that the regulation could prove burdensome to enrollees and state programs.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "STAT+: Competition for obesity drugs, clinical blind spots, and more news from ADA",
-      "url": "https://www.statnews.com/2026/06/07/competition-obesity-drugs-clinical-blind-spots-and-more-ada/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-06-07",
-      "summary": "You're reading the web edition of STAT's ADA in 30 Seconds, from the American Diabetes Association's annual conference.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: New data may cast doubt on competitiveness of Boehringer’s obesity drug",
-      "url": "https://www.statnews.com/2026/06/07/boehringer-ingelheim-obesity-drug-survodutide-phase-3-data/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-06-07",
-      "summary": "Boehringer Ingelheim’s obesity drug showed promise in cutting liver fat, but it was less impressive at overall weight loss, new data shows.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Industry Voices—A healthcare experience that is as seamless as it is soulful",
-      "url": "https://www.fiercehealthcare.com/providers/industry-voices-healthcare-experience-seamless-it-soulful",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-07",
       "summary": "Patients and their loved ones are too often navigating a fragmented system while carrying the emotional weight that comes with a diagnosis or uncertainty, writes Ascension SVP and Chief Experience Officer Carol Campbell.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
