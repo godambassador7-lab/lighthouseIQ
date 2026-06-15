@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-06-15T00:17:21.410Z",
+  "lastUpdated": "2026-06-15T06:32:01.196Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 4,
-    "healthySources": 6,
+    "staleSources": 7,
+    "healthySources": 3,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 206,
+        "articleCount": 207,
         "latestPublishedAt": "2026-06-15T00:00:00.000Z",
-        "staleHours": 0,
+        "staleHours": 6,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 152,
+        "articleCount": 151,
         "latestPublishedAt": "2026-06-12T00:00:00.000Z",
-        "staleHours": 72,
-        "status": "ok"
+        "staleHours": 78,
+        "status": "stale"
       },
       {
         "source": "STAT News",
         "articleCount": 58,
         "latestPublishedAt": "2026-06-13T00:00:00.000Z",
-        "staleHours": 48,
+        "staleHours": 54,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 43,
         "latestPublishedAt": "2026-06-15T00:00:00.000Z",
-        "staleHours": 0,
+        "staleHours": 6,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 16,
         "latestPublishedAt": "2026-06-12T00:00:00.000Z",
-        "staleHours": 72,
-        "status": "ok"
+        "staleHours": 78,
+        "status": "stale"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 9,
         "latestPublishedAt": "2026-06-11T00:00:00.000Z",
-        "staleHours": 96,
+        "staleHours": 102,
         "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 8,
         "latestPublishedAt": "2026-06-12T00:00:00.000Z",
-        "staleHours": 72,
-        "status": "ok"
+        "staleHours": 78,
+        "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 5,
         "latestPublishedAt": "2026-06-11T00:00:00.000Z",
-        "staleHours": 96,
+        "staleHours": 102,
         "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 2,
         "latestPublishedAt": "2026-06-09T00:00:00.000Z",
-        "staleHours": 144,
+        "staleHours": 150,
         "status": "stale"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 1,
         "latestPublishedAt": "2026-06-10T00:00:00.000Z",
-        "staleHours": 120,
+        "staleHours": 126,
         "status": "stale"
       }
     ]
@@ -103,11 +103,11 @@
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
-      "count": 15
+      "count": 14
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 162
+      "count": 163
     },
     "general_market": {
       "label": "General Market",
@@ -127,7 +127,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 35,
+        "actual": 36,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -137,7 +137,7 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 4,
+        "actual": 7,
         "pass": false
       }
     }
@@ -262,6 +262,15 @@
       "category": "general_market",
       "relevance": 96,
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "Healthcare AI Works Better with Clear Roles and Honest Limits",
+      "url": "https://www.fiercehealthcare.com/sponsored/healthcare-ai-works-better-clear-roles-and-honest-limits",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-15",
+      "summary": "In healthcare, building trust in AI is successful when roles are clear and limits are honest. Here's what that looks like in medical transportation.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "Express Scripts files suit to challenge Tennessee PBM law",
@@ -4837,15 +4846,6 @@
       "summary": "OpenEvidence, the AI-powered clinical reference app, has become one of the fastest-growing tools in American medicine, fielding 30 million questions last month alone, The New York Times reported June 8. Here are six things to know about OpenEvidence, according to the story and previous Becker&#8217;s reporting: 1.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Sutter Health&#8217;s Epic command center adds 12 beds a day",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/sutter-healths-epic-command-center-adds-12-beds-a-day/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-08",
-      "summary": "Sacramento, Calif.-based Sutter Health opened a centralized capacity management center to coordinate patient flow, effectively adding 12 beds per day to system capacity, according to an Epic case study.",
-      "category": "capacity_expansion",
-      "categoryLabel": "Capacity & Expansion"
     }
   ]
 }
