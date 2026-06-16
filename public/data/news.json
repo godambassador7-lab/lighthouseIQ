@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-06-16T10:14:34.687Z",
+  "lastUpdated": "2026-06-16T16:03:58.997Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 3,
-    "healthySources": 7,
+    "staleSources": 2,
+    "healthySources": 8,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 214,
+        "articleCount": 206,
         "latestPublishedAt": "2026-06-16T00:00:00.000Z",
-        "staleHours": 10,
+        "staleHours": 16,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 140,
-        "latestPublishedAt": "2026-06-15T00:00:00.000Z",
-        "staleHours": 34,
+        "articleCount": 150,
+        "latestPublishedAt": "2026-06-16T00:00:00.000Z",
+        "staleHours": 16,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 56,
+        "articleCount": 61,
         "latestPublishedAt": "2026-06-16T00:00:00.000Z",
-        "staleHours": 10,
+        "staleHours": 16,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
-        "articleCount": 46,
+        "articleCount": 38,
         "latestPublishedAt": "2026-06-16T00:00:00.000Z",
-        "staleHours": 10,
+        "staleHours": 16,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
-        "articleCount": 18,
-        "latestPublishedAt": "2026-06-15T00:00:00.000Z",
-        "staleHours": 34,
+        "articleCount": 20,
+        "latestPublishedAt": "2026-06-16T00:00:00.000Z",
+        "staleHours": 16,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 8,
         "latestPublishedAt": "2026-06-16T00:00:00.000Z",
-        "staleHours": 10,
+        "staleHours": 16,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 8,
         "latestPublishedAt": "2026-06-11T00:00:00.000Z",
-        "staleHours": 130,
+        "staleHours": 136,
         "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 7,
         "latestPublishedAt": "2026-06-15T00:00:00.000Z",
-        "staleHours": 34,
+        "staleHours": 40,
         "status": "ok"
       },
       {
         "source": "National Nurses United RSS",
-        "articleCount": 2,
-        "latestPublishedAt": "2026-06-09T00:00:00.000Z",
-        "staleHours": 178,
-        "status": "stale"
+        "articleCount": 1,
+        "latestPublishedAt": "2026-06-16T00:00:00.000Z",
+        "staleHours": 16,
+        "status": "ok"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 1,
         "latestPublishedAt": "2026-06-10T00:00:00.000Z",
-        "staleHours": 154,
+        "staleHours": 160,
         "status": "stale"
       }
     ]
@@ -87,19 +87,19 @@
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 18
+      "count": 16
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 10
+      "count": 7
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 100
+      "count": 104
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 6
+      "count": 8
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
@@ -107,18 +107,16 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 158
+      "count": 160
     },
     "general_market": {
       "label": "General Market",
-      "count": 177
+      "count": 174
     }
   },
   "quality": {
-    "status": "warning",
-    "failedChecks": [
-      "maxStaleSources"
-    ],
+    "status": "pass",
+    "failedChecks": [],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -127,7 +125,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 38,
+        "actual": 58,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -137,8 +135,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 3,
-        "pass": false
+        "actual": 2,
+        "pass": true
       }
     }
   },
@@ -252,6 +250,18 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
+      "title": "NNU report finds a majority of nurses experienced workplace violence in the past year",
+      "summary": "Health care workers have been experiencing a surge in workplace violence rates nationally since the onset of the Covid-19 pandemic, building on already rising rates in previous years. A nationwide survey conducted by National Nurses United found that the majority of nurses have experienced workplace violence and nearly one-third have seen a rise in rates in the past year.",
+      "url": "https://www.nationalnursesunited.org/press/nnu-report-finds-a-majority-of-nurses-experienced-workplace-violence-in-the-past-year",
+      "source": "National Nurses United RSS",
+      "sourceType": "rss",
+      "sourceId": "nnu_rss",
+      "publishedAt": "2026-06-16",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "Center for Scientific Review; Notice of Closed Meetings",
       "summary": "",
       "url": "https://www.federalregister.gov/documents/2026/06/16/2026-12074/center-for-scientific-review-notice-of-closed-meetings",
@@ -262,6 +272,141 @@
       "category": "general_market",
       "relevance": 96,
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "How health systems can lead through disruption: Cost, supply chain and AI",
+      "url": "https://www.beckershospitalreview.com/supply-chain/how-health-systems-can-lead-through-disruption-cost-supply-chain-and-ai/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-16",
+      "summary": "U.S.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Senate Democrats outline plans to lower drug prices: 4 notes",
+      "url": "https://www.beckershospitalreview.com/pharmacy/senate-democrats-outline-plans-to-lower-drug-prices-4-notes/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-16",
+      "summary": "Senate Finance Committee minority staff has released a request for information outlining three policy options aimed at lowering prescription drug prices, reducing patient out-of-pocket costs and supporting biopharmaceutical innovation. The proposal, released June 16, builds on a February plan led by Sen.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "FMOL Health CEO on a $50M workforce bet that wasn&#8217;t in the budget",
+      "url": "https://www.beckershospitalreview.com/strategy/fmol-health-ceo-on-a-50m-workforce-bet-that-wasnt-in-the-budget/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-16",
+      "summary": "The 2025 compensation budget at Baton Rouge, La.-based FMOL Health had accounted for $11 million.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "States begin collecting from CVS&#8217;s $36.5M insulin Medicaid settlement",
+      "url": "https://www.beckershospitalreview.com/pharmacy/states-begin-collecting-from-cvss-36-5m-insulin-medicaid-settlement/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-16",
+      "summary": "States have begun receiving payments from CVS Pharmacy&#8217;s $36.5 million settlement over allegations that the company overbilled Medicaid programs for insulin prescriptions between 2010 and 2020.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Oklahoma hospital responds to attention sparked by Netflix documentary",
+      "url": "https://www.beckershospitalreview.com/digital-marketing/oklahoma-hospital-responds-to-attention-sparked-by-netflix-documentary/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-16",
+      "summary": "McCurtain Memorial Hospital in Idabel, Okla., is asking the public to respect those affected by a 2020 murder case after a Netflix documentary about the crime prompted requests to visit the facility, photograph staff and conduct interviews.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "GLP-1s may improve male fertility: 4 study notes",
+      "url": "https://www.beckershospitalreview.com/glp-1s/glp-1s-may-improve-male-fertility-4-study-notes/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-16",
+      "summary": "GLP-1 medications did not harm male hormones or fertility after long-term use and may improve testosterone levels and sperm quality in men with obesity-related low testosterone, according to research being presented at the Endocrine Society&#8217;s annual meeting in Chicago. Here are four things to know: The post GLP-1s may improve male fertility: 4 study notes appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "quality_safety",
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "Rural Health Transformation Program funding status, by state",
+      "url": "https://www.beckershospitalreview.com/finance/rural-health-transformation-program-funding-status-by-state/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-16",
+      "summary": "States are moving at markedly different speeds to deploy billions of dollars in new federal funding for rural healthcare. The $50 billion Rural Health Transformation Program was established under HR 1 and is administered by CMS, which will distribute $10 billion annually to all 50 states from 2026 through 2030.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "CMS reshapes states&#8217; $50B rural health fund plans amid clawback threats",
+      "url": "https://www.beckershospitalreview.com/rural-health/cms-reshapes-states-50b-rural-health-fund-plans-amid-clawback-threats/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-16",
+      "summary": "Several states have had to revise their Rural Health Transformation Program plans under federal pressure, KFF Health News reported June 16. State officials and healthcare leaders say CMS has used the program to push specific policy changes, with agency staffers working alongside state health departments over the past six months to alter or eliminate certain [&#8230;] The post CMS reshapes states&#8217; $50B rural health fund plans amid clawback threats appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Anthropic, Trump administration work to resolve AI model dispute",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/anthropic-trump-administration-work-to-resolve-ai-model-dispute/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-16",
+      "summary": "Anthropic and Trump administration officials are working to resolve a dispute that led the administration to restrict access to the AI company&#8217;s newest models, The Wall Street Journal reported June 15. The Journal reported discussions continued June 15 between Anthropic executives and administration officials after the government prohibited foreign governments, companies and many individuals from [&#8230;] The post Anthropic, Trump administration work to resolve AI model dispute appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "ChatGPT, Gemini, Claude beat clinical AI tools: Study",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/chatgpt-gemini-claude-beat-clinical-ai-tools-study/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-16",
+      "summary": "General-purpose large language models from OpenAI, Google and Anthropic outperformed specialized clinical AI tools across every medical benchmark in a study published in Nature Medicine. Researchers tested OpenEvidence and Wolters Kluwer&#8217;s UpToDate Expert AI against GPT-5.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "The U.S. infant mortality rate fell to an all-time low, though it still trails other similar nations",
+      "url": "https://www.statnews.com/2026/06/16/us-infant-mortality-rate-all-time-low/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-16",
+      "summary": "Infant mortality in the U.S.",
+      "category": "quality_safety",
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "STAT+: ARCH-launched Neumora stops depression program",
+      "url": "https://www.statnews.com/2026/06/16/biotech-news-arch-launched-neumora-stops-depression-program/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-16",
+      "summary": "A new AI model to improve trial enrollment, importing drugs from Canada, and more biotech news from The Readout",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "STAT+: Pharmalittle: We&#8217;re reading about Medicare and obesity drugs, Germany&#8217;s pricing plans, and more",
+      "url": "https://www.statnews.com/pharmalot/2026/06/16/medicare-obesity-drugs-germany-pricing-plans/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-16",
+      "summary": "Weight loss drugs will be available through Medicare starting next month, thanks to a program that is supposed to be temporary but may be difficult to end",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "How supplement use changed over decades",
+      "url": "https://www.statnews.com/2026/06/16/health-news-how-supplement-use-changed-over-decades/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-16",
+      "summary": "Medicare-funded weight loss, Utah's lower drunk driving limit, and more health news from Morning Rounds",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "STAT+: Verge Labs’ new AI model solves patient stratification problems for neurology clinical trials",
+      "url": "https://www.statnews.com/2026/06/16/verge-labs-ai-model-clinical-trials-data-neurology-diseases/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-16",
+      "summary": "As the saying goes, one man’s trash is another man’s treasure.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "STAT+: Human Cell Atlas leader’s tie to 10x Genomics raises conflict-of-interest questions",
@@ -289,6 +434,42 @@
       "summary": "“Alzheimer’s is not primarily a disease of old age. It is a decades-long biological process,” writes Elizabeth Bevins.",
       "category": "general_market",
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "Express Scripts, PCMA sue to block Tennesee law breaking up PBMs and pharmacies",
+      "url": "https://www.healthcaredive.com/news/express-scripts-pcma-sue-tennesee-law-breaking-up-pbms-pharmacies/822942/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-06-16",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Centene offers employee buyouts amid membership losses",
+      "url": "https://www.healthcaredive.com/news/centene-offers-employee-buyouts-membership-losses/823005/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-06-16",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "PCMA joins major PBMs in suing over Tennessee's new PBM law",
+      "url": "https://www.fiercehealthcare.com/payers/cvs-sues-challenge-tennessees-new-pbm-law",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-16",
+      "summary": "The Pharmaceutical Care Management Association has joined some of the nation's largest pharmacy benefit managers in challenging Tennessee's new law governing the industry.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Uncovr secures $7M in seed funding for AI surgical documentation platform",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/uncovr-secures-7m-seed-funding-ai-surgical-documentation-platform",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-16",
+      "summary": "The company says it is currently working with leading hospitals across the U.S.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "Centene offering staff buyouts as it navigates murky ACA waters",
@@ -354,20 +535,20 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "How transparency is redefining payment integrity",
-      "url": "https://www.fiercehealthcare.com/sponsored/how-transparency-redefining-payment-integrity",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-16",
-      "summary": "What rising expectations from health plans reveal about the next era of payment integrity leadership.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
       "title": "InStride Health lands $30M series C to expand pediatric mental health services",
       "url": "https://www.fiercehealthcare.com/health-tech/instride-health-lands-30m-series-c-expand-pediatric-mental-health-services",
       "source": "Fierce Healthcare",
       "publishedAt": "2026-06-16",
       "summary": "InStride Health, a provider of specialty mental healthcare to children, teens and young adults, landed $30 million in series C funding to fuel its growth as it expands to new markets and broadens its network of payer partners.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "How transparency is redefining payment integrity",
+      "url": "https://www.fiercehealthcare.com/sponsored/how-transparency-redefining-payment-integrity",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-16",
+      "summary": "What rising expectations from health plans reveal about the next era of payment integrity leadership.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
@@ -4648,216 +4829,6 @@
       "summary": "AI medical interpreting is quickly entering healthcare. Here are 8 requirements leaders should use to pilot it safely and responsibly.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "AI in health care: From hype to enterprise value",
-      "url": "https://www.fiercehealthcare.com/sponsored/ai-health-care-hype-enterprise-value",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-10",
-      "summary": "Where AI is delivering ROI today — and what health care leaders must do to scale it.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Essence Healthcare, Oura expand partnership to sleep apnea detection",
-      "url": "https://www.fiercehealthcare.com/payers/essence-healthcare-oura-expand-partnership-sleep-apnea-detection",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-10",
-      "summary": "Medicare Advantage insurer Essence Healthcare is continuing to build out its partnership with smart ring maker Oura and has unveiled a new clinical program that aims to identify potential sleep apnea risk.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Weekly Rundown: Trump signs AI executive order; Health Catalyst to sell Vitalware for $147M",
-      "url": "https://www.fiercehealthcare.com/health-tech/weekly-rundown-vida-health-instacart-partner-healthy-food-access-study-finds-patients",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-10",
-      "summary": "Stay up to date on the latest in health tech, digital health and health AI news with this weekly brief.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Healthcare Dealmakers—WakeMed to join Atrium Health, Qualtrics closes $6.8B Press Ganey deal and more",
-      "url": "https://www.fiercehealthcare.com/providers/healthcare-dealmakers-wakemed-join-atrium-health-qualtrics-closes-68b-press-ganey-deal",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-10",
-      "summary": "Sanford Health moves to add North Memorial Health, Sutter Health and Allina Health sign a definitive agreement and more merger and acquisition news from May.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Industry Voices—A healthcare experience that is as seamless as it is soulful",
-      "url": "https://www.fiercehealthcare.com/providers/industry-voices-healthcare-experience-seamless-it-soulful",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-10",
-      "summary": "Patients and their loved ones are too often navigating a fragmented system while carrying the emotional weight that comes with a diagnosis or uncertainty, writes Ascension SVP and Chief Experience Officer Carol Campbell.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "As pro-life pressure ramps up on Trump, FDA is investigating safety of abortion pill: WSJ",
-      "url": "https://www.fiercehealthcare.com/pharma/pro-life-pressure-ramps-trump-fda-investigating-safety-abortion-pill-wsj",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-10",
-      "summary": "The FDA is going forward with an investigation into the safety of the abortion pill mifepristone, an initiative that could allow the Trump administration to impose restrictions on its use, The Wall Street Journal reports.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Fullspan Health debuts Healthline AI companion to connect consumers to medical content and providers",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/fullspan-health-debuts-healthline-ai-companion-users-find-verified-health",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-10",
-      "summary": "The conversational AI agent pulls information from Fullspan’s medically reviewed properties, including Healthline and Psych Central.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "WellSpan Health strikes strategic partnership with Philips to deploy, co-develop new healthcare tech",
-      "url": "https://www.fiercehealthcare.com/health-tech/wellspan-health-strikes-strategic-partnership-philips-deploy-co-develop-new-healthcare",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-10",
-      "summary": "WellSpan Health inked a seven-year strategic alliance with Philips to drive advanced imaging technology across its network and co-develop new healthcare technology.",
-      "category": "labor_unions",
-      "categoryLabel": "Labor & Unions"
-    },
-    {
-      "title": "Ixlayer rolls out digital acute pain management platform in collaboration with Vertex Pharmaceuticals",
-      "url": "https://www.fiercehealthcare.com/health-tech/ixlayer-rolls-out-digital-acute-pain-management-platform-collaboration-vertex",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-10",
-      "summary": "The platform was built in collaboration with Vertex Pharmaceuticals, a biopharma company that launched a non-opioid pain reliever in early 2025.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Small businesses feel the squeeze as healthcare costs rise: Morgan Health",
-      "url": "https://www.fiercehealthcare.com/payers/small-businesses-feel-squeeze-healthcare-costs-rise-morgan-health",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-10",
-      "summary": "As healthcare costs continue to rise, smaller businesses are particularly vulnerable to the pressure, according to a new Morgan Health report.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Redding nurses, health care workers to hold strike vote and picket for safe staffing",
-      "summary": "Registered nurses and caregivers at Shasta Regional Medical Center in Redding, Calif., will hold a strike vote and picket on Thursday, June 11, to protest management’s refusal to address patient care and safe staffing issues. Nurses and health care workers at Shasta Regional, a Prime Healthcare facility.",
-      "url": "https://www.nationalnursesunited.org/press/redding-nurses-and-health-care-workers-to-hold-strike-vote-and-picket-for-safe-staffing",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "2026-06-09",
-      "category": "labor_unions",
-      "relevance": 100,
-      "categoryLabel": "Labor & Unions"
-    },
-    {
-      "title": "Chicago nurses ready for one-day strike at Prime Saint Mary of Nazareth Hospital",
-      "summary": "Nurses at Saint Mary of Nazareth Hospital in Chicago are prepared for their one-day strike on June 11 to protest the administration’s illegal firings of six nurses in retaliation for union activity.",
-      "url": "https://www.nationalnursesunited.org/press/chicago-nurses-ready-for-one-day-strike-at-prime-saint-mary-of-nazareth-hospital",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "2026-06-09",
-      "category": "labor_unions",
-      "relevance": 100,
-      "categoryLabel": "Labor & Unions"
-    },
-    {
-      "title": "Center for Scientific Review; Amended Notice of Meeting",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/06/09/2026-11541/center-for-scientific-review-amended-notice-of-meeting",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-06-09",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Reducing Bureaucracy and Burden for Community Services Programs",
-      "summary": "This Final Rule amends the Block Grants regulations, the Individual Development Account Reserve Funds Established Pursuant to Grants for Assets for Independence regulations, and the Emergency Community Services Homeless Grant Program regulations to eliminate unnecessary or obsolete regulations. A plain language summary of this final rule is posted at https://www.regulations.gov.",
-      "url": "https://www.federalregister.gov/documents/2026/06/09/2026-11531/reducing-bureaucracy-and-burden-for-community-services-programs",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-06-09",
-      "category": "mergers_mna",
-      "relevance": 96,
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Employment and Training Services for Noncustodial Parents in the Child Support Program; Rescission",
-      "summary": "The Office of Child Support Enforcement proposes to rescind the Employment and Training Services for Noncustodial Parents in the Child Support Program final rule, published in the Federal Register on December 13, 2024. The final rule allowed child support agencies to utilize Federal Financial Participation under title IV-D of the Social Security Act for providing specific, optional, and non-duplicative employment and training services to eligible noncustodial parents.",
-      "url": "https://www.federalregister.gov/documents/2026/06/09/2026-11530/employment-and-training-services-for-noncustodial-parents-in-the-child-support-program-rescission",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-06-09",
-      "category": "ai_tech",
-      "relevance": 96,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Office of the Director; Notice of Charter Renewal",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/06/09/2026-11519/office-of-the-director-notice-of-charter-renewal",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-06-09",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Center for Scientific Review; Notice of Closed Meetings",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/06/09/2026-11503/center-for-scientific-review-notice-of-closed-meetings",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-06-09",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "National Cancer Institute; Notice of Meeting",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/06/09/2026-11502/national-cancer-institute-notice-of-meeting",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-06-09",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "National Institute of Allergy and Infectious Diseases; Notice of Closed Meeting",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/06/09/2026-11486/national-institute-of-allergy-and-infectious-diseases-notice-of-closed-meeting",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-06-09",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "National Institute of Allergy and Infectious Diseases; Notice of Meeting",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/06/09/2026-11477/national-institute-of-allergy-and-infectious-diseases-notice-of-meeting",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-06-09",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
     }
   ]
 }
