@@ -43,6 +43,7 @@ const mapToast = document.getElementById('map-toast');
 const mapHomeStateBtn = document.getElementById('map-home-state-btn');
 const mapTargetModeBtn = document.getElementById('map-target-mode-btn');
 const mapTargetStateBtn = document.getElementById('map-target-state-btn');
+const mapClearBtn = document.getElementById('map-clear-btn');
 const mapScopeHealthcareBtn = document.getElementById('map-scope-healthcare');
 const mapScopeAllBtn = document.getElementById('map-scope-all');
 const mapScopeLabel = document.getElementById('map-scope-label');
@@ -909,6 +910,46 @@ const filterNoticesByScope = (notices) => {
     const name = (n.employer_name || '').toLowerCase();
     return !name.includes('hotel') && !name.includes('hospitality');
   });
+  return out;
+};
+
+const filterNoticesByActiveControls = (notices) => {
+  let out = Array.isArray(notices) ? notices.slice() : [];
+  const selectedRegion = String(regionSelect?.value || '').trim();
+  const selectedStateSet = new Set(selectedStates.map((state) => String(state).trim().toUpperCase()).filter(Boolean));
+  const org = String(orgInput?.value || '').trim().toLowerCase();
+  const since = String(sinceInput?.value || '').trim();
+  const minScore = Number(scoreInput?.value || 0);
+
+  if (selectedRegion && REGION_STATES[selectedRegion]) {
+    const allowed = new Set(REGION_STATES[selectedRegion]);
+    out = out.filter((notice) => allowed.has(String(notice?.state || '').trim().toUpperCase()));
+  }
+  if (selectedStateSet.size > 0) {
+    out = out.filter((notice) => selectedStateSet.has(String(notice?.state || '').trim().toUpperCase()));
+  }
+  if (org) {
+    out = out.filter((notice) => {
+      const haystack = [
+        notice?.employer_name,
+        notice?.employerName,
+        notice?.facility_name,
+        notice?.business_name,
+        notice?.parent_system,
+        notice?.parentSystem
+      ].filter(Boolean).join(' ').toLowerCase();
+      return haystack.includes(org);
+    });
+  }
+  if (since) {
+    const sinceMs = Date.parse(since);
+    if (Number.isFinite(sinceMs)) {
+      out = out.filter((notice) => getNoticeDateValue(notice) >= sinceMs);
+    }
+  }
+  if (Number.isFinite(minScore) && minScore > 0) {
+    out = out.filter((notice) => Number(notice?.nursing_score ?? notice?.nursingImpact?.score ?? 0) >= minScore);
+  }
   return out;
 };
 
@@ -4022,7 +4063,7 @@ const loadNotices = async () => {
 
     // Merge in custom notices from localStorage
     if (customNotices.length > 0) {
-      notices = [...customNotices, ...notices];
+      notices = [...filterNoticesByActiveControls(customNotices), ...notices];
     }
     notices = filterNoticesByScope(notices);
     notices = sortNoticesByNewest(notices);
@@ -4110,28 +4151,45 @@ const fetchLiveData = async () => {
 
 fetchBtn.addEventListener('click', fetchLiveData);
 
-clearBtn.addEventListener('click', () => {
-  regionSelect.value = '';
-  // Clear multi-select states
-  selectedStates = [];
-  stateSelect.value = '';
-  populateStateDropdown('');
-  updateStateDisplay();
-  // Clear other filters
-  orgInput.value = '';
-  sinceInput.value = '';
-  scoreInput.value = 0;
-  scoreReadout.textContent = '0+';
-  limitInput.value = '';
-  // Update map highlights and reload
+const refreshMapAfterFilterReset = () => {
+  mapStateData = mapScope === 'all'
+    ? (Object.keys(stateDataAll || {}).length ? stateDataAll : mapStateData)
+    : (Object.keys(stateDataHealthcare || {}).length ? stateDataHealthcare : stateDataAll);
   if (currentMapView === 'map') {
+    updateWeatherMap();
     updateMapHighlights();
   } else if (currentMapView === 'chart') {
     renderBarChart();
   } else if (currentMapView === 'flight') {
     renderRnFlightPattern();
   }
+};
+
+const resetStateMapFilters = ({ resetAllFilters = false } = {}) => {
+  regionSelect.value = '';
+  selectedStates = [];
+  stateSelect.value = '';
+  populateStateDropdown('');
+  updateStateDisplay();
+
+  if (resetAllFilters) {
+    orgInput.value = '';
+    sinceInput.value = '';
+    scoreInput.value = 0;
+    scoreReadout.textContent = '0+';
+    limitInput.value = '';
+  }
+
+  refreshMapAfterFilterReset();
   loadNotices();
+};
+
+clearBtn.addEventListener('click', () => {
+  resetStateMapFilters({ resetAllFilters: true });
+});
+
+mapClearBtn?.addEventListener('click', () => {
+  resetStateMapFilters();
 });
 
 regionSelect.addEventListener('change', () => {
@@ -5241,6 +5299,9 @@ const buildStateCountsMapFromNotices = (notices) => {
 const syncMapStateDataToVisibleNotices = () => {
   mapStateData = buildStateCountsMapFromNotices(currentNotices);
   updateWeatherMap();
+  if (currentMapView === 'map') {
+    updateMapHighlights();
+  }
   if (currentMapView === 'chart') {
     renderBarChart();
   } else if (currentMapView === 'flight') {
