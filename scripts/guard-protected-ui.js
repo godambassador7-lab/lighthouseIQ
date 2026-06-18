@@ -26,13 +26,13 @@ const requirements = [
       'flight-view-btn',
       'RN Flight Pattern',
       'id="rn-flight"',
-      'app.js?v=8.1',
+      'app.js?v=8.2',
       'id="calibration-target"',
       'calibration-specialty',
       'target-state-coverage',
       'target-state-schools',
       'target-state-news',
-      'styles.css?v=5.12'
+      'styles.css?v=5.13'
     ]
   },
   {

@@ -9633,6 +9633,214 @@ button.market-chart-state-row:hover,
   border-radius: var(--radius-sm);
 }
 
+.clinical-specialty-card {
+  display: grid;
+  gap: 18px;
+}
+
+.clinical-specialty-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.clinical-specialty-controls {
+  display: grid;
+  grid-template-columns: minmax(220px, 1.4fr) minmax(160px, 0.9fr);
+  gap: 12px;
+  min-width: min(520px, 100%);
+}
+
+.clinical-specialty-controls label {
+  display: grid;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.clinical-specialty-controls select {
+  width: 100%;
+  border: 1px solid rgba(26, 54, 93, 0.14);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--navy);
+  padding: 10px 12px;
+  font-size: 13px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.clinical-specialty-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.clinical-specialty-kpis > div,
+.clinical-destination-note {
+  background: rgba(26, 54, 93, 0.04);
+  border: 1px solid rgba(26, 54, 93, 0.08);
+  border-radius: 8px;
+  padding: 13px;
+}
+
+.clinical-specialty-kpis span,
+.clinical-panel-title span,
+.clinical-destination-note span,
+.clinical-destination-note small {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.clinical-specialty-kpis strong,
+.clinical-destination-note strong {
+  display: block;
+  color: var(--navy);
+  font-weight: 700;
+  margin: 4px 0;
+}
+
+.clinical-specialty-kpis small {
+  display: block;
+  color: #4a5568;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.clinical-specialty-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+  gap: 16px;
+}
+
+.clinical-pipeline-panel,
+.clinical-hospital-panel {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+}
+
+.clinical-panel-title {
+  display: grid;
+  gap: 3px;
+}
+
+.clinical-panel-title strong {
+  color: var(--navy);
+}
+
+.clinical-pipeline-list,
+.clinical-hospital-list {
+  display: grid;
+  gap: 10px;
+}
+
+.clinical-pipeline-row,
+.clinical-hospital-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  background: #fff;
+  border: 1px solid rgba(26, 54, 93, 0.1);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.clinical-hospital-row {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.clinical-rank,
+.clinical-score,
+.clinical-hospital-row > span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: rgba(26, 54, 93, 0.08);
+  color: var(--navy);
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.clinical-pipeline-main {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.clinical-pipeline-main strong,
+.clinical-hospital-row strong {
+  color: var(--navy);
+  font-size: 13px;
+}
+
+.clinical-pipeline-main small,
+.clinical-hospital-row small {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.clinical-pipeline-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.clinical-pipeline-metrics span {
+  background: rgba(26, 54, 93, 0.06);
+  border-radius: 999px;
+  padding: 4px 8px;
+  color: #2d3748;
+  font-size: 10px;
+}
+
+.clinical-score-bar {
+  height: 6px;
+  overflow: hidden;
+  background: rgba(26, 54, 93, 0.08);
+  border-radius: 999px;
+}
+
+.clinical-score-bar i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #1a365d, #38a169);
+}
+
+.clinical-methodology {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.5;
+  border-top: 1px dashed rgba(26, 54, 93, 0.18);
+  padding-top: 12px;
+}
+
+@media (max-width: 900px) {
+  .clinical-specialty-header,
+  .clinical-specialty-body {
+    grid-template-columns: 1fr;
+    display: grid;
+  }
+
+  .clinical-specialty-controls,
+  .clinical-specialty-kpis {
+    grid-template-columns: 1fr;
+    min-width: 0;
+  }
+}
+
 /* State Lists in Executive Summary */
 .state-lists-container {
   display: grid;
