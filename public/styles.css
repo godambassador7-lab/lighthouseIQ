@@ -9647,9 +9647,10 @@ button.market-chart-state-row:hover,
 
 .clinical-specialty-controls {
   display: grid;
-  grid-template-columns: minmax(220px, 1.4fr) minmax(160px, 0.9fr);
+  grid-template-columns: minmax(220px, 1.35fr) minmax(160px, 0.85fr) auto;
   gap: 12px;
-  min-width: min(520px, 100%);
+  align-items: end;
+  min-width: min(680px, 100%);
 }
 
 .clinical-specialty-controls label {
@@ -9671,6 +9672,18 @@ button.market-chart-state-row:hover,
   font-size: 13px;
   text-transform: none;
   letter-spacing: 0;
+}
+
+.clinical-export-actions {
+  display: flex;
+  align-items: end;
+  gap: 8px;
+  min-height: 39px;
+}
+
+.clinical-export-actions .beacon-action-btn {
+  min-height: 38px;
+  white-space: nowrap;
 }
 
 .clinical-specialty-kpis {
@@ -9838,6 +9851,14 @@ button.market-chart-state-row:hover,
   .clinical-specialty-kpis {
     grid-template-columns: 1fr;
     min-width: 0;
+  }
+
+  .clinical-export-actions {
+    align-items: stretch;
+  }
+
+  .clinical-export-actions .beacon-action-btn {
+    flex: 1;
   }
 }
 

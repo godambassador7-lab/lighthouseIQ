@@ -6559,21 +6559,148 @@ const getClinicalDestinationSummary = (context) => {
   };
 };
 
-const renderClinicalSpecialtyModule = () => {
+const getClinicalSpecialtyExportData = () => {
   const context = getClinicalSpecialtyContext();
   const targetState = ALL_STATES.includes(strategicClinicalTargetState) ? strategicClinicalTargetState : 'IN';
   const rows = getClinicalPipelineRows(context, targetState);
-  const topRow = rows[0];
   const destination = getClinicalDestinationSummary(context);
+  const sourceSummary = getTargetSpecialtySummary(context);
+  const sourceUpdated = targetSpecialtySummaryData?.lastUpdated ? formatDate(targetSpecialtySummaryData.lastUpdated) : 'No timestamp';
+  const hospitalRows = rows
+    .flatMap((row) => row.hospitals.map((hospital) => ({ ...hospital, sourceState: row.state })))
+    .slice(0, 12);
+
+  return {
+    context,
+    targetState,
+    targetName: STATE_NAMES[targetState] || targetState,
+    rows,
+    hospitalRows,
+    destination,
+    sourceSummary,
+    sourceUpdated,
+    generatedAt: new Date().toLocaleString()
+  };
+};
+
+const buildClinicalSpecialtyExportRows = (data) => {
+  const exportRows = [];
+  const pushRow = (section, item, detail = '') => exportRows.push([section, item, detail]);
+  const joinDetail = (items) => items.filter(Boolean).join(' | ');
+
+  pushRow('Overview', 'Clinical Specialty', data.context.label);
+  pushRow('Overview', 'Specialty Family', data.context.family);
+  pushRow('Overview', 'Target State', `${data.targetName} (${data.targetState})`);
+  pushRow('Overview', 'Executive Brief', data.context.brief);
+  pushRow('Overview', 'Source Coverage', data.sourceSummary ? 'Specialty summary + live signals' : 'Modeled live signals');
+  pushRow('Overview', 'Specialty Summary Updated', data.sourceUpdated);
+  pushRow('Overview', 'Generated At', data.generatedAt);
+
+  if (data.rows.length) {
+    data.rows.forEach((row, index) => {
+      pushRow(
+        'Pipeline States',
+        `${index + 1}. ${row.stateName} (${row.state})`,
+        joinDetail([
+          `Score ${row.score}`,
+          `Talent ${Math.round(row.talentSupply).toLocaleString()}`,
+          `Estimated affected roles ${Math.round(row.noticeSignal.estimatedRoles).toLocaleString()}`,
+          `Specialty fit ${Math.round(row.summaryFit)}`,
+          `Migration +${Math.round(row.migration)}`,
+          `Pipeline pressure ${Math.round(row.pipelinePressure)}`,
+          `Hospital instability ${Math.round(row.hospitalDrag)}`,
+          row.reasons.join('; ')
+        ])
+      );
+    });
+  } else {
+    pushRow('Pipeline States', 'No ranked pipeline states', 'No specialty pipeline states are ranked yet.');
+  }
+
+  if (data.hospitalRows.length) {
+    data.hospitalRows.forEach((hospital) => {
+      pushRow(
+        'Hospitals / Systems To Watch',
+        hospital.name || 'Unknown facility',
+        joinDetail([
+          [hospital.city, hospital.sourceState].filter(Boolean).join(', '),
+          hospital.system,
+          `Signal ${Math.round(hospital.signal || 0)}`,
+          hospital.reason,
+          hospital.affected ? `${Math.round(hospital.affected).toLocaleString()} affected/beds proxy` : null
+        ])
+      );
+    });
+  } else {
+    pushRow('Hospitals / Systems To Watch', 'No hospital rows', 'Hospital-level specialty pressure will appear after notices/provider joins load.');
+  }
+
+  if (data.destination) {
+    pushRow(
+      'Destination Fit',
+      data.destination.metro,
+      joinDetail([
+        `Score ${Math.round(data.destination.score)}`,
+        `${data.destination.hospitalCount} hospitals`,
+        `Local signal ${Math.round(data.destination.localSignal).toLocaleString()}`,
+        data.destination.hospitals.length ? `Top hospitals: ${data.destination.hospitals.join('; ')}` : null
+      ])
+    );
+  }
+
+  pushRow(
+    'Methodology',
+    'Signal Model',
+    'Model blends live talent specialty tags, target-specialty summary, WARN role mix, RN Flight pipeline pressure, migration pattern, facility distress, provider depth, strike/news disruption, and public source confidence. RN-below roles use role-mix and care-setting proxies when direct specialty labels are thin.'
+  );
+
+  return exportRows;
+};
+
+const exportClinicalSpecialtyResults = (format = 'excel') => {
+  const data = getClinicalSpecialtyExportData();
+  const rows = buildClinicalSpecialtyExportRows(data);
+  const cleanSpecialty = data.context.label.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  const filenameBase = `clinical-specialty-${cleanSpecialty || 'pipeline'}-${data.targetState}`;
+  const title = `Clinical Specialty Pipeline - ${data.context.label} into ${data.targetName}`;
+  const meta = [
+    `Exported: ${data.generatedAt}`,
+    `Target State: ${data.targetName} (${data.targetState})`,
+    `Specialty Summary Updated: ${data.sourceUpdated}`
+  ];
+
+  if (format === 'pdf') {
+    openPdfExport({
+      title,
+      meta,
+      headers: ['Section', 'Item', 'Detail'],
+      rows
+    });
+    showExportToast('Clinical Specialty PDF opened.');
+    return;
+  }
+
+  downloadExcel({
+    title,
+    meta,
+    headers: ['Section', 'Item', 'Detail'],
+    rows,
+    filename: `${filenameBase}.xls`
+  });
+  showExportToast('Clinical Specialty Excel exported.');
+};
+
+const renderClinicalSpecialtyModule = () => {
+  const exportData = getClinicalSpecialtyExportData();
+  const { context, targetState, rows, destination, sourceSummary, sourceUpdated } = exportData;
+  const topRow = rows[0];
   const specialtyOptions = Object.entries(CLINICAL_SPECIALTY_CONTEXT)
     .map(([key, item]) => `<option value="${escapeHtml(key)}" ${key === strategicClinicalSpecialty ? 'selected' : ''}>${escapeHtml(item.label)}</option>`)
     .join('');
   const targetOptions = ALL_STATES
     .map((state) => `<option value="${state}" ${state === targetState ? 'selected' : ''}>${escapeHtml(STATE_NAMES[state] || state)} (${state})</option>`)
     .join('');
-  const sourceSummary = getTargetSpecialtySummary(context);
-  const sourceUpdated = targetSpecialtySummaryData?.lastUpdated ? formatDate(targetSpecialtySummaryData.lastUpdated) : 'No timestamp';
-  const hospitalRows = rows.flatMap((row) => row.hospitals.map((hospital) => ({ ...hospital, sourceState: row.state }))).slice(0, 8);
+  const hospitalRows = exportData.hospitalRows.slice(0, 8);
 
   return `
     <article class="strategic-card full-width clinical-specialty-card">
@@ -6591,6 +6718,10 @@ const renderClinicalSpecialtyModule = () => {
             <span>Target State</span>
             <select id="strategic-clinical-target">${targetOptions}</select>
           </label>
+          <div class="clinical-export-actions" aria-label="Export current clinical specialty results">
+            <button type="button" class="beacon-action-btn" id="strategic-clinical-export-excel">Excel</button>
+            <button type="button" class="beacon-action-btn" id="strategic-clinical-export-pdf">PDF</button>
+          </div>
         </div>
       </div>
       <div class="clinical-specialty-kpis">
@@ -6889,6 +7020,8 @@ const closeStrategicStateModal = () => {
 const bindStrategicClinicalSpecialtyControls = () => {
   const specialtySelect = document.getElementById('strategic-clinical-specialty');
   const targetSelect = document.getElementById('strategic-clinical-target');
+  const exportExcel = document.getElementById('strategic-clinical-export-excel');
+  const exportPdf = document.getElementById('strategic-clinical-export-pdf');
   specialtySelect?.addEventListener('change', (event) => {
     strategicClinicalSpecialty = normalizeClinicalSpecialtyKey(event.target.value);
     renderStrategicReviewContent();
@@ -6897,6 +7030,8 @@ const bindStrategicClinicalSpecialtyControls = () => {
     strategicClinicalTargetState = ALL_STATES.includes(event.target.value) ? event.target.value : 'IN';
     renderStrategicReviewContent();
   });
+  exportExcel?.addEventListener('click', () => exportClinicalSpecialtyResults('excel'));
+  exportPdf?.addEventListener('click', () => exportClinicalSpecialtyResults('pdf'));
 };
 
 const bindStrategicStateModal = () => {
