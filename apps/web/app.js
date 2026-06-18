@@ -1861,6 +1861,7 @@ const loadStrategicData = async () => {
   } catch {
     strategicData = {};
   }
+  renderStrategicReviewContent();
 };
 
 const loadRelocationData = async () => {
@@ -6108,11 +6109,281 @@ const initStrategicReview = () => {
   const toggleIcon = section?.querySelector('.strategic-toggle-icon');
 
   if (!toggleBtn || !section) return;
+  if (toggleBtn.dataset.boundStrategicToggle === 'true') return;
+  toggleBtn.dataset.boundStrategicToggle = 'true';
 
   toggleBtn.addEventListener('click', () => {
     section.classList.toggle('open');
     const isOpen = section.classList.contains('open');
     if (toggleIcon) toggleIcon.textContent = isOpen ? '-' : '+';
+  });
+
+  renderStrategicReviewContent();
+  bindStrategicStateModal();
+};
+
+const getStrategicReviewData = () => {
+  const salaryData = strategicData?.salaryData && typeof strategicData.salaryData === 'object'
+    ? strategicData.salaryData
+    : {};
+  const summary = strategicData?.summary && typeof strategicData.summary === 'object'
+    ? strategicData.summary
+    : {};
+  const shortageStates = Array.isArray(summary.shortageStates)
+    ? summary.shortageStates
+    : Object.entries(salaryData)
+      .filter(([, row]) => String(row?.shortage || '').toLowerCase() === 'shortage')
+      .map(([state]) => state);
+  const surplusStates = Array.isArray(summary.surplusStates)
+    ? summary.surplusStates
+    : Object.entries(salaryData)
+      .filter(([, row]) => String(row?.shortage || '').toLowerCase() === 'surplus')
+      .map(([state]) => state);
+  const balancedStates = Array.isArray(summary.balancedStates)
+    ? summary.balancedStates
+    : Object.entries(salaryData)
+      .filter(([, row]) => String(row?.shortage || '').toLowerCase() === 'balanced')
+      .map(([state]) => state);
+
+  return { salaryData, summary, shortageStates, surplusStates, balancedStates };
+};
+
+const strategicBadgeClass = (value) => {
+  const normalized = String(value || '').toLowerCase();
+  if (normalized === 'shortage') return 'low';
+  if (normalized === 'surplus') return 'high';
+  return 'medium';
+};
+
+const renderStrategicStatePills = (states, type) => {
+  const safeStates = Array.isArray(states) ? states.slice(0, 12) : [];
+  if (!safeStates.length) return '<span class="state-pill">No states mapped</span>';
+  const overflow = states.length > safeStates.length ? `<span class="state-pill">+${states.length - safeStates.length} more</span>` : '';
+  return `${safeStates.map((state) => `<span class="state-pill ${type}">${escapeHtml(state)}</span>`).join('')}${overflow}`;
+};
+
+const renderStrategicReviewContent = () => {
+  const container = document.getElementById('strategic-review-content');
+  if (!container) return;
+
+  if (strategicData === null) {
+    container.innerHTML = '<div class="empty-state">Loading strategic analysis...</div>';
+    return;
+  }
+
+  const { salaryData, summary, shortageStates, surplusStates, balancedStates } = getStrategicReviewData();
+  const stateRows = Object.entries(salaryData);
+  if (!stateRows.length) {
+    container.innerHTML = '<div class="empty-state">Strategic analysis is unavailable right now.</div>';
+    return;
+  }
+
+  const avgStaff = Number(summary.avgStaffSalary);
+  const avgTravel = Number(summary.avgTravelSalary);
+  const avgPremium = Number(summary.avgTravelPremium);
+  const totalGap = Number(summary.totalProjectedGap);
+  const topPremiumStates = stateRows
+    .map(([state, row]) => ({
+      state,
+      premium: Number(row?.travelAnnual) - Number(row?.staffRN),
+      staffRN: Number(row?.staffRN),
+      travelAnnual: Number(row?.travelAnnual),
+      shortage: row?.shortage
+    }))
+    .filter((row) => Number.isFinite(row.premium))
+    .sort((a, b) => b.premium - a.premium)
+    .slice(0, 5);
+
+  const sourceLinks = Array.isArray(strategicData?.sources) ? strategicData.sources : [];
+  const sourceHtml = sourceLinks.length
+    ? sourceLinks.map((source) => (
+      source?.url
+        ? `<a href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(source.name || 'Source')}</a>`
+        : `<span>${escapeHtml(source?.name || 'Source')}</span>`
+    )).join('<span>|</span>')
+    : '<span>Source list unavailable</span>';
+
+  container.innerHTML = `
+    <div class="strategic-grid">
+      <article class="strategic-card full-width">
+        <h4><span class="card-icon">#</span> Executive Market Summary</h4>
+        <p class="card-description">National nursing labor pressure, travel premium, and state shortage posture from the loaded strategic dataset.</p>
+        <div class="exec-metrics-row">
+          <div class="exec-metric-card">
+            <div class="exec-metric-value negative">${Number.isFinite(totalGap) ? formatNumber(totalGap) : '--'}</div>
+            <div class="exec-metric-label">Projected RN Gap</div>
+          </div>
+          <div class="exec-metric-card">
+            <div class="exec-metric-value">${Number.isFinite(avgStaff) ? formatCurrency(avgStaff) : '--'}</div>
+            <div class="exec-metric-label">Avg Staff RN</div>
+          </div>
+          <div class="exec-metric-card">
+            <div class="exec-metric-value">${Number.isFinite(avgTravel) ? formatCurrency(avgTravel) : '--'}</div>
+            <div class="exec-metric-label">Avg Travel Annual</div>
+          </div>
+          <div class="exec-metric-card">
+            <div class="exec-metric-value positive">${Number.isFinite(avgPremium) ? formatCurrency(avgPremium) : '--'}</div>
+            <div class="exec-metric-label">Travel Premium</div>
+          </div>
+        </div>
+        <div class="state-lists-container">
+          <button type="button" class="state-list-section shortage interactive" data-strategic-state-list="shortage">
+            <div class="state-list-header">
+              <span class="state-list-icon">!</span>
+              <span class="state-list-title">Shortage States (${shortageStates.length})</span>
+            </div>
+            <div class="state-pills">${renderStrategicStatePills(shortageStates, 'shortage')}</div>
+            <div class="state-list-subtext">Open state rationale and salary context.</div>
+          </button>
+          <button type="button" class="state-list-section surplus interactive" data-strategic-state-list="surplus">
+            <div class="state-list-header">
+              <span class="state-list-icon">+</span>
+              <span class="state-list-title">Surplus States (${surplusStates.length})</span>
+            </div>
+            <div class="state-pills">${renderStrategicStatePills(surplusStates, 'surplus')}</div>
+            <div class="state-list-subtext">Open state rationale and salary context.</div>
+          </button>
+        </div>
+      </article>
+      <article class="strategic-card">
+        <h4><span class="card-icon">$</span> Highest Travel Premiums</h4>
+        <p class="card-description">States where modeled travel annual pay most exceeds staff RN salary.</p>
+        <ul class="heat-score-list">
+          ${topPremiumStates.map((row) => `
+            <li>
+              <span>
+                <span class="heat-score-name">${escapeHtml(row.state)}</span>
+                <span class="heat-score-meta">${escapeHtml(STATE_NAMES[row.state] || row.state)}</span>
+              </span>
+              <span>
+                <strong>${formatCurrency(row.premium, { signed: true })}</strong>
+                <span class="strategic-badge ${strategicBadgeClass(row.shortage)}">${escapeHtml(row.shortage || 'unknown')}</span>
+              </span>
+            </li>
+          `).join('')}
+        </ul>
+      </article>
+      <article class="strategic-card">
+        <h4><span class="card-icon">i</span> Coverage Snapshot</h4>
+        <p class="card-description">Loaded state-level salary and workforce balance coverage.</p>
+        <div class="exec-dashboard-grid">
+          <div class="exec-dashboard-item">
+            <div class="exec-dashboard-label">States Loaded</div>
+            <div class="exec-dashboard-value">${stateRows.length}</div>
+            <div class="exec-dashboard-sub">Salary benchmarks available</div>
+          </div>
+          <div class="exec-dashboard-item">
+            <div class="exec-dashboard-label">Balanced</div>
+            <div class="exec-dashboard-value">${balancedStates.length}</div>
+            <div class="exec-dashboard-sub">Neither shortage nor surplus</div>
+          </div>
+          <div class="exec-dashboard-item">
+            <div class="exec-dashboard-label">Dataset Version</div>
+            <div class="exec-dashboard-value">${escapeHtml(strategicData?.version || 'Unknown')}</div>
+            <div class="exec-dashboard-sub">${escapeHtml(strategicData?.lastUpdated ? `Updated ${formatDate(strategicData.lastUpdated)}` : 'No timestamp')}</div>
+          </div>
+        </div>
+      </article>
+      <div class="strategic-footnote">
+        <span>Sources:</span>
+        ${sourceHtml}
+      </div>
+    </div>
+  `;
+};
+
+const getStrategicStateReason = (state, row, listType) => {
+  const projectedGap = Number(row?.projectedGap);
+  const staff = Number(row?.staffRN);
+  const travel = Number(row?.travelAnnual);
+  const premium = travel - staff;
+  const status = String(row?.shortage || listType || 'market').toLowerCase();
+  const gapText = Number.isFinite(projectedGap)
+    ? `${formatNumber(Math.abs(projectedGap))} RN ${projectedGap < 0 ? 'shortfall' : 'surplus'}`
+    : 'unmapped workforce gap';
+  const premiumText = Number.isFinite(premium) ? `${formatCurrency(premium, { signed: true })} travel premium` : 'unmapped travel premium';
+  return `${escapeHtml(STATE_NAMES[state] || state)} is marked ${status} with ${gapText} and ${premiumText}.`;
+};
+
+const openStrategicStateModal = (listType) => {
+  const modal = document.getElementById('strategic-state-modal');
+  const title = document.getElementById('strategic-state-title');
+  const subtitle = document.getElementById('strategic-state-subtitle');
+  const summaryEl = document.getElementById('strategic-state-summary');
+  const sourcesEl = document.getElementById('strategic-state-sources');
+  const listEl = document.getElementById('strategic-state-list');
+  if (!modal || !listEl) return;
+
+  const { salaryData, shortageStates, surplusStates } = getStrategicReviewData();
+  const states = listType === 'surplus' ? surplusStates : shortageStates;
+  const label = listType === 'surplus' ? 'Surplus States' : 'Shortage States';
+  if (title) title.textContent = label;
+  if (subtitle) subtitle.textContent = 'State-level rationale and source freshness.';
+  if (summaryEl) {
+    summaryEl.textContent = `${states.length} ${listType} states are mapped in the strategic review dataset.`;
+  }
+  if (sourcesEl) {
+    const sources = Array.isArray(strategicData?.sources) ? strategicData.sources : [];
+    sourcesEl.innerHTML = sources.length
+      ? sources.map((source) => `
+        <div class="strategic-source-row">
+          <span class="strategic-source-name">${escapeHtml(source?.name || 'Source')}</span>
+          ${source?.url ? `<a href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(source.url)}</a>` : ''}
+          <span class="strategic-source-age">${escapeHtml(strategicData?.lastUpdated ? `Updated ${formatDate(strategicData.lastUpdated)}` : 'No timestamp')}</span>
+        </div>
+      `).join('')
+      : '<div class="strategic-source-row"><span class="strategic-source-name">No sources listed</span></div>';
+  }
+
+  listEl.innerHTML = states.map((state) => {
+    const row = salaryData[state] || {};
+    const staff = Number(row.staffRN);
+    const travel = Number(row.travelAnnual);
+    const gap = Number(row.projectedGap);
+    return `
+      <article class="strategic-state-item ${listType}">
+        <div class="strategic-state-item-header">
+          <span class="strategic-state-item-title">${escapeHtml(state)} - ${escapeHtml(STATE_NAMES[state] || state)}</span>
+          <span class="strategic-badge ${strategicBadgeClass(row.shortage || listType)}">${escapeHtml(row.shortage || listType)}</span>
+        </div>
+        <p class="strategic-state-item-why">${getStrategicStateReason(state, row, listType)}</p>
+        <div class="strategic-state-item-metrics">
+          <span class="strategic-state-item-metric">Staff RN ${Number.isFinite(staff) ? formatCurrency(staff) : '--'}</span>
+          <span class="strategic-state-item-metric">Travel annual ${Number.isFinite(travel) ? formatCurrency(travel) : '--'}</span>
+          <span class="strategic-state-item-metric">Gap ${Number.isFinite(gap) ? formatNumber(gap) : '--'}</span>
+        </div>
+      </article>
+    `;
+  }).join('') || '<div class="empty-state">No states mapped for this list.</div>';
+
+  modal.classList.add('active');
+  document.body.classList.add('modal-open');
+};
+
+const closeStrategicStateModal = () => {
+  document.getElementById('strategic-state-modal')?.classList.remove('active');
+  document.body.classList.remove('modal-open');
+};
+
+const bindStrategicStateModal = () => {
+  const container = document.getElementById('strategic-review-content');
+  const modal = document.getElementById('strategic-state-modal');
+  if (!container || !modal || modal.dataset.boundStrategicModal === 'true') return;
+  modal.dataset.boundStrategicModal = 'true';
+
+  container.addEventListener('click', (event) => {
+    const trigger = event.target.closest('[data-strategic-state-list]');
+    if (!trigger) return;
+    openStrategicStateModal(trigger.dataset.strategicStateList);
+  });
+
+  document.getElementById('strategic-state-close')?.addEventListener('click', closeStrategicStateModal);
+  document.getElementById('strategic-state-close-footer')?.addEventListener('click', closeStrategicStateModal);
+  modal.addEventListener('click', (event) => {
+    if (event.target === modal) closeStrategicStateModal();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && modal.classList.contains('active')) closeStrategicStateModal();
   });
 };
 
