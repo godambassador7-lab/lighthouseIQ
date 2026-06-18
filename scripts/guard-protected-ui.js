@@ -26,7 +26,7 @@ const requirements = [
       'flight-view-btn',
       'RN Flight Pattern',
       'id="rn-flight"',
-      'app.js?v=8.0',
+      'app.js?v=8.1',
       'id="calibration-target"',
       'calibration-specialty',
       'target-state-coverage',
