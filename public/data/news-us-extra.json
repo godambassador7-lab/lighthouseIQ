@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-18T12:59:33.726Z",
+  "lastUpdated": "2026-06-18T16:40:17.238Z",
   "scope": "US healthcare",
   "sourceManifestVersion": "1.0.0",
   "sourceHealth": [
@@ -111,9 +111,10 @@
       "source": "NYSNA RSS",
       "id": "nysna_rss",
       "type": "rss",
-      "ok": true,
-      "status": 200,
-      "records": 12
+      "ok": false,
+      "status": 0,
+      "records": 0,
+      "error": "fetch failed"
     },
     {
       "source": "SEIU RSS",
@@ -128,8 +129,9 @@
       "id": "hca_newsroom",
       "type": "html",
       "ok": false,
-      "status": 404,
-      "records": 0
+      "status": 0,
+      "records": 0,
+      "error": "This operation was aborted"
     },
     {
       "source": "Tenet Newsroom",
@@ -344,6 +346,17 @@
       "sourceId": "federal_register_fda",
       "publishedAt": "2026-06-18",
       "category": "quality_safety",
+      "relevance": 100
+    },
+    {
+      "title": "HCA 8-K filing - HCA Healthcare, Inc.",
+      "summary": "HCA Healthcare, Inc. filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/860730/000119312526275086/d163825d8k.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-06-18",
+      "category": "policy_reimbursement",
       "relevance": 100
     },
     {
@@ -1326,17 +1339,6 @@
       "relevance": 85
     },
     {
-      "title": "HCA 8-K filing - HCA Healthcare, Inc.",
-      "summary": "HCA Healthcare, Inc. filed 8-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/860730/000119312526182265/hca-20260427.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-04-27",
-      "category": "policy_reimbursement",
-      "relevance": 100
-    },
-    {
       "title": "CI 8-K filing - The Cigna Group",
       "summary": "The Cigna Group filed 8-K with the SEC.",
       "url": "https://www.sec.gov/Archives/edgar/data/1739940/000114036126017123/ef20071227_8k.htm",
@@ -1755,39 +1757,6 @@
       "relevance": 100
     },
     {
-      "title": "Save Healthcare Services",
-      "summary": "",
-      "url": "https://www.nysna.org/campaigns/save-healthcare-services",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 100
-    },
-    {
-      "title": "More than 99% of NYSNA Nurses at St. Charles Hospital Vote Yes to Authorize Strike",
-      "summary": "",
-      "url": "https://www.nysna.org/press/more-99-nysna-nurses-st-charles-hospital-vote-yes-authorize-strike",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 100
-    },
-    {
-      "title": "TODAY: NYSNA Nurses to Announce Results of Strike Authorization Vote for Nurses at Catholic Health System/St. Charles Hospital",
-      "summary": "",
-      "url": "https://www.nysna.org/press/today-nysna-nurses-announce-results-strike-authorization-vote-nurses-catholic-health-systemst",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 100
-    },
-    {
       "title": "Vulnerability Disclosure",
       "summary": "",
       "url": "https://www.justice.gov/jmd/vulnerability-disclosure-policy",
@@ -1862,28 +1831,6 @@
       "sourceId": "ftc_press_releases",
       "publishedAt": "",
       "category": "mergers_mna",
-      "relevance": 98
-    },
-    {
-      "title": "Putnam Hospital Nurses Speak Out for Safe Staffing and a Fair Contract",
-      "summary": "",
-      "url": "https://www.nysna.org/press/putnam-hospital-nurses-speak-out-safe-staffing-and-fair-contract",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "ai_tech",
-      "relevance": 98
-    },
-    {
-      "title": "TOMORROW: Putnam Hospital Nurses Speak Out for Safe Staffing and a Fair Contract",
-      "summary": "",
-      "url": "https://www.nysna.org/press/tomorrow-putnam-hospital-nurses-speak-out-safe-staffing-and-fair-contract",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "ai_tech",
       "relevance": 98
     },
     {
@@ -2415,50 +2362,6 @@
       "relevance": 93
     },
     {
-      "title": "Journal of the New York State Nurses Association",
-      "summary": "",
-      "url": "https://www.nysna.org/nursing-resources/journal-new-york-state-nurses-association",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 93
-    },
-    {
-      "title": "Statewide Peer Assistance for Nurses",
-      "summary": "",
-      "url": "https://www.statewidepeerassistance.org/",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 93
-    },
-    {
-      "title": "Health Equity and Social Justice",
-      "summary": "",
-      "url": "https://www.nysna.org/campaigns/health-equity-and-social-justice",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 93
-    },
-    {
-      "title": "NYSNA Nurses Protect Nurse Practice in New York State Budget",
-      "summary": "",
-      "url": "https://www.nysna.org/news/nysna-nurses-protect-nurse-practice-new-york-state-budget",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 93
-    },
-    {
       "title": "Nondiscrimination & Accessibility",
       "summary": "",
       "url": "https://www.cms.gov/about-cms/web-policies-important-links/accessibility-nondiscrimination-disabilities-notice",
@@ -2578,39 +2481,6 @@
       "publishedAt": "",
       "category": "ai_tech",
       "relevance": 90
-    },
-    {
-      "title": "NYSNA Update: June 12, 2026",
-      "summary": "",
-      "url": "https://www.nysna.org/news/nysna-update-june-12-2026",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 88
-    },
-    {
-      "title": "NYSNA Update: June 5, 2026",
-      "summary": "",
-      "url": "https://www.nysna.org/news/nysna-update-june-5-2026",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 88
-    },
-    {
-      "title": "See All Photos and Videos",
-      "summary": "",
-      "url": "https://www.nysna.org/news/gallery",
-      "source": "NYSNA RSS",
-      "sourceType": "rss",
-      "sourceId": "nysna_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 88
     }
   ]
 }

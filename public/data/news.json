@@ -1,74 +1,81 @@
 {
-  "lastUpdated": "2026-06-18T12:59:33.794Z",
+  "lastUpdated": "2026-06-18T16:40:17.299Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
-    "totalSources": 9,
+    "totalSources": 10,
     "staleSources": 0,
-    "healthySources": 9,
+    "healthySources": 10,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 209,
+        "articleCount": 200,
         "latestPublishedAt": "2026-06-18T00:00:00.000Z",
-        "staleHours": 12,
+        "staleHours": 16,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 136,
-        "latestPublishedAt": "2026-06-17T00:00:00.000Z",
-        "staleHours": 36,
+        "articleCount": 146,
+        "latestPublishedAt": "2026-06-18T00:00:00.000Z",
+        "staleHours": 16,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 59,
+        "articleCount": 65,
         "latestPublishedAt": "2026-06-18T00:00:00.000Z",
-        "staleHours": 12,
+        "staleHours": 16,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
-        "articleCount": 49,
+        "articleCount": 47,
         "latestPublishedAt": "2026-06-18T00:00:00.000Z",
-        "staleHours": 12,
+        "staleHours": 16,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
-        "articleCount": 18,
-        "latestPublishedAt": "2026-06-17T00:00:00.000Z",
-        "staleHours": 36,
+        "articleCount": 21,
+        "latestPublishedAt": "2026-06-18T00:00:00.000Z",
+        "staleHours": 16,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
-        "articleCount": 13,
+        "articleCount": 7,
         "latestPublishedAt": "2026-06-18T00:00:00.000Z",
-        "staleHours": 12,
+        "staleHours": 16,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
-        "articleCount": 8,
+        "articleCount": 6,
         "latestPublishedAt": "2026-06-16T00:00:00.000Z",
-        "staleHours": 60,
+        "staleHours": 64,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
-        "articleCount": 6,
+        "articleCount": 5,
         "latestPublishedAt": "2026-06-18T00:00:00.000Z",
-        "staleHours": 12,
+        "staleHours": 16,
         "status": "ok"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 2,
         "latestPublishedAt": "2026-06-16T00:00:00.000Z",
-        "staleHours": 60,
+        "staleHours": 64,
+        "status": "ok"
+      },
+      {
+        "source": "SEC Healthcare Filings",
+        "articleCount": 1,
+        "latestPublishedAt": "2026-06-18T00:00:00.000Z",
+        "staleHours": 16,
         "status": "ok"
       }
     ]
@@ -80,31 +87,31 @@
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 17
+      "count": 16
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 3
+      "count": 2
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 96
+      "count": 95
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 11
+      "count": 12
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
-      "count": 19
+      "count": 18
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 144
+      "count": 143
     },
     "general_market": {
       "label": "General Market",
-      "count": 200
+      "count": 204
     }
   },
   "quality": {
@@ -113,12 +120,12 @@
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
-        "actual": 9,
+        "actual": 10,
         "pass": true
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 55,
+        "actual": 76,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -291,6 +298,18 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "HCA 8-K filing - HCA Healthcare, Inc.",
+      "summary": "HCA Healthcare, Inc. filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/860730/000119312526275086/d163825d8k.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-06-18",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "Center for Scientific Review; Notice of Closed Meetings",
       "summary": "",
       "url": "https://www.federalregister.gov/documents/2026/06/18/2026-12342/center-for-scientific-review-notice-of-closed-meetings",
@@ -387,6 +406,150 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "PBMs take Tennessee, Illinois to federal court over pharmacy laws",
+      "url": "https://www.beckershospitalreview.com/pharmacy/pbms-take-tennessee-illinois-to-federal-court-over-pharmacy-laws/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-18",
+      "summary": "The Pharmaceutical Care Management Association, a trade group for pharmacy benefit managers, filed lawsuits in June challenging Illinois and Tennessee pharmacy laws.&#160; PCMA raised Employee Retirement Income Security Act-based preemption counts targeting Illinois&#8217; Prescription Drug Affordability Act.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Bankrupt hospital loses court bid to force higher BCBS Alabama rates",
+      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/bankrupt-hospital-loses-court-bid-to-force-higher-bcbs-alabama-rates/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-18",
+      "summary": "A federal judge has denied an emergency request by Montgomery, Ala.-based Jackson Hospital, which filed for bankruptcy in February,&#160; to force Blue Cross Blue Shield of Alabama to raise its reimbursement rates to match area hospital Baptist Medical Center South.",
+      "category": "closures_layoffs",
+      "categoryLabel": "Closures & Layoffs"
+    },
+    {
+      "title": "States ranked by Medicaid prescription drug spend",
+      "url": "https://www.beckershospitalreview.com/pharmacy/states-ranked-by-medicaid-prescription-drug-spend/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-18",
+      "summary": "California, New York and Ohio led all states in gross Medicaid prescription drug spending in fiscal year 2024, accounting for more than a quarter of national spend, according to a KFF analysis of federal data. The figures reflect gross spending before manufacturer rebates on covered outpatient drugs under the Medicaid Drug Rebate Program, drawn from [&#8230;] The post States ranked by Medicaid prescription drug spend appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Former VCU Health leader dies",
+      "url": "https://www.beckershospitalreview.com/hospital-management-administration/former-vcu-health-leader-dies/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-18",
+      "summary": "John Duval, who retired in 2016 as CEO and vice president for clinical affairs at VCU Hospitals and Clinics in Richmond, Va., died June 9.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Mass General Brigham appoints director of AI literacy",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/mass-general-brigham-appoints-director-of-ai-literacy/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-18",
+      "summary": "Mass General Brigham in Somerville, Mass., has promoted Chenzhe Cao to the new role of director of AI literacy and acceleration.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "8 GLP-1 findings to know",
+      "url": "https://www.beckershospitalreview.com/glp-1s/8-glp-1-findings-to-know/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-18",
+      "summary": "A wave of new research is expanding what clinicians and health system leaders know about GLP-1 medications — covering new territory from liver disease to male fertility to a blood pressure safety signal.&#160; Here are eight recent findings: The post 8 GLP-1 findings to know appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "‘Challenge the CEO’s thinking’: How strong CIOs collaborate with CEOs",
+      "url": "https://www.beckershospitalreview.com/strategy/challenge-the-ceos-thinking-how-strong-cios-collaborate-with-ceos/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-18",
+      "summary": "Hospital and health system CEOs are expected to balance growth, access, finances and operations. In 2026, they must also weigh new technology investments, including AI.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "CMS recalculates MA star ratings payments in wake of Clover lawsuit",
+      "url": "https://www.beckershospitalreview.com/finance/cms-recalculates-2027-ma-quality-bonus-payments-in-wake-of-clover-lawsuit/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-18",
+      "summary": "CMS&#160;is&#160;“voluntarily recalculating” 2027 Medicare Advantage quality bonus payment ratings, based on 2026 star ratings,&#160;following&#160;Clover Health’s successful challenge of the agency’s measures. CMS sent a letter informing health plans June 17.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "&#8216;Rip off the Band-Aid and start over&#8217;: Rural healthcare leaders debate policy reform",
+      "url": "https://www.beckershospitalreview.com/finance/rip-off-the-band-aid-and-start-over-rural-healthcare-leaders-debate-policy-reform/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-18",
+      "summary": "As CMS begins distributing first-year awards from the $50 billion Rural Health Transformation Program, three healthcare leaders gathered at the inaugural Becker&#8217;s Rural Healthcare Summit on June 12 and offered sharply divergent views on whether federal investment can fix what one panelist described as a system that is &#8220;irrevocably broken.&#8221; Lynn Barr, founder of Caravan [&#8230;] The post &#8216;Rip off the Band-Aid and start over&#8217;: Rural healthcare leaders debate policy reform appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "5 revenue cycle leaders to know",
+      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/5-revenue-cycle-leaders-to-know-7/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-18",
+      "summary": "Health systems across the U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Ebola cases increase almost 40% in a week as death toll passes 200",
+      "url": "https://www.statnews.com/2026/06/18/ebola-outbreak-congo-uganda-cases-increase-death-toll/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-18",
+      "summary": "Ebola cases have increased almost 40% in a week in the current outbreak in Congo and Uganda as the death toll passes 200.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Do wearables actually help people with cardiovascular disease?",
+      "url": "https://www.statnews.com/2026/06/18/do-wearables-actually-help-people-with-cardiovascular-disease/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-18",
+      "summary": "In this edition of STAT Health Tech: A look at what researchers found about if using wearables help people with cardiovascular diseases, and more.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Cambrian&#8217;s experimental longevity drug mimics exercise",
+      "url": "https://www.statnews.com/2026/06/18/biotech-news-cambrians-experimental-longevity-drug-mimics-exercise/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-18",
+      "summary": "What Soon-Shiong has delivered, Encanta's RSV antiviral, and other biotech news from The Readout",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Shingles vaccine may lower dementia risk, new study finds",
+      "url": "https://www.statnews.com/2026/06/18/shingles-vaccine-may-lower-dementia-risk-new-study/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-18",
+      "summary": "Nursing home residents who received at least one dose of shingles vaccine were 24 percent less likely to develop dementia, a new study found.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Pharmalittle: We&#8217;re reading about an FDA review of Moderna&#8217;s flu shot, J&#038;J&#8217;s focus on cancer, and more",
+      "url": "https://www.statnews.com/pharmalot/2026/06/18/fda-panel-vote-moderna-flu-vaccine-jnj-cancer-drugs/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-18",
+      "summary": "Johnson &#038; Johnson has no plans to enter the booming obesity market, opting instead to focus on diseases such as cancer",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "How many Americans can afford high-quality health care? A new poll finds the number has fallen",
+      "url": "https://www.statnews.com/2026/06/18/how-many-americans-can-afford-their-healthcare/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-18",
+      "summary": "A new poll shows only about half of U.S.",
+      "category": "quality_safety",
+      "categoryLabel": "Quality & Safety"
+    },
+    {
       "title": "Six of the biggest health news stories today",
       "url": "https://www.statnews.com/2026/06/18/health-news-high-end-infant-formula-synthetic-opioids-ftc/?utm_campaign=rss",
       "source": "STAT News",
@@ -457,6 +620,42 @@
       "summary": "“AI is creating a new and largely overlooked strain on something fundamental to health,” write Sten H. Vermund and Patricia J.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Can certification help solve healthcare’s AI governance gap?",
+      "url": "https://www.healthcaredive.com/news/joint-commission-adaptable-ai-blueprint-certification-ken-grubbs-william-walders/823201/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-06-18",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "PCMA sues to exempt PBMs from Illinois drug law",
+      "url": "https://www.healthcaredive.com/news/pcma-sues-illinois-prescription-drug-affordability-act-pbm/823195/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-06-18",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Employers plan to shift more health costs to employees",
+      "url": "https://www.healthcaredive.com/news/employers-shift-more-health-costs-on-employees-mercer/822891/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-06-18",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Eli Lilly cuts 340B discounts for hospitals resisting its claims data submission policy",
+      "url": "https://www.fiercehealthcare.com/providers/eli-lillys-ultimatum-hospitals-send-340b-claims-data-june-1-or-lose-discounts",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-18",
+      "summary": "The drugmaker had issued a June 8 ultimatum to an unspecified number of hospitals that weren't following a data submission policy it implemented in February. Furious hospital industry groups describe the decision as unlawful and urge the administration to intervene.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
     },
     {
       "title": "Lantern, Marathon Health team up to launch integrated care management model",
@@ -4645,228 +4844,6 @@
       "summary": "Vega helps customers with testing, fine-tuning and deployment of AI. Since 2019, PCCI's models have identified nearly 3 million at-risk individuals.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "WellSpan reports 66% workplace violence reduction with Canopy's safety tech",
-      "url": "https://www.fiercehealthcare.com/hospitals/wellspan-reports-66-workplace-violence-reduction-canopy-systemwide-tech-case-study",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-12",
-      "summary": "Alongside decreased workplace injuries, the case study found increased reporting of verbal escalations and the connected safety platform system’s successful use in medical emergencies.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Fierce Healthcare Layoff Tracker—UPMC lays off 200; UVM cuts 142 roles",
-      "url": "https://www.fiercehealthcare.com/finance/fierce-healthcare-layoff-tracker-2026-job-cuts-eliminations-health-systems-hospitals",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-12",
-      "summary": "Stick with this tracker for the latest layoff and workforce updates from across healthcare.",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "UnitedHealthcare exec talks AI, affordability and member engagement",
-      "url": "https://www.fiercehealthcare.com/payers/unitedhealthcare-exec-talks-ai-affordability-and-member-engagement",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-12",
-      "summary": "Dan Kueter, CEO of UnitedHealthcare Employer &amp; Individual, joins the podcast to talk about what employers are asking for in today’s commercial insurance market and how UnitedHealthcare is using digital tools, AI and more personalized benefit design to support member engagement.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "PSG report examines payers and employers’ attitudes towards GLP-1 coverage, unbundling’ PBM models",
-      "url": "https://www.fiercehealthcare.com/payers/psg-report-examines-payers-employers-attitudes-towards-glp-1-coverage-unbundling-pbm-models",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-12",
-      "summary": "The annual drug benefit design report drew insights from 237 benefits leaders across employers, health plans and unions.",
-      "category": "labor_unions",
-      "categoryLabel": "Labor & Unions"
-    },
-    {
-      "title": "Alignment Health CEO 'very confident' in Q2 guidance as insurer eyes market expansion",
-      "url": "https://www.fiercehealthcare.com/payers/alignment-health-ceo-very-confident-q2-guidance-insurer-eyes-market-expansion",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-12",
-      "summary": "Alignment Health CEO John Kao reiterated Tuesday that the company's strong revenue and membership growth in the first quarter would continue in Q2 despite the Medicare Advantage headwinds confronting many other insurers.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "AHIP 2026: CAQH rebrands as DataSpring as it charts course for the future",
-      "url": "https://www.fiercehealthcare.com/health-tech/ahip-2026-caqh-rebrands-dataspring-it-charts-course-future",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-12",
-      "summary": "LAS VEGAS—CAQH has rebranded as DataSpring, a name leaders say reflects the organization's push toward a more modern and innovative future.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "House Appropriations Committee takes aim at CMS' WISeR pilot",
-      "url": "https://www.fiercehealthcare.com/regulatory/house-appropriations-committee-takes-aim-cms-wiser-pilot",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-12",
-      "summary": "A key legislative panel voted Tuesday to bar the Centers for Medicare &amp; Medicaid Services from spending funds on a controversial prior authorization pilot.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "PCMA unveils new policy platform aimed at drug affordability",
-      "url": "https://www.fiercehealthcare.com/payers/pcma-unveils-new-policy-platform-aimed-drug-affordability",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-12",
-      "summary": "The Pharmaceutical Care Management Association released a new policy platform, which includes six ways it says that federal policymakers can support lower drug costs.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "CalOptima Health approves $430M rate increase to keep safety-net providers afloat",
-      "url": "https://www.fiercehealthcare.com/payers/caloptima-health-approves-430m-rate-increase-keep-safety-net-providers-afloat",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-12",
-      "summary": "The Orange County Medi-Cal plan said it would tap its reserves to support hospitals and specialists whose financial stability is threatened by Medicaid funding and eligibility changes from the One Big Beautiful Bill Act.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Hundreds of hospitals warned over price transparency failings, AP reports",
-      "url": "https://www.fiercehealthcare.com/providers/hundreds-hospitals-warned-over-price-transparency-failings-ap-reports",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-12",
-      "summary": "At least 519 hospitals nationwide have received a warning notice or Corrective Action Plan request due to price transparency deficiencies since April, according to a \"senior administration official\" cited by the AP.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Statement of Organization, Functions, and Delegations of Authority",
-      "summary": "The Centers for Medicare and Medicaid Services (CMS), Office of Health Technology and Products (OHTP), has been established. This new organizational component will provide enterprise leadership and oversight for CMS healthcare technology modernization, digital products, and transformation of platforms and services supporting Medicare, Medicaid, the Children's Health Insurance Program (CHIP), and other CMS-administered programs, in close coordination with the CMS Chief Information Officer (CIO) and subject to CIO-led enterprise information technology (IT) governance, cybersecurity, enterprise architecture, and capital planning and investment control responsibilities, as well as CIO-led digital service delivery, customer experience, and public digital experience responsibilities under applicable law.",
-      "url": "https://www.federalregister.gov/documents/2026/06/11/2026-11743/statement-of-organization-functions-and-delegations-of-authority",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-06-11",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Agency Information Collection Activities; Submission for Office of Management and Budget Review; Comment Request; Procedures for the Safe Processing and Importing of Fish and Fishery Products",
-      "summary": "The Food and Drug Administration (FDA) is announcing that a proposed collection of information has been submitted to the Office of Management and Budget (OMB) for review and clearance under the Paperwork Reduction Act of 1995.",
-      "url": "https://www.federalregister.gov/documents/2026/06/11/2026-11762/agency-information-collection-activities-submission-for-office-of-management-and-budget-review",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-06-11",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Agency Information Collection Activities; Submission for Office of Management and Budget Review; Comment Request; Establishment, Maintenance, and Availability of Records; Additional Traceability Records for Certain Foods",
-      "summary": "The Food and Drug Administration (FDA) is announcing that a proposed collection of information has been submitted to the Office of Management and Budget (OMB) for review and clearance under the Paperwork Reduction Act of 1995.",
-      "url": "https://www.federalregister.gov/documents/2026/06/11/2026-11760/agency-information-collection-activities-submission-for-office-of-management-and-budget-review",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-06-11",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Medical Devices; Immunology and Microbiology Devices; Classification of the Spinal Muscular Atrophy Newborn Screening Test System",
-      "summary": "The Food and Drug Administration (FDA) is classifying the Spinal Muscular Atrophy newborn screening test system into class II (special controls). The special controls that apply to the device type are identified in this order and will be part of the codified language for classification of the Spinal Muscular Atrophy newborn screening test system. We are taking this action because we have determined that classifying the device into class II will provide a reasonable assurance of safety and effectiveness of the device. We believe this action will also enhance patients' access to beneficial innovative devices, in part by reducing regulatory burdens.",
-      "url": "https://www.federalregister.gov/documents/2026/06/11/2026-11740/medical-devices-immunology-and-microbiology-devices-classification-of-the-spinal-muscular-atrophy",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-06-11",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Medical Devices; Immunology and Microbiology Devices; Classification of the Simple Point-of-Care Device to Directly Detect SARS-CoV-2 Viral Targets From Clinical Specimens in Near-Patient Settings",
-      "summary": "The Food and Drug Administration (FDA) is classifying the simple point-of-care device to directly detect SARS-CoV-2 viral targets from clinical specimens in near-patient settings into class II (special controls). The special controls that apply to the device type are identified in this order and will be part of the codified language for classification of the simple point-of-care device to directly detect SARS-CoV-2 viral targets from clinical specimens in near-patient settings. We are taking this action because we have determined that classifying the device into class II will provide a reasonable assurance of safety and effectiveness of the device. We believe this action will also enhance patients' access to beneficial innovative devices, in part by reducing regulatory burdens.",
-      "url": "https://www.federalregister.gov/documents/2026/06/11/2026-11739/medical-devices-immunology-and-microbiology-devices-classification-of-the-simple-point-of-care",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-06-11",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Drug Repurposing for Unmet Medical Needs; Request for Information; Extension of Comment Period",
-      "summary": "The Food and Drug Administration (FDA, the Agency, or we) is extending the comment period for the notice entitled \"Drug Repurposing for Unmet Medical Needs; Request for Information\" that appeared in the Federal Register of May 12, 2026 (91 FR 25897). In the notice, FDA requested comments to solicit input on FDA's efforts with respect to drug repurposing to address unmet medical needs. The Agency is taking this action to allow interested persons additional time to submit comments.",
-      "url": "https://www.federalregister.gov/documents/2026/06/11/2026-11691/drug-repurposing-for-unmet-medical-needs-request-for-information-extension-of-comment-period",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-06-11",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Recommendations on Scale-Up and Postapproval Changes Guidances for Industry; Request for Comments; Reopening of the Comment Period",
-      "summary": "The Food and Drug Administration (FDA or the Agency) is reopening the comment period for the request for information and comments that appeared in the Federal Register of March 3, 2026. In the notice, FDA requested comments on the Agency's series of guidances for industry on scale-up and postapproval changes for specific dosage forms. The Agency is taking this action to allow interested persons additional time to submit comments.",
-      "url": "https://www.federalregister.gov/documents/2026/06/11/2026-11690/recommendations-on-scale-up-and-postapproval-changes-guidances-for-industry-request-for-comments",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-06-11",
-      "category": "capacity_expansion",
-      "relevance": 100,
-      "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "Heart Pump Correction: Abiomed Issues Correction for Automated Impella Controllers",
-      "summary": "Certain AIC units require hardware updates to address potential safety concerns that could lead to a delay or loss of hemodynamic support.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/heart-pump-correction-abiomed-issues-correction-automated-impella-controllers",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-06-11",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Early Alert: Positive Pressure Breathing Device Issue from Baxter",
-      "summary": "Volara system patient circuits may leak air and medication from the nebulizer cup during therapy, leading to reduced oxygenation and ineffective nebulization.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-positive-pressure-breathing-device-issue-baxter",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-06-11",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Solicitation of Nominations for Membership on the Presidential Advisory Council on HIV/AIDS",
-      "summary": "The Office of the Assistant Secretary for Health (OASH) is seeking nominations for membership on the Presidential Advisory Council on HIV/AIDS (referred to as PACHA and/or the Council). The PACHA is a federal advisory committee within the U. S. Department of Health and Human Services (HHS). Management support for the activities of this Council is the responsibility of the Office of the Assistant Secretary for Health (OASH). The qualified individuals will be nominated by the Secretary of the U.S. Department of Health and Human Services for appointment to the PACHA. Members of the Council, including the Chair, are appointed by the Secretary. Members are invited to serve for overlapping terms of up to four years. The Council was established to provide advice, information, and recommendations to the Secretary regarding programs, policies, and research to promote effective treatment, prevention and cure of HIV and AIDS, including considering common co-morbidities, as needed to promote effective HIV diagnosis, treatment, prevention, and quality care services. The functions of the Council are solely advisory in nature. A copy of the PACHA charter that describes its structure and functions and lists of the current members can be reviewed on the PACHA website at: https://www.hiv.gov/federal- response/pacha/about-pacha.",
-      "url": "https://www.federalregister.gov/documents/2026/06/11/2026-11738/solicitation-of-nominations-for-membership-on-the-presidential-advisory-council-on-hivaids",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-06-11",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "National Institute of Allergy and Infectious Diseases; Amended Notice of Meeting",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/06/11/2026-11771/national-institute-of-allergy-and-infectious-diseases-amended-notice-of-meeting",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-06-11",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
     }
   ]
 }
