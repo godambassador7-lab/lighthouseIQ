@@ -1,82 +1,82 @@
 {
-  "lastUpdated": "2026-06-21T00:13:31.884Z",
+  "lastUpdated": "2026-06-21T06:08:49.352Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 1,
-    "healthySources": 9,
+    "staleSources": 6,
+    "healthySources": 4,
     "sources": [
       {
         "source": "Fierce Healthcare",
         "articleCount": 223,
         "latestPublishedAt": "2026-06-21T00:00:00.000Z",
-        "staleHours": 0,
+        "staleHours": 6,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
         "articleCount": 137,
         "latestPublishedAt": "2026-06-19T00:00:00.000Z",
-        "staleHours": 48,
+        "staleHours": 54,
         "status": "ok"
       },
       {
         "source": "STAT News",
         "articleCount": 62,
         "latestPublishedAt": "2026-06-20T00:00:00.000Z",
-        "staleHours": 24,
+        "staleHours": 30,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 37,
         "latestPublishedAt": "2026-06-22T00:00:00.000Z",
-        "staleHours": -24,
+        "staleHours": -18,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 17,
         "latestPublishedAt": "2026-06-18T00:00:00.000Z",
-        "staleHours": 72,
-        "status": "ok"
+        "staleHours": 78,
+        "status": "stale"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 11,
         "latestPublishedAt": "2026-06-18T00:00:00.000Z",
-        "staleHours": 72,
-        "status": "ok"
+        "staleHours": 78,
+        "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 5,
         "latestPublishedAt": "2026-06-18T00:00:00.000Z",
-        "staleHours": 72,
-        "status": "ok"
+        "staleHours": 78,
+        "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 5,
         "latestPublishedAt": "2026-06-18T00:00:00.000Z",
-        "staleHours": 72,
-        "status": "ok"
+        "staleHours": 78,
+        "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 2,
         "latestPublishedAt": "2026-06-16T00:00:00.000Z",
-        "staleHours": 120,
+        "staleHours": 126,
         "status": "stale"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 1,
         "latestPublishedAt": "2026-06-18T00:00:00.000Z",
-        "staleHours": 72,
-        "status": "ok"
+        "staleHours": 78,
+        "status": "stale"
       }
     ]
   },
@@ -115,8 +115,10 @@
     }
   },
   "quality": {
-    "status": "pass",
-    "failedChecks": [],
+    "status": "warning",
+    "failedChecks": [
+      "maxStaleSources"
+    ],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -135,8 +137,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 1,
-        "pass": true
+        "actual": 6,
+        "pass": false
       }
     }
   },
@@ -1135,18 +1137,6 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "Catheter Recall Expansion: Medline Industries Removes Reprocessed Electrophysiology and Ultrasound Catheters",
-      "summary": "Certain reprocessed catheters may contain residual particulates that could cause infection, embolism, or thrombosis",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/catheter-recall-expansion-medline-industries-removes-reprocessed-electrophysiology-and-ultrasound",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-06-18",
-      "category": "quality_safety",
-      "relevance": 98,
-      "categoryLabel": "Quality & Safety"
-    },
-    {
       "title": "Early Alert: Catheter Introducer Issue from Abiomed and Oscor",
       "summary": "Abiomed and Oscor have identified a potential for introducer sheath leakage in 14Fr and 23Fr Introducers that may increase the risk of access-site bleeding.",
       "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-catheter-introducer-issue-abiomed-and-oscor",
@@ -1157,6 +1147,18 @@
       "category": "general_market",
       "relevance": 98,
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "Catheter Recall Expansion: Medline Industries Removes Reprocessed Electrophysiology and Ultrasound Catheters",
+      "summary": "Certain reprocessed catheters may contain residual particulates that could cause infection, embolism, or thrombosis",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/catheter-recall-expansion-medline-industries-removes-reprocessed-electrophysiology-and-ultrasound",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-06-18",
+      "category": "quality_safety",
+      "relevance": 98,
+      "categoryLabel": "Quality & Safety"
     },
     {
       "title": "Center for Scientific Review; Notice of Closed Meetings",
