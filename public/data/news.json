@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-06-22T19:37:38.423Z",
+  "lastUpdated": "2026-06-22T22:09:39.929Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 4,
-    "healthySources": 6,
+    "staleSources": 3,
+    "healthySources": 7,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 200,
+        "articleCount": 197,
         "latestPublishedAt": "2026-06-22T00:00:00.000Z",
-        "staleHours": 19,
+        "staleHours": 22,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 142,
+        "articleCount": 148,
         "latestPublishedAt": "2026-06-22T00:00:00.000Z",
-        "staleHours": 19,
+        "staleHours": 22,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 74,
+        "articleCount": 73,
         "latestPublishedAt": "2026-06-22T00:00:00.000Z",
-        "staleHours": 19,
+        "staleHours": 22,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 37,
         "latestPublishedAt": "2026-06-22T00:00:00.000Z",
-        "staleHours": 19,
+        "staleHours": 22,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
-        "articleCount": 22,
+        "articleCount": 18,
         "latestPublishedAt": "2026-06-22T00:00:00.000Z",
-        "staleHours": 19,
+        "staleHours": 22,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 11,
         "latestPublishedAt": "2026-06-18T00:00:00.000Z",
-        "staleHours": 115,
+        "staleHours": 118,
         "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
-        "articleCount": 6,
+        "articleCount": 7,
         "latestPublishedAt": "2026-06-22T00:00:00.000Z",
-        "staleHours": 19,
+        "staleHours": 22,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 5,
         "latestPublishedAt": "2026-06-18T00:00:00.000Z",
-        "staleHours": 115,
+        "staleHours": 118,
         "status": "stale"
+      },
+      {
+        "source": "SEC Healthcare Filings",
+        "articleCount": 2,
+        "latestPublishedAt": "2026-06-22T00:00:00.000Z",
+        "staleHours": 22,
+        "status": "ok"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 2,
         "latestPublishedAt": "2026-06-16T00:00:00.000Z",
-        "staleHours": 163,
-        "status": "stale"
-      },
-      {
-        "source": "SEC Healthcare Filings",
-        "articleCount": 1,
-        "latestPublishedAt": "2026-06-18T00:00:00.000Z",
-        "staleHours": 115,
+        "staleHours": 166,
         "status": "stale"
       }
     ]
@@ -83,19 +83,19 @@
   "categoryCoverage": {
     "closures_layoffs": {
       "label": "Closures & Layoffs",
-      "count": 5
+      "count": 4
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 24
+      "count": 26
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 1
+      "count": 2
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 83
+      "count": 82
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -111,7 +111,7 @@
     },
     "general_market": {
       "label": "General Market",
-      "count": 228
+      "count": 227
     }
   },
   "quality": {
@@ -127,7 +127,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 74,
+        "actual": 88,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -137,7 +137,7 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 4,
+        "actual": 3,
         "pass": false
       }
     }
@@ -204,6 +204,18 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
+      "title": "Infant Resuscitation System Correction: GE HealthCare Issues Correction for Giraffe and Panda Infant Resuscitation Systems and Warmers with a M1091607-R Blender",
+      "summary": "The air-oxygen blender knob shaft on certain integrated and stand-alone Resuscitation systems can loosen, affecting the delivered oxygen concentration",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/infant-resuscitation-system-correction-ge-healthcare-issues-correction-giraffe-and-panda-infant",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-06-22",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
       "title": "Heart Pump Controller Correction: Abiomed Updates Use Instructions for Automated Impella Controllers",
       "summary": "A software error may cause the Automated Impella Controller to restart when used in conjunction with left ventricular Impella devices.",
       "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/heart-pump-controller-correction-abiomed-updates-use-instructions-automated-impella-controllers",
@@ -216,92 +228,113 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "UnityPoint cut maternal sepsis deaths to 0 with Epic care path",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/unitypoint-cut-maternal-sepsis-deaths-to-0-with-epic-care-path/",
-      "source": "Becker's Hospital Review",
+      "title": "CNC 8-K filing - Centene Corporation",
+      "summary": "Centene Corporation filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1071739/000107173926000132/cnc-20260619.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
       "publishedAt": "2026-06-22",
-      "summary": "West Des Moines, Iowa-based UnityPoint Health cut its maternal sepsis mortality rate from 3.2% to 0% after embedding pregnancy-specific detection criteria into its Epic EHR.",
-      "category": "quality_safety",
-      "categoryLabel": "Quality & Safety"
+      "category": "general_market",
+      "relevance": 85,
+      "categoryLabel": "General Market"
     },
     {
-      "title": "UCLA Health names new CIO",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/ucla-health-names-new-cio/",
+      "title": "Banner Health clinicians file to unionize",
+      "url": "https://www.beckershospitalreview.com/hr/banner-health-clinicians-file-to-unionize/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-06-22",
-      "summary": "UCLA Health has promoted Jeanne Markland to CIO of UCLA Health. A spokesperson for UCLA Health confirmed to Becker&#8217;s that Ms.",
+      "summary": "Physicians, nurse practitioners and physician assistants at Phoenix-based Banner Health have filed a petition for union representation with the Union of American Physicians and Dentists, the union said in a June 22 news release shared with Becker&#8217;s. If the election succeeds, the bargaining unit would include more than 240 clinicians across 31 clinic locations in [&#8230;] The post Banner Health clinicians file to unionize appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "labor_unions",
+      "categoryLabel": "Labor & Unions"
+    },
+    {
+      "title": "New Hampshire system names new chief strategy officer",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/new-hampshire-system-names-new-chief-strategy-officer/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-22",
+      "summary": "Alisha Feightner has been promoted to senior vice president and chief strategy officer of Manchester, N.H.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
     {
-      "title": "Struggling Mississippi hospital gets OK for new owner",
-      "url": "https://www.beckershospitalreview.com/finance/struggling-mississippi-hospital-gets-ok-for-new-owner/",
+      "title": "AI in diagnosis and clinical reasoning: 8 recent studies",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/ai-in-diagnosis-and-clinical-reasoning-8-recent-studies/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-06-22",
-      "summary": "The Mississippi Institutions of Higher Learning board of trustees voted June 18 for Jackson-based University of Mississippi Medical Center to take over Greenwood (Miss.) Leflore Hospital, SuperTalk Mississippi Media reported June 19.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
+      "summary": "AI has outperformed physicians on emergency diagnoses, flagged pancreatic cancer up to three years early and beat specialized clinical software on medical benchmarks across several studies Becker&#8217;s has covered in recent months. But the studies raise as many questions as they answer for health system leaders.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
     },
     {
-      "title": "Less resilience training, more connection: A different path to increasing physician and leadership engagement",
-      "url": "https://www.beckershospitalreview.com/leadership/less-resilience-training-more-connection-a-different-path-to-increasing-physician-and-leadership-engagement/",
+      "title": "HHS launches Operation TrailBlazer to reclaim clinical trial edge: 5 notes",
+      "url": "https://www.beckershospitalreview.com/pharmacy/hhs-launches-operation-trailblazer-to-reclaim-clinical-trial-edge-5-notes/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-06-22",
-      "summary": "Burnout in healthcare cannot be solved by adding another meeting to the calendar of already overextended leaders. Real change happens when people have skin in the game and are invited to help fund, shape and sponsor the work.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Wyoming hospital to rebadge 19 revenue cycle employees",
-      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/wyoming-hospital-to-rebadge-19-revenue-cycle-employees/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-22",
-      "summary": "Jackson, Wyo.-based St.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "CommonSpirit hospital leader headed to Logan Health",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/commonspirit-hospital-leader-headed-to-logan-health/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-22",
-      "summary": "Josh Neff, president of CommonSpirit Health&#8217;s Mercy Hospital in Durango, Colo., will join Kalispell, Mont.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Perioperative glucose: The CMS measure 2028 budgets have underpriced",
-      "url": "https://www.beckershospitalreview.com/anesthesia/perioperative-glucose-the-cms-measure-2028-budgets-have-underpriced/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-22",
-      "summary": "CMS has made severe hyperglycemia and severe hypoglycemia reportable hospital-harm measures. The reporting requirement is here, and the payment consequence arrives in the 2028 determination.",
+      "summary": "HHS has directed six of its agencies to reduce regulatory barriers associated with clinical trial research to accelerate pharmaceutical development in the U.S.",
       "category": "policy_reimbursement",
       "categoryLabel": "Policy & Reimbursement"
     },
     {
-      "title": "University Hospitals vice president of strategy and partnerships retires",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/university-hospitals-vice-president-of-strategy-and-partnerships-retires/",
+      "title": "Iowa 1st to fully allocate year 1 rural health funds",
+      "url": "https://www.beckershospitalreview.com/finance/iowa-1st-to-fully-allocate-year-1-rural-health-funds/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-06-22",
-      "summary": "Rick Cicero, vice president of strategy and partnerships at Cleveland-based University Hospitals, has retired after more than 40 years in healthcare, according to a June 19 LinkedIn post. Mr.",
+      "summary": "Iowa has become the first state to fully allocate its initial funding from the Rural Health Transformation Program. The state has allocated all $209 million of its first-year funding for healthcare initiatives, including workforce development, cancer research and prevention and hospital grants, according to a June 22 news release from the office of Rep.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
     {
-      "title": "US healthcare affordability hits 5-year low: Gallup",
-      "url": "https://www.beckershospitalreview.com/finance/us-healthcare-affordability-hits-5-year-low-gallup/",
+      "title": "Duke Health names ophthalmology chair",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/duke-health-names-ophthalmology-chair/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-06-22",
-      "summary": "Healthcare affordability among U.S.",
+      "summary": "Durham, N.C.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Health insurer CEOs could face criminal liability for denials that lead to injury, death under Pennsylvania bill",
+      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/health-insurer-ceos-could-face-criminal-liability-for-denials-that-lead-to-injury-death-under-pennsylvania-bill/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-22",
+      "summary": "A Pennsylvania bill would create a category of aggravated assault in the state&#8217;s criminal code to hold health insurer CEOs liable if a covered person gets an &#8220;adverse benefit determination&#8221; of a medically necessary benefit that leads to serious bodily injury or death. Under House Bill 2611, referred to the House judiciary committee June 8, [&#8230;] The post Health insurer CEOs could face criminal liability for denials that lead to injury, death under Pennsylvania bill appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
     {
-      "title": "FDA panel backs 1st mRNA flu vaccine",
-      "url": "https://www.beckershospitalreview.com/quality/public-health/fda-panel-backs-1st-mrna-flu-vaccine/",
+      "title": "Texas hospital taps new COO",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/texas-hospital-taps-new-coo-2/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-06-22",
-      "summary": "An FDA advisory panel has recommended approval of Moderna&#8217;s mRNA-based flu vaccine, mFlusiva, for adults ages 50-64, and adults 65 and older if a specific condition is met. The vaccine was about 27% more effective than a standard flu shot in a late-stage trial, an FDA official said at a June 18 panel meeting.",
+      "summary": "Howard Garner has been named COO of Austin-based St. David&#8217;s South Austin Medical Center.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Hackensack Meridian, Hunterdon Health explore merger",
+      "url": "https://www.beckershospitalreview.com/hospital-transactions-and-valuation/hunterdon-health-hackensack-meridian-sign-letter-of-intent-to-merge/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-22",
+      "summary": "Flemington, N.J.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "What the revenue cycle leaders of 2030 will know",
+      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/what-the-revenue-cycle-leaders-of-2030-will-know/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-22",
+      "summary": "Ask a Revenue Cycle Leader is a new series featuring insights from health system and hospital revenue cycle executives nationwide. Becker’s poses questions on the most pressing issues in healthcare finance — from payer relations and automation to workforce and patient experience.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "STAT+: Closely watched Pfizer lung cancer drug falls short in clinical trial",
+      "url": "https://www.statnews.com/2026/06/22/pfizer-lung-cancer-sigvotatug-vedotin/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-22",
+      "summary": "Pfizer said an experimental drug it hoped could replace a widely used chemotherapy in one of the most common forms of lung cancer fell short in a clinical trial.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
     },
@@ -464,6 +497,105 @@
       "source": "Healthcare Dive",
       "publishedAt": "2026-06-22",
       "summary": "<p>AI is turning payer contracts into revenue intelligence. Here is how.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Patient portal messages doubled since 2020, study finds, underscoring challenges to physician workloads",
+      "url": "https://www.fiercehealthcare.com/health-tech/patient-portal-messages-doubled-2020-physicians-try-balance-digital-and-clinical",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-22",
+      "summary": "Online portal messages sent to providers more than doubled between 2020 and 2025, but there hasn't been a corresponding drop-off in clinic visits as digital medicine is supplementing rather than replacing in-person care, a new study finds.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "UnityPoint cut maternal sepsis deaths to 0 with Epic care path",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/unitypoint-cut-maternal-sepsis-deaths-to-0-with-epic-care-path/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-22",
+      "summary": "West Des Moines, Iowa-based UnityPoint Health cut its maternal sepsis mortality rate from 3.2% to 0% after embedding pregnancy-specific detection criteria into its Epic EHR.",
+      "category": "quality_safety",
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "UCLA Health names new CIO",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/ucla-health-names-new-cio/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-22",
+      "summary": "UCLA Health has promoted Jeanne Markland to CIO of UCLA Health. A spokesperson for UCLA Health confirmed to Becker&#8217;s that Ms.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Struggling Mississippi hospital gets OK for new owner",
+      "url": "https://www.beckershospitalreview.com/finance/struggling-mississippi-hospital-gets-ok-for-new-owner/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-22",
+      "summary": "The Mississippi Institutions of Higher Learning board of trustees voted June 18 for Jackson-based University of Mississippi Medical Center to take over Greenwood (Miss.) Leflore Hospital, SuperTalk Mississippi Media reported June 19.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Less resilience training, more connection: A different path to increasing physician and leadership engagement",
+      "url": "https://www.beckershospitalreview.com/leadership/less-resilience-training-more-connection-a-different-path-to-increasing-physician-and-leadership-engagement/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-22",
+      "summary": "Burnout in healthcare cannot be solved by adding another meeting to the calendar of already overextended leaders. Real change happens when people have skin in the game and are invited to help fund, shape and sponsor the work.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Wyoming hospital to rebadge 19 revenue cycle employees",
+      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/wyoming-hospital-to-rebadge-19-revenue-cycle-employees/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-22",
+      "summary": "Jackson, Wyo.-based St.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "CommonSpirit hospital leader headed to Logan Health",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/commonspirit-hospital-leader-headed-to-logan-health/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-22",
+      "summary": "Josh Neff, president of CommonSpirit Health&#8217;s Mercy Hospital in Durango, Colo., will join Kalispell, Mont.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Perioperative glucose: The CMS measure 2028 budgets have underpriced",
+      "url": "https://www.beckershospitalreview.com/anesthesia/perioperative-glucose-the-cms-measure-2028-budgets-have-underpriced/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-22",
+      "summary": "CMS has made severe hyperglycemia and severe hypoglycemia reportable hospital-harm measures. The reporting requirement is here, and the payment consequence arrives in the 2028 determination.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "University Hospitals vice president of strategy and partnerships retires",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/university-hospitals-vice-president-of-strategy-and-partnerships-retires/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-22",
+      "summary": "Rick Cicero, vice president of strategy and partnerships at Cleveland-based University Hospitals, has retired after more than 40 years in healthcare, according to a June 19 LinkedIn post. Mr.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "US healthcare affordability hits 5-year low: Gallup",
+      "url": "https://www.beckershospitalreview.com/finance/us-healthcare-affordability-hits-5-year-low-gallup/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-22",
+      "summary": "Healthcare affordability among U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "FDA panel backs 1st mRNA flu vaccine",
+      "url": "https://www.beckershospitalreview.com/quality/public-health/fda-panel-backs-1st-mrna-flu-vaccine/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-22",
+      "summary": "An FDA advisory panel has recommended approval of Moderna&#8217;s mRNA-based flu vaccine, mFlusiva, for adults ages 50-64, and adults 65 and older if a specific condition is met. The vaccine was about 27% more effective than a standard flu shot in a late-stage trial, an FDA official said at a June 18 panel meeting.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
     },
@@ -1761,18 +1893,6 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "Catheter Recall Expansion: Medline Industries Removes Reprocessed Electrophysiology and Ultrasound Catheters",
-      "summary": "Certain reprocessed catheters may contain residual particulates that could cause infection, embolism, or thrombosis",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/catheter-recall-expansion-medline-industries-removes-reprocessed-electrophysiology-and-ultrasound",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-06-18",
-      "category": "quality_safety",
-      "relevance": 98,
-      "categoryLabel": "Quality & Safety"
-    },
-    {
       "title": "Early Alert: Catheter Introducer Issue from Abiomed and Oscor",
       "summary": "Abiomed and Oscor have identified a potential for introducer sheath leakage in 14Fr and 23Fr Introducers that may increase the risk of access-site bleeding.",
       "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-catheter-introducer-issue-abiomed-and-oscor",
@@ -1783,6 +1903,18 @@
       "category": "general_market",
       "relevance": 98,
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "Catheter Recall Expansion: Medline Industries Removes Reprocessed Electrophysiology and Ultrasound Catheters",
+      "summary": "Certain reprocessed catheters may contain residual particulates that could cause infection, embolism, or thrombosis",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/catheter-recall-expansion-medline-industries-removes-reprocessed-electrophysiology-and-ultrasound",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-06-18",
+      "category": "quality_safety",
+      "relevance": 98,
+      "categoryLabel": "Quality & Safety"
     },
     {
       "title": "Center for Scientific Review; Notice of Closed Meetings",
@@ -4702,132 +4834,6 @@
       "summary": "Jesse Gabriel \"has passed more food policy in three years than most legislators enact in their entire careers,\" says one supporter.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Opinion: I’m a pediatrician. I want to prescribe the right AI to my patients",
-      "url": "https://www.statnews.com/2026/06/15/ai-children-screen-time-pediatrician-prescription-guidance/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-06-15",
-      "summary": "AI for children requires “randomized controlled trials measuring real developmental outcomes, not engagement metrics,” writes Dua Hassan.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Opinion: In many South Asian American families, a child’s autism diagnosis is a secret",
-      "url": "https://www.statnews.com/2026/06/15/autism-diagnosis-south-asian-american-families-stigma/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-06-15",
-      "summary": "“In South Asian households, a child's disability triggers a specific kind of family crisis,” writes child and adolescent psychiatrist Ritu Goel.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Medicare drug price rule may target under-the-skin cancer immunotherapies",
-      "url": "https://www.healthcaredive.com/news/medicare-drug-price-negotiation-IV-subcutaneous-opdivo-keytruda/822922/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-06-15",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Judge vacates most of controversial 2025 ACA enrollment, eligibility rule",
-      "url": "https://www.healthcaredive.com/news/judge-vacates-cms-aca-enrollment-eligibility-rule/822884/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-06-15",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Data analytics for payers: Improving maternal health outcomes while reducing total cost of care",
-      "url": "https://www.healthcaredive.com/spons/data-analytics-for-payers-improving-maternal-health-outcomes-while-reducin/822284/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-06-15",
-      "summary": "<p>How health plans can use analytics to improve maternal care and reduce avoidable utilization</p>",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "How healthcare AI is closing the revenue gap",
-      "url": "https://www.healthcaredive.com/spons/how-healthcare-ai-is-closing-the-revenue-gap/822195/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-06-15",
-      "summary": "<p>Discover how healthcare organizations are moving from early experimentation to broader AI adoption, connecting clinical improvements to financial impact.",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "Centene offering staff buyouts as it navigates murky ACA waters",
-      "url": "https://www.fiercehealthcare.com/payers/centene-offering-staff-buyouts-navigates-murky-aca-waters",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-15",
-      "summary": "Centene will offer buyouts to employees as it navigates a significant membership decline, a spokesperson confirmed to Fierce Healthcare.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "KFF: Insurer participation in the ACA marketplaces declined from 2025 to 2026",
-      "url": "https://www.fiercehealthcare.com/payers/kff-insurer-participation-aca-marketplaces-declined-2025-2026",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-15",
-      "summary": "The number of insurers offering plans on the Affordable Care Act's marketplaces declined between 2025 and 2026, with more payers poised for an exit ahead of the 2027 plan year, according to a new analysis.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Judge tosses multiple provisions of CMS' 2025 ACA program integrity rule",
-      "url": "https://www.fiercehealthcare.com/regulatory/judge-tosses-multiple-provisions-cms-2025-aca-program-integrity-rule",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-15",
-      "summary": "A federal judge has vacated several key components of a controversial 2025 program integrity rule for the Affordable Care Act's marketplaces.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "47% of US adults say corporate health insurers ‘primary drivers’ of rising health costs",
-      "url": "https://www.fiercehealthcare.com/finance/47-us-adults-say-corp-health-insurers-are-primary-drivers-rising-health-costs-coalition",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-15",
-      "summary": "Though 47% of respondents point the finger at corporate health insurers, respondents also selected the federal government (36%) and drug companies (34%) as primary drivers in rising costs.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Centene offers employee buyouts",
-      "url": "https://www.beckershospitalreview.com/workforce/centene-offers-employee-buyouts/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-15",
-      "summary": "Centene is offering a voluntary separation program to employees, the company confirmed to Becker&#8217;s June 15. &#8220;Centene is positioning the company to lead the future of healthcare — working to deliver a simpler and better experience for our members and partners while meeting the realities of today&#8217;s healthcare environment,&#8221; the company said.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Cleveland Clinic, IBM quantum partnership clears 50 projects in 5 years",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/innovation/cleveland-clinic-ibm-quantum-partnership-clears-50-projects-in-5-years/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-15",
-      "summary": "Cleveland Clinic and IBM&#8217;s Discovery Accelerator has supported more than 50 biomedical research projects in its first five years, the organizations said June 15 at the third annual Cleveland Discovery and Innovation Forum. The 10-year partnership, launched in 2021, applies high-performance computing, AI and quantum computing to speed biomedical discovery.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Karias Health launches AI care companion",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/karias-health-launches-ai-care-companion/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-15",
-      "summary": "Karias Health has introduced Faith, an AI care companion built to help members understand and act on healthcare decisions in real time. Faith is embedded in the broader Karias platform and is designed to bridge gaps across the care process, per a June 9 news release.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Rush taps new interim CFO",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/rush-taps-new-interim-cfo/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-15",
-      "summary": "Kevin Lenahan has been named interim senior vice president and CFO of Chicago-based Rush University System for Health, according to a June 15 LinkedIn post. Prior to his new role, Mr.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
     }
   ]
 }
