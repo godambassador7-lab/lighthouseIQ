@@ -1,82 +1,82 @@
 {
-  "lastUpdated": "2026-06-23T18:02:39.414Z",
+  "lastUpdated": "2026-06-23T20:22:10.805Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 3,
-    "healthySources": 7,
+    "staleSources": 2,
+    "healthySources": 8,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 204,
+        "articleCount": 199,
         "latestPublishedAt": "2026-06-23T00:00:00.000Z",
-        "staleHours": 18,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 141,
+        "articleCount": 151,
         "latestPublishedAt": "2026-06-23T00:00:00.000Z",
-        "staleHours": 18,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 76,
+        "articleCount": 74,
         "latestPublishedAt": "2026-06-23T00:00:00.000Z",
-        "staleHours": 18,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 34,
         "latestPublishedAt": "2026-06-23T00:00:00.000Z",
-        "staleHours": 18,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
-        "articleCount": 19,
+        "articleCount": 15,
         "latestPublishedAt": "2026-06-23T00:00:00.000Z",
-        "staleHours": 18,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 10,
         "latestPublishedAt": "2026-06-18T00:00:00.000Z",
-        "staleHours": 138,
+        "staleHours": 140,
         "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 7,
         "latestPublishedAt": "2026-06-22T00:00:00.000Z",
-        "staleHours": 42,
+        "staleHours": 44,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 5,
         "latestPublishedAt": "2026-06-18T00:00:00.000Z",
-        "staleHours": 138,
+        "staleHours": 140,
         "status": "stale"
+      },
+      {
+        "source": "National Nurses United RSS",
+        "articleCount": 3,
+        "latestPublishedAt": "2026-06-23T00:00:00.000Z",
+        "staleHours": 20,
+        "status": "ok"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 2,
         "latestPublishedAt": "2026-06-22T00:00:00.000Z",
-        "staleHours": 42,
+        "staleHours": 44,
         "status": "ok"
-      },
-      {
-        "source": "National Nurses United RSS",
-        "articleCount": 2,
-        "latestPublishedAt": "2026-06-16T00:00:00.000Z",
-        "staleHours": 186,
-        "status": "stale"
       }
     ]
   },
@@ -91,34 +91,32 @@
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 1
+      "count": 3
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 75
+      "count": 72
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 16
+      "count": 17
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
-      "count": 12
+      "count": 13
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 136
+      "count": 134
     },
     "general_market": {
       "label": "General Market",
-      "count": 230
+      "count": 231
     }
   },
   "quality": {
-    "status": "warning",
-    "failedChecks": [
-      "maxStaleSources"
-    ],
+    "status": "pass",
+    "failedChecks": [],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -127,7 +125,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 73,
+        "actual": 87,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -137,8 +135,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 3,
-        "pass": false
+        "actual": 2,
+        "pass": true
       }
     }
   },
@@ -192,6 +190,18 @@
       "categoryLabel": "Policy & Reimbursement"
     },
     {
+      "title": "Nation’s largest union of registered nurses joins U.S. representatives to call for end to blockade of Cuba",
+      "summary": "NNU and U.S. Representative Delia Ramirez will hold a press conference in Washington, D.C. on Tuesday, June 30 to demand an end to the Trump administration’s blockade of oil supplies entering Cuba. Union nurses will be joined by Global Health Partners, which is working to supply the island nation with critical medical equipment and medicine, as fuel shortages enter its fourth month and the humanitarian crisis escalates.",
+      "url": "https://www.nationalnursesunited.org/press/registered-nurses-join-us-representatives-to-call-for-end-to-blockade-of-cuba",
+      "source": "National Nurses United RSS",
+      "sourceType": "rss",
+      "sourceId": "nnu_rss",
+      "publishedAt": "2026-06-23",
+      "category": "labor_unions",
+      "relevance": 100,
+      "categoryLabel": "Labor & Unions"
+    },
+    {
       "title": "Center for Scientific Review; Notice of Closed Meetings",
       "summary": "",
       "url": "https://www.federalregister.gov/documents/2026/06/23/2026-12614/center-for-scientific-review-notice-of-closed-meetings",
@@ -216,94 +226,103 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "The cost of giving birth by state",
-      "url": "https://www.beckershospitalreview.com/rankings-and-ratings/the-cost-of-giving-birth-by-state-2/",
+      "title": "AGS Health names 4 executives to accelerate AI strategy",
+      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/ags-health-names-4-executives-to-accelerate-ai-strategy/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-06-23",
-      "summary": "Based on FAIR Health commercial claims data, the national median in-network cost of a C-section for commercially insured patients is $19,911, compared with $15,728 for a vaginal delivery. The figures come from FAIR Health&#8217;s Cost of Giving Birth Tracker, an interactive tool updated June 22 that tracks state-by-state costs for vaginal deliveries and C-sections.",
+      "summary": "Revenue cycle management company AGS Health named four executives to its senior leadership team, citing accelerating investment in AI, automation and data management as the driver behind the expanded leadership team. Cheryl Cruver, previously the company&#8217;s chief revenue officer, was named president of U.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "How ambient AI is moving past the scribe to drive orthopedic productivity — 4 takeaways",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/how-ambient-ai-is-moving-past-the-scribe-to-drive-orthopedic-productivity-4-takeaways/",
+      "title": "Michigan nurses plan 3-day strike",
+      "url": "https://www.beckershospitalreview.com/hr/michigan-nurses-plan-3-day-strike/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-06-23",
-      "summary": "Orthopedic practices are running full clinic and surgical schedules while documentation demands keep climbing, pushing physicians into after-hours charting and capping how many patients they can see. Ambient AI has become a near-ubiquitous documentation aid, but the more pressing question for orthopedic leaders is whether these tools are actually returning time and revenue or simply [&#8230;] The post How ambient AI is moving past the scribe to drive orthopedic productivity — 4 takeaways appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
+      "summary": "Members of the Michigan Nurses Association are set to begin a three-day strike July 3 at MyMichigan Medical Center Alma, part of Midland-based MyMichigan Health. The union represents 178 nurses at the hospital, according to an MNA news release.",
+      "category": "labor_unions",
+      "categoryLabel": "Labor & Unions"
     },
     {
-      "title": "OHSU swings from $71M operating loss to $65M gain through Q3",
-      "url": "https://www.beckershospitalreview.com/finance/ohsu-swings-from-71m-operating-loss-to-65m-gain-through-q3/",
+      "title": "Phoenix Children&#8217;s creates community hospitals leadership role",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/phoenix-childrens-creates-community-hospitals-leadership-role/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-06-23",
-      "summary": "Portland-based Oregon Health &#38; Science University recorded an operating income of $65 million (1.4% operating margin) through the third quarter of 2026, up from an operating loss of $71 million (-1.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Are rural hospitals best served by trading competition for collaboration?",
-      "url": "https://www.beckershospitalreview.com/finance/are-rural-hospitals-best-served-by-trading-competition-for-collaboration/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-23",
-      "summary": "As rural hospitals in the U.S.",
+      "summary": "Jayson Argyle has been appointed senior vice president of community hospitals at Phoenix Children&#8217;s, a newly created role supporting the growth of its network. In the role, Mr.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
     {
-      "title": "CHOP CEO to retire; successor named",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/chop-ceo-to-retire-successor-named/",
+      "title": "RWJBarnabas Health, Rutgers open $225M cancer center",
+      "url": "https://www.beckershospitalreview.com/capital/rwjbarnabas-health-rutgers-open-225m-cancer-center/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-06-23",
-      "summary": "Madeline Bell, BSN, plans to retire Oct. 1 as CEO of Children&#8217;s Hospital of Philadelphia after nearly 40 years with the organization.",
+      "summary": "On June 22, West Orange, N.J.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
     {
-      "title": "Most socially responsible hospital in every state: Lown Institute",
-      "url": "https://www.beckershospitalreview.com/rankings-and-ratings/most-socially-responsible-hospital-in-every-state-lown-institute/",
+      "title": "Kentucky system snaps up multiple practices after acquisition by Deaconess Health",
+      "url": "https://www.beckershospitalreview.com/hospital-transactions-and-valuation/kentucky-system-snaps-up-multiple-practices-after-acquisition-by-deaconess-health/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-06-23",
-      "summary": "The Lown Institute published its 2026 Lown Hospitals Index &#8220;Honor Roll&#8221; June 23, spotlighting the top hospitals for social responsibility in every state. To compile the list, the nonpartisan healthcare think tank assessed 2,718 acute care hospitals, 900 critical access hospitals and 331 health systems nationwide across more than 50 metrics related to health equity, [&#8230;] The post Most socially responsible hospital in every state: Lown Institute appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "summary": "Hopkinsville, Ky.-based Jennie Stuart Health has acquired six physician practices and clinics, adding to its growing provider network.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Massachusetts task force calls for eminent domain takeover of unfinished Steward hospital",
+      "url": "https://www.beckershospitalreview.com/finance/massachusetts-task-force-calls-for-eminent-domain-takeover-of-unfinished-steward-hospital/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-23",
+      "summary": "A Massachusetts task force assembled by Gov. Maura Healey released a June 22 report that revealed the healthcare consequences of the unfinished Norwood (Mass.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Top 25 US healthcare research organizations, per Nature",
+      "url": "https://www.beckershospitalreview.com/quality/patient-safety-outcomes/top-25-us-healthcare-research-organizations-per-nature/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-23",
+      "summary": "Boston-based Massachusetts General Hospital was the highest-performing U.S.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
     {
-      "title": "How 3 health systems are growing their own pharmacy workforce",
-      "url": "https://www.beckershospitalreview.com/pharmacy/how-3-health-systems-are-growing-their-own-pharmacy-workforce/",
+      "title": "A year after promising &#8216;change and reform,&#8217; UnitedHealth opens its doors",
+      "url": "https://www.beckershospitalreview.com/finance/a-year-after-promising-change-and-reform-unitedhealth-opens-its-doors/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-06-23",
-      "summary": "As workforce shortages continue to pressure pharmacy departments, some health systems are investing in a longer-term solution: building their own talent pipelines. Rather than relying solely on external hiring, organizations are creating technician training programs, expanding residency positions and developing new pathways to prepare pharmacists and technicians for increasingly specialized roles.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Drugmaker recalls 11,460 bottles of blood pressure medication",
-      "url": "https://www.beckershospitalreview.com/pharmacy/drugmaker-recalls-11460-bottles-of-blood-pressure-medication/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-23",
-      "summary": "Inventia Healthcare Limited is recalling 11,460 bottles of Chlorthalidone Tablets USP, 25 mg, a blood pressure medication distributed nationwide after the product failed dissolution specifications. The recall was initiated June 5 and was classified as a Class II recall by the FDA on June 22, according to a June 22 enforcement report.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "HCA HealthONE names CEO of 2 Denver hospitals",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/hca-healthone-names-ceo-of-2-denver-hospitals/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-23",
-      "summary": "Denver-based HCA HealthONE has named Casey Guber president and CEO of HCA HealthONE Presbyterian St. Luke&#8217;s and HCA HealthONE Rocky Mountain Children&#8217;s, two hospitals on its Denver campus, according to a June 23 news release shared with Becker&#8217;s.",
+      "summary": "It&#8217;s not every day the country&#8217;s largest healthcare company provides on-the-record access to its senior leadership team, no topics barred. But that is exactly what UnitedHealth Group has done, inviting reporters and social media influencers to its corporate headquarters in June for a daylong showcase of where the company is heading.",
       "category": "capacity_expansion",
       "categoryLabel": "Capacity & Expansion"
     },
     {
-      "title": "Boston Children&#8217;s launches neurologic drug research program",
-      "url": "https://www.beckershospitalreview.com/pharmacy/boston-childrens-launches-neurologic-drug-research-program/",
+      "title": "VUMC deploys patient-facing AI to cut portal messaging delays",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/vumc-deploys-patient-facing-ai-to-cut-portal-messaging-delays/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-06-23",
-      "summary": "Boston (Mass.) Children&#8217;s Hospital has launched a neurologic drug research program through a new research agreement focused on developing therapies for patients with unmet medical needs.",
+      "summary": "As patient portal use continues to grow, Nashville, Tenn.-based Vanderbilt University Medical Center is exploring whether AI can help patients get answers faster while reducing administrative burden on clinicians.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Inaugural CEO of DC hospital heads to Dignity Health",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/inaugural-ceo-of-dc-hospital-heads-to-dignity-health/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-23",
+      "summary": "Anthony Coleman, DHA, has been appointed president of two Dignity Health hospitals in a newly combined role. Dr.",
       "category": "general_market",
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Want high-quality generic drugs? One expert has ideas on how consumers can trust their supply",
+      "url": "https://www.statnews.com/pharmalot/2026/06/23/high-quality-generic-drugs-lab-testing/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-23",
+      "summary": "Can the quality of generic drugs in the U.S.",
+      "category": "quality_safety",
+      "categoryLabel": "Quality & Safety"
     },
     {
       "title": "Judge rules government can&#8217;t stop SNAP dollars from buying candy and sugary drinks",
@@ -315,7 +334,7 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Texas doctor charged in $89M fraud case as administration pushes health care crackdown",
+      "title": "Justice Department announces hundreds of charges in multibillion-dollar health care fraud crackdown",
       "url": "https://www.statnews.com/2026/06/23/texas-doctor-charged-fraud-case-cms-health-care-crackdown/?utm_campaign=rss",
       "source": "STAT News",
       "publishedAt": "2026-06-23",
@@ -459,6 +478,15 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
+      "title": "Chutes & Ladders—MultiCare Health System, Franciscan Alliance, CHOP CEOs to retire",
+      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-23",
+      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "Hallmark Health Care Solutions launches AI solution to tackle workforce ‘black box’",
       "url": "https://www.fiercehealthcare.com/health-tech/hallmark-health-care-solutions-launches-ai-solution-tackle-workforce-black-box",
       "source": "Fierce Healthcare",
@@ -466,6 +494,105 @@
       "summary": "Health systems partnering with Hallmark have seen significant measurable results, including reducing contingent labor expenses by 15% to 25% and lowering overtime costs by an average of 25%.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "The cost of giving birth by state",
+      "url": "https://www.beckershospitalreview.com/rankings-and-ratings/the-cost-of-giving-birth-by-state-2/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-23",
+      "summary": "Based on FAIR Health commercial claims data, the national median in-network cost of a C-section for commercially insured patients is $19,911, compared with $15,728 for a vaginal delivery. The figures come from FAIR Health&#8217;s Cost of Giving Birth Tracker, an interactive tool updated June 22 that tracks state-by-state costs for vaginal deliveries and C-sections.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "How ambient AI is moving past the scribe to drive orthopedic productivity — 4 takeaways",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/how-ambient-ai-is-moving-past-the-scribe-to-drive-orthopedic-productivity-4-takeaways/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-23",
+      "summary": "Orthopedic practices are running full clinic and surgical schedules while documentation demands keep climbing, pushing physicians into after-hours charting and capping how many patients they can see. Ambient AI has become a near-ubiquitous documentation aid, but the more pressing question for orthopedic leaders is whether these tools are actually returning time and revenue or simply [&#8230;] The post How ambient AI is moving past the scribe to drive orthopedic productivity — 4 takeaways appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "OHSU swings from $71M operating loss to $65M gain through Q3",
+      "url": "https://www.beckershospitalreview.com/finance/ohsu-swings-from-71m-operating-loss-to-65m-gain-through-q3/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-23",
+      "summary": "Portland-based Oregon Health &#38; Science University recorded an operating income of $65 million (1.4% operating margin) through the third quarter of 2026, up from an operating loss of $71 million (-1.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Are rural hospitals best served by trading competition for collaboration?",
+      "url": "https://www.beckershospitalreview.com/finance/are-rural-hospitals-best-served-by-trading-competition-for-collaboration/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-23",
+      "summary": "As rural hospitals in the U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "CHOP CEO to retire; successor named",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/chop-ceo-to-retire-successor-named/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-23",
+      "summary": "Madeline Bell, BSN, plans to retire Oct. 1 as CEO of Children&#8217;s Hospital of Philadelphia after nearly 40 years with the organization.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Most socially responsible hospital in every state: Lown Institute",
+      "url": "https://www.beckershospitalreview.com/rankings-and-ratings/most-socially-responsible-hospital-in-every-state-lown-institute/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-23",
+      "summary": "The Lown Institute published its 2026 Lown Hospitals Index &#8220;Honor Roll&#8221; June 23, spotlighting the top hospitals for social responsibility in every state. To compile the list, the nonpartisan healthcare think tank assessed 2,718 acute care hospitals, 900 critical access hospitals and 331 health systems nationwide across more than 50 metrics related to health equity, [&#8230;] The post Most socially responsible hospital in every state: Lown Institute appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "How 3 health systems are growing their own pharmacy workforce",
+      "url": "https://www.beckershospitalreview.com/pharmacy/how-3-health-systems-are-growing-their-own-pharmacy-workforce/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-23",
+      "summary": "As workforce shortages continue to pressure pharmacy departments, some health systems are investing in a longer-term solution: building their own talent pipelines. Rather than relying solely on external hiring, organizations are creating technician training programs, expanding residency positions and developing new pathways to prepare pharmacists and technicians for increasingly specialized roles.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Drugmaker recalls 11,460 bottles of blood pressure medication",
+      "url": "https://www.beckershospitalreview.com/pharmacy/drugmaker-recalls-11460-bottles-of-blood-pressure-medication/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-23",
+      "summary": "Inventia Healthcare Limited is recalling 11,460 bottles of Chlorthalidone Tablets USP, 25 mg, a blood pressure medication distributed nationwide after the product failed dissolution specifications. The recall was initiated June 5 and was classified as a Class II recall by the FDA on June 22, according to a June 22 enforcement report.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "HCA HealthONE names CEO of 2 Denver hospitals",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/hca-healthone-names-ceo-of-2-denver-hospitals/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-23",
+      "summary": "Denver-based HCA HealthONE has named Casey Guber president and CEO of HCA HealthONE Presbyterian St. Luke&#8217;s and HCA HealthONE Rocky Mountain Children&#8217;s, two hospitals on its Denver campus, according to a June 23 news release shared with Becker&#8217;s.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "Boston Children&#8217;s launches neurologic drug research program",
+      "url": "https://www.beckershospitalreview.com/pharmacy/boston-childrens-launches-neurologic-drug-research-program/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-23",
+      "summary": "Boston (Mass.) Children&#8217;s Hospital has launched a neurologic drug research program through a new research agreement focused on developing therapies for patients with unmet medical needs.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Texas doctor charged in $89M fraud case as administration pushes health care crackdown",
+      "url": "https://www.statnews.com/2026/06/23/texas-doctor-charged-fraud-case-cms-health-care-crackdown/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-23",
+      "summary": "The Justice Department has charged a Texas doctor in an $89 million health care fraud scheme, accusing him of billing insurers for medically unnecessary cardiovascular screening tests.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
     },
     {
       "title": "A look at Elevance Health's push to streamline clinical reviews",
@@ -4398,9 +4525,9 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Disruptions in Availability of Breast Biopsy Needles - Letter to Health Care Providers",
-      "summary": "The FDA issued a LHCP to notify providers that Stereotactic Breast Biopsy Needles (product code KNW) are experiencing a supply disruption.",
-      "url": "http://www.fda.gov/medical-devices/letters-health-care-providers/disruptions-availability-breast-biopsy-needles-letter-health-care-providers",
+      "title": "Early Alert: Convenience Kit Issue from Windstone Medical Packaging, Inc.",
+      "summary": "Certain Cardinal Health Webcol Large Alcohol Prep Pads in Custom Convenience Kits manufactured by Aligned Medical Solutions are not sterile",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-convenience-kit-issue-windstone-medical-packaging-inc",
       "source": "FDA MedWatch RSS",
       "sourceType": "rss",
       "sourceId": "fda_medwatch_rss",
@@ -4410,9 +4537,9 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Early Alert: Convenience Kit Issue from Windstone Medical Packaging, Inc.",
-      "summary": "Certain Cardinal Health Webcol Large Alcohol Prep Pads in Custom Convenience Kits manufactured by Aligned Medical Solutions are not sterile",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-convenience-kit-issue-windstone-medical-packaging-inc",
+      "title": "Disruptions in Availability of Breast Biopsy Needles - Letter to Health Care Providers",
+      "summary": "The FDA issued a LHCP to notify providers that Stereotactic Breast Biopsy Needles (product code KNW) are experiencing a supply disruption.",
+      "url": "http://www.fda.gov/medical-devices/letters-health-care-providers/disruptions-availability-breast-biopsy-needles-letter-health-care-providers",
       "source": "FDA MedWatch RSS",
       "sourceType": "rss",
       "sourceId": "fda_medwatch_rss",
@@ -4696,132 +4823,6 @@
       "summary": "Medicare-funded weight loss, Utah's lower drunk driving limit, and more health news from Morning Rounds",
       "category": "policy_reimbursement",
       "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "STAT+: Verge Labs’ new AI model solves patient stratification problems for neurology clinical trials",
-      "url": "https://www.statnews.com/2026/06/16/verge-labs-ai-model-clinical-trials-data-neurology-diseases/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-06-16",
-      "summary": "As the saying goes, one man’s trash is another man’s treasure.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: Human Cell Atlas leader’s tie to 10x Genomics raises conflict-of-interest questions",
-      "url": "https://www.statnews.com/2026/06/16/human-cell-atlas-consortium-meeting-boston-spatial-biology-next-step/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-06-16",
-      "summary": "As the Human Cell Atlas project marks its 10th anniversary, a leader's ties to a major single-cell RNA sequencing company raise conflict-of-interest questions.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Opinion: Congress must reauthorize the Pandemic and All-Hazards Preparedness Act",
-      "url": "https://www.statnews.com/2026/06/16/aspr-pandemic-all-hazard-preparedness-act-reauthorization/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-06-16",
-      "summary": "America’s next health emergency won’t wait for Washington, write W. Craig Vanderwagen and Jennifer B.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Opinion: I’m an Alzheimer’s specialist. I still missed it in my own father",
-      "url": "https://www.statnews.com/2026/06/16/alzheimers-diagnosis-treatment-infrastructure/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-06-16",
-      "summary": "“Alzheimer’s is not primarily a disease of old age. It is a decades-long biological process,” writes Elizabeth Bevins.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "IRhythm discloses data stolen from third-party applications in cyberattack",
-      "url": "https://www.healthcaredive.com/news/irhythm-discloses-data-stolen-from-third-party-applications-in-cyberattack/823091/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-06-16",
-      "summary": "<p>The cardiac monitoring company said that a threat actor has demanded payment in exchange for not publicly releasing the stolen data.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Express Scripts, PCMA sue to block Tennessee law breaking up PBMs and pharmacies",
-      "url": "https://www.healthcaredive.com/news/express-scripts-pcma-sue-tennesee-law-breaking-up-pbms-pharmacies/822942/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-06-16",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "CMS proposes Medicare coverage expansion for TAVR",
-      "url": "https://www.healthcaredive.com/news/cms-proposes-medicare-coverage-expansion-for-tavr/823051/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-06-16",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Centene offers employee buyouts amid membership losses",
-      "url": "https://www.healthcaredive.com/news/centene-offers-employee-buyouts-membership-losses/823005/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-06-16",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "MedPAC offers a look at enrollment hiccups for Medicare beneficiaries",
-      "url": "https://www.fiercehealthcare.com/payers/medpac-offers-look-enrollment-hiccups-medicare-beneficiaries",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-16",
-      "summary": "Beneficiaries face a series of complex decisions in enrolling in Medicare coverage. A key federal panel outlines some of the pain points, alongside other policy recommendations and updates for Congress.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "CMS tightens oversight of accreditation facilities, limits fee-based consulting",
-      "url": "https://www.fiercehealthcare.com/regulatory/cms-tightens-oversight-accreditation-facilities-limits-fee-based-consulting",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-16",
-      "summary": "A final rule updates performance reviews, codifies existing requirements and brings new conflict-of-interest protections for the nine organizations that regularly survey and accredit more than 9,000 providers participating in Medicare.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Chutes & Ladders—Strive Health taps new CMO, CFO; Komodo changes leadership structure",
-      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-16",
-      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "US telehealth utilization climbs 10.1% in Q1, led by mental health visits: Fair Health",
-      "url": "https://www.fiercehealthcare.com/telehealth/telehealth-utilization-101-nationally-between-q4-2025-and-q1-2026-fair-health-tracker",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-16",
-      "summary": "The top five diagnostic categories were mental health, acute respiratory diseases and infections, overweight and obesity, endocrine and metabolic disorders and joint and soft tissue diseases.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "PCMA joins major PBMs in suing over Tennessee's new PBM law",
-      "url": "https://www.fiercehealthcare.com/payers/cvs-sues-challenge-tennessees-new-pbm-law",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-16",
-      "summary": "The Pharmaceutical Care Management Association has joined some of the nation's largest pharmacy benefit managers in challenging Tennessee's new law governing the industry.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Uncovr secures $7M in seed funding for AI surgical documentation platform",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/uncovr-secures-7m-seed-funding-ai-surgical-documentation-platform",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-16",
-      "summary": "The company says it is currently working with leading hospitals across the U.S.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
     }
   ]
 }
