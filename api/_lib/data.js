@@ -55,6 +55,21 @@ function normalizeStateParam(value) {
     .filter(Boolean);
 }
 
+const REGION_STATES = {
+  Northeast: ['CT', 'ME', 'MA', 'NH', 'RI', 'VT', 'NJ', 'NY', 'PA'],
+  Midwest: ['IL', 'IN', 'MI', 'OH', 'WI', 'IA', 'KS', 'MN', 'MO', 'NE', 'ND', 'SD'],
+  South: ['DE', 'FL', 'GA', 'MD', 'NC', 'SC', 'VA', 'DC', 'WV', 'AL', 'KY', 'MS', 'TN', 'AR', 'LA', 'OK', 'TX'],
+  West: ['AZ', 'CO', 'ID', 'MT', 'NV', 'NM', 'UT', 'WY', 'AK', 'CA', 'HI', 'OR', 'WA'],
+  Territories: ['AS', 'GU', 'MP', 'PR', 'VI']
+};
+
+function normalizeRegionStates(value) {
+  const region = String(value || '').trim();
+  if (!region) return [];
+  const canonical = Object.keys(REGION_STATES).find((key) => key.toLowerCase() === region.toLowerCase());
+  return canonical ? REGION_STATES[canonical] : [];
+}
+
 function sortByRecencyDesc(a, b) {
   const aDate = String(a.notice_date || a.noticeDate || a.retrieved_at || a.source?.retrievedAt || '');
   const bDate = String(b.notice_date || b.noticeDate || b.retrieved_at || b.source?.retrievedAt || '');
@@ -63,6 +78,11 @@ function sortByRecencyDesc(a, b) {
 
 export function filterNotices(all, query) {
   let out = all.slice();
+
+  const regionStates = normalizeRegionStates(query.region);
+  if (regionStates.length > 0) {
+    out = out.filter((n) => regionStates.includes(String(n.state || '').toUpperCase()));
+  }
 
   const states = normalizeStateParam(query.state);
   if (states.length > 0) {

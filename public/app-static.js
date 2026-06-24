@@ -1125,6 +1125,9 @@ const loadStrategicData = async () => {
   } catch {
     strategicData = {};
   }
+  if (typeof renderStrategicReviewContent === 'function') {
+    renderStrategicReviewContent();
+  }
 };
 
 const loadRelocationData = async () => {
@@ -1295,7 +1298,7 @@ const initLightworker = () => {
       ALL_STATES.forEach(s => {
         const opt = document.createElement('option');
         opt.value = s;
-        opt.textContent = `${s} — ${STATE_NAMES[s] || s}`;
+        opt.textContent = `${s} ? ${STATE_NAMES[s] || s}`;
         homeSelect.appendChild(opt);
       });
     }
@@ -1579,7 +1582,7 @@ const renderDetail = (notice) => {
   detailBody.innerHTML = `
     <div class="detail-section">
       <h5>${notice.employer_name || 'Unknown employer'}</h5>
-      <p>${[notice.facility_name, notice.parent_system].filter(Boolean).join(' • ') || 'System unknown'}</p>
+      <p>${[notice.facility_name, notice.parent_system].filter(Boolean).join(' ? ') || 'System unknown'}</p>
       <p>${[notice.address, notice.city, notice.county, notice.state].filter(Boolean).join(', ') || 'Location unknown'}</p>
     </div>
     <div class="detail-section">
@@ -1592,7 +1595,7 @@ const renderDetail = (notice) => {
       <h5>Nursing Impact Breakdown</h5>
       <p>Care setting: ${careSetting}</p>
       <p>Lead time: ${leadTime !== null && leadTime !== undefined ? `${leadTime} days` : 'Unknown'}</p>
-      <p>Role mix: ${roleMix ? `RN ${roleMix.rn}% • LPN ${roleMix.lpn}% • CNA ${roleMix.cna}%` : 'Unavailable'}</p>
+      <p>Role mix: ${roleMix ? `RN ${roleMix.rn}% ? LPN ${roleMix.lpn}% ? CNA ${roleMix.cna}%` : 'Unavailable'}</p>
       <p>Specialties: ${specialties.length ? specialties.join(', ') : 'None detected'}</p>
     </div>
     <div class="detail-section">
@@ -1636,7 +1639,7 @@ const renderAlerts = (data) => {
     <div class="insight-row">
       <div>
         <div class="insight-title">${alert.employer_name || 'Unknown employer'}</div>
-        <div class="insight-meta">${[alert.state, alert.facility_name || alert.parent_system].filter(Boolean).join(' • ')}</div>
+        <div class="insight-meta">${[alert.state, alert.facility_name || alert.parent_system].filter(Boolean).join(' ? ')}</div>
       </div>
       <div>
         <div class="insight-pill ${alert.early_warning ? 'yellow' : ''}">${alert.early_warning ? 'Early' : 'Signal'}</div>
@@ -1663,7 +1666,7 @@ const renderHeatmap = (data) => {
     <div class="insight-row">
       <div>
         <div class="insight-title">${cityDisplay}</div>
-        <div class="insight-meta">${loc.state} • ${loc.notices_last_90_days} in 90d</div>
+        <div class="insight-meta">${loc.state} ? ${loc.notices_last_90_days} in 90d</div>
       </div>
       <div class="insight-pill ${loc.risk_level === 'red' ? 'red' : 'yellow'}">${loc.risk_level.toUpperCase()}</div>
     </div>
@@ -1692,7 +1695,7 @@ const renderTalent = (data) => {
     <div class="insight-row">
       <div>
         <div class="insight-title">${cityDisplay}</div>
-        <div class="insight-meta">${entry.state} • ${entry.notices_count} notices</div>
+        <div class="insight-meta">${entry.state} ? ${entry.notices_count} notices</div>
       </div>
       <div>
         <div class="insight-pill">${entry.estimated_nurses_available}</div>
@@ -1719,7 +1722,7 @@ const renderEmployers = (data) => {
     <div class="insight-row">
       <div>
         <div class="insight-title">${entry.employer_name || 'Unknown employer'}</div>
-        <div class="insight-meta">${entry.parent_system || entry.state} • ${entry.total_notices} notices</div>
+        <div class="insight-meta">${entry.parent_system || entry.state} ? ${entry.total_notices} notices</div>
       </div>
       <div class="insight-meta">${entry.avg_lead_time_days ?? 'n/a'}d avg lead</div>
     </div>
@@ -2060,7 +2063,7 @@ const initForecast = () => {
     forecastOutput.innerHTML = `
       Estimated displacement over ${horizon || 60} days:
       <strong>${totalNurses}</strong> total nurses
-      (RN ${rn} • LPN ${lpn} • CNA ${cna}).
+      (RN ${rn} ? LPN ${lpn} ? CNA ${cna}).
     `;
   };
 
@@ -2357,8 +2360,7 @@ const initWeatherMap = async () => {
         }
         return;
       }
-      stateSelect.value = stateId;
-      loadNotices();
+      selectSingleStateFromMap(stateId);
     });
   });
 
@@ -2726,6 +2728,18 @@ const toggleStateSelection = (state) => {
   onStateSelectionChange();
 };
 
+const selectSingleStateFromMap = (state) => {
+  if (!state || !ALL_STATES.includes(state)) return;
+  selectedStates = [state];
+  stateSelect.value = state;
+  stateOptions?.querySelectorAll('[data-state]').forEach((option) => {
+    option.classList.toggle('selected', option.dataset.state === state);
+  });
+  updateStateDisplay();
+  updateMapHighlights();
+  onStateSelectionChange();
+};
+
 // Handle state selection change - update map/chart and reload data
 const onStateSelectionChange = () => {
   if (currentMapView === 'map') {
@@ -3072,7 +3086,7 @@ const openProjectDetail = (projectId) => {
       <div class="project-notice-item" data-notice-id="${notice.id}">
         <div class="project-notice-item-info">
           <h5>${notice.employerName || notice.employer_name || 'Unknown'}</h5>
-          <span>${notice.state} • ${formatDate(notice.noticeDate || notice.notice_date)} • ${formatNumber(notice.affectedCount || notice.employees_affected)} affected</span>
+          <span>${notice.state} ? ${formatDate(notice.noticeDate || notice.notice_date)} ? ${formatNumber(notice.affectedCount || notice.employees_affected)} affected</span>
         </div>
         <button onclick="removeNoticeFromProject('${projectId}', '${notice.id}')" title="Remove from project">&times;</button>
       </div>
@@ -3370,11 +3384,268 @@ const initStrategicReview = () => {
   const toggleIcon = section?.querySelector('.strategic-toggle-icon');
 
   if (!toggleBtn || !section) return;
+  if (toggleBtn.dataset.boundStrategicToggle === 'true') return;
+  toggleBtn.dataset.boundStrategicToggle = 'true';
 
   toggleBtn.addEventListener('click', () => {
     section.classList.toggle('open');
     const isOpen = section.classList.contains('open');
     if (toggleIcon) toggleIcon.textContent = isOpen ? '-' : '+';
+  });
+
+  renderStrategicReviewContent();
+  bindStrategicStateModal();
+};
+
+const formatStrategicCurrency = (value, { signed = false } = {}) => {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return '--';
+  const rounded = Math.round(n);
+  const abs = Math.abs(rounded).toLocaleString();
+  if (!signed) return `$${abs}`;
+  const sign = rounded > 0 ? '+' : rounded < 0 ? '-' : '';
+  return `${sign}$${abs}`;
+};
+
+const getStrategicReviewData = () => {
+  const salaryData = strategicData?.salaryData && typeof strategicData.salaryData === 'object'
+    ? strategicData.salaryData
+    : {};
+  const summary = strategicData?.summary && typeof strategicData.summary === 'object'
+    ? strategicData.summary
+    : {};
+  const shortageStates = Array.isArray(summary.shortageStates)
+    ? summary.shortageStates
+    : Object.entries(salaryData)
+      .filter(([, row]) => String(row?.shortage || '').toLowerCase() === 'shortage')
+      .map(([state]) => state);
+  const surplusStates = Array.isArray(summary.surplusStates)
+    ? summary.surplusStates
+    : Object.entries(salaryData)
+      .filter(([, row]) => String(row?.shortage || '').toLowerCase() === 'surplus')
+      .map(([state]) => state);
+  const balancedStates = Array.isArray(summary.balancedStates)
+    ? summary.balancedStates
+    : Object.entries(salaryData)
+      .filter(([, row]) => String(row?.shortage || '').toLowerCase() === 'balanced')
+      .map(([state]) => state);
+
+  return { salaryData, summary, shortageStates, surplusStates, balancedStates };
+};
+
+const strategicBadgeClass = (value) => {
+  const normalized = String(value || '').toLowerCase();
+  if (normalized === 'shortage') return 'low';
+  if (normalized === 'surplus') return 'high';
+  return 'medium';
+};
+
+const renderStrategicStatePills = (states, type) => {
+  const safeStates = Array.isArray(states) ? states.slice(0, 12) : [];
+  if (!safeStates.length) return '<span class="state-pill">No states mapped</span>';
+  const overflow = states.length > safeStates.length ? `<span class="state-pill">+${states.length - safeStates.length} more</span>` : '';
+  return `${safeStates.map((state) => `<span class="state-pill ${type}">${escapeHtml(state)}</span>`).join('')}${overflow}`;
+};
+
+const renderStrategicReviewContent = () => {
+  const container = document.getElementById('strategic-review-content');
+  if (!container) return;
+
+  if (strategicData === null) {
+    container.innerHTML = '<div class="empty-state">Loading strategic analysis...</div>';
+    return;
+  }
+
+  const { salaryData, summary, shortageStates, surplusStates, balancedStates } = getStrategicReviewData();
+  const stateRows = Object.entries(salaryData);
+  if (!stateRows.length) {
+    container.innerHTML = '<div class="empty-state">Strategic analysis is unavailable right now.</div>';
+    return;
+  }
+
+  const avgStaff = Number(summary.avgStaffSalary);
+  const avgTravel = Number(summary.avgTravelSalary);
+  const avgPremium = Number(summary.avgTravelPremium);
+  const totalGap = Number(summary.totalProjectedGap);
+  const topPremiumStates = stateRows
+    .map(([state, row]) => ({
+      state,
+      premium: Number(row?.travelAnnual) - Number(row?.staffRN),
+      shortage: row?.shortage
+    }))
+    .filter((row) => Number.isFinite(row.premium))
+    .sort((a, b) => b.premium - a.premium)
+    .slice(0, 5);
+
+  const sourceLinks = Array.isArray(strategicData?.sources) ? strategicData.sources : [];
+  const sourceHtml = sourceLinks.length
+    ? sourceLinks.map((source) => (
+      source?.url
+        ? `<a href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(source.name || 'Source')}</a>`
+        : `<span>${escapeHtml(source?.name || 'Source')}</span>`
+    )).join('<span>|</span>')
+    : '<span>Source list unavailable</span>';
+
+  container.innerHTML = `
+    <div class="strategic-grid">
+      <article class="strategic-card full-width">
+        <h4><span class="card-icon">#</span> Executive Market Summary</h4>
+        <p class="card-description">National nursing labor pressure, travel premium, and state shortage posture from the loaded strategic dataset.</p>
+        <div class="exec-metrics-row">
+          <div class="exec-metric-card">
+            <div class="exec-metric-value negative">${Number.isFinite(totalGap) ? formatNumber(totalGap) : '--'}</div>
+            <div class="exec-metric-label">Projected RN Gap</div>
+          </div>
+          <div class="exec-metric-card">
+            <div class="exec-metric-value">${Number.isFinite(avgStaff) ? formatStrategicCurrency(avgStaff) : '--'}</div>
+            <div class="exec-metric-label">Avg Staff RN</div>
+          </div>
+          <div class="exec-metric-card">
+            <div class="exec-metric-value">${Number.isFinite(avgTravel) ? formatStrategicCurrency(avgTravel) : '--'}</div>
+            <div class="exec-metric-label">Avg Travel Annual</div>
+          </div>
+          <div class="exec-metric-card">
+            <div class="exec-metric-value positive">${Number.isFinite(avgPremium) ? formatStrategicCurrency(avgPremium) : '--'}</div>
+            <div class="exec-metric-label">Travel Premium</div>
+          </div>
+        </div>
+        <div class="state-lists-container">
+          <button type="button" class="state-list-section shortage interactive" data-strategic-state-list="shortage">
+            <div class="state-list-header">
+              <span class="state-list-icon">!</span>
+              <span class="state-list-title">Shortage States (${shortageStates.length})</span>
+            </div>
+            <div class="state-pills">${renderStrategicStatePills(shortageStates, 'shortage')}</div>
+            <div class="state-list-subtext">Open state rationale and salary context.</div>
+          </button>
+          <button type="button" class="state-list-section surplus interactive" data-strategic-state-list="surplus">
+            <div class="state-list-header">
+              <span class="state-list-icon">+</span>
+              <span class="state-list-title">Surplus States (${surplusStates.length})</span>
+            </div>
+            <div class="state-pills">${renderStrategicStatePills(surplusStates, 'surplus')}</div>
+            <div class="state-list-subtext">Open state rationale and salary context.</div>
+          </button>
+        </div>
+      </article>
+      <article class="strategic-card">
+        <h4><span class="card-icon">$</span> Highest Travel Premiums</h4>
+        <p class="card-description">States where modeled travel annual pay most exceeds staff RN salary.</p>
+        <ul class="heat-score-list">
+          ${topPremiumStates.map((row) => `
+            <li>
+              <span>
+                <span class="heat-score-name">${escapeHtml(row.state)}</span>
+                <span class="heat-score-meta">${escapeHtml(STATE_NAMES[row.state] || row.state)}</span>
+              </span>
+              <span>
+                <strong>${formatStrategicCurrency(row.premium, { signed: true })}</strong>
+                <span class="strategic-badge ${strategicBadgeClass(row.shortage)}">${escapeHtml(row.shortage || 'unknown')}</span>
+              </span>
+            </li>
+          `).join('')}
+        </ul>
+      </article>
+      <article class="strategic-card">
+        <h4><span class="card-icon">i</span> Coverage Snapshot</h4>
+        <p class="card-description">Loaded state-level salary and workforce balance coverage.</p>
+        <div class="exec-dashboard-grid">
+          <div class="exec-dashboard-item">
+            <div class="exec-dashboard-label">States Loaded</div>
+            <div class="exec-dashboard-value">${stateRows.length}</div>
+            <div class="exec-dashboard-sub">Salary benchmarks available</div>
+          </div>
+          <div class="exec-dashboard-item">
+            <div class="exec-dashboard-label">Balanced</div>
+            <div class="exec-dashboard-value">${balancedStates.length}</div>
+            <div class="exec-dashboard-sub">Neither shortage nor surplus</div>
+          </div>
+          <div class="exec-dashboard-item">
+            <div class="exec-dashboard-label">Dataset Version</div>
+            <div class="exec-dashboard-value">${escapeHtml(strategicData?.version || 'Unknown')}</div>
+            <div class="exec-dashboard-sub">${escapeHtml(strategicData?.lastUpdated ? `Updated ${formatDate(strategicData.lastUpdated)}` : 'No timestamp')}</div>
+          </div>
+        </div>
+      </article>
+      <div class="strategic-footnote">
+        <span>Sources:</span>
+        ${sourceHtml}
+      </div>
+    </div>
+  `;
+};
+
+const openStrategicStateModal = (listType) => {
+  const modal = document.getElementById('strategic-state-modal');
+  const title = document.getElementById('strategic-state-title');
+  const summaryEl = document.getElementById('strategic-state-summary');
+  const sourcesEl = document.getElementById('strategic-state-sources');
+  const listEl = document.getElementById('strategic-state-list');
+  if (!modal || !listEl) return;
+
+  const { salaryData, shortageStates, surplusStates } = getStrategicReviewData();
+  const states = listType === 'surplus' ? surplusStates : shortageStates;
+  if (title) title.textContent = listType === 'surplus' ? 'Surplus States' : 'Shortage States';
+  if (summaryEl) summaryEl.textContent = `${states.length} ${listType} states are mapped in the strategic review dataset.`;
+  if (sourcesEl) {
+    const sources = Array.isArray(strategicData?.sources) ? strategicData.sources : [];
+    sourcesEl.innerHTML = sources.map((source) => `
+      <div class="strategic-source-row">
+        <span class="strategic-source-name">${escapeHtml(source?.name || 'Source')}</span>
+        ${source?.url ? `<a href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(source.url)}</a>` : ''}
+        <span class="strategic-source-age">${escapeHtml(strategicData?.lastUpdated ? `Updated ${formatDate(strategicData.lastUpdated)}` : 'No timestamp')}</span>
+      </div>
+    `).join('') || '<div class="strategic-source-row"><span class="strategic-source-name">No sources listed</span></div>';
+  }
+
+  listEl.innerHTML = states.map((state) => {
+    const row = salaryData[state] || {};
+    const staff = Number(row.staffRN);
+    const travel = Number(row.travelAnnual);
+    const gap = Number(row.projectedGap);
+    const premium = travel - staff;
+    const gapText = Number.isFinite(gap)
+      ? `${formatNumber(Math.abs(gap))} RN ${gap < 0 ? 'shortfall' : 'surplus'}`
+      : 'unmapped workforce gap';
+    const premiumText = Number.isFinite(premium) ? `${formatStrategicCurrency(premium, { signed: true })} travel premium` : 'unmapped travel premium';
+    return `
+      <article class="strategic-state-item ${listType}">
+        <div class="strategic-state-item-header">
+          <span class="strategic-state-item-title">${escapeHtml(state)} - ${escapeHtml(STATE_NAMES[state] || state)}</span>
+          <span class="strategic-badge ${strategicBadgeClass(row.shortage || listType)}">${escapeHtml(row.shortage || listType)}</span>
+        </div>
+        <p class="strategic-state-item-why">${escapeHtml(STATE_NAMES[state] || state)} is marked ${escapeHtml(row.shortage || listType)} with ${gapText} and ${premiumText}.</p>
+        <div class="strategic-state-item-metrics">
+          <span class="strategic-state-item-metric">Staff RN ${Number.isFinite(staff) ? formatStrategicCurrency(staff) : '--'}</span>
+          <span class="strategic-state-item-metric">Travel annual ${Number.isFinite(travel) ? formatStrategicCurrency(travel) : '--'}</span>
+          <span class="strategic-state-item-metric">Gap ${Number.isFinite(gap) ? formatNumber(gap) : '--'}</span>
+        </div>
+      </article>
+    `;
+  }).join('') || '<div class="empty-state">No states mapped for this list.</div>';
+
+  modal.classList.add('active');
+  document.body.classList.add('modal-open');
+};
+
+const closeStrategicStateModal = () => {
+  document.getElementById('strategic-state-modal')?.classList.remove('active');
+  document.body.classList.remove('modal-open');
+};
+
+const bindStrategicStateModal = () => {
+  const container = document.getElementById('strategic-review-content');
+  const modal = document.getElementById('strategic-state-modal');
+  if (!container || !modal || modal.dataset.boundStrategicModal === 'true') return;
+  modal.dataset.boundStrategicModal = 'true';
+  container.addEventListener('click', (event) => {
+    const trigger = event.target.closest('[data-strategic-state-list]');
+    if (trigger) openStrategicStateModal(trigger.dataset.strategicStateList);
+  });
+  document.getElementById('strategic-state-close')?.addEventListener('click', closeStrategicStateModal);
+  document.getElementById('strategic-state-close-footer')?.addEventListener('click', closeStrategicStateModal);
+  modal.addEventListener('click', (event) => {
+    if (event.target === modal) closeStrategicStateModal();
   });
 };
 
@@ -4087,7 +4358,7 @@ const renderStateBeacon = async (state) => {
     renderBeaconList(stateBeaconHospitals, hospitalItems, (item) => `
       <div class="state-beacon-item">
         <strong>${escapeHtml(item.name)}</strong>
-        <span>${escapeHtml(item.label)} • Score ${item.score.toFixed(1)} • WARN ${item.warnCount}</span>
+        <span>${escapeHtml(item.label)} ? Score ${item.score.toFixed(1)} ? WARN ${item.warnCount}</span>
       </div>
     `);
   } else {
@@ -4099,7 +4370,7 @@ const renderStateBeacon = async (state) => {
     renderBeaconList(stateBeaconHospitals, hospitalItems, (item) => `
       <div class="state-beacon-item">
         <strong>${escapeHtml(item.employer)}</strong>
-        <span>${escapeHtml(item.label)} • ${item.notices} notices</span>
+        <span>${escapeHtml(item.label)} ? ${item.notices} notices</span>
       </div>
     `);
   }
@@ -4121,7 +4392,7 @@ const renderStateBeacon = async (state) => {
       <strong>${escapeHtml(item.name)}</strong>
       <span>
         ${item.flagship ? '<span class="state-beacon-badge">Flagship</span>' : ''}
-        ${item.metro ? `• ${escapeHtml(item.metro)}` : ''}
+        ${item.metro ? `? ${escapeHtml(item.metro)}` : ''}
       </span>
     </div>
   `);
@@ -4135,7 +4406,7 @@ const renderStateBeacon = async (state) => {
   renderBeaconList(stateBeaconCompetition, competitionSystems, (system) => `
     <div class="state-beacon-item">
       <strong>${escapeHtml(system.name)}</strong>
-      <span>${escapeHtml(system.presence || '')} ${system.notes ? `• ${escapeHtml(system.notes)}` : ''}</span>
+      <span>${escapeHtml(system.presence || '')} ${system.notes ? `? ${escapeHtml(system.notes)}` : ''}</span>
     </div>
   `);
 
@@ -4208,7 +4479,7 @@ const renderStateBeacon = async (state) => {
   renderBeaconList(stateBeaconNews, newsMatches, (article) => `
     <a href="${article.url}" target="_blank" rel="noopener noreferrer">
       <strong>${escapeHtml(article.title)}</strong>
-      <div class="state-beacon-subtitle">${escapeHtml(article.source || '')}${article.publishedAt ? ` • ${escapeHtml(article.publishedAt)}` : ''}</div>
+      <div class="state-beacon-subtitle">${escapeHtml(article.source || '')}${article.publishedAt ? ` ? ${escapeHtml(article.publishedAt)}` : ''}</div>
     </a>
   `);
 
@@ -4271,7 +4542,7 @@ const renderStateBeacon = async (state) => {
 
   renderBeaconList(stateBeaconScript, entry.talkingPoints, (point) => `
     <div class="state-beacon-item">
-      <strong>•</strong>
+      <strong>?</strong>
       <span>${escapeHtml(replaceTokens(point, tokens))}</span>
     </div>
   `);
@@ -4414,7 +4685,7 @@ const renderHomeState = async (homeState) => {
     renderBeaconList(homeStateHospitals, hospitalItems, (item) => `
       <div class="state-beacon-item">
         <strong>${escapeHtml(item.name)}</strong>
-        <span>${escapeHtml(item.label)} • Score ${item.score.toFixed(1)} • WARN ${item.warnCount}</span>
+        <span>${escapeHtml(item.label)} ? Score ${item.score.toFixed(1)} ? WARN ${item.warnCount}</span>
       </div>
     `);
   } else {
@@ -4426,7 +4697,7 @@ const renderHomeState = async (homeState) => {
     renderBeaconList(homeStateHospitals, hospitalItems, (item) => `
       <div class="state-beacon-item">
         <strong>${escapeHtml(item.employer)}</strong>
-        <span>${escapeHtml(item.label)} • ${item.notices} notices</span>
+        <span>${escapeHtml(item.label)} ? ${item.notices} notices</span>
       </div>
     `);
   }
@@ -4440,7 +4711,7 @@ const renderHomeState = async (homeState) => {
   renderBeaconList(homeStateCompetition, competitionSystems, (system) => `
     <div class="state-beacon-item">
       <strong>${escapeHtml(system.name)}</strong>
-      <span>${escapeHtml(system.presence || '')} ${system.notes ? `• ${escapeHtml(system.notes)}` : ''}</span>
+      <span>${escapeHtml(system.presence || '')} ${system.notes ? `? ${escapeHtml(system.notes)}` : ''}</span>
     </div>
   `);
 
@@ -4478,7 +4749,7 @@ const renderHomeState = async (homeState) => {
   renderBeaconList(homeStateNews, newsMatches, (article) => `
     <a href="${article.url}" target="_blank" rel="noopener noreferrer">
       <strong>${escapeHtml(article.title)}</strong>
-      <div class="state-beacon-subtitle">${escapeHtml(article.source || '')}${article.publishedAt ? ` • ${escapeHtml(article.publishedAt)}` : ''}</div>
+      <div class="state-beacon-subtitle">${escapeHtml(article.source || '')}${article.publishedAt ? ` ? ${escapeHtml(article.publishedAt)}` : ''}</div>
     </a>
   `);
 
@@ -4572,7 +4843,7 @@ const buildHomeStateExportRows = (data) => {
   data.hospitals?.watchlist?.forEach((item) => pushRow('Hospitals Watchlist', item.employer, `${item.notices} notices`));
 
   data.competitionSystems?.forEach((system) => {
-    pushRow('Competition', system.name, [system.presence, system.notes].filter(Boolean).join(' • '));
+    pushRow('Competition', system.name, [system.presence, system.notes].filter(Boolean).join(' ? '));
   });
 
   pushRow('Pipeline', 'Programs count', data.programsCount);
@@ -4581,7 +4852,7 @@ const buildHomeStateExportRows = (data) => {
   (data.pipeline?.residencies || []).forEach((entry) => pushRow('Pipeline Residencies', entry, ''));
 
   data.newsFeed?.forEach((article) => {
-    const meta = [article.source, article.publishedAt || article.date].filter(Boolean).join(' • ');
+    const meta = [article.source, article.publishedAt || article.date].filter(Boolean).join(' ? ');
     pushRow('News', article.title || 'Untitled', meta);
   });
 
@@ -5755,7 +6026,7 @@ const buildStateBeaconExportRows = (data) => {
   Object.entries(data.market || {}).forEach(([key, value]) => pushRow('Market', key, Array.isArray(value) ? value.join('; ') : value));
 
   data.competition?.systems?.forEach((system) => {
-    pushRow('Competition', system.name, [system.presence, system.notes].filter(Boolean).join(' • '));
+    pushRow('Competition', system.name, [system.presence, system.notes].filter(Boolean).join(' ? '));
   });
 
   data.hospitals?.best?.forEach((item) => pushRow('Hospitals Best', item.employer, `${item.notices} notices`));
@@ -5796,7 +6067,7 @@ const exportStateBeaconCsv = () => {
   Object.entries(data.market || {}).forEach(([key, value]) => pushRow('Market', key, Array.isArray(value) ? value.join('; ') : value));
 
   data.competition?.systems?.forEach((system) => {
-    pushRow('Competition', system.name, [system.presence, system.notes].filter(Boolean).join(' • '));
+    pushRow('Competition', system.name, [system.presence, system.notes].filter(Boolean).join(' ? '));
   });
 
   data.hospitals?.best?.forEach((item) => pushRow('Hospitals Best', item.employer, `${item.notices} notices`));
@@ -6868,4 +7139,3 @@ if (document.fonts && document.fonts.ready) {
 
 // Auto-init if already authenticated
 bootstrapAuth();
-

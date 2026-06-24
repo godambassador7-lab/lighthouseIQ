@@ -43,6 +43,7 @@ const mapToast = document.getElementById('map-toast');
 const mapHomeStateBtn = document.getElementById('map-home-state-btn');
 const mapTargetModeBtn = document.getElementById('map-target-mode-btn');
 const mapTargetStateBtn = document.getElementById('map-target-state-btn');
+const mapClearBtn = document.getElementById('map-clear-btn');
 const mapScopeHealthcareBtn = document.getElementById('map-scope-healthcare');
 const mapScopeAllBtn = document.getElementById('map-scope-all');
 const mapScopeLabel = document.getElementById('map-scope-label');
@@ -370,6 +371,7 @@ let strikeAlertsData = [];
 let strikeAlertsMeta = { lastUpdated: null, sources: [], sourceHealth: [] };
 let recruitmentIntel = null;
 let strategicData = null;
+let targetSpecialtySummaryData = null;
 let relocationData = null;
 let freeMarketSignals = null;
 let marketReadinessIntegration = null;
@@ -378,6 +380,8 @@ let facilityMarketFeatures = null;
 let providerMasterData = null;
 let hospitalRankingsData = null;
 let specialtySurplusExpandedBucket = '';
+let strategicClinicalSpecialty = 'SURG_TECH';
+let strategicClinicalTargetState = 'IN';
 let hospitalSearchIndex = [];
 let hospitalSearchMatches = [];
 let hospitalSearchResultRows = [];
@@ -909,6 +913,46 @@ const filterNoticesByScope = (notices) => {
     const name = (n.employer_name || '').toLowerCase();
     return !name.includes('hotel') && !name.includes('hospitality');
   });
+  return out;
+};
+
+const filterNoticesByActiveControls = (notices) => {
+  let out = Array.isArray(notices) ? notices.slice() : [];
+  const selectedRegion = String(regionSelect?.value || '').trim();
+  const selectedStateSet = new Set(selectedStates.map((state) => String(state).trim().toUpperCase()).filter(Boolean));
+  const org = String(orgInput?.value || '').trim().toLowerCase();
+  const since = String(sinceInput?.value || '').trim();
+  const minScore = Number(scoreInput?.value || 0);
+
+  if (selectedRegion && REGION_STATES[selectedRegion]) {
+    const allowed = new Set(REGION_STATES[selectedRegion]);
+    out = out.filter((notice) => allowed.has(String(notice?.state || '').trim().toUpperCase()));
+  }
+  if (selectedStateSet.size > 0) {
+    out = out.filter((notice) => selectedStateSet.has(String(notice?.state || '').trim().toUpperCase()));
+  }
+  if (org) {
+    out = out.filter((notice) => {
+      const haystack = [
+        notice?.employer_name,
+        notice?.employerName,
+        notice?.facility_name,
+        notice?.business_name,
+        notice?.parent_system,
+        notice?.parentSystem
+      ].filter(Boolean).join(' ').toLowerCase();
+      return haystack.includes(org);
+    });
+  }
+  if (since) {
+    const sinceMs = Date.parse(since);
+    if (Number.isFinite(sinceMs)) {
+      out = out.filter((notice) => getNoticeDateValue(notice) >= sinceMs);
+    }
+  }
+  if (Number.isFinite(minScore) && minScore > 0) {
+    out = out.filter((notice) => Number(notice?.nursing_score ?? notice?.nursingImpact?.score ?? 0) >= minScore);
+  }
   return out;
 };
 
@@ -1820,6 +1864,16 @@ const loadStrategicData = async () => {
   } catch {
     strategicData = {};
   }
+  renderStrategicReviewContent();
+};
+
+const loadTargetSpecialtySummary = async () => {
+  try {
+    targetSpecialtySummaryData = await fetchJson(`/data/target-specialty-summary.json?ts=${Date.now()}`);
+  } catch {
+    targetSpecialtySummaryData = {};
+  }
+  renderStrategicReviewContent();
 };
 
 const loadRelocationData = async () => {
@@ -2740,7 +2794,7 @@ const initLightworker = () => {
       ALL_STATES.forEach(s => {
         const opt = document.createElement('option');
         opt.value = s;
-        opt.textContent = `${s} Ã¢â‚¬â€ ${STATE_NAMES[s] || s}`;
+        opt.textContent = `${s} ???????? ${STATE_NAMES[s] || s}`;
         homeSelect.appendChild(opt);
       });
     }
@@ -3086,6 +3140,30 @@ const renderInsightFallback = (element, message) => {
   element.innerHTML = `<div class="empty-state">${message}</div>`;
 };
 
+const insightSeverity = (score, warnAt = 50, criticalAt = 75) => {
+  if (score >= criticalAt) return { label: 'High', className: 'red' };
+  if (score >= warnAt) return { label: 'Watch', className: 'yellow' };
+  return { label: 'Stable', className: '' };
+};
+
+const renderInsightBrief = (title, metrics, action) => `
+  <div class="insight-exec-brief">
+    <div>
+      <span>Executive readout</span>
+      <strong>${escapeHtml(title)}</strong>
+    </div>
+    <div class="insight-exec-metrics">
+      ${metrics.map((metric) => `
+        <div>
+          <span>${escapeHtml(metric.label)}</span>
+          <strong>${escapeHtml(String(metric.value))}</strong>
+        </div>
+      `).join('')}
+    </div>
+    <p>${escapeHtml(action)}</p>
+  </div>
+`;
+
 const renderAlerts = (data) => {
   if (!alertsList) return;
   const alerts = data?.alerts ?? [];
@@ -3096,18 +3174,34 @@ const renderAlerts = (data) => {
   const top = alerts
     .sort((a, b) => (b.early_warning === true) - (a.early_warning === true))
     .slice(0, 8);
-  alertsList.innerHTML = top.map(alert => `
+  const earlyCount = alerts.filter((alert) => alert.early_warning).length;
+  const avgLead = Math.round(alerts.reduce((sum, alert) => sum + Number(alert.lead_time_days || 0), 0) / Math.max(1, alerts.length));
+  const executiveBrief = renderInsightBrief(
+    `${earlyCount} early-warning signals need recruiter review`,
+    [
+      { label: 'Signals', value: alerts.length.toLocaleString() },
+      { label: 'Early', value: earlyCount.toLocaleString() },
+      { label: 'Avg lead', value: `${avgLead || 'n/a'}d` }
+    ],
+    earlyCount ? 'Prioritize outreach against early-warning employers before effective dates compress the candidate window.' : 'Maintain weekly monitoring; no immediate early-warning spike detected.'
+  );
+  alertsList.innerHTML = executiveBrief + top.map(alert => {
+    const leadDays = Number(alert.lead_time_days ?? 0);
+    const severity = insightSeverity(alert.early_warning ? 80 : leadDays <= 30 ? 58 : 32);
+    return `
     <div class="insight-row">
       <div>
         <div class="insight-title">${alert.employer_name || 'Unknown employer'}</div>
         <div class="insight-meta">${[alert.state, alert.facility_name || alert.parent_system].filter(Boolean).join(' | ')}</div>
+        <div class="insight-action">Action: ${alert.early_warning ? 'source impacted RNs now' : 'monitor for conversion trigger'}</div>
       </div>
       <div>
-        <div class="insight-pill ${alert.early_warning ? 'yellow' : ''}">${alert.early_warning ? 'Early' : 'Signal'}</div>
+        <div class="insight-pill ${severity.className}">${severity.label}</div>
         <div class="insight-meta">${alert.lead_time_days ?? 'n/a'}d lead</div>
       </div>
     </div>
-  `).join('');
+  `;
+  }).join('');
 };
 
 const renderHeatmap = (data) => {
@@ -3121,15 +3215,30 @@ const renderHeatmap = (data) => {
     renderInsightFallback(heatmapList, 'No hotspots detected.');
     return;
   }
-  heatmapList.innerHTML = ranked.map(loc => {
+  const topState = ranked[0]?.state || 'n/a';
+  const redCount = locations.filter((loc) => loc.risk_level === 'red').length;
+  const total90 = ranked.reduce((sum, loc) => sum + Number(loc.notices_last_90_days || 0), 0);
+  const executiveBrief = renderInsightBrief(
+    `${topState} leads current workforce-risk concentration`,
+    [
+      { label: 'Hotspots', value: ranked.length },
+      { label: 'Red', value: redCount },
+      { label: '90d notices', value: total90.toLocaleString() }
+    ],
+    'Use this as the market-priority stack for sourcing capacity, competitor monitoring, and facility outreach.'
+  );
+  heatmapList.innerHTML = executiveBrief + ranked.map(loc => {
     const cityDisplay = loc.city && loc.city !== 'unknown' ? loc.city : `${loc.state} Statewide`;
+    const riskScore = loc.risk_level === 'red' ? 85 : loc.risk_level === 'yellow' ? 60 : 30;
+    const severity = insightSeverity(riskScore);
     return `
     <div class="insight-row">
       <div>
         <div class="insight-title">${cityDisplay}</div>
         <div class="insight-meta">${loc.state} | ${loc.notices_last_90_days} in 90d</div>
+        <div class="insight-action">Action: validate hospitals, commute radius, and specialty mix.</div>
       </div>
-      <div class="insight-pill ${loc.risk_level === 'red' ? 'red' : 'yellow'}">${loc.risk_level.toUpperCase()}</div>
+      <div class="insight-pill ${severity.className}">${severity.label}</div>
     </div>
   `;
   }).join('');
@@ -3150,16 +3259,31 @@ const renderTalent = (data) => {
     return;
   }
 
-  talentList.innerHTML = top.map(entry => {
+  const totalAvailable = top.reduce((sum, entry) => sum + Number(entry.estimated_nurses_available || 0), 0);
+  const topSpecialties = [...new Set(top.flatMap((entry) => Array.isArray(entry.specialties) ? entry.specialties : []))]
+    .slice(0, 4);
+  const executiveBrief = renderInsightBrief(
+    `${Math.round(totalAvailable).toLocaleString()} estimated RNs in top opportunity pockets`,
+    [
+      { label: 'Markets', value: opportunities.length.toLocaleString() },
+      { label: 'Top 8 supply', value: Math.round(totalAvailable).toLocaleString() },
+      { label: 'Specialties', value: topSpecialties.length || 'n/a' }
+    ],
+    `Lead with ${topSpecialties.join(', ') || 'general RN'} campaigns in the highest-supply cities before expanding to statewide sourcing.`
+  );
+  talentList.innerHTML = executiveBrief + top.map(entry => {
     const cityDisplay = entry.city && entry.city !== 'unknown' ? entry.city : `${entry.state} Statewide`;
+    const availability = Number(entry.estimated_nurses_available || 0);
+    const severity = insightSeverity(availability, 150, 350);
     return `
     <div class="insight-row">
       <div>
         <div class="insight-title">${cityDisplay}</div>
         <div class="insight-meta">${entry.state} | ${entry.notices_count} notices</div>
+        <div class="insight-action">Action: launch ${entry.specialties?.slice(0, 2).join('/') || 'RN'} sequence.</div>
       </div>
       <div>
-        <div class="insight-pill">${entry.estimated_nurses_available}</div>
+        <div class="insight-pill ${severity.className}">${Math.round(availability).toLocaleString()}</div>
         <div class="insight-meta">${entry.specialties?.slice(0, 2).join(', ') || 'General'}</div>
       </div>
     </div>
@@ -3179,15 +3303,35 @@ const renderEmployers = (data) => {
     renderInsightFallback(employerList, 'No employer profiles yet.');
     return;
   }
-  employerList.innerHTML = top.map(entry => `
+  const repeated = employers.filter((entry) => Number(entry.total_notices || 0) >= 3).length;
+  const totalAffected = employers.reduce((sum, entry) => sum + Number(entry.total_affected || 0), 0);
+  const executiveBrief = renderInsightBrief(
+    `${repeated} employers show repeated WARN behavior`,
+    [
+      { label: 'Employers', value: employers.length.toLocaleString() },
+      { label: 'Repeat', value: repeated.toLocaleString() },
+      { label: 'Affected', value: Math.round(totalAffected).toLocaleString() }
+    ],
+    'Use repeat employers as account-watch targets for displacement sourcing and competitive staffing intelligence.'
+  );
+  employerList.innerHTML = executiveBrief + top.map(entry => {
+    const noticeCount = Number(entry.total_notices || 0);
+    const severity = insightSeverity(noticeCount, 3, 8);
+    return `
     <div class="insight-row">
       <div>
         <div class="insight-title">${entry.employer_name || 'Unknown employer'}</div>
         <div class="insight-meta">${entry.parent_system || entry.state} | ${entry.total_notices} notices</div>
+        <div class="insight-action">Action: monitor ${entry.state || 'market'} recurrence and recruiter timing.</div>
       </div>
-      <div class="insight-meta">${entry.avg_lead_time_days ?? 'n/a'}d avg lead</div>
+      <div>
+        <div class="insight-pill ${severity.className}">${severity.label}</div>
+        <div class="insight-meta">${entry.avg_lead_time_days ?? 'n/a'}d avg lead</div>
+      </div>
     </div>
-  `).join('');
+  `;
+  }).join('');
+  renderStrategicReviewContent();
 };
 
 const SURPLUS_SPECIALTY_MAP = {
@@ -3815,45 +3959,50 @@ const loadFreeMarketSignals = async () => {
   }
 };
 const loadInsights = async () => {
-  await loadFreeMarketSignals();
-  await loadMarketReadinessIntegration();
-  await loadMarketRequiredMetrics();
-  await loadFacilityMarketFeatures();
-  await loadProviderMaster();
-  await loadHospitalRankingsData();
-  try {
-    const [alerts, geo, talent, employers] = await Promise.all([
-      fetchJson('/insights/alerts'),
-      fetchJson('/insights/geo'),
-      fetchJson('/insights/talent'),
-      fetchJson('/insights/employers')
-    ]);
-    renderAlerts(alerts);
-    renderHeatmap(geo);
-    renderTalent(talent);
-    renderEmployers(employers);
-  } catch (err) {
+  const warmup = Promise.allSettled([
+    loadFreeMarketSignals(),
+    loadMarketReadinessIntegration(),
+    loadMarketRequiredMetrics(),
+    loadFacilityMarketFeatures(),
+    loadProviderMaster(),
+    loadHospitalRankingsData()
+  ]);
+  const getInsightFeed = async (apiPath, fallbackPath) => {
     try {
-      const [alerts, geo, talent, employers] = await Promise.all([
-        fetchJson('/data/alerts.json'),
-        fetchJson('/data/geo.json'),
-        fetchJson('/data/talent.json'),
-        fetchJson('/data/employers.json')
-      ]);
-      renderAlerts(alerts);
-      renderHeatmap(geo);
-      renderTalent(talent);
-      renderEmployers(employers);
-    } catch (fallbackErr) {
-      console.warn('Insights unavailable in API mode:', fallbackErr);
-      specialtySurplusMode = 'unavailable';
-      renderInsightFallback(alertsList, 'Insights unavailable.');
-      renderInsightFallback(heatmapList, 'Insights unavailable.');
-      renderInsightFallback(talentList, 'Insights unavailable.');
-      renderInsightFallback(employerList, 'Insights unavailable.');
-      renderInsightFallback(specialtySurplusList, 'Insights unavailable.');
+      return await fetchJson(apiPath);
+    } catch (apiErr) {
+      return fetchJson(fallbackPath);
     }
+  };
+  try {
+    const [alerts, geo, talent, employers] = await Promise.allSettled([
+      getInsightFeed('/insights/alerts', '/data/alerts.json'),
+      getInsightFeed('/insights/geo', '/data/geo.json'),
+      getInsightFeed('/insights/talent', '/data/talent.json'),
+      getInsightFeed('/insights/employers', '/data/employers.json')
+    ]);
+    if (alerts.status === 'fulfilled') renderAlerts(alerts.value);
+    else renderInsightFallback(alertsList, 'Alerts unavailable.');
+    if (geo.status === 'fulfilled') renderHeatmap(geo.value);
+    else renderInsightFallback(heatmapList, 'Hotspots unavailable.');
+    if (talent.status === 'fulfilled') renderTalent(talent.value);
+    else {
+      specialtySurplusMode = 'unavailable';
+      renderInsightFallback(talentList, 'Talent signals unavailable.');
+      renderInsightFallback(specialtySurplusList, 'Specialty surplus unavailable.');
+    }
+    if (employers.status === 'fulfilled') renderEmployers(employers.value);
+    else renderInsightFallback(employerList, 'Employer profiles unavailable.');
+  } catch (err) {
+    console.warn('Insights unavailable:', err);
+    specialtySurplusMode = 'unavailable';
+    renderInsightFallback(alertsList, 'Insights unavailable.');
+    renderInsightFallback(heatmapList, 'Insights unavailable.');
+    renderInsightFallback(talentList, 'Insights unavailable.');
+    renderInsightFallback(employerList, 'Insights unavailable.');
+    renderInsightFallback(specialtySurplusList, 'Insights unavailable.');
   }
+  warmup.then(() => renderSpecialtySurplus()).catch(() => {});
 };
 
 const loadLeadershipMarketSignals = async () => {
@@ -3866,6 +4015,7 @@ const loadLeadershipMarketSignals = async () => {
     loadHospitalRankingsData(),
     loadRecruitmentIntel(),
     loadStrategicData(),
+    loadTargetSpecialtySummary(),
     loadRelocationData(),
     typeof loadRuralClosuresData === 'function' ? loadRuralClosuresData() : Promise.resolve(),
     typeof loadStrikeAlerts === 'function' ? loadStrikeAlerts() : Promise.resolve(),
@@ -3876,6 +4026,7 @@ const loadLeadershipMarketSignals = async () => {
   } else if (currentMapView === 'flight') {
     renderRnFlightPattern();
   }
+  renderStrategicReviewContent();
 };
 
 const initForecast = () => {
@@ -3928,7 +4079,7 @@ const loadNotices = async () => {
 
     // Merge in custom notices from localStorage
     if (customNotices.length > 0) {
-      notices = [...customNotices, ...notices];
+      notices = [...filterNoticesByActiveControls(customNotices), ...notices];
     }
     notices = filterNoticesByScope(notices);
     notices = sortNoticesByNewest(notices);
@@ -3937,6 +4088,7 @@ const loadNotices = async () => {
     syncMapStateDataToVisibleNotices();
     renderNotices(currentNotices);
     updateStats(currentNotices);
+    renderStrategicReviewContent();
     if (!currentNotices.length) {
       if (!apiHasDb) {
         noticeList.innerHTML = `<div class="empty-state">No database connected. Start Postgres and run the worker to load notices.</div>`;
@@ -3950,11 +4102,13 @@ const loadNotices = async () => {
       syncMapStateDataToVisibleNotices();
       renderNotices(currentNotices);
       updateStats(currentNotices);
+      renderStrategicReviewContent();
     } else {
       currentNotices = [];
       syncMapStateDataToVisibleNotices();
       setLoading('Unable to load notices. Is the API running?');
       statTotal.textContent = '0';
+      renderStrategicReviewContent();
     }
     renderDetail(null);
   }
@@ -4016,28 +4170,45 @@ const fetchLiveData = async () => {
 
 fetchBtn.addEventListener('click', fetchLiveData);
 
-clearBtn.addEventListener('click', () => {
-  regionSelect.value = '';
-  // Clear multi-select states
-  selectedStates = [];
-  stateSelect.value = '';
-  populateStateDropdown('');
-  updateStateDisplay();
-  // Clear other filters
-  orgInput.value = '';
-  sinceInput.value = '';
-  scoreInput.value = 0;
-  scoreReadout.textContent = '0+';
-  limitInput.value = '';
-  // Update map highlights and reload
+const refreshMapAfterFilterReset = () => {
+  mapStateData = mapScope === 'all'
+    ? (Object.keys(stateDataAll || {}).length ? stateDataAll : mapStateData)
+    : (Object.keys(stateDataHealthcare || {}).length ? stateDataHealthcare : stateDataAll);
   if (currentMapView === 'map') {
+    updateWeatherMap();
     updateMapHighlights();
   } else if (currentMapView === 'chart') {
     renderBarChart();
   } else if (currentMapView === 'flight') {
     renderRnFlightPattern();
   }
+};
+
+const resetStateMapFilters = ({ resetAllFilters = false } = {}) => {
+  regionSelect.value = '';
+  selectedStates = [];
+  stateSelect.value = '';
+  populateStateDropdown('');
+  updateStateDisplay();
+
+  if (resetAllFilters) {
+    orgInput.value = '';
+    sinceInput.value = '';
+    scoreInput.value = 0;
+    scoreReadout.textContent = '0+';
+    limitInput.value = '';
+  }
+
+  refreshMapAfterFilterReset();
   loadNotices();
+};
+
+clearBtn.addEventListener('click', () => {
+  resetStateMapFilters({ resetAllFilters: true });
+});
+
+mapClearBtn?.addEventListener('click', () => {
+  resetStateMapFilters();
 });
 
 regionSelect.addEventListener('change', () => {
@@ -4802,8 +4973,7 @@ const initWeatherMap = async () => {
         openBonusFactorModal(stateId);
         return;
       }
-      stateSelect.value = stateId;
-      loadNotices();
+      selectSingleStateFromMap(stateId);
     });
     shape.addEventListener('contextmenu', (event) => {
       event.preventDefault();
@@ -5148,6 +5318,9 @@ const buildStateCountsMapFromNotices = (notices) => {
 const syncMapStateDataToVisibleNotices = () => {
   mapStateData = buildStateCountsMapFromNotices(currentNotices);
   updateWeatherMap();
+  if (currentMapView === 'map') {
+    updateMapHighlights();
+  }
   if (currentMapView === 'chart') {
     renderBarChart();
   } else if (currentMapView === 'flight') {
@@ -5289,6 +5462,18 @@ const toggleStateSelection = (state) => {
   }
 
   updateStateDisplay();
+  onStateSelectionChange();
+};
+
+const selectSingleStateFromMap = (state) => {
+  if (!state || !ALL_STATES.includes(state)) return;
+  selectedStates = [state];
+  stateSelect.value = state;
+  stateOptions?.querySelectorAll('[data-state]').forEach((option) => {
+    option.classList.toggle('selected', option.dataset.state === state);
+  });
+  updateStateDisplay();
+  updateMapHighlights();
   onStateSelectionChange();
 };
 
@@ -5942,11 +6127,932 @@ const initStrategicReview = () => {
   const toggleIcon = section?.querySelector('.strategic-toggle-icon');
 
   if (!toggleBtn || !section) return;
+  if (toggleBtn.dataset.boundStrategicToggle === 'true') return;
+  toggleBtn.dataset.boundStrategicToggle = 'true';
 
   toggleBtn.addEventListener('click', () => {
     section.classList.toggle('open');
     const isOpen = section.classList.contains('open');
     if (toggleIcon) toggleIcon.textContent = isOpen ? '-' : '+';
+  });
+
+  renderStrategicReviewContent();
+  bindStrategicStateModal();
+};
+
+const getStrategicReviewData = () => {
+  const salaryData = strategicData?.salaryData && typeof strategicData.salaryData === 'object'
+    ? strategicData.salaryData
+    : {};
+  const summary = strategicData?.summary && typeof strategicData.summary === 'object'
+    ? strategicData.summary
+    : {};
+  const shortageStates = Array.isArray(summary.shortageStates)
+    ? summary.shortageStates
+    : Object.entries(salaryData)
+      .filter(([, row]) => String(row?.shortage || '').toLowerCase() === 'shortage')
+      .map(([state]) => state);
+  const surplusStates = Array.isArray(summary.surplusStates)
+    ? summary.surplusStates
+    : Object.entries(salaryData)
+      .filter(([, row]) => String(row?.shortage || '').toLowerCase() === 'surplus')
+      .map(([state]) => state);
+  const balancedStates = Array.isArray(summary.balancedStates)
+    ? summary.balancedStates
+    : Object.entries(salaryData)
+      .filter(([, row]) => String(row?.shortage || '').toLowerCase() === 'balanced')
+      .map(([state]) => state);
+
+  return { salaryData, summary, shortageStates, surplusStates, balancedStates };
+};
+
+const strategicBadgeClass = (value) => {
+  const normalized = String(value || '').toLowerCase();
+  if (normalized === 'shortage') return 'low';
+  if (normalized === 'surplus') return 'high';
+  return 'medium';
+};
+
+const CLINICAL_SPECIALTY_CONTEXT = {
+  GENERAL_RN: {
+    label: 'General RN',
+    family: 'Registered Nurse',
+    summaryKey: '',
+    aliases: ['RN', 'REGISTERED NURSE', 'NURSE'],
+    roleMixKey: 'rn',
+    demand: 1.08,
+    settingWeights: { acute: 1, snf: 0.82, outpatient: 0.62, home: 0.72, behavioral: 0.66 },
+    brief: 'Broad RN sourcing across inpatient, outpatient, and post-acute roles.'
+  },
+  OR_RN: {
+    label: 'OR / Perioperative RN',
+    family: 'Registered Nurse',
+    summaryKey: 'OR',
+    aliases: ['OR', 'OPERATING ROOM', 'PERIOPERATIVE', 'SURGERY', 'SURGICAL'],
+    roleMixKey: 'rn',
+    demand: 1.2,
+    settingWeights: { acute: 1, outpatient: 0.78 },
+    brief: 'Surgical service-line nurse pipeline for OR, periop, PACU-adjacent, and procedure teams.'
+  },
+  ED_RN: {
+    label: 'Emergency Department RN',
+    family: 'Registered Nurse',
+    summaryKey: 'ED',
+    aliases: ['ED', 'ER', 'EMERGENCY DEPARTMENT', 'EMERGENCY ROOM'],
+    roleMixKey: 'rn',
+    demand: 1.18,
+    settingWeights: { acute: 1 },
+    brief: 'High-acuity emergency nurse pipeline with strong disruption and shift-fit sensitivity.'
+  },
+  ICU_RN: {
+    label: 'ICU / Critical Care RN',
+    family: 'Registered Nurse',
+    summaryKey: 'ICU',
+    aliases: ['ICU', 'CRITICAL CARE', 'INTENSIVE CARE'],
+    roleMixKey: 'rn',
+    demand: 1.16,
+    settingWeights: { acute: 1 },
+    brief: 'Critical care pipeline for hospitals with complex acuity, staffing drag, and premium-pay pressure.'
+  },
+  MED_SURG_RN: {
+    label: 'Med-Surg RN',
+    family: 'Registered Nurse',
+    summaryKey: 'MED SURG',
+    aliases: ['MED SURG', 'MED-SURG', 'MEDICAL SURGICAL'],
+    roleMixKey: 'rn',
+    demand: 1.12,
+    settingWeights: { acute: 1, snf: 0.5 },
+    brief: 'Core inpatient RN pipeline where volume, ratios, and onboarding stability matter most.'
+  },
+  L_AND_D_RN: {
+    label: 'Labor & Delivery RN',
+    family: 'Registered Nurse',
+    summaryKey: 'L&D',
+    aliases: ['L&D', 'LABOR AND DELIVERY', 'LABOR & DELIVERY', 'OB', 'INPATIENT OB'],
+    roleMixKey: 'rn',
+    demand: 1.08,
+    settingWeights: { acute: 1 },
+    brief: 'Maternal-child pipeline for birth-volume markets and service lines with safety-sensitive staffing.'
+  },
+  TELE_RN: {
+    label: 'Telemetry RN',
+    family: 'Registered Nurse',
+    summaryKey: 'TELE',
+    aliases: ['TELE', 'TELEMETRY'],
+    roleMixKey: 'rn',
+    demand: 1.1,
+    settingWeights: { acute: 1 },
+    brief: 'Telemetry pipeline for stepdown-adjacent units, cardiac monitoring, and flexible med-surg crossfill.'
+  },
+  PCU_RN: {
+    label: 'PCU / Stepdown RN',
+    family: 'Registered Nurse',
+    summaryKey: 'PCU',
+    aliases: ['PCU', 'STEPDOWN', 'STEP-DOWN', 'PROGRESSIVE CARE'],
+    roleMixKey: 'rn',
+    demand: 1.11,
+    settingWeights: { acute: 1 },
+    brief: 'Progressive care pipeline for acuity bridges between med-surg and ICU teams.'
+  },
+  PEDS_RN: {
+    label: 'Pediatrics RN',
+    family: 'Registered Nurse',
+    summaryKey: 'PEDS',
+    aliases: ['PEDS', 'PEDIATRIC', 'PEDIATRICS'],
+    roleMixKey: 'rn',
+    demand: 1.06,
+    settingWeights: { acute: 0.9, outpatient: 0.74 },
+    brief: 'Pediatric pipeline for children’s hospitals, specialty clinics, and family-centered care teams.'
+  },
+  BEHAVIORAL_RN: {
+    label: 'Behavioral Health RN',
+    family: 'Registered Nurse',
+    summaryKey: 'BEHAVIORAL',
+    aliases: ['BEHAVIORAL', 'PSYCH', 'PSYCHIATRIC', 'MENTAL HEALTH'],
+    roleMixKey: 'rn',
+    demand: 1.09,
+    settingWeights: { behavioral: 1, acute: 0.46 },
+    brief: 'Behavioral health pipeline for psych, detox, crisis, and inpatient behavioral teams.'
+  },
+  LPN_LVN: {
+    label: 'LPN / LVN',
+    family: 'Licensed Practical Nurse',
+    aliases: ['LPN', 'LVN', 'LICENSED PRACTICAL', 'LICENSED VOCATIONAL'],
+    roleMixKey: 'lpn',
+    demand: 1.04,
+    settingWeights: { snf: 1, home: 0.86, outpatient: 0.7, acute: 0.45 },
+    brief: 'LPN/LVN pipeline for post-acute, clinic, home health, and care-team extender models.'
+  },
+  CNA_PCT: {
+    label: 'CNA / PCT / Patient Care Assistant',
+    family: 'Patient Care Support',
+    aliases: ['CNA', 'PCT', 'PATIENT CARE', 'PATIENT CARE TECH', 'PATIENT CARE ASSISTANT', 'NURSING ASSISTANT'],
+    roleMixKey: 'cna',
+    demand: 1.1,
+    settingWeights: { snf: 1, acute: 0.8, home: 0.8, behavioral: 0.62 },
+    brief: 'Bedside support pipeline for CNA, PCT, sitter, and patient care assistant coverage.'
+  },
+  SURG_TECH: {
+    label: 'CST / Surgical Tech',
+    family: 'Surgical Services Support',
+    summaryKey: 'OR',
+    aliases: ['CST', 'SURGICAL TECH', 'SURGICAL TECHNOLOGIST', 'SCRUB TECH', 'OPERATING ROOM', 'OR', 'SURGERY'],
+    roleMixKey: null,
+    demand: 1.15,
+    settingWeights: { acute: 1, outpatient: 0.82 },
+    brief: 'Surgical tech pipeline for OR, ASC, scrub tech, and procedure-room staffing.'
+  },
+  MEDICAL_ASSISTANT: {
+    label: 'Medical Assistant',
+    family: 'Ambulatory Support',
+    aliases: ['MA', 'MEDICAL ASSISTANT', 'CLINIC ASSISTANT', 'BACK OFFICE'],
+    roleMixKey: null,
+    demand: 1.03,
+    settingWeights: { outpatient: 1, home: 0.42, acute: 0.3 },
+    brief: 'Ambulatory medical assistant pipeline for clinics, physician groups, and access expansion.'
+  },
+  DIALYSIS_TECH: {
+    label: 'Dialysis Tech / Renal Support',
+    family: 'Patient Care Support',
+    aliases: ['DIALYSIS', 'RENAL', 'HEMODIALYSIS'],
+    roleMixKey: 'cna',
+    demand: 1.05,
+    settingWeights: { outpatient: 0.88, acute: 0.52 },
+    brief: 'Renal support pipeline for dialysis, chronic kidney care, and hospital-based renal teams.'
+  },
+  STERILE_PROCESSING: {
+    label: 'Sterile Processing Tech',
+    family: 'Surgical Services Support',
+    aliases: ['STERILE PROCESSING', 'SPD', 'CENTRAL STERILE', 'INSTRUMENT TECH'],
+    roleMixKey: null,
+    demand: 1.06,
+    settingWeights: { acute: 0.86, outpatient: 0.72 },
+    brief: 'Sterile processing pipeline for OR throughput, instrument turnaround, and procedural capacity.'
+  }
+};
+
+const normalizeClinicalSpecialtyKey = (key) => (
+  CLINICAL_SPECIALTY_CONTEXT[key] ? key : 'SURG_TECH'
+);
+
+const getClinicalSpecialtyContext = () => (
+  CLINICAL_SPECIALTY_CONTEXT[normalizeClinicalSpecialtyKey(strategicClinicalSpecialty)]
+);
+
+const specialtyAliasMatch = (values, aliases) => {
+  const haystack = (Array.isArray(values) ? values : [values])
+    .map((value) => normalizeSpecialty(value))
+    .filter(Boolean)
+    .join(' | ');
+  if (!haystack) return false;
+  return (aliases || []).some((alias) => {
+    const normalizedAlias = normalizeSpecialty(alias);
+    if (!normalizedAlias) return false;
+    if (normalizedAlias.length <= 3) {
+      return haystack.split(/[^A-Z&]+/).includes(normalizedAlias);
+    }
+    return haystack.includes(normalizedAlias);
+  });
+};
+
+const getTargetSpecialtySummary = (context) => {
+  const summaries = Array.isArray(targetSpecialtySummaryData?.summaries)
+    ? targetSpecialtySummaryData.summaries
+    : [];
+  const targetKey = normalizeSpecialty(context?.summaryKey || context?.label || '');
+  if (!targetKey) return null;
+  return summaries.find((summary) => normalizeSpecialty(summary?.specialty) === targetKey)
+    || summaries.find((summary) => normalizeSpecialty(summary?.label) === targetKey)
+    || null;
+};
+
+const getNoticeRoleShare = (notice, context) => {
+  const roleMix = notice?.nursing_role_mix || notice?.nursingRoleMix || {};
+  const setting = String(notice?.nursing_care_setting || notice?.careSetting || '').trim().toLowerCase();
+  const settingWeight = Number(context?.settingWeights?.[setting] ?? 0.55);
+  const affected = Math.max(0, Number(notice?.employees_affected ?? notice?.affectedCount ?? 0));
+  if (affected <= 0) return 0;
+  if (context?.roleMixKey) {
+    const mixValue = Number(roleMix?.[context.roleMixKey] ?? 0);
+    return affected * Math.max(0.04, mixValue / 100) * settingWeight;
+  }
+  const specialtyValues = parseMaybeJson(notice?.nursing_specialties || notice?.nursingSpecialties);
+  const text = [
+    notice?.employer_name,
+    notice?.facility_name,
+    notice?.parent_system,
+    notice?.raw_text,
+    specialtyValues.join(' ')
+  ].filter(Boolean).join(' ');
+  const directMatch = specialtyAliasMatch(text, context?.aliases);
+  const supportShare = context?.family === 'Surgical Services Support'
+    ? 0.16
+    : context?.family === 'Ambulatory Support'
+      ? 0.2
+      : 0.12;
+  return affected * supportShare * settingWeight * (directMatch ? 1.65 : 1);
+};
+
+const getClinicalTalentSupply = (state, context) => {
+  const stateKey = String(state || '').trim().toUpperCase();
+  if (!stateKey || !Array.isArray(latestTalentOpportunities)) return 0;
+  return latestTalentOpportunities
+    .filter((entry) => String(entry?.state || '').trim().toUpperCase() === stateKey)
+    .reduce((sum, entry) => {
+      const est = Math.max(0, Number(entry?.estimated_nurses_available || 0));
+      if (est <= 0) return sum;
+      const specialties = Array.isArray(entry?.specialties) ? entry.specialties : [];
+      if (specialtyAliasMatch(specialties, context?.aliases)) return sum + est;
+      if (context?.roleMixKey === 'rn' && !specialties.length) return sum + est * 0.12 * context.demand;
+      if (!context?.roleMixKey && context?.summaryKey && specialtyAliasMatch(specialties, [context.summaryKey])) return sum + est * 0.55;
+      return sum;
+    }, 0);
+};
+
+const getClinicalSummaryFit = (state, context) => {
+  const summary = getTargetSpecialtySummary(context);
+  if (!summary) return 0;
+  const stateKey = String(state || '').trim().toUpperCase();
+  const rows = [
+    summary.primarySourceMarket,
+    ...(Array.isArray(summary.secondarySourceMarkets) ? summary.secondarySourceMarkets : [])
+  ].filter(Boolean);
+  const row = rows.find((entry) => String(entry?.state || '').trim().toUpperCase() === stateKey);
+  if (!row) return 0;
+  const fit = Number(row.fitScore || 0);
+  const available = Number(row.estimatedNursesAvailable || 0);
+  const notices = Number(row.noticesCount || 0);
+  return Math.max(0, fit) + Math.min(18, available / 80) + Math.min(10, notices * 0.8);
+};
+
+const getClinicalNoticeSignal = (state, context) => {
+  const stateKey = String(state || '').trim().toUpperCase();
+  if (!stateKey || !Array.isArray(currentNotices)) return { count: 0, estimatedRoles: 0, score: 0 };
+  const rows = currentNotices.filter((notice) => String(notice?.state || '').trim().toUpperCase() === stateKey);
+  let estimatedRoles = 0;
+  let count = 0;
+  rows.forEach((notice) => {
+    const roleShare = getNoticeRoleShare(notice, context);
+    if (roleShare <= 0) return;
+    const specialties = parseMaybeJson(notice?.nursing_specialties || notice?.nursingSpecialties);
+    const directMatch = specialtyAliasMatch(specialties, context?.aliases);
+    const score = Math.max(0, Number(notice?.nursing_score ?? notice?.nursingImpact?.score ?? 0));
+    estimatedRoles += roleShare * (1 + Math.min(0.5, score / 160)) * (directMatch ? 1.35 : 1);
+    count += 1;
+  });
+  return {
+    count,
+    estimatedRoles,
+    score: Math.min(35, Math.sqrt(estimatedRoles) * 0.95 + count * 0.8)
+  };
+};
+
+const getClinicalHospitalTargetsForState = (state, context, limit = 5) => {
+  const stateKey = String(state || '').trim().toUpperCase();
+  const noticeRows = (Array.isArray(currentNotices) ? currentNotices : [])
+    .filter((notice) => String(notice?.state || '').trim().toUpperCase() === stateKey)
+    .map((notice) => {
+      const roleSignal = getNoticeRoleShare(notice, context);
+      const specialties = parseMaybeJson(notice?.nursing_specialties || notice?.nursingSpecialties);
+      const directMatch = specialtyAliasMatch(specialties, context?.aliases);
+      const score = Number(notice?.nursing_score ?? notice?.nursingImpact?.score ?? 0);
+      return {
+        name: notice?.facility_name || notice?.employer_name || 'Unknown facility',
+        city: notice?.city || '',
+        state: stateKey,
+        system: notice?.parent_system || '',
+        affected: Number(notice?.employees_affected ?? notice?.affectedCount ?? 0),
+        reason: directMatch ? 'specialty-labeled WARN pressure' : 'role-mix pressure',
+        signal: roleSignal + Math.max(0, score) + (directMatch ? 25 : 0)
+      };
+    })
+    .filter((row) => row.signal > 0);
+
+  const providerRows = (Array.isArray(providerMasterData?.providers) ? providerMasterData.providers : [])
+    .filter((provider) => String(provider?.state || '').trim().toUpperCase() === stateKey)
+    .map((provider) => ({
+      name: provider?.name || 'Unknown facility',
+      city: provider?.metro || '',
+      state: stateKey,
+      system: provider?.system || '',
+      affected: Number(provider?.beds || 0),
+      reason: context?.family === 'Surgical Services Support' ? 'surgical-capacity proxy' : 'facility-depth proxy',
+      signal: Number(provider?.score || 0) + Math.min(35, Number(provider?.beds || 0) / 18)
+    }));
+
+  const merged = new Map();
+  [...noticeRows, ...providerRows].forEach((row) => {
+    const key = `${String(row.name).toUpperCase()}|${stateKey}`;
+    const existing = merged.get(key);
+    if (!existing || row.signal > existing.signal) merged.set(key, row);
+  });
+
+  return Array.from(merged.values())
+    .sort((a, b) => b.signal - a.signal || b.affected - a.affected || a.name.localeCompare(b.name))
+    .slice(0, limit);
+};
+
+const getClinicalPipelineRows = (context, targetState) => {
+  const target = ALL_STATES.includes(targetState) ? targetState : 'IN';
+  return ALL_STATES
+    .filter((state) => state !== target)
+    .map((state) => {
+      const talentSupply = getClinicalTalentSupply(state, context);
+      const summaryFit = getClinicalSummaryFit(state, context);
+      const noticeSignal = getClinicalNoticeSignal(state, context);
+      const push = typeof getRnFlightPushScore === 'function' ? getRnFlightPushScore(state) : 0;
+      const migration = typeof getRnFlightMigrationHistoryPull === 'function' ? getRnFlightMigrationHistoryPull(state, target) : 0;
+      const pipelinePressure = typeof getRnFlightPipelinePressure === 'function' ? getRnFlightPipelinePressure(target) : 0;
+      const hospitalDrag = typeof getRnFlightHospitalInstability === 'function' ? getRnFlightHospitalInstability(state) : 0;
+      const compact = freeMarketSignals?.nlcCompactStates?.includes(state) && freeMarketSignals?.nlcCompactStates?.includes(target) ? 6 : 0;
+      const roleNeed = noticeSignal.score * context.demand;
+      const supplyScore = Math.min(34, Math.sqrt(talentSupply) * 0.8);
+      const summaryScore = Math.min(30, summaryFit * 0.32);
+      const score = Math.max(0, Math.min(100, Math.round(
+        supplyScore
+        + summaryScore
+        + roleNeed
+        + push * 0.12
+        + migration * 1.4
+        + pipelinePressure * 0.55
+        + compact
+        + hospitalDrag * 0.28
+      )));
+      const reasons = [
+        talentSupply > 100 ? `${Math.round(talentSupply).toLocaleString()} live talent signal` : '',
+        summaryFit > 0 ? 'precomputed specialty source market' : '',
+        noticeSignal.estimatedRoles > 30 ? `${Math.round(noticeSignal.estimatedRoles).toLocaleString()} estimated affected ${context.family.toLowerCase()} roles` : '',
+        migration > 4 ? 'RN Flight migration pattern' : '',
+        pipelinePressure > 5 ? 'target-state pipeline pressure' : '',
+        compact ? 'compact-friendly' : '',
+        hospitalDrag > 6 ? 'hospital instability signal' : ''
+      ].filter(Boolean);
+      return {
+        state,
+        stateName: STATE_NAMES[state] || state,
+        score,
+        talentSupply,
+        noticeSignal,
+        summaryFit,
+        migration,
+        pipelinePressure,
+        hospitalDrag,
+        reasons,
+        hospitals: getClinicalHospitalTargetsForState(state, context, 4)
+      };
+    })
+    .filter((row) => row.score > 0)
+    .sort((a, b) => b.score - a.score || b.talentSupply - a.talentSupply || b.noticeSignal.estimatedRoles - a.noticeSignal.estimatedRoles)
+    .slice(0, 8);
+};
+
+const getClinicalDestinationSummary = (context) => {
+  const summary = getTargetSpecialtySummary(context);
+  const destination = summary?.primaryIndianaDestination || null;
+  if (!destination) return null;
+  return {
+    metro: destination.metro || 'Indiana',
+    score: Number(destination.score || 0),
+    hospitals: Array.isArray(destination.topHospitals) ? destination.topHospitals.slice(0, 5) : [],
+    hospitalCount: Number(destination.hospitalCount || 0),
+    localSignal: Number(destination.estimatedLocalSpecialtySignal || 0)
+  };
+};
+
+const getClinicalSpecialtyExportData = () => {
+  const context = getClinicalSpecialtyContext();
+  const targetState = ALL_STATES.includes(strategicClinicalTargetState) ? strategicClinicalTargetState : 'IN';
+  const rows = getClinicalPipelineRows(context, targetState);
+  const destination = getClinicalDestinationSummary(context);
+  const sourceSummary = getTargetSpecialtySummary(context);
+  const sourceUpdated = targetSpecialtySummaryData?.lastUpdated ? formatDate(targetSpecialtySummaryData.lastUpdated) : 'No timestamp';
+  const hospitalRows = rows
+    .flatMap((row) => row.hospitals.map((hospital) => ({ ...hospital, sourceState: row.state })))
+    .slice(0, 12);
+
+  return {
+    context,
+    targetState,
+    targetName: STATE_NAMES[targetState] || targetState,
+    rows,
+    hospitalRows,
+    destination,
+    sourceSummary,
+    sourceUpdated,
+    generatedAt: new Date().toLocaleString()
+  };
+};
+
+const buildClinicalSpecialtyExportRows = (data) => {
+  const exportRows = [];
+  const pushRow = (section, item, detail = '') => exportRows.push([section, item, detail]);
+  const joinDetail = (items) => items.filter(Boolean).join(' | ');
+
+  pushRow('Overview', 'Clinical Specialty', data.context.label);
+  pushRow('Overview', 'Specialty Family', data.context.family);
+  pushRow('Overview', 'Target State', `${data.targetName} (${data.targetState})`);
+  pushRow('Overview', 'Executive Brief', data.context.brief);
+  pushRow('Overview', 'Source Coverage', data.sourceSummary ? 'Specialty summary + live signals' : 'Modeled live signals');
+  pushRow('Overview', 'Specialty Summary Updated', data.sourceUpdated);
+  pushRow('Overview', 'Generated At', data.generatedAt);
+
+  if (data.rows.length) {
+    data.rows.forEach((row, index) => {
+      pushRow(
+        'Pipeline States',
+        `${index + 1}. ${row.stateName} (${row.state})`,
+        joinDetail([
+          `Score ${row.score}`,
+          `Talent ${Math.round(row.talentSupply).toLocaleString()}`,
+          `Estimated affected roles ${Math.round(row.noticeSignal.estimatedRoles).toLocaleString()}`,
+          `Specialty fit ${Math.round(row.summaryFit)}`,
+          `Migration +${Math.round(row.migration)}`,
+          `Pipeline pressure ${Math.round(row.pipelinePressure)}`,
+          `Hospital instability ${Math.round(row.hospitalDrag)}`,
+          row.reasons.join('; ')
+        ])
+      );
+    });
+  } else {
+    pushRow('Pipeline States', 'No ranked pipeline states', 'No specialty pipeline states are ranked yet.');
+  }
+
+  if (data.hospitalRows.length) {
+    data.hospitalRows.forEach((hospital) => {
+      pushRow(
+        'Hospitals / Systems To Watch',
+        hospital.name || 'Unknown facility',
+        joinDetail([
+          [hospital.city, hospital.sourceState].filter(Boolean).join(', '),
+          hospital.system,
+          `Signal ${Math.round(hospital.signal || 0)}`,
+          hospital.reason,
+          hospital.affected ? `${Math.round(hospital.affected).toLocaleString()} affected/beds proxy` : null
+        ])
+      );
+    });
+  } else {
+    pushRow('Hospitals / Systems To Watch', 'No hospital rows', 'Hospital-level specialty pressure will appear after notices/provider joins load.');
+  }
+
+  if (data.destination) {
+    pushRow(
+      'Destination Fit',
+      data.destination.metro,
+      joinDetail([
+        `Score ${Math.round(data.destination.score)}`,
+        `${data.destination.hospitalCount} hospitals`,
+        `Local signal ${Math.round(data.destination.localSignal).toLocaleString()}`,
+        data.destination.hospitals.length ? `Top hospitals: ${data.destination.hospitals.join('; ')}` : null
+      ])
+    );
+  }
+
+  pushRow(
+    'Methodology',
+    'Signal Model',
+    'Model blends live talent specialty tags, target-specialty summary, WARN role mix, RN Flight pipeline pressure, migration pattern, facility distress, provider depth, strike/news disruption, and public source confidence. RN-below roles use role-mix and care-setting proxies when direct specialty labels are thin.'
+  );
+
+  return exportRows;
+};
+
+const exportClinicalSpecialtyResults = (format = 'excel') => {
+  const data = getClinicalSpecialtyExportData();
+  const rows = buildClinicalSpecialtyExportRows(data);
+  const cleanSpecialty = data.context.label.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  const filenameBase = `clinical-specialty-${cleanSpecialty || 'pipeline'}-${data.targetState}`;
+  const title = `Clinical Specialty Pipeline - ${data.context.label} into ${data.targetName}`;
+  const meta = [
+    `Exported: ${data.generatedAt}`,
+    `Target State: ${data.targetName} (${data.targetState})`,
+    `Specialty Summary Updated: ${data.sourceUpdated}`
+  ];
+
+  if (format === 'pdf') {
+    openPdfExport({
+      title,
+      meta,
+      headers: ['Section', 'Item', 'Detail'],
+      rows
+    });
+    showExportToast('Clinical Specialty PDF opened.');
+    return;
+  }
+
+  downloadExcel({
+    title,
+    meta,
+    headers: ['Section', 'Item', 'Detail'],
+    rows,
+    filename: `${filenameBase}.xls`
+  });
+  showExportToast('Clinical Specialty Excel exported.');
+};
+
+const renderClinicalSpecialtyModule = () => {
+  const exportData = getClinicalSpecialtyExportData();
+  const { context, targetState, rows, destination, sourceSummary, sourceUpdated } = exportData;
+  const topRow = rows[0];
+  const specialtyOptions = Object.entries(CLINICAL_SPECIALTY_CONTEXT)
+    .map(([key, item]) => `<option value="${escapeHtml(key)}" ${key === strategicClinicalSpecialty ? 'selected' : ''}>${escapeHtml(item.label)}</option>`)
+    .join('');
+  const targetOptions = ALL_STATES
+    .map((state) => `<option value="${state}" ${state === targetState ? 'selected' : ''}>${escapeHtml(STATE_NAMES[state] || state)} (${state})</option>`)
+    .join('');
+  const hospitalRows = exportData.hospitalRows.slice(0, 8);
+
+  return `
+    <article class="strategic-card full-width clinical-specialty-card">
+      <div class="clinical-specialty-header">
+        <div>
+          <h4><span class="card-icon">+</span> Clinical Specialty Pipeline</h4>
+          <p class="card-description">Executive sourcing lens for RN specialties and RN-below patient-care roles, including CST, CNA/PCT, MA, LPN/LVN, surgical services, and support roles.</p>
+        </div>
+        <div class="clinical-specialty-controls">
+          <label>
+            <span>Clinical Specialty</span>
+            <select id="strategic-clinical-specialty">${specialtyOptions}</select>
+          </label>
+          <label>
+            <span>Target State</span>
+            <select id="strategic-clinical-target">${targetOptions}</select>
+          </label>
+          <div class="clinical-export-actions" aria-label="Export current clinical specialty results">
+            <button type="button" class="beacon-action-btn" id="strategic-clinical-export-excel">Excel</button>
+            <button type="button" class="beacon-action-btn" id="strategic-clinical-export-pdf">PDF</button>
+          </div>
+        </div>
+      </div>
+      <div class="clinical-specialty-kpis">
+        <div>
+          <span>Specialty family</span>
+          <strong>${escapeHtml(context.family)}</strong>
+          <small>${escapeHtml(context.brief)}</small>
+        </div>
+        <div>
+          <span>Top pipeline state</span>
+          <strong>${escapeHtml(topRow ? `${topRow.state} (${topRow.score})` : '--')}</strong>
+          <small>${topRow ? escapeHtml(topRow.reasons.slice(0, 2).join(' | ') || 'modeled specialty fit') : 'No ranked state yet'}</small>
+        </div>
+        <div>
+          <span>Destination pressure</span>
+          <strong>${Math.round((topRow?.pipelinePressure || 0) * 6)}</strong>
+          <small>${escapeHtml(STATE_NAMES[targetState] || targetState)} pipeline pressure using RN Flight model</small>
+        </div>
+        <div>
+          <span>Source coverage</span>
+          <strong>${sourceSummary ? 'Specialty + live' : 'Modeled'}</strong>
+          <small>Specialty summary updated ${escapeHtml(sourceUpdated)}</small>
+        </div>
+      </div>
+      <div class="clinical-specialty-body">
+        <div class="clinical-pipeline-panel">
+          <div class="clinical-panel-title">
+            <strong>Pipeline States</strong>
+            <span>Best source markets to reach out for ${escapeHtml(context.label)} into ${escapeHtml(STATE_NAMES[targetState] || targetState)}</span>
+          </div>
+          <div class="clinical-pipeline-list">
+            ${rows.map((row, index) => `
+              <div class="clinical-pipeline-row">
+                <span class="clinical-rank">${index + 1}</span>
+                <div class="clinical-pipeline-main">
+                  <strong>${escapeHtml(row.stateName)} (${row.state})</strong>
+                  <small>${escapeHtml(row.reasons.join(' | ') || 'Balanced modeled signal')}</small>
+                  <div class="clinical-pipeline-metrics">
+                    <span>Talent ${Math.round(row.talentSupply).toLocaleString()}</span>
+                    <span>Role signal ${Math.round(row.noticeSignal.estimatedRoles).toLocaleString()}</span>
+                    <span>Hospitals ${row.hospitals.length}</span>
+                    <span>Migration +${Math.round(row.migration)}</span>
+                  </div>
+                  <div class="clinical-score-bar"><i style="width:${Math.max(4, row.score)}%"></i></div>
+                </div>
+                <span class="clinical-score">${row.score}</span>
+              </div>
+            `).join('') || '<div class="empty-state">No specialty pipeline states are ranked yet.</div>'}
+          </div>
+        </div>
+        <div class="clinical-hospital-panel">
+          <div class="clinical-panel-title">
+            <strong>Hospitals / Systems To Watch</strong>
+            <span>Facilities with role-mix pressure, specialty disruption, or service-line capacity signals.</span>
+          </div>
+          <div class="clinical-hospital-list">
+            ${hospitalRows.map((hospital) => `
+              <div class="clinical-hospital-row">
+                <div>
+                  <strong>${escapeHtml(hospital.name)}</strong>
+                  <small>${escapeHtml([hospital.city, hospital.sourceState].filter(Boolean).join(', ') || hospital.sourceState)}${hospital.system ? ` | ${escapeHtml(hospital.system)}` : ''}</small>
+                  <small>${escapeHtml(hospital.reason)}${hospital.affected ? ` | ${Math.round(hospital.affected).toLocaleString()} affected/beds proxy` : ''}</small>
+                </div>
+                <span>${Math.round(hospital.signal)}</span>
+              </div>
+            `).join('') || '<div class="empty-state">Hospital-level specialty pressure will appear after notices/provider joins load.</div>'}
+          </div>
+          ${destination ? `
+            <div class="clinical-destination-note">
+              <strong>${escapeHtml(destination.metro)} destination fit</strong>
+              <span>${destination.hospitalCount} hospitals | local signal ${Math.round(destination.localSignal).toLocaleString()} | score ${Math.round(destination.score)}</span>
+              ${destination.hospitals.length ? `<small>${destination.hospitals.map(escapeHtml).join(' | ')}</small>` : ''}
+            </div>
+          ` : ''}
+        </div>
+      </div>
+      <div class="clinical-methodology">
+        Model blends live talent specialty tags, target-specialty summary, WARN role mix, RN Flight pipeline pressure, migration pattern, facility distress, provider depth, strike/news disruption, and public source confidence. RN-below roles use role-mix and care-setting proxies when direct specialty labels are thin.
+      </div>
+    </article>
+  `;
+};
+
+const renderStrategicStatePills = (states, type) => {
+  const safeStates = Array.isArray(states) ? states.slice(0, 12) : [];
+  if (!safeStates.length) return '<span class="state-pill">No states mapped</span>';
+  const overflow = states.length > safeStates.length ? `<span class="state-pill">+${states.length - safeStates.length} more</span>` : '';
+  return `${safeStates.map((state) => `<span class="state-pill ${type}">${escapeHtml(state)}</span>`).join('')}${overflow}`;
+};
+
+const renderStrategicReviewContent = () => {
+  const container = document.getElementById('strategic-review-content');
+  if (!container) return;
+
+  if (strategicData === null) {
+    container.innerHTML = '<div class="empty-state">Loading strategic analysis...</div>';
+    return;
+  }
+
+  const { salaryData, summary, shortageStates, surplusStates, balancedStates } = getStrategicReviewData();
+  const stateRows = Object.entries(salaryData);
+  if (!stateRows.length) {
+    container.innerHTML = '<div class="empty-state">Strategic analysis is unavailable right now.</div>';
+    return;
+  }
+
+  const avgStaff = Number(summary.avgStaffSalary);
+  const avgTravel = Number(summary.avgTravelSalary);
+  const avgPremium = Number(summary.avgTravelPremium);
+  const totalGap = Number(summary.totalProjectedGap);
+  const topPremiumStates = stateRows
+    .map(([state, row]) => ({
+      state,
+      premium: Number(row?.travelAnnual) - Number(row?.staffRN),
+      staffRN: Number(row?.staffRN),
+      travelAnnual: Number(row?.travelAnnual),
+      shortage: row?.shortage
+    }))
+    .filter((row) => Number.isFinite(row.premium))
+    .sort((a, b) => b.premium - a.premium)
+    .slice(0, 5);
+
+  const sourceLinks = Array.isArray(strategicData?.sources) ? strategicData.sources : [];
+  const sourceHtml = sourceLinks.length
+    ? sourceLinks.map((source) => (
+      source?.url
+        ? `<a href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(source.name || 'Source')}</a>`
+        : `<span>${escapeHtml(source?.name || 'Source')}</span>`
+    )).join('<span>|</span>')
+    : '<span>Source list unavailable</span>';
+
+  container.innerHTML = `
+    <div class="strategic-grid">
+      <article class="strategic-card full-width">
+        <h4><span class="card-icon">#</span> Executive Market Summary</h4>
+        <p class="card-description">National nursing labor pressure, travel premium, and state shortage posture from the loaded strategic dataset.</p>
+        <div class="exec-metrics-row">
+          <div class="exec-metric-card">
+            <div class="exec-metric-value negative">${Number.isFinite(totalGap) ? formatNumber(totalGap) : '--'}</div>
+            <div class="exec-metric-label">Projected RN Gap</div>
+          </div>
+          <div class="exec-metric-card">
+            <div class="exec-metric-value">${Number.isFinite(avgStaff) ? formatCurrency(avgStaff) : '--'}</div>
+            <div class="exec-metric-label">Avg Staff RN</div>
+          </div>
+          <div class="exec-metric-card">
+            <div class="exec-metric-value">${Number.isFinite(avgTravel) ? formatCurrency(avgTravel) : '--'}</div>
+            <div class="exec-metric-label">Avg Travel Annual</div>
+          </div>
+          <div class="exec-metric-card">
+            <div class="exec-metric-value positive">${Number.isFinite(avgPremium) ? formatCurrency(avgPremium) : '--'}</div>
+            <div class="exec-metric-label">Travel Premium</div>
+          </div>
+        </div>
+        <div class="state-lists-container">
+          <button type="button" class="state-list-section shortage interactive" data-strategic-state-list="shortage">
+            <div class="state-list-header">
+              <span class="state-list-icon">!</span>
+              <span class="state-list-title">Shortage States (${shortageStates.length})</span>
+            </div>
+            <div class="state-pills">${renderStrategicStatePills(shortageStates, 'shortage')}</div>
+            <div class="state-list-subtext">Open state rationale and salary context.</div>
+          </button>
+          <button type="button" class="state-list-section surplus interactive" data-strategic-state-list="surplus">
+            <div class="state-list-header">
+              <span class="state-list-icon">+</span>
+              <span class="state-list-title">Surplus States (${surplusStates.length})</span>
+            </div>
+            <div class="state-pills">${renderStrategicStatePills(surplusStates, 'surplus')}</div>
+            <div class="state-list-subtext">Open state rationale and salary context.</div>
+          </button>
+        </div>
+      </article>
+      <article class="strategic-card">
+        <h4><span class="card-icon">$</span> Highest Travel Premiums</h4>
+        <p class="card-description">States where modeled travel annual pay most exceeds staff RN salary.</p>
+        <ul class="heat-score-list">
+          ${topPremiumStates.map((row) => `
+            <li>
+              <span>
+                <span class="heat-score-name">${escapeHtml(row.state)}</span>
+                <span class="heat-score-meta">${escapeHtml(STATE_NAMES[row.state] || row.state)}</span>
+              </span>
+              <span>
+                <strong>${formatCurrency(row.premium, { signed: true })}</strong>
+                <span class="strategic-badge ${strategicBadgeClass(row.shortage)}">${escapeHtml(row.shortage || 'unknown')}</span>
+              </span>
+            </li>
+          `).join('')}
+        </ul>
+      </article>
+      <article class="strategic-card">
+        <h4><span class="card-icon">i</span> Coverage Snapshot</h4>
+        <p class="card-description">Loaded state-level salary and workforce balance coverage.</p>
+        <div class="exec-dashboard-grid">
+          <div class="exec-dashboard-item">
+            <div class="exec-dashboard-label">States Loaded</div>
+            <div class="exec-dashboard-value">${stateRows.length}</div>
+            <div class="exec-dashboard-sub">Salary benchmarks available</div>
+          </div>
+          <div class="exec-dashboard-item">
+            <div class="exec-dashboard-label">Balanced</div>
+            <div class="exec-dashboard-value">${balancedStates.length}</div>
+            <div class="exec-dashboard-sub">Neither shortage nor surplus</div>
+          </div>
+          <div class="exec-dashboard-item">
+            <div class="exec-dashboard-label">Dataset Version</div>
+            <div class="exec-dashboard-value">${escapeHtml(strategicData?.version || 'Unknown')}</div>
+            <div class="exec-dashboard-sub">${escapeHtml(strategicData?.lastUpdated ? `Updated ${formatDate(strategicData.lastUpdated)}` : 'No timestamp')}</div>
+          </div>
+        </div>
+      </article>
+      ${renderClinicalSpecialtyModule()}
+      <div class="strategic-footnote">
+        <span>Sources:</span>
+        ${sourceHtml}
+      </div>
+    </div>
+  `;
+  bindStrategicClinicalSpecialtyControls();
+};
+
+const getStrategicStateReason = (state, row, listType) => {
+  const projectedGap = Number(row?.projectedGap);
+  const staff = Number(row?.staffRN);
+  const travel = Number(row?.travelAnnual);
+  const premium = travel - staff;
+  const status = String(row?.shortage || listType || 'market').toLowerCase();
+  const gapText = Number.isFinite(projectedGap)
+    ? `${formatNumber(Math.abs(projectedGap))} RN ${projectedGap < 0 ? 'shortfall' : 'surplus'}`
+    : 'unmapped workforce gap';
+  const premiumText = Number.isFinite(premium) ? `${formatCurrency(premium, { signed: true })} travel premium` : 'unmapped travel premium';
+  return `${escapeHtml(STATE_NAMES[state] || state)} is marked ${status} with ${gapText} and ${premiumText}.`;
+};
+
+const openStrategicStateModal = (listType) => {
+  const modal = document.getElementById('strategic-state-modal');
+  const title = document.getElementById('strategic-state-title');
+  const subtitle = document.getElementById('strategic-state-subtitle');
+  const summaryEl = document.getElementById('strategic-state-summary');
+  const sourcesEl = document.getElementById('strategic-state-sources');
+  const listEl = document.getElementById('strategic-state-list');
+  if (!modal || !listEl) return;
+
+  const { salaryData, shortageStates, surplusStates } = getStrategicReviewData();
+  const states = listType === 'surplus' ? surplusStates : shortageStates;
+  const label = listType === 'surplus' ? 'Surplus States' : 'Shortage States';
+  if (title) title.textContent = label;
+  if (subtitle) subtitle.textContent = 'State-level rationale and source freshness.';
+  if (summaryEl) {
+    summaryEl.textContent = `${states.length} ${listType} states are mapped in the strategic review dataset.`;
+  }
+  if (sourcesEl) {
+    const sources = Array.isArray(strategicData?.sources) ? strategicData.sources : [];
+    sourcesEl.innerHTML = sources.length
+      ? sources.map((source) => `
+        <div class="strategic-source-row">
+          <span class="strategic-source-name">${escapeHtml(source?.name || 'Source')}</span>
+          ${source?.url ? `<a href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(source.url)}</a>` : ''}
+          <span class="strategic-source-age">${escapeHtml(strategicData?.lastUpdated ? `Updated ${formatDate(strategicData.lastUpdated)}` : 'No timestamp')}</span>
+        </div>
+      `).join('')
+      : '<div class="strategic-source-row"><span class="strategic-source-name">No sources listed</span></div>';
+  }
+
+  listEl.innerHTML = states.map((state) => {
+    const row = salaryData[state] || {};
+    const staff = Number(row.staffRN);
+    const travel = Number(row.travelAnnual);
+    const gap = Number(row.projectedGap);
+    return `
+      <article class="strategic-state-item ${listType}">
+        <div class="strategic-state-item-header">
+          <span class="strategic-state-item-title">${escapeHtml(state)} - ${escapeHtml(STATE_NAMES[state] || state)}</span>
+          <span class="strategic-badge ${strategicBadgeClass(row.shortage || listType)}">${escapeHtml(row.shortage || listType)}</span>
+        </div>
+        <p class="strategic-state-item-why">${getStrategicStateReason(state, row, listType)}</p>
+        <div class="strategic-state-item-metrics">
+          <span class="strategic-state-item-metric">Staff RN ${Number.isFinite(staff) ? formatCurrency(staff) : '--'}</span>
+          <span class="strategic-state-item-metric">Travel annual ${Number.isFinite(travel) ? formatCurrency(travel) : '--'}</span>
+          <span class="strategic-state-item-metric">Gap ${Number.isFinite(gap) ? formatNumber(gap) : '--'}</span>
+        </div>
+      </article>
+    `;
+  }).join('') || '<div class="empty-state">No states mapped for this list.</div>';
+
+  modal.classList.add('active');
+  document.body.classList.add('modal-open');
+};
+
+const closeStrategicStateModal = () => {
+  document.getElementById('strategic-state-modal')?.classList.remove('active');
+  document.body.classList.remove('modal-open');
+};
+
+const bindStrategicClinicalSpecialtyControls = () => {
+  const specialtySelect = document.getElementById('strategic-clinical-specialty');
+  const targetSelect = document.getElementById('strategic-clinical-target');
+  const exportExcel = document.getElementById('strategic-clinical-export-excel');
+  const exportPdf = document.getElementById('strategic-clinical-export-pdf');
+  specialtySelect?.addEventListener('change', (event) => {
+    strategicClinicalSpecialty = normalizeClinicalSpecialtyKey(event.target.value);
+    renderStrategicReviewContent();
+  });
+  targetSelect?.addEventListener('change', (event) => {
+    strategicClinicalTargetState = ALL_STATES.includes(event.target.value) ? event.target.value : 'IN';
+    renderStrategicReviewContent();
+  });
+  exportExcel?.addEventListener('click', () => exportClinicalSpecialtyResults('excel'));
+  exportPdf?.addEventListener('click', () => exportClinicalSpecialtyResults('pdf'));
+};
+
+const bindStrategicStateModal = () => {
+  const container = document.getElementById('strategic-review-content');
+  const modal = document.getElementById('strategic-state-modal');
+  if (!container || !modal || modal.dataset.boundStrategicModal === 'true') return;
+  modal.dataset.boundStrategicModal = 'true';
+
+  container.addEventListener('click', (event) => {
+    const trigger = event.target.closest('[data-strategic-state-list]');
+    if (!trigger) return;
+    openStrategicStateModal(trigger.dataset.strategicStateList);
+  });
+
+  document.getElementById('strategic-state-close')?.addEventListener('click', closeStrategicStateModal);
+  document.getElementById('strategic-state-close-footer')?.addEventListener('click', closeStrategicStateModal);
+  modal.addEventListener('click', (event) => {
+    if (event.target === modal) closeStrategicStateModal();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && modal.classList.contains('active')) closeStrategicStateModal();
   });
 };
 
@@ -6341,9 +7447,9 @@ const loadPrograms = async (force = false) => {
         ? `Sources: ${sourceNames.join(' + ')}`
         : '';
       if (data?.mode === 'live') {
-        programsSourceNote.textContent += `${programsSourceNote.textContent ? ' • ' : ''}Live refresh active`;
+        programsSourceNote.textContent += `${programsSourceNote.textContent ? ' ? ' : ''}Live refresh active`;
       } else if (data?.mode === 'fallback-after-live-failure') {
-        programsSourceNote.textContent += `${programsSourceNote.textContent ? ' • ' : ''}Live refresh failed; using local snapshot`;
+        programsSourceNote.textContent += `${programsSourceNote.textContent ? ' ? ' : ''}Live refresh failed; using local snapshot`;
       }
     }
 
@@ -9060,6 +10166,39 @@ const getStateProgramCount = (state) => {
   }, 0);
 };
 
+const getRnFlightFocusState = () => (
+  rnFlightMode === 'inbound' ? rnFlightTargetState : rnFlightOriginState
+);
+
+const hasRnFlightCompactEvidence = () => (
+  Array.isArray(freeMarketSignals?.nlcCompactStates) && freeMarketSignals.nlcCompactStates.length > 0
+);
+
+const getRnFlightCompactAuditStatus = () => (
+  hasRnFlightCompactEvidence() ? 'ok' : (freeMarketSignals?.sources?.ncsbn || 'unknown')
+);
+
+const hasRnFlightProgramEvidence = (state) => {
+  const focusState = state || getRnFlightFocusState();
+  const cachedTargetMetro = targetStateMetroDataCache?.[focusState] || null;
+  const targetMetroEntry = targetStateMetrosData?.states?.[focusState] || cachedTargetMetro || {};
+  const beaconEntry = stateBeaconData?.states?.[focusState] || {};
+  const metroPipeline = targetMetroEntry.pipeline || {};
+  const beaconPipeline = beaconEntry.pipeline || {};
+  const educationBreakdown = beaconEntry.nursingEducation?.breakdown || {};
+
+  return nursingPrograms.length > 0
+    || getStateProgramCount(focusState) > 0
+    || Number(metroPipeline.programsCount || beaconPipeline.programsCount || 0) > 0
+    || (metroPipeline.majorPrograms || []).length > 0
+    || (beaconPipeline.majorPrograms || []).length > 0
+    || Object.values(educationBreakdown).some((group) => Number(group?.programs || group?.count || 0) > 0);
+};
+
+const getRnFlightProgramAuditStatus = (state) => (
+  hasRnFlightProgramEvidence(state) ? 'ok' : 'limited'
+);
+
 const getStateStrikeCount = (state) => {
   if (!Array.isArray(strikeAlertsData) || !strikeAlertsData.length) return 0;
   return strikeAlertsData.reduce((count, row) => (
@@ -9995,8 +11134,8 @@ const getRnFlightSourceConfidence = () => {
     datasetScore(datasets.hrsaNssrn?.status || freeMarketSignals?.sources?.hrsa),
     datasetScore(datasets.blsOes?.status || freeMarketSignals?.sources?.bls),
     datasetScore(datasets.cmsCareCompare?.status || datasets.cmsHcris?.status),
-    datasetScore(freeMarketSignals?.sources?.ncsbn),
-    nursingPrograms.length ? 1 : 0.45,
+    hasRnFlightCompactEvidence() ? 1 : datasetScore(freeMarketSignals?.sources?.ncsbn),
+    hasRnFlightProgramEvidence(getRnFlightFocusState()) ? 1 : 0.45,
     strikeAlertsData.length ? 1 : 0.45,
     Object.keys(ruralClosuresData || {}).length ? 1 : 0.45,
     stateNewsData ? 1 : 0.45,
@@ -10416,13 +11555,14 @@ const renderRnFlightRowVariables = (row) => {
 
 const getRnFlightSourceAuditRows = () => {
   const datasets = marketRequiredMetrics?.datasets || {};
+  const focusState = getRnFlightFocusState();
   return [
     ['BLS wage/employment', datasets.blsOes?.status || freeMarketSignals?.sources?.bls || 'unknown', 'Real wage and travel-pay pull'],
-    ['NCSBN compact', freeMarketSignals?.sources?.ncsbn || 'unknown', 'License friction and start-timing drag'],
+    ['NCSBN compact', getRnFlightCompactAuditStatus(), 'License friction and start-timing drag'],
     ['HRSA workforce', datasets.hrsaNssrn?.status || freeMarketSignals?.sources?.hrsa || 'unknown', 'Supply, shortage, and workforce pressure'],
     ['CMS facility data', datasets.cmsCareCompare?.status || datasets.cmsHcris?.status || 'unknown', 'Hospital quality/stability context'],
     ['WARN/news/rural', currentNotices.length || stateNewsData || Object.keys(ruralClosuresData || {}).length ? 'ok' : 'limited', 'Disruption, closures, and labor-climate drag'],
-    ['Nursing programs', nursingPrograms.length ? 'ok' : 'limited', 'Pipeline pressure versus local demand']
+    ['Nursing programs', getRnFlightProgramAuditStatus(focusState), 'Pipeline pressure versus local demand']
   ];
 };
 
