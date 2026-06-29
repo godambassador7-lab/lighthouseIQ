@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-06-28T23:08:53.086Z",
+  "lastUpdated": "2026-06-29T04:11:18.163Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 2,
-    "healthySources": 8,
+    "staleSources": 6,
+    "healthySources": 4,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 178,
-        "latestPublishedAt": "2026-06-28T00:00:00.000Z",
-        "staleHours": 23,
+        "articleCount": 203,
+        "latestPublishedAt": "2026-06-29T00:00:00.000Z",
+        "staleHours": 4,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 153,
+        "articleCount": 144,
         "latestPublishedAt": "2026-06-26T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 76,
+        "status": "stale"
       },
       {
         "source": "STAT News",
-        "articleCount": 73,
+        "articleCount": 59,
         "latestPublishedAt": "2026-06-27T00:00:00.000Z",
-        "staleHours": 47,
+        "staleHours": 52,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 39,
         "latestPublishedAt": "2026-06-29T00:00:00.000Z",
-        "staleHours": -1,
+        "staleHours": 4,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 29,
         "latestPublishedAt": "2026-06-26T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 76,
+        "status": "stale"
       },
       {
         "source": "Healthcare Dive",
-        "articleCount": 16,
+        "articleCount": 14,
         "latestPublishedAt": "2026-06-26T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 76,
+        "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 5,
         "latestPublishedAt": "2026-06-25T00:00:00.000Z",
-        "staleHours": 95,
+        "staleHours": 100,
         "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 3,
         "latestPublishedAt": "2026-06-29T00:00:00.000Z",
-        "staleHours": -1,
+        "staleHours": 4,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 3,
         "latestPublishedAt": "2026-06-26T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 76,
+        "status": "stale"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 1,
         "latestPublishedAt": "2026-06-22T00:00:00.000Z",
-        "staleHours": 167,
+        "staleHours": 172,
         "status": "stale"
       }
     ]
@@ -83,11 +83,11 @@
   "categoryCoverage": {
     "closures_layoffs": {
       "label": "Closures & Layoffs",
-      "count": 7
+      "count": 8
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 34
+      "count": 33
     },
     "labor_unions": {
       "label": "Labor & Unions",
@@ -95,7 +95,7 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 75
+      "count": 79
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -107,16 +107,18 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 170
+      "count": 169
     },
     "general_market": {
       "label": "General Market",
-      "count": 184
+      "count": 181
     }
   },
   "quality": {
-    "status": "pass",
-    "failedChecks": [],
+    "status": "warning",
+    "failedChecks": [
+      "maxStaleSources"
+    ],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -135,8 +137,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 2,
-        "pass": true
+        "actual": 6,
+        "pass": false
       }
     }
   },
@@ -307,6 +309,231 @@
       "publishedAt": "2026-06-29",
       "category": "general_market",
       "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "As PBM industry shifts, LucyRx and Abarca Health merge to build scale",
+      "url": "https://www.fiercehealthcare.com/payers/pbm-industry-shifts-lucyrx-and-abarca-health-merge-build-scale",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-29",
+      "summary": "Amid significant shifts in the pharmacy benefit management industry, LucyRx and Abarca Health have revealed plans to merge to build the scale necessary to compete in this changing landscape.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Clinicians' compensation rose 4.3% across 2025: AMGA",
+      "url": "https://www.fiercehealthcare.com/providers/clinicians-compensation-rose-43-across-2025-amga",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-29",
+      "summary": "The annual survey of 451 medical groups and health systems found signs of \"genuine demand expansion\" and productivity increases that support about half of the year's compensation growth.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "Weekly Rundown: Innovaccer, AWS ink strategic collaboration; Mount Sinai adopts Signal 1 for AI management",
+      "url": "https://www.fiercehealthcare.com/health-tech/weekly-rundown-innovaccer-aws-ink-strategic-collab-invoca-launches-patient-engagement",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-29",
+      "summary": "Stay up to date on the latest in health tech, digital health and health AI news with this weekly brief.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Industry Voices—What Pope Leo’s AI encyclical could mean for healthcare: 3 key takeaways for leaders",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/industry-voices-what-pope-leos-ai-encyclical-could-mean-healthcare-3-key",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-29",
+      "summary": "The papal letter’s guidance on artificial intelligence can provide competitive, legal, reputational and financial benefits to healthcare organizations, faith-based and otherwise, legal experts from Epstein Becker Green write.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Cassidy's new plan to overhaul 340B: Rebates, contract pharmacy limits and more changes",
+      "url": "https://www.fiercehealthcare.com/providers/cassidys-new-plan-reform-340b-rebates-contract-pharmacy-limits-and-more",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-29",
+      "summary": "A legislative discussion draft shared Thursday by the Senate HELP chairman includes rebates, contract pharmacy limits, narrowed definitions and other proposals.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "With Medicare's GLP-1 'bridge' coming soon, Walmart expands weight management supports for consumers",
+      "url": "https://www.fiercehealthcare.com/payers/medicares-glp-1-bridge-coming-soon-walmart-expands-weight-management-supports-consumers",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-29",
+      "summary": "Medicare's GLP-1 Bridge program goes into effect next week, so Walmart is rolling out new supports aimed at helping beneficiaries understand their weight management options.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Democrats to propose bill capping out-of-pocket costs for Medicare enrollees",
+      "url": "https://www.fiercehealthcare.com/regulatory/democrats-propose-bill-capping-out-pocket-costs-medicare-enrollees",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-29",
+      "summary": "Sen. Ron Wyden and 14 Democratic co-sponsors plan to introduce legislation Thursday to cap consumers’ potential out-of-pocket costs in traditional Medicare, resurfacing a long-running debate over why the program doesn’t limit beneficiary spending.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Oracle partners with Theator to expand AI-powered surgical documentation to operating rooms",
+      "url": "https://www.fiercehealthcare.com/health-tech/oracle-partners-theator-expand-ai-powered-surgical-documentation-operating-rooms",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-29",
+      "summary": "Oracle Health, owned by tech giant Oracle after it acquired EHR company Cerner in 2022, is ramping up its AI capabilities while also expanding its AI ecosystem through partnerships.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Judge blocks narrowed definition of 'professional degree' for federal student loan caps",
+      "url": "https://www.fiercehealthcare.com/providers/coalition-attorneys-general-sue-block-federal-student-loan-caps",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-29",
+      "summary": "Plaintiff provider associations cheered the decision, as the rule's definition would have barred advanced practice students from a higher borrowing limit.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Upside secures $20M series A to expand healthcare-focused housing platform",
+      "url": "https://www.fiercehealthcare.com/finance/upside-secures-20m-series-expand-healthcare-focused-housing-platform",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-29",
+      "summary": "The company plans to use the funding simultaneously across Medicaid, Medicare Advantage and employer-sponsored markets.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Fierce Healthcare Layoff Tracker—St. Charles cuts 45 leadership roles; MU Health Care lays off 74",
+      "url": "https://www.fiercehealthcare.com/finance/fierce-healthcare-layoff-tracker-2026-job-cuts-eliminations-health-systems-hospitals",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-29",
+      "summary": "Stick with this tracker for the latest layoff and workforce updates from across healthcare.",
+      "category": "closures_layoffs",
+      "categoryLabel": "Closures & Layoffs"
+    },
+    {
+      "title": "TigerConnect expands AI-driven platform with new scheduling capabilities",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/tigerconnect-expands-ai-driven-platform-new-scheduling-capabilities",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-29",
+      "summary": "The new platform offers real-time AI-generated gap detection and intelligent assignment logic for schedule balancing.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "First Stop Health expands weight management program, shares first-year results",
+      "url": "https://www.fiercehealthcare.com/telehealth/first-stop-health-expands-weight-management-program-shares-first-year-results",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-29",
+      "summary": "During the first year, one employer saw 100% of participants lose weight over 12 months, the company says.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Infinitus launches risk detection system to ensure appropriate patient triage from AI agents",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/infinitus-launches-risk-detection-system-ensure-appropriate-patient-triage",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-29",
+      "summary": "The solution—dubbed Clinical Escalations—continuously assesses risk during interactions, allowing reclassification of events to emergent clinical situations.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Assort Health scores $120M series C to scale voice AI agent platform for healthcare",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/assort-health-scores-120m-series-c-scale-voice-ai-agent-platform-healthcare",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-29",
+      "summary": "Assort Health has a large proprietary specialty dataset built on 190 million patient interactions, 62,000 care protocols and 1.6 million decision pathways.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Kaiser Health Plan ordered to pay hospital $82M over insufficient reimbursement",
+      "url": "https://www.fiercehealthcare.com/providers/kaiser-health-plan-ordered-pay-hospital-82m-over-insufficient-reimbursement",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-29",
+      "summary": "A drawn-out legal back-and-forth between Kaiser Health Plan and Pomona Valley Hospital over out-of-network emergency care reimbursement hinged on the terms of a previously terminated contract, making the case \"a useful reminder that a terminated contract is not always a dead document.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Florida AG to probe CVS for anticompetitive pharmacy practices",
+      "url": "https://www.fiercehealthcare.com/payers/florida-ag-probe-cvs-anticompetitive-pharmacy-practices",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-29",
+      "summary": "Florida Attorney General James Uthmeier has issued a subpoena to CVS Health, citing concern about potential anticompetitive practices from the vertically integrated healthcare giant.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "US health spending set to reach $9T by 2034: CMS report",
+      "url": "https://www.fiercehealthcare.com/finance/us-health-spending-set-reach-9t-2034-cms-report",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-29",
+      "summary": "U.S.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Locum tenens coverage becoming ‘more purposeful’ staffing strategy: Definitive Healthcare",
+      "url": "https://www.fiercehealthcare.com/hospitals/locum-tenens-coverage-becoming-more-purposeful-staffing-strategy-definitive-healthcare",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-29",
+      "summary": "Definitive Healthcare identified four key workforce trends around contingent staffing, advanced practice providers, new behavioral health delivery models and AI tech as a workforce multiplier.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Judge rebuffs DOJ's grand jury subpoena for info on NYU Langone's trans patients",
+      "url": "https://www.fiercehealthcare.com/providers/nyu-langone-health-says-it-received-grand-jury-subpoena-over-gender-affirming-care",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-29",
+      "summary": "NYU Langone Health had disclosed in May that it was \"one of several institutions\" facing a criminal investigation over its delivery of the services to minors, an escalation in the Trump administration's pressure campaign.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Senators call for $50B rural health fund to better target small providers, relax spending restrictions",
+      "url": "https://www.fiercehealthcare.com/providers/senators-call-50b-rural-health-fund-better-target-small-providers-relax-spending",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-29",
+      "summary": "The Centers for Medicare and Medicaid Services has substantial leeway on how funds from the Rural Health Transformation Program are doled out. Lawmakers warn the current approach \"may unintentionally disadvantage many of the rural hospitals and clinics the program was intended to support.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Some life insurers compete with health insurers on benefits. Here's why",
+      "url": "https://www.fiercehealthcare.com/payers/some-life-insurers-compete-health-insurers-benefits",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-29",
+      "summary": "Life insurers are intimately familiar with death and its causes. Some have decided to help customers be proactive about their health.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Patients prefer healthcare providers' AI agents to public chatbots, with human oversight non‑negotiable, survey finds",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/patients-prefer-healthcare-providers-ai-agents-public-chatbots-and-human",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-29",
+      "summary": "Patients are open to using AI agents to help with tasks like scheduling and billing, but they overwhelmingly prefer AI tools that live inside their doctor’s secure portal, a new Salesforce survey found.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Coval raises $28M series A to address AI voice agent reliability, compliance",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/coval-raises-28m-series-address-ai-voice-agent-reliability-compliance",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-29",
+      "summary": "The company plans to use the funds to address deployment reliability and compliance issues, expand its sales and solutions engineering teams and advance product capabilities.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Badges, bots and blind spots",
+      "url": "https://www.fiercehealthcare.com/health-tech/badges-bots-and-blind-spots",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-06-29",
+      "summary": "Hospitals are under pressure to secure increasingly digital care environments without slowing clinicians down. This week on \"Podnosis,\" Senior Writer Anastassia Gliadkovskaya talks with Imprivata Chief Medical Officer Sean Kelly, M.",
+      "category": "general_market",
       "categoryLabel": "General Market"
     },
     {
@@ -4655,231 +4882,6 @@
       "summary": "Alisha Feightner has been promoted to senior vice president and chief strategy officer of Manchester, N.H.",
       "category": "general_market",
       "categoryLabel": "General Market"
-    },
-    {
-      "title": "8 recent studies on AI in diagnosis and clinical reasoning",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/8-recent-studies-on-ai-in-diagnosis-and-clinical-reasoning/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-22",
-      "summary": "AI has outperformed physicians on emergency diagnoses, flagged pancreatic cancer up to three years early and beat specialized clinical software on medical benchmarks across several studies Becker&#8217;s has covered in recent months. But the studies raise as many questions as they answer for health system leaders.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "AI in diagnosis and clinical reasoning: 8 recent studies",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/ai-in-diagnosis-and-clinical-reasoning-8-recent-studies/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-22",
-      "summary": "AI has outperformed physicians on emergency diagnoses, flagged pancreatic cancer up to three years early and beat specialized clinical software on medical benchmarks across several studies Becker&#8217;s has covered in recent months. But the studies raise as many questions as they answer for health system leaders.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "HHS launches Operation TrailBlazer to reclaim clinical trial edge: 5 notes",
-      "url": "https://www.beckershospitalreview.com/pharmacy/hhs-launches-operation-trailblazer-to-reclaim-clinical-trial-edge-5-notes/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-22",
-      "summary": "HHS has directed six of its agencies to reduce regulatory barriers associated with clinical trial research to accelerate pharmaceutical development in the U.S.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Iowa 1st to fully allocate year 1 rural health funds",
-      "url": "https://www.beckershospitalreview.com/finance/iowa-1st-to-fully-allocate-year-1-rural-health-funds/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-22",
-      "summary": "Iowa has become the first state to fully allocate its initial funding from the Rural Health Transformation Program. The state has allocated all $209 million of its first-year funding for healthcare initiatives, including workforce development, cancer research and prevention and hospital grants, according to a June 22 news release from the office of Rep.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Duke Health names ophthalmology chair",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/duke-health-names-ophthalmology-chair/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-22",
-      "summary": "Durham, N.C.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Health insurer CEOs could face criminal liability for denials that lead to injury, death under Pennsylvania bill",
-      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/health-insurer-ceos-could-face-criminal-liability-for-denials-that-lead-to-injury-death-under-pennsylvania-bill/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-22",
-      "summary": "A Pennsylvania bill would create a category of aggravated assault in the state&#8217;s criminal code to hold health insurer CEOs liable if a covered person gets an &#8220;adverse benefit determination&#8221; of a medically necessary benefit that leads to serious bodily injury or death. Under House Bill 2611, referred to the House judiciary committee June 8, [&#8230;] The post Health insurer CEOs could face criminal liability for denials that lead to injury, death under Pennsylvania bill appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Texas hospital taps new COO",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/texas-hospital-taps-new-coo-2/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-22",
-      "summary": "Howard Garner has been named COO of Austin-based St. David&#8217;s South Austin Medical Center.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Hackensack Meridian, Hunterdon Health explore merger",
-      "url": "https://www.beckershospitalreview.com/hospital-transactions-and-valuation/hunterdon-health-hackensack-meridian-sign-letter-of-intent-to-merge/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-22",
-      "summary": "Flemington, N.J.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "What the revenue cycle leaders of 2030 will know",
-      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/what-the-revenue-cycle-leaders-of-2030-will-know/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-22",
-      "summary": "Ask a Revenue Cycle Leader is a new series featuring insights from health system and hospital revenue cycle executives nationwide. Becker’s poses questions on the most pressing issues in healthcare finance — from payer relations and automation to workforce and patient experience.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: Closely watched Pfizer lung cancer drug falls short in clinical trial",
-      "url": "https://www.statnews.com/2026/06/22/pfizer-lung-cancer-sigvotatug-vedotin/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-06-22",
-      "summary": "Pfizer said an experimental drug it hoped could replace a widely used chemotherapy in one of the most common forms of lung cancer fell short in a clinical trial.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: FDA to launch pilot program to speed up early-stage clinical trials",
-      "url": "https://www.statnews.com/2026/06/22/fda-speed-up-early-stage-single-study-clinical-trials/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-06-22",
-      "summary": "Federal health officials aim to speed up drug development and better compete with China.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Confirmed Ebola cases in Congo outbreak top 1,000 with 254 deaths, authorities say",
-      "url": "https://www.statnews.com/2026/06/22/ebola-congo-1000-cases-254-deaths-civil-war-impedes-search-patient-zero/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-06-22",
-      "summary": "Confirmed cases in the Ebola outbreak in eastern Congo have reached 1,003, including 254 deaths, officials said, as tracing those who had been in contact with patients remains a major challenge.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: Another big deal, another sign biotech M&#038;A is back",
-      "url": "https://www.statnews.com/2026/06/22/biotech-news-another-big-deal-another-sign-ma-is-back/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-06-22",
-      "summary": "AbbVie buys Apogee Therapeutics, LSD therapy Phase 3 results, and more biotech news from The Readout",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Despite transplant referrals, most kidney patients don’t make the waitlist",
-      "url": "https://www.statnews.com/2026/06/22/health-news-most-kidney-failure-patients-never-get-transplant/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-06-22",
-      "summary": "An NIH grant proposal poses new threats, more cases of a livestock disease in Europe, and more health news from Morning Rounds",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: Pharmalittle: We&#8217;re reading about another FDA reversal, pharma&#8217;s M&#038;A spree and much more",
-      "url": "https://www.statnews.com/pharmalot/2026/06/22/another-fda-reversal-pharma-merger-and-acquisition-spree/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-06-22",
-      "summary": "The latest pharma news from the Pharmalot campus via the Pharmalittle newsletter is here",
-      "category": "capacity_expansion",
-      "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "STAT+: AbbVie to buy Apogee Therapeutics in nearly $11B deal",
-      "url": "https://www.statnews.com/2026/06/22/abbvie-apogee-acquisition-immunology-zumilokibart/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-06-22",
-      "summary": "AbbVie is buying Apogee Therapeutics, the developer of an experimental atopic dermatitis drug, for nearly $11B, continuing a run of pharma acquisitions.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "STAT+: Definium LSD therapy helped patients with major depression in late-stage trial",
-      "url": "https://www.statnews.com/2026/06/22/definium-lsd-dt120-major-depression-phase-3-data/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-06-22",
-      "summary": "Definium Therapeutics said that its LSD therapy helped patients with major depression in its first Phase 3 trial, bringing the psychedelic drug closer to a potential approval.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: FDA reverses course on Regenxbio’s childhood gene therapy after rejection",
-      "url": "https://www.statnews.com/2026/06/22/fda-reverses-course-regenxbio-gene-therapy-navsunli-hunter-syndrome/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-06-22",
-      "summary": "The FDA will reconsider approving Regenxbio's experimental gene therapy for a deadly and rare childhood brain disorder it rejected just four months ago.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Health equity researchers fear unseen level of scrutiny under White House proposal",
-      "url": "https://www.statnews.com/2026/06/22/health-disparity-research-new-dei-rule-threat-nih-grants/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-06-22",
-      "summary": "Health disparities researchers say a new White House proposal could disqualify much of their work from federal funding — perhaps the most serious threat yet to the future of their&#8230;",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Pharma goes on a spending spree, snapping up biotechs in a hurry",
-      "url": "https://www.statnews.com/2026/06/22/pharma-biotech-ma-boom-2026-deals-total-123-billion/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-06-22",
-      "summary": "Pharmaceutical companies are hungry to make deals, and they’re making more than they have in years.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Opinion: I work in a psychiatric ER. I’m watching the system fail people in real time",
-      "url": "https://www.statnews.com/2026/06/22/psychiatric-er-detox-caregivers-autism-emergency/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-06-22",
-      "summary": "The psychiatric ER is “a detox center for those with no safe place to withdraw and a respite center for caregivers at their breaking point,” writes a psychiatrist.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Opinion: STAT+: Enough, already: the problem with clinical trial data collection",
-      "url": "https://www.statnews.com/2026/06/22/clinical-trial-data-how-much-is-too-much/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-06-22",
-      "summary": "“Nearly 30% of the data collected in clinical trials do not directly inform key decisions, yet patients are still asked to provide it.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Sanofi names new R&#038;D head as it tries to jump-start pipeline",
-      "url": "https://www.statnews.com/2026/06/22/sanofi-paulo-fontoura-houman-ashrafian-research-and-development/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-06-22",
-      "summary": "Sanofi said that Paulo Fontoura, the chief medical officer at Xaira, would be taking over as its head of R&#038;D, as the company tries to jumpstart its pipeline.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Health services M&A is active in 2026, but uncertainty slows volume: PwC",
-      "url": "https://www.healthcaredive.com/news/health-services-ma-active-deal-volume-down-reimbusement-uncertainty-pwc/823338/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-06-22",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Hospitals irate after Eli Lilly follows through on 340B ultimatum",
-      "url": "https://www.healthcaredive.com/news/eli-lilly-halts-340b-discounts-hospitals-irate-hrsa/823370/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-06-22",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
     }
   ]
 }
