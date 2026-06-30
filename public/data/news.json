@@ -1,74 +1,74 @@
 {
-  "lastUpdated": "2026-06-30T12:14:46.749Z",
+  "lastUpdated": "2026-06-30T15:37:39.703Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 9,
-    "staleSources": 3,
-    "healthySources": 6,
+    "staleSources": 2,
+    "healthySources": 7,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 198,
+        "articleCount": 193,
         "latestPublishedAt": "2026-06-30T00:00:00.000Z",
-        "staleHours": 12,
+        "staleHours": 15,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 142,
-        "latestPublishedAt": "2026-06-29T00:00:00.000Z",
-        "staleHours": 36,
+        "articleCount": 147,
+        "latestPublishedAt": "2026-06-30T00:00:00.000Z",
+        "staleHours": 15,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 65,
+        "articleCount": 70,
         "latestPublishedAt": "2026-06-30T00:00:00.000Z",
-        "staleHours": 12,
+        "staleHours": 15,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
-        "articleCount": 44,
+        "articleCount": 42,
         "latestPublishedAt": "2026-06-30T00:00:00.000Z",
-        "staleHours": 12,
+        "staleHours": 15,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
-        "articleCount": 26,
+        "articleCount": 24,
         "latestPublishedAt": "2026-06-26T00:00:00.000Z",
-        "staleHours": 108,
+        "staleHours": 111,
         "status": "stale"
       },
       {
         "source": "Healthcare Dive",
-        "articleCount": 15,
-        "latestPublishedAt": "2026-06-29T00:00:00.000Z",
-        "staleHours": 36,
+        "articleCount": 16,
+        "latestPublishedAt": "2026-06-30T00:00:00.000Z",
+        "staleHours": 15,
         "status": "ok"
-      },
-      {
-        "source": "National Nurses United RSS",
-        "articleCount": 5,
-        "latestPublishedAt": "2026-06-25T00:00:00.000Z",
-        "staleHours": 132,
-        "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 4,
         "latestPublishedAt": "2026-06-30T00:00:00.000Z",
-        "staleHours": 12,
+        "staleHours": 15,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
-        "articleCount": 1,
-        "latestPublishedAt": "2026-06-26T00:00:00.000Z",
-        "staleHours": 108,
+        "articleCount": 2,
+        "latestPublishedAt": "2026-06-30T00:00:00.000Z",
+        "staleHours": 15,
+        "status": "ok"
+      },
+      {
+        "source": "National Nurses United RSS",
+        "articleCount": 2,
+        "latestPublishedAt": "2026-06-25T00:00:00.000Z",
+        "staleHours": 135,
         "status": "stale"
       }
     ]
@@ -84,15 +84,15 @@
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 8
+      "count": 7
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 83
+      "count": 86
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 8
+      "count": 9
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
@@ -100,18 +100,16 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 168
+      "count": 166
     },
     "general_market": {
       "label": "General Market",
-      "count": 181
+      "count": 180
     }
   },
   "quality": {
-    "status": "warning",
-    "failedChecks": [
-      "maxStaleSources"
-    ],
+    "status": "pass",
+    "failedChecks": [],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -120,7 +118,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 40,
+        "actual": 57,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -130,8 +128,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 3,
-        "pass": false
+        "actual": 2,
+        "pass": true
       }
     }
   },
@@ -233,6 +231,18 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "Implantable Marker Recall: Hologic Removes BioZorb 3D Bioabsorbable Markers due to Risk for Patient Complications",
+      "summary": "BioZorb Markers are implantable and used to mark soft tissue for procedures. They are being recalled after reports of patient complications.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/implantable-marker-recall-hologic-removes-biozorb-3d-bioabsorbable-markers-due-risk-patient",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-06-30",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "Center for Scientific Review; Notice of Closed Meeting",
       "summary": "",
       "url": "https://www.federalregister.gov/documents/2026/06/30/2026-13117/center-for-scientific-review-notice-of-closed-meeting",
@@ -255,6 +265,141 @@
       "category": "general_market",
       "relevance": 96,
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "CDC leaders focus on boosting staff",
+      "url": "https://www.beckershospitalreview.com/quality/public-health/cdc-leaders-focus-on-boosting-staff/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-30",
+      "summary": "The CDC&#8217;s top leaders have a new focus: hiring more staff, including senior roles, Bloomberg News reported June 29. Sean Slovenski, the CDC’s principal deputy director and chief operating officer, told the agency that he is working to improve operating strategy over the next four to six months, including tackling low morale and how many [&#8230;] The post CDC leaders focus on boosting staff appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "UHS Louisiana hospital names new CEO",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/uhs-louisiana-hospital-names-new-ceo/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-30",
+      "summary": "Crystal Manning-Mitchell, MSN, RN, has been appointed CEO of River Oaks Hospital in Harahan, La., part of King of Prussia, Pa.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Women&#8217;s Center for Radiology reports data breach, patient data exposed",
+      "url": "https://www.beckershospitalreview.com/radiology/womens-center-for-radiology-reports-data-breach-patient-data-exposed/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-30",
+      "summary": "Orlando, Fla.-based Women&#8217;s Center for Radiology is notifying patients of a data breach after unauthorized access to a portion of its computer network exposed personal and protected health information.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "AstraZeneca to pay Texas $34M over alleged Medicaid kickbacks",
+      "url": "https://www.beckershospitalreview.com/pharmacy/astrazeneca-to-pay-texas-34m-over-alleged-medicaid-kickbacks/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-30",
+      "summary": "AstraZeneca will pay nearly $34 million to resolve allegations it used illegal kickbacks to influence prescriptions reimbursed by Texas Medicaid. Texas sued AstraZeneca under the Texas Health Care Program Fraud Prevention Act, alleging the drugmaker provided free nursing services and reimbursement support to prescribers and paid third parties to deploy nurses and other healthcare professionals [&#8230;] The post AstraZeneca to pay Texas $34M over alleged Medicaid kickbacks appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Hospital pharmacies urged to avoid online HIV drug marketplaces",
+      "url": "https://www.beckershospitalreview.com/pharmacy/hospital-pharmacies-urged-to-avoid-online-hiv-drug-marketplaces/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-30",
+      "summary": "AIDS Drug Assistance Program Advocacy and the Partnership for Safe Medicines are urging pharmacies to avoid purchasing discounted HIV medications through online pharmacy-to-pharmacy marketplaces, warning the products may qualify as suspect under FDA guidance and the Drug Supply Chain Security Act. Under the Drug Supply Chain Security Act, dispensers that identify suspect products must quarantine [&#8230;] The post Hospital pharmacies urged to avoid online HIV drug marketplaces appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Health orgs raise alarm on White House research funding proposal: What to know",
+      "url": "https://www.beckershospitalreview.com/quality/health-orgs-raise-alarm-on-white-house-research-funding-proposal-what-to-know/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-30",
+      "summary": "The American Association for Cancer Research has called the proposed federal grant regulations published May 29 by the White House&#8217;s Office of Management and Budget &#8220;reckless&#8221; and a &#8220;major threat&#8221; to the National Institutes of Health. &#8220;The intention of these proposed revisions is to improve transparency, accountability and oversight of federal awards while reducing administrative [&#8230;] The post Health orgs raise alarm on White House research funding proposal: What to know appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Virtual nurse discharges see 72% cut in readmissions compared to traditional methods",
+      "url": "https://www.beckershospitalreview.com/quality/nursing/virtual-nurse-discharges-see-72-cut-in-readmissions-compared-to-traditional-methods/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-30",
+      "summary": "Patients who received virtual nurse discharges had a 72% relative reduction in readmission compared to traditional, in-person discharges, a recent study found. The study, published June 12 in NPJ Digital Medicine, analyzed 4,662 adult patient discharges from inpatient units at nine Southeastern hospitals before and after virtual nursing implementation between 2022 and 2024.",
+      "category": "quality_safety",
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "Ascension taps Wisconsin hospital administrator",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/ascension-taps-wisconsin-hospital-administrator/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-30",
+      "summary": "Lacey Crabb, MSN, has been appointed hospital administrator of Ascension Calumet Hospital in Chilton, Wis. Ms.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "NEJM retracts study supporting Amgen&#8217;s Tavneos amid FDA fight",
+      "url": "https://www.beckershospitalreview.com/pharmacy/nejm-retracts-study-supporting-amgens-tavneos-amid-fda-fight/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-30",
+      "summary": "The New England Journal of Medicine has retracted the clinical trial publication behind Amgen&#8217;s rare disease drug Tavneos after two of the study&#8217;s authors requested the retraction over undisclosed changes to how patient outcomes were assessed. In a June 29 retraction statement, NEJM said the primary endpoint assessments for nine patients were readjudicated after the [&#8230;] The post NEJM retracts study supporting Amgen&#8217;s Tavneos amid FDA fight appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Mississippi judge orders state Medicaid officials to pay hospital $2.4 million, keep it open through July",
+      "url": "https://www.beckershospitalreview.com/finance/mississippi-judge-orders-state-medicaid-officials-to-pay-hospital-2-4-million-keep-it-open-through-july/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-06-30",
+      "summary": "A Mississippi Chancery Court judge ordered June 29 the state&#8217;s Division of Medicaid to release a scheduled payment of around $2.4 million to Greenwood (Miss.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "STAT+: All of Us tests a new approach to collect real-world data for research",
+      "url": "https://www.statnews.com/2026/06/30/nih-all-of-us-program-taps-ehr-records-fill-data-gaps/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-30",
+      "summary": "The NIH All of Us Research Program has secured thousands of electronic medical records through an innovative use of patient data-sharing networks",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Investors double down on Bain-backed startup",
+      "url": "https://www.statnews.com/2026/06/30/biotech-news-investors-double-down-on-bain-backed-capital/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-30",
+      "summary": "FDA's top gene therapy regulator steps down, Trump's plan to lower GLP-1 prices, and more biotech news",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "STAT+: FDA digital leader hints at coming AI policy updates",
+      "url": "https://www.statnews.com/2026/06/30/health-tech-fda-digital-leader-hints-at-coming-ai-policy-updates/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-30",
+      "summary": "Today's health tech news includes virtual PT for a whole country, what the FDA is considering on AI policy, and more",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "STAT+: Pharmalittle: We&#8217;re reading about Chinese trial sites being probed, RFK Jr. and peptides, and more",
+      "url": "https://www.statnews.com/pharmalot/2026/06/30/china-clinical-trials-probe-rfk-jr-peptides-compounders/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-30",
+      "summary": "U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Half of states sue over Medicaid work requirements",
+      "url": "https://www.statnews.com/2026/06/30/health-news-half-of-states-sue-over-medicaid-work-requirements/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-06-30",
+      "summary": "FDA peptide panelists, a new study on Covid and flu shots, and more health news from Morning Rounds",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
     },
     {
       "title": "Opinion: Short-sighted new student loan caps elevate chiropractic care over critical health care professions",
@@ -300,6 +445,15 @@
       "summary": "Safety concerns tied to Abivax's experimental bowel disease drug tanked company shares just weeks ago. But a new analysis sent them climbing.",
       "category": "general_market",
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "States sue Trump administration over Medicaid work requirements rule",
+      "url": "https://www.healthcaredive.com/news/states-sue-trump-administration-medicaid-work-requirements-rule/824060/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-06-30",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
     },
     {
       "title": "How payers, drugmakers can collaborate to drive more outcomes-based contracts",
@@ -4701,180 +4855,6 @@
       "summary": "The Kansas High Value Network's seven members together command $545 million in net revenue, and hope to improve quality and efficiency through shared services and value-based contracting.",
       "category": "quality_safety",
       "categoryLabel": "Quality & Safety"
-    },
-    {
-      "title": "A look at Epic's long-term play to build tech for operations, starting with scheduling",
-      "url": "https://www.fiercehealthcare.com/health-tech/look-epics-long-term-play-build-tech-operations-starting-scheduling",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-24",
-      "summary": "The company is working to build a natively integrated enterprise resource planning (ERP) suite exclusively for healthcare operations that will collect financial, operational and clinical data in one unified system.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Congressional Budget Office calls for more research on No Surprises Act unintended impacts",
-      "url": "https://www.fiercehealthcare.com/regulatory/congressional-budget-office-calls-more-research-no-surprises-act-impacts",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-24",
-      "summary": "The nonpartisan office is seeking more information on the law’s impact on healthcare prices, network participation, ownership structures and more.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "HHS opens applications for $700M in mental health, addiction funding, with $96M for new STREETS program",
-      "url": "https://www.fiercehealthcare.com/regulatory/rfk-jr-publicizes-700-million-mental-health-addiction-funding-announces-new-streets",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-24",
-      "summary": "The HHS secretary announced over $700 million spread across various Substance Abuse and Mental Health Services Administration (SAMHSA) initiatives, including a new effort called the Safety Through Recovery, Engagement, and Evidence-based Treatment and Support (STREETS) Program.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "FTC, states sue transgender health association over 'misleading' gender care guidance",
-      "url": "https://www.fiercehealthcare.com/regulatory/ftc-states-sue-transgender-health-association-over-misleading-gender-care-guidance",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-24",
-      "summary": "The regulator and four red states allege that the World Professional Association for Transgender Health has mischaracterized the medical evidence behind its recommendations supportive of gender-affirming care in minors, and seek an injunction.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Healthcare organizations still struggle to operationalize AI at scale: Arcadia survey",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/ai-implementation-lagging-across-us-healthcare-organizations-arcadia-survey",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-24",
-      "summary": "Arcadia’s survey drew insights from 281 healthcare leaders across provider, payer and service organizations at the March HIMSS26 conference.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "St. Rose Hospital nurses plan informational picket to demand fair contract",
-      "summary": "Nurses at St. Rose Hospital in Hayward, Calif., will hold an informational picket to demonstrate mounting opposition among staff and community to stalling in contract negotiations with Alameda Health System. Nurses and patients are particularly outraged about St. Rose management attempting to sub-contract out of the fifth floor at the hospital to Stanford Medicine, potentially creating two tiers of health care for patients in Hayward.",
-      "url": "https://www.nationalnursesunited.org/press/st-rose-hospital-nurses-plan-informational-picket-to-demand-fair-contract",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "2026-06-23",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Contra Costa County nurses to hold informational picket to preserve patient services and nurse retention",
-      "summary": "Registered nurses with Contra Costa Health and Contra Costa Regional Medical Center, in Martinez, Calif., will hold an informational picket on Thursday, June 25, to protest the county’s failure to commit to preserving patient care and nursing staff, announced California Nurses Association/National Nurses United (CNA/NNU) today.",
-      "url": "https://www.nationalnursesunited.org/press/contra-costa-county-nurses-to-hold-informational-picket-to-preserve-patient-services",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "2026-06-23",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Nation’s largest union of registered nurses joins U.S. representatives to call for end to blockade of Cuba",
-      "summary": "NNU and U.S. Representative Delia Ramirez will hold a press conference in Washington, D.C. on Tuesday, June 30 to demand an end to the Trump administration’s blockade of oil supplies entering Cuba. Union nurses will be joined by Global Health Partners, which is working to supply the island nation with critical medical equipment and medicine, as fuel shortages enter its fourth month and the humanitarian crisis escalates.",
-      "url": "https://www.nationalnursesunited.org/press/registered-nurses-join-us-representatives-to-call-for-end-to-blockade-of-cuba",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "2026-06-23",
-      "category": "labor_unions",
-      "relevance": 100,
-      "categoryLabel": "Labor & Unions"
-    },
-    {
-      "title": "Agency Information Collection Activities; Submission for Office of Management and Budget Review; Comment Request; Certification of Identity, Form FDA 3975",
-      "summary": "The Food and Drug Administration (FDA) is announcing that a proposed collection of information has been submitted to the Office of Management and Budget (OMB) for review and clearance under the Paperwork Reduction Act of 1995.",
-      "url": "https://www.federalregister.gov/documents/2026/06/23/2026-12579/agency-information-collection-activities-submission-for-office-of-management-and-budget-review",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-06-23",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Agency Information Collection Activities; Proposed Collection; Comment Request; Potential Tobacco Product Violations Reporting Form",
-      "summary": "The Food and Drug Administration (FDA or Agency) is announcing an opportunity for public comment on the proposed collection of certain information by the Agency. Under the Paperwork Reduction Act of 1995 (PRA), Federal Agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension of an existing collection of information, and to allow 60 days for public comment in response to the notice. This notice solicits comments on the Potential Tobacco Product Violations Reporting Form.",
-      "url": "https://www.federalregister.gov/documents/2026/06/23/2026-12577/agency-information-collection-activities-proposed-collection-comment-request-potential-tobacco",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-06-23",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Submission for OMB Review; 30-Day Comment Request; Chimpanzee Research Use Form (Office of the Director)",
-      "summary": "In compliance with the requirement of the Paperwork Reduction Act of 1995 to provide opportunity for public comment on proposed data collection projects, the Office of Laboratory Animal Welfare (OLAW), Office of the Director (OD), National Institutes of Health (NIH), will publish periodic summaries of proposed projects to be submitted to the Office of Management and Budget (OMB) for review and approval.",
-      "url": "https://www.federalregister.gov/documents/2026/06/23/2026-12585/submission-for-omb-review-30-day-comment-request-chimpanzee-research-use-form-office-of-the-director",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-06-23",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Center for Scientific Review; Notice of Closed Meetings",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/06/23/2026-12614/center-for-scientific-review-notice-of-closed-meetings",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-06-23",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Oracle Health, 8 health systems must face data breach lawsuit",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/cybersecurity/oracle-health-8-health-systems-must-face-data-breach-lawsuit/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-23",
-      "summary": "A federal judge ruled June 22 that a data breach lawsuit against Oracle Health and eight health systems can move forward, denying most of the defendants&#8217; attempts to dismiss the consolidated case. U.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Mount Sinai to centralize oversight of its growing AI portfolio",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/mount-sinai-to-centralize-oversight-of-its-growing-ai-portfolio/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-23",
-      "summary": "New York City-based Mount Sinai Health System will evaluate Signal 1&#8217;s AI Management Platform to unify governance and performance monitoring across its growing portfolio of AI tools. AIMS gives Mount Sinai a single system to track every AI tool in operation or under evaluation, streamline intake and approval workflows, and automate monitoring and reporting for [&#8230;] The post Mount Sinai to centralize oversight of its growing AI portfolio appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Duke Health, Texas Health Resources partner with clinical AI company",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/duke-health-texas-health-resources-partner-with-clinical-ai-company/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-23",
-      "summary": "Cadence, a clinical AI company focused on chronic disease management, has raised $100 million in Series C funding and announced new partnerships with Duke Health and Texas Health Resources as it expands its footprint among health systems. The funding round was led by Spark Capital and included participation from Thrive Capital, General Catalyst, Coatue, B [&#8230;] The post Duke Health, Texas Health Resources partner with clinical AI company appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Kenya halts US-backed Ebola facility after contempt of court ruling",
-      "url": "https://www.beckershospitalreview.com/quality/public-health/kenya-halts-us-backed-ebola-facility-after-contempt-of-court-ruling/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-23",
-      "summary": "Kenya&#8217;s health cabinet secretary on June 23 ordered construction halted on a U.S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Oregon system cuts 45 leadership roles",
-      "url": "https://www.beckershospitalreview.com/finance/oregon-system-cuts-45-leadership-roles/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-23",
-      "summary": "Bend, Ore.-based St.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
     }
   ]
 }
