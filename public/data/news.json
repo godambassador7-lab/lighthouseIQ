@@ -1,67 +1,74 @@
 {
-  "lastUpdated": "2026-07-02T18:33:52.252Z",
+  "lastUpdated": "2026-07-02T20:34:07.994Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
-    "totalSources": 8,
+    "totalSources": 9,
     "staleSources": 0,
-    "healthySources": 8,
+    "healthySources": 9,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 198,
+        "articleCount": 190,
         "latestPublishedAt": "2026-07-02T00:00:00.000Z",
-        "staleHours": 18,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 151,
+        "articleCount": 153,
         "latestPublishedAt": "2026-07-02T00:00:00.000Z",
-        "staleHours": 18,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 66,
+        "articleCount": 69,
         "latestPublishedAt": "2026-07-02T00:00:00.000Z",
-        "staleHours": 18,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 40,
         "latestPublishedAt": "2026-07-02T00:00:00.000Z",
-        "staleHours": 18,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 20,
         "latestPublishedAt": "2026-06-30T00:00:00.000Z",
-        "staleHours": 66,
+        "staleHours": 68,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
-        "articleCount": 14,
+        "articleCount": 16,
         "latestPublishedAt": "2026-07-02T00:00:00.000Z",
-        "staleHours": 18,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 6,
         "latestPublishedAt": "2026-07-02T00:00:00.000Z",
-        "staleHours": 18,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 5,
         "latestPublishedAt": "2026-07-02T00:00:00.000Z",
-        "staleHours": 18,
+        "staleHours": 20,
+        "status": "ok"
+      },
+      {
+        "source": "National Nurses United RSS",
+        "articleCount": 1,
+        "latestPublishedAt": "2026-07-02T00:00:00.000Z",
+        "staleHours": 20,
         "status": "ok"
       }
     ]
@@ -77,11 +84,11 @@
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 5
+      "count": 6
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 90
+      "count": 93
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -93,7 +100,7 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 151
+      "count": 147
     },
     "general_market": {
       "label": "General Market",
@@ -106,12 +113,12 @@
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
-        "actual": 8,
+        "actual": 9,
         "pass": true
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 81,
+        "actual": 89,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -248,6 +255,18 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "Baltimore nurses to hold one-day strike for patient safety and staff retention",
+      "summary": "Registered nurses at Ascension Saint Agnes Hospital in Baltimore, Md., will hold a one-day strike on Monday, July 6, to protest the administration’s refusal to address RNs’ deep concerns about patient safety and staff retention. The nurses will be joined by U.S. Rep. Kweisi Mfume at their morning rally.",
+      "url": "https://www.nationalnursesunited.org/press/baltimore-nurses-to-hold-one-day-strike-for-patient-safety-and-staff-retention",
+      "source": "National Nurses United RSS",
+      "sourceType": "rss",
+      "sourceId": "nnu_rss",
+      "publishedAt": "2026-07-02",
+      "category": "labor_unions",
+      "relevance": 100,
+      "categoryLabel": "Labor & Unions"
+    },
+    {
       "title": "Heart Pump Recall: Abiomed Removes Impella CP Sets with SmartAssist",
       "summary": "Specific Impella CP Sets are out of specification; use may result in low purge pressure events from the onset of the case",
       "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/heart-pump-recall-abiomed-removes-impella-cp-sets-smartassist",
@@ -305,6 +324,24 @@
       "publishedAt": "2026-07-02",
       "category": "general_market",
       "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Missouri hospital names interim chief administrative officer",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/missouri-hospital-names-interim-chief-administrative-officer/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-02",
+      "summary": "Kyle Bridges has been appointed interim chief administrative officer of Freeman Neosho (Mo.) Hospital, part of Joplin, Mo.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "OSF taps foundation president",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/osf-taps-foundation-president/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-02",
+      "summary": "Jacque Schweighart has been appointed chief development officer and president of the Peoria, Ill.-based OSF HealthCare Foundation, effective Aug.",
+      "category": "general_market",
       "categoryLabel": "General Market"
     },
     {
@@ -380,22 +417,31 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "Cone Health invests $40M to rebuild Epic after years of technical debt",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/cone-health-invests-40m-to-rebuild-epic-after-years-of-technical-debt/",
-      "source": "Becker's Hospital Review",
+      "title": "STAT+: Medicare takes another swing at 340B cuts to hospitals",
+      "url": "https://www.statnews.com/2026/07/02/medicare-hospital-payment-340b-drugs-cut/?utm_campaign=rss",
+      "source": "STAT News",
       "publishedAt": "2026-07-02",
-      "summary": "Cone Health is investing at least $40 million to rebuild the foundation of its Epic EHR after years of customization left the health system with technical debt and limited its ability to adopt newer Epic capabilities. Mike Kramer, MD, chief medical information officer of Cone Health, said the health system&#8217;s Epic environment had accumulated years [&#8230;] The post Cone Health invests $40M to rebuild Epic after years of technical debt appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
+      "summary": "Reducing Medicare payments for 340B drugs is the latest proposal focused on the hotly debated drug discount program.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
     },
     {
-      "title": "Care is leaving the hospital faster than demographics suggest: Sg2",
-      "url": "https://www.beckershospitalreview.com/strategy/care-is-leaving-the-hospital-faster-than-demographics-suggest-sg2/",
-      "source": "Becker's Hospital Review",
+      "title": "STAT+: Lawmakers urge HHS to force Eli Lilly to provide 340B drug discounts to hospitals",
+      "url": "https://www.statnews.com/pharmalot/2026/07/02/lawmakers-urge-lilly-to-provide-340b-drug-discounts-to-hospitals/?utm_campaign=rss",
+      "source": "STAT News",
       "publishedAt": "2026-07-02",
-      "summary": "An aging, higher-acuity population is colliding with contracting insurance coverage, care redesign, new therapies and competition from disruptors — and the net effect is care leaving the hospital faster than raw population math alone would indicate. The post Care is leaving the hospital faster than demographics suggest: Sg2 appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
+      "summary": "Lawmakers step into a dispute between Eli Lilly and hospitals about the 340b drug discount program.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "STAT+: Elevance sues government over $115 million tied to Medicare Advantage star ratings",
+      "url": "https://www.statnews.com/2026/07/02/elevance-lawsuit-medicare-advantage-star-ratings-clover/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-07-02",
+      "summary": "The health insurer says CMS didn't calculate its star ratings appropriately.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
     },
     {
       "title": "STAT+: Up and down the ladder: The latest comings and goings",
@@ -515,11 +561,56 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
+      "title": "Elevance sues CMS after Medicare Advantage stars recalculation",
+      "url": "https://www.healthcaredive.com/news/elevance-sues-cms-medicare-advantage-stars-recalculation/824411/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-07-02",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
       "title": "Fewer health information exchanges say they experience info blocking",
       "url": "https://www.healthcaredive.com/news/fewer-health-information-exchanges-information-blocking-onc/824257/",
       "source": "Healthcare Dive",
       "publishedAt": "2026-07-02",
       "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Allegheny Health Network, Heritage Valley finalize combination in Pennsylvania",
+      "url": "https://www.healthcaredive.com/news/allegheny-health-network-heritage-valley-health-system-merger-pennsylvania/824343/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-07-02",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Medicare slashes 340B payments, broadens site-neutral policies in proposed 2027 payment rule",
+      "url": "https://www.healthcaredive.com/news/regulators-propose-slashing-340b-payments-broadening-site-neutral-policies-2027/824312/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-07-02",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Cone Health invests $40M to rebuild Epic after years of technical debt",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/cone-health-invests-40m-to-rebuild-epic-after-years-of-technical-debt/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-02",
+      "summary": "Cone Health is investing at least $40 million to rebuild the foundation of its Epic EHR after years of customization left the health system with technical debt and limited its ability to adopt newer Epic capabilities. Mike Kramer, MD, chief medical information officer of Cone Health, said the health system&#8217;s Epic environment had accumulated years [&#8230;] The post Cone Health invests $40M to rebuild Epic after years of technical debt appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Care is leaving the hospital faster than demographics suggest: Sg2",
+      "url": "https://www.beckershospitalreview.com/strategy/care-is-leaving-the-hospital-faster-than-demographics-suggest-sg2/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-02",
+      "summary": "An aging, higher-acuity population is colliding with contracting insurance coverage, care redesign, new therapies and competition from disruptors — and the net effect is care leaving the hospital faster than raw population math alone would indicate. The post Care is leaving the hospital faster than demographics suggest: Sg2 appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
@@ -664,15 +755,6 @@
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-07-02",
       "summary": "The FDA has expanded the approval of Vertex Pharmaceuticals&#8217; gene therapy Casgevy (exagamglogene autotemcel) to patients 2 years and older with sickle cell disease with recurrent vaso-occlusive crises or transfusion-dependent β thalassemia. The decision makes Casgevy the first gene therapy approved for children as young as 2 with sickle cell disease.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Allegheny Health Network, Heritage Valley finalize combination in Pennsylvania",
-      "url": "https://www.healthcaredive.com/news/allegheny-health-network-heritage-valley-health-system-merger-pennsylvania/824343/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-07-02",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
@@ -4765,78 +4847,6 @@
       "source": "Fierce Healthcare",
       "publishedAt": "2026-06-26",
       "summary": "Florida Attorney General James Uthmeier has issued a subpoena to CVS Health, citing concern about potential anticompetitive practices from the vertically integrated healthcare giant.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "US health spending set to reach $9T by 2034: CMS report",
-      "url": "https://www.fiercehealthcare.com/finance/us-health-spending-set-reach-9t-2034-cms-report",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-26",
-      "summary": "U.S.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Locum tenens coverage becoming ‘more purposeful’ staffing strategy: Definitive Healthcare",
-      "url": "https://www.fiercehealthcare.com/hospitals/locum-tenens-coverage-becoming-more-purposeful-staffing-strategy-definitive-healthcare",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-26",
-      "summary": "Definitive Healthcare identified four key workforce trends around contingent staffing, advanced practice providers, new behavioral health delivery models and AI tech as a workforce multiplier.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Judge rebuffs DOJ's grand jury subpoena for info on NYU Langone's trans patients",
-      "url": "https://www.fiercehealthcare.com/providers/nyu-langone-health-says-it-received-grand-jury-subpoena-over-gender-affirming-care",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-26",
-      "summary": "NYU Langone Health had disclosed in May that it was \"one of several institutions\" facing a criminal investigation over its delivery of the services to minors, an escalation in the Trump administration's pressure campaign.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Senators call for $50B rural health fund to better target small providers, relax spending restrictions",
-      "url": "https://www.fiercehealthcare.com/providers/senators-call-50b-rural-health-fund-better-target-small-providers-relax-spending",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-26",
-      "summary": "The Centers for Medicare and Medicaid Services has substantial leeway on how funds from the Rural Health Transformation Program are doled out. Lawmakers warn the current approach \"may unintentionally disadvantage many of the rural hospitals and clinics the program was intended to support.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Some life insurers compete with health insurers on benefits. Here's why",
-      "url": "https://www.fiercehealthcare.com/payers/some-life-insurers-compete-health-insurers-benefits",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-26",
-      "summary": "Life insurers are intimately familiar with death and its causes. Some have decided to help customers be proactive about their health.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Patients prefer healthcare providers' AI agents to public chatbots, with human oversight non‑negotiable, survey finds",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/patients-prefer-healthcare-providers-ai-agents-public-chatbots-and-human",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-26",
-      "summary": "Patients are open to using AI agents to help with tasks like scheduling and billing, but they overwhelmingly prefer AI tools that live inside their doctor’s secure portal, a new Salesforce survey found.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Coval raises $28M series A to address AI voice agent reliability, compliance",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/coval-raises-28m-series-address-ai-voice-agent-reliability-compliance",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-26",
-      "summary": "The company plans to use the funds to address deployment reliability and compliance issues, expand its sales and solutions engineering teams and advance product capabilities.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Badges, bots and blind spots",
-      "url": "https://www.fiercehealthcare.com/health-tech/badges-bots-and-blind-spots",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-06-26",
-      "summary": "Hospitals are under pressure to secure increasingly digital care environments without slowing clinicians down. This week on \"Podnosis,\" Senior Writer Anastassia Gliadkovskaya talks with Imprivata Chief Medical Officer Sean Kelly, M.",
       "category": "general_market",
       "categoryLabel": "General Market"
     }
