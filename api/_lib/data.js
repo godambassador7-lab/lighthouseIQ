@@ -76,8 +76,29 @@ function sortByRecencyDesc(a, b) {
   return bDate.localeCompare(aDate);
 }
 
+const DEFAULT_NOTICE_LIMIT = 1000;
+const MAX_NOTICE_LIMIT = 5000;
+
 export function filterNotices(all, query) {
   let out = all.slice();
+
+  const org = String(query.org || '').trim().toLowerCase();
+  if (org) {
+    out = out.filter((n) => {
+      const text = [
+        n.employer_name,
+        n.employerName,
+        n.parent_system,
+        n.parentSystem,
+        n.facility_name,
+        n.facilityName
+      ]
+        .filter(Boolean)
+        .join(' ')
+        .toLowerCase();
+      return text.includes(org);
+    });
+  }
 
   const regionStates = normalizeRegionStates(query.region);
   if (regionStates.length > 0) {
@@ -110,10 +131,11 @@ export function filterNotices(all, query) {
   out.sort(sortByRecencyDesc);
 
   const limitRaw = String(query.limit ?? '').trim();
-  if (limitRaw) {
-    const limit = Math.max(0, Math.min(5000, Number(limitRaw) || 0));
-    if (limit > 0) out = out.slice(0, limit);
-  }
+  const parsedLimit = limitRaw && limitRaw.toLowerCase() !== 'all'
+    ? Number(limitRaw)
+    : DEFAULT_NOTICE_LIMIT;
+  const limit = Math.max(1, Math.min(MAX_NOTICE_LIMIT, Number(parsedLimit) || DEFAULT_NOTICE_LIMIT));
+  out = out.slice(0, limit);
 
   return out;
 }

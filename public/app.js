@@ -319,6 +319,7 @@ let bonusFactorViewMode = 'projected';
 let bonusFactorSelectedState = '';
 let bonusFactorBreakdownCollapsed = false;
 const NOTICE_MAX_COUNT = 100;
+const NOTICE_API_DEFAULT_LIMIT = 1000;
 const NOTICE_WINDOW_COUNT = 5;
 let calibrationStats = { minCount: 0, maxCount: 0 };
 let nursingPrograms = [];
@@ -1439,11 +1440,10 @@ const buildQuery = () => {
   if (sinceInput.value) params.set('since', sinceInput.value);
   if (scoreInput.value) params.set('minScore', scoreInput.value);
   params.set('order', 'recent');
-  if (!limitInput.value || Number(limitInput.value) <= 0) {
-    params.set('limit', 'all');
-  } else {
-    params.set('limit', limitInput.value);
-  }
+  const requestedLimit = Number(limitInput.value);
+  params.set('limit', Number.isFinite(requestedLimit) && requestedLimit > 0
+    ? String(Math.floor(requestedLimit))
+    : String(NOTICE_API_DEFAULT_LIMIT));
   return params.toString();
 };
 
@@ -5316,7 +5316,10 @@ const buildStateCountsMapFromNotices = (notices) => {
 };
 
 const syncMapStateDataToVisibleNotices = () => {
-  mapStateData = buildStateCountsMapFromNotices(currentNotices);
+  const scopedStateData = mapScope === 'all' ? stateDataAll : stateDataHealthcare;
+  mapStateData = scopedStateData && Object.keys(scopedStateData).length
+    ? scopedStateData
+    : buildStateCountsMapFromNotices(currentNotices);
   updateWeatherMap();
   if (currentMapView === 'map') {
     updateMapHighlights();
