@@ -1,0 +1,1104 @@
+{
+  "lastUpdated": "2026-07-03T14:13:35.660Z",
+  "homeState": "IN",
+  "methodology": {
+    "description": "Specialty-level recruiting summary built from live talent opportunities, target-state metro fit, and Indiana out-of-state recruitment scores.",
+    "ranking": [
+      "Primary source markets prioritize live specialty-labeled nurse availability, with recruitment score as a secondary fit signal.",
+      "Indiana destination metros prioritize hospital depth plus any local specialty-labeled signal.",
+      "Fallback recruitment states come from the home-state recruitment model when live specialty signal is thin."
+    ],
+    "sources": [
+      "public/data/talent.json",
+      "public/data/recruitment-intel.json",
+      "public/data/target-state-metros.json",
+      "public/data/free-market-signals.json"
+    ]
+  },
+  "summaries": [
+    {
+      "specialty": "OR",
+      "label": "Operating Room",
+      "recommendation": "Primary Operating Room outreach should start in Houston, TX, then route candidates toward Indianapolis, IN roles.",
+      "primarySourceMarket": {
+        "state": "TX",
+        "topCity": "Houston",
+        "estimatedNursesAvailable": 1401,
+        "noticesCount": 27,
+        "recruitmentScore": 4.68,
+        "fitScore": 85,
+        "outreachFocus": "Houston, TX",
+        "topCities": [
+          {
+            "city": "Houston",
+            "estimatedNursesAvailable": 1401,
+            "noticesCount": 27
+          }
+        ]
+      },
+      "secondarySourceMarkets": [
+        {
+          "state": "CA",
+          "topCity": "Fresno",
+          "estimatedNursesAvailable": 236,
+          "noticesCount": 22,
+          "recruitmentScore": 5.07,
+          "fitScore": 26,
+          "outreachFocus": "Fresno, CA",
+          "topCities": [
+            {
+              "city": "Fresno",
+              "estimatedNursesAvailable": 140,
+              "noticesCount": 19
+            },
+            {
+              "city": "1421 Oakdale Rd. Modesto CA 95355",
+              "estimatedNursesAvailable": 47,
+              "noticesCount": 1
+            },
+            {
+              "city": "1421 Oakdale Road Modesto CA 95355",
+              "estimatedNursesAvailable": 40,
+              "noticesCount": 1
+            },
+            {
+              "city": "Rancho Mirage",
+              "estimatedNursesAvailable": 9,
+              "noticesCount": 1
+            }
+          ]
+        },
+        {
+          "state": "OK",
+          "topCity": "Oklahoma City",
+          "estimatedNursesAvailable": 15,
+          "noticesCount": 2,
+          "recruitmentScore": 0.49,
+          "fitScore": 2,
+          "outreachFocus": "Oklahoma City, OK",
+          "topCities": [
+            {
+              "city": "Oklahoma City",
+              "estimatedNursesAvailable": 15,
+              "noticesCount": 2
+            }
+          ]
+        },
+        {
+          "state": "WV",
+          "topCity": "Charleston",
+          "estimatedNursesAvailable": 22,
+          "noticesCount": 1,
+          "recruitmentScore": 0.02,
+          "fitScore": 1,
+          "outreachFocus": "Charleston, WV",
+          "topCities": [
+            {
+              "city": "Charleston",
+              "estimatedNursesAvailable": 22,
+              "noticesCount": 1
+            }
+          ]
+        }
+      ],
+      "primaryIndianaDestination": {
+        "metro": "Indianapolis",
+        "hospitalCount": 6,
+        "competition": "high",
+        "estimatedLocalSpecialtySignal": 645,
+        "noticesCount": 23,
+        "score": 152,
+        "topHospitals": [
+          "Community Hospital East",
+          "IU Health University Hospital",
+          "Community Hospital North",
+          "Ascension St. Vincent Hospital - Indianapolis",
+          "Community Hospital South"
+        ]
+      },
+      "indianaDestinations": [
+        {
+          "metro": "Indianapolis",
+          "hospitalCount": 6,
+          "competition": "high",
+          "estimatedLocalSpecialtySignal": 645,
+          "noticesCount": 23,
+          "score": 152,
+          "topHospitals": [
+            "Community Hospital East",
+            "IU Health University Hospital",
+            "Community Hospital North",
+            "Ascension St. Vincent Hospital - Indianapolis",
+            "Community Hospital South"
+          ]
+        },
+        {
+          "metro": "Fort Wayne",
+          "hospitalCount": 1,
+          "competition": "low",
+          "estimatedLocalSpecialtySignal": 107,
+          "noticesCount": 4,
+          "score": 33,
+          "topHospitals": [
+            "Parkview Regional Medical Center"
+          ]
+        },
+        {
+          "metro": "Carmel",
+          "hospitalCount": 2,
+          "competition": "medium",
+          "estimatedLocalSpecialtySignal": 16,
+          "noticesCount": 1,
+          "score": 27,
+          "topHospitals": [
+            "IU Health North Hospital",
+            "Ascension St. Vincent Carmel"
+          ]
+        },
+        {
+          "metro": "Muncie",
+          "hospitalCount": 1,
+          "competition": "low",
+          "estimatedLocalSpecialtySignal": 63,
+          "noticesCount": 3,
+          "score": 25,
+          "topHospitals": [
+            "IU Health Ball Memorial Hospital"
+          ]
+        },
+        {
+          "metro": "Lafayette",
+          "hospitalCount": 2,
+          "competition": "medium",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 24,
+          "topHospitals": [
+            "IU Health Arnett Hospital",
+            "Franciscan Health Lafayette"
+          ]
+        },
+        {
+          "metro": "Greenfield",
+          "hospitalCount": 1,
+          "competition": "low",
+          "estimatedLocalSpecialtySignal": 12,
+          "noticesCount": 1,
+          "score": 14,
+          "topHospitals": [
+            "Hancock Regional Hospital"
+          ]
+        }
+      ],
+      "fallbackRecruitmentStates": [
+        "MN",
+        "ND",
+        "CO",
+        "WA",
+        "OR"
+      ],
+      "baselineShare": 10.3,
+      "evidence": {
+        "liveSourceMarketCount": 4,
+        "liveOutOfStateEstimatedNurses": 1674,
+        "liveOutOfStateNoticeCount": 52,
+        "homeState": "IN"
+      }
+    },
+    {
+      "specialty": "ED",
+      "label": "Emergency Department",
+      "recommendation": "Primary Emergency Department outreach should start in Brockport, NY, then route candidates toward Indianapolis, IN roles.",
+      "primarySourceMarket": {
+        "state": "NY",
+        "topCity": "Brockport",
+        "estimatedNursesAvailable": 98,
+        "noticesCount": 2,
+        "recruitmentScore": 4.89,
+        "fitScore": 86,
+        "outreachFocus": "Brockport, NY",
+        "topCities": [
+          {
+            "city": "Brockport",
+            "estimatedNursesAvailable": 98,
+            "noticesCount": 2
+          }
+        ]
+      },
+      "secondarySourceMarkets": [],
+      "primaryIndianaDestination": {
+        "metro": "Indianapolis",
+        "hospitalCount": 6,
+        "competition": "high",
+        "estimatedLocalSpecialtySignal": 0,
+        "noticesCount": 0,
+        "score": 72,
+        "topHospitals": [
+          "Community Hospital East",
+          "IU Health University Hospital",
+          "Community Hospital North",
+          "Ascension St. Vincent Hospital - Indianapolis",
+          "Community Hospital South"
+        ]
+      },
+      "indianaDestinations": [
+        {
+          "metro": "Indianapolis",
+          "hospitalCount": 6,
+          "competition": "high",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 72,
+          "topHospitals": [
+            "Community Hospital East",
+            "IU Health University Hospital",
+            "Community Hospital North",
+            "Ascension St. Vincent Hospital - Indianapolis",
+            "Community Hospital South"
+          ]
+        },
+        {
+          "metro": "Carmel",
+          "hospitalCount": 2,
+          "competition": "medium",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 24,
+          "topHospitals": [
+            "IU Health North Hospital",
+            "Ascension St. Vincent Carmel"
+          ]
+        },
+        {
+          "metro": "Lafayette",
+          "hospitalCount": 2,
+          "competition": "medium",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 24,
+          "topHospitals": [
+            "IU Health Arnett Hospital",
+            "Franciscan Health Lafayette"
+          ]
+        },
+        {
+          "metro": "Avon",
+          "hospitalCount": 1,
+          "competition": "low",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 12,
+          "topHospitals": [
+            "IU Health West Hospital"
+          ]
+        },
+        {
+          "metro": "Bloomington",
+          "hospitalCount": 1,
+          "competition": "low",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 12,
+          "topHospitals": [
+            "IU Health Bloomington Hospital"
+          ]
+        },
+        {
+          "metro": "Danville",
+          "hospitalCount": 1,
+          "competition": "low",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 12,
+          "topHospitals": [
+            "Hendricks Regional Health"
+          ]
+        }
+      ],
+      "fallbackRecruitmentStates": [
+        "MN",
+        "ND",
+        "CO",
+        "WA",
+        "OR"
+      ],
+      "baselineShare": 7.7,
+      "evidence": {
+        "liveSourceMarketCount": 1,
+        "liveOutOfStateEstimatedNurses": 98,
+        "liveOutOfStateNoticeCount": 2,
+        "homeState": "IN"
+      }
+    },
+    {
+      "specialty": "ICU",
+      "label": "Intensive Care",
+      "recommendation": "No strong live Intensive Care source pocket is mapped right now; use broad Indiana relocation targets starting with MN, ND, CO and route candidates toward Indianapolis.",
+      "primarySourceMarket": null,
+      "secondarySourceMarkets": [],
+      "primaryIndianaDestination": {
+        "metro": "Indianapolis",
+        "hospitalCount": 6,
+        "competition": "high",
+        "estimatedLocalSpecialtySignal": 0,
+        "noticesCount": 0,
+        "score": 72,
+        "topHospitals": [
+          "Community Hospital East",
+          "IU Health University Hospital",
+          "Community Hospital North",
+          "Ascension St. Vincent Hospital - Indianapolis",
+          "Community Hospital South"
+        ]
+      },
+      "indianaDestinations": [
+        {
+          "metro": "Indianapolis",
+          "hospitalCount": 6,
+          "competition": "high",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 72,
+          "topHospitals": [
+            "Community Hospital East",
+            "IU Health University Hospital",
+            "Community Hospital North",
+            "Ascension St. Vincent Hospital - Indianapolis",
+            "Community Hospital South"
+          ]
+        },
+        {
+          "metro": "Carmel",
+          "hospitalCount": 2,
+          "competition": "medium",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 24,
+          "topHospitals": [
+            "IU Health North Hospital",
+            "Ascension St. Vincent Carmel"
+          ]
+        },
+        {
+          "metro": "Lafayette",
+          "hospitalCount": 2,
+          "competition": "medium",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 24,
+          "topHospitals": [
+            "IU Health Arnett Hospital",
+            "Franciscan Health Lafayette"
+          ]
+        },
+        {
+          "metro": "Avon",
+          "hospitalCount": 1,
+          "competition": "low",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 12,
+          "topHospitals": [
+            "IU Health West Hospital"
+          ]
+        },
+        {
+          "metro": "Bloomington",
+          "hospitalCount": 1,
+          "competition": "low",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 12,
+          "topHospitals": [
+            "IU Health Bloomington Hospital"
+          ]
+        },
+        {
+          "metro": "Danville",
+          "hospitalCount": 1,
+          "competition": "low",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 12,
+          "topHospitals": [
+            "Hendricks Regional Health"
+          ]
+        }
+      ],
+      "fallbackRecruitmentStates": [
+        "MN",
+        "ND",
+        "CO",
+        "WA",
+        "OR"
+      ],
+      "baselineShare": 10.3,
+      "evidence": {
+        "liveSourceMarketCount": 0,
+        "liveOutOfStateEstimatedNurses": 0,
+        "liveOutOfStateNoticeCount": 0,
+        "homeState": "IN"
+      }
+    },
+    {
+      "specialty": "MED SURG",
+      "label": "Med Surg",
+      "recommendation": "No strong live Med Surg source pocket is mapped right now; use broad Indiana relocation targets starting with MN, ND, CO and route candidates toward Indianapolis.",
+      "primarySourceMarket": null,
+      "secondarySourceMarkets": [],
+      "primaryIndianaDestination": {
+        "metro": "Indianapolis",
+        "hospitalCount": 6,
+        "competition": "high",
+        "estimatedLocalSpecialtySignal": 0,
+        "noticesCount": 0,
+        "score": 72,
+        "topHospitals": [
+          "Community Hospital East",
+          "IU Health University Hospital",
+          "Community Hospital North",
+          "Ascension St. Vincent Hospital - Indianapolis",
+          "Community Hospital South"
+        ]
+      },
+      "indianaDestinations": [
+        {
+          "metro": "Indianapolis",
+          "hospitalCount": 6,
+          "competition": "high",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 72,
+          "topHospitals": [
+            "Community Hospital East",
+            "IU Health University Hospital",
+            "Community Hospital North",
+            "Ascension St. Vincent Hospital - Indianapolis",
+            "Community Hospital South"
+          ]
+        },
+        {
+          "metro": "Carmel",
+          "hospitalCount": 2,
+          "competition": "medium",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 24,
+          "topHospitals": [
+            "IU Health North Hospital",
+            "Ascension St. Vincent Carmel"
+          ]
+        },
+        {
+          "metro": "Lafayette",
+          "hospitalCount": 2,
+          "competition": "medium",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 24,
+          "topHospitals": [
+            "IU Health Arnett Hospital",
+            "Franciscan Health Lafayette"
+          ]
+        },
+        {
+          "metro": "Avon",
+          "hospitalCount": 1,
+          "competition": "low",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 12,
+          "topHospitals": [
+            "IU Health West Hospital"
+          ]
+        },
+        {
+          "metro": "Bloomington",
+          "hospitalCount": 1,
+          "competition": "low",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 12,
+          "topHospitals": [
+            "IU Health Bloomington Hospital"
+          ]
+        },
+        {
+          "metro": "Danville",
+          "hospitalCount": 1,
+          "competition": "low",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 12,
+          "topHospitals": [
+            "Hendricks Regional Health"
+          ]
+        }
+      ],
+      "fallbackRecruitmentStates": [
+        "MN",
+        "ND",
+        "CO",
+        "WA",
+        "OR"
+      ],
+      "baselineShare": 13.7,
+      "evidence": {
+        "liveSourceMarketCount": 0,
+        "liveOutOfStateEstimatedNurses": 0,
+        "liveOutOfStateNoticeCount": 0,
+        "homeState": "IN"
+      }
+    },
+    {
+      "specialty": "L&D",
+      "label": "Labor and Delivery",
+      "recommendation": "No strong live Labor and Delivery source pocket is mapped right now; use broad Indiana relocation targets starting with MN, ND, CO and route candidates toward Indianapolis.",
+      "primarySourceMarket": null,
+      "secondarySourceMarkets": [],
+      "primaryIndianaDestination": {
+        "metro": "Indianapolis",
+        "hospitalCount": 6,
+        "competition": "high",
+        "estimatedLocalSpecialtySignal": 0,
+        "noticesCount": 0,
+        "score": 72,
+        "topHospitals": [
+          "Community Hospital East",
+          "IU Health University Hospital",
+          "Community Hospital North",
+          "Ascension St. Vincent Hospital - Indianapolis",
+          "Community Hospital South"
+        ]
+      },
+      "indianaDestinations": [
+        {
+          "metro": "Indianapolis",
+          "hospitalCount": 6,
+          "competition": "high",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 72,
+          "topHospitals": [
+            "Community Hospital East",
+            "IU Health University Hospital",
+            "Community Hospital North",
+            "Ascension St. Vincent Hospital - Indianapolis",
+            "Community Hospital South"
+          ]
+        },
+        {
+          "metro": "Carmel",
+          "hospitalCount": 2,
+          "competition": "medium",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 24,
+          "topHospitals": [
+            "IU Health North Hospital",
+            "Ascension St. Vincent Carmel"
+          ]
+        },
+        {
+          "metro": "Lafayette",
+          "hospitalCount": 2,
+          "competition": "medium",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 24,
+          "topHospitals": [
+            "IU Health Arnett Hospital",
+            "Franciscan Health Lafayette"
+          ]
+        },
+        {
+          "metro": "Avon",
+          "hospitalCount": 1,
+          "competition": "low",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 12,
+          "topHospitals": [
+            "IU Health West Hospital"
+          ]
+        },
+        {
+          "metro": "Bloomington",
+          "hospitalCount": 1,
+          "competition": "low",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 12,
+          "topHospitals": [
+            "IU Health Bloomington Hospital"
+          ]
+        },
+        {
+          "metro": "Danville",
+          "hospitalCount": 1,
+          "competition": "low",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 12,
+          "topHospitals": [
+            "Hendricks Regional Health"
+          ]
+        }
+      ],
+      "fallbackRecruitmentStates": [
+        "MN",
+        "ND",
+        "CO",
+        "WA",
+        "OR"
+      ],
+      "baselineShare": 4.5,
+      "evidence": {
+        "liveSourceMarketCount": 0,
+        "liveOutOfStateEstimatedNurses": 0,
+        "liveOutOfStateNoticeCount": 0,
+        "homeState": "IN"
+      }
+    },
+    {
+      "specialty": "TELE",
+      "label": "Telemetry",
+      "recommendation": "No strong live Telemetry source pocket is mapped right now; use broad Indiana relocation targets starting with MN, ND, CO and route candidates toward Indianapolis.",
+      "primarySourceMarket": null,
+      "secondarySourceMarkets": [],
+      "primaryIndianaDestination": {
+        "metro": "Indianapolis",
+        "hospitalCount": 6,
+        "competition": "high",
+        "estimatedLocalSpecialtySignal": 0,
+        "noticesCount": 0,
+        "score": 72,
+        "topHospitals": [
+          "Community Hospital East",
+          "IU Health University Hospital",
+          "Community Hospital North",
+          "Ascension St. Vincent Hospital - Indianapolis",
+          "Community Hospital South"
+        ]
+      },
+      "indianaDestinations": [
+        {
+          "metro": "Indianapolis",
+          "hospitalCount": 6,
+          "competition": "high",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 72,
+          "topHospitals": [
+            "Community Hospital East",
+            "IU Health University Hospital",
+            "Community Hospital North",
+            "Ascension St. Vincent Hospital - Indianapolis",
+            "Community Hospital South"
+          ]
+        },
+        {
+          "metro": "Carmel",
+          "hospitalCount": 2,
+          "competition": "medium",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 24,
+          "topHospitals": [
+            "IU Health North Hospital",
+            "Ascension St. Vincent Carmel"
+          ]
+        },
+        {
+          "metro": "Lafayette",
+          "hospitalCount": 2,
+          "competition": "medium",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 24,
+          "topHospitals": [
+            "IU Health Arnett Hospital",
+            "Franciscan Health Lafayette"
+          ]
+        },
+        {
+          "metro": "Avon",
+          "hospitalCount": 1,
+          "competition": "low",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 12,
+          "topHospitals": [
+            "IU Health West Hospital"
+          ]
+        },
+        {
+          "metro": "Bloomington",
+          "hospitalCount": 1,
+          "competition": "low",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 12,
+          "topHospitals": [
+            "IU Health Bloomington Hospital"
+          ]
+        },
+        {
+          "metro": "Danville",
+          "hospitalCount": 1,
+          "competition": "low",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 12,
+          "topHospitals": [
+            "Hendricks Regional Health"
+          ]
+        }
+      ],
+      "fallbackRecruitmentStates": [
+        "MN",
+        "ND",
+        "CO",
+        "WA",
+        "OR"
+      ],
+      "baselineShare": 6,
+      "evidence": {
+        "liveSourceMarketCount": 0,
+        "liveOutOfStateEstimatedNurses": 0,
+        "liveOutOfStateNoticeCount": 0,
+        "homeState": "IN"
+      }
+    },
+    {
+      "specialty": "PCU",
+      "label": "Progressive Care",
+      "recommendation": "No strong live Progressive Care source pocket is mapped right now; use broad Indiana relocation targets starting with MN, ND, CO and route candidates toward Indianapolis.",
+      "primarySourceMarket": null,
+      "secondarySourceMarkets": [],
+      "primaryIndianaDestination": {
+        "metro": "Indianapolis",
+        "hospitalCount": 6,
+        "competition": "high",
+        "estimatedLocalSpecialtySignal": 0,
+        "noticesCount": 0,
+        "score": 72,
+        "topHospitals": [
+          "Community Hospital East",
+          "IU Health University Hospital",
+          "Community Hospital North",
+          "Ascension St. Vincent Hospital - Indianapolis",
+          "Community Hospital South"
+        ]
+      },
+      "indianaDestinations": [
+        {
+          "metro": "Indianapolis",
+          "hospitalCount": 6,
+          "competition": "high",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 72,
+          "topHospitals": [
+            "Community Hospital East",
+            "IU Health University Hospital",
+            "Community Hospital North",
+            "Ascension St. Vincent Hospital - Indianapolis",
+            "Community Hospital South"
+          ]
+        },
+        {
+          "metro": "Carmel",
+          "hospitalCount": 2,
+          "competition": "medium",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 24,
+          "topHospitals": [
+            "IU Health North Hospital",
+            "Ascension St. Vincent Carmel"
+          ]
+        },
+        {
+          "metro": "Lafayette",
+          "hospitalCount": 2,
+          "competition": "medium",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 24,
+          "topHospitals": [
+            "IU Health Arnett Hospital",
+            "Franciscan Health Lafayette"
+          ]
+        },
+        {
+          "metro": "Avon",
+          "hospitalCount": 1,
+          "competition": "low",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 12,
+          "topHospitals": [
+            "IU Health West Hospital"
+          ]
+        },
+        {
+          "metro": "Bloomington",
+          "hospitalCount": 1,
+          "competition": "low",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 12,
+          "topHospitals": [
+            "IU Health Bloomington Hospital"
+          ]
+        },
+        {
+          "metro": "Danville",
+          "hospitalCount": 1,
+          "competition": "low",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 12,
+          "topHospitals": [
+            "Hendricks Regional Health"
+          ]
+        }
+      ],
+      "fallbackRecruitmentStates": [
+        "MN",
+        "ND",
+        "CO",
+        "WA",
+        "OR"
+      ],
+      "baselineShare": 2.2,
+      "evidence": {
+        "liveSourceMarketCount": 0,
+        "liveOutOfStateEstimatedNurses": 0,
+        "liveOutOfStateNoticeCount": 0,
+        "homeState": "IN"
+      }
+    },
+    {
+      "specialty": "PEDS",
+      "label": "Pediatrics",
+      "recommendation": "No strong live Pediatrics source pocket is mapped right now; use broad Indiana relocation targets starting with MN, ND, CO and route candidates toward Indianapolis.",
+      "primarySourceMarket": null,
+      "secondarySourceMarkets": [],
+      "primaryIndianaDestination": {
+        "metro": "Indianapolis",
+        "hospitalCount": 6,
+        "competition": "high",
+        "estimatedLocalSpecialtySignal": 0,
+        "noticesCount": 0,
+        "score": 72,
+        "topHospitals": [
+          "Community Hospital East",
+          "IU Health University Hospital",
+          "Community Hospital North",
+          "Ascension St. Vincent Hospital - Indianapolis",
+          "Community Hospital South"
+        ]
+      },
+      "indianaDestinations": [
+        {
+          "metro": "Indianapolis",
+          "hospitalCount": 6,
+          "competition": "high",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 72,
+          "topHospitals": [
+            "Community Hospital East",
+            "IU Health University Hospital",
+            "Community Hospital North",
+            "Ascension St. Vincent Hospital - Indianapolis",
+            "Community Hospital South"
+          ]
+        },
+        {
+          "metro": "Carmel",
+          "hospitalCount": 2,
+          "competition": "medium",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 24,
+          "topHospitals": [
+            "IU Health North Hospital",
+            "Ascension St. Vincent Carmel"
+          ]
+        },
+        {
+          "metro": "Lafayette",
+          "hospitalCount": 2,
+          "competition": "medium",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 24,
+          "topHospitals": [
+            "IU Health Arnett Hospital",
+            "Franciscan Health Lafayette"
+          ]
+        },
+        {
+          "metro": "Avon",
+          "hospitalCount": 1,
+          "competition": "low",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 12,
+          "topHospitals": [
+            "IU Health West Hospital"
+          ]
+        },
+        {
+          "metro": "Bloomington",
+          "hospitalCount": 1,
+          "competition": "low",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 12,
+          "topHospitals": [
+            "IU Health Bloomington Hospital"
+          ]
+        },
+        {
+          "metro": "Danville",
+          "hospitalCount": 1,
+          "competition": "low",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 12,
+          "topHospitals": [
+            "Hendricks Regional Health"
+          ]
+        }
+      ],
+      "fallbackRecruitmentStates": [
+        "MN",
+        "ND",
+        "CO",
+        "WA",
+        "OR"
+      ],
+      "baselineShare": 2.9,
+      "evidence": {
+        "liveSourceMarketCount": 0,
+        "liveOutOfStateEstimatedNurses": 0,
+        "liveOutOfStateNoticeCount": 0,
+        "homeState": "IN"
+      }
+    },
+    {
+      "specialty": "BEHAVIORAL",
+      "label": "Behavioral Health",
+      "recommendation": "No strong live Behavioral Health source pocket is mapped right now; use broad Indiana relocation targets starting with MN, ND, CO and route candidates toward Indianapolis.",
+      "primarySourceMarket": null,
+      "secondarySourceMarkets": [],
+      "primaryIndianaDestination": {
+        "metro": "Indianapolis",
+        "hospitalCount": 6,
+        "competition": "high",
+        "estimatedLocalSpecialtySignal": 0,
+        "noticesCount": 0,
+        "score": 72,
+        "topHospitals": [
+          "Community Hospital East",
+          "IU Health University Hospital",
+          "Community Hospital North",
+          "Ascension St. Vincent Hospital - Indianapolis",
+          "Community Hospital South"
+        ]
+      },
+      "indianaDestinations": [
+        {
+          "metro": "Indianapolis",
+          "hospitalCount": 6,
+          "competition": "high",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 72,
+          "topHospitals": [
+            "Community Hospital East",
+            "IU Health University Hospital",
+            "Community Hospital North",
+            "Ascension St. Vincent Hospital - Indianapolis",
+            "Community Hospital South"
+          ]
+        },
+        {
+          "metro": "Carmel",
+          "hospitalCount": 2,
+          "competition": "medium",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 24,
+          "topHospitals": [
+            "IU Health North Hospital",
+            "Ascension St. Vincent Carmel"
+          ]
+        },
+        {
+          "metro": "Lafayette",
+          "hospitalCount": 2,
+          "competition": "medium",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 24,
+          "topHospitals": [
+            "IU Health Arnett Hospital",
+            "Franciscan Health Lafayette"
+          ]
+        },
+        {
+          "metro": "Avon",
+          "hospitalCount": 1,
+          "competition": "low",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 12,
+          "topHospitals": [
+            "IU Health West Hospital"
+          ]
+        },
+        {
+          "metro": "Bloomington",
+          "hospitalCount": 1,
+          "competition": "low",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 12,
+          "topHospitals": [
+            "IU Health Bloomington Hospital"
+          ]
+        },
+        {
+          "metro": "Danville",
+          "hospitalCount": 1,
+          "competition": "low",
+          "estimatedLocalSpecialtySignal": 0,
+          "noticesCount": 0,
+          "score": 12,
+          "topHospitals": [
+            "Hendricks Regional Health"
+          ]
+        }
+      ],
+      "fallbackRecruitmentStates": [
+        "MN",
+        "ND",
+        "CO",
+        "WA",
+        "OR"
+      ],
+      "baselineShare": 4.3,
+      "evidence": {
+        "liveSourceMarketCount": 0,
+        "liveOutOfStateEstimatedNurses": 0,
+        "liveOutOfStateNoticeCount": 0,
+        "homeState": "IN"
+      }
+    }
+  ]
+}
