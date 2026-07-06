@@ -1,74 +1,74 @@
 {
-  "lastUpdated": "2026-07-06T17:53:00.339Z",
+  "lastUpdated": "2026-07-06T20:07:07.841Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 9,
-    "staleSources": 3,
-    "healthySources": 6,
+    "staleSources": 2,
+    "healthySources": 7,
     "sources": [
       {
         "source": "Fierce Healthcare",
         "articleCount": 205,
         "latestPublishedAt": "2026-07-06T00:00:00.000Z",
-        "staleHours": 17,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 144,
+        "articleCount": 142,
         "latestPublishedAt": "2026-07-06T00:00:00.000Z",
-        "staleHours": 17,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 66,
+        "articleCount": 67,
         "latestPublishedAt": "2026-07-06T00:00:00.000Z",
-        "staleHours": 17,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 48,
         "latestPublishedAt": "2026-07-06T00:00:00.000Z",
-        "staleHours": 17,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 17,
         "latestPublishedAt": "2026-07-06T00:00:00.000Z",
-        "staleHours": 17,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 8,
         "latestPublishedAt": "2026-07-01T00:00:00.000Z",
-        "staleHours": 137,
+        "staleHours": 140,
         "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 7,
         "latestPublishedAt": "2026-07-06T00:00:00.000Z",
-        "staleHours": 17,
+        "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
-        "articleCount": 4,
-        "latestPublishedAt": "2026-07-02T00:00:00.000Z",
-        "staleHours": 113,
-        "status": "stale"
+        "articleCount": 5,
+        "latestPublishedAt": "2026-07-06T00:00:00.000Z",
+        "staleHours": 20,
+        "status": "ok"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 1,
         "latestPublishedAt": "2026-07-02T00:00:00.000Z",
-        "staleHours": 113,
+        "staleHours": 116,
         "status": "stale"
       }
     ]
@@ -80,7 +80,7 @@
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 35
+      "count": 34
     },
     "labor_unions": {
       "label": "Labor & Unions",
@@ -88,7 +88,7 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 88
+      "count": 87
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -96,22 +96,20 @@
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
-      "count": 22
+      "count": 23
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 152
+      "count": 151
     },
     "general_market": {
       "label": "General Market",
-      "count": 185
+      "count": 187
     }
   },
   "quality": {
-    "status": "warning",
-    "failedChecks": [
-      "maxStaleSources"
-    ],
+    "status": "pass",
+    "failedChecks": [],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -120,7 +118,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 84,
+        "actual": 92,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -130,8 +128,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 3,
-        "pass": false
+        "actual": 2,
+        "pass": true
       }
     }
   },
@@ -317,6 +315,18 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "Convenience Kit Correction: Windstone Medical Packaging, Inc. Issues Correction for Convenience Kit",
+      "summary": "Certain Cardinal Health Webcol Large Alcohol Prep Pads in Custom Convenience Kits manufactured by Aligned Medical Solutions are not sterile.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/convenience-kit-correction-windstone-medical-packaging-inc-issues-correction-convenience-kit",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-07-06",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
       "title": "Agency Information Collection Activities: Submission for OMB Review; Comment Request",
       "summary": "",
       "url": "https://www.federalregister.gov/documents/2026/07/06/2026-13621/agency-information-collection-activities-submission-for-omb-review-comment-request",
@@ -350,6 +360,60 @@
       "publishedAt": "2026-07-06",
       "category": "general_market",
       "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "150+ rural hospitals have closed since 2010: What it takes to stay open",
+      "url": "https://www.beckershospitalreview.com/finance/150-rural-hospitals-have-closed-since-2010-what-it-takes-to-stay-open/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-06",
+      "summary": "More than 150 rural hospitals have closed since 2010, and hundreds more are operating on thin margins that leave them vulnerable to even modest revenue or cost structure disruptions, according to a June white paper from law firm Barnes &#38; Thornburg, citing statistics from the he Chartis Center for Rural Health and Sheps Center for [&#8230;] The post 150+ rural hospitals have closed since 2010: What it takes to stay open appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Medical City Dallas names Tabitha South chief nursing executive",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/medical-city-dallas-names-tabitha-south-chief-nursing-executive/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-06",
+      "summary": "Medical City Dallas has named Tabitha South, DNP, RN, as its new chief nursing executive, according to a July 6 news release. Dr.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Duke Health seeks state OK to raise hospital expansion cost by $619M, add new freestanding ED",
+      "url": "https://www.beckershospitalreview.com/capital/duke-health-seeks-state-ok-to-raise-hospital-expansion-cost-by-619m-add-new-freestanding-ed/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-06",
+      "summary": "Durham, N.C.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "&#8216;Medicare Advantage has never saved a penny&#8217;: Democrat-led bill seeks to rein in MA",
+      "url": "https://www.beckershospitalreview.com/finance/medicare-advantage-has-never-saved-a-penny-democrat-led-bill-seeks-to-rein-in-ma/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-06",
+      "summary": "House Democrats introduced a bill July 1 targeting Medicare Advantage overpayments. Under the bill, HHS would need to exclude or adjust diagnosis codes that &#8220;are most likely to be subject to coding variation by Medicare Advantage plans,&#8221; limiting possible upcoding.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "The 97 hospitals to earn Magnet&#8217;s top honor",
+      "url": "https://www.beckershospitalreview.com/quality/nursing/the-97-hospitals-to-earn-magnets-top-honor/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-06",
+      "summary": "In 2022, the American Nurses Credentialing Center&#160;launched the Magnet with Distinction program to recognize the world’s highest performing Magnet organizations. Since then, 96 hospitals in the U.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "40 health systems spending $8B on cancer care",
+      "url": "https://www.beckershospitalreview.com/capital/16-health-systems-spending-4-billion-on-cancer-care/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-06",
+      "summary": "With cancer care growing beyond hospital walls and more cancer patients surviving than ever before, health systems in the U.S.",
+      "category": "general_market",
       "categoryLabel": "General Market"
     },
     {
@@ -389,56 +453,11 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "WHO declares cruise ship hantavirus outbreak over after 13 cases, 3 deaths",
-      "url": "https://www.beckershospitalreview.com/quality/public-health/who-declares-cruise-ship-hantavirus-outbreak-over-after-13-cases-3-deaths/",
-      "source": "Becker's Hospital Review",
+      "title": "Obamacare rolls shrank dramatically in many states over the past year, new federal data shows",
+      "url": "https://www.statnews.com/2026/07/06/obamacare-rolls-shrank-dramatically-affordable-care-act-states/?utm_campaign=rss",
+      "source": "STAT News",
       "publishedAt": "2026-07-06",
-      "summary": "The World Health Organization has declared an end to the Andes hantavirus outbreak tied to the M/V Hondius cruise ship, closing out a two-month response across 33-countries and territories. In its July 2 Disease Outbreak News notice, the WHO said the outbreak &#8220;no longer poses a public health risk and no further related transmission is [&#8230;] The post WHO declares cruise ship hantavirus outbreak over after 13 cases, 3 deaths appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "SSM Health&#8217;s 1st digital chief departs",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/ssm-healths-1st-digital-chief-departs/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-06",
-      "summary": "Saad Chaudhry has left his role as St. Louis-based SSM Health&#8217;s inaugural chief digital officer after about a year in the position.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Indiana system to open new hospital in August",
-      "url": "https://www.beckershospitalreview.com/capital/indiana-system-to-open-new-hospital-in-august/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-06",
-      "summary": "Batesville, Ind.-based Margaret Mary Health will open a replacement hospital in Batesville Aug.",
-      "category": "capacity_expansion",
-      "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "4 recent FDA moves to know",
-      "url": "https://www.beckershospitalreview.com/pharmacy/4-recent-fda-moves-to-know/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-06",
-      "summary": "The FDA has been busy over the past month, from expanding a gene therapy to younger patients to weighing whether &#8220;wellness&#8221; peptides belong on pharmacy compounding lists.&#160; Here are four things to know:&#160; 1.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Kentucky hospital names CEO",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/kentucky-hospital-names-ceo-5/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-06",
-      "summary": "Lexington, Ky.-based Appalachian Regional Healthcare has named Joey Waddell CEO of Whitesburg (Ky.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "6 hospital-use drugs hitting their shortage deadline this month",
-      "url": "https://www.beckershospitalreview.com/pharmacy/6-hospital-use-drugs-hitting-their-shortage-deadline-this-month/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-06",
-      "summary": "Active drug shortages in the U.S.",
+      "summary": "States across the country saw steep drops in the number of people covered by the Affordable Care Act over the past year, according to new federal data.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
@@ -596,6 +615,15 @@
       "categoryLabel": "Mergers & M&A"
     },
     {
+      "title": "The Revenue Cycle Model Is Being Rebuilt And CFOs Are Leading the Way",
+      "url": "https://www.fiercehealthcare.com/sponsored/revenue-cycle-model-being-rebuilt-and-cfos-are-leading-way",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-07-06",
+      "summary": "The revenue cycle has always been a reflection of broader healthcare pressures. When labor levels were more abundant and reimbursement rates were higher, a headcount-heavy model made sense.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
       "title": "Can You Use AI Without Turning Your Revenue Cycle Upside Down?",
       "url": "https://www.fiercehealthcare.com/sponsored/can-you-use-ai-without-turning-your-revenue-cycle-upside-down",
       "source": "Fierce Healthcare",
@@ -605,13 +633,58 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "The Revenue Cycle Model Is Being Rebuilt And CFOs Are Leading the Way",
-      "url": "https://www.fiercehealthcare.com/sponsored/revenue-cycle-model-being-rebuilt-and-cfos-are-leading-way",
-      "source": "Fierce Healthcare",
+      "title": "WHO declares cruise ship hantavirus outbreak over after 13 cases, 3 deaths",
+      "url": "https://www.beckershospitalreview.com/quality/public-health/who-declares-cruise-ship-hantavirus-outbreak-over-after-13-cases-3-deaths/",
+      "source": "Becker's Hospital Review",
       "publishedAt": "2026-07-06",
-      "summary": "The revenue cycle has always been a reflection of broader healthcare pressures. When labor levels were more abundant and reimbursement rates were higher, a headcount-heavy model made sense.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
+      "summary": "The World Health Organization has declared an end to the Andes hantavirus outbreak tied to the M/V Hondius cruise ship, closing out a two-month response across 33-countries and territories. In its July 2 Disease Outbreak News notice, the WHO said the outbreak &#8220;no longer poses a public health risk and no further related transmission is [&#8230;] The post WHO declares cruise ship hantavirus outbreak over after 13 cases, 3 deaths appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "closures_layoffs",
+      "categoryLabel": "Closures & Layoffs"
+    },
+    {
+      "title": "SSM Health&#8217;s 1st digital chief departs",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/ssm-healths-1st-digital-chief-departs/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-06",
+      "summary": "Saad Chaudhry has left his role as St. Louis-based SSM Health&#8217;s inaugural chief digital officer after about a year in the position.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Indiana system to open new hospital in August",
+      "url": "https://www.beckershospitalreview.com/capital/indiana-system-to-open-new-hospital-in-august/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-06",
+      "summary": "Batesville, Ind.-based Margaret Mary Health will open a replacement hospital in Batesville Aug.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "4 recent FDA moves to know",
+      "url": "https://www.beckershospitalreview.com/pharmacy/4-recent-fda-moves-to-know/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-06",
+      "summary": "The FDA has been busy over the past month, from expanding a gene therapy to younger patients to weighing whether &#8220;wellness&#8221; peptides belong on pharmacy compounding lists.&#160; Here are four things to know:&#160; 1.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Kentucky hospital names CEO",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/kentucky-hospital-names-ceo-5/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-06",
+      "summary": "Lexington, Ky.-based Appalachian Regional Healthcare has named Joey Waddell CEO of Whitesburg (Ky.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "6 hospital-use drugs hitting their shortage deadline this month",
+      "url": "https://www.beckershospitalreview.com/pharmacy/6-hospital-use-drugs-hitting-their-shortage-deadline-this-month/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-06",
+      "summary": "Active drug shortages in the U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
     },
     {
       "title": "Epic reshapes leadership as President Sumit Rana plans to step away",
@@ -1670,18 +1743,6 @@
       "categoryLabel": "Labor & Unions"
     },
     {
-      "title": "Heart Pump Recall: Abiomed Removes Impella CP Sets with SmartAssist",
-      "summary": "Specific Impella CP Sets are out of specification; use may result in low purge pressure events from the onset of the case",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/heart-pump-recall-abiomed-removes-impella-cp-sets-smartassist",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-07-02",
-      "category": "general_market",
-      "relevance": 98,
-      "categoryLabel": "General Market"
-    },
-    {
       "title": "Insulin Pump Recall: Insulet Removes Omnipod Pods",
       "summary": "Certain Omnipod Pods may have a tear in the tubing that allows insulin to leak outside the Pod instead of being delivered to the body.",
       "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/insulin-pump-recall-insulet-removes-omnipod-pods",
@@ -1692,6 +1753,18 @@
       "category": "ai_tech",
       "relevance": 98,
       "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Heart Pump Recall: Abiomed Removes Impella CP Sets with SmartAssist",
+      "summary": "Specific Impella CP Sets are out of specification; use may result in low purge pressure events from the onset of the case",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/heart-pump-recall-abiomed-removes-impella-cp-sets-smartassist",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-07-02",
+      "category": "general_market",
+      "relevance": 98,
+      "categoryLabel": "General Market"
     },
     {
       "title": "Government Owned Invention Available for License: A Conserved Viral Peptide for Use in Cancer Immunotherapy",
@@ -4765,78 +4838,6 @@
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-06-29",
       "summary": "J. Scott Smitherman, MD, has been promoted to vice president and chief medical information officer of Renton, Wash.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Ascension Via Christi acquires shuttered Kansas hospital",
-      "url": "https://www.beckershospitalreview.com/capital/ascension-via-christi-acquires-shuttered-kansas-hospital/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-29",
-      "summary": "Wichita, Kan.-based Ascension Via Christi acquired Rock Regional Hospital, a shuttered Derby, Kan.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "How health systems are preparing for Medicare&#8217;s GLP-1 Bridge program",
-      "url": "https://www.beckershospitalreview.com/pharmacy/how-health-systems-are-preparing-for-medicares-glp-1-bridge-program/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-29",
-      "summary": "On July 1, eligible Medicare Part D beneficiaries can access GLP-1 medications — Ozempic, Wegovy, Mounjaro and Zepbound — at a $50 monthly copay through the Medicare GLP-1 Bridge program, a temporary federal initiative running through December 2027. The program runs outside patients&#8217; existing Part D plans through a separate pathway administered by Humana, and [&#8230;] The post How health systems are preparing for Medicare&#8217;s GLP-1 Bridge program appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Montana, Arkansas to kick off Medicaid work requirements July 1",
-      "url": "https://www.beckershospitalreview.com/finance/montana-arkansas-to-kick-off-medicaid-work-requirements-july-1/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-29",
-      "summary": "Montana is preparing to roll out its community engagement rules for Medicaid July 1, and Arkansas is soft-launching its requirements that same day. HR 1 outlined how low-income, nonpregnant adults ages 19 to 64 must work, perform community service or attend school — or some mix of these — for at least 80 hours per [&#8230;] The post Montana, Arkansas to kick off Medicaid work requirements July 1 appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "GLP-1s linked to slower biological aging: 4 study notes",
-      "url": "https://www.beckershospitalreview.com/glp-1s/glp-1s-linked-to-slower-biological-aging-4-study-notes/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-29",
-      "summary": "Treatment with the GLP-1 receptor agonist semaglutide was associated with slower biological aging in adults with HIV-associated lipohypertrophy, according to a study published May 19 in Nature Communications. Here are four things to know: The post GLP-1s linked to slower biological aging: 4 study notes appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Health system owner faces allegations of diverting millions in widening multistate legal battle",
-      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/health-system-owner-faces-allegations-of-diverting-millions-in-widening-multistate-legal-battle/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-29",
-      "summary": "Mike Sarian, founder and majority owner of multiple hospital companies spanning more than a dozen hospitals across several states, is facing a widening series of lawsuits alleging he diverted millions of dollars from hospital operating accounts, shifted funds among facilities and used corporate money for personal expenses. The allegations, outlined in recent court filings in [&#8230;] The post Health system owner faces allegations of diverting millions in widening multistate legal battle appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Are EHR switches slowing down?",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/are-ehr-switches-slowing-down/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-29",
-      "summary": "The number of hospitals affected by new EHR decisions dropped significantly in 2025 compared to prior years, down 40% compared to 2024 and 50% compared to 2023.&#160; In May, a KLAS report tied the decline to ongoing uncertainty around government policy and health systems redirecting investment toward technologies such as AI and advanced analytics aimed [&#8230;] The post Are EHR switches slowing down?",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Missouri system taps chief nursing officer",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/missouri-system-taps-chief-nursing-officer/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-29",
-      "summary": "West Plains, Mo.-based Ozarks Healthcare named Tonya Aaron, BSN, RN, chief nursing officer.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Former Washington healthcare CEO pleads guilty in $24M embezzlement case",
-      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/former-washington-healthcare-ceo-pleads-guilty-in-24m-embezzlement-case/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-06-29",
-      "summary": "Patrick Alan Bucknum, 55, former CEO of Community Clinic Network in Wenatchee, Wash., pleaded guilty June 24 to one count of wire fraud, according to a Justice Department news release.",
       "category": "general_market",
       "categoryLabel": "General Market"
     }
