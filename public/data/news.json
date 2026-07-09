@@ -1,74 +1,74 @@
 {
-  "lastUpdated": "2026-07-09T00:18:48.272Z",
+  "lastUpdated": "2026-07-09T05:10:14.631Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 9,
-    "staleSources": 0,
-    "healthySources": 9,
+    "staleSources": 1,
+    "healthySources": 8,
     "sources": [
       {
         "source": "Fierce Healthcare",
         "articleCount": 230,
         "latestPublishedAt": "2026-07-09T00:00:00.000Z",
-        "staleHours": 0,
+        "staleHours": 5,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 140,
-        "latestPublishedAt": "2026-07-08T00:00:00.000Z",
-        "staleHours": 24,
+        "articleCount": 141,
+        "latestPublishedAt": "2026-07-09T00:00:00.000Z",
+        "staleHours": 5,
         "status": "ok"
       },
       {
         "source": "STAT News",
         "articleCount": 57,
         "latestPublishedAt": "2026-07-08T00:00:00.000Z",
-        "staleHours": 24,
+        "staleHours": 29,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
-        "articleCount": 35,
+        "articleCount": 34,
         "latestPublishedAt": "2026-07-08T00:00:00.000Z",
-        "staleHours": 24,
+        "staleHours": 29,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 16,
         "latestPublishedAt": "2026-07-08T00:00:00.000Z",
-        "staleHours": 24,
+        "staleHours": 29,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 8,
         "latestPublishedAt": "2026-07-08T00:00:00.000Z",
-        "staleHours": 24,
+        "staleHours": 29,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 6,
         "latestPublishedAt": "2026-07-07T00:00:00.000Z",
-        "staleHours": 48,
+        "staleHours": 53,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 6,
         "latestPublishedAt": "2026-07-06T00:00:00.000Z",
-        "staleHours": 72,
-        "status": "ok"
+        "staleHours": 77,
+        "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 2,
         "latestPublishedAt": "2026-07-07T00:00:00.000Z",
-        "staleHours": 48,
+        "staleHours": 53,
         "status": "ok"
       }
     ]
@@ -80,7 +80,7 @@
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 40
+      "count": 41
     },
     "labor_unions": {
       "label": "Labor & Unions",
@@ -104,7 +104,7 @@
     },
     "general_market": {
       "label": "General Market",
-      "count": 191
+      "count": 190
     }
   },
   "quality": {
@@ -118,7 +118,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 25,
+        "actual": 26,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -128,12 +128,21 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 0,
+        "actual": 1,
         "pass": true
       }
     }
   },
   "articles": [
+    {
+      "title": "States ranked by ED physicians per capita",
+      "url": "https://www.beckershospitalreview.com/rankings-and-ratings/states-ranked-by-ed-physicians-per-capita/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-09",
+      "summary": "Emergency medicine physicians per capita vary more than fourfold across the U.S.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
     {
       "title": "Tampa General Hospital sues Eli Lilly over pulled 340B discounts",
       "url": "https://www.fiercehealthcare.com/providers/tampa-general-hospital-sues-eli-lilly-over-pulled-340b-discounts",
@@ -4792,18 +4801,6 @@
       "category": "policy_reimbursement",
       "relevance": 100,
       "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "The Federal Demonstration Partnership; Phase VIII Notice",
-      "summary": "This notice announces a solicitation for large and small public and private colleges and universities (including predominantly undergraduate institutions, minority serving institutions, and emerging research institutions), non-profit research and education organizations (e.g., science museums and research institutes), and research hospitals and medical centers that are recipients of federal research or research-related funding to participate in Phase VIII of the Federal Demonstration Partnership (FDP). FDP is a unique forum of federal agencies and recipients committed to testing innovative approaches and streamlining processes and systems for federally supported research. It is anticipated that the National Academy of Sciences, Engineering and Medicine will continue to function as the secretariat for the FDP; as it has since 1988. The full solicitation is found at the Federal Demonstration Partnership website https://thefdp.org/.",
-      "url": "https://www.federalregister.gov/documents/2026/07/01/2026-13244/the-federal-demonstration-partnership-phase-viii-notice",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-07-01",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
     }
   ]
 }
