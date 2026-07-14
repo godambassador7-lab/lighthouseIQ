@@ -1,74 +1,81 @@
 {
-  "lastUpdated": "2026-07-14T10:52:49.621Z",
+  "lastUpdated": "2026-07-14T12:19:34.548Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
-    "totalSources": 9,
+    "totalSources": 10,
     "staleSources": 2,
-    "healthySources": 7,
+    "healthySources": 8,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 214,
+        "articleCount": 215,
         "latestPublishedAt": "2026-07-14T00:00:00.000Z",
-        "staleHours": 10,
+        "staleHours": 12,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
         "articleCount": 161,
         "latestPublishedAt": "2026-07-13T00:00:00.000Z",
-        "staleHours": 34,
+        "staleHours": 36,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 63,
+        "articleCount": 61,
         "latestPublishedAt": "2026-07-14T00:00:00.000Z",
-        "staleHours": 10,
+        "staleHours": 12,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 33,
         "latestPublishedAt": "2026-07-14T00:00:00.000Z",
-        "staleHours": 10,
+        "staleHours": 12,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 13,
         "latestPublishedAt": "2026-07-13T00:00:00.000Z",
-        "staleHours": 34,
+        "staleHours": 36,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 6,
         "latestPublishedAt": "2026-07-14T00:00:00.000Z",
-        "staleHours": 10,
+        "staleHours": 12,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 5,
         "latestPublishedAt": "2026-07-13T00:00:00.000Z",
-        "staleHours": 34,
+        "staleHours": 36,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 4,
         "latestPublishedAt": "2026-07-09T00:00:00.000Z",
-        "staleHours": 130,
+        "staleHours": 132,
         "status": "stale"
+      },
+      {
+        "source": "SEC Healthcare Filings",
+        "articleCount": 1,
+        "latestPublishedAt": "2026-07-14T00:00:00.000Z",
+        "staleHours": 12,
+        "status": "ok"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 1,
         "latestPublishedAt": "2026-07-07T00:00:00.000Z",
-        "staleHours": 178,
+        "staleHours": 180,
         "status": "stale"
       }
     ]
@@ -100,11 +107,11 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 177
+      "count": 178
     },
     "general_market": {
       "label": "General Market",
-      "count": 188
+      "count": 187
     }
   },
   "quality": {
@@ -113,12 +120,12 @@
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
-        "actual": 9,
+        "actual": 10,
         "pass": true
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 40,
+        "actual": 42,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -255,6 +262,18 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
+      "title": "HCA 8-K filing - HCA Healthcare, Inc.",
+      "summary": "HCA Healthcare, Inc. filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/860730/000119312526302539/hca-20260714.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-07-14",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "FDA authorized Zyn nicotine pouches without knowing what they were made of, says former agency scientist",
       "url": "https://www.statnews.com/2026/07/14/zyn-nicotine-pouches-fda-approval-microplastic-risk/?utm_campaign=rss",
       "source": "STAT News",
@@ -296,6 +315,15 @@
       "source": "STAT News",
       "publishedAt": "2026-07-14",
       "summary": "Deepfakes undermine the credibility that makes digital care — from telehealth visits to patient portals — possible.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Cottage Health Expands Partnership with hellocare.ai Following Successful Pilot to Deploy AI Assisted Virtual Care and Patient Safety Platform Enterprise Wide",
+      "url": "https://www.fiercehealthcare.com/sponsored/cottage-health-expands-partnership-hellocareai-following-successful-pilot-deploy-ai",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-07-14",
+      "summary": "Santa Barbara, CA and Clearwater, FL — July 14, 2026 - Cottage Health and hellocare.ai today announced an expanded partnership to deploy the hellocare.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
     },
@@ -372,15 +400,6 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "How Lee Health Turned Language Access into a Strategic Clinical Asset",
-      "url": "https://www.fiercehealthcare.com/sponsored/how-lee-health-turned-language-access-strategic-clinical-asset",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-07-14",
-      "summary": "Lee Health transformed language access from a compliance requirement into a strategic advantage that improves care, operations and patient experience.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
       "title": "Accountability Is Key to Medicaid's Home Care Future",
       "url": "https://www.fiercehealthcare.com/sponsored/accountability-key-medicaids-home-care-future",
       "source": "Fierce Healthcare",
@@ -388,6 +407,15 @@
       "summary": "As Medicaid scrutiny grows, stronger oversight and modern infrastructure can protect taxpayer dollars while preserving care at home.",
       "category": "policy_reimbursement",
       "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "How Lee Health Turned Language Access into a Strategic Clinical Asset",
+      "url": "https://www.fiercehealthcare.com/sponsored/how-lee-health-turned-language-access-strategic-clinical-asset",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-07-14",
+      "summary": "Lee Health transformed language access from a compliance requirement into a strategic advantage that improves care, operations and patient experience.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
     },
     {
       "title": "Doctors want wearable data but healthcare isn't ready for it, AMA survey finds",
@@ -4762,24 +4790,6 @@
       "summary": "Vertex Pharmaceuticals will spend $10 billion to acquire Crinetics Pharmaceuticals and its drug for a rare endocrine disorder",
       "category": "mergers_mna",
       "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Ebola outbreak exposes a fractured outbreak response system",
-      "url": "https://www.statnews.com/2026/07/07/health-news-ebola-outbreak-exposes-a-fractured-outbreak-response-system/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-07-07",
-      "summary": "The costly threat to employer-based health care, Gen Z doctors, and more health news",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "5 takeaways from STAT’s series on the soaring cost of health insurance",
-      "url": "https://www.statnews.com/2026/07/07/why-health-insurance-costs-so-much-out-of-pocket-series-key-takeaways/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-07-07",
-      "summary": "Read the 5 key takeaways from STAT's series \"Out of Pocket, Out of Reach,\" an examination of workplace health insurance.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
     }
   ]
 }
