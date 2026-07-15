@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-15T14:59:36.468Z",
+  "lastUpdated": "2026-07-15T16:28:34.036Z",
   "scope": "US healthcare",
   "sourceManifestVersion": "1.0.0",
   "sourceHealth": [
@@ -111,9 +111,9 @@
       "source": "NYSNA RSS",
       "id": "nysna_rss",
       "type": "rss",
-      "ok": false,
-      "status": 500,
-      "records": 0
+      "ok": true,
+      "status": 200,
+      "records": 13
     },
     {
       "source": "SEIU RSS",
@@ -257,6 +257,17 @@
       "publishedAt": "2026-07-15",
       "category": "policy_reimbursement",
       "relevance": 96
+    },
+    {
+      "title": "ELV 10-Q filing - Elevance Health, Inc.",
+      "summary": "Elevance Health, Inc. filed 10-Q with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1156039/000115603926000060/elv-20260630.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-07-15",
+      "category": "policy_reimbursement",
+      "relevance": 90
     },
     {
       "title": "ELV 8-K filing - Elevance Health, Inc.",
@@ -787,9 +798,9 @@
       "relevance": 100
     },
     {
-      "title": "Insulin Pump Recall: Insulet Removes Omnipod Pods",
-      "summary": "Certain Omnipod Pods may have a tear in the tubing that allows insulin to leak outside the Pod instead of being delivered to the body.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/insulin-pump-recall-insulet-removes-omnipod-pods",
+      "title": "Heart Pump Recall: Abiomed Removes Impella CP Sets with SmartAssist",
+      "summary": "Specific Impella CP Sets are out of specification; use may result in low purge pressure events from the onset of the case",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/heart-pump-recall-abiomed-removes-impella-cp-sets-smartassist",
       "source": "FDA MedWatch RSS",
       "sourceType": "rss",
       "sourceId": "fda_medwatch_rss",
@@ -798,9 +809,9 @@
       "relevance": 98
     },
     {
-      "title": "Heart Pump Recall: Abiomed Removes Impella CP Sets with SmartAssist",
-      "summary": "Specific Impella CP Sets are out of specification; use may result in low purge pressure events from the onset of the case",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/heart-pump-recall-abiomed-removes-impella-cp-sets-smartassist",
+      "title": "Insulin Pump Recall: Insulet Removes Omnipod Pods",
+      "summary": "Certain Omnipod Pods may have a tear in the tubing that allows insulin to leak outside the Pod instead of being delivered to the body.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/insulin-pump-recall-insulet-removes-omnipod-pods",
       "source": "FDA MedWatch RSS",
       "sourceType": "rss",
       "sourceId": "fda_medwatch_rss",
@@ -1040,9 +1051,9 @@
       "relevance": 100
     },
     {
-      "title": "Early Alert: Catheter Introducer Issue from Abiomed and Oscor",
-      "summary": "Abiomed and Oscor have identified a potential for introducer sheath leakage in 14Fr and 23Fr Introducers that may increase the risk of access-site bleeding.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-catheter-introducer-issue-abiomed-and-oscor",
+      "title": "Catheter Recall Expansion: Medline Industries Removes Reprocessed Electrophysiology and Ultrasound Catheters",
+      "summary": "Certain reprocessed catheters may contain residual particulates that could cause infection, embolism, or thrombosis",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/catheter-recall-expansion-medline-industries-removes-reprocessed-electrophysiology-and-ultrasound",
       "source": "FDA MedWatch RSS",
       "sourceType": "rss",
       "sourceId": "fda_medwatch_rss",
@@ -1051,9 +1062,9 @@
       "relevance": 98
     },
     {
-      "title": "Catheter Recall Expansion: Medline Industries Removes Reprocessed Electrophysiology and Ultrasound Catheters",
-      "summary": "Certain reprocessed catheters may contain residual particulates that could cause infection, embolism, or thrombosis",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/catheter-recall-expansion-medline-industries-removes-reprocessed-electrophysiology-and-ultrasound",
+      "title": "Early Alert: Catheter Introducer Issue from Abiomed and Oscor",
+      "summary": "Abiomed and Oscor have identified a potential for introducer sheath leakage in 14Fr and 23Fr Introducers that may increase the risk of access-site bleeding.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-catheter-introducer-issue-abiomed-and-oscor",
       "source": "FDA MedWatch RSS",
       "sourceType": "rss",
       "sourceId": "fda_medwatch_rss",
@@ -1423,17 +1434,6 @@
       "publishedAt": "2026-04-27",
       "category": "policy_reimbursement",
       "relevance": 85
-    },
-    {
-      "title": "ELV 10-Q filing - Elevance Health, Inc.",
-      "summary": "Elevance Health, Inc. filed 10-Q with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/1156039/000115603926000043/elv-20260331.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-04-22",
-      "category": "policy_reimbursement",
-      "relevance": 90
     },
     {
       "title": "UNH 8-K filing - UnitedHealth Group Incorporated",
@@ -1851,6 +1851,72 @@
       "sourceId": "nnu_rss",
       "publishedAt": "",
       "category": "labor_unions",
+      "relevance": 100
+    },
+    {
+      "title": "Save Healthcare Services",
+      "summary": "",
+      "url": "https://www.nysna.org/campaigns/save-healthcare-services",
+      "source": "NYSNA RSS",
+      "sourceType": "rss",
+      "sourceId": "nysna_rss",
+      "publishedAt": "",
+      "category": "labor_unions",
+      "relevance": 100
+    },
+    {
+      "title": "Nurses Overwhelmingly Ratify New Contract at Catholic Health/St. Charles Hospital",
+      "summary": "",
+      "url": "https://www.nysna.org/press/nurses-overwhelmingly-ratify-new-contract-catholic-healthst-charles-hospital",
+      "source": "NYSNA RSS",
+      "sourceType": "rss",
+      "sourceId": "nysna_rss",
+      "publishedAt": "",
+      "category": "labor_unions",
+      "relevance": 100
+    },
+    {
+      "title": "Victory: Nurses at Catholic Health/St. Charles Hospital Reach Tentative Contract Agreement",
+      "summary": "",
+      "url": "https://www.nysna.org/press/victory-nurses-catholic-healthst-charles-hospital-reach-tentative-contract-agreement",
+      "source": "NYSNA RSS",
+      "sourceType": "rss",
+      "sourceId": "nysna_rss",
+      "publishedAt": "",
+      "category": "labor_unions",
+      "relevance": 100
+    },
+    {
+      "title": "CVPH Healthcare Professionals Speak Out to Save the Adirondack Blood Donor Center",
+      "summary": "",
+      "url": "https://www.nysna.org/news/cvph-healthcare-professionals-speak-out-save-adirondack-blood-donor-center",
+      "source": "NYSNA RSS",
+      "sourceType": "rss",
+      "sourceId": "nysna_rss",
+      "publishedAt": "",
+      "category": "labor_unions",
+      "relevance": 100
+    },
+    {
+      "title": "Nurses Deliver Strike Notice at Catholic Health/St. Charles Hospital",
+      "summary": "",
+      "url": "https://www.nysna.org/press/nurses-deliver-strike-notice-catholic-healthst-charles-hospital",
+      "source": "NYSNA RSS",
+      "sourceType": "rss",
+      "sourceId": "nysna_rss",
+      "publishedAt": "",
+      "category": "labor_unions",
+      "relevance": 100
+    },
+    {
+      "title": "Northwell Health/Putnam Hospital Nurses Speak Out to Demand Safe Staffing and a Fair Contract!",
+      "summary": "",
+      "url": "https://www.nysna.org/news/northwell-healthputnam-hospital-nurses-speak-out-demand-safe-staffing-and-fair-contract",
+      "source": "NYSNA RSS",
+      "sourceType": "rss",
+      "sourceId": "nysna_rss",
+      "publishedAt": "",
+      "category": "ai_tech",
       "relevance": 100
     },
     {
@@ -2382,6 +2448,50 @@
       "relevance": 93
     },
     {
+      "title": "Journal of the New York State Nurses Association",
+      "summary": "",
+      "url": "https://www.nysna.org/nursing-resources/journal-new-york-state-nurses-association",
+      "source": "NYSNA RSS",
+      "sourceType": "rss",
+      "sourceId": "nysna_rss",
+      "publishedAt": "",
+      "category": "labor_unions",
+      "relevance": 93
+    },
+    {
+      "title": "Statewide Peer Assistance for Nurses",
+      "summary": "",
+      "url": "https://www.statewidepeerassistance.org/",
+      "source": "NYSNA RSS",
+      "sourceType": "rss",
+      "sourceId": "nysna_rss",
+      "publishedAt": "",
+      "category": "labor_unions",
+      "relevance": 93
+    },
+    {
+      "title": "Health Equity and Social Justice",
+      "summary": "",
+      "url": "https://www.nysna.org/campaigns/health-equity-and-social-justice",
+      "source": "NYSNA RSS",
+      "sourceType": "rss",
+      "sourceId": "nysna_rss",
+      "publishedAt": "",
+      "category": "labor_unions",
+      "relevance": 93
+    },
+    {
+      "title": "NYSNA Condemns Northstar/Claxton-Hepburn&#039;s Proposed Maternal Health Cuts",
+      "summary": "",
+      "url": "https://www.nysna.org/press/nysna-condemns-northstarclaxton-hepburns-proposed-maternal-health-cuts",
+      "source": "NYSNA RSS",
+      "sourceType": "rss",
+      "sourceId": "nysna_rss",
+      "publishedAt": "",
+      "category": "labor_unions",
+      "relevance": 93
+    },
+    {
       "title": "Report Fraud, Waste, & Abuse",
       "summary": "",
       "url": "https://oig.hhs.gov/fraud/report-fraud/",
@@ -2512,6 +2622,39 @@
       "publishedAt": "",
       "category": "ai_tech",
       "relevance": 90
+    },
+    {
+      "title": "View all weekly newsletters",
+      "summary": "",
+      "url": "https://www.nysna.org/resources/weekly-newsletters",
+      "source": "NYSNA RSS",
+      "sourceType": "rss",
+      "sourceId": "nysna_rss",
+      "publishedAt": "",
+      "category": "labor_unions",
+      "relevance": 88
+    },
+    {
+      "title": "NYSNA Update: July 10, 2026",
+      "summary": "",
+      "url": "https://www.nysna.org/news/nysna-update-july-10-2026",
+      "source": "NYSNA RSS",
+      "sourceType": "rss",
+      "sourceId": "nysna_rss",
+      "publishedAt": "",
+      "category": "labor_unions",
+      "relevance": 88
+    },
+    {
+      "title": "See All Photos and Videos",
+      "summary": "",
+      "url": "https://www.nysna.org/news/gallery",
+      "source": "NYSNA RSS",
+      "sourceType": "rss",
+      "sourceId": "nysna_rss",
+      "publishedAt": "",
+      "category": "labor_unions",
+      "relevance": 88
     }
   ]
 }
