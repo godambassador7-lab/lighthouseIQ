@@ -1,82 +1,82 @@
 {
-  "lastUpdated": "2026-07-17T00:09:06.037Z",
+  "lastUpdated": "2026-07-17T04:12:40.353Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 0,
-    "healthySources": 10,
+    "staleSources": 2,
+    "healthySources": 8,
     "sources": [
       {
         "source": "Fierce Healthcare",
         "articleCount": 190,
         "latestPublishedAt": "2026-07-17T00:00:00.000Z",
-        "staleHours": 0,
+        "staleHours": 4,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
         "articleCount": 182,
         "latestPublishedAt": "2026-07-16T00:00:00.000Z",
-        "staleHours": 24,
+        "staleHours": 28,
         "status": "ok"
       },
       {
         "source": "STAT News",
         "articleCount": 66,
         "latestPublishedAt": "2026-07-16T00:00:00.000Z",
-        "staleHours": 24,
+        "staleHours": 28,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 30,
         "latestPublishedAt": "2026-07-16T00:00:00.000Z",
-        "staleHours": 24,
+        "staleHours": 28,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 12,
         "latestPublishedAt": "2026-07-16T00:00:00.000Z",
-        "staleHours": 24,
+        "staleHours": 28,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 5,
         "latestPublishedAt": "2026-07-16T00:00:00.000Z",
-        "staleHours": 24,
+        "staleHours": 28,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 5,
         "latestPublishedAt": "2026-07-16T00:00:00.000Z",
-        "staleHours": 24,
+        "staleHours": 28,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 5,
         "latestPublishedAt": "2026-07-14T00:00:00.000Z",
-        "staleHours": 72,
-        "status": "ok"
+        "staleHours": 76,
+        "status": "stale"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 4,
         "latestPublishedAt": "2026-07-16T00:00:00.000Z",
-        "staleHours": 24,
+        "staleHours": 28,
         "status": "ok"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 1,
         "latestPublishedAt": "2026-07-14T00:00:00.000Z",
-        "staleHours": 72,
-        "status": "ok"
+        "staleHours": 76,
+        "status": "stale"
       }
     ]
   },
@@ -95,7 +95,7 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 75
+      "count": 76
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -111,7 +111,7 @@
     },
     "general_market": {
       "label": "General Market",
-      "count": 190
+      "count": 189
     }
   },
   "quality": {
@@ -125,7 +125,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 25,
+        "actual": 26,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -135,12 +135,21 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 0,
+        "actual": 2,
         "pass": true
       }
     }
   },
   "articles": [
+    {
+      "title": "CMS proposal to block third-party vendors will upend remote monitoring services, health tech leaders say",
+      "url": "https://www.fiercehealthcare.com/regulatory/medicare-proposes-stricter-requirements-remote-monitoring-services-limiting-use-third",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-07-17",
+      "summary": "Tucked inside a Medicare physician pay draft rule released this week, federal regulators proposed major changes to remote patient monitoring payment policies that experts say will significantly disrupt providers' RPM programs.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
     {
       "title": "GE HealthCare, Catholic Health strike 10-year, $500M technology partnership",
       "url": "https://www.fiercehealthcare.com/health-tech/ge-healthcare-catholic-health-strike-10-year-500m-technology-partnership",
@@ -169,20 +178,20 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Coalition for Health AI launches implementation initiative for public health agencies",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/coalition-health-ai-launches-implementation-initiative-public-health",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-07-17",
-      "summary": "Applications for the effort are now open through Aug. 6, and participants will be selected by CHAI’s leadership council.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
       "title": "UnitedHealth Group to maintain 'restless' even after topping investor's Q2 expectations, CEO says",
       "url": "https://www.fiercehealthcare.com/payers/unitedhealth-group-boosts-outlook-it-posts-55b-q2-profit",
       "source": "Fierce Healthcare",
       "publishedAt": "2026-07-17",
       "summary": "UnitedHealth Group boosted its outlook for the year on the back of $5.5 billion in profit for the second quarter.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Coalition for Health AI launches implementation initiative for public health agencies",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/coalition-health-ai-launches-implementation-initiative-public-health",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-07-17",
+      "summary": "Applications for the effort are now open through Aug. 6, and participants will be selected by CHAI’s leadership council.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
     },
@@ -4781,15 +4790,6 @@
       "summary": "Stay up to date on the latest in health tech, digital health and health AI news with this weekly brief.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Chutes & Ladders—Northwell Health names first Chief Biotechnology Officer; Collective Health announces new executive hire",
-      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-07-11",
-      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
     }
   ]
 }
