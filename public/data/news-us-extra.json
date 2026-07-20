@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-20T20:27:51.877Z",
+  "lastUpdated": "2026-07-20T22:05:29.594Z",
   "scope": "US healthcare",
   "sourceManifestVersion": "1.0.0",
   "sourceHealth": [
@@ -103,9 +103,10 @@
       "source": "National Nurses United RSS",
       "id": "nnu_rss",
       "type": "rss",
-      "ok": true,
-      "status": 200,
-      "records": 20
+      "ok": false,
+      "status": 0,
+      "records": 0,
+      "error": "fetch failed"
     },
     {
       "source": "NYSNA RSS",
@@ -257,6 +258,17 @@
       "publishedAt": "2026-07-20",
       "category": "ai_tech",
       "relevance": 100
+    },
+    {
+      "title": "Unique Pharmaceutical Laboratories (A Div. of J. B. Chemicals & Pharmaceuticals Ltd.) Issues Voluntary Nationwide Recall of Cetirizine Hydrochloride Tablets USP 5 mg Due to Potential Cross Contamination with Ranitidine",
+      "summary": "FOR IMMEDIATE RELEASE – July 18th, 2026 – Panoli, Gujarat, Unique Pharmaceutical Laboratories (A Div. of J. B. Chemicals & Pharmaceuticals Ltd.) is voluntarily recalling four lots of Cetirizine Hydrochloride Tablets USP 5 mg to the consumer level due to cross contamination with Ranitidine.",
+      "url": "http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/unique-pharmaceutical-laboratories-div-j-b-chemicals-pharmaceuticals-ltd-issues-voluntary-nationwide",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-07-20",
+      "category": "quality_safety",
+      "relevance": 98
     },
     {
       "title": "Office of the Secretary; Amended Notice of Meeting",
@@ -611,17 +623,6 @@
       "relevance": 100
     },
     {
-      "title": "Bakersfield nurses to hold informational picket over proposed layoffs that jeopardize patient care",
-      "summary": "Registered nurses will hold an informational picket on Thursday, July 16 in Bakersfield, Calif., to protest proposed health care staffing reductions and service cuts at CommonSpirit Health’s Dignity Health Bakersfield Memorial Hospital and Dignity Health Mercy Hospitals that will jeopardize patient care.",
-      "url": "https://www.nationalnursesunited.org/press/bakersfield-nurses-to-hold-informational-picket-over-proposed-layoffs",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "2026-07-14",
-      "category": "closures_layoffs",
-      "relevance": 100
-    },
-    {
       "title": "HCA 8-K filing - HCA Healthcare, Inc.",
       "summary": "HCA Healthcare, Inc. filed 8-K with the SEC.",
       "url": "https://www.sec.gov/Archives/edgar/data/860730/000119312526302539/hca-20260714.htm",
@@ -787,17 +788,6 @@
       "relevance": 100
     },
     {
-      "title": "Ascension blocks Wichita nurses from returning to work after one-day strike",
-      "summary": "Registered nurses at two Ascension hospitals in Wichita, Kansas, are outraged today as Ascension management has locked them out for days following nurses’ one-day strike on July 6. The nurses at Ascension Via Christi St. Francis and St. Joseph hospitals say the move is an obvious retaliatory punishment for striking.",
-      "url": "https://www.nationalnursesunited.org/press/ascension-blocks-wichita-nurses-from-returning-to-work-after-one-day-strike",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "2026-07-07",
-      "category": "labor_unions",
-      "relevance": 100
-    },
-    {
       "title": "Infusion Pump Correction: Fresenius Kabi Issues Correction for dropped or jarred Ivenix Large Volume Infusion Pumps",
       "summary": "If dropped, the Ivenix pump touchscreen may become unresponsive and should be removed from use.",
       "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/infusion-pump-correction-fresenius-kabi-issues-correction-dropped-or-jarred-ivenix-large-volume",
@@ -919,20 +909,9 @@
       "relevance": 100
     },
     {
-      "title": "Baltimore nurses to hold one-day strike for patient safety and staff retention",
-      "summary": "Registered nurses at Ascension Saint Agnes Hospital in Baltimore, Md., will hold a one-day strike on Monday, July 6, to protest the administration’s refusal to address RNs’ deep concerns about patient safety and staff retention. The nurses will be joined by U.S. Rep. Kweisi Mfume at their morning rally.",
-      "url": "https://www.nationalnursesunited.org/press/baltimore-nurses-to-hold-one-day-strike-for-patient-safety-and-staff-retention",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "2026-07-02",
-      "category": "labor_unions",
-      "relevance": 100
-    },
-    {
-      "title": "Heart Pump Recall: Abiomed Removes Impella CP Sets with SmartAssist",
-      "summary": "Specific Impella CP Sets are out of specification; use may result in low purge pressure events from the onset of the case",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/heart-pump-recall-abiomed-removes-impella-cp-sets-smartassist",
+      "title": "Insulin Pump Recall: Insulet Removes Omnipod Pods",
+      "summary": "Certain Omnipod Pods may have a tear in the tubing that allows insulin to leak outside the Pod instead of being delivered to the body.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/insulin-pump-recall-insulet-removes-omnipod-pods",
       "source": "FDA MedWatch RSS",
       "sourceType": "rss",
       "sourceId": "fda_medwatch_rss",
@@ -941,9 +920,9 @@
       "relevance": 98
     },
     {
-      "title": "Insulin Pump Recall: Insulet Removes Omnipod Pods",
-      "summary": "Certain Omnipod Pods may have a tear in the tubing that allows insulin to leak outside the Pod instead of being delivered to the body.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/insulin-pump-recall-insulet-removes-omnipod-pods",
+      "title": "Heart Pump Recall: Abiomed Removes Impella CP Sets with SmartAssist",
+      "summary": "Specific Impella CP Sets are out of specification; use may result in low purge pressure events from the onset of the case",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/heart-pump-recall-abiomed-removes-impella-cp-sets-smartassist",
       "source": "FDA MedWatch RSS",
       "sourceType": "rss",
       "sourceId": "fda_medwatch_rss",
@@ -1005,61 +984,6 @@
       "publishedAt": "2026-06-26",
       "category": "quality_safety",
       "relevance": 98
-    },
-    {
-      "title": "Baltimore nurses announce one-day strike for patient and staff retention",
-      "summary": "Registered nurses at Ascension Saint Agnes Hospital in Baltimore, Md., gave notice today to their employer that they will hold a strike for one day on Monday, July 6, to protest the administration’s refusal to address RNs’ deep concerns about patient safety and staff retention.",
-      "url": "https://www.nationalnursesunited.org/press/baltimore-nurses-announce-one-day-strike-for-patient-and-staff-retention",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "2026-06-25",
-      "category": "labor_unions",
-      "relevance": 100
-    },
-    {
-      "title": "St. Rose Hospital nurses plan informational picket to demand fair contract",
-      "summary": "Nurses at St. Rose Hospital in Hayward, Calif., will hold an informational picket to demonstrate mounting opposition among staff and community to stalling in contract negotiations with Alameda Health System. Nurses and patients are particularly outraged about St. Rose management attempting to sub-contract out of the fifth floor at the hospital to Stanford Medicine, potentially creating two tiers of health care for patients in Hayward.",
-      "url": "https://www.nationalnursesunited.org/press/st-rose-hospital-nurses-plan-informational-picket-to-demand-fair-contract",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "2026-06-23",
-      "category": "ai_tech",
-      "relevance": 100
-    },
-    {
-      "title": "Contra Costa County nurses to hold informational picket to preserve patient services and nurse retention",
-      "summary": "Registered nurses with Contra Costa Health and Contra Costa Regional Medical Center, in Martinez, Calif., will hold an informational picket on Thursday, June 25, to protest the county’s failure to commit to preserving patient care and nursing staff, announced California Nurses Association/National Nurses United (CNA/NNU) today.",
-      "url": "https://www.nationalnursesunited.org/press/contra-costa-county-nurses-to-hold-informational-picket-to-preserve-patient-services",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "2026-06-23",
-      "category": "ai_tech",
-      "relevance": 100
-    },
-    {
-      "title": "Nation’s largest union of registered nurses joins U.S. representatives to call for end to blockade of Cuba",
-      "summary": "NNU and U.S. Representative Delia Ramirez will hold a press conference in Washington, D.C. on Tuesday, June 30 to demand an end to the Trump administration’s blockade of oil supplies entering Cuba. Union nurses will be joined by Global Health Partners, which is working to supply the island nation with critical medical equipment and medicine, as fuel shortages enter its fourth month and the humanitarian crisis escalates.",
-      "url": "https://www.nationalnursesunited.org/press/registered-nurses-join-us-representatives-to-call-for-end-to-blockade-of-cuba",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "2026-06-23",
-      "category": "labor_unions",
-      "relevance": 100
-    },
-    {
-      "title": "Infant Resuscitation System Correction: GE HealthCare Issues Correction for Giraffe and Panda Infant Resuscitation Systems and Warmers with a M1091607-R Blender",
-      "summary": "The air-oxygen blender knob shaft on certain integrated and stand-alone Resuscitation systems can loosen, affecting the delivered oxygen concentration",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/infant-resuscitation-system-correction-ge-healthcare-issues-correction-giraffe-and-panda-infant",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-06-22",
-      "category": "ai_tech",
-      "relevance": 100
     },
     {
       "title": "Heart Pump Controller Correction: Abiomed Updates Use Instructions for Automated Impella Controllers",
@@ -1425,17 +1349,6 @@
       "relevance": 100
     },
     {
-      "title": "USC nurses to hold two-day strike for patient safety",
-      "summary": "Registered nurses at Keck Hospital of USC and USC Norris Cancer Hospital in Los Angeles, Calif. will hold a two-day strike on July 13 and July 14 to protest the administration’s refusal to address RNs’ deep concerns about unsafe staffing conditions.",
-      "url": "https://www.nationalnursesunited.org/press/usc-nurses-hold-two-day-strike-for-patient-safety",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "2021-07-13",
-      "category": "labor_unions",
-      "relevance": 100
-    },
-    {
       "title": "Submit Merger/Antitrust Comment",
       "summary": "",
       "url": "https://www.ftc.gov/enforcement/submit-merger-antitrust-comment",
@@ -1601,17 +1514,6 @@
       "relevance": 100
     },
     {
-      "title": "CDC finds decline in healthcare-associated infections in hospitals",
-      "summary": "",
-      "url": "https://www.aha.org/news/headline/2026-07-17-cdc-finds-decline-healthcare-associated-infections-hospitals",
-      "source": "AHA News",
-      "sourceType": "html",
-      "sourceId": "aha_news",
-      "publishedAt": "",
-      "category": "quality_safety",
-      "relevance": 100
-    },
-    {
       "title": "CMS posts updated FAQ on PAMA clinical laboratory private payer data reporting",
       "summary": "",
       "url": "https://www.aha.org/news/headline/2026-07-17-cms-posts-updated-faq-pama-clinical-laboratory-private-payer-data-reporting",
@@ -1620,6 +1522,17 @@
       "sourceId": "aha_news",
       "publishedAt": "",
       "category": "policy_reimbursement",
+      "relevance": 100
+    },
+    {
+      "title": "CDC finds decline in healthcare-associated infections in hospitals",
+      "summary": "",
+      "url": "https://www.aha.org/news/headline/2026-07-17-cdc-finds-decline-healthcare-associated-infections-hospitals",
+      "source": "AHA News",
+      "sourceType": "html",
+      "sourceId": "aha_news",
+      "publishedAt": "",
+      "category": "quality_safety",
       "relevance": 100
     },
     {
@@ -1645,17 +1558,6 @@
       "relevance": 100
     },
     {
-      "title": "CDC issues advisory to healthcare providers on cyclosporiasis cases",
-      "summary": "",
-      "url": "https://www.aha.org/news/headline/2026-07-14-cdc-issues-advisory-healthcare-providers-cyclosporiasis-cases",
-      "source": "AHA News",
-      "sourceType": "html",
-      "sourceId": "aha_news",
-      "publishedAt": "",
-      "category": "policy_reimbursement",
-      "relevance": 100
-    },
-    {
       "title": "Affordability Requires Looking at the Whole Healthcare System",
       "summary": "",
       "url": "https://www.aha.org/news/blog/2026-07-08-affordability-requires-looking-whole-healthcare-system",
@@ -1664,138 +1566,6 @@
       "sourceId": "aha_news",
       "publishedAt": "",
       "category": "policy_reimbursement",
-      "relevance": 100
-    },
-    {
-      "title": "Congressional Progressive Caucus Shadow Hearing: July 22 at 8:30 a.m.",
-      "summary": "National Nurses United President Jamie Brown, RN, will testify at the Congressional Progressive Caucus’ (CPC) shadow hearing, “Universal Healthcare: Now is the Time for Medicare for All,” on Wednesday, July 22. NNU is the largest union of registered nurses, who see everyday how people cannot access or afford the health care they need when they need it.",
-      "url": "https://www.nationalnursesunited.org/press/congressional-progressive-caucus-shadow-hearing-july-22",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 100
-    },
-    {
-      "title": "Kaiser nurses protest CEO’s appearance at AHA Leadership Summit",
-      "summary": "Registered nurses from Kaiser Permanente facilities across California protested today outside the American Hospital Association (AHA) Leadership Summit in Denver, Colo., where Kaiser CEO Greg A. Adams is scheduled to speak this week.",
-      "url": "https://www.nationalnursesunited.org/press/kaiser-nurses-protest-ceos-appearance-at-aha-leadership-summit",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "",
-      "category": "ai_tech",
-      "relevance": 100
-    },
-    {
-      "title": "San Francisco nurses, doctors to hold protest at UC regents meeting for patient safety",
-      "summary": "Registered nurses and resident physicians at University of California San Francisco will protest a UC Regents meeting on July 15 to highlight their patient safety concerns about boarding in the emergency department. Combined with existing unsafe staffing, the boarding has created unsafe conditions caused by providing patient care in waiting rooms and hallways.",
-      "url": "https://www.nationalnursesunited.org/press/san-francisco-nurses-doctors-to-hold-protest-at-uc-regents-meeting-for-patient-safety",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "",
-      "category": "quality_safety",
-      "relevance": 100
-    },
-    {
-      "title": "Hemet nurses ratify new contract with strong measures to improve patient safety and nurse retention",
-      "summary": "Registered nurses at Hemet Global Medical Center in Hemet, California, voted overwhelmingly in favor of ratifying a new three-year contract on July 7, winning protections to improve patient safety and nurse retention.",
-      "url": "https://www.nationalnursesunited.org/press/hemet-nurses-ratify-new-contract-with-strong-measures-to-improve-patient-safety",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "",
-      "category": "quality_safety",
-      "relevance": 100
-    },
-    {
-      "title": "Federal cuts threaten 600 financially vulnerable hospitals nationwide",
-      "summary": "More than 600 financially vulnerable hospitals across the United States are set to experience an aggregate increase in financial deficits of between 50 and 75 percent. The financial losses, estimated in a new research study, present an extreme risk of cuts and closures of essential health care services for millions of people across the country.",
-      "url": "https://www.nationalnursesunited.org/press/federal-cuts-threaten-600-financially-vulnerable-hospitals-nationwide",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "",
-      "category": "closures_layoffs",
-      "relevance": 100
-    },
-    {
-      "title": "Nurses at HCA Swedish Medical Center join nation’s largest nurses union",
-      "summary": "Registered nurses at HCA HealthONE Swedish (a.k.a., Swedish Medical Center) in Englewood, Colo., voted to join National Nurses Organizing Committee/National Nurses United, the country’s largest nurses union, in an election held on July 1 and 2, 2026.",
-      "url": "https://www.nationalnursesunited.org/press/nurses-at-hca-swedish-medical-center-join-nations-largest-nurses-union",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 100
-    },
-    {
-      "title": "Wichita nurses prepared for one-day strike for patient and staff safety",
-      "summary": "Nurses at two Ascension hospitals in Wichita, Kan., are moving forward with their one-day strike on July 6 to protest hospital management’s refusal to address RNs’ deep concerns about safety at Ascension Via Christi St. Francis and Ascension Via Christi St. Joseph hospitals.",
-      "url": "https://www.nationalnursesunited.org/press/wichita-nurses-prepared-for-one-day-strike-for-patient-and-staff-safety",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 100
-    },
-    {
-      "title": "Registered nurses at Dominican Hospital to protest proposed staffing cuts that jeopardize patient safety",
-      "summary": "Registered nurses at Dominican Hospital in Santa Cruz, Calif., will hold an informational picket on Tuesday, June 30, to alert the community about CommonSpirit Health’s (CommonSpirit) proposed staffing cuts that jeopardize patient safety and undermine quality care.",
-      "url": "https://www.nationalnursesunited.org/press/registered-nurses-at-dominican-hospital-to-protest-proposed-staffing-cuts",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "",
-      "category": "quality_safety",
-      "relevance": 100
-    },
-    {
-      "title": "Los Angeles nurses to hold an informational picket for patient safety and protest imminent closure of pediatric unit",
-      "summary": "Registered nurses at California Hospital Medical Center in Los Angeles, Calif., will hold an informational picket on Monday, June 29, to protest the administration’s decision to lay off essential unit support staff throughout the facility and to close the pediatric unit.",
-      "url": "https://www.nationalnursesunited.org/press/los-angeles-nurses-to-hold-an-informational-picket-for-patient-safety",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "",
-      "category": "closures_layoffs",
-      "relevance": 100
-    },
-    {
-      "title": "Wichita nurses to hold one-day strike for patient and staff safety",
-      "summary": "Nurses at Ascension Via Christi St. Francis and St. Joseph hospitals in Wichita, Kan., will hold a one-day strike on July 6 to protest the administration’s refusal to address RNs’ well-documented concerns about patient safety and workplace violence protection as part of contract negotiations.",
-      "url": "https://www.nationalnursesunited.org/press/wichita-nurses-to-hold-one-day-strike-for-patient-and-staff-safety",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
-      "relevance": 100
-    },
-    {
-      "title": "St. Joseph Health nurses to hold vigil for patient safety and safe staffing",
-      "summary": "Registered nurses at St. Joseph Health in Brazos Valley, Texas, will hold a vigil for patient safety and safe staffing on Wednesday, June 24. The vigil is taking place after hundreds of nurses and hospital employees signed a petition of no confidence in hospital leadership, citing ongoing concerns about patient safety and staffing and the impact of management decisions on the quality of patient care.",
-      "url": "https://www.nationalnursesunited.org/press/st-joseph-health-nurses-to-hold-vigil-for-patient-safety-and-safe-staffing",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "",
-      "category": "quality_safety",
-      "relevance": 100
-    },
-    {
-      "title": "Chicago nurses at Saint Mary of Nazareth Hospital vote overwhelmingly to join NNOC/NNU",
-      "summary": "Registered nurses at Saint Mary of Nazareth Hospital in Chicago voted overwhelmingly to join National Nurses Organizing Committee, an affiliate of National Nurses United, the nation’s largest and fastest-growing nurses union. In an election held Wednesday, June 17, nurses voted 96% yes to forming a union.",
-      "url": "https://www.nationalnursesunited.org/press/chicago-nurses-at-saint-mary-of-nazareth-hospital-vote-overwhelmingly-to-join-nnoc-nnu",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "",
-      "category": "labor_unions",
       "relevance": 100
     },
     {
@@ -2055,6 +1825,17 @@
       "title": "AHA Rural Health Care Leadership Conference",
       "summary": "",
       "url": "https://ruralconference.aha.org/",
+      "source": "AHA News",
+      "sourceType": "html",
+      "sourceId": "aha_news",
+      "publishedAt": "",
+      "category": "policy_reimbursement",
+      "relevance": 96
+    },
+    {
+      "title": "ASHE to host Health Care Facilities Innovation Conference in August",
+      "summary": "",
+      "url": "https://www.aha.org/news/headline/2026-07-20-ashe-host-health-care-facilities-innovation-conference-august",
       "source": "AHA News",
       "sourceType": "html",
       "sourceId": "aha_news",
