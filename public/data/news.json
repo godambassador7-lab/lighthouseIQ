@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-07-20T15:58:44.387Z",
+  "lastUpdated": "2026-07-20T18:14:04.459Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 4,
-    "healthySources": 6,
+    "staleSources": 3,
+    "healthySources": 7,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 185,
+        "articleCount": 182,
         "latestPublishedAt": "2026-07-20T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 174,
+        "articleCount": 176,
         "latestPublishedAt": "2026-07-20T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "STAT News",
         "articleCount": 74,
         "latestPublishedAt": "2026-07-20T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 32,
         "latestPublishedAt": "2026-07-20T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 12,
         "latestPublishedAt": "2026-07-20T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 7,
         "latestPublishedAt": "2026-07-20T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
-        "articleCount": 6,
-        "latestPublishedAt": "2026-07-17T00:00:00.000Z",
-        "staleHours": 87,
-        "status": "stale"
+        "articleCount": 7,
+        "latestPublishedAt": "2026-07-20T00:00:00.000Z",
+        "staleHours": 18,
+        "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 5,
         "latestPublishedAt": "2026-07-16T00:00:00.000Z",
-        "staleHours": 111,
+        "staleHours": 114,
         "status": "stale"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 4,
         "latestPublishedAt": "2026-07-16T00:00:00.000Z",
-        "staleHours": 111,
+        "staleHours": 114,
         "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 1,
         "latestPublishedAt": "2026-07-14T00:00:00.000Z",
-        "staleHours": 159,
+        "staleHours": 162,
         "status": "stale"
       }
     ]
@@ -83,11 +83,11 @@
   "categoryCoverage": {
     "closures_layoffs": {
       "label": "Closures & Layoffs",
-      "count": 11
+      "count": 10
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 16
+      "count": 14
     },
     "labor_unions": {
       "label": "Labor & Unions",
@@ -107,7 +107,7 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 154
+      "count": 157
     },
     "general_market": {
       "label": "General Market",
@@ -127,7 +127,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 59,
+        "actual": 67,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -137,7 +137,7 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 4,
+        "actual": 3,
         "pass": false
       }
     }
@@ -192,6 +192,18 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "Early Alert: Intravascular Administration Set Issue from Baxter",
+      "summary": "Baxter administration sets may have air bubbles in the drip chamber and tubing, which may result in air being delivered through the IV line to the patient.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-intravascular-administration-set-issue-baxter",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-07-20",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
       "title": "Office of the Secretary; Amended Notice of Meeting",
       "summary": "",
       "url": "https://www.federalregister.gov/documents/2026/07/20/2026-14599/office-of-the-secretary-amended-notice-of-meeting",
@@ -202,6 +214,60 @@
       "category": "general_market",
       "relevance": 96,
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "As AI vendor ROI claims grow bolder, health systems require more proof",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/as-ai-vendor-roi-claims-grow-bolder-health-systems-require-more-proof/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-20",
+      "summary": "When an AI vendor walks into Mass General Brigham with a bold ROI claim, the conversation doesn’t start with a pilot proposal. It starts with a form.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Children&#8217;s Minnesota names chief ambulatory officer",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/childrens-minnesota-names-chief-ambulatory-officer/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-20",
+      "summary": "Minneapolis-based Children&#8217;s Minnesota promoted Monica Schiller to senior vice president of service lines and chief ambulatory officer, effective July 18. Ms.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Meet 5 AI execs driving health insurers&#8217; strategies",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/meet-5-ai-execs-driving-health-insurers-strategies/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-20",
+      "summary": "AI chiefs have become increasingly present in health systems, shaping governance, implementation and oversight. Health plans and their subsidiaries have been getting on the bandwagon, too.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Pharmacist median pay by state",
+      "url": "https://www.beckershospitalreview.com/compensation-issues/pharmacist-median-pay-by-state/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-20",
+      "summary": "Pharmacist pay varies widely across the country, with the gap between the highest- and lowest-paying states topping $39,000 a year, according to data released May 15 by the Bureau of Labor Statistics. Alaska pharmacists earn the highest annual median pay in the country, while those in Rhode Island earn the lowest.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "What makes patients choose 1 hospital over another?",
+      "url": "https://www.beckershospitalreview.com/patient-experience/what-makes-patients-choose-1-hospital-over-another/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-20",
+      "summary": "Most patients decide on a hospital before settling on a physician — or land on both in the same step — when they first encounter a new health concern, according to survey results U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Chicago&#8217;s 1st new medical school in a century opens",
+      "url": "https://www.beckershospitalreview.com/workforce/chicagos-1st-new-medical-school-in-a-century-opens/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-20",
+      "summary": "Illinois College of Osteopathic Medicine opened July 20 in Chicago, marking the city&#8217;s first new medical school in nearly 100 years. Five things to know: 1.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
     },
     {
       "title": "Lehigh Valley Health Network security guards allege wage theft",
@@ -238,60 +304,6 @@
       "summary": "CMS is rapidly reshaping the federal health technology landscape, rolling out a series of initiatives over the past three months that touch nearly every stage of digital healthcare, from how AI tools are paid for and how prior authorizations are processed to how Medicare technology is governed and remote patient monitoring is delivered. Here are [&#8230;] The post How CMS is reshaping health tech: 4 things to know appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
       "category": "policy_reimbursement",
       "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "6 of 20 physician specialties see lower burnout but lower happiness rates",
-      "url": "https://www.beckershospitalreview.com/quality/hospital-physician-relationships/6-of-20-physician-specialties-see-lower-burnout-but-lower-happiness-rates/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-20",
-      "summary": "Six physician specialties saw lower rates of burnout between 2024 and 2026, but still reported lower rates of happiness. Becker&#8217;s compiled Medscape’s “Physician Mental Health &#38; Well-Being Report” in 2025 and 2026 to determine the rate of happiness change.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "24 AI tools ranked for patient safety: Stanford, Harvard study",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/24-ai-tools-ranked-for-patient-safety-stanford-harvard-study/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-20",
-      "summary": "Stanford University School of Medicine and Harvard Medical School researchers ranked 24 AI systems by clinical safety in a new benchmark study, finding four medical-specialized tools topped the list in a statistical tie. The findings come from NOHARM (Numerous Options Harm Assessment for Risk in Medicine), originally posted to arXiv in December 2025 and last [&#8230;] The post 24 AI tools ranked for patient safety: Stanford, Harvard study appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "quality_safety",
-      "categoryLabel": "Quality & Safety"
-    },
-    {
-      "title": "FDA retracts cyclospora source finding: 5 things to know",
-      "url": "https://www.beckershospitalreview.com/quality/public-health/fda-retracts-cyclospora-source-finding-5-things-to-know/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-20",
-      "summary": "The FDA has retracted its statement that the cyclospora outbreak is linked to Taylor Farms, the supplier of Taco Bell lettuce, The Wall Street Journal reported July 20. Here is what to know.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "3 decisions health systems need to make before 2027: Deloitte",
-      "url": "https://www.beckershospitalreview.com/finance/3-decisions-health-systems-need-to-make-before-2027-deloitte/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-20",
-      "summary": "Health system leaders should focus on three strategic decisions during the second half of 2026 to strengthen operations heading into 2027, according to Deloitte&#8217;s midyear healthcare outlook, published July 16.. The report argues that while hospitals continue to see strong demand, many are still battling labor shortages, supply chain pressures and uncompensated care, leaving little [&#8230;] The post 3 decisions health systems need to make before 2027: Deloitte appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "17 most expensive EHR projects of all time, ranked",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/17-most-expensive-ehr-projects-of-all-time-ranked/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-20",
-      "summary": "EHRs are among the largest investments health systems will ever make, with some reaching into the billions — and, in one case, tens of billions — of dollars. Here are the priciest EHR installations on record, according to Becker&#8217;s reporting and other publicly available sources detailing projects that cost $500 million or more (this list [&#8230;] The post 17 most expensive EHR projects of all time, ranked appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "10 providers seeking RCM talent",
-      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/10-providers-seeking-rcm-talent-55/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-20",
-      "summary": "Ten hospitals and health systems recently posted job listings seeking revenue cycle management expertise. Note: This is not an exhaustive list.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
     },
     {
       "title": "STAT+: The next step of site-neutral, and a fiery PBM hearing",
@@ -411,6 +423,15 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "Clover Health reveals data breach in SEC filing",
+      "url": "https://www.fiercehealthcare.com/payers/clover-health-reveals-data-breach-sec-filing",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-07-20",
+      "summary": "Clover Health has disclosed a data breach in a new securities filing, though details on the incident are scarce.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
       "title": "Tempus buys out cancer genomics partner Personalis in $1.5 billion deal",
       "url": "https://www.fiercehealthcare.com/medtech/tempus-buys-out-cancer-genomics-specialist-personalis-15-billion-deal",
       "source": "Fierce Healthcare",
@@ -463,6 +484,60 @@
       "summary": "Stay up to date on the latest in health tech, digital health and health AI news with this weekly brief.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "6 of 20 physician specialties see lower burnout but lower happiness rates",
+      "url": "https://www.beckershospitalreview.com/quality/hospital-physician-relationships/6-of-20-physician-specialties-see-lower-burnout-but-lower-happiness-rates/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-20",
+      "summary": "Six physician specialties saw lower rates of burnout between 2024 and 2026, but still reported lower rates of happiness. Becker&#8217;s compiled Medscape’s “Physician Mental Health &#38; Well-Being Report” in 2025 and 2026 to determine the rate of happiness change.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "24 AI tools ranked for patient safety: Stanford, Harvard study",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/24-ai-tools-ranked-for-patient-safety-stanford-harvard-study/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-20",
+      "summary": "Stanford University School of Medicine and Harvard Medical School researchers ranked 24 AI systems by clinical safety in a new benchmark study, finding four medical-specialized tools topped the list in a statistical tie. The findings come from NOHARM (Numerous Options Harm Assessment for Risk in Medicine), originally posted to arXiv in December 2025 and last [&#8230;] The post 24 AI tools ranked for patient safety: Stanford, Harvard study appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "quality_safety",
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "FDA retracts cyclospora source finding: 5 things to know",
+      "url": "https://www.beckershospitalreview.com/quality/public-health/fda-retracts-cyclospora-source-finding-5-things-to-know/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-20",
+      "summary": "The FDA has retracted its statement that the cyclospora outbreak is linked to Taylor Farms, the supplier of Taco Bell lettuce, The Wall Street Journal reported July 20. Here is what to know.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "3 decisions health systems need to make before 2027: Deloitte",
+      "url": "https://www.beckershospitalreview.com/finance/3-decisions-health-systems-need-to-make-before-2027-deloitte/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-20",
+      "summary": "Health system leaders should focus on three strategic decisions during the second half of 2026 to strengthen operations heading into 2027, according to Deloitte&#8217;s midyear healthcare outlook, published July 16.. The report argues that while hospitals continue to see strong demand, many are still battling labor shortages, supply chain pressures and uncompensated care, leaving little [&#8230;] The post 3 decisions health systems need to make before 2027: Deloitte appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "17 most expensive EHR projects of all time, ranked",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/17-most-expensive-ehr-projects-of-all-time-ranked/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-20",
+      "summary": "EHRs are among the largest investments health systems will ever make, with some reaching into the billions — and, in one case, tens of billions — of dollars. Here are the priciest EHR installations on record, according to Becker&#8217;s reporting and other publicly available sources detailing projects that cost $500 million or more (this list [&#8230;] The post 17 most expensive EHR projects of all time, ranked appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "10 providers seeking RCM talent",
+      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/10-providers-seeking-rcm-talent-55/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-20",
+      "summary": "Ten hospitals and health systems recently posted job listings seeking revenue cycle management expertise. Note: This is not an exhaustive list.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
     },
     {
       "title": "Senate strikes down Dems move to overturn CMS’ WISeR AI prior auth pilot",
@@ -4735,78 +4810,6 @@
       "summary": "The hospitalist note template inside New Orleans-based Ochsner Health&#8217;s Epic system had gone unchanged for nearly a decade. This June, the 46-hospital system, which spans Louisiana and Mississippi, rebuilt it from the ground up and rolled it out everywhere at once.",
       "category": "general_market",
       "categoryLabel": "General Market"
-    },
-    {
-      "title": "Michigan nurses sue for back pay after hospital shutters",
-      "url": "https://www.beckershospitalreview.com/hr/michigan-nurses-sue-for-back-pay-after-hospital-shutters/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-14",
-      "summary": "The Michigan Nurses Association has sued Sturgis (Mich.) Hospital, alleging the now-shuttered hospital violated federal law by giving employees just three days&#8217; notice before closing, according to a complaint shared with Becker&#8217;s.",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "PeaceHealth names chief philanthropy officer for Washington communities",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/peacehealth-names-chief-philanthropy-officer-for-washington-communities/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-14",
-      "summary": "Heather McEvoy was appointed chief philanthropy officer for PeaceHealth&#8217;s Vancouver and Longview, Wash., communities.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "NYU Langone opens Long Island ASC",
-      "url": "https://www.beckershospitalreview.com/quality/nyu-langone-opens-long-island-asc/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-14",
-      "summary": "New York City-based NYU Langone Health opened NYU Langone Ambulatory Care—Patchogue, N.Y.",
-      "category": "capacity_expansion",
-      "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "Corewell Health taps market CFO",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/corewell-health-taps-market-cfo/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-14",
-      "summary": "Michael King has been named market CFO of Southfield, Mich.-based Corewell Health, according to a July 13 LinkedIn post.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "HCA Healthcare now expects ACA exchange impacts to exceed $1B in 2026",
-      "url": "https://www.fiercehealthcare.com/providers/hca-healthcare-warns-greater-expected-exchange-disruption-lowers-2026-guidance",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-07-14",
-      "summary": "The country's largest for-profit health system released preliminary second-quarter results highlighting an increase in uninsured volumes. It now expects a $1 billion to $1.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Cottage Health Expands Partnership with hellocare.ai Following Successful Pilot to Deploy AI Assisted Virtual Care and Patient Safety Platform Enterprise Wide",
-      "url": "https://www.fiercehealthcare.com/sponsored/cottage-health-expands-partnership-hellocareai-following-successful-pilot-deploy-ai",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-07-14",
-      "summary": "Santa Barbara, CA and Clearwater, FL — July 14, 2026 - Cottage Health and hellocare.ai today announced an expanded partnership to deploy the hellocare.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Hospital M&A stays hot in Q2 as health systems position for the future",
-      "url": "https://www.fiercehealthcare.com/providers/hospital-ma-stays-hot-q2-health-systems-position-future",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-07-14",
-      "summary": "There were 18 hospital transactions announced April through June, continuing a rebound from early 2025 that has seen more participation from mid-to-large independent systems eyeing future growth and sustainability, Kaufman Hall reports.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "North Carolina budget allocates millions for first-ever Rural Emergency Hospital reopening",
-      "url": "https://www.fiercehealthcare.com/providers/north-carolina-budget-allocates-millions-first-ever-rural-emergency-hospital-reopening",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-07-14",
-      "summary": "With tens of millions in hand from the state, local officials and ECU Health are hashing out plans to reopen and reimagine Martin General Hospital, which closed in 2023 due to financial strain.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
     }
   ]
 }
