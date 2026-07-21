@@ -1,86 +1,93 @@
 {
-  "lastUpdated": "2026-07-21T17:28:52.437Z",
+  "lastUpdated": "2026-07-21T19:30:24.095Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
-    "totalSources": 9,
+    "totalSources": 10,
     "staleSources": 2,
-    "healthySources": 7,
+    "healthySources": 8,
     "sources": [
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 184,
+        "articleCount": 182,
         "latestPublishedAt": "2026-07-21T00:00:00.000Z",
-        "staleHours": 17,
+        "staleHours": 19,
         "status": "ok"
       },
       {
         "source": "Fierce Healthcare",
-        "articleCount": 179,
+        "articleCount": 180,
         "latestPublishedAt": "2026-07-21T00:00:00.000Z",
-        "staleHours": 17,
+        "staleHours": 19,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 72,
+        "articleCount": 73,
         "latestPublishedAt": "2026-07-21T00:00:00.000Z",
-        "staleHours": 17,
+        "staleHours": 19,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 32,
         "latestPublishedAt": "2026-07-21T00:00:00.000Z",
-        "staleHours": 17,
+        "staleHours": 19,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
-        "articleCount": 13,
+        "articleCount": 12,
         "latestPublishedAt": "2026-07-21T00:00:00.000Z",
-        "staleHours": 17,
+        "staleHours": 19,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 8,
         "latestPublishedAt": "2026-07-21T00:00:00.000Z",
-        "staleHours": 17,
+        "staleHours": 19,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 7,
         "latestPublishedAt": "2026-07-20T00:00:00.000Z",
-        "staleHours": 41,
+        "staleHours": 43,
         "status": "ok"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 3,
         "latestPublishedAt": "2026-07-16T00:00:00.000Z",
-        "staleHours": 137,
+        "staleHours": 139,
         "status": "stale"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 2,
         "latestPublishedAt": "2026-07-17T00:00:00.000Z",
-        "staleHours": 113,
+        "staleHours": 115,
         "status": "stale"
+      },
+      {
+        "source": "National Nurses United RSS",
+        "articleCount": 1,
+        "latestPublishedAt": "2026-07-21T00:00:00.000Z",
+        "staleHours": 19,
+        "status": "ok"
       }
     ]
   },
   "categoryCoverage": {
     "closures_layoffs": {
       "label": "Closures & Layoffs",
-      "count": 11
+      "count": 10
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 13
+      "count": 15
     },
     "labor_unions": {
       "label": "Labor & Unions",
@@ -88,11 +95,11 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 91
+      "count": 90
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 14
+      "count": 13
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
@@ -100,11 +107,11 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 156
+      "count": 159
     },
     "general_market": {
       "label": "General Market",
-      "count": 200
+      "count": 198
     }
   },
   "quality": {
@@ -113,12 +120,12 @@
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
-        "actual": 9,
+        "actual": 10,
         "pass": true
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 80,
+        "actual": 94,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -195,6 +202,18 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "MaineHealth management refuses to cut ties with Palantir",
+      "summary": "Maine Medical Center registered nurses and community allies will hold a press conference and rally on Thursday, July 23 in Portland to highlight their demand that MaineHealth cancel its contract with Palantir Technologies, a company that has helped enable increasingly deadly encounters with immigration officers, including, most recently, the murders of Johan Sebastian Durán Guerrero in Maine and Lorenzo Salgado Araujo in Texas.",
+      "url": "https://www.nationalnursesunited.org/press/mainehealth-management-refuses-to-cut-ties-with-palantir",
+      "source": "National Nurses United RSS",
+      "sourceType": "rss",
+      "sourceId": "nnu_rss",
+      "publishedAt": "2026-07-21",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
       "title": "National Institute of Neurological Disorders and Stroke; Notice of Meeting",
       "summary": "",
       "url": "https://www.federalregister.gov/documents/2026/07/21/2026-14667/national-institute-of-neurological-disorders-and-stroke-notice-of-meeting",
@@ -231,6 +250,87 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
+      "title": "UnitedHealthcare, ECU Health extend agreement until August",
+      "url": "https://www.beckershospitalreview.com/academic-medical-center/policy-and-regulation/north-carolina-system-to-start-going-out-of-network-with-unitedhealthcare-in-april/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-21",
+      "summary": "Hospitals under Greenville, N.C.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "AdventHealth, Intermountain Health plan Denver joint venture: 5 things to know",
+      "url": "https://www.beckershospitalreview.com/hospital-transactions-and-valuation/adventhealth-intermountain-health-plan-denver-joint-venture-5-things-to-know/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-21",
+      "summary": "AdventHealth and Intermountain Health have signed a letter of intent to form a joint venture combining their greater Denver-area hospitals and care sites. Here are five things to know, according to a July 21 joint news release: 1.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Inside CHOP&#8217;s push to get 25% of its workforce fluent in AI",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/inside-chops-push-to-get-25-of-its-workforce-fluent-in-ai/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-21",
+      "summary": "Children&#8217;s Hospital of Philadelphia has trained more than 1,300 employees through its School of AI since launching the program in 2025, but its leaders say reaching the rest of its workforce will take more than curriculum alone. The Philadelphia-based health system launched its School of AI in September 2025, building on a data literacy effort [&#8230;] The post Inside CHOP&#8217;s push to get 25% of its workforce fluent in AI appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Trump administration to modernize how hospitals track injuries with EHR data",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/trump-administration-to-modernize-national-injury-tracking-with-ehr-data/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-21",
+      "summary": "The Consumer Product Safety Commission is overhauling how hospitals track and report consumer product-related injuries, moving to a system that pulls data automatically from patients&#8217; electronic health records, Politico reported July 21. The updated system, called NEISS-R, replaces a manually coded process the CPSC has used since 1972.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "St. David&#8217;s Texas hospital taps new COO",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/st-davids-texas-hospital-taps-new-coo/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-21",
+      "summary": "Brandon Cohen has been named COO of St. David&#8217;s North Austin (Texas) Medical Center, effective July 23.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Longitude Health launching clinical trial, cell and gene therapy arms",
+      "url": "https://www.beckershospitalreview.com/finance/longitude-health-launching-clinical-trial-cell-and-gene-therapy-arms/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-21",
+      "summary": "Innovation consortium Longitude Health&#8217;s board of managers approved funding for two new utilities: Longitude Clinical Trial Services and Longitude Cell and Gene Therapy.&#160; The additions bring Longitude Health&#8217;s utility count to four, joining Longitude Rx, launched in December 2024, and Longitude Fx, approved in April, according to a July 21 news release.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "The healthcare AI PR wars, explained",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/the-healthcare-ai-pr-wars-explained/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-21",
+      "summary": "Clinical AI vendors have spent the past few weeks citing dueling benchmark studies to make the case that their tool is the safest or most trusted by physicians — sometimes citing the same study to reach opposite conclusions. Here are 12 things to know about the fight, and why the health system leaders who actually [&#8230;] The post The healthcare AI PR wars, explained appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "FDA approves gene-targeting cancer drug",
+      "url": "https://www.beckershospitalreview.com/pharmacy/fda-approves-gene-targeting-cancer-drug/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-21",
+      "summary": "The FDA has granted full approval for selpercatnib in the treatment of advanced cancer among patients ages 2 and older who carry a rare genetic alteration. Selpercatinib, also known as Retevmo, targets and &#8220;turns off&#8221; the RET gene fusion to stop cell growth, according to a July 21 news release from New York City-based Memorial [&#8230;] The post FDA approves gene-targeting cancer drug appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "9 teams advance in HHS&#8217; EHIgnite EHR data challenge",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/9-teams-advance-in-hhs-ehignite-ehr-data-challenge/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-21",
+      "summary": "HHS&#8217; ONC has selected nine teams as phase 1 winners of its EHIgnite Challenge, a federal competition to turn dense electronic health information exports into usable tools for patients and clinicians. The challenge drew nearly 100 submissions targeting the problem of single-patient EHI exports that often run hundreds of pages and are difficult to act [&#8230;] The post 9 teams advance in HHS&#8217; EHIgnite EHR data challenge appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
       "title": "Nationwide Children&#8217;s names CNO",
       "url": "https://www.beckershospitalreview.com/hospital-executive-moves/nationwide-childrens-names-cno/",
       "source": "Becker's Hospital Review",
@@ -240,85 +340,13 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "What would it take for systems to compete with America&#8217;s best 401(k) plans?",
-      "url": "https://www.beckershospitalreview.com/workforce/what-would-it-take-for-systems-to-compete-with-americas-best-401k-plans/",
-      "source": "Becker's Hospital Review",
+      "title": "STAT+: Rare disease drugmakers try to avoid Trump price cuts",
+      "url": "https://www.statnews.com/2026/07/21/rare-disease-drugmakers-avoid-trump-price-cuts-pbm-state-laws-dc-diagnosis/?utm_campaign=rss",
+      "source": "STAT News",
       "publishedAt": "2026-07-21",
-      "summary": "U.S.",
+      "summary": "Plus, GOP voters want a crackdown on health care fraud, and how PBMs are skirting state laws.",
       "category": "general_market",
       "categoryLabel": "General Market"
-    },
-    {
-      "title": "Amazon&#8217;s pay for 8 health tech jobs",
-      "url": "https://www.beckershospitalreview.com/disruptors/amazons-pay-for-8-health-tech-jobs-4/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-21",
-      "summary": "Amazon is hiring software and applied-science leaders, AI engineers and a healthcare cybersecurity specialist — the kinds of roles hospital and health system CIOs and chief digital officers are competing for as they build out their own AI and digital teams. Here are eight health tech jobs Amazon is hiring for this month that should [&#8230;] The post Amazon&#8217;s pay for 8 health tech jobs appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "HHS defers $1B+ in Medicaid funds to Minnesota, California",
-      "url": "https://www.beckershospitalreview.com/finance/hhs-defers-1b-in-medicaid-funds-to-minnesota-california/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-21",
-      "summary": "HHS and CMS are deferring more than $1 billion in federal Medicaid funds to Minnesota and California, agency officials confirmed July 21.&#160; The agencies said they are deferring approximately $867.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Median pay for 42 hospital jobs",
-      "url": "https://www.beckershospitalreview.com/compensation-issues/median-pay-for-42-hospital-jobs/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-21",
-      "summary": "Median annual wages vary widely among hospital workers, according to May 2025 data from the Bureau of Labor Statistics. Registered nurses, the nation&#8217;s largest healthcare practitioner occupation with roughly 3.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Care New England executive heads to Connecticut Children&#8217;s",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/care-new-england-executive-heads-to-connecticut-childrens/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-21",
-      "summary": "Hartford-based Connecticut Children&#8217;s has appointed Thomas Ricci executive vice president and CFO, effective Aug. 31.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Iowa board sanctions MercyOne pharmacy after drug diversion",
-      "url": "https://www.beckershospitalreview.com/pharmacy/iowa-board-sanctions-mercyone-pharmacy-after-drug-diversion/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-21",
-      "summary": "The Iowa Board of Pharmacy has cited and warned a MercyOne hospital pharmacy after a pharmacy technician diverted 330 tablets of a controlled stimulant undetected for nearly two years. MercyOne Dubuque (Iowa) West Pharmacy failed to maintain controlled-substance accountability and did not verify that its physical drug inventory matched its expected inventory, according to a [&#8230;] The post Iowa board sanctions MercyOne pharmacy after drug diversion appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "56 health systems with strong finances",
-      "url": "https://www.beckershospitalreview.com/finance/56-health-systems-with-strong-finances/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-21",
-      "summary": "Here are 56 health systems with strong operational metrics and solid financial positions, according to reports from credit rating agencies Fitch Ratings and Moody’s Investors Service released in 2026. Note: This is not an exhaustive list.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Cleveland Clinic receives $25M from Cleveland Browns owner",
-      "url": "https://www.beckershospitalreview.com/capital/cleveland-clinic-receives-25m-from-cleveland-browns-owner/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-21",
-      "summary": "Cleveland Clinic has received a $25 million investment from longtime supporters Dee and Jimmy Haslam. Three notes: 1.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "UNC Health dismisses 340B underpayment lawsuits targeting Humana",
-      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/unc-health-dismisses-340b-underpayment-lawsuits-targeting-humana/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-21",
-      "summary": "Chapel Hill, N.C.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
     },
     {
       "title": "Opinion: Pete Hegseth, ‘The Odyssey,’ and the testosterone myth",
@@ -438,6 +466,15 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
+      "title": "Trump administration pauses $1B in Medicaid payments to California, Minnesota",
+      "url": "https://www.healthcaredive.com/news/minnesota-california-1-billion-medicaid-funding-deferred-fraud-trump-hhs/825802/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-07-21",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
       "title": "Novo sues Lilly, alleging ‘misleading’ advertising of obesity drugs",
       "url": "https://www.healthcaredive.com/news/novo-lilly-lawsuit-obesity-drug-glp1-marketing/825801/",
       "source": "Healthcare Dive",
@@ -456,11 +493,110 @@
       "categoryLabel": "Mergers & M&A"
     },
     {
+      "title": "AdventHealth, Intermountain Health plan to form Denver-area joint venture",
+      "url": "https://www.fiercehealthcare.com/providers/adventhealth-intermountain-health-plan-form-denver-area-joint-venture",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-07-21",
+      "summary": "The entity would comprise five AdventHealth hospitals, three Intermountain hospitals and their affiliated sites. It would be managed by AdventHealth, which is also expected to be the joint venture's majority owner.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "T. Denny Sanford, billionaire philanthropist and Sanford Health namesake, dies at 90",
+      "url": "https://www.fiercehealthcare.com/providers/t-denny-sanford-billionaire-philanthropist-and-sanford-health-namesake-dies-90",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-07-21",
+      "summary": "The Midwest native gave more than $4 billion over the course of his lifetime, including nearly $2 billion to Sanford Health.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
       "title": "Trump admin pausing over $1B in Medicaid payments to California, Minnesota",
       "url": "https://www.fiercehealthcare.com/regulatory/trump-admin-pausing-over-1b-medicaid-payments-california-minnesota",
       "source": "Fierce Healthcare",
       "publishedAt": "2026-07-21",
       "summary": "The funding freezes are due to “suspected fraud and noncompliance,” U.S.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "What would it take for systems to compete with America&#8217;s best 401(k) plans?",
+      "url": "https://www.beckershospitalreview.com/workforce/what-would-it-take-for-systems-to-compete-with-americas-best-401k-plans/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-21",
+      "summary": "U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Amazon&#8217;s pay for 8 health tech jobs",
+      "url": "https://www.beckershospitalreview.com/disruptors/amazons-pay-for-8-health-tech-jobs-4/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-21",
+      "summary": "Amazon is hiring software and applied-science leaders, AI engineers and a healthcare cybersecurity specialist — the kinds of roles hospital and health system CIOs and chief digital officers are competing for as they build out their own AI and digital teams. Here are eight health tech jobs Amazon is hiring for this month that should [&#8230;] The post Amazon&#8217;s pay for 8 health tech jobs appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "HHS defers $1B+ in Medicaid funds to Minnesota, California",
+      "url": "https://www.beckershospitalreview.com/finance/hhs-defers-1b-in-medicaid-funds-to-minnesota-california/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-21",
+      "summary": "HHS and CMS are deferring more than $1 billion in federal Medicaid funds to Minnesota and California, agency officials confirmed July 21.&#160; The agencies said they are deferring approximately $867.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Median pay for 42 hospital jobs",
+      "url": "https://www.beckershospitalreview.com/compensation-issues/median-pay-for-42-hospital-jobs/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-21",
+      "summary": "Median annual wages vary widely among hospital workers, according to May 2025 data from the Bureau of Labor Statistics. Registered nurses, the nation&#8217;s largest healthcare practitioner occupation with roughly 3.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Care New England executive heads to Connecticut Children&#8217;s",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/care-new-england-executive-heads-to-connecticut-childrens/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-21",
+      "summary": "Hartford-based Connecticut Children&#8217;s has appointed Thomas Ricci executive vice president and CFO, effective Aug. 31.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Iowa board sanctions MercyOne pharmacy after drug diversion",
+      "url": "https://www.beckershospitalreview.com/pharmacy/iowa-board-sanctions-mercyone-pharmacy-after-drug-diversion/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-21",
+      "summary": "The Iowa Board of Pharmacy has cited and warned a MercyOne hospital pharmacy after a pharmacy technician diverted 330 tablets of a controlled stimulant undetected for nearly two years. MercyOne Dubuque (Iowa) West Pharmacy failed to maintain controlled-substance accountability and did not verify that its physical drug inventory matched its expected inventory, according to a [&#8230;] The post Iowa board sanctions MercyOne pharmacy after drug diversion appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "56 health systems with strong finances",
+      "url": "https://www.beckershospitalreview.com/finance/56-health-systems-with-strong-finances/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-21",
+      "summary": "Here are 56 health systems with strong operational metrics and solid financial positions, according to reports from credit rating agencies Fitch Ratings and Moody’s Investors Service released in 2026. Note: This is not an exhaustive list.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Cleveland Clinic receives $25M from Cleveland Browns owner",
+      "url": "https://www.beckershospitalreview.com/capital/cleveland-clinic-receives-25m-from-cleveland-browns-owner/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-21",
+      "summary": "Cleveland Clinic has received a $25 million investment from longtime supporters Dee and Jimmy Haslam. Three notes: 1.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "UNC Health dismisses 340B underpayment lawsuits targeting Humana",
+      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/unc-health-dismisses-340b-underpayment-lawsuits-targeting-humana/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-21",
+      "summary": "Chapel Hill, N.C.",
       "category": "policy_reimbursement",
       "categoryLabel": "Policy & Reimbursement"
     },
@@ -4663,132 +4799,6 @@
       "summary": "A global report from Heidi Health finds that 83% of clinicians began using AI in their practice before their employer had established formal policy, guidance or a recommended tool — a sign that adoption is outrunning governance across healthcare systems worldwide, according to a news release shared with Becker&#8217;s. The report, &#8220;Pressure Points: How the [&#8230;] The post 83% of clinicians adopted AI before governance frameworks were in place: Survey appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Community Health Network CHRO exits",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/community-health-network-chro-exits/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-15",
-      "summary": "Michelle Mahaffey, executive vice president and chief human resources officer at Indianapolis-based Community Health Network for the past six years, has announced she is stepping down from the role. Ms.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Judge tosses another No Surprises lawsuit against HaloMD",
-      "url": "https://www.healthcaredive.com/news/judge-dismisses-elevance-no-surprises-lawsuit-georgia-halomd/825327/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-07-15",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Children&#8217;s Wisconsin taps primary care president",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/childrens-wisconsin-taps-primary-care-president/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-15",
-      "summary": "Milwaukee-based Children&#8217;s Wisconsin named Kevin Dahlman, MD, as president of primary care. In the role, Dr.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "How children&#8217;s hospitals manage the nation&#8217;s most stubborn drug shortages",
-      "url": "https://www.beckershospitalreview.com/pharmacy/how-childrens-hospitals-manage-the-nations-most-stubborn-drug-shortages/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-15",
-      "summary": "Pediatric drugs are the most affected therapeutic category in active drug shortage with 16 shortages, and six of those involve IV fluids and additives — a challenge that hits children&#8217;s hospitals harder than most adult health systems. A different kind of complexity Managing drug shortages at a pediatric institution requires more than finding an alternative [&#8230;] The post How children&#8217;s hospitals manage the nation&#8217;s most stubborn drug shortages appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Vermont hospital taps new president and COO",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/vermont-hospital-taps-new-president-and-coo/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-15",
-      "summary": "Marc Kosak has been named president and COO of Berlin-based Central Vermont Medical Center, effective July 20, according to a July 15 news release shared with Becker&#8217;s. The hospital is part of Burlington-based University of Vermont Health.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "As rural hospitals close ORs, surgical care deserts are expanding too",
-      "url": "https://www.beckershospitalreview.com/asc-transactions-and-valuation-issues/720-rural-hospitals-are-at-risk-just-6-of-ascs-are-there-to-catch-the-fallout/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-15",
-      "summary": "Roughly a third of the nation&#8217;s rural hospitals — 720 in all — are at risk of closing, according to a report from the Center for Healthcare Quality and Payment Reform. The findings begs a familiar question among ASC leaders: When hospitals retreat from a service line, who ends up with the volume?",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "Hacking group says it won&#8217;t target hospitals",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/cybersecurity/hacking-group-says-it-wont-target-hospitals/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-15",
-      "summary": "A cybercriminal group calling itself The Syndicate claims it breached Israeli fintech firm Nayax and stole more than 1 billion payment card records, while telling DataBreaches.net it steers clear of attacking hospitals.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "&#8216;More than a designation&#8217;: Adventist hospital transitions to critical access facility",
-      "url": "https://www.beckershospitalreview.com/finance/more-than-a-designation-adventist-hospital-transitions-to-critical-access-facility/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-15",
-      "summary": "Adventist Health Columbia Gorge in The Dalles, Ore., has officially transitioned to a critical access hospital after receiving final approval from CMS, a spokesperson for the health system confirmed to Becker&#8217;s.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Dignity Health names chief medical officer of California hospital",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/dignity-health-names-chief-medical-officer-of-california-hospital/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-15",
-      "summary": "San Francisco-based Dignity Health, a member of CommonSpirit Health, has appointed Gregory Eberhart, MD, as chief medical officer of California Hospital Medical Center in Los Angeles, according to a July 15 news release shared with Becker&#8217;s.&#160; This marks Dr.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "AdventHealth names SVP, chief clinical officer for primary care division",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/adventhealth-names-svp-chief-clinical-officer-for-primary-care-division/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-15",
-      "summary": "AdventHealth, a 57-hospital system based in Altamonte Springs, Fla., recently promoted Robert Rodgers, MD, to senior vice president and chief clinical officer of its primary health division.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Nicklaus Children&#8217;s $75M Epic project isn&#8217;t just about IT",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/nicklaus-childrens-75m-epic-project-isnt-just-about-it/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-15",
-      "summary": "Nicklaus Children&#8217;s Health System is putting a number on its Epic rollout, and its president and CEO wants people to understand what that number is actually for. Matthew A.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Doctor pay to drop in 2027 under proposed Medicare pay rule",
-      "url": "https://www.healthcaredive.com/news/doctor-pay-cut-2027-proposed-physician-pay-rule-cms/825303/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-07-15",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Elevance Health leaves D.C. Medicaid market, mulls future exits",
-      "url": "https://www.fiercehealthcare.com/payers/elevance-healths-stock-slides-premarket-even-it-beats-street-15b-q2-profit",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-07-15",
-      "summary": "Elevance Health is kicking off another round of quarterly earnings results for major insurers, posting $1.5 billion in profit for Q2.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "How CHOP increased naloxone co-prescribing from 3% to 84%: Study",
-      "url": "https://www.beckershospitalreview.com/pharmacy/how-chop-increased-naloxone-co-prescribing-from-3-to-84-study/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-15",
-      "summary": "Children&#8217;s Hospital of Philadelphia increased average monthly naloxone, known as Narcan, co-prescribing for patients receiving outpatient opioid prescriptions from 3% to 84.1% through an enterprisewide quality improvement initiative, according to a study published June 16 in The Journal of Pediatrics.",
-      "category": "quality_safety",
-      "categoryLabel": "Quality & Safety"
     }
   ]
 }
