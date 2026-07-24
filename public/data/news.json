@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-07-24T10:24:32.569Z",
+  "lastUpdated": "2026-07-24T12:24:10.703Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 3,
-    "healthySources": 7,
+    "staleSources": 2,
+    "healthySources": 8,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 197,
+        "articleCount": 194,
         "latestPublishedAt": "2026-07-24T00:00:00.000Z",
-        "staleHours": 10,
+        "staleHours": 12,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
         "articleCount": 173,
         "latestPublishedAt": "2026-07-24T00:00:00.000Z",
-        "staleHours": 10,
+        "staleHours": 12,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 66,
+        "articleCount": 68,
         "latestPublishedAt": "2026-07-24T00:00:00.000Z",
-        "staleHours": 10,
+        "staleHours": 12,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 31,
         "latestPublishedAt": "2026-07-24T00:00:00.000Z",
-        "staleHours": 10,
+        "staleHours": 12,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 15,
         "latestPublishedAt": "2026-07-23T00:00:00.000Z",
-        "staleHours": 34,
+        "staleHours": 36,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 7,
         "latestPublishedAt": "2026-07-24T00:00:00.000Z",
-        "staleHours": 10,
+        "staleHours": 12,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 7,
         "latestPublishedAt": "2026-07-23T00:00:00.000Z",
-        "staleHours": 34,
+        "staleHours": 36,
+        "status": "ok"
+      },
+      {
+        "source": "SEC Healthcare Filings",
+        "articleCount": 2,
+        "latestPublishedAt": "2026-07-24T00:00:00.000Z",
+        "staleHours": 12,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 2,
         "latestPublishedAt": "2026-07-20T00:00:00.000Z",
-        "staleHours": 106,
+        "staleHours": 108,
         "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 1,
         "latestPublishedAt": "2026-07-21T00:00:00.000Z",
-        "staleHours": 82,
-        "status": "stale"
-      },
-      {
-        "source": "SEC Healthcare Filings",
-        "articleCount": 1,
-        "latestPublishedAt": "2026-07-21T00:00:00.000Z",
-        "staleHours": 82,
+        "staleHours": 84,
         "status": "stale"
       }
     ]
@@ -91,11 +91,11 @@
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 9
+      "count": 10
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 81
+      "count": 79
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -111,14 +111,12 @@
     },
     "general_market": {
       "label": "General Market",
-      "count": 205
+      "count": 206
     }
   },
   "quality": {
-    "status": "warning",
-    "failedChecks": [
-      "maxStaleSources"
-    ],
+    "status": "pass",
+    "failedChecks": [],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -127,7 +125,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 50,
+        "actual": 54,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -137,8 +135,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 3,
-        "pass": false
+        "actual": 2,
+        "pass": true
       }
     }
   },
@@ -312,6 +310,18 @@
       "categoryLabel": "Policy & Reimbursement"
     },
     {
+      "title": "HCA 8-K filing - HCA Healthcare, Inc.",
+      "summary": "HCA Healthcare, Inc. filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/860730/000119312526315151/hca-20260724.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-07-24",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "Government Owned Invention Available for License: Nucleophosmin 1 (NPM1) Mutation-Specific T Cell Receptors for Targeted Treatment of Acute Myeloid Leukemia (AML)",
       "summary": "The NCI seeks research co-development partners or licensees for NPM1 Mutation-Specific T Cell Receptors for Targeted Treatment of AML.",
       "url": "https://www.federalregister.gov/documents/2026/07/24/2026-14981/government-owned-invention-available-for-license-nucleophosmin-1-npm1-mutation-specific-t-cell",
@@ -384,6 +394,24 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
+      "title": "A new, separate outbreak of the diarrhea-causing parasite",
+      "url": "https://www.statnews.com/2026/07/24/health-news-new-separate-cyclospora-diarrhea-outbreak/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-07-24",
+      "summary": "A win for peptide proponents, autism advisory committees clash, and more health news from Morning Rounds",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Merck strikes voluntary licensing deals in poor countries for an experimental HIV prevention pill",
+      "url": "https://www.statnews.com/pharmalot/2026/07/24/merck-experimental-hiv-prevention-pill-licensing-deals/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-07-24",
+      "summary": "Merck is striking licensing deals for its experimental HIV prevention pill in hope of getting wide-scale production started quickly.",
+      "category": "labor_unions",
+      "categoryLabel": "Labor & Unions"
+    },
+    {
       "title": "STAT+: White House offers its science blueprint: More AI, less life sciences",
       "url": "https://www.statnews.com/2026/07/24/science-new-golden-age-report-draws-mixed-reaction/?utm_campaign=rss",
       "source": "STAT News",
@@ -418,6 +446,15 @@
       "summary": "A federal loan program made it possible for Gauri Gurumurthy to pursue medicine. Now that program is changing.",
       "category": "general_market",
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "OpenAI makes Health in ChatGPT widely available, moving deeper into consumer health",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/openai-makes-health-chatgpt-widely-available-moving-deeper-consumer-health",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-07-24",
+      "summary": "OpenAI on Thursday made its Health in ChatGPT feature broadly available, enabling U.S.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "New CMS data spotlight continued rise in No Surprises Act disputes",
@@ -4753,42 +4790,6 @@
       "summary": "UnitedHealth Group boosted its outlook for the year on the back of $5.5 billion in profit for the second quarter.",
       "category": "general_market",
       "categoryLabel": "General Market"
-    },
-    {
-      "title": "West Tennessee Healthcare expands critical care support through eICU Program in partnership with Philips and hellocare.ai",
-      "url": "https://www.fiercehealthcare.com/sponsored/west-tennessee-healthcare-expands-critical-care-support-through-eicu-program-partnership",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-07-18",
-      "summary": "Jackson, TN - West Tennessee Healthcare is continuing to strengthen critical care services across the region through the expansion of its systemwide eICU program powered by Philips eCareManager and integrated with the hellocare.ai virtual care platform.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Senate HELP committee grills CDC nominee Erica Schwartz on vaccine policy, resistance to political interference",
-      "url": "https://www.fiercehealthcare.com/providers/senate-help-committee-grills-cdc-nominee-erica-schwartz-vaccine-policy-restoring-trust",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-07-18",
-      "summary": "Erica Schwartz, M.D.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "CMS seeks public feedback on 'AMA's monopoly' over CPT codes",
-      "url": "https://www.fiercehealthcare.com/regulatory/american-medical-associations-handling-cpt-codes-enters-congress-crosshairs",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-07-18",
-      "summary": "The agency joins prominent Republican lawmakers in scrutinizing the government's decades-long reliance on the physician association's proprietary coding system, and said it believes a divorce would not run afoul of statute.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Bipartisan House bill tying doc pay to inflation earns resounding applause from providers",
-      "url": "https://www.fiercehealthcare.com/providers/bipartisan-house-bill-tying-doc-pay-inflation-earns-resounding-applause-providers",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-07-18",
-      "summary": "Less than a day after a draft rule outlining reimbursement cuts for 2027, heads of the GOP and Democratic Doctors Caucuses introduced a sweeping physician pay overhaul featuring wish list items from primary care capitated payments to mandatory model changes.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
     }
   ]
 }
