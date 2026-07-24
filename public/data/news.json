@@ -1,82 +1,82 @@
 {
-  "lastUpdated": "2026-07-24T00:06:36.806Z",
+  "lastUpdated": "2026-07-24T04:20:23.078Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 2,
-    "healthySources": 8,
+    "staleSources": 4,
+    "healthySources": 6,
     "sources": [
       {
         "source": "Fierce Healthcare",
         "articleCount": 207,
         "latestPublishedAt": "2026-07-24T00:00:00.000Z",
-        "staleHours": 0,
+        "staleHours": 4,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
         "articleCount": 173,
-        "latestPublishedAt": "2026-07-23T00:00:00.000Z",
-        "staleHours": 24,
+        "latestPublishedAt": "2026-07-24T00:00:00.000Z",
+        "staleHours": 4,
         "status": "ok"
       },
       {
         "source": "STAT News",
         "articleCount": 62,
         "latestPublishedAt": "2026-07-23T00:00:00.000Z",
-        "staleHours": 24,
+        "staleHours": 28,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 24,
         "latestPublishedAt": "2026-07-23T00:00:00.000Z",
-        "staleHours": 24,
+        "staleHours": 28,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 15,
         "latestPublishedAt": "2026-07-23T00:00:00.000Z",
-        "staleHours": 24,
+        "staleHours": 28,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 7,
         "latestPublishedAt": "2026-07-20T00:00:00.000Z",
-        "staleHours": 96,
+        "staleHours": 100,
         "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 6,
         "latestPublishedAt": "2026-07-23T00:00:00.000Z",
-        "staleHours": 24,
+        "staleHours": 28,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 4,
         "latestPublishedAt": "2026-07-20T00:00:00.000Z",
-        "staleHours": 96,
+        "staleHours": 100,
         "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 1,
         "latestPublishedAt": "2026-07-21T00:00:00.000Z",
-        "staleHours": 72,
-        "status": "ok"
+        "staleHours": 76,
+        "status": "stale"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 1,
         "latestPublishedAt": "2026-07-21T00:00:00.000Z",
-        "staleHours": 72,
-        "status": "ok"
+        "staleHours": 76,
+        "status": "stale"
       }
     ]
   },
@@ -107,16 +107,18 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 167
+      "count": 166
     },
     "general_market": {
       "label": "General Market",
-      "count": 200
+      "count": 201
     }
   },
   "quality": {
-    "status": "pass",
-    "failedChecks": [],
+    "status": "warning",
+    "failedChecks": [
+      "maxStaleSources"
+    ],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -125,7 +127,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 25,
+        "actual": 27,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -135,12 +137,30 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 2,
-        "pass": true
+        "actual": 4,
+        "pass": false
       }
     }
   },
   "articles": [
+    {
+      "title": "For big payers, is insurance still the point?",
+      "url": "https://www.beckershospitalreview.com/finance/for-big-payers-is-insurance-still-the-point/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-24",
+      "summary": "The country’s biggest payers have been branching out beyond insurance for years. Now, that trend is becoming even more pronounced.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Swedish Medical Center, UNOS sued over race-adjusted kidney transplant scores",
+      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/swedish-medical-center-unos-sued-over-race-adjusted-kidney-transplant-scores/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-24",
+      "summary": "A lawsuit filed July 21 against Seattle-based Swedish Medical Center and the United Network for Organ Sharing alleges the organizations used a race-based kidney function formula that delayed the plaintiff&#8217;s transplant waitlist eligibility by six years. The complaint, filed in the U.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
     {
       "title": "New CMS data spotlight continued rise in No Surprises Act disputes",
       "url": "https://www.fiercehealthcare.com/regulatory/new-cms-data-spotlights-continued-rise-no-surprises-act-disputes",
@@ -4749,24 +4769,6 @@
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-07-17",
       "summary": "For a critical access hospital in rural Iowa, a failed technology bet isn&#8217;t an abstract risk. It&#8217;s a resource problem.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Going &#8216;AI-powered&#8217;: El Camino Health&#8217;s EHR AI use up 500% in 2 months",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/going-ai-powered-el-camino-healths-ehr-ai-use-up-500-in-2-months/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-17",
-      "summary": "El Camino Health has a particular vantage point on what technology adoption can look like. The Mountain View, Calif.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Heywood Healthcare wins state grant to subsidize employee child care",
-      "url": "https://www.beckershospitalreview.com/population-health/heywood-healthcare-wins-state-grant-to-subsidize-employee-child-care/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-17",
-      "summary": "Heywood Healthcare has secured a competitive state award through the Commonwealth Employer Childcare Innovation Fund to provide fully subsidized child care for employees with the greatest financial need, the Gardner, Mass.-based system said in a June 16 news release shared with Becker&#8217;s.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
     }
