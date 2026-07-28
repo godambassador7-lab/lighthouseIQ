@@ -1,82 +1,75 @@
 {
-  "lastUpdated": "2026-07-28T08:41:00.354Z",
+  "lastUpdated": "2026-07-28T11:23:05.082Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
-    "totalSources": 10,
-    "staleSources": 2,
-    "healthySources": 8,
+    "totalSources": 9,
+    "staleSources": 0,
+    "healthySources": 9,
     "sources": [
       {
         "source": "Fierce Healthcare",
         "articleCount": 203,
         "latestPublishedAt": "2026-07-28T00:00:00.000Z",
-        "staleHours": 8,
+        "staleHours": 11,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 156,
-        "latestPublishedAt": "2026-07-27T00:00:00.000Z",
-        "staleHours": 32,
+        "articleCount": 157,
+        "latestPublishedAt": "2026-07-28T00:00:00.000Z",
+        "staleHours": 11,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 62,
+        "articleCount": 64,
         "latestPublishedAt": "2026-07-28T00:00:00.000Z",
-        "staleHours": 8,
+        "staleHours": 11,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
-        "articleCount": 34,
+        "articleCount": 32,
         "latestPublishedAt": "2026-07-28T00:00:00.000Z",
-        "staleHours": 8,
+        "staleHours": 11,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
-        "articleCount": 16,
+        "articleCount": 15,
         "latestPublishedAt": "2026-07-27T00:00:00.000Z",
-        "staleHours": 32,
+        "staleHours": 35,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 14,
         "latestPublishedAt": "2026-07-27T00:00:00.000Z",
-        "staleHours": 32,
+        "staleHours": 35,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 8,
         "latestPublishedAt": "2026-07-27T00:00:00.000Z",
-        "staleHours": 32,
+        "staleHours": 35,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 4,
         "latestPublishedAt": "2026-07-27T00:00:00.000Z",
-        "staleHours": 32,
+        "staleHours": 35,
         "status": "ok"
       },
       {
         "source": "SEC Healthcare Filings",
-        "articleCount": 2,
-        "latestPublishedAt": "2026-07-24T00:00:00.000Z",
-        "staleHours": 104,
-        "status": "stale"
-      },
-      {
-        "source": "National Nurses United RSS",
-        "articleCount": 1,
-        "latestPublishedAt": "2026-07-21T00:00:00.000Z",
-        "staleHours": 176,
-        "status": "stale"
+        "articleCount": 3,
+        "latestPublishedAt": "2026-07-28T00:00:00.000Z",
+        "staleHours": 11,
+        "status": "ok"
       }
     ]
   },
@@ -95,7 +88,7 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 73
+      "count": 74
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -107,7 +100,7 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 169
+      "count": 168
     },
     "general_market": {
       "label": "General Market",
@@ -120,12 +113,12 @@
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
-        "actual": 10,
+        "actual": 9,
         "pass": true
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 41,
+        "actual": 46,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -135,7 +128,7 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 2,
+        "actual": 0,
         "pass": true
       }
     }
@@ -286,7 +279,49 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "CMS evaluates one year of health tech progress, announces eight new pledge categories",
+      "title": "CNC 8-K filing - Centene Corporation",
+      "summary": "Centene Corporation filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1071739/000107173926000154/cnc-20260728.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-07-28",
+      "category": "general_market",
+      "relevance": 85,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "CNC 10-Q filing - Centene Corporation",
+      "summary": "Centene Corporation filed 10-Q with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1071739/000107173926000153/cnc-20260630.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-07-28",
+      "category": "general_market",
+      "relevance": 85,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "10 best states for healthcare: US News",
+      "url": "https://www.beckershospitalreview.com/rankings-and-ratings/10-best-states-for-healthcare-us-news-3/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-28",
+      "summary": "U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Preliminary trial results suggest a path to a safer Alzheimer&#8217;s treatment",
+      "url": "https://www.statnews.com/2026/07/28/promis-neurosciences-amyloid-alzheimers-aria/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-07-28",
+      "summary": "ProMIS Neurosciences is trying to design a safer amyloid-clearing drug for Alzheimer's. Early results suggest it might be on to something.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: CMS evaluates one year of health tech progress, announces eight new pledge categories",
       "url": "https://www.statnews.com/2026/07/28/medicare-medicaid-evaluates-health-tech-progress-unveils-eight-pledge-categories/?utm_campaign=rss",
       "source": "STAT News",
       "publishedAt": "2026-07-28",
@@ -536,6 +571,15 @@
       "summary": "Teladoc Health unveiled a new virtual care model for employers and health plans designed to offer a more coordinated, personalized approach for members, while tying payment to clinical and financial outcomes.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "CMS evaluates one year of health tech progress, announces eight new pledge categories",
+      "url": "https://www.statnews.com/2026/07/28/medicare-medicaid-evaluates-health-tech-progress-unveils-eight-pledge-categories/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-07-28",
+      "summary": "One year after launching the CMS Health Tech Ecosystem, officials convened in D.C.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
     },
     {
       "title": "Fierce Healthcare Fundraising Tracker '26: Bunkerhill Health closes series B round; Corner Health lands $32.5M",
@@ -2023,9 +2067,9 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "BAXTER ISSUES VOLUNTARY NATIONWIDE RECALL OF CEFAZOLIN IN DEXTROSE INJECTION, USP, 2G / 100ML (20MG / ML) SINGLE-DOSE INFUSION BAG IN 100ML DUE TO PARTICULATE MATTER FOUND IN SOLUTION",
-      "summary": "July 24, 2026 – DEERFIELD, Ill., Baxter International Inc. (NYSE:BAX) is voluntarily recalling Lot LD175708, Exp 14-Feb 2027 of Cefazolin in Dextrose Injection due to a report of particulate matter found in the solution identified as cardboard. Risk Statement: The use of the defective product has a",
-      "url": "http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/baxter-issues-voluntary-nationwide-recall-cefazolin-dextrose-injection-usp-2g-100ml-20mg-ml-single",
+      "title": "Early Alert: Percutaneous Catheter Issue from Boston Scientific",
+      "summary": "ENROUTE Transcarotid Neuroprotection Systems may have arterial sheath tip separation or partial tip separation during use",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-percutaneous-catheter-issue-boston-scientific",
       "source": "FDA MedWatch RSS",
       "sourceType": "rss",
       "sourceId": "fda_medwatch_rss",
@@ -2047,9 +2091,9 @@
       "categoryLabel": "Quality & Safety"
     },
     {
-      "title": "Early Alert: Percutaneous Catheter Issue from Boston Scientific",
-      "summary": "ENROUTE Transcarotid Neuroprotection Systems may have arterial sheath tip separation or partial tip separation during use",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-percutaneous-catheter-issue-boston-scientific",
+      "title": "BAXTER ISSUES VOLUNTARY NATIONWIDE RECALL OF CEFAZOLIN IN DEXTROSE INJECTION, USP, 2G / 100ML (20MG / ML) SINGLE-DOSE INFUSION BAG IN 100ML DUE TO PARTICULATE MATTER FOUND IN SOLUTION",
+      "summary": "July 24, 2026 – DEERFIELD, Ill., Baxter International Inc. (NYSE:BAX) is voluntarily recalling Lot LD175708, Exp 14-Feb 2027 of Cefazolin in Dextrose Injection due to a report of particulate matter found in the solution identified as cardboard. Risk Statement: The use of the defective product has a",
+      "url": "http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/baxter-issues-voluntary-nationwide-recall-cefazolin-dextrose-injection-usp-2g-100ml-20mg-ml-single",
       "source": "FDA MedWatch RSS",
       "sourceType": "rss",
       "sourceId": "fda_medwatch_rss",
@@ -4775,66 +4819,6 @@
       "category": "policy_reimbursement",
       "relevance": 100,
       "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "MaineHealth management refuses to cut ties with Palantir",
-      "summary": "Maine Medical Center registered nurses and community allies will hold a press conference and rally on Thursday, July 23 in Portland to highlight their demand that MaineHealth cancel its contract with Palantir Technologies, a company that has helped enable increasingly deadly encounters with immigration officers, including, most recently, the murders of Johan Sebastian Durán Guerrero in Maine and Lorenzo Salgado Araujo in Texas.",
-      "url": "https://www.nationalnursesunited.org/press/mainehealth-management-refuses-to-cut-ties-with-palantir",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "2026-07-21",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "UHS 8-K filing - Universal Health Services, Inc.",
-      "summary": "Universal Health Services, Inc. filed 8-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/352915/000119312526310330/uhs-20260720.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-07-21",
-      "category": "general_market",
-      "relevance": 90,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Expedited Investigational New Drug Pilot Program; Request for Information; Extension of the Comment Period",
-      "summary": "The Food and Drug Administration (FDA or the Agency) is extending the comment period for the notice that appeared in the Federal Register of June 24, 2026, to open a public docket to solicit input and comments on a proposal to establish a pilot program, the Expedited Investigational New Drug (IND) pilot program, to shorten the time it takes from drug identification to first-in-human (FIH) study, while protecting clinical trial participants.",
-      "url": "https://www.federalregister.gov/documents/2026/07/21/2026-14672/expedited-investigational-new-drug-pilot-program-request-for-information-extension-of-the-comment",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-07-21",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "National Institute of Neurological Disorders and Stroke; Notice of Meeting",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/07/21/2026-14667/national-institute-of-neurological-disorders-and-stroke-notice-of-meeting",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-07-21",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "National Institute of Neurological Disorders and Stroke; Notice of Meeting",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/07/21/2026-14666/national-institute-of-neurological-disorders-and-stroke-notice-of-meeting",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-07-21",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
     }
   ]
 }
