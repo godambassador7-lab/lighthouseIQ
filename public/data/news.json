@@ -1,74 +1,81 @@
 {
-  "lastUpdated": "2026-07-30T20:20:39.503Z",
+  "lastUpdated": "2026-07-30T22:13:00.279Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
-    "totalSources": 9,
+    "totalSources": 10,
     "staleSources": 0,
-    "healthySources": 9,
+    "healthySources": 10,
     "sources": [
       {
         "source": "Fierce Healthcare",
         "articleCount": 184,
         "latestPublishedAt": "2026-07-30T00:00:00.000Z",
-        "staleHours": 20,
+        "staleHours": 22,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 172,
+        "articleCount": 179,
         "latestPublishedAt": "2026-07-30T00:00:00.000Z",
-        "staleHours": 20,
+        "staleHours": 22,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 53,
+        "articleCount": 54,
         "latestPublishedAt": "2026-07-30T00:00:00.000Z",
-        "staleHours": 20,
+        "staleHours": 22,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
-        "articleCount": 35,
+        "articleCount": 32,
         "latestPublishedAt": "2026-07-30T00:00:00.000Z",
-        "staleHours": 20,
-        "status": "ok"
-      },
-      {
-        "source": "Federal Register - FDA",
-        "articleCount": 19,
-        "latestPublishedAt": "2026-07-29T00:00:00.000Z",
-        "staleHours": 44,
+        "staleHours": 22,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 14,
         "latestPublishedAt": "2026-07-30T00:00:00.000Z",
-        "staleHours": 20,
+        "staleHours": 22,
+        "status": "ok"
+      },
+      {
+        "source": "Federal Register - FDA",
+        "articleCount": 13,
+        "latestPublishedAt": "2026-07-29T00:00:00.000Z",
+        "staleHours": 46,
         "status": "ok"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 12,
         "latestPublishedAt": "2026-07-30T00:00:00.000Z",
-        "staleHours": 20,
+        "staleHours": 22,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 6,
         "latestPublishedAt": "2026-07-30T00:00:00.000Z",
-        "staleHours": 20,
+        "staleHours": 22,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 5,
         "latestPublishedAt": "2026-07-30T00:00:00.000Z",
-        "staleHours": 20,
+        "staleHours": 22,
+        "status": "ok"
+      },
+      {
+        "source": "National Nurses United RSS",
+        "articleCount": 1,
+        "latestPublishedAt": "2026-07-30T00:00:00.000Z",
+        "staleHours": 22,
         "status": "ok"
       }
     ]
@@ -88,11 +95,11 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 74
+      "count": 73
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 14
+      "count": 16
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
@@ -100,7 +107,7 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 151
+      "count": 150
     },
     "general_market": {
       "label": "General Market",
@@ -113,12 +120,12 @@
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
-        "actual": 9,
+        "actual": 10,
         "pass": true
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 107,
+        "actual": 118,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -363,6 +370,18 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
+      "title": "Nurses plan informational picket at Jackson Park Hospital to highlight patient safety concerns",
+      "summary": "Registered nurses at Jackson Park Hospital and Medical Center (JPH) will hold an informational picket on Friday, July 31, 2026, to raise their concerns about short staffing of both nurses and ancillary staff putting patients at risk, contributing to a high staff turnover, and creating challenges recruiting and retaining nurses.",
+      "url": "https://www.nationalnursesunited.org/press/nurses-plan-informational-picket-at-jackson-park-hospital-to-highlight-patient-safety",
+      "source": "National Nurses United RSS",
+      "sourceType": "rss",
+      "sourceId": "nnu_rss",
+      "publishedAt": "2026-07-30",
+      "category": "quality_safety",
+      "relevance": 100,
+      "categoryLabel": "Quality & Safety"
+    },
+    {
       "title": "Office of the Secretary; Amended Notice of Meeting",
       "summary": "",
       "url": "https://www.federalregister.gov/documents/2026/07/30/2026-15425/office-of-the-secretary-amended-notice-of-meeting",
@@ -411,92 +430,92 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "Payer CEOs sharpen their attacks on No Surprises arbitration",
+      "url": "https://www.beckershospitalreview.com/finance/payer-ceos-sharpen-their-attacks-on-no-surprises-arbitration/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-30",
+      "summary": "Another health insurance CEO is taking aim at the No Surprises Act&#8217;s arbitration system. &#8220;We do support the overall strategic intent of consumer protection from surprise billing.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "CMS drops 2 more final payment rules: 11 things to know",
+      "url": "https://www.beckershospitalreview.com/finance/cms-drops-2-more-final-payment-rules-11-things-to-know/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-30",
+      "summary": "CMS finalized fiscal 2027 payment rules for inpatient rehabilitation facilities and hospices July 30, giving both settings a 2.3% payment increase.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Get off the EHR upgrade treadmill: architectural sovereignty is the real clinical AI strategy",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/get-off-the-ehr-upgrade-treadmill-architectural-sovereignty-is-the-real-clinical-ai-strategy/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-30",
+      "summary": "Health systems are racing to keep up with their EHR vendor’s quarterly cadence. They should be asking whether that roadmap leads where clinical AI actually needs to go.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Cigna sees &#8216;slight downtick&#8217; in Evernorth clients covering GLP-1s",
+      "url": "https://www.beckershospitalreview.com/glp-1s/cigna-sees-slight-downtick-in-evernorth-clients-covering-glp-1s/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-30",
+      "summary": "Cigna pulled back GLP-1 weight-loss coverage for its own employees July 1. Now it says its clients have been doing the same.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "WVU Medicine names hospital CEO",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/wvu-medicine-names-hospital-ceo/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-30",
+      "summary": "John Forester has been named president and CEO of WVU Medicine St. Joseph&#8217;s Hospital in Buckhannon, W.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Mold-related cases might be mistaken for healthcare-associated infections: CDC",
+      "url": "https://www.beckershospitalreview.com/quality/infection-control/mold-related-cases-might-be-mistaken-for-healthcare-associated-infections-cdc/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-30",
+      "summary": "More than one-third of invasive mold disease cases at four Atlanta hospitals occurred in patients without classic risk factors, according to a CDC surveillance report published July 30. The finding suggests surveillance and clinician suspicion built only around the usual predisposing conditions could miss a substantial share of a rare but often fatal infection.",
+      "category": "quality_safety",
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "AHA urges NLRB to uphold decades-old hospital bargaining unit rule",
+      "url": "https://www.beckershospitalreview.com/hr/aha-urges-nlrb-to-uphold-decades-old-hospital-bargaining-unit-rule/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-30",
+      "summary": "The American Hospital Association filed an amicus brief with the National Labor Relations Board urging the board to preserve the 1989 Health Care Rule, which establishes eight mandatory types of bargaining units at acute-care hospitals. According to the July 29 brief, the AHA is weighing in on a case in which the Minnesota Nurses Association [&#8230;] The post AHA urges NLRB to uphold decades-old hospital bargaining unit rule appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "UnitedHealth Group becomes 4th largest company in the world",
+      "url": "https://www.beckershospitalreview.com/finance/unitedhealth-group-becomes-4th-largest-company-in-the-world/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-30",
+      "summary": "UnitedHealth Group is now the fourth-largest company in the world by revenue, according to the 2026 Fortune Global 500. The list ranks the world&#8217;s largest public and private companies by revenue for the 2025 fiscal year.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "10 hospitals, health systems looking for CFOs",
+      "url": "https://www.beckershospitalreview.com/finance/10-hospitals-health-systems-looking-for-cfos-3/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-30",
+      "summary": "Here are 10 hospitals and health systems that are seeking CFOs and assistant CFOs in recent job listings. 1.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "Penn State Health expands employee tuition program",
       "url": "https://www.beckershospitalreview.com/academic-medical-center/academic-medical-centers-workforce/penn-state-health-expands-employee-tuition-program/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-07-30",
       "summary": "Hershey, Pa.-based Penn State Health has expanded its employee tuition program, extending it to all full-time employees, including new hires at any system location, and their eligible dependents, according to a July 30 news release.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Union: 40% of nursing staff among Tower Health hospital layoffs",
-      "url": "https://www.beckershospitalreview.com/finance/union-40-of-nursing-staff-among-tower-health-hospital-layoffs/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-30",
-      "summary": "More than 40% of the nursing staff at Tower Health&#8217;s Pottstown (Pa.) Hospital are affected by its recent workforce reduction, according to the union representing 200 nurses at the hospital.",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "29 large health systems growing bigger",
-      "url": "https://www.beckershospitalreview.com/rural-health/growth-merger/11-large-health-systems-growing-bigger/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-30",
-      "summary": "After a brief post-pandemic lull, hospital consolidation is accelerating again, with large health systems expanding across state lines, absorbing independent hospitals and reshaping regional care markets.&#160; From portfolio resets and strategic exits to cross-market mergers and billion-dollar investments, these moves reflect how scale, capital access and geographic reach are becoming critical advantages in today’s healthcare [&#8230;] The post 29 large health systems growing bigger appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "How 7 systems divert behavioral health patients from the ED",
-      "url": "https://www.beckershospitalreview.com/care-coordination/how-7-systems-divert-behavioral-health-patients-from-the-ed/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-30",
-      "summary": "Behavioral health patients often wait longer than other emergency department patients for a bed. Along the way, patients may end up receiving care in the most expensive setting available, or experiencing distress in an often-hectic environment.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "6 ways leaders are fighting mid-career nurse burnout",
-      "url": "https://www.beckershospitalreview.com/quality/nursing/6-ways-leaders-are-fighting-mid-career-nurse-burnout/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-30",
-      "summary": "Mid-career nurses, defined as those with five to 15 years of experience, are now the most burned-out group, a finding that comes as no surprise to nurse leaders. At about three to five years of experience, nurses become very comfortable in their practice, but &#8220;that poses the question of whether they&#8217;re in the right spot [&#8230;] The post 6 ways leaders are fighting mid-career nurse burnout appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Tariffs: where things stand for healthcare",
-      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/tariffs-where-things-stand-for-healthcare/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-30",
-      "summary": "The U.S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Federal judge denies 25 states&#8217; bid to block Medicaid work rules",
-      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/federal-judge-denies-25-states-bid-to-block-medicaid-work-rules/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-30",
-      "summary": "A federal judge on July 29 denied a request from 25 states and Washington, D.C.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Erlanger to keep stadium naming rights amid Prisma Health merger",
-      "url": "https://www.beckershospitalreview.com/digital-marketing/erlanger-to-keep-stadium-naming-rights-amid-prisma-health-merger/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-30",
-      "summary": "Chattanooga, Tenn.-based Erlanger will retain the naming rights to Erlanger Park, the home of the Chattanooga Lookouts, even if its proposed merger with Greenville, S.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Cleveland Clinic breaks ground on $322M expansion",
-      "url": "https://www.beckershospitalreview.com/capital/cleveland-clinic-breaks-ground-on-322m-expansion/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-30",
-      "summary": "Cleveland Clinic has broken ground on a $322 million expansion of Cleveland Clinic Avon (Ohio) Hospital and the Richard E. Jacobs Health Center.",
-      "category": "capacity_expansion",
-      "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "Former Banner physician executive joins HCA Texas hospital as chief medical officer",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/former-banner-physician-executive-joins-hca-texas-hospital-as-chief-medical-officer/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-30",
-      "summary": "HCA Houston Healthcare Conroe (Texas) has named Renee Hebbeler-Clark, MD, chief medical officer, according to a July 29 news release shared with Becker&#8217;s.&#160; Dr.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
@@ -555,7 +574,7 @@
       "categoryLabel": "Policy & Reimbursement"
     },
     {
-      "title": "STAT+: Tracking the FDA expert review of Replimune’s melanoma treatment",
+      "title": "STAT+: FDA expert committee votes in favor of Replimune’s melanoma treatment",
       "url": "https://www.statnews.com/2026/07/30/replimune-melanoma-drug-rp1-fda-expert-meeting-live-blog/?utm_campaign=rss",
       "source": "STAT News",
       "publishedAt": "2026-07-30",
@@ -679,6 +698,96 @@
       "summary": "Erica Schwartz, M.D.",
       "category": "policy_reimbursement",
       "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Union: 40% of nursing staff among Tower Health hospital layoffs",
+      "url": "https://www.beckershospitalreview.com/finance/union-40-of-nursing-staff-among-tower-health-hospital-layoffs/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-30",
+      "summary": "More than 40% of the nursing staff at Tower Health&#8217;s Pottstown (Pa.) Hospital are affected by its recent workforce reduction, according to the union representing 200 nurses at the hospital.",
+      "category": "closures_layoffs",
+      "categoryLabel": "Closures & Layoffs"
+    },
+    {
+      "title": "29 large health systems growing bigger",
+      "url": "https://www.beckershospitalreview.com/rural-health/growth-merger/11-large-health-systems-growing-bigger/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-30",
+      "summary": "After a brief post-pandemic lull, hospital consolidation is accelerating again, with large health systems expanding across state lines, absorbing independent hospitals and reshaping regional care markets.&#160; From portfolio resets and strategic exits to cross-market mergers and billion-dollar investments, these moves reflect how scale, capital access and geographic reach are becoming critical advantages in today’s healthcare [&#8230;] The post 29 large health systems growing bigger appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "How 7 systems divert behavioral health patients from the ED",
+      "url": "https://www.beckershospitalreview.com/care-coordination/how-7-systems-divert-behavioral-health-patients-from-the-ed/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-30",
+      "summary": "Behavioral health patients often wait longer than other emergency department patients for a bed. Along the way, patients may end up receiving care in the most expensive setting available, or experiencing distress in an often-hectic environment.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "6 ways leaders are fighting mid-career nurse burnout",
+      "url": "https://www.beckershospitalreview.com/quality/nursing/6-ways-leaders-are-fighting-mid-career-nurse-burnout/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-30",
+      "summary": "Mid-career nurses, defined as those with five to 15 years of experience, are now the most burned-out group, a finding that comes as no surprise to nurse leaders. At about three to five years of experience, nurses become very comfortable in their practice, but &#8220;that poses the question of whether they&#8217;re in the right spot [&#8230;] The post 6 ways leaders are fighting mid-career nurse burnout appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Tariffs: where things stand for healthcare",
+      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/tariffs-where-things-stand-for-healthcare/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-30",
+      "summary": "The U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Federal judge denies 25 states&#8217; bid to block Medicaid work rules",
+      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/federal-judge-denies-25-states-bid-to-block-medicaid-work-rules/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-30",
+      "summary": "A federal judge on July 29 denied a request from 25 states and Washington, D.C.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Erlanger to keep stadium naming rights amid Prisma Health merger",
+      "url": "https://www.beckershospitalreview.com/digital-marketing/erlanger-to-keep-stadium-naming-rights-amid-prisma-health-merger/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-30",
+      "summary": "Chattanooga, Tenn.-based Erlanger will retain the naming rights to Erlanger Park, the home of the Chattanooga Lookouts, even if its proposed merger with Greenville, S.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Cleveland Clinic breaks ground on $322M expansion",
+      "url": "https://www.beckershospitalreview.com/capital/cleveland-clinic-breaks-ground-on-322m-expansion/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-30",
+      "summary": "Cleveland Clinic has broken ground on a $322 million expansion of Cleveland Clinic Avon (Ohio) Hospital and the Richard E. Jacobs Health Center.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "Former Banner physician executive joins HCA Texas hospital as chief medical officer",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/former-banner-physician-executive-joins-hca-texas-hospital-as-chief-medical-officer/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-07-30",
+      "summary": "HCA Houston Healthcare Conroe (Texas) has named Renee Hebbeler-Clark, MD, chief medical officer, according to a July 29 news release shared with Becker&#8217;s.&#160; Dr.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Tracking the FDA expert review of Replimune’s melanoma treatment",
+      "url": "https://www.statnews.com/2026/07/30/replimune-melanoma-drug-rp1-fda-expert-meeting-live-blog/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-07-30",
+      "summary": "STAT is live-blogging a meeting of FDA experts to review Replimune’s experimental melanoma drug, RP1.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
     },
     {
       "title": "13 states where the most common job is in healthcare",
@@ -4738,132 +4847,6 @@
       "category": "general_market",
       "relevance": 100,
       "categoryLabel": "General Market"
-    },
-    {
-      "title": "Cellular, Tissue, and Gene Therapies Advisory Committee; Amendment of Notice-Biologics License Application (BLA) 125842 From Capricor, Inc. for Deramiocel (Human Allogeneic Cardiosphere-Derived Cells)",
-      "summary": "The Food and Drug Administration (FDA) is announcing an amendment to the notice of meeting of the Cellular, Tissue, and Gene Therapies Advisory Committee (the Committee). This meeting was announced in the Federal Register on June 29, 2026. The amendment is being made to reflect a change in the DATES, ADDRESSES, and SUPPLEMENTARY INFORMATION: Procedure portion of the document. There are no other changes.",
-      "url": "https://www.federalregister.gov/documents/2026/07/24/2026-15016/cellular-tissue-and-gene-therapies-advisory-committee-amendment-of-notice-biologics-license",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-07-24",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Francis Esteban Matos: Final Debarment Order",
-      "summary": "The Food and Drug Administration (FDA or the Agency) is issuing an order under the Federal Food, Drug, and Cosmetic Act (FD&C Act) debarring Francis Esteban Matos for a period of 5 years from importing or offering for import any drug into the United States. FDA bases this order on a finding that Mr. Matos was convicted of a felony under Federal law. The factual basis supporting Mr. Matos's conviction, as described below, is conduct relating to the importation into the United States of a drug or controlled substance. Mr. Matos was given notice of the proposed debarment and was given an opportunity to request a hearing to show why he should not be debarred. As of May 18, 2026 (more than 30 days after receipt of the notice), Mr. Matos had not responded. Mr. Matos's failure to respond and request a hearing constitutes a waiver of his right to a hearing concerning this matter.",
-      "url": "https://www.federalregister.gov/documents/2026/07/24/2026-14989/francis-esteban-matos-final-debarment-order",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-07-24",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Medical Devices; Orthopedic Devices; Classification of the Intraoperative Surgical Angle Measurement Tool",
-      "summary": "The Food and Drug Administration (FDA) is classifying the intraoperative surgical angle measurement tool into class II (special controls). The special controls that apply to the device type are identified in this order and will be part of the codified language for classification of the intraoperative surgical angle measurement tool. We are taking this action because we have determined that classifying the device into class II will provide a reasonable assurance of safety and effectiveness of the device. We believe this action will also enhance patients' access to beneficial innovative devices, in part by reducing regulatory burdens.",
-      "url": "https://www.federalregister.gov/documents/2026/07/24/2026-14987/medical-devices-orthopedic-devices-classification-of-the-intraoperative-surgical-angle-measurement",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-07-24",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Medical Devices; General Hospital and Personal Use Devices; Classification of the Diabetes Digital Behavioral Therapeutic Device",
-      "summary": "The Food and Drug Administration (FDA) is classifying the diabetes digital behavioral therapeutic device into class II (special controls). The special controls that apply to the device type are identified in this order and will be part of the codified language for classification of the diabetes digital behavioral therapeutic device. We are taking this action because we have determined that classifying the device into class II will provide a reasonable assurance of safety and effectiveness of the device. We believe this action will also enhance patients' access to beneficial innovative devices, in part by reducing regulatory burdens.",
-      "url": "https://www.federalregister.gov/documents/2026/07/24/2026-14986/medical-devices-general-hospital-and-personal-use-devices-classification-of-the-diabetes-digital",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-07-24",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Medical Devices; Immunology and Microbiology Devices; Classification of the Over-the-Counter Test To Detect SARS-CoV-2 From Clinical Specimens",
-      "summary": "The Food and Drug Administration (FDA) is classifying the over-the-counter test to detect SARS-CoV-2 from clinical specimens into class II (special controls). The special controls that apply to the device type are identified in this order and will be part of the codified language for classification of the over-the-counter test to detect SARS-CoV-2 from clinical specimens. We are taking this action because we have determined that classifying the device into class II will provide a reasonable assurance of safety and effectiveness of the device. We believe this action will also enhance patients' access to beneficial innovative devices, in part by reducing regulatory burdens.",
-      "url": "https://www.federalregister.gov/documents/2026/07/24/2026-14985/medical-devices-immunology-and-microbiology-devices-classification-of-the-over-the-counter-test-to",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-07-24",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Medical Devices; Clinical Chemistry and Clinical Toxicology Devices; Classification of the Prognostic Test for Assessment of Chronic Kidney Disease Progression",
-      "summary": "The Food and Drug Administration (FDA) is classifying the prognostic test for assessment of chronic kidney disease progression into class II (special controls). The special controls that apply to the device type are identified in this order and will be part of the codified language for classification of the prognostic test for assessment of chronic kidney disease progression. We are taking this action because we have determined that classifying the device into class II will provide a reasonable assurance of safety and effectiveness of the device. We believe this action will also enhance patients' access to beneficial innovative devices, in part by reducing regulatory burdens.",
-      "url": "https://www.federalregister.gov/documents/2026/07/24/2026-14984/medical-devices-clinical-chemistry-and-clinical-toxicology-devices-classification-of-the-prognostic",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-07-24",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "HHS Request for Comment on the Update to the National Plan To Address Alzheimer's Disease",
-      "summary": "HHS released the first National Plan to Address Alzheimer's Disease in 2012, establishing a comprehensive framework to accelerate scientific progress and improve support for individuals living with Alzheimer's disease and Alzheimer's disease-related dementias (AD/ADRD) and their families. Since then, the National Plan has been updated annually and has guided federal efforts across research, care delivery, public health, and data infrastructure. HHS is now updating the overall National Plan to lead federal efforts through 2035. HHS would like input from the public to inform the future direction of federal efforts. Through this RFI, HHS invites public comment on approaches to advancing AD/ADRD research and development of new interventions to prevent and treat dementia, risk reduction strategies, early detection and diagnostic tools, and/or enhanced care, services, and supports for people living with dementia and their families, caregivers, and care partners. The Department also seeks input on gaps, emerging priorities, and opportunities to strengthen coordination across federal, state, Tribal, local, private sector, and community partners. The purpose of this RFI is to solicit public input to inform the development of a comprehensive update to the National Plan to Address Alzheimer's Disease, including future goals and priorities.",
-      "url": "https://www.federalregister.gov/documents/2026/07/24/2026-15045/hhs-request-for-comment-on-the-update-to-the-national-plan-to-address-alzheimers-disease",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-07-24",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Proposed Information Collection Activity; Voluntary Acknowledgment of Paternity and Required Data Elements for Paternity Establishment Affidavits",
-      "summary": "The Office of Child Support Enforcement (OCSE), Administration for Children and Families (ACF), U.S. Department of Health and Human Services, is requesting a 3-year extension of the Voluntary Acknowledgment of Paternity and Required Data Elements for Paternity Establishment Affidavits. No changes are proposed to the data elements, but burden has been adjusted to reflect improved automation for processes.",
-      "url": "https://www.federalregister.gov/documents/2026/07/24/2026-15044/proposed-information-collection-activity-voluntary-acknowledgment-of-paternity-and-required-data",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-07-24",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Rescinding Portions of the U.S. Department of Health and Human Services Title VI Regulations To Align With the Statutory Text and Conform to Executive Order 14281",
-      "summary": "By this rule, the U.S. Department of Health and Human Services amends its regulations implementing Title VI of the Civil Rights Act of 1964 (Title VI) to remove provisions that impose or exemplify liability based on disparate impact. These amendments align the Department's regulations with the best reading of Title VI's statutory text, avoid constitutional concerns, reduce compliance costs and uncertainty for recipients, and serve the public interest. In addition, these revisions conform to Executive Order 14281.",
-      "url": "https://www.federalregister.gov/documents/2026/07/24/2026-15000/rescinding-portions-of-the-us-department-of-health-and-human-services-title-vi-regulations-to-align",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-07-24",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Jefferson Health sues Independence Blue Cross over nearly $100M in disputed payments",
-      "url": "https://www.beckershospitalreview.com/finance/jefferson-health-sues-independence-blue-cross-over-nearly-100m-in-disputed-payments/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-24",
-      "summary": "Jefferson Health is alleging Independence Blue Cross used a string of reimbursement policy changes this year to cut what it pays the health system by an amount approaching $100 million in a new lawsuit. The July 22 complaint, filed in Philadelphia&#8217;s Court of Common Pleas, laid out five policy shifts the health system says breach [&#8230;] The post Jefferson Health sues Independence Blue Cross over nearly $100M in disputed payments appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "240 community hospital CEOs to know &#124; 2026",
-      "url": "https://www.beckershospitalreview.com/hospital-management-administration/240-community-hospital-ceos-to-know-2026/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-07-24",
-      "summary": "The community hospital CEOs recognized here are community stewards, strategic visionaries and patient advocates. While acute care remains central to their mission, these forward-thinking executives also prioritize expanding their institutions&#8217; offerings, making sure to weave primary care, specialty treatments, rehabilitation and public health programs into a broader picture of community health.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
     }
   ]
 }
