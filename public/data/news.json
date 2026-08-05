@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-08-05T07:44:41.030Z",
+  "lastUpdated": "2026-08-05T10:41:37.499Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 1,
-    "healthySources": 9,
+    "staleSources": 0,
+    "healthySources": 10,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 208,
+        "articleCount": 205,
         "latestPublishedAt": "2026-08-05T00:00:00.000Z",
-        "staleHours": 7,
+        "staleHours": 10,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
         "articleCount": 139,
         "latestPublishedAt": "2026-08-05T00:00:00.000Z",
-        "staleHours": 7,
+        "staleHours": 10,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 51,
-        "latestPublishedAt": "2026-08-04T00:00:00.000Z",
-        "staleHours": 31,
+        "articleCount": 55,
+        "latestPublishedAt": "2026-08-05T00:00:00.000Z",
+        "staleHours": 10,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 43,
         "latestPublishedAt": "2026-08-05T00:00:00.000Z",
-        "staleHours": 7,
+        "staleHours": 10,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 18,
         "latestPublishedAt": "2026-08-03T00:00:00.000Z",
-        "staleHours": 55,
+        "staleHours": 58,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 16,
         "latestPublishedAt": "2026-08-04T00:00:00.000Z",
-        "staleHours": 31,
+        "staleHours": 34,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
-        "articleCount": 10,
+        "articleCount": 9,
         "latestPublishedAt": "2026-08-05T00:00:00.000Z",
-        "staleHours": 7,
+        "staleHours": 10,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 9,
         "latestPublishedAt": "2026-08-04T00:00:00.000Z",
-        "staleHours": 31,
+        "staleHours": 34,
         "status": "ok"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 4,
-        "latestPublishedAt": "2026-07-30T00:00:00.000Z",
-        "staleHours": 151,
-        "status": "stale"
+        "latestPublishedAt": "2026-08-05T00:00:00.000Z",
+        "staleHours": 10,
+        "status": "ok"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 2,
         "latestPublishedAt": "2026-08-04T00:00:00.000Z",
-        "staleHours": 31,
+        "staleHours": 34,
         "status": "ok"
       }
     ]
@@ -125,7 +125,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 45,
+        "actual": 52,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -135,7 +135,7 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 1,
+        "actual": 0,
         "pass": true
       }
     }
@@ -370,6 +370,30 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "CVS 10-Q filing - CVS Health Corporation",
+      "summary": "CVS Health Corporation filed 10-Q with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/64803/000006480326000098/cvs-20260630.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-08-05",
+      "category": "general_market",
+      "relevance": 90,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "CVS 8-K filing - CVS Health Corporation",
+      "summary": "CVS Health Corporation filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/64803/000006480326000097/cvs-20260805.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-08-05",
+      "category": "general_market",
+      "relevance": 90,
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "System CEO loans Illinois hospital $1M amid payroll delay",
       "url": "https://www.beckershospitalreview.com/finance/system-ceo-loans-illinois-hospital-1m-amid-payroll-delay/",
       "source": "Becker's Hospital Review",
@@ -377,6 +401,51 @@
       "summary": "Granite City, Ill.-based Gateway Regional Medical Center faced cash flow issues that delayed payroll for more than 600 employees, according to an Aug.",
       "category": "general_market",
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Exemption of rare disease therapies in drug-pricing pilots would wipe out huge savings, analysis finds",
+      "url": "https://www.statnews.com/2026/08/05/cms-drug-pricing-pilot-programs-rare-disease-drugs/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-08-05",
+      "summary": "Excluding rare disease therapies from a Medicare pilot program to lower drug prices would wipe out much of the savings from retail drugs, according to new research.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "STAT+: Senate inquiry suggests Trump administration softened kratom and tobacco policies in quid pro quo",
+      "url": "https://www.statnews.com/2026/08/05/senator-ron-wyden-investigation-kennedy-flavored-vapes-kratom/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-08-05",
+      "summary": "The Senate investigation includes RFK Jr. as well as the heads of Reynolds American and kratom company Botanic Tonics, asking for written responses and documentation by Aug.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "MRI is standard for diagnosing prostate cancer in most western countries. But most U.S. men don’t get them",
+      "url": "https://www.statnews.com/2026/08/05/prostate-cancer-screening-biopsy-vs-mri-debate/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-08-05",
+      "summary": "Pre-biopsy MRI is standard outside the U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Opinion: Tear down the wall between M.D. and D.O. education",
+      "url": "https://www.statnews.com/2026/08/05/md-vs-do-medical-education-merge/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-08-05",
+      "summary": "Having separate systems for M.D.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Opinion: Something is missing from movies about medical aid in dying",
+      "url": "https://www.statnews.com/2026/08/05/new-york-medical-aid-dying-assisted-suicide-room-next-door-movies/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-08-05",
+      "summary": "Films and documentaries about assisted dying can narrow the frame of debate, write Anna Magdalena Elsner and Vanessa Rampton.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "US News' 2025-26 Best Hospitals lists home in on outcomes",
@@ -4825,78 +4894,6 @@
       "publishedAt": "2026-07-30",
       "summary": "The startup provides an in-home care model to help child and young adult patients with serious complex mental health needs.",
       "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Is it safe to drink Red Bull and vodka? Questionable research tied to energy drink giant has shaped policy",
-      "url": "https://www.statnews.com/2026/07/30/red-bull-funded-studies-energy-drinks-alcohol-shape-policy/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-07-30",
-      "summary": "Studies tied to Red Bull helped block warning labels about drinking alcohol along with energy drinks. Independent studies report risks in mixing the two.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "HaloMD's Patrick Velliky explains why No Surprises Act IDR enforcement matters",
-      "url": "https://www.fiercehealthcare.com/sponsored/halomds-patrick-velliky-explains-why-no-surprises-act-idr-enforcement-matters",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-07-30",
-      "summary": "A HaloMD executive examines IDR nonpayment, enforcement gaps and what is at stake for providers and patients.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "New university initiative offers screening, referrals for endometriosis",
-      "url": "https://www.fiercehealthcare.com/providers/new-university-initiative-offers-screening-referrals-endometriosis",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-07-30",
-      "summary": "The partnership, led by a national provider of endometriosis care and an awareness nonprofit, offers colleges free educational resources, screening tools and referral pathways.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Tenet Healthcare shrugs off ACA headwinds with sweeping Q2 outperformance, boosts 2026 guidance",
-      "url": "https://www.fiercehealthcare.com/providers/tenet-healthcare-shrugs-aca-headwinds-sweeping-q2-outperformance-boosts-2026-guidance",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-07-30",
-      "summary": "Bucking a trend set by its for-profit peers, the company outpaced the margin hit of substantial uninsured volume growth and boosted its 2026 guidance.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Privacy Act of 1974; Matching Program",
-      "summary": "In accordance with the Privacy Act of 1974, as amended, the Department of Health and Human Services (HHS), Centers for Medicare & Medicaid Services (CMS) is providing notice of the re-establishment of a matching program between CMS and the Office of Personnel Management, \"Verification of Eligibility for Minimum Essential Coverage Under the Patient Protection and Affordable Care Act through an Office of Personnel Management Health Benefit Plan\". The matching program provides CMS and State Administering Entities with the Office of Personnel Management (OPM) data to use in determining individuals' eligibility to enroll in a qualified health plan through an exchange established under the ACA; for insurance affordability programs, certifications of exemption, and to make eligibility redeterminations and renewals, including appeal determinations.",
-      "url": "https://www.federalregister.gov/documents/2026/07/29/2026-15282/privacy-act-of-1974-matching-program",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-07-29",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "HCA 8-K filing - HCA Healthcare, Inc.",
-      "summary": "HCA Healthcare, Inc. filed 8-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/860730/000119312526323731/d315311d8k.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-07-29",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "HUM 10-Q filing - Humana Inc.",
-      "summary": "Humana Inc. filed 10-Q with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/49071/000004907126000050/hum-20260630.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-07-29",
-      "category": "general_market",
-      "relevance": 85,
       "categoryLabel": "General Market"
     }
   ]
