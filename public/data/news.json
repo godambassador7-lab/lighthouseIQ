@@ -1,23 +1,23 @@
 {
-  "lastUpdated": "2026-08-10T20:01:18.500Z",
+  "lastUpdated": "2026-08-10T20:54:51.601Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 4,
-    "healthySources": 6,
+    "staleSources": 3,
+    "healthySources": 7,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 208,
+        "articleCount": 206,
         "latestPublishedAt": "2026-08-10T00:00:00.000Z",
         "staleHours": 20,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 149,
+        "articleCount": 153,
         "latestPublishedAt": "2026-08-10T00:00:00.000Z",
         "staleHours": 20,
         "status": "ok"
@@ -44,13 +44,6 @@
         "status": "ok"
       },
       {
-        "source": "Federal Register - FDA",
-        "articleCount": 7,
-        "latestPublishedAt": "2026-08-06T00:00:00.000Z",
-        "staleHours": 116,
-        "status": "stale"
-      },
-      {
         "source": "FDA MedWatch RSS",
         "articleCount": 6,
         "latestPublishedAt": "2026-08-10T00:00:00.000Z",
@@ -58,17 +51,24 @@
         "status": "ok"
       },
       {
-        "source": "Federal Register - CMS",
-        "articleCount": 5,
-        "latestPublishedAt": "2026-08-05T00:00:00.000Z",
-        "staleHours": 140,
+        "source": "Federal Register - FDA",
+        "articleCount": 6,
+        "latestPublishedAt": "2026-08-06T00:00:00.000Z",
+        "staleHours": 116,
         "status": "stale"
       },
       {
         "source": "SEC Healthcare Filings",
+        "articleCount": 4,
+        "latestPublishedAt": "2026-08-10T00:00:00.000Z",
+        "staleHours": 20,
+        "status": "ok"
+      },
+      {
+        "source": "Federal Register - CMS",
         "articleCount": 3,
-        "latestPublishedAt": "2026-08-07T00:00:00.000Z",
-        "staleHours": 92,
+        "latestPublishedAt": "2026-08-05T00:00:00.000Z",
+        "staleHours": 140,
         "status": "stale"
       },
       {
@@ -95,7 +95,7 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 77
+      "count": 75
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -103,15 +103,15 @@
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
-      "count": 9
+      "count": 7
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 145
+      "count": 146
     },
     "general_market": {
       "label": "General Market",
-      "count": 210
+      "count": 213
     }
   },
   "quality": {
@@ -127,7 +127,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 87,
+        "actual": 94,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -137,7 +137,7 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 4,
+        "actual": 3,
         "pass": false
       }
     }
@@ -276,6 +276,54 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "UNH 10-Q filing - UnitedHealth Group Incorporated",
+      "summary": "UnitedHealth Group Incorporated filed 10-Q with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/731766/000073176626000197/unh-20260630.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-08-10",
+      "category": "general_market",
+      "relevance": 90,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Massachusetts governor creates path to hospital takeover",
+      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/massachusetts-governor-creates-path-to-hospital-takeover/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-08-10",
+      "summary": "Massachusetts Gov. Maura Healey signed a bill Aug.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "33 revenue cycle executive moves in 2026",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/33-revenue-cycle-executive-moves-in-2026/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-08-10",
+      "summary": "From Kaiser Permanente naming a senior vice president of revenue realization, to Johns Hopkins Medicine naming a vice president of revenue cycle management, here are 31 revenue cycle executive moves Becker’s reported in 2026:&#160; 1. Oklahoma City-based Integris Health has named David Summers chief revenue officer.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "AI chip shortage threatens medical device supply",
+      "url": "https://www.beckershospitalreview.com/supply-chain/ai-chip-shortage-threatens-medical-device-supply/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-08-10",
+      "summary": "An AI-driven shortage of memory chips could raise costs and create supply challenges for medical device makers as data centers consume more of the components. Memory chip prices have quadrupled over the past year, and medical device makers are among industries asking the federal government for help securing the chips they need, according to an [&#8230;] The post AI chip shortage threatens medical device supply appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Interventional radiology group launches hospital value initiative",
+      "url": "https://www.beckershospitalreview.com/radiology/interventional-radiology-group-launches-hospital-value-initiative/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-08-10",
+      "summary": "The Society of Interventional Radiology has partnered with triLumen Health Partners to develop a strategic roadmap for identifying, quantifying and supporting the value of interventional radiology. The effort comes as interventional radiology&#8217;s value may not always translate into reimbursement, resources or institutional influence, according to an Aug.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
       "title": "Which colleges produce the most CEOs?",
       "url": "https://www.beckershospitalreview.com/hospital-management-administration/which-colleges-produce-the-most-ceos/",
       "source": "Becker's Hospital Review",
@@ -328,42 +376,6 @@
       "summary": "From replacement hospitals to major cancer centers, health systems nationwide are moving forward on large-scale construction projects to expand capacity, modernize infrastructure and meet rising patient demand in 2026. Here are 18 hospital projects worth $500 million or more that have been announced, advanced or opened in 2026: 1.",
       "category": "capacity_expansion",
       "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "CMS repeals breakthrough device fast track for new tech payments: 6 things to know",
-      "url": "https://www.beckershospitalreview.com/finance/cms-repeals-breakthrough-device-fast-track-for-new-tech-payments-6-things-to-know/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-10",
-      "summary": "Device and drug makers will lose the shortcut they have used to secure supplemental Medicare payments since 2020, under a provision of the fiscal 2027 Inpatient Prospective Payment System final rule. Beginning with applications for fiscal 2028, every applicant for a new technology add-on payment must demonstrate substantial clinical improvement over existing treatments, including products [&#8230;] The post CMS repeals breakthrough device fast track for new tech payments: 6 things to know appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "4 states where no rural hospitals are at risk of closing — and why",
-      "url": "https://www.beckershospitalreview.com/finance/4-states-where-no-rural-hospitals-are-at-risk-of-closing-and-why/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-10",
-      "summary": "A July 21 Center for Healthcare Quality and Payment Reform analysis found 700 rural hospitals are at risk of closing across the U.S.",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "Wisconsin expands managed care options for 9,000 Medicaid long-term care members",
-      "url": "https://www.beckershospitalreview.com/post-acute/wisconsin-expands-managed-care-options-for-9000-medicaid-long-term-care-members/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-10",
-      "summary": "The Wisconsin Department of Health Services is growing its long-term care options for those on Medicaid in 2027. According to a July 2026 update, the expansion will reach more than 9,000 southeastern Wisconsin members of the state&#8217;s Family Care and Family Care Partnership programs, which cover long-term care for older adults and people with disabilities.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Louisiana deaths from flesh-eating bacteria outpacing 10-year average",
-      "url": "https://www.beckershospitalreview.com/quality/public-health/louisiana-deaths-from-flesh-eating-bacteria-outpacing-10-year-average/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-10",
-      "summary": "Louisiana has recorded nine cases of Vibrio vulnificus and five deaths in 2026, well above its 10-year average of seven cases and one death a year, the state health department said Aug. 6.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "Trump returns to controversial vaccine policy with order questioning childhood schedule",
@@ -519,11 +531,65 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
+      "title": "Women’s health equity funding hits new high, drawing $1.55B in 2025",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/w-group-releases-1st-global-womens-health-investment-report-tracking-record",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-10",
+      "summary": "Women’s health companies raised a record $1.55 billion in disclosed equity in 2025, up 41% year over year.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "The number of health plans reporting operating losses is growing: report",
+      "url": "https://www.fiercehealthcare.com/payers/number-health-plans-reporting-operating-losses-growing-report",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-10",
+      "summary": "Health insurers are under significant financial pressure, and the gap between the organizations that are adapting and those that are not is growing, according to a new report.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "Sanders, Cassidy request DOJ update on contempt status of former Steward Health Care CEO",
       "url": "https://www.fiercehealthcare.com/regulatory/sanders-cassidy-request-doj-update-contempt-status-former-steward-health-care-ceo",
       "source": "Fierce Healthcare",
       "publishedAt": "2026-08-10",
       "summary": "The Senators requested Attorney General Todd Blanche provide an update on the criminal contempt referral against Ralph de la Torre, M.D.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "CMS repeals breakthrough device fast track for new tech payments: 6 things to know",
+      "url": "https://www.beckershospitalreview.com/finance/cms-repeals-breakthrough-device-fast-track-for-new-tech-payments-6-things-to-know/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-08-10",
+      "summary": "Device and drug makers will lose the shortcut they have used to secure supplemental Medicare payments since 2020, under a provision of the fiscal 2027 Inpatient Prospective Payment System final rule. Beginning with applications for fiscal 2028, every applicant for a new technology add-on payment must demonstrate substantial clinical improvement over existing treatments, including products [&#8230;] The post CMS repeals breakthrough device fast track for new tech payments: 6 things to know appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "4 states where no rural hospitals are at risk of closing — and why",
+      "url": "https://www.beckershospitalreview.com/finance/4-states-where-no-rural-hospitals-are-at-risk-of-closing-and-why/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-08-10",
+      "summary": "A July 21 Center for Healthcare Quality and Payment Reform analysis found 700 rural hospitals are at risk of closing across the U.S.",
+      "category": "closures_layoffs",
+      "categoryLabel": "Closures & Layoffs"
+    },
+    {
+      "title": "Wisconsin expands managed care options for 9,000 Medicaid long-term care members",
+      "url": "https://www.beckershospitalreview.com/post-acute/wisconsin-expands-managed-care-options-for-9000-medicaid-long-term-care-members/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-08-10",
+      "summary": "The Wisconsin Department of Health Services is growing its long-term care options for those on Medicaid in 2027. According to a July 2026 update, the expansion will reach more than 9,000 southeastern Wisconsin members of the state&#8217;s Family Care and Family Care Partnership programs, which cover long-term care for older adults and people with disabilities.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Louisiana deaths from flesh-eating bacteria outpacing 10-year average",
+      "url": "https://www.beckershospitalreview.com/quality/public-health/louisiana-deaths-from-flesh-eating-bacteria-outpacing-10-year-average/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-08-10",
+      "summary": "Louisiana has recorded nine cases of Vibrio vulnificus and five deaths in 2026, well above its 10-year average of seven cases and one death a year, the state health department said Aug. 6.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
     },
@@ -4765,78 +4831,6 @@
       "summary": "Cigna is raising its outlook for the year after beating the Street on both earnings and revenue in the second quarter of 2026.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Free research hub Nila aims to demystify menopause, other hormone conditions",
-      "url": "https://www.fiercehealthcare.com/digital-health/nila-free-research-hub-menopause-other-hormone-conditions",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-04",
-      "summary": "Nila’s goal is to offer inclusive information to underrepresented communities like neurodivergent or transgender people.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Waystar boosts 2026 outlook as AI-powered RCM solutions gain traction with providers",
-      "url": "https://www.fiercehealthcare.com/finance/waystar-boosts-2026-outlook-after-solid-q2-performance",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-04",
-      "summary": "The healthcare payment software maker brought in $319.7 million in second-quarter revenue, up 18% YOY.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Teladoc Health trims 2026 revenue forecast amid challenges with BetterHelp insurance shift",
-      "url": "https://www.fiercehealthcare.com/health-tech/teladoc-health-trims-2026-revenue-forecast-amid-challenges-betterhelp-insurance-shift",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-04",
-      "summary": "Teladoc Health trimmed its 2026 revenue outlook as its virtual behavioral health unit, BetterHelp, faces revenue pressure with consumer demand for insurance-covered services outpacing clinical capacity.",
-      "category": "capacity_expansion",
-      "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "Senate HELP committee advances nominees for CDC director, HHS preparedness head",
-      "url": "https://www.fiercehealthcare.com/providers/senate-help-committee-grills-cdc-nominee-erica-schwartz-vaccine-policy-restoring-trust",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-04",
-      "summary": "Erica Schwartz, M.D.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Medicare Program; FY 2027 Hospice Wage Index and Payment Rate Update and Hospice Quality Reporting Program Requirements",
-      "summary": "This final rule updates the hospice wage index, payment rates, and aggregate cap amount for fiscal year 2027. This final rule also includes an analysis of Medicare non-hospice spending, including details regarding a hospice service and spending variation index, and finalizes the requirement that hospices provide the hospice election statement addendum to all Medicare beneficiaries at the time of hospice election. Additionally, this rule finalizes conforming changes to discharge from hospice care regulations and changes to the face-to-face encounter regulations. This final rule also includes a summary of comments received on our requests for information regarding community- based palliative care; the construction of a hospice specific wage index; and the overlap between hospice and medical aid in dying laws. Finally, this rule finalizes changes to the Hospice Quality Reporting Program.",
-      "url": "https://www.federalregister.gov/documents/2026/08/03/2026-15686/medicare-program-fy-2027-hospice-wage-index-and-payment-rate-update-and-hospice-quality-reporting",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-08-03",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Medicare Program; Inpatient Rehabilitation Facility Prospective Payment System for Federal Fiscal Year 2027 and Updates to the IRF Quality Reporting Program",
-      "summary": "This final rule updates the prospective payment rates for inpatient rehabilitation facilities (IRFs) for Federal fiscal year (FY) 2027. As required by statute, this final rule includes the classification and weighting factors for the IRF prospective payment system's (PPS) case-mix groups and a description of the methodologies and data used in computing the prospective payment rates for FY 2027. It also finalizes the third and final of the 3-year phaseout of the rural adjustment, which began in FY 2025. This final rule includes a solicitation for public comments on alternative data sources for the IRF PPS wage index; requires all therapy treatments and/or therapy evaluations to begin no later than 36 hours from midnight on the day of admission; finalizes requirements for the initial Interdisciplinary Team meeting to occur on or before 4 days from the date the patient is admitted; and summarizes a request for information on potential future IRF PPS payment reform. Additionally, this final rule includes updates to the IRF Quality Reporting Program and changes to the Durable Medical Equipment, Prosthetics, Orthotics, and Supplies (DMEPOS) Competitive Bidding Program.",
-      "url": "https://www.federalregister.gov/documents/2026/08/03/2026-15652/medicare-program-inpatient-rehabilitation-facility-prospective-payment-system-for-federal-fiscal",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-08-03",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Modification of Certain Terminology in Title 21; Reopening of the Comment Period",
-      "summary": "The Food and Drug Administration (FDA or the Agency) is reopening the comment period for the proposed rule that appeared in the Federal Register of May 6, 2026, to modify certain terminology in Title 21 of the Code of Federal Regulations (CFR) to comply with Executive Order (E.O.) 14168, \"Defending Women From Gender Ideology Extremism and Restoring Biological Truth to the Federal Government,\" issued on January 20, 2025. Specifically, this proposed rule, if finalized, will remove the term \"gender\" wherever it appears and either replace it with the term \"sex,\" or delete reference to gender, as applicable, along with other editorial changes to improve readability. The Agency is taking this action to allow interested persons additional time to submit comments.",
-      "url": "https://www.federalregister.gov/documents/2026/08/03/2026-15671/modification-of-certain-terminology-in-title-21-reopening-of-the-comment-period",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-08-03",
-      "category": "capacity_expansion",
-      "relevance": 100,
-      "categoryLabel": "Capacity & Expansion"
     }
   ]
 }
