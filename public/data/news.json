@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-08-11T07:14:49.299Z",
+  "lastUpdated": "2026-08-11T09:03:34.424Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 3,
-    "healthySources": 7,
+    "staleSources": 2,
+    "healthySources": 8,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 212,
+        "articleCount": 208,
         "latestPublishedAt": "2026-08-11T00:00:00.000Z",
-        "staleHours": 7,
+        "staleHours": 9,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 147,
+        "articleCount": 142,
         "latestPublishedAt": "2026-08-11T00:00:00.000Z",
-        "staleHours": 7,
+        "staleHours": 9,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 63,
-        "latestPublishedAt": "2026-08-10T00:00:00.000Z",
-        "staleHours": 31,
+        "articleCount": 68,
+        "latestPublishedAt": "2026-08-11T00:00:00.000Z",
+        "staleHours": 9,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
-        "articleCount": 42,
-        "latestPublishedAt": "2026-08-10T00:00:00.000Z",
-        "staleHours": 31,
+        "articleCount": 46,
+        "latestPublishedAt": "2026-08-11T00:00:00.000Z",
+        "staleHours": 9,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
-        "articleCount": 15,
+        "articleCount": 14,
         "latestPublishedAt": "2026-08-10T00:00:00.000Z",
-        "staleHours": 31,
+        "staleHours": 33,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 6,
         "latestPublishedAt": "2026-08-10T00:00:00.000Z",
-        "staleHours": 31,
+        "staleHours": 33,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 6,
         "latestPublishedAt": "2026-08-06T00:00:00.000Z",
-        "staleHours": 127,
+        "staleHours": 129,
         "status": "stale"
+      },
+      {
+        "source": "Federal Register - CMS",
+        "articleCount": 4,
+        "latestPublishedAt": "2026-08-11T00:00:00.000Z",
+        "staleHours": 9,
+        "status": "ok"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 4,
         "latestPublishedAt": "2026-08-10T00:00:00.000Z",
-        "staleHours": 31,
+        "staleHours": 33,
         "status": "ok"
-      },
-      {
-        "source": "Federal Register - CMS",
-        "articleCount": 3,
-        "latestPublishedAt": "2026-08-05T00:00:00.000Z",
-        "staleHours": 151,
-        "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 2,
         "latestPublishedAt": "2026-08-06T00:00:00.000Z",
-        "staleHours": 127,
+        "staleHours": 129,
         "status": "stale"
       }
     ]
@@ -87,15 +87,15 @@
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 33
+      "count": 32
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 8
+      "count": 9
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 73
+      "count": 75
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -107,18 +107,16 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 149
+      "count": 146
     },
     "general_market": {
       "label": "General Market",
-      "count": 212
+      "count": 213
     }
   },
   "quality": {
-    "status": "warning",
-    "failedChecks": [
-      "maxStaleSources"
-    ],
+    "status": "pass",
+    "failedChecks": [],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -127,7 +125,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 26,
+        "actual": 36,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -137,18 +135,114 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 3,
-        "pass": false
+        "actual": 2,
+        "pass": true
       }
     }
   },
   "articles": [
     {
-      "title": "Maryland awards $80M in Rural Health Transformation funds",
-      "url": "https://www.beckershospitalreview.com/rural-health/finance-funding/maryland-awards-80m-in-rural-health-transformation-funds/",
-      "source": "Becker's Hospital Review",
+      "title": "Medicare Program; Regulatory Alignment for Predictable and Immediate Device (RAPID) Coverage Pathway",
+      "summary": "This notice with comment period provides information to the public on the process CMS will use to provide accelerated Medicare coverage through the Regulatory Alignment for Predictable and Immediate Device (RAPID) coverage pathway for new innovative technologies. The RAPID coverage pathway leverages existing processes to provide expedited national Medicare coverage for eligible technologies. This notice with comment period solicits public comment on the proposed RAPID coverage pathway.",
+      "url": "https://www.federalregister.gov/documents/2026/08/11/2026-16368/medicare-program-regulatory-alignment-for-predictable-and-immediate-device-rapid-coverage-pathway",
+      "source": "Federal Register - CMS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_cms",
       "publishedAt": "2026-08-11",
-      "summary": "The Maryland Department of Health awarded $80 million to 41 grantees in the first round of funding under the Rural Health Transformation Program, Gov. Wes Moore announced Aug.",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Reauthorization of the Generic Drug User Fee Amendments; Public Meeting; Request for Comments",
+      "summary": "The Food and Drug Administration (FDA, the Agency, or we) is hosting a public meeting to discuss proposed recommendations for the reauthorization of the Generic Drug User Fee Amendments (GDUFA) for fiscal years (FYs) 2028 to 2032. GDUFA amended the Federal Food, Drug, and Cosmetic Act (FD&C Act) to authorize FDA to assess and collect fees to support human generic drug activities. The current legislative authority for GDUFA expires at the end of September 2027. At that time, new legislation will be required for FDA to continue to assess and collect generic drug user fees for future fiscal years. The FD&C Act directs FDA, following negotiations with the regulated industry and periodic consultations with other stakeholders, to present recommendations for reauthorization of the GDUFA program to the relevant Congressional committees, publish the recommendations in the Federal Register, provide for a period of 30 days for the public to provide written comments on such recommendations, and hold a meeting at which the public may present its views on such recommendations. FDA will then consider such public views and comments and revise such recommendations as necessary.",
+      "url": "https://www.federalregister.gov/documents/2026/08/11/2026-16353/reauthorization-of-the-generic-drug-user-fee-amendments-public-meeting-request-for-comments",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-08-11",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Notice of Availability of Final Health Center Program Scope of Project Policy Manual Guidance",
+      "summary": "The Health Center Program Scope of Project Policy Manual (Scope Manual) is program guidance to assist health centers in understanding what constitutes the Health Center Program scope of project under section 330 of the Public Health Service (PHS) Act.",
+      "url": "https://www.federalregister.gov/documents/2026/08/11/2026-16348/notice-of-availability-of-final-health-center-program-scope-of-project-policy-manual-guidance",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-08-11",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Proposed Collection; 60-Day Comment Request Generic Clearance for the Collection of Customer Participation and Performance Management With NIH Programs, Products, and Services (Office of the Director)",
+      "summary": "In compliance with the requirement of the Paperwork Reduction Act of 1995 to provide an opportunity for public comment on proposed data collection projects, the National Institutes of Health, National Cancer Institute (NCI) will publish periodic summaries of proposed projects to be submitted to the Office of Management and Budget (OMB) for review and approval.",
+      "url": "https://www.federalregister.gov/documents/2026/08/11/2026-16300/proposed-collection-60-day-comment-request-generic-clearance-for-the-collection-of-customer",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-08-11",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Substances Generally Recognized as Safe",
+      "summary": "The Food and Drug Administration (FDA or we) is proposing to require the submission of generally recognized as safe (GRAS) notices for the use of a human or animal food substance purported to be GRAS under the conditions of its intended use under the Federal Food, Drug, and Cosmetic Act (FD&C Act).",
+      "url": "https://www.federalregister.gov/documents/2026/08/11/2026-16296/substances-generally-recognized-as-safe",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-08-11",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Why is MoonLake Immunotherapeutics scared of releasing data on its drug candidate?",
+      "url": "https://www.statnews.com/2026/08/11/why-is-moonlake-immunotherapeutics-scared-of-releasing-data/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-08-11",
+      "summary": "Biotech companies don’t hide or obfuscate strong data.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Nurses seek a seat at the table as they fight expanding clinical AI",
+      "url": "https://www.statnews.com/2026/08/11/nurses-seek-involvement-clinical-ai-decisions/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-08-11",
+      "summary": "Nurses, who make up the largest part of the health care workforce, say clinical artificial intelligence poses a threat to their jobs, and patients.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Opinion: Burdensome Medicare GLP-1 program may keep patients from accessing $50 per month weight loss drugs",
+      "url": "https://www.statnews.com/2026/08/11/medicare-weight-loss-drugs-glp-1s-bridge-program-primary-care/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-08-11",
+      "summary": "Medicare’s new weight loss drug program “risks creating barriers at precisely the moment when confidence in broader GLP‑1 coverage is most needed,” writes Jeffrey Millstein.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Opinion: The new geography of abortion care",
+      "url": "https://www.statnews.com/2026/08/11/abortion-post-dobbs-clinic-hotline-advice/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-08-11",
+      "summary": "Even before Dobbs, patients had “begun reorganizing abortion care outside traditional health care settings,” writes Jennifer Karlin.",
+      "category": "labor_unions",
+      "categoryLabel": "Labor & Unions"
+    },
+    {
+      "title": "IRBs have a problem. Can North Star’s nonprofit model save it?",
+      "url": "https://www.statnews.com/2026/08/11/north-star-review-founders-advocate-nonprofit-approach-institutional-oversight/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-08-11",
+      "summary": "As institutional review boards face pressure from companies and ethicists, North Star Review Board offers a nonprofit model as more independent.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
@@ -374,6 +468,15 @@
       "source": "Fierce Healthcare",
       "publishedAt": "2026-08-11",
       "summary": "Plans on the Affordable Care Act's exchanges are set for further premium increases next year, a new report shows.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Maryland awards $80M in Rural Health Transformation funds",
+      "url": "https://www.beckershospitalreview.com/rural-health/finance-funding/maryland-awards-80m-in-rural-health-transformation-funds/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-08-11",
+      "summary": "The Maryland Department of Health awarded $80 million to 41 grantees in the first round of funding under the Rural Health Transformation Program, Gov. Wes Moore announced Aug.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
@@ -1881,30 +1984,6 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "Reducing Federal Burden for Head Start Programs",
-      "summary": "This NPRM proposes to rescind and replace the Head Start Program Performance Standards (Performance Standards), last revised in 2024. The proposed Performance Standards would significantly reduce Federal bureaucratic burden on programs; defer to State policies wherever possible; return substantial local control to Head Start agencies delivering the services and to parents as the primary caregivers and decision-makers for their children; reduce unnecessary duplication of Head Start regulations with Federal statute and other regulations; and emphasize the critical role of health, nutrition, and physical exercise for young children.",
-      "url": "https://www.federalregister.gov/documents/2026/08/07/2026-16134/reducing-federal-burden-for-head-start-programs",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-08-07",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Notice of Award of a Single Source Cooperative Agreement To Fund Institute of Epidemiology, Disease Control and Research, Bangladesh; National Institute of Public Health, Cambodia; Institut Pasteur de Madagascar; National Health Laboratory Service, South Africa; L.Sakvarelidze National Center for Disease Control and Public Health, Georgia.",
-      "summary": "The Centers for Disease Control and Prevention (CDC), located within the Department of Health and Human Services (HHS), announces five separate awards to fund Institute of Epidemiology, Disease Control and Research, Bangladesh; National Institute of Public Health, Cambodia; Institut Pasteur de Madagascar; National Health Laboratory Service, South Africa; L.Sakvarelidze National Center for Disease Control and Public Health, Georgia. For Institute of Epidemiology, Disease Control and Research, Bangladesh, the award is for approximately $1,000,000 in Federal Fiscal Year (FFY) 2026, subject to the availability of funds. For National Institute of Public Health, Cambodia, the award is for approximately $1,000,000 in FFY 2026, subject to the availability of funds. For Institut Pasteur de Madagascar, the award is for approximately $800,000 in FFY 2026, subject to the availability of funds. For National Health Laboratory Service, South Africa, the award is for approximately $1,000,000 in FFY 2026, subject to the availability of funds. For L. Sakvarelidze National Center for Disease Control and Public Health, Georgia, the award is for approximately $800,000 in FFY 2026, subject to the availability of funds. The total FFY 2026 funding amount for the five recipients is $4,600,000. Funding amounts for years 2-5 for each recipient will be set at continuation The awards will enhance health security by strengthening global influenza and other priority pathogen surveillance networks to detect and respond to infectious disease threats.",
-      "url": "https://www.federalregister.gov/documents/2026/08/07/2026-16110/notice-of-award-of-a-single-source-cooperative-agreement-to-fund-institute-of-epidemiology-disease",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-08-07",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
       "title": "National Eye Institute; Notice of Closed Meeting",
       "summary": "",
       "url": "https://www.federalregister.gov/documents/2026/08/07/2026-16163/national-eye-institute-notice-of-closed-meeting",
@@ -1939,6 +2018,30 @@
       "category": "general_market",
       "relevance": 90,
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "Reducing Federal Burden for Head Start Programs",
+      "summary": "This NPRM proposes to rescind and replace the Head Start Program Performance Standards (Performance Standards), last revised in 2024. The proposed Performance Standards would significantly reduce Federal bureaucratic burden on programs; defer to State policies wherever possible; return substantial local control to Head Start agencies delivering the services and to parents as the primary caregivers and decision-makers for their children; reduce unnecessary duplication of Head Start regulations with Federal statute and other regulations; and emphasize the critical role of health, nutrition, and physical exercise for young children.",
+      "url": "https://www.federalregister.gov/documents/2026/08/07/2026-16134/reducing-federal-burden-for-head-start-programs",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-08-07",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Notice of Award of a Single Source Cooperative Agreement To Fund Institute of Epidemiology, Disease Control and Research, Bangladesh; National Institute of Public Health, Cambodia; Institut Pasteur de Madagascar; National Health Laboratory Service, South Africa; L.Sakvarelidze National Center for Disease Control and Public Health, Georgia.",
+      "summary": "The Centers for Disease Control and Prevention (CDC), located within the Department of Health and Human Services (HHS), announces five separate awards to fund Institute of Epidemiology, Disease Control and Research, Bangladesh; National Institute of Public Health, Cambodia; Institut Pasteur de Madagascar; National Health Laboratory Service, South Africa; L.Sakvarelidze National Center for Disease Control and Public Health, Georgia. For Institute of Epidemiology, Disease Control and Research, Bangladesh, the award is for approximately $1,000,000 in Federal Fiscal Year (FFY) 2026, subject to the availability of funds. For National Institute of Public Health, Cambodia, the award is for approximately $1,000,000 in FFY 2026, subject to the availability of funds. For Institut Pasteur de Madagascar, the award is for approximately $800,000 in FFY 2026, subject to the availability of funds. For National Health Laboratory Service, South Africa, the award is for approximately $1,000,000 in FFY 2026, subject to the availability of funds. For L. Sakvarelidze National Center for Disease Control and Public Health, Georgia, the award is for approximately $800,000 in FFY 2026, subject to the availability of funds. The total FFY 2026 funding amount for the five recipients is $4,600,000. Funding amounts for years 2-5 for each recipient will be set at continuation The awards will enhance health security by strengthening global influenza and other priority pathogen surveillance networks to detect and respond to infectious disease threats.",
+      "url": "https://www.federalregister.gov/documents/2026/08/07/2026-16110/notice-of-award-of-a-single-source-cooperative-agreement-to-fund-institute-of-epidemiology-disease",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-08-07",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
     },
     {
       "title": "Why Baylor, Texas Children&#8217;s renewed their 73-year affiliation",
@@ -2652,30 +2755,6 @@
       "categoryLabel": "Policy & Reimbursement"
     },
     {
-      "title": "Announcement of the Intent To Award a Single-Source Cooperative Agreement to Burke Law Group, PLLC in Houston, Texas",
-      "summary": "The ACF, ORR announces the intent to award a single-source cooperative agreement in an amount of up to $150,000,000 to Burke Law Group, a law firm headquartered in Houston, Texas. The purpose of this proposed award is to provide legal orientation, legal consultation, and attorney-of-record representation services for eligible unaccompanied alien children (UACs) during immigration proceedings before the Executive Office for Immigration Review (EOIR) and in hearings and proceedings before the U.S. Citizenship and Immigration Services (USCIS) while children remain in ORR care. The proposed award also includes limited discharge-related legal continuity planning and referral support for children exiting ORR care. Under the proposed award, Burke Law Group would provide legal orientation, legal consultation, and attorney-of-record representation services for eligible UACs while they remain in ORR care. The recipient would also provide limited discharge-related legal continuity planning and referral support to assist children in connecting with appropriate post-discharge legal resources.",
-      "url": "https://www.federalregister.gov/documents/2026/08/06/2026-16081/announcement-of-the-intent-to-award-a-single-source-cooperative-agreement-to-burke-law-group-pllc-in",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-08-06",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Proposed Collection; 60-Day Comment Request: The Impact of Clinical Research Training and Medical Education at the Clinical Center on Physician Careers in Academia and Clinical Research (Clinical Center)",
-      "summary": "In compliance with the requirement of the Paperwork Reduction Act of 1995, for opportunity for public comment on proposed data collection projects, the Clinical Center, the National Institutes of Health (NIH) will publish periodic summaries of proposed projects to be submitted to the Office of Management and Budget (OMB) for review and approval.",
-      "url": "https://www.federalregister.gov/documents/2026/08/06/2026-16071/proposed-collection-60-day-comment-request-the-impact-of-clinical-research-training-and-medical",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-08-06",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
       "title": "Authorization of Emergency Use of an In Vitro Diagnostic Device in Response to an Outbreak of Mpox; Availability",
       "summary": "The Food and Drug Administration (FDA or Agency) is announcing the issuance of an Emergency Use Authorization (EUA) (the Authorization) under the Federal Food, Drug, and Cosmetic Act (FD&C Act) in response to an outbreak of Mpox. FDA has issued an Authorization for an in vitro diagnostic device, Allplex HSV-1&2/VZV/ MPXV Assay, for the simultaneous qualitative detection and differentiation of viral nucleic acid from monkeypox virus (MPXV clade I/II and MPXV clade II)1, herpes simplex virus type 1 (HSV-1), herpes simplex virus type 2 (HSV-2), and varicella-zoster virus (VZV). The Authorization contains, among other things, conditions on the emergency use of the authorized product. The Authorization follows the August 9, 2022, determination by the Secretary of Health and Human Services (HHS) that there is a public health emergency, or a significant potential for a public health emergency, that affects, or has a significant potential to affect, national security or the health and security of U.S. citizens living abroad, and that involves monkeypox virus. On the basis of such determination, the Secretary of HHS declared, on September 7, 2022, that circumstances exist justifying the authorization of emergency use of in vitro diagnostics for detection and/or diagnosis of infection with the monkeypox virus, including in vitro diagnostics that detect and/or diagnose infection with non-variola Orthopoxvirus, pursuant to the FD&C Act, subject to terms of any authorization issued under that section. The Authorization, which includes an explanation of the reasons for issuance, is listed in this document, and can be accessed on FDA's website from the link indicated.",
       "url": "https://www.federalregister.gov/documents/2026/08/06/2026-15964/authorization-of-emergency-use-of-an-in-vitro-diagnostic-device-in-response-to-an-outbreak-of-mpox",
@@ -2733,6 +2812,30 @@
       "publishedAt": "2026-08-06",
       "category": "ai_tech",
       "relevance": 98,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Announcement of the Intent To Award a Single-Source Cooperative Agreement to Burke Law Group, PLLC in Houston, Texas",
+      "summary": "The ACF, ORR announces the intent to award a single-source cooperative agreement in an amount of up to $150,000,000 to Burke Law Group, a law firm headquartered in Houston, Texas. The purpose of this proposed award is to provide legal orientation, legal consultation, and attorney-of-record representation services for eligible unaccompanied alien children (UACs) during immigration proceedings before the Executive Office for Immigration Review (EOIR) and in hearings and proceedings before the U.S. Citizenship and Immigration Services (USCIS) while children remain in ORR care. The proposed award also includes limited discharge-related legal continuity planning and referral support for children exiting ORR care. Under the proposed award, Burke Law Group would provide legal orientation, legal consultation, and attorney-of-record representation services for eligible UACs while they remain in ORR care. The recipient would also provide limited discharge-related legal continuity planning and referral support to assist children in connecting with appropriate post-discharge legal resources.",
+      "url": "https://www.federalregister.gov/documents/2026/08/06/2026-16081/announcement-of-the-intent-to-award-a-single-source-cooperative-agreement-to-burke-law-group-pllc-in",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-08-06",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Proposed Collection; 60-Day Comment Request: The Impact of Clinical Research Training and Medical Education at the Clinical Center on Physician Careers in Academia and Clinical Research (Clinical Center)",
+      "summary": "In compliance with the requirement of the Paperwork Reduction Act of 1995, for opportunity for public comment on proposed data collection projects, the Clinical Center, the National Institutes of Health (NIH) will publish periodic summaries of proposed projects to be submitted to the Office of Management and Budget (OMB) for review and approval.",
+      "url": "https://www.federalregister.gov/documents/2026/08/06/2026-16071/proposed-collection-60-day-comment-request-the-impact-of-clinical-research-training-and-medical",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-08-06",
+      "category": "ai_tech",
+      "relevance": 100,
       "categoryLabel": "AI & Digital Tech"
     },
     {
@@ -4741,96 +4844,6 @@
       "summary": "Amae’s long-term goal is to develop a predictive model that pulls on wearables and other data to measure disease state and progression and spot early warning signs of clinical decline.",
       "category": "general_market",
       "categoryLabel": "General Market"
-    },
-    {
-      "title": "Daffodil Health unveils AI-powered payer platform for managing NSA disputes",
-      "url": "https://www.fiercehealthcare.com/payers/daffodil-health-unveils-ai-powered-payer-platform-managing-nsa-disputes",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-04",
-      "summary": "AI health tech company Daffodil Health is rolling out a new platform aimed at supporting payers in managing the No Surprises Act dispute process.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "QuantHealth raises $45M series B to accelerate AI-driven clinical trial simulations",
-      "url": "https://www.fiercehealthcare.com/finance/quanthealth-raises-45m-series-b-accelerate-ai-driven-clinical-trial-simulations",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-04",
-      "summary": "The company plans to use the fresh capital to advance its R&amp;D, grow its team and expand its product portfolio, CEO and co-founder Orr Inbar told Fierce Healthcare.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Hospital trauma data drives local e-bike crackdowns",
-      "url": "https://www.beckershospitalreview.com/care-coordination/hospital-trauma-data-drives-local-e-bike-crackdowns/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-04",
-      "summary": "When the Long Beach, Calif., City Council voted this spring to push e-bikes off city sidewalks, the decisive evidence came not from police crash reports but from a hospital trauma registry.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "100 measles cases cost New Mexico $5.35M in 2025",
-      "url": "https://www.beckershospitalreview.com/quality/public-health/100-measles-cases-cost-new-mexico-5-35m-in-2025/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-04",
-      "summary": "In 2025, New Mexico confirmed 100 measles cases across nine of its 33 counties, and each case cost an average $53,522, according to research published Aug. 4 in Annals of Internal Medicine.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "101 best healthcare employers for women: Forbes",
-      "url": "https://www.beckershospitalreview.com/workforce/101-best-healthcare-employers-for-women-forbes/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-04",
-      "summary": "More than 100 health systems, pharmaceutical companies and other healthcare organizations landed on Forbes&#8216; 2026 list of America&#8217;s Best Employers for Women. The ninth annual ranking, published Aug.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "UT Southwestern names 1st chief AI officer",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/ut-southwestern-names-1st-chief-ai-officer/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-04",
-      "summary": "Dallas-based UT Southwestern Medical Center has named Warren D&#8217;Souza, PhD, as its inaugural chief artificial intelligence officer. Dr.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Healthcare AI doesn’t need more pilots. It needs more proof.",
-      "url": "https://www.beckershospitalreview.com/finance/healthcare-ai-doesnt-need-more-pilots-it-needs-more-proof/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-04",
-      "summary": "Health system leaders don’t need another conversation about AI potential. They’ve seen over a hundred demos.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Hospitals say they’re feeling the pinch as more patients lose insurance",
-      "url": "https://www.healthcaredive.com/news/hospitals-feeling-pinch-patients-lose-insurance/826764/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-08-04",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Startup Claryx launches out of stealth to tackle the $45B challenge of hospital-acquired infections",
-      "url": "https://www.fiercehealthcare.com/health-tech/startup-claryx-launches-out-stealth-tackle-45b-challenge-hospital-acquired-infections",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-04",
-      "summary": "Startup Claryx is taking a novel approach to pathogen detection, using environmental and genomic intelligence to support hospital infection prevention programs. The company is building an immune system for hospitals, one that catches transmission while it's happening.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Cleveland Clinic, Zipline take flight with prescription drug drone delivery partnership",
-      "url": "https://www.fiercehealthcare.com/health-tech/cleveland-clinic-and-zipline-take-flight-through-prescription-drug-drone-delivery",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-04",
-      "summary": "Cleveland Clinic and Zipline have taken to the skies with their drone-delivery partnership for prescription drugs. It marks the first long-term deployment of a prescription drug drone delivery by a health system, they said, with the first deliveries made last week in and around Beachwood.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
     }
   ]
 }
