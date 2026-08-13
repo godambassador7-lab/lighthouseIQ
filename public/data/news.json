@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-08-12T23:48:22.838Z",
+  "lastUpdated": "2026-08-13T02:10:14.097Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 1,
-    "healthySources": 9,
+    "staleSources": 3,
+    "healthySources": 7,
     "sources": [
       {
-        "source": "Becker's Hospital Review",
-        "articleCount": 181,
-        "latestPublishedAt": "2026-08-12T00:00:00.000Z",
-        "staleHours": 23,
+        "source": "Fierce Healthcare",
+        "articleCount": 205,
+        "latestPublishedAt": "2026-08-13T00:00:00.000Z",
+        "staleHours": 2,
         "status": "ok"
       },
       {
-        "source": "Fierce Healthcare",
-        "articleCount": 180,
+        "source": "Becker's Hospital Review",
+        "articleCount": 167,
         "latestPublishedAt": "2026-08-12T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 26,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 65,
+        "articleCount": 54,
         "latestPublishedAt": "2026-08-12T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 26,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 39,
         "latestPublishedAt": "2026-08-12T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 26,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 16,
         "latestPublishedAt": "2026-08-12T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 26,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 8,
         "latestPublishedAt": "2026-08-10T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 74,
+        "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 6,
         "latestPublishedAt": "2026-08-12T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 26,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 2,
         "latestPublishedAt": "2026-08-12T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 26,
         "status": "ok"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 2,
         "latestPublishedAt": "2026-08-10T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 74,
+        "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 1,
         "latestPublishedAt": "2026-08-06T00:00:00.000Z",
-        "staleHours": 167,
+        "staleHours": 170,
         "status": "stale"
       }
     ]
@@ -83,7 +83,7 @@
   "categoryCoverage": {
     "closures_layoffs": {
       "label": "Closures & Layoffs",
-      "count": 17
+      "count": 18
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
@@ -91,7 +91,7 @@
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 8
+      "count": 6
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
@@ -107,16 +107,18 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 173
+      "count": 180
     },
     "general_market": {
       "label": "General Market",
-      "count": 206
+      "count": 200
     }
   },
   "quality": {
-    "status": "pass",
-    "failedChecks": [],
+    "status": "warning",
+    "failedChecks": [
+      "maxStaleSources"
+    ],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -125,7 +127,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 110,
+        "actual": 25,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -135,12 +137,237 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 1,
-        "pass": true
+        "actual": 3,
+        "pass": false
       }
     }
   },
   "articles": [
+    {
+      "title": "UC San Diego Health, West Health launch $40M accelerator for 'tech-forward' coordinated care",
+      "url": "https://www.fiercehealthcare.com/providers/uc-san-diego-health-west-health-launch-40m-accelerator-tech-forward-coordinated-care",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-13",
+      "summary": "The academic system and the nonprofit plan to develop a scalable model for timely, personalized care delivery, with an emphasis on care navigation and digital health tools.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Appeals court tosses methodology for calculating NSA qualifying payment amounts",
+      "url": "https://www.fiercehealthcare.com/regulatory/appeals-court-tosses-methodology-calculating-nsa-qualifying-payment-amounts",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-13",
+      "summary": "A federal appeals court has tossed key methodology used to resolve out-of-network claims under the No Surprises Act.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Antelope Recovery, offering SUD care for teens, to expand Spanish services in Colorado",
+      "url": "https://www.fiercehealthcare.com/digital-health/antelope-recovery-gets-colorado-opioid-settlement-funds-expand-spanish-services",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-13",
+      "summary": "Antelope Recovery offers mental health treatment for criminal justice-involved teens. The latest funding will also be used to develop additional programming specific to the challenges these youth face.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Sharp HealthCare announces another reorganization affecting 260 workers",
+      "url": "https://www.fiercehealthcare.com/providers/sharp-healthcare-announces-another-reorganization-affecting-260-workers",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-13",
+      "summary": "The workforce reduction will reduce the San Diego nonprofit's headcount by just under 1%, but follows last summer's elimination of 315 roles. Leadership attributed the decision to heightened expenses and policy changes at both the federal and state levels.",
+      "category": "closures_layoffs",
+      "categoryLabel": "Closures & Layoffs"
+    },
+    {
+      "title": "Suvi Health launches ambient AI solution for patients to reduce hospital stays and support care transitions",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/suvi-health-launches-ambient-ai-solution-patients-and-caregivers-support",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-13",
+      "summary": "Startup Suvi Health developed an ambient AI platform for patients to close gaps at critical transition points and support the handoff between hospital care teams and patients and their families.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "The biggest payer and provider trends from Q2",
+      "url": "https://www.fiercehealthcare.com/payers/biggest-payer-and-provider-trends-q2",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-13",
+      "summary": "Fierce Healthcare's Paige Minemyer and Dave Muoio break down the biggest trends shaping payer and provider performance in the second quarter and what to watch next.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Oracle Health debuts revamped patient portal with an AI upgrade",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/oracle-health-debuts-revamped-ai-powered-patient-portal",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-13",
+      "summary": "Oracle Health debuted a revamped digital platform for patients with an artificial intelligence assistant that can explain medical records in plain language and assist with scheduling appointments.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Assort Health rolls out AI agent to automate referrals for specialty practices and health systems",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/assort-health-rolls-out-ai-agent-dedicated-referrals",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-13",
+      "summary": "The tool can process inbound referrals, confirm eligibility and match patients to best-suited providers, the startup says.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Healthcare CFOs face growing decision-making expectations. Many say they aren't ready",
+      "url": "https://www.fiercehealthcare.com/finance/healthcare-cfos-face-growing-decision-making-expectations-many-say-they-arent-ready",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-13",
+      "summary": "Healthcare chief financial officers often say they are expected to be substantially involved in a broad range of enterprise decision-making, though many don’t believe they are appropriately equipped to contribute.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Claims data transparency empowers employers to act on affordability: survey",
+      "url": "https://www.fiercehealthcare.com/payers/claims-data-transparency-empowers-employers-act-affordability-survey",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-13",
+      "summary": "Employers that have access to key data on their healthcare spending and costs are more likely to take steps to address affordability and pharmacy benefit transparency, a new survey shows.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "CMS ends Medicaid, CHIP funding for gender-affirming care for minors",
+      "url": "https://www.fiercehealthcare.com/regulatory/cms-ends-medicaid-chip-funding-gender-affirming-care-minors",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-13",
+      "summary": "The Trump administration has finalized a rule that would pull funding for gender-affirming care for minors from Medicaid and the Children's Health Insurance Program.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Hims & Hers posts $753M in Q2 revenue as it preps for push into peptide market",
+      "url": "https://www.fiercehealthcare.com/health-tech/hims-hers-posts-753m-q3-revenue-it-preps-push-peptide-market",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-13",
+      "summary": "Digital health and wellness company Hims &amp; Hers is ready to tap into a multi-billion peptide market if U.S.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Senators introduce bipartisan legislation to further antimicrobial resistance research",
+      "url": "https://www.fiercehealthcare.com/regulatory/senators-introduce-bipartisan-legislation-further-antimicrobial-resistance-research",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-13",
+      "summary": "The bill was introduced alongside a report that found “superbugs” can cost the U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Chutes & Ladders— Humana names new Medicaid chief; Tufts Medicine CEO, CFO to exit",
+      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-13",
+      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "CMS' mandatory VBC programs brought substantial administrative costs for hospitals: study",
+      "url": "https://www.fiercehealthcare.com/providers/cms-mandatory-vbc-programs-brought-substantial-administrative-costs-hospitals-study",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-13",
+      "summary": "Four mandatory value-based payment programs were associated with more than $3 billion in aggregated administrative costs compared to non-participating hospitals, researchers' analysis of Medicare cost reports found.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Flagler Health secures $50M series B for AI-native MSK care platform expansion",
+      "url": "https://www.fiercehealthcare.com/finance/flagler-health-secures-50m-series-b-ai-native-msk-care-platform-expansion",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-13",
+      "summary": "The company says its platform is built on one of the largest MSK patient datasets and integrates directly into existing EMRs and workflows.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "Trump signs executive order to overhaul pediatric vaccine recommendations",
+      "url": "https://www.fiercehealthcare.com/providers/trump-signs-executive-order-overhaul-pediatric-vaccine-recommendations",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-13",
+      "summary": "President Donald Trump signed an executive order Monday that calls for reducing the number of required vaccinations for children in a move that backs a revised immunization schedule pushed by the Department of Health and Human Services.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Women’s health equity funding hits new high, drawing $1.55B in 2025",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/w-group-releases-1st-global-womens-health-investment-report-tracking-record",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-13",
+      "summary": "Women’s health companies raised a record $1.55 billion in disclosed equity in 2025, up 41% year over year.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "The number of health plans reporting operating losses is growing: report",
+      "url": "https://www.fiercehealthcare.com/payers/number-health-plans-reporting-operating-losses-growing-report",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-13",
+      "summary": "Health insurers are under significant financial pressure, and the gap between the organizations that are adapting and those that are not is growing, according to a new report.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Sanders, Cassidy request DOJ update on contempt status of former Steward Health Care CEO",
+      "url": "https://www.fiercehealthcare.com/regulatory/sanders-cassidy-request-doj-update-contempt-status-former-steward-health-care-ceo",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-13",
+      "summary": "The Senators requested Attorney General Todd Blanche provide an update on the criminal contempt referral against Ralph de la Torre, M.D.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Doximity bets big on hospital adoption of enterprise AI as it ramps up tech spending",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/doximity-bets-big-hospital-enterprise-ai-platforms-it-ramps-tech-investment",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-13",
+      "summary": "Doximity's push to be the leading AI digital assistant for docs<br>",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Inside Doctronic’s AI prescription refill pilot program in Utah",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/deep-dive-doctronics-ai-prescription-refill-pilot-program-utah",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-13",
+      "summary": "The company was “very conservative” with the initial formulary, and there are plans to add new medications once it is proven safe to do so, Matt Pavelle, Doctronic co-founder and co-CEO, said.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Weekly Rundown: Hers rolls out new AI-native app; Novo Nordisk, H1 partner on AI-driven clinical development",
+      "url": "https://www.fiercehealthcare.com/health-tech/weekly-rundown-novo-nordisk-h1-partner-ai-driven-clinical-development-hackensack",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-13",
+      "summary": "The latest news from Hims &amp; Hers, Atropos Health, Signal 1, NewYork-Presbyterian, Sharecare, Novo Nordisk, H1, Strida, Hackensack Meridian Health and ModMed.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Insurers see positive results in managing health costs in Q2",
+      "url": "https://www.fiercehealthcare.com/payers/payer-2026-q2-earnings-unitedhealth-cvs-cigna-elevance-health",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-13",
+      "summary": "The health insurance industry weathered a rough 2025, and the turnaround for some companies through the midpoint has surprised even Wall Street analysts.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Industry Voices—AI won’t fix nurse burnout. Nurses will",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/industry-voices-ai-wont-fix-nurse-burnout-nurses-will",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-13",
+      "summary": "If AI rollouts follow the path of the technologies that came before them—designed for the system, not the people inside it—they could deepen the very burnout they’re trying to relieve.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
     {
       "title": "Agency Information Collection Activities: Proposed Collection; Comment Request",
       "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information (including each proposed extension or reinstatement of an existing collection of information) and to allow 60 days for public comment on the proposed action. Interested persons are invited to send comments regarding our burden estimates or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
@@ -4589,231 +4816,6 @@
       "summary": "From deciphering complex medical jargon to understanding the array of treatment options, patients often feel overwhelmed even before stepping into a physician&#8217;s office. But could artificial intelligence make the entire experience less daunting and even more collaborative?",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Medicaid&#8217;s rocky summer: 6 states to watch",
-      "url": "https://www.beckershospitalreview.com/finance/medicaids-rocky-summer-6-states-to-watch/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-06",
-      "summary": "It is more than halfway through 2026 and more than one year since the passage of HR 1. From policy shifts to fraud concerns to insurer strategies, Medicaid has been in an unceasing state of uncertainty.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "1 in 5 physicians experience depression: Survey",
-      "url": "https://www.beckershospitalreview.com/quality/hospital-physician-relationships/1-in-5-physicians-experience-depression-survey/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-06",
-      "summary": "Just under half of full-time U.S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "MaineHealth to end labor and delivery at Lincoln Hospital",
-      "url": "https://www.beckershospitalreview.com/finance/mainehealth-to-end-labor-and-delivery-at-lincoln-hospital/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-06",
-      "summary": "Portland-based MaineHealth will end inpatient labor and delivery services at MaineHealth Lincoln Hospital in Damariscotta, Maine, effective Dec. 18, according to an Aug.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "2026 health system pay strategies are getting more targeted: 5 takeaways",
-      "url": "https://www.beckershospitalreview.com/compensation-issues/2026-health-system-pay-strategies-are-getting-more-targeted-5-takeaways/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-06",
-      "summary": "Hospital and health system pay strategies are getting more deliberate in 2026. Minimum wage hikes are up sharply from last year, union contracts are settling into smaller, steadier raises instead of 2025&#8217;s double-digit jumps, and CHROs are steering dollars toward specific roles rather than spreading them evenly — a shift playing out even as national [&#8230;] The post 2026 health system pay strategies are getting more targeted: 5 takeaways appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "labor_unions",
-      "categoryLabel": "Labor & Unions"
-    },
-    {
-      "title": "Hospital price caps make affordability a CEO &#8216;responsibility&#8217;",
-      "url": "https://www.beckershospitalreview.com/finance/hospital-price-caps-make-affordability-a-ceo-responsibility/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-06",
-      "summary": "Hospital price caps are gaining momentum across the U.S.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "State Department to nearly double financial commitment to Ebola outbreak: 6 notes",
-      "url": "https://www.beckershospitalreview.com/quality/public-health/state-department-to-nearly-double-financial-commitment-to-ebola-outbreak-6-notes/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-06",
-      "summary": "The Department of State, in coordination with the CDC and Congress, said it intends to provide an additional $242 million in funding for the Ebola outbreak response in the Democratic Republic of Congo and surrounding areas. The U.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "10 hospitals, health systems seeking pharmacy leaders",
-      "url": "https://www.beckershospitalreview.com/pharmacy/10-hospitals-health-systems-seeking-pharmacy-leaders-3/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-06",
-      "summary": "Hospitals and health systems nationwide are seeking pharmacy leaders as the role expands amid drug pricing pressure, supply chain constraints and growing 340B oversight. Many organizations have sharpened their focus on pharmacy as a strategic lever — elevating its role with clinical integration, specialty drug management and cost-containment efforts.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Regional One Health unveils plan for $900M hospital campus",
-      "url": "https://www.beckershospitalreview.com/capital/regional-one-health-unveils-plan-for-900m-hospital-campus/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-06",
-      "summary": "Memphis-based Regional One Health has revealed the first renderings of its plan for a $900 million hospital campus in Memphis. While the current project cost is $900 million, that figure could change as the system moves through the design process, a spokesperson for Regional One Health confirmed with Becker&#8217;s.",
-      "category": "capacity_expansion",
-      "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "SSM Health appeals certification of St. Mary&#8217;s nurses&#8217; union election",
-      "url": "https://www.beckershospitalreview.com/hr/ssm-health-appeals-certification-of-st-marys-nurses-union-election/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-06",
-      "summary": "St. Louis-based SSM Health filed a request for review with the National Labor Relations Board on Aug.",
-      "category": "labor_unions",
-      "categoryLabel": "Labor & Unions"
-    },
-    {
-      "title": "4 lawsuits testing where AI accountability lands in healthcare",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/4-lawsuits-testing-where-ai-accountability-lands-in-healthcare/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-06",
-      "summary": "Health systems, insurers and AI companies are facing a wave of litigation in 2026 over how artificial intelligence is used to make or influence decisions about patient care, coverage and billing.&#160; Here are four cases testing where accountability lands when an algorithm is involved: The post 4 lawsuits testing where AI accountability lands in healthcare appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Vista Health System names CEO-CNO after 2 leaders depart",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/vista-health-system-names-ceo-cno-after-2-leaders-depart/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-06",
-      "summary": "Daisy Rodriguez, MSN, RN, has been named CEO and chief nursing officer of Waukegan, Ill.-based Vista Health System, according to an Aug.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "The thread running through payers&#8217; and for-profit systems&#8217; Q2 earnings",
-      "url": "https://www.beckershospitalreview.com/finance/the-thread-running-through-payers-and-for-profit-systems-q2-earnings/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-06",
-      "summary": "Payers and for-profit health systems alike are feeling the fallout from changes to the ACA environment, according to second-quarter 2026 earnings. Centene&#8217;s exchange membership fell by more than 2 million, Cigna announced plans to exit ACA exchanges entirely in 2027, and HCA Healthcare pointed to a $1 billion-to-$1.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "The patient experience outlook for the fall: 4 signals to watch",
-      "url": "https://www.beckershospitalreview.com/patient-experience/the-patient-experience-outlook-for-the-fall-4-signals-to-watch/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-06",
-      "summary": "As we enter the second half of 2026, several trends are becoming clear. Financial pressure, expanding experience portfolios and federal policy changes are reshaping the future of patient experience.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Providence names North Division chief executive",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/providence-names-north-division-chief-executive/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-06",
-      "summary": "Kristy Carrington, BSN, RN, was appointed chief executive of Providence&#8217;s North Division, effective Aug. 24, according to an Aug.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Two FDA approvals — a new drug and a new vaccine",
-      "url": "https://www.statnews.com/2026/08/06/biotech-news-two-fda-approvals-a-new-drug-and-a-new-vaccine/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-08-06",
-      "summary": "Takeda's narcolepsy drug approved, the first mRNA flu shot approved, and more biotech updates from The Readout",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "U.S. moves to shut a Kentucky organ donation group, citing safety failures",
-      "url": "https://www.statnews.com/2026/08/06/us-to-shut-kentucky-organ-donation-group-safety-concerns/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-08-06",
-      "summary": "The U.S.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Opinion: The U.S. needs a 9/11 Commission-style independent body to investigate Covid response",
-      "url": "https://www.statnews.com/2026/08/06/covid-accountability-9-11-style-commission-needed-not-fauci-bashing/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-08-06",
-      "summary": "“A transparent evaluation of Covid would separate what happened from competing political narratives and help us improve for the future,” writes IDSA President Ronald Nahass.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Senate committee votes along party lines to hold Fauci in contempt of Congress",
-      "url": "https://www.statnews.com/2026/08/06/anthony-fauci-fifth-amendment-rand-paul-seeks-criminal-contempt/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-08-06",
-      "summary": "A Senate committee has voted to hold Anthony Fauci in contempt of Congress after he declined to answer questions about his role in the Covid pandemic.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Pharmalittle: We&#8217;re reading about Moderna&#8217;s flu shot, a death in a gene-editing trial in China, and more",
-      "url": "https://www.statnews.com/pharmalot/2026/08/06/moderna-flu-shot-gene-editing-trial-death-pharmalittle-newsletter/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-08-06",
-      "summary": "In today's Pharmalittle newsletter: Moderna's mRNA flu shot approved, a death reported in a gene-editing trial in China, and more.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Medicare pushes ACCESS but doesn&#8217;t tell patients what providers offer it",
-      "url": "https://www.statnews.com/2026/08/06/cms-medicare-pilot-access-patient-info-health-tech/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-08-06",
-      "summary": "In this edition: Progress report on ACCESS, Medicare's chronic care pilot, and health regulators courting industry on AI regulation.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Opinion: One year since Kennedy canceled mRNA vaccine projects, science shows how wrong he was",
-      "url": "https://www.statnews.com/2026/08/06/mflusiva-fda-mrna-flu-vaccine-rfk-jr/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-08-06",
-      "summary": "“The United States invented this platform and is the only country walking away from it,” Jeff Coller writes of mRNA vaccines.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Covid can reactivate dormant viruses, according to study",
-      "url": "https://www.statnews.com/2026/08/06/health-news-covid-can-reactivate-dormant-viruses-study-finds/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-08-06",
-      "summary": "A CDC director officially confirmed, Moderna's mRNA flu shot approved, and other health news from Morning Rounds",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: A scientist-turned-biotech executive is notching some wins, and enjoying it",
-      "url": "https://www.statnews.com/2026/08/06/greg-verdine-lifemine-parabilis-research/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-08-06",
-      "summary": "Scientist-turned-biotech executive Greg Verdine is having a very good year.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Biotech&#8217;s next big bet: A Tenax study of a heart failure treatment",
-      "url": "https://www.statnews.com/2026/08/06/tenax-study-heart-failure-preview/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-08-06",
-      "summary": "Tenax Therapeutics will soon report results from a Phase 3 study that is one of the biggest binary biotech stock events remaining in the sector this year.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Opinion: What my colleagues and I will look for as we assess U.S. measles elimination status",
-      "url": "https://www.statnews.com/2026/08/06/measles-elimination-status-2026-paho/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-08-06",
-      "summary": "Noel T. Brewer and colleagues will soon decide whether the U.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
     }
   ]
 }
