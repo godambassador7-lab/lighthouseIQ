@@ -1,74 +1,74 @@
 {
-  "lastUpdated": "2026-08-18T05:35:04.031Z",
+  "lastUpdated": "2026-08-18T06:49:47.981Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 9,
-    "staleSources": 3,
-    "healthySources": 6,
+    "staleSources": 2,
+    "healthySources": 7,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 190,
+        "articleCount": 188,
         "latestPublishedAt": "2026-08-18T00:00:00.000Z",
-        "staleHours": 5,
+        "staleHours": 6,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 188,
+        "articleCount": 184,
         "latestPublishedAt": "2026-08-17T00:00:00.000Z",
-        "staleHours": 29,
+        "staleHours": 30,
         "status": "ok"
       },
       {
         "source": "STAT News",
         "articleCount": 50,
         "latestPublishedAt": "2026-08-17T00:00:00.000Z",
-        "staleHours": 29,
+        "staleHours": 30,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
-        "articleCount": 40,
-        "latestPublishedAt": "2026-08-17T00:00:00.000Z",
-        "staleHours": 29,
+        "articleCount": 44,
+        "latestPublishedAt": "2026-08-18T00:00:00.000Z",
+        "staleHours": 6,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 15,
         "latestPublishedAt": "2026-08-17T00:00:00.000Z",
-        "staleHours": 29,
+        "staleHours": 30,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
-        "articleCount": 6,
-        "latestPublishedAt": "2026-08-14T00:00:00.000Z",
-        "staleHours": 101,
-        "status": "stale"
+        "articleCount": 8,
+        "latestPublishedAt": "2026-08-17T00:00:00.000Z",
+        "staleHours": 30,
+        "status": "ok"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 4,
         "latestPublishedAt": "2026-08-17T00:00:00.000Z",
-        "staleHours": 29,
+        "staleHours": 30,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 4,
         "latestPublishedAt": "2026-08-13T00:00:00.000Z",
-        "staleHours": 125,
+        "staleHours": 126,
         "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 3,
         "latestPublishedAt": "2026-08-13T00:00:00.000Z",
-        "staleHours": 125,
+        "staleHours": 126,
         "status": "stale"
       }
     ]
@@ -88,7 +88,7 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 73
+      "count": 71
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -100,18 +100,16 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 172
+      "count": 173
     },
     "general_market": {
       "label": "General Market",
-      "count": 191
+      "count": 192
     }
   },
   "quality": {
-    "status": "warning",
-    "failedChecks": [
-      "maxStaleSources"
-    ],
+    "status": "pass",
+    "failedChecks": [],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -120,7 +118,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 26,
+        "actual": 32,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -130,12 +128,84 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 3,
-        "pass": false
+        "actual": 2,
+        "pass": true
       }
     }
   },
   "articles": [
+    {
+      "title": "Determining Whether To Submit an ANDA or a 505(b)(2) Application; Draft Guidance for Industry; Availability",
+      "summary": "The Food and Drug Administration (FDA or Agency) is announcing the availability of a draft guidance for industry titled \"Determining Whether to Submit an ANDA or a 505(b)(2) Application.\" This draft guidance is intended to serve as a foundational guidance to assist applicants in determining which one of the abbreviated approval pathways under the Federal Food, Drug, and Cosmetic Act (FD&C Act) is appropriate for the submission of a marketing application to FDA. This draft guidance revises the guidance for industry titled \"Determining Whether to Submit an ANDA or a 505(b)(2) Application\" issued in May 2019 and, when finalized, will replace the 2019 guidance for industry.",
+      "url": "https://www.federalregister.gov/documents/2026/08/18/2026-16837/determining-whether-to-submit-an-anda-or-a-505b2-application-draft-guidance-for-industry",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-08-18",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Testosterone Use in Menopausal Women; Public Workshop; Request for Comments",
+      "summary": "The Food and Drug Administration's (FDA) Office of Women's Health and the Center for Drug Evaluation and Research are announcing a public workshop titled \"Testosterone Use in Menopausal Women.\" The purpose of the public workshop is to examine the current scientific evidence and critical knowledge gaps related to testosterone use in menopausal women to help inform future research and potential drug development of testosterone products for menopausal women. Researchers, educators, industry, clinicians, patients, and consumers may benefit from attending this scientific workshop. Presentations will examine the physiological roles of testosterone throughout a woman's life, including age-related decline, the menopausal transition, challenges associated with measuring and interpreting testosterone blood levels, and how these levels correlate with clinical symptoms and conditions. Speakers will review current and potential clinical uses of testosterone in menopausal women and examine the strengths and limitations of available data supporting those uses. Speakers will discuss regulatory considerations, including the development of robust efficacy and safety data, to support a marketing application for testosterone in menopausal women for the treatment of various clinical conditions, and study design considerations for evaluating long-term safety outcomes in women.",
+      "url": "https://www.federalregister.gov/documents/2026/08/18/2026-16829/testosterone-use-in-menopausal-women-public-workshop-request-for-comments",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-08-18",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Tribal Consultation Meeting",
+      "summary": "Pursuant to the Head Start Act, notice is hereby given of one Tribal Consultation session to be held between HHS/ACF OHS leadership and the leadership of Tribal governments operating Head Start and Early Head Start programs. The purpose of this consultation session is to discuss ways to better meet the needs of American Indian and Alaska Native (AIAN) children and their families, taking into consideration funding allocations, distribution formulas, and other issues affecting the delivery of Head Start services in their geographic locations.",
+      "url": "https://www.federalregister.gov/documents/2026/08/18/2026-16826/tribal-consultation-meeting",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-08-18",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Submission for Office of Management and Budget Review; ACF-700 Tribal Annual Report",
+      "summary": "The Administration for Children and Families (ACF) is requesting to reinstate approval of the ACF-700: Tribal Annual Report (Office of Management and Budget (OMB) #: 0970-0430) with proposed revisions. ACF requests changes to the form that reduce annual burden hours.",
+      "url": "https://www.federalregister.gov/documents/2026/08/18/2026-16793/submission-for-office-of-management-and-budget-review-acf-700-tribal-annual-report",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-08-18",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "National Institute of Allergy and Infectious Diseases; Amended Notice of Meeting",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/08/18/2026-16779/national-institute-of-allergy-and-infectious-diseases-amended-notice-of-meeting",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-08-18",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "National Institute of Neurological Disorders and Stroke; Notice of Partially Closed Meeting",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/08/18/2026-16778/national-institute-of-neurological-disorders-and-stroke-notice-of-partially-closed-meeting",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-08-18",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
     {
       "title": "Four health systems, including Ochsner and Denver Health, go live with Epic's real-time prior authorization checks",
       "url": "https://www.fiercehealthcare.com/health-tech/ochsner-summit-health-among-health-systems-launch-real-time-prior-authorization-checks",
@@ -530,42 +600,18 @@
       "title": "Type VII Veterinary Master File for Research and Development and Risk Reviews; Guidance for Industry; Availability",
       "summary": "The Food and Drug Administration (FDA, Agency, or we) is announcing the availability of a final guidance for industry (GFI) #260 entitled \"Type VII Veterinary Master File for Research and Development and Risk Reviews.\" This guidance describes FDA's current thinking regarding the use of Type VII Veterinary Master Files (Type VII VMFs). Type VII VMFs are appropriate for research and development of animal cells, tissues, and cell- and tissue-based products (ACTPs), gene therapies, and heritable intentional genomic alterations (IGAs) in animals.",
       "url": "https://www.federalregister.gov/documents/2026/08/17/2026-16711/type-vii-veterinary-master-file-for-research-and-development-and-risk-reviews-guidance-for-industry",
-      "source": "Federal Register - HHS",
+      "source": "Federal Register - FDA",
       "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
+      "sourceId": "federal_register_fda",
       "publishedAt": "2026-08-17",
       "category": "ai_tech",
       "relevance": 100,
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Order Under Sections 362 and 365 of the Public Health Service Act Continuing the Suspension of the Right To Introduce Certain Persons From Countries Where a Quarantinable Communicable Disease Exists",
-      "summary": "The Centers for Disease Control and Prevention (CDC), a component of the Department of Health and Human Services (HHS), announces it is issuing an Order under Section 362 and 365 of the Public Health Service Act, and associated implementing regulations, continuing the suspension of the right to introduce certain persons from countries where an outbreak of a quarantinable communicable disease exists. This Order was issued on August 12, 2026, and shall remain in effect through 4:59 p.m. Eastern Daylight Time (EDT) on Friday, September 11, 2026. This Order may be amended or rescinded prior to that time at the discretion of the Director.",
-      "url": "https://www.federalregister.gov/documents/2026/08/17/2026-16706/order-under-sections-362-and-365-of-the-public-health-service-act-continuing-the-suspension-of-the",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-08-17",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
       "title": "Withdrawal of the Announcement of the Intent To Award a Single-Source Cooperative Agreement to Burke Law Group, PLLC in Houston, Texas",
       "summary": "The Administration for Children and Families (ACF), Office of Refugee Resettlement (ORR), is withdrawing the, `Announcement of the Intent to Award a Single-Source Cooperative Agreement to Burke Law Group, PLLC in Houston, Texas' published in the Federal Register on August 6, 2026, at 91 FR 50848 (FR Doc. 2026-16081).",
       "url": "https://www.federalregister.gov/documents/2026/08/17/2026-16741/withdrawal-of-the-announcement-of-the-intent-to-award-a-single-source-cooperative-agreement-to-burke",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-08-17",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Proposed Collection; 60-Day Comment Request; Data Use Certification for the NIH National Institute on Drug Abuse Data Share Site",
-      "summary": "The purpose of this notice is to inform the public of the information collection requirement for the NIDA Data Share, the data use terms and conditions, and to request a progress report statement at the time of renewal. In compliance with the requirement of the Paperwork Reduction Act of 1995 to provide opportunity for public comment on proposed data collection projects, the National Institute on Drug Abuse (NIDA) will publish periodic summaries of proposed projects to be submitted to the Office of Management and Budget (OMB) for review and approval.",
-      "url": "https://www.federalregister.gov/documents/2026/08/17/2026-16683/proposed-collection-60-day-comment-request-data-use-certification-for-the-nih-national-institute-on",
       "source": "Federal Register - HHS",
       "sourceType": "federal_register",
       "sourceId": "federal_register_hhs",
@@ -654,6 +700,30 @@
       "summary": "Kristy Carrington, BSN, RN, becomes chief executive of Providence&#8217;s North Division on Aug. 24, bringing lessons from her early career as an ICU nurse that she said continue to shape how she leads.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Order Under Sections 362 and 365 of the Public Health Service Act Continuing the Suspension of the Right To Introduce Certain Persons From Countries Where a Quarantinable Communicable Disease Exists",
+      "summary": "The Centers for Disease Control and Prevention (CDC), a component of the Department of Health and Human Services (HHS), announces it is issuing an Order under Section 362 and 365 of the Public Health Service Act, and associated implementing regulations, continuing the suspension of the right to introduce certain persons from countries where an outbreak of a quarantinable communicable disease exists. This Order was issued on August 12, 2026, and shall remain in effect through 4:59 p.m. Eastern Daylight Time (EDT) on Friday, September 11, 2026. This Order may be amended or rescinded prior to that time at the discretion of the Director.",
+      "url": "https://www.federalregister.gov/documents/2026/08/17/2026-16706/order-under-sections-362-and-365-of-the-public-health-service-act-continuing-the-suspension-of-the",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-08-17",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Proposed Collection; 60-Day Comment Request; Data Use Certification for the NIH National Institute on Drug Abuse Data Share Site",
+      "summary": "The purpose of this notice is to inform the public of the information collection requirement for the NIDA Data Share, the data use terms and conditions, and to request a progress report statement at the time of renewal. In compliance with the requirement of the Paperwork Reduction Act of 1995 to provide opportunity for public comment on proposed data collection projects, the National Institute on Drug Abuse (NIDA) will publish periodic summaries of proposed projects to be submitted to the Office of Management and Budget (OMB) for review and approval.",
+      "url": "https://www.federalregister.gov/documents/2026/08/17/2026-16683/proposed-collection-60-day-comment-request-data-use-certification-for-the-nih-national-institute-on",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-08-17",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
     },
     {
       "title": "HHS seeks comment on TEFCA monitoring, feedback collection",
@@ -2063,25 +2133,13 @@
       "title": "Determination That ANSAID (Flurbiprofen) Tablets, 50 Milligrams and 100 Milligrams, Were Not Withdrawn From Sale for Reasons of Safety or Effectiveness",
       "summary": "The Food and Drug Administration (FDA, Agency, or we) has determined that ANSAID (flurbiprofen) tablets, 50 milligrams (mg) and 100 mg, were not withdrawn from sale for reasons of safety or effectiveness. This determination will allow FDA to approve abbreviated new drug applications (ANDAs) for flurbiprofen tablets, 50 mg and 100 mg, if all other legal and regulatory requirements are met.",
       "url": "https://www.federalregister.gov/documents/2026/08/14/2026-16666/determination-that-ansaid-flurbiprofen-tablets-50-milligrams-and-100-milligrams-were-not-withdrawn",
-      "source": "Federal Register - HHS",
+      "source": "Federal Register - FDA",
       "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
+      "sourceId": "federal_register_fda",
       "publishedAt": "2026-08-14",
       "category": "ai_tech",
       "relevance": 100,
       "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Notice of Award of a Single Source Cooperative Agreement To Fund International Rescue Committee",
-      "summary": "The Centers for Disease Control and Prevention (CDC), located within the Department of Health and Human Services (HHS), announces the award of approximately $1,000,000 for Federal Fiscal Year 2026 funding to International Rescue Committee (IRC), subject to availability of funds. Funding amounts for years 2-5 will be set at continuation. The award will allow CDC to support the implementation of strategies to reduce the transmission of communicable and emerging diseases in mobile populations in overseas settings.",
-      "url": "https://www.federalregister.gov/documents/2026/08/14/2026-16658/notice-of-award-of-a-single-source-cooperative-agreement-to-fund-international-rescue-committee",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-08-14",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
     },
     {
       "title": "Reauthorization of the Prescription Drug User Fee Act; Public Meeting; Request for Comments",
@@ -2118,6 +2176,18 @@
       "category": "closures_layoffs",
       "relevance": 100,
       "categoryLabel": "Closures & Layoffs"
+    },
+    {
+      "title": "Notice of Award of a Single Source Cooperative Agreement To Fund International Rescue Committee",
+      "summary": "The Centers for Disease Control and Prevention (CDC), located within the Department of Health and Human Services (HHS), announces the award of approximately $1,000,000 for Federal Fiscal Year 2026 funding to International Rescue Committee (IRC), subject to availability of funds. Funding amounts for years 2-5 will be set at continuation. The award will allow CDC to support the implementation of strategies to reduce the transmission of communicable and emerging diseases in mobile populations in overseas settings.",
+      "url": "https://www.federalregister.gov/documents/2026/08/14/2026-16658/notice-of-award-of-a-single-source-cooperative-agreement-to-fund-international-rescue-committee",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-08-14",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
     },
     {
       "title": "National Institute on Alcohol Abuse and Alcoholism; Notice of Partially Closed Meeting",
@@ -4750,60 +4820,6 @@
       "source": "Fierce Healthcare",
       "publishedAt": "2026-08-12",
       "summary": "Digital health and wellness company Hims &amp; Hers is ready to tap into a multi-billion peptide market if U.S.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "CMS' mandatory VBC programs brought substantial administrative costs for hospitals: study",
-      "url": "https://www.fiercehealthcare.com/providers/cms-mandatory-vbc-programs-brought-substantial-administrative-costs-hospitals-study",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-12",
-      "summary": "Four mandatory value-based payment programs were associated with more than $3 billion in aggregated administrative costs compared to non-participating hospitals, researchers' analysis of Medicare cost reports found.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Chutes & Ladders— Humana names new Medicaid chief; Tufts Medicine CEO, CFO to exit",
-      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-12",
-      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "15 recent hospital, health system CEO moves",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/7-recent-hospital-health-system-ceo-moves-21/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-12",
-      "summary": "Hospital and health system CEOs across the U.S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "International fugitive pleads guilty in $1.2B Medicare telehealth scheme",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/telehealth/international-fugitive-pleads-guilty-in-1-2b-medicare-telehealth-scheme/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-12",
-      "summary": "Herbert Leon Kimble, 60, pleaded guilty Aug. 11 in federal court in Columbia, S.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "UNC Health Pardee earns Level III trauma designation",
-      "url": "https://www.beckershospitalreview.com/quality/patient-safety-outcomes/unc-health-pardee-earns-level-iii-trauma-designation/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-12",
-      "summary": "UNC Health Pardee in Hendersonville, N.C.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Franciscan, Brown Health scale Microsoft&#8217;s agentic AI tools",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/innovation/franciscan-brown-health-scale-microsofts-agentic-ai-tools/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-12",
-      "summary": "Mishawaka, Ind.-based Franciscan Health and Providence, R.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
     }
