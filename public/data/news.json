@@ -1,74 +1,81 @@
 {
-  "lastUpdated": "2026-08-20T18:45:16.580Z",
+  "lastUpdated": "2026-08-20T19:37:02.156Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
-    "totalSources": 9,
+    "totalSources": 10,
     "staleSources": 1,
-    "healthySources": 8,
+    "healthySources": 9,
     "sources": [
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 195,
+        "articleCount": 197,
         "latestPublishedAt": "2026-08-20T00:00:00.000Z",
-        "staleHours": 18,
+        "staleHours": 19,
         "status": "ok"
       },
       {
         "source": "Fierce Healthcare",
-        "articleCount": 175,
+        "articleCount": 172,
         "latestPublishedAt": "2026-08-20T00:00:00.000Z",
-        "staleHours": 18,
+        "staleHours": 19,
         "status": "ok"
       },
       {
         "source": "STAT News",
         "articleCount": 61,
         "latestPublishedAt": "2026-08-20T00:00:00.000Z",
-        "staleHours": 18,
+        "staleHours": 19,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 34,
         "latestPublishedAt": "2026-08-20T00:00:00.000Z",
-        "staleHours": 18,
+        "staleHours": 19,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 15,
         "latestPublishedAt": "2026-08-20T00:00:00.000Z",
-        "staleHours": 18,
+        "staleHours": 19,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
-        "articleCount": 12,
+        "articleCount": 11,
         "latestPublishedAt": "2026-08-18T00:00:00.000Z",
-        "staleHours": 66,
+        "staleHours": 67,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
-        "articleCount": 4,
+        "articleCount": 5,
         "latestPublishedAt": "2026-08-20T00:00:00.000Z",
-        "staleHours": 18,
+        "staleHours": 19,
         "status": "ok"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 3,
         "latestPublishedAt": "2026-08-17T00:00:00.000Z",
-        "staleHours": 90,
+        "staleHours": 91,
         "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 1,
         "latestPublishedAt": "2026-08-20T00:00:00.000Z",
-        "staleHours": 18,
+        "staleHours": 19,
+        "status": "ok"
+      },
+      {
+        "source": "National Nurses United RSS",
+        "articleCount": 1,
+        "latestPublishedAt": "2026-08-20T00:00:00.000Z",
+        "staleHours": 19,
         "status": "ok"
       }
     ]
@@ -80,7 +87,7 @@
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 21
+      "count": 22
     },
     "labor_unions": {
       "label": "Labor & Unions",
@@ -92,7 +99,7 @@
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 5
+      "count": 6
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
@@ -100,11 +107,11 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 170
+      "count": 166
     },
     "general_market": {
       "label": "General Market",
-      "count": 213
+      "count": 215
     }
   },
   "quality": {
@@ -113,12 +120,12 @@
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
-        "actual": 9,
+        "actual": 10,
         "pass": true
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 86,
+        "actual": 91,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -255,6 +262,30 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
+      "title": "Contra Costa County nurses overwhelmingly ratify new three-year contract",
+      "summary": "Registered nurses with Contra Costa County Health Services voted 95 percent in favor of ratifying a new contract, winning protections to improve patient safety and nurse retention.",
+      "url": "https://www.nationalnursesunited.org/press/contra-costa-county-nurses-overwhelmingly-ratify-new-three-year-contract",
+      "source": "National Nurses United RSS",
+      "sourceType": "rss",
+      "sourceId": "nnu_rss",
+      "publishedAt": "2026-08-20",
+      "category": "quality_safety",
+      "relevance": 100,
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "Convenience Kit Recall: Medline Issues Correction for Convenience Kits Containing B. Braun Bupivacaine Hydrochloride Components",
+      "summary": "Medline is correcting affected convenience kits by removing included B. Braun components containing Huons Bupivacaine Hydrochloride in Dextrose Injection, USP.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/convenience-kit-recall-medline-issues-correction-convenience-kits-containing-b-braun-bupivacaine",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-08-20",
+      "category": "ai_tech",
+      "relevance": 98,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
       "title": "Agency Forms Undergoing Paperwork Reduction Act Review",
       "summary": "",
       "url": "https://www.federalregister.gov/documents/2026/08/20/2026-17043/agency-forms-undergoing-paperwork-reduction-act-review",
@@ -300,6 +331,24 @@
       "publishedAt": "2026-08-20",
       "category": "general_market",
       "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "HCA Kansas hospital names CEO",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/hca-kansas-hospital-names-ceo/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-08-20",
+      "summary": "John Corbeil was appointed CEO of Overland Park (Kan.) Regional Medical Center, according to an Aug.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Ascension taps president to reopen closed Kansas hospital",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/ascension-taps-president-to-reopen-closed-kansas-hospital/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-08-20",
+      "summary": "Wichita, Kan.-based Ascension Via Christi has appointed a leader to oversee the shuttered Derby, Kan.",
+      "category": "general_market",
       "categoryLabel": "General Market"
     },
     {
@@ -373,24 +422,6 @@
       "summary": "Sioux Falls, S.D.",
       "category": "general_market",
       "categoryLabel": "General Market"
-    },
-    {
-      "title": "The new health system CEO job description, per 23 leaders",
-      "url": "https://www.beckershospitalreview.com/hospital-management-administration/the-new-health-system-ceo-job-description-per-23-leaders/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-20",
-      "summary": "The health system CEO job description is getting longer, and increasingly filled with responsibilities that barely registered five years ago. Today&#8217;s CEOs are expected to steer AI strategy, prepare for cyberattacks, shape culture, advocate in statehouses and on Capitol Hill, protect employees from workplace violence, address affordability and serve as trusted voices in their communities.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Risk On, Ready or Not",
-      "url": "https://www.beckershospitalreview.com/leadership/risk-on-ready-or-not/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-20",
-      "summary": "In 2024, the Medicare Shared Savings Program had its strongest year on record. Even then, roughly one in four participating ACOs did all the work and came away with nothing.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
     },
     {
       "title": "STAT+: How a Trump loyalist got the FDA nomination",
@@ -510,7 +541,7 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "Cityblock acquires Homeward Health to move into rural healthcare, lands $116M funding round",
+      "title": "Cityblock inks deal to acquire Homeward Health to move into rural healthcare, lands $116M funding round",
       "url": "https://www.fiercehealthcare.com/health-tech/cityblock-acquires-homeward-health-move-rural-healthcare-lands-116m-funding-round",
       "source": "Fierce Healthcare",
       "publishedAt": "2026-08-20",
@@ -571,6 +602,33 @@
       "summary": "The lawsuit comes after two new Notice of Funding Opportunities were issued—and then revoked—imposing new criteria for funding awards for the program.",
       "category": "general_market",
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "The new health system CEO job description, per 23 leaders",
+      "url": "https://www.beckershospitalreview.com/hospital-management-administration/the-new-health-system-ceo-job-description-per-23-leaders/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-08-20",
+      "summary": "The health system CEO job description is getting longer, and increasingly filled with responsibilities that barely registered five years ago. Today&#8217;s CEOs are expected to steer AI strategy, prepare for cyberattacks, shape culture, advocate in statehouses and on Capitol Hill, protect employees from workplace violence, address affordability and serve as trusted voices in their communities.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Risk On, Ready or Not",
+      "url": "https://www.beckershospitalreview.com/leadership/risk-on-ready-or-not/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-08-20",
+      "summary": "In 2024, the Medicare Shared Savings Program had its strongest year on record. Even then, roughly one in four participating ACOs did all the work and came away with nothing.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Cityblock acquires Homeward Health to move into rural healthcare, lands $116M funding round",
+      "url": "https://www.fiercehealthcare.com/health-tech/cityblock-acquires-homeward-health-move-rural-healthcare-lands-116m-funding-round",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-20",
+      "summary": "Combined, the two companies will serve nearly 250,000 people and are positioned to reach the120 million people receiving government-funded healthcare in the U.S.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
     },
     {
       "title": "Court sides with drugmakers in 340B dispute, decertifies 11 clinics",
@@ -4747,54 +4805,6 @@
       "summary": "The workforce reduction will reduce the San Diego nonprofit's headcount by just under 1%, but follows last summer's elimination of 315 roles. Leadership attributed the decision to heightened expenses and policy changes at both the federal and state levels.",
       "category": "closures_layoffs",
       "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "Suvi Health launches ambient AI solution for patients to reduce hospital stays and support care transitions",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/suvi-health-launches-ambient-ai-solution-patients-and-caregivers-support",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-15",
-      "summary": "Startup Suvi Health developed an ambient AI platform for patients to close gaps at critical transition points and support the handoff between hospital care teams and patients and their families.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "The biggest payer and provider trends from Q2",
-      "url": "https://www.fiercehealthcare.com/payers/biggest-payer-and-provider-trends-q2",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-15",
-      "summary": "Fierce Healthcare's Paige Minemyer and Dave Muoio break down the biggest trends shaping payer and provider performance in the second quarter and what to watch next.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Oracle Health debuts revamped patient portal with an AI upgrade",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/oracle-health-debuts-revamped-ai-powered-patient-portal",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-15",
-      "summary": "Oracle Health debuted a revamped digital platform for patients with an artificial intelligence assistant that can explain medical records in plain language and assist with scheduling appointments.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Assort Health rolls out AI agent to automate referrals for specialty practices and health systems",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/assort-health-rolls-out-ai-agent-dedicated-referrals",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-15",
-      "summary": "The tool can process inbound referrals, confirm eligibility and match patients to best-suited providers, the startup says.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Determination That ANSAID (Flurbiprofen) Tablets, 50 Milligrams and 100 Milligrams, Were Not Withdrawn From Sale for Reasons of Safety or Effectiveness",
-      "summary": "The Food and Drug Administration (FDA, Agency, or we) has determined that ANSAID (flurbiprofen) tablets, 50 milligrams (mg) and 100 mg, were not withdrawn from sale for reasons of safety or effectiveness. This determination will allow FDA to approve abbreviated new drug applications (ANDAs) for flurbiprofen tablets, 50 mg and 100 mg, if all other legal and regulatory requirements are met.",
-      "url": "https://www.federalregister.gov/documents/2026/08/14/2026-16666/determination-that-ansaid-flurbiprofen-tablets-50-milligrams-and-100-milligrams-were-not-withdrawn",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-08-14",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
     }
   ]
 }
