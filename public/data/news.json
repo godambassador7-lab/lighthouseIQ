@@ -1,68 +1,68 @@
 {
-  "lastUpdated": "2026-08-19T23:28:22.328Z",
+  "lastUpdated": "2026-08-20T01:23:47.967Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 8,
-    "staleSources": 0,
-    "healthySources": 8,
+    "staleSources": 2,
+    "healthySources": 6,
     "sources": [
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 208,
+        "articleCount": 191,
         "latestPublishedAt": "2026-08-19T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 25,
         "status": "ok"
       },
       {
         "source": "Fierce Healthcare",
-        "articleCount": 167,
-        "latestPublishedAt": "2026-08-19T00:00:00.000Z",
-        "staleHours": 23,
+        "articleCount": 184,
+        "latestPublishedAt": "2026-08-20T00:00:00.000Z",
+        "staleHours": 1,
         "status": "ok"
       },
       {
         "source": "STAT News",
         "articleCount": 61,
         "latestPublishedAt": "2026-08-19T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 25,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 29,
         "latestPublishedAt": "2026-08-19T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 25,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 16,
         "latestPublishedAt": "2026-08-19T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 25,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 13,
         "latestPublishedAt": "2026-08-17T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 73,
+        "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 3,
         "latestPublishedAt": "2026-08-19T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 25,
         "status": "ok"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 3,
         "latestPublishedAt": "2026-08-17T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 73,
+        "status": "stale"
       }
     ]
   },
@@ -73,7 +73,7 @@
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 18
+      "count": 19
     },
     "labor_unions": {
       "label": "Labor & Unions",
@@ -81,23 +81,23 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 65
+      "count": 69
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 8
+      "count": 6
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
-      "count": 7
+      "count": 5
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 163
+      "count": 165
     },
     "general_market": {
       "label": "General Market",
-      "count": 218
+      "count": 215
     }
   },
   "quality": {
@@ -111,7 +111,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 116,
+        "actual": 25,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -121,12 +121,237 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 0,
+        "actual": 2,
         "pass": true
       }
     }
   },
   "articles": [
+    {
+      "title": "Many Medicare beneficiaries are confident they understand the program. The data says otherwise",
+      "url": "https://www.fiercehealthcare.com/payers/many-medicare-beneficiaries-are-confident-they-understand-program-theyre-wrong-new-study",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-20",
+      "summary": "While many individuals believe they have a firm grasp on their Medicare benefits, the reality is far different, according to a new survey.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "HHS announces $96.7M in grants for behavioral health services",
+      "url": "https://www.fiercehealthcare.com/regulatory/hhs-announces-967m-grants-behavioral-health-services",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-20",
+      "summary": "Services provided include support for homeless individuals with serious mental illness, suicide prevention and early intervention, SUD treatment, peer support and more.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Projected healthcare services deal count to be lowest since 2017, PitchBook finds",
+      "url": "https://www.fiercehealthcare.com/finance/projected-healthcare-services-deal-count-be-lowest-2017-pitchbook-finds",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-20",
+      "summary": "Three of four segments, except ancillary and outsourced services, face weakness amid macroeconomic headwinds like looming interest rate hikes and low healthcare services utilization.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Oracle Health builds out clinical AI agent with coding, chart review tools",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/oracle-health-announces-expansion-clinical-ai-agent-capabilities",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-20",
+      "summary": "New capabilities for the clinical AI agent include automated coding, dictation and chart review.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Bringing preventive care into the home",
+      "url": "https://www.fiercehealthcare.com/health-tech/bringing-preventive-care-home",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-20",
+      "summary": "Reperio Health co-founder and CEO Travis Rush joins \"Podnosis\" to discuss how at-home screenings and virtual care could make preventive care more convenient and help patients turn health data into action.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Epic expands AI ambitions with agent platform, Cosmos-powered predictions and workflow automation",
+      "url": "https://www.fiercehealthcare.com/health-tech/epic-expands-ai-ambitions-agent-platform-cosmos-powered-predictions-and-deeper-workflow",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-20",
+      "summary": "As healthcare organizations rapidly adopt artificial intelligence technologies, electronic health record giant Epic aims to be the foundational layer, embedding AI and automation into clinical, operational and administrative workflows.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Included Health to offer Carrum specialty care for alternative plan members",
+      "url": "https://www.fiercehealthcare.com/providers/carrum-included-health-integrate-specialty-care-health-plan-members",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-20",
+      "summary": "Carrum’s Centers of Excellence network for specialty care will be embedded directly into Included Health’s Alternative Health Plan to help connect members to high-quality specialty care with more predictable costs.",
+      "category": "quality_safety",
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "Fierce Healthcare Fundraising Tracker '26: Aligned Marketplace lands $20M; Happy Health buoyed by $75M round",
+      "url": "https://www.fiercehealthcare.com/health-tech/fierce-healthcare-fundraising-tracker-26",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-20",
+      "summary": "Keep up with all the venture capital dollars being funneled into the health tech and digital health industries.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "AMA applauds updated CMS prior authorization reporting guidance",
+      "url": "https://www.fiercehealthcare.com/regulatory/ama-backs-updated-cms-prior-authorization-reporting-guidance",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-20",
+      "summary": "The organization said the agency responded to its concerns about payers' implementation of the transparency provisions of the 2024 final rule.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Chutes & Ladders—St. Jude names next CEO; CVS shuffles board of directors",
+      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-20",
+      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Hospital performance improves in June, but lags 2025",
+      "url": "https://www.fiercehealthcare.com/providers/hospital-performance-improves-june-lags-2025",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-20",
+      "summary": "Hospitals' operating margins remain inconsistent across the industry, with rising uncompensated care burden and non-labor expenses increasingly weighing down performance, according to June operating data.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "HIPAA-compliant marketing platform Ours Privacy lands $15M amid growing pixel concerns",
+      "url": "https://www.fiercehealthcare.com/health-tech/hipaa-compliant-marketing-platform-ours-privacy-lands-15m",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-20",
+      "summary": "The software is a full-stack marketing solution designed with healthcare privacy in mind. It integrates with a slew of data sources—from websites to EHRs to Big Tech platforms—cleans PHI and transmits it to third parties.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "R1 acquiring Humata Health to bolster AI-powered prior authorizations",
+      "url": "https://www.fiercehealthcare.com/finance/r1-agrees-acquire-humata-health-enhance-os-ai-powered-prior-auths",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-20",
+      "summary": "Humata’s AI-powered solution has allowed physicians to achieve a 96% first-pass approval rate while reducing write-offs by 30%, executives say.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Ousted OHSU Healthcare CEO files lawsuit alleging wrongful termination, discrimination",
+      "url": "https://www.fiercehealthcare.com/providers/ousted-ohsu-healthcare-ceo-files-lawsuit-alleging-wrongful-termination-discrimination",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-20",
+      "summary": "Tarek Salaway's complaint contests the academic system's publicly shared account of his conduct and seeks $15.5 million in damages.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "JD Power: Member satisfaction with Medicare Advantage plans continues to slide",
+      "url": "https://www.fiercehealthcare.com/payers/jd-power-member-satisfaction-medicare-advantage-plans-continues-slide",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-20",
+      "summary": "Satisfaction with Medicare Advantage plans has declined for the second straight year as enrollees expect insurers to be more of a partner in their care, according to a new study from JD Power.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Alignment Health seeks to have former exec's whistleblower suit tossed",
+      "url": "https://www.fiercehealthcare.com/payers/former-exec-alleges-alignment-healthcare-leaders-juiced-profits-boost-bonuses",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-20",
+      "summary": "Alignment Healthcare and several of its executives have filed a motion to have a whistleblower suit filed by a former exec dismissed.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Rural primary care company Hopscotch clinches $53M to expand beyond NC",
+      "url": "https://www.fiercehealthcare.com/providers/rural-primary-care-company-hopscotch-clinches-53m-expand-beyond-nc",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-20",
+      "summary": "As rural healthcare faces access challenges, Hopscotch focuses on a smooth and attentive patient experience while augmenting clinicians with technology.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Whoop expands Advanced Labs to non-members, adds Grail’s multi-cancer detection test to lineup",
+      "url": "https://www.fiercehealthcare.com/health-tech/whoop-expands-advanced-labs-offering-non-members-adds-grails-multi-cancer-detection",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-20",
+      "summary": "Advanced Labs includes insights into cardiovascular, metabolic and inflammatory health through comprehensive, clinician-reviewed blood testing.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Happy Health secures $75M to expand AI-powered care in the home starting with sleep apnea",
+      "url": "https://www.fiercehealthcare.com/finance/happy-health-secures-75m-ai-driven-home-based-care-platform",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-20",
+      "summary": "The startup’s smart ring—dubbed Happy Ring—was first cleared by the FDA in 2024.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Papa, eternalHealth expand partnership around Plus platform",
+      "url": "https://www.fiercehealthcare.com/payers/papa-eternalhealth-expand-partnership-around-plus-platform",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-20",
+      "summary": "Papa is expanding its relationship with eternalHealth, with the Boston-based insurer signing on for three core services from its Papa Plus platform.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Four health systems, including Ochsner and Denver Health, go live with Epic's real-time prior authorization checks",
+      "url": "https://www.fiercehealthcare.com/health-tech/ochsner-summit-health-among-health-systems-launch-real-time-prior-authorization-checks",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-20",
+      "summary": "UnitedHealthcare, Network Health and Aetna are among the first group of health plans to go live with the API, while Ochsner Health, Froedtert ThedaCare Health, Denver Health and Summit Health are the four health systems now using the real-time prior auth checks.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "DocGo agrees to acquire virtual care provider Hicuity Health, assumes $52M debt",
+      "url": "https://www.fiercehealthcare.com/finance/docgo-enters-definitive-agreement-acquire-virtual-care-provider-hicuity-health-assumes-52m",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-20",
+      "summary": "DocGo is acquiring the virtual care provider by assuming approximately $52 million in existing debt.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Providence Health Plan's Medicare Advantage sale falls through",
+      "url": "https://www.fiercehealthcare.com/payers/providence-mulling-sale-its-health-plan-amid-financial-pressure",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-20",
+      "summary": "After exploring options for the future, including a sale, Providence Health Plan announced this week that it will cease operations for most of its insurance businesses next year.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "As healthcare costs weigh on patients, states could play a bigger role, report finds",
+      "url": "https://www.fiercehealthcare.com/regulatory/americans-want-healthcares-financial-burdens-addressed-heres-how-states-could-do-more",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-20",
+      "summary": "Recent Commonwealth Fund reports outline the nation's grievances with rising healthcare costs and the greater role states could take in protecting those most at risk.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Innovaccer, Mastek ink strategic partnership to scale agentic AI in healthcare globally",
+      "url": "https://www.fiercehealthcare.com/health-tech/innovaccer-mastek-ink-strategic-partnership-accelerate-global-deployment-agentic",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-20",
+      "summary": "Mastek will join Innovaccer’s Platinum GSI program as the company works to expand into the U.K.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
     {
       "title": "Gardenia Blue Interest Group; Filing of Color Additive Petition",
       "summary": "The Food and Drug Administration (FDA or we) is announcing that we have filed a petition, submitted by Gardenia Blue Interest Group (GBIG or petitioner), c/o Exponent, Inc., proposing that we amend our color additive regulations to expand the safe use of gardenia (genipin) blue in various foods at levels consistent with good manufacturing practice. The petition also proposes to lower the specification for arsenic in gardenia (genipin) blue.",
@@ -4543,231 +4768,6 @@
       "source": "Fierce Healthcare",
       "publishedAt": "2026-08-14",
       "summary": "A sweeping list of law enforcement referrals for \"potentially anomalous billing patterns\" related to gender-affirming care for minors stems from a newly commissioned analysis, which accuses healthcare providers and other groups of ideological capture and profiteering.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Cityblock unveils partnership with Humana in North Carolina",
-      "url": "https://www.fiercehealthcare.com/payers/cityblock-unveils-partnership-humana-north-carolina",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-14",
-      "summary": "Cityblock Health is expanding its footprint in North Carolina through a new partnership with Humana.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Single payer system would save $1 trillion, 114,000 lives annually: Yale study",
-      "url": "https://www.beckershospitalreview.com/finance/single-payer-system-would-save-1-trillion-114000-lives-annually-yale-study/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-14",
-      "summary": "A single payer universal healthcare system would reduce U.S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Henry Ford Health pharmacy chief elected ASHP president-elect",
-      "url": "https://www.beckershospitalreview.com/pharmacy/henry-ford-health-pharmacy-chief-elected-ashp-president-elect/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-14",
-      "summary": "Jennifer Tryon, PharmD, senior vice president and chief pharmacy officer at Detroit-based Henry Ford Health, was elected president-elect of ASHP. Dr.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "83% of employers say rising healthcare costs are squeezing pay raises",
-      "url": "https://www.beckershospitalreview.com/compensation-issues/83-of-employers-say-rising-healthcare-costs-are-squeezing-pay-raises/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-14",
-      "summary": "More than 8 in 10 employers say rising healthcare costs are cutting into wage and salary increases, according to a survey conducted by The National Alliance of Healthcare Purchaser Coalitions. The 2026 Pulse of the Purchaser survey, released Aug.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Vanderbilt Health notifies 3,298 patients of email data breach",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/cybersecurity/vanderbilt-health-notifies-3298-patients-of-email-data-breach/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-14",
-      "summary": "Nashville, Tenn.-based Vanderbilt Health is notifying 3,298 patients that their medical information may have been exposed after an employee clicked a malicious link in a phishing email, according to a filing with the HHS Office for Civil Rights.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "6 Penn Nursing studies on what staffing headcounts miss",
-      "url": "https://www.beckershospitalreview.com/quality/nursing/6-penn-nursing-studies-challenge-how-hospitals-measure-staffing/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-14",
-      "summary": "A year of University of Pennsylvania School of Nursing research points to a consistent finding: the staffing numbers hospitals track most closely to predict patient safety are less reliable than nurses&#8217; own read. Here is what Penn Nursing&#8217;s recent work has found: 1.",
-      "category": "quality_safety",
-      "categoryLabel": "Quality & Safety"
-    },
-    {
-      "title": "Congressman presses VA on unresolved Oracle Health EHR oversight recommendations",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/congressman-presses-va-on-unresolved-oracle-health-ehr-oversight-recommendations/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-14",
-      "summary": "U.S.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Lurie Children&#8217;s turns &#8216;curbside consults&#8217; into billable encounters",
-      "url": "https://www.beckershospitalreview.com/care-coordination/lurie-childrens-turns-curbside-consults-into-billable-encounters/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-14",
-      "summary": "Ann &#38; Robert H. Lurie Children&#8217;s Hospital of Chicago increased documented interprofessional consultations from an average of 0.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "What does it take to be a lasting AI partner to health systems?",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/what-does-it-take-to-be-a-lasting-ai-partner-to-health-systems/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-14",
-      "summary": "BJC Health, Hartford HealthCare, NYU Langone Health, UNC Health, University of Utah Health and WVU Medicine are finding out. The post What does it take to be a lasting AI partner to health systems?",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Trump administration refers scores of providers, pharmacies, PBMs to DOJ, OIG over past billing for pediatric gender-affirming care",
-      "url": "https://www.fiercehealthcare.com/regulatory/hhs-refers-scores-providers-pharmacies-pbms-doj-oig-over-past-billing-pediatric-gender",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-14",
-      "summary": "A sweeping list of law enforcement referrals for \"potentially anomalous billing patterns\" related to gender-affirming care for minors stems from a newly commissioned analysis, which accuses healthcare providers and other groups of ideological capture and profiteering.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Epic releases Care Everywhere diagnostic image exchange to tackle healthcare's 'CD problem'",
-      "url": "https://www.fiercehealthcare.com/health-tech/taking-aim-healthcares-cd-problem-epic-releases-care-everywhere-diagnostic-image",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-14",
-      "summary": "Epic released a new diagnostic image exchange solution that enables healthcare providers at Epic-connected health systems to retrieve and share diagnostic-quality medical images, such as CT scans, X-rays and MRIs, with a single click.",
-      "category": "quality_safety",
-      "categoryLabel": "Quality & Safety"
-    },
-    {
-      "title": "Cedar launches Kora Platform to build out agentic AI for medical billing",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/cedar-launches-kora-platform-agentic-ai-billing",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-14",
-      "summary": "Kora has achieved a 20% pickup rate for outbound calls, which the company says is 4x the industry average.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Common Health Coalition secures $100M from OpenAI Foundation to boost hepatitis C cure rates",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/openai-foundation-common-health-coalition-launch-public-health-initiative",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-14",
-      "summary": "Funding will support the deployment of AI-enabled tools to help identify patients who have fallen out of care, reduce administrative burden, strengthen care coordination and improve patient outcomes.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "6 Penn Nursing studies challenge how hospitals measure staffing",
-      "url": "https://www.beckershospitalreview.com/quality/nursing/6-penn-nursing-studies-challenge-how-hospitals-measure-staffing/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-14",
-      "summary": "A year of University of Pennsylvania School of Nursing research points to a consistent finding: the staffing numbers hospitals track most closely to predict patient safety are less reliable than nurses&#8217; own read. Here is what Penn Nursing&#8217;s recent work has found: 1.",
-      "category": "quality_safety",
-      "categoryLabel": "Quality & Safety"
-    },
-    {
-      "title": "Wisconsin health system names chief supply officer",
-      "url": "https://www.beckershospitalreview.com/supply-chain/wisconsin-health-system-names-chief-supply-officer/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-14",
-      "summary": "Wausau, Wis.-based Aspirus Health has named Laurent Cauchi vice president and chief supply officer.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Illinois hospitals get $31M for tech under rural health program",
-      "url": "https://www.beckershospitalreview.com/digital-health/illinois-hospitals-get-31m-for-tech-under-rural-health-program/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-14",
-      "summary": "The Illinois Critical Access Hospital Network has executed three grant agreements worth more than $50 million with the state to fund rural hospital technology, disease prevention and workforce initiatives. ICAHN signed the agreements with the Illinois Department of Healthcare and Family Services on July 31, effective August 1 through June 30, 2027, per an Aug.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Mercy nurses cut documentation time 22% with Microsoft AI",
-      "url": "https://www.beckershospitalreview.com/digital-health/mercy-nurses-cut-documentation-time-22-with-microsoft-ai/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-14",
-      "summary": "Chesterfield, Mo.-based Mercy reported a 22% reduction in flowsheet documentation time per shift after rolling out Microsoft&#8217;s Dragon Copilot AI assistant to nurses, according to a Microsoft customer story published Aug.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Florida hospital names director of pharmacy",
-      "url": "https://www.beckershospitalreview.com/pharmacy/florida-hospital-names-director-of-pharmacy/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-14",
-      "summary": "Homestead (Fla.) Hospital, part of Coral Gables, Fla.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Temple Health CIO retires",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/temple-health-cio-retires/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-14",
-      "summary": "Debbie Cancilla has retired as executive vice president of data strategy and CIO of Philadelphia-based Temple University Health System. Vinay Bharel, senior vice president of information systems operations, now serves as interim CIO.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "UC San Diego Health, West Health launch $40M accelerator for 'tech-forward' coordinated care",
-      "url": "https://www.fiercehealthcare.com/providers/uc-san-diego-health-west-health-launch-40m-accelerator-tech-forward-coordinated-care",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-14",
-      "summary": "The academic system and the nonprofit plan to develop a scalable model for timely, personalized care delivery, with an emphasis on care navigation and digital health tools.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Appeals court tosses methodology for calculating NSA qualifying payment amounts",
-      "url": "https://www.fiercehealthcare.com/regulatory/appeals-court-tosses-methodology-calculating-nsa-qualifying-payment-amounts",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-14",
-      "summary": "A federal appeals court has tossed key methodology used to resolve out-of-network claims under the No Surprises Act.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Physician-owned assisted living facility opens in Utah",
-      "url": "https://www.beckershospitalreview.com/post-acute/physician-owned-assisted-living-facility-opens-in-utah/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-14",
-      "summary": "Salt Lake City-based Manor on 1st, a physician-owned and operated assisted living community, is opening Aug. 15, CBS affiliate KUTV reported Aug.",
-      "category": "capacity_expansion",
-      "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "Leadership in the Age of Learning",
-      "url": "https://www.beckershospitalreview.com/quality/leadership-in-the-age-of-learning/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-14",
-      "summary": "Why Human Flourishing Will Determine Whether Healthcare Realizes the Promise of Artificial Intelligence Every hospital begins the day with a plan. Every great hospital ends the day having learned.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "1 dead in officer-involved shooting at Alabama hospital campus",
-      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/1-dead-in-officer-involved-shooting-at-alabama-hospital-campus/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-14",
-      "summary": "Alabama police confirmed an officer-involved shooting on the campus of UAB St. Vincent&#8217;s Birmingham Aug.",
-      "category": "capacity_expansion",
-      "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "Antelope Recovery, offering SUD care for teens, to expand Spanish services in Colorado",
-      "url": "https://www.fiercehealthcare.com/digital-health/antelope-recovery-gets-colorado-opioid-settlement-funds-expand-spanish-services",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-14",
-      "summary": "Antelope Recovery offers mental health treatment for criminal justice-involved teens. The latest funding will also be used to develop additional programming specific to the challenges these youth face.",
       "category": "general_market",
       "categoryLabel": "General Market"
     }
