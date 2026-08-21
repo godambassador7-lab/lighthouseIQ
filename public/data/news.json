@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-08-21T11:31:52.202Z",
+  "lastUpdated": "2026-08-21T12:55:04.751Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 1,
-    "healthySources": 9,
+    "staleSources": 0,
+    "healthySources": 10,
     "sources": [
       {
         "source": "Becker's Hospital Review",
         "articleCount": 214,
         "latestPublishedAt": "2026-08-20T00:00:00.000Z",
-        "staleHours": 35,
+        "staleHours": 36,
         "status": "ok"
       },
       {
         "source": "Fierce Healthcare",
-        "articleCount": 145,
+        "articleCount": 144,
         "latestPublishedAt": "2026-08-21T00:00:00.000Z",
-        "staleHours": 11,
+        "staleHours": 12,
         "status": "ok"
       },
       {
         "source": "STAT News",
         "articleCount": 64,
         "latestPublishedAt": "2026-08-21T00:00:00.000Z",
-        "staleHours": 11,
+        "staleHours": 12,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 35,
         "latestPublishedAt": "2026-08-21T00:00:00.000Z",
-        "staleHours": 11,
+        "staleHours": 12,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 15,
         "latestPublishedAt": "2026-08-20T00:00:00.000Z",
-        "staleHours": 35,
+        "staleHours": 36,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 15,
         "latestPublishedAt": "2026-08-19T00:00:00.000Z",
-        "staleHours": 59,
+        "staleHours": 60,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 5,
         "latestPublishedAt": "2026-08-20T00:00:00.000Z",
-        "staleHours": 35,
+        "staleHours": 36,
+        "status": "ok"
+      },
+      {
+        "source": "SEC Healthcare Filings",
+        "articleCount": 4,
+        "latestPublishedAt": "2026-08-21T00:00:00.000Z",
+        "staleHours": 12,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 3,
         "latestPublishedAt": "2026-08-21T00:00:00.000Z",
-        "staleHours": 11,
+        "staleHours": 12,
         "status": "ok"
-      },
-      {
-        "source": "SEC Healthcare Filings",
-        "articleCount": 3,
-        "latestPublishedAt": "2026-08-17T00:00:00.000Z",
-        "staleHours": 107,
-        "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 1,
         "latestPublishedAt": "2026-08-20T00:00:00.000Z",
-        "staleHours": 35,
+        "staleHours": 36,
         "status": "ok"
       }
     ]
@@ -107,11 +107,11 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 159
+      "count": 158
     },
     "general_market": {
       "label": "General Market",
-      "count": 226
+      "count": 227
     }
   },
   "quality": {
@@ -125,7 +125,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 35,
+        "actual": 36,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -135,7 +135,7 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 1,
+        "actual": 0,
         "pass": true
       }
     }
@@ -223,6 +223,18 @@
       "publishedAt": "2026-08-21",
       "category": "general_market",
       "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "UHS 8-K filing - Universal Health Services, Inc.",
+      "summary": "Universal Health Services, Inc. filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/352915/000119312526359953/d329184d8k.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-08-21",
+      "category": "general_market",
+      "relevance": 90,
       "categoryLabel": "General Market"
     },
     {
@@ -4815,15 +4827,6 @@
       "source": "Fierce Healthcare",
       "publishedAt": "2026-08-17",
       "summary": "Funding will support the deployment of AI-enabled tools to help identify patients who have fallen out of care, reduce administrative burden, strengthen care coordination and improve patient outcomes.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "UC San Diego Health, West Health launch $40M accelerator for 'tech-forward' coordinated care",
-      "url": "https://www.fiercehealthcare.com/providers/uc-san-diego-health-west-health-launch-40m-accelerator-tech-forward-coordinated-care",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-17",
-      "summary": "The academic system and the nonprofit plan to develop a scalable model for timely, personalized care delivery, with an emphasis on care navigation and digital health tools.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
     }
