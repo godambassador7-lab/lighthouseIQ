@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-08-24T13:59:16.529Z",
+  "lastUpdated": "2026-08-24T14:50:23.303Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 5,
-    "healthySources": 5,
+    "staleSources": 4,
+    "healthySources": 6,
     "sources": [
       {
         "source": "Becker's Hospital Review",
         "articleCount": 190,
         "latestPublishedAt": "2026-08-24T00:00:00.000Z",
-        "staleHours": 13,
+        "staleHours": 14,
         "status": "ok"
       },
       {
         "source": "Fierce Healthcare",
-        "articleCount": 179,
+        "articleCount": 176,
         "latestPublishedAt": "2026-08-24T00:00:00.000Z",
-        "staleHours": 13,
+        "staleHours": 14,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 67,
+        "articleCount": 68,
         "latestPublishedAt": "2026-08-24T00:00:00.000Z",
-        "staleHours": 13,
+        "staleHours": 14,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 30,
         "latestPublishedAt": "2026-08-24T00:00:00.000Z",
-        "staleHours": 13,
+        "staleHours": 14,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 14,
         "latestPublishedAt": "2026-08-24T00:00:00.000Z",
-        "staleHours": 13,
+        "staleHours": 14,
+        "status": "ok"
+      },
+      {
+        "source": "FDA MedWatch RSS",
+        "articleCount": 9,
+        "latestPublishedAt": "2026-08-24T00:00:00.000Z",
+        "staleHours": 14,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 8,
         "latestPublishedAt": "2026-08-20T00:00:00.000Z",
-        "staleHours": 109,
-        "status": "stale"
-      },
-      {
-        "source": "FDA MedWatch RSS",
-        "articleCount": 7,
-        "latestPublishedAt": "2026-08-21T00:00:00.000Z",
-        "staleHours": 85,
+        "staleHours": 110,
         "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 3,
         "latestPublishedAt": "2026-08-21T00:00:00.000Z",
-        "staleHours": 85,
+        "staleHours": 86,
         "status": "stale"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 1,
         "latestPublishedAt": "2026-08-21T00:00:00.000Z",
-        "staleHours": 85,
+        "staleHours": 86,
         "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 1,
         "latestPublishedAt": "2026-08-20T00:00:00.000Z",
-        "staleHours": 109,
+        "staleHours": 110,
         "status": "stale"
       }
     ]
@@ -83,19 +83,19 @@
   "categoryCoverage": {
     "closures_layoffs": {
       "label": "Closures & Layoffs",
-      "count": 8
+      "count": 7
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 29
+      "count": 27
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 3
+      "count": 4
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 60
+      "count": 61
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -111,7 +111,7 @@
     },
     "general_market": {
       "label": "General Market",
-      "count": 200
+      "count": 201
     }
   },
   "quality": {
@@ -127,7 +127,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 53,
+        "actual": 66,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -137,7 +137,7 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 5,
+        "actual": 4,
         "pass": false
       }
     }
@@ -192,6 +192,30 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
+      "title": "Early Alert: Convenience Kit Issue from AVID Medical",
+      "summary": "Certain AVID Medical convenience kits containing recalled BD ChloraPrep applicators should be removed from use due to potential fungal contamination",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-convenience-kit-issue-avid-medical",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-08-24",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Early Alert: Convenience Kit Issue from Medline",
+      "summary": "Certain Medline convenience kits containing recalled BD ChloraPrep applicators should be removed from use due to potential fungal contamination",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-convenience-kit-issue-medline",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-08-24",
+      "category": "ai_tech",
+      "relevance": 98,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
       "title": "Government Owned Invention Available for License: T Cell Receptors Targeting HPV 6 or HPV 11",
       "summary": "The National Cancer Institute (NCI) seeks research co- development partners and/or licensees for a collection of T cell receptors (TCRs) that specifically target HPV 6 or HPV 11 antigens.",
       "url": "https://www.federalregister.gov/documents/2026/08/24/2026-17188/government-owned-invention-available-for-license-t-cell-receptors-targeting-hpv-6-or-hpv-11",
@@ -204,76 +228,103 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "12 hospitals, health systems seeking CEOs",
-      "url": "https://www.beckershospitalreview.com/hospital-management-administration/7-hospitals-seeking-ceos/",
+      "title": "The Hidden Communication Gaps Disrupting Hospital Operations",
+      "url": "https://www.beckershospitalreview.com/hospital-management-administration/the-hidden-communication-gaps-disrupting-hospital-operations/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-08-24",
-      "summary": "Hospitals across the U.S.",
+      "summary": "Hospitals depend on outside vendors for an enormous range of products and services, but nowhere is that relationship more visible than in procedural care. Medical device representatives may be present for surgeries, coordinate specialized equipment and work closely with clinical teams to ensure physicians have what they need for a case.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
     {
-      "title": "&#8216;BFFs&#8217; and budgets: Inside health systems&#8217; Epic relationships",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/bffs-and-budgets-inside-health-systems-epic-relationships/",
+      "title": "6 new FDA approved drugs to know",
+      "url": "https://www.beckershospitalreview.com/pharmacy/6-new-fda-approved-drugs-to-know/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-08-24",
-      "summary": "Epic accounts for 43.7% of the U.",
+      "summary": "The FDA has approved six new treatments across oncology, neurology and cardiometabolic care in recent weeks, with one rare disease decision window still ahead.&#160; Here are six approvals to know: The post 6 new FDA approved drugs to know appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
     {
-      "title": "Phoenix Children&#8217;s names COO and chief nurse executive",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/phoenix-childrens-names-coo-and-chief-nurse-executive/",
+      "title": "3 underdiscussed revenue cycle challenges",
+      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/3-underdiscussed-revenue-cycle-challenges/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-08-24",
-      "summary": "Jamie Wiggins, PhD, RN, was appointed executive vice president, COO and chief nursing executive at Phoenix Children&#8217;s. The combined role brings operational and nursing leadership together as the health system grows, according to an Aug.",
+      "summary": "From underpayment erosion to contract underperformance, three leaders shared with Becker&#8217;s the revenue cycle challenges they believe deserve more attention:&#160;&#160; Paul Chausse, Jr. Senior Vice President of Revenue Cycle and Chief Revenue Cycle Officer at Tampa (Fla.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
     {
-      "title": "HHS seeks comment on new childhood vaccine categories",
-      "url": "https://www.beckershospitalreview.com/quality/public-health/hhs-seeks-comment-on-new-childhood-vaccine-categories/",
+      "title": "30 health systems warn of MyChart &#8216;Medicare Kit&#8217; scam",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/cybersecurity/30-health-systems-warn-of-mychart-medicare-kit-scam/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-08-24",
-      "summary": "Federal health officials are seeking public comment on whether to add new categories to the childhood vaccine schedule, according to a request for information HHS published Aug. 24 in the Federal Register.",
+      "summary": "A phishing scam impersonating MyChart is targeting patients at health systems across the country, with fraudulent emails and texts dangling a &#8220;MyChart Medicare Kit&#8221; or &#8220;Senior Health Package&#8221; to trick recipients into clicking malicious links or handing over personal information. The messages, which use subject lines such as &#8220;Your MyChart Medicare Kit Awaits!",
       "category": "policy_reimbursement",
       "categoryLabel": "Policy & Reimbursement"
     },
     {
-      "title": "10 hardest-working states in the US",
-      "url": "https://www.beckershospitalreview.com/rankings-and-ratings/10-hardest-working-states-in-the-us-3/",
+      "title": "Why UHS bet $835M on Talkspace&#8217;s 6,000 therapists",
+      "url": "https://www.beckershospitalreview.com/finance/why-uhs-bet-835m-on-talkspaces-6000-therapists/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-08-24",
-      "summary": "South Dakota is the state where Americans work the hardest, according to an analysis published Aug. 24 by WalletHub.",
+      "summary": "King of Prussia, Pa.-based Universal Health Services has had a busy summer.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
     {
-      "title": "30 large health systems growing bigger",
-      "url": "https://www.beckershospitalreview.com/rural-health/growth-merger/11-large-health-systems-growing-bigger/",
+      "title": "North Dakota rehab hospital names CEO",
+      "url": "https://www.beckershospitalreview.com/post-acute/north-dakota-rehab-hospital-names-ceo/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-08-24",
-      "summary": "After a brief post-pandemic lull, hospital consolidation is accelerating again, with large health systems expanding across state lines, absorbing independent hospitals and reshaping regional care markets.&#160; From portfolio resets and strategic exits to cross-market mergers and billion-dollar investments, these moves reflect how scale, capital access and geographic reach are becoming critical advantages in today’s healthcare [&#8230;] The post 30 large health systems growing bigger appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "12 healthcare bankruptcies in 2026",
-      "url": "https://www.beckershospitalreview.com/finance/9-healthcare-bankruptcies-in-2026/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-24",
-      "summary": "As the healthcare industry continues to face financial and policy shifts, hospital bankruptcies show no signs of slowing. Becker&#8217;s covered 20 healthcare organization bankruptcies in 2025, up from 15 in 2024, suggesting&#160; financial pressures from healthcare workforce shortages, rising operational costs and declining reimbursement rates.",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "Cleveland Clinic APP leader to join MUSC Health",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/cleveland-clinic-app-leader-to-join-musc-health/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-24",
-      "summary": "Evan Minor, BSN, NP, director of advanced practice providers at Cleveland Clinic, will join Charleston, S.C.",
+      "summary": "Grand Forks, N.D.",
       "category": "general_market",
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "Arkansas Children’s taps new vice president of financial services",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/arkansas-childrens-taps-new-vice-president-of-financial-services/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-08-24",
+      "summary": "Brandon Duany has been named vice president of financial services at Little Rock-based Arkansas Children&#8217;s, according to an Aug. 21 LinkedIn post.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "HSHS physician exec: Population health, ACOs &#8216;moving to downside risk&#8217;",
+      "url": "https://www.beckershospitalreview.com/quality/hospital-physician-relationships/hshs-physician-exec-population-health-acos-moving-to-downside-risk/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-08-24",
+      "summary": "Population health accountability has been arriving gradually for years at health systems nationwide, through shared savings programs and value-based contracts that rewarded efficiency but kept most of the financial risk on Medicare&#8217;s side. That cushion is shrinking.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Atrium gets approval for its 1st Atlanta hospital",
+      "url": "https://www.beckershospitalreview.com/capital/atrium-gets-approval-for-its-1st-atlanta-hospital/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-08-24",
+      "summary": "Charlotte, N.C.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "More NP students pay for preceptors out-of-pocket: 7 notes",
+      "url": "https://www.beckershospitalreview.com/quality/nursing/more-np-students-pay-for-preceptors-out-of-pocket-7-notes/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-08-24",
+      "summary": "Many nurse practitioners are struggling to find a preceptor, resulting in many students paying preceptors thousands of dollars so they can graduate, The Hechinger Report reported Aug. 24.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Public-sector purgatory, and a union-hospital fight",
+      "url": "https://www.statnews.com/2026/08/24/public-sector-workers-health-insurance-costs-hospital-union-battle/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-08-24",
+      "summary": "Aon, the big consulting and brokerage house, confirms 2027 is going to be brutal for job-based health care premiums.",
+      "category": "labor_unions",
+      "categoryLabel": "Labor & Unions"
     },
     {
       "title": "STAT+: Pharmalittle: We&#8217;re reading about Medicaid obesity-drug coverage, a Regenxbio gene therapy, and more",
@@ -366,20 +417,20 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Healthcare was built around specialties. Patients experience it as one journey.",
-      "url": "https://www.healthcaredive.com/spons/healthcare-was-built-around-specialties-patients-experience-it-as-one-jour/827855/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-08-24",
-      "summary": "<p>Care coordination starts by designing healthcare around people, not disconnected systems.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
       "title": "Transparency was never a pivot. It’s always been how we work.",
       "url": "https://www.healthcaredive.com/spons/transparency-was-never-a-pivot-its-always-been-how-we-work/827824/",
       "source": "Healthcare Dive",
       "publishedAt": "2026-08-24",
       "summary": "<p>We&rsquo;ve been building the PBM of the future. Let me share what that means.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Healthcare was built around specialties. Patients experience it as one journey.",
+      "url": "https://www.healthcaredive.com/spons/healthcare-was-built-around-specialties-patients-experience-it-as-one-jour/827855/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-08-24",
+      "summary": "<p>Care coordination starts by designing healthcare around people, not disconnected systems.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
@@ -445,6 +496,78 @@
       "summary": "One-size-fits-all review can under-govern high-risk generative AI models while blocking narrow AI models designed to reduce privacy exposure, write Peter Grantcharov and David Knobel.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "12 hospitals, health systems seeking CEOs",
+      "url": "https://www.beckershospitalreview.com/hospital-management-administration/7-hospitals-seeking-ceos/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-08-24",
+      "summary": "Hospitals across the U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "&#8216;BFFs&#8217; and budgets: Inside health systems&#8217; Epic relationships",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/bffs-and-budgets-inside-health-systems-epic-relationships/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-08-24",
+      "summary": "Epic accounts for 43.7% of the U.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Phoenix Children&#8217;s names COO and chief nurse executive",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/phoenix-childrens-names-coo-and-chief-nurse-executive/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-08-24",
+      "summary": "Jamie Wiggins, PhD, RN, was appointed executive vice president, COO and chief nursing executive at Phoenix Children&#8217;s. The combined role brings operational and nursing leadership together as the health system grows, according to an Aug.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "HHS seeks comment on new childhood vaccine categories",
+      "url": "https://www.beckershospitalreview.com/quality/public-health/hhs-seeks-comment-on-new-childhood-vaccine-categories/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-08-24",
+      "summary": "Federal health officials are seeking public comment on whether to add new categories to the childhood vaccine schedule, according to a request for information HHS published Aug. 24 in the Federal Register.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "10 hardest-working states in the US",
+      "url": "https://www.beckershospitalreview.com/rankings-and-ratings/10-hardest-working-states-in-the-us-3/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-08-24",
+      "summary": "South Dakota is the state where Americans work the hardest, according to an analysis published Aug. 24 by WalletHub.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "30 large health systems growing bigger",
+      "url": "https://www.beckershospitalreview.com/rural-health/growth-merger/11-large-health-systems-growing-bigger/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-08-24",
+      "summary": "After a brief post-pandemic lull, hospital consolidation is accelerating again, with large health systems expanding across state lines, absorbing independent hospitals and reshaping regional care markets.&#160; From portfolio resets and strategic exits to cross-market mergers and billion-dollar investments, these moves reflect how scale, capital access and geographic reach are becoming critical advantages in today’s healthcare [&#8230;] The post 30 large health systems growing bigger appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "12 healthcare bankruptcies in 2026",
+      "url": "https://www.beckershospitalreview.com/finance/9-healthcare-bankruptcies-in-2026/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-08-24",
+      "summary": "As the healthcare industry continues to face financial and policy shifts, hospital bankruptcies show no signs of slowing. Becker&#8217;s covered 20 healthcare organization bankruptcies in 2025, up from 15 in 2024, suggesting&#160; financial pressures from healthcare workforce shortages, rising operational costs and declining reimbursement rates.",
+      "category": "closures_layoffs",
+      "categoryLabel": "Closures & Layoffs"
+    },
+    {
+      "title": "Cleveland Clinic APP leader to join MUSC Health",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/cleveland-clinic-app-leader-to-join-musc-health/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-08-24",
+      "summary": "Evan Minor, BSN, NP, director of advanced practice providers at Cleveland Clinic, will join Charleston, S.C.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
     },
     {
       "title": "Weekly Rundown: Expressable joins Amazon's health conditions program; Function launches data connector for AI platforms",
@@ -4675,123 +4798,6 @@
       "summary": "Epic used its 2026 Users&#8217; Group Meeting on Tuesday to detail several new and expanding AI capabilities across its EHR platform. Here are five things health system leaders should know: 1.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "A new era in healthcare design: Using biometric data to build evidence-based environments",
-      "url": "https://www.beckershospitalreview.com/capital/a-new-era-in-healthcare-design-using-biometric-data-to-build-evidence-based-environments/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-18",
-      "summary": "Every element of a healthcare environment&#8217;s design influences how patients heal, how staff work and how efficiently the organization performs. Traditionally, healthcare design has relied mostly on a subjective feedback loop.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Ochsner&#8217;s strategies to reaching 10,000 transplants completed",
-      "url": "https://www.beckershospitalreview.com/quality/patient-safety-outcomes/ochsners-strategies-to-reaching-10000-transplants-completed/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-18",
-      "summary": "Jefferson, La.-based Ochsner Transplant Institute recently completed 10,000 organ transplants, an accomplishment that Ari Cohen, MD, attributed to having a strong team that&#8217;s invested in the outcomes for patients.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Papa, eternalHealth expand partnership around Plus platform",
-      "url": "https://www.fiercehealthcare.com/payers/papa-eternalhealth-expand-partnership-around-plus-platform",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-18",
-      "summary": "Papa is expanding its relationship with eternalHealth, with the Boston-based insurer signing on for three core services from its Papa Plus platform.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "A boom for a new C-suite role",
-      "url": "https://www.beckershospitalreview.com/workforce/a-boom-for-a-new-c-suite-role/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-18",
-      "summary": "A new C-suite position has been gaining traction among hospitals and health systems the last few years: chief advanced practice officer. Also called chief APPs, chief advanced practice officers oversee nurse practitioners, physician assistants and other advanced practice providers across a given system.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Neurosurgery and spine physician group CFO retires",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/neurosurgery-and-spine-physician-group-cfo-retires/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-18",
-      "summary": "Michael Radomski, vice president of finance and CFO of Cincinnati-based Mayfield Brain &#38; Spine, has retired, according to an Aug. 17 LinkedIn post.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Epic&#8217;s roadmap: 12 takeaways from Judy Faulkner",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/epics-roadmap-12-takeaways-from-judy-faulkner/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-18",
-      "summary": "Epic President and CEO Judy Faulkner used her Aug. 18 UGM executive address to unveil a wave of Cosmos-powered AI tools, new smaller-organization product tiers, rural health expansions and a cybersecurity update disclosing the company&#8217;s use of Anthropic&#8217;s most restricted AI model, all framed around what she called &#8220;Ergo,&#8221; Epic&#8217;s new healthcare intelligence platform.",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "How revenue cycle leaders make their team feel valued, not just measured",
-      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/how-revenue-cycle-leaders-make-their-team-feel-valued-not-just-measured/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-18",
-      "summary": "Metrics drive revenue cycle operations, but the people behind those results are more than just numbers. From handwritten notes to dad jokes, 14 revenue cycle leaders shared with Becker&#8217;s how they work to ensure their teams feel valued, not just measured.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Four health systems, including Ochsner and Denver Health, go live with Epic's real-time prior authorization checks",
-      "url": "https://www.fiercehealthcare.com/health-tech/ochsner-summit-health-among-health-systems-launch-real-time-prior-authorization-checks",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-18",
-      "summary": "UnitedHealthcare, Network Health and Aetna are among the first group of health plans to go live with the API, while Ochsner Health, Froedtert ThedaCare Health, Denver Health and Summit Health are the four health systems now using the real-time prior auth checks.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "DocGo agrees to acquire virtual care provider Hicuity Health, assumes $52M debt",
-      "url": "https://www.fiercehealthcare.com/finance/docgo-enters-definitive-agreement-acquire-virtual-care-provider-hicuity-health-assumes-52m",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-18",
-      "summary": "DocGo is acquiring the virtual care provider by assuming approximately $52 million in existing debt.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "How to build high-performing APP teams that create organizational value",
-      "url": "https://www.beckershospitalreview.com/workforce/how-to-build-high-performing-app-teams-that-create-organizational-value/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-18",
-      "summary": "Health systems by and large have realized that advanced practice providers are essential to meeting growing patient demand. The challenge is no longer about just hiring enough APPs to fill the staffing needs; it is about building organizations that allow them to perform at their highest level.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "10 top geriatric hospitals: US News",
-      "url": "https://www.beckershospitalreview.com/rankings-and-ratings/10-top-geriatric-hospitals-us-news/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-18",
-      "summary": "UCSF Medical Center is the top geriatric hospital in the nation, U.S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Hospitals treat patients faster as ED demand, unpaid care climb: Kaufman Hall",
-      "url": "https://www.beckershospitalreview.com/care-coordination/hospitals-treat-patients-faster-as-ed-demand-unpaid-care-climb-kaufman-hall/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-18",
-      "summary": "Emergency department visits rose in June and uncompensated care climbed across most of the country, according to Kaufman Hall&#8217;s latest &#8220;National Hospital Flash Report.&#8221; ED visits were up 4% year over year and 7% from May, the report found.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "6 big pharma moves to know",
-      "url": "https://www.beckershospitalreview.com/pharmacy/6-big-pharma-moves-to-know/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-18",
-      "summary": "Big pharma&#8217;s last two weeks have included a phase 3 setback, a new FDA approval and a fresh round of 340B litigation. Here&#8217;s what to know:&#160; The post 6 big pharma moves to know appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
     }
   ]
 }
