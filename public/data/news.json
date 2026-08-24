@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-08-24T11:34:49.874Z",
+  "lastUpdated": "2026-08-24T12:57:41.931Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 6,
-    "healthySources": 4,
+    "staleSources": 5,
+    "healthySources": 5,
     "sources": [
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 190,
-        "latestPublishedAt": "2026-08-21T00:00:00.000Z",
-        "staleHours": 83,
-        "status": "stale"
+        "articleCount": 188,
+        "latestPublishedAt": "2026-08-24T00:00:00.000Z",
+        "staleHours": 12,
+        "status": "ok"
       },
       {
         "source": "Fierce Healthcare",
         "articleCount": 182,
         "latestPublishedAt": "2026-08-24T00:00:00.000Z",
-        "staleHours": 11,
+        "staleHours": 12,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 64,
+        "articleCount": 66,
         "latestPublishedAt": "2026-08-24T00:00:00.000Z",
-        "staleHours": 11,
+        "staleHours": 12,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 30,
         "latestPublishedAt": "2026-08-24T00:00:00.000Z",
-        "staleHours": 11,
+        "staleHours": 12,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 14,
         "latestPublishedAt": "2026-08-24T00:00:00.000Z",
-        "staleHours": 11,
+        "staleHours": 12,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 8,
         "latestPublishedAt": "2026-08-20T00:00:00.000Z",
-        "staleHours": 107,
+        "staleHours": 108,
         "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 7,
         "latestPublishedAt": "2026-08-21T00:00:00.000Z",
-        "staleHours": 83,
+        "staleHours": 84,
         "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 3,
         "latestPublishedAt": "2026-08-21T00:00:00.000Z",
-        "staleHours": 83,
+        "staleHours": 84,
         "status": "stale"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 1,
         "latestPublishedAt": "2026-08-21T00:00:00.000Z",
-        "staleHours": 83,
+        "staleHours": 84,
         "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 1,
         "latestPublishedAt": "2026-08-20T00:00:00.000Z",
-        "staleHours": 107,
+        "staleHours": 108,
         "status": "stale"
       }
     ]
@@ -87,7 +87,7 @@
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 26
+      "count": 27
     },
     "labor_unions": {
       "label": "Labor & Unions",
@@ -95,7 +95,7 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 62
+      "count": 61
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -107,11 +107,11 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 186
+      "count": 187
     },
     "general_market": {
       "label": "General Market",
-      "count": 201
+      "count": 200
     }
   },
   "quality": {
@@ -127,7 +127,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 41,
+        "actual": 44,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -137,7 +137,7 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 6,
+        "actual": 5,
         "pass": false
       }
     }
@@ -202,6 +202,33 @@
       "category": "ai_tech",
       "relevance": 96,
       "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Cleveland Clinic APP leader to join MUSC Health",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/cleveland-clinic-app-leader-to-join-musc-health/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-08-24",
+      "summary": "Evan Minor, BSN, NP, director of advanced practice providers at Cleveland Clinic, will join Charleston, S.C.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "FDA plans to regulate generative AI",
+      "url": "https://www.statnews.com/2026/08/24/health-news-fda-plans-to-regulate-generative-ai/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-08-24",
+      "summary": "New clues to RFK Jr.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "STAT+: FDA pauses Regenxbio gene therapy trial again due to safety concerns",
+      "url": "https://www.statnews.com/2026/08/24/fda-pauses-regenxbio-gene-therapy-trial-hunter-syndrome-safety-concerns/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-08-24",
+      "summary": "The FDA put a hold on a Regenxbio gene therapy trial again after new safety concerns emerged.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
     },
     {
       "title": "STAT+: Inside Moderna and Merck’s cancer vaccine triumph",
@@ -4763,33 +4790,6 @@
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-08-18",
       "summary": "Hospitals and health systems have made several pharmacy leadership changes in recent weeks. Here are six recent moves: The post 6 recent pharmacy leadership moves appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Costco enters Medicare market through insurer partnership",
-      "url": "https://www.beckershospitalreview.com/strategy/costco-enters-medicare-market-through-insurer-partnership/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-18",
-      "summary": "SCAN Health Plan and Costco will roll out insurance products for older adults in the coming years, according to an Aug. 18 news release.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "UNC Health launches investment platform",
-      "url": "https://www.beckershospitalreview.com/finance/unc-health-launches-investment-platform/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-18",
-      "summary": "UNC Health has launched UNC Health Ventures, a corporate venture capital and strategic investment platform created through the rebranding of Rex Health Ventures. The platform will identify, invest in and collaborate with emerging healthcare companies whose work aligns with the Chapel Hill, N.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "UC San Diego Health 1st in region with rare disease pharmacy certification",
-      "url": "https://www.beckershospitalreview.com/pharmacy/uc-san-diego-health-1st-in-region-with-rare-disease-pharmacy-certification/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-18",
-      "summary": "UC San Diego Health&#8217;s specialty pharmacy program has earned Rare Disease Certification from the Utilization Review Accreditation Commission, becoming the first health system in the San Diego region to earn the designation. The program is one of only three certified pharmacies in California, according to an Aug.",
       "category": "general_market",
       "categoryLabel": "General Market"
     }
