@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-08-23T23:26:00.367Z",
+  "lastUpdated": "2026-08-24T01:27:21.409Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 2,
-    "healthySources": 8,
+    "staleSources": 8,
+    "healthySources": 2,
     "sources": [
       {
         "source": "Becker's Hospital Review",
         "articleCount": 196,
         "latestPublishedAt": "2026-08-21T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 73,
+        "status": "stale"
       },
       {
         "source": "Fierce Healthcare",
-        "articleCount": 175,
-        "latestPublishedAt": "2026-08-23T00:00:00.000Z",
-        "staleHours": 23,
+        "articleCount": 185,
+        "latestPublishedAt": "2026-08-24T00:00:00.000Z",
+        "staleHours": 1,
         "status": "ok"
       },
       {
         "source": "STAT News",
         "articleCount": 57,
         "latestPublishedAt": "2026-08-21T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 73,
+        "status": "stale"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 30,
         "latestPublishedAt": "2026-08-24T00:00:00.000Z",
-        "staleHours": -1,
+        "staleHours": 1,
         "status": "ok"
-      },
-      {
-        "source": "Federal Register - FDA",
-        "articleCount": 14,
-        "latestPublishedAt": "2026-08-20T00:00:00.000Z",
-        "staleHours": 95,
-        "status": "stale"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 12,
         "latestPublishedAt": "2026-08-21T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 73,
+        "status": "stale"
+      },
+      {
+        "source": "Federal Register - FDA",
+        "articleCount": 8,
+        "latestPublishedAt": "2026-08-20T00:00:00.000Z",
+        "staleHours": 97,
+        "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
-        "articleCount": 8,
+        "articleCount": 7,
         "latestPublishedAt": "2026-08-21T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
-      },
-      {
-        "source": "SEC Healthcare Filings",
-        "articleCount": 4,
-        "latestPublishedAt": "2026-08-21T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 73,
+        "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 3,
         "latestPublishedAt": "2026-08-21T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 73,
+        "status": "stale"
+      },
+      {
+        "source": "SEC Healthcare Filings",
+        "articleCount": 1,
+        "latestPublishedAt": "2026-08-21T00:00:00.000Z",
+        "staleHours": 73,
+        "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 1,
         "latestPublishedAt": "2026-08-20T00:00:00.000Z",
-        "staleHours": 95,
+        "staleHours": 97,
         "status": "stale"
       }
     ]
@@ -83,11 +83,11 @@
   "categoryCoverage": {
     "closures_layoffs": {
       "label": "Closures & Layoffs",
-      "count": 9
+      "count": 7
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 25
+      "count": 27
     },
     "labor_unions": {
       "label": "Labor & Unions",
@@ -95,11 +95,11 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 62
+      "count": 61
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 10
+      "count": 11
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
@@ -107,16 +107,18 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 179
+      "count": 186
     },
     "general_market": {
       "label": "General Market",
-      "count": 207
+      "count": 200
     }
   },
   "quality": {
-    "status": "pass",
-    "failedChecks": [],
+    "status": "warning",
+    "failedChecks": [
+      "maxStaleSources"
+    ],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -135,8 +137,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 2,
-        "pass": true
+        "actual": 8,
+        "pass": false
       }
     }
   },
@@ -199,6 +201,231 @@
       "publishedAt": "2026-08-24",
       "category": "ai_tech",
       "relevance": 96,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Employers brace for another year of healthcare cost increases",
+      "url": "https://www.fiercehealthcare.com/payers/employers-brace-another-year-healthcare-cost-increases",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-24",
+      "summary": "Employers' healthcare costs are set to climb yet again in 2027, with analysts at Aon projecting an increase of 9.5%.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "A look inside the expanded partnership between SCAN and Costco",
+      "url": "https://www.fiercehealthcare.com/payers/look-inside-expanded-partnership-between-scan-and-costco",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-24",
+      "summary": "SCAN Group and retailer Costco are expanding their partnership with the launch of new cobranded Medicare products.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "As AI advances, a debate grows over the future role of physicians",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/ai-advances-debate-grows-over-future-role-physicians",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-24",
+      "summary": "A new AMA framework assumes a physician remains in the loop as AI advances, while a provocative opinion piece explicitly questions whether physician-AI hybrids are actually the optimal model.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Industry Voices—Hospital AI committees are asking the wrong privacy question",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/industry-voices-hospital-ai-committees-are-asking-wrong-privacy-question",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-24",
+      "summary": "One-size-fits-all review can under-govern high-risk generative AI models while blocking narrow AI models designed to reduce privacy exposure, write Peter Grantcharov and David Knobel.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Weekly Rundown: Expressable joins Amazon's health conditions program; Function launches data connector for AI platforms",
+      "url": "https://www.fiercehealthcare.com/health-tech/weekly-rundown-ambience-healthcare-rolls-out-healthcare-ai-partnership-model-function",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-24",
+      "summary": "Stay up to date on the latest in health tech, digital health and health AI news with this weekly brief.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Epic's Seth Howard on leadership changes and the company's vision to power AI across the health system",
+      "url": "https://www.fiercehealthcare.com/health-tech/epics-seth-howard-leadership-shifts-and-companys-strategy-power-ai-across-health-system",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-24",
+      "summary": "Seth Howard views Epic's AI strategy as a continuation of a long-term roadmap, not a sudden shift, even as agile healthcare AI startups jump into the market to offer specialized tools.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Fierce Healthcare Fundraising Tracker '26: MaxQ Medical lands $31.5M; Happy Health buoyed by $75M round",
+      "url": "https://www.fiercehealthcare.com/health-tech/fierce-healthcare-fundraising-tracker-26",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-24",
+      "summary": "Keep up with all the venture capital dollars being funneled into the health tech and digital health industries.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "UnitedHealthcare expands behavioral coaching program for youths",
+      "url": "https://www.fiercehealthcare.com/payers/unitedhealthcare-expands-behavioral-coaching-program-youths",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-24",
+      "summary": "UnitedHealthcare is expanding access to its child and family behavioral coaching program, making it available to 13 million commercial members.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Radial acquires TMS Health Partners, MSO behind network of brain medicine clinics",
+      "url": "https://www.fiercehealthcare.com/providers/radial-acquires-tms-health-partners-mso-behind-network-brain-medicine-clinics",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-24",
+      "summary": "Radial is acquiring the non-clinical assets of a leading interventional psychiatry group with 20 brain medicine clinics. These clinics offer cutting-edge brain medicine treatments, including Spravato and TMS.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Cityblock inks deal to acquire Homeward Health to move into rural healthcare, lands $116M funding round",
+      "url": "https://www.fiercehealthcare.com/health-tech/cityblock-acquires-homeward-health-move-rural-healthcare-lands-116m-funding-round",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-24",
+      "summary": "Combined, the two companies will serve nearly 250,000 people and are positioned to reach the 120 million people receiving government-funded healthcare in the U.S.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Chutes & Ladders—Providence names new CFO; Humana taps new CMO",
+      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-24",
+      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "GLP-1s are forcing a strategic reset across healthcare: Wells Fargo report",
+      "url": "https://www.fiercehealthcare.com/providers/glp-1s-forcing-strategic-reset-across-healthcare-well-fargo-report",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-24",
+      "summary": "GLP-1s are disrupting a healthcare system built around treating obesity-related complications, forcing providers, insurers and investors to rethink where future revenue and growth will come from, according to a new report from Wells Fargo.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "HHS announces $96.7M in grants for behavioral health services",
+      "url": "https://www.fiercehealthcare.com/regulatory/hhs-announces-967m-grants-behavioral-health-services",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-24",
+      "summary": "Services provided include support for homeless individuals with serious mental illness, suicide prevention and early intervention, SUD treatment, peer support and more.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Many Medicare beneficiaries are confident they understand the program. The data says otherwise",
+      "url": "https://www.fiercehealthcare.com/payers/many-medicare-beneficiaries-are-confident-they-understand-program-theyre-wrong-new-study",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-24",
+      "summary": "While many individuals believe they have a firm grasp on their Medicare benefits, the reality is far different, according to a new survey.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Projected healthcare services deal count to be lowest since 2017, PitchBook finds",
+      "url": "https://www.fiercehealthcare.com/finance/projected-healthcare-services-deal-count-be-lowest-2017-pitchbook-finds",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-24",
+      "summary": "Three of four segments, except ancillary and outsourced services, face weakness amid macroeconomic headwinds like looming interest rate hikes and low healthcare services utilization.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Federal judge temporarily blocks Trump administration from Teen Pregnancy Prevention Program funding cuts",
+      "url": "https://www.fiercehealthcare.com/regulatory/coalition-organizations-file-lawsuit-against-trump-administration-over-teen-pregnancy",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-24",
+      "summary": "The lawsuit comes after two new Notice of Funding Opportunities were issued—and then revoked—imposing new criteria for funding awards for the program.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Oracle Health builds out clinical AI agent with coding, chart review tools",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/oracle-health-announces-expansion-clinical-ai-agent-capabilities",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-24",
+      "summary": "New capabilities for the clinical AI agent include automated coding, dictation and chart review.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Bringing preventive care into the home",
+      "url": "https://www.fiercehealthcare.com/health-tech/bringing-preventive-care-home",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-24",
+      "summary": "Reperio Health co-founder and CEO Travis Rush joins \"Podnosis\" to discuss how at-home screenings and virtual care could make preventive care more convenient and help patients turn health data into action.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Epic expands AI ambitions with agent platform, Cosmos-powered predictions and workflow automation",
+      "url": "https://www.fiercehealthcare.com/health-tech/epic-expands-ai-ambitions-agent-platform-cosmos-powered-predictions-and-deeper-workflow",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-24",
+      "summary": "As healthcare organizations rapidly adopt artificial intelligence technologies, electronic health record giant Epic aims to be the foundational layer, embedding AI and automation into clinical, operational and administrative workflows.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Included Health to offer Carrum specialty care for alternative plan members",
+      "url": "https://www.fiercehealthcare.com/providers/carrum-included-health-integrate-specialty-care-health-plan-members",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-24",
+      "summary": "Carrum’s Centers of Excellence network for specialty care will be embedded directly into Included Health’s Alternative Health Plan to help connect members to high-quality specialty care with more predictable costs.",
+      "category": "quality_safety",
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "AMA applauds updated CMS prior authorization reporting guidance",
+      "url": "https://www.fiercehealthcare.com/regulatory/ama-backs-updated-cms-prior-authorization-reporting-guidance",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-24",
+      "summary": "The organization said the agency responded to its concerns about payers' implementation of the transparency provisions of the 2024 final rule.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Hospital performance improves in June, but lags 2025",
+      "url": "https://www.fiercehealthcare.com/providers/hospital-performance-improves-june-lags-2025",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-24",
+      "summary": "Hospitals' operating margins remain inconsistent across the industry, with rising uncompensated care burden and non-labor expenses increasingly weighing down performance, according to June operating data.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "HIPAA-compliant marketing platform Ours Privacy lands $15M amid growing pixel concerns",
+      "url": "https://www.fiercehealthcare.com/health-tech/hipaa-compliant-marketing-platform-ours-privacy-lands-15m",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-24",
+      "summary": "The software is a full-stack marketing solution designed with healthcare privacy in mind. It integrates with a slew of data sources—from websites to EHRs to Big Tech platforms—cleans PHI and transmits it to third parties.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "R1 acquiring Humata Health to bolster AI-powered prior authorizations",
+      "url": "https://www.fiercehealthcare.com/finance/r1-agrees-acquire-humata-health-enhance-os-ai-powered-prior-auths",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-24",
+      "summary": "Humata’s AI-powered solution has allowed physicians to achieve a 96% first-pass approval rate while reducing write-offs by 30%, executives say.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Ousted OHSU Healthcare CEO files lawsuit alleging wrongful termination, discrimination",
+      "url": "https://www.fiercehealthcare.com/providers/ousted-ohsu-healthcare-ceo-files-lawsuit-alleging-wrongful-termination-discrimination",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-08-24",
+      "summary": "Tarek Salaway's complaint contests the academic system's publicly shared account of his conduct and seeks $15.5 million in damages.",
+      "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
     },
     {
@@ -4565,261 +4792,6 @@
       "summary": "Since April, more than 300 enterprise health systems have adopted Abridge's artificial intelligence-based decision support solution, and the company is now making the tool available to every clinician at its partner health systems.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Study examines how ICHRA adoption could help stabilize ACA risk pools",
-      "url": "https://www.fiercehealthcare.com/payers/study-examines-how-ichra-adoption-could-help-stabilize-aca-risk-pools",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-18",
-      "summary": "With the instability in the Affordable Care Act's marketplaces, proponents of ICHRA have suggested that these models could help support the risk pools.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Industry Voices—AI should help cancer patients survive the healthcare system",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/industry-voices-ai-should-help-cancer-patients-survive-healthcare-system",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-18",
-      "summary": "Cancer care navigators are an invaluable resource, but there are nowhere near enough navigators to meet the scale of the need. This is where AI can make a meaningful difference, write the Digital Medicine Society's Jennifer Goldsack and former CMS Chief Medical Officer Lee Fleisher, M.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Insurers denied between 12% to 18% of prior authorization requests in 2025: KFF",
-      "url": "https://www.fiercehealthcare.com/payers/insurers-denied-between-12-18-prior-auth-requests-2025-kff",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-18",
-      "summary": "Researchers analyzed data from insurers in Medicare Advantage, Medicaid managed care and ACA Marketplace segments—representing approximately 71 million enrollees.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "AHA backs HHS' voluntary 'Make Hospital Food Healthier Pledge'",
-      "url": "https://www.fiercehealthcare.com/providers/hhs-calls-hospitals-sign-make-hospital-food-healthier-pledge",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-18",
-      "summary": "The administration is seeking voluntary commitments from hospitals to serve less processed foods in line with recently updated dietary guidelines, which officials said will boost chronic disease prevention and general long-term wellness.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Luigi Mangione pleads guilty in federal case over murder of UnitedHealthcare CEO Brian Thompson",
-      "url": "https://www.fiercehealthcare.com/payers/luigi-mangione-will-plead-guilty-federal-case-over-murder-unitedhealthcare-ceo-brian",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-18",
-      "summary": "The man accused of murdering UnitedHealthcare CEO Brian Thompson has pleaded guilty in the federal trial against him, per media reports.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Patient advocacy group sues AMA for open access to CPT system",
-      "url": "https://www.fiercehealthcare.com/regulatory/patient-advocacy-group-sues-ama-open-access-cpt-system",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-18",
-      "summary": "“We are asking the court to affirm a basic principle: No one can charge the public to access standards that are incorporated into state and federal law,\" said PatientRightsAdvocate.org Founder Cynthia Fisher.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Women's oncology market will reach $110B by 2030 across therapeutics, diagnostics and care delivery",
-      "url": "https://www.fiercehealthcare.com/finance/pwc-report-claims-womens-oncology-will-grow-65b-75b-today-100b-110b-2030-recommends",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-18",
-      "summary": "Female-specific oncology is expected to grow from about $65 billion today to $75 billion, and then to $100 billion to $110 billion in 2030. This growth will be derived from areas such as therapeutics, devices and diagnostics and care delivery.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Weekly Rundown: US News rates GLP-1 telehealth platforms; CHAI launches AI cybersecurity work group",
-      "url": "https://www.fiercehealthcare.com/health-tech/weekly-rundown-us-news-world-report-debuts-glp-1-telehealth-platform-rankings-chai",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-18",
-      "summary": "Stay up to date on the latest in health tech, digital health and health AI news with this weekly brief.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Hippocratic AI rolls out platform to coordinate teams of conversational voice AI agents",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/hippocratic-ai-rolls-out-agentic-orchestrators-coordinate-voice-ai-teams",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-18",
-      "summary": "For health plans, the AI teams support functions such as member onboarding, chronic care management and Star Ratings improvement. Provider-focused offerings target patient onboarding, care gap closure and inpatient and ambulatory workflows.",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "Providence reports $400M operating improvement halfway through 2026",
-      "url": "https://www.fiercehealthcare.com/providers/providence-reports-400m-operating-improvement-halfway-through-2026",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-18",
-      "summary": "The major nonprofit system has logged its fourth consecutive quarter of operating gains after years in the red—a key milestone for its leaders ahead of OBBBA's expected headwinds.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "March of Dimes: Maternity care deserts persist, Medicaid cuts threaten to curb access further",
-      "url": "https://www.fiercehealthcare.com/providers/march-dimes-report-maternity-care-deserts-medicaid-cuts",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-18",
-      "summary": "A number of factors contribute to access, including the availability of OB clinicians, insurance coverage and access to birthing facilities.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Major PBMs agree to offer TrumpRx pricing information to members",
-      "url": "https://www.fiercehealthcare.com/payers/major-pbms-agree-offer-trumprx-pricing-information-members",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-18",
-      "summary": "The Pharmaceutical Care Management Association announced Thursday that its members had reached an agreement with the feds to offer information on cash prices available through TrumpRx.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "A look at where Aetna is seeing value-based care success in Medicare Advantage",
-      "url": "https://www.fiercehealthcare.com/payers/look-where-aetna-seeing-value-based-care-success-medicare-advantage",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-18",
-      "summary": "Aetna is seeing its value-based care efforts pay off in both preventive care metrics and cost savings, according to a new analysis from the company.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Trump administration refers providers, PBMs to DOJ over youth gender care billing",
-      "url": "https://www.fiercehealthcare.com/regulatory/hhs-refers-scores-providers-pharmacies-pbms-doj-oig-over-past-billing-pediatric-gender",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-18",
-      "summary": "A sweeping list of law enforcement referrals for \"potentially anomalous billing patterns\" related to gender-affirming care for minors stems from a newly commissioned analysis, which accuses healthcare providers and other groups of ideological capture and profiteering.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Cityblock unveils partnership with Humana in North Carolina",
-      "url": "https://www.fiercehealthcare.com/payers/cityblock-unveils-partnership-humana-north-carolina",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-18",
-      "summary": "Cityblock Health is expanding its footprint in North Carolina through a new partnership with Humana.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Medical Devices; Classification of Accessories Distinct From Other Devices; Proposed List of Accessories Suitable for Class I; Request for Comments",
-      "summary": "As required by the FDA Reauthorization Act of 2017 (FDARA), the Food and Drug Administration (FDA or Agency) has identified a list of accessories for which the Agency believes general controls alone are sufficient to provide reasonable assurance of safety and effectiveness, making them appropriate for class I classification. FDA is publishing this document proposing to classify these accessories into class I and distinct from other devices, as well as seeking public comment in accordance with procedures established by FDARA. This document does not represent FDA's final determination with respect to the proposed accessories listed in this document.",
-      "url": "https://www.federalregister.gov/documents/2026/08/17/2026-16729/medical-devices-classification-of-accessories-distinct-from-other-devices-proposed-list-of",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-08-17",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Gastroenterology-Urology Devices; Reclassification of Diagnostic Endoscopic Light Source Systems To Be Renamed Cystoscopic Systems Intended as an Aid for Detection of Bladder Cancer",
-      "summary": "The Food and Drug Administration (FDA) is proposing to reclassify diagnostic endoscopic light source systems (product code OAY), which are postamendments class III devices, from class III (premarket approval) into class II (special controls), subject to premarket notification. FDA is also proposing a new device classification regulation with the name \"Cystoscopic system intended as an aid for detection of bladder cancer,\" along with special controls that FDA believes are necessary to provide a reasonable assurance of the safety and effectiveness of these devices.",
-      "url": "https://www.federalregister.gov/documents/2026/08/17/2026-16728/gastroenterology-urology-devices-reclassification-of-diagnostic-endoscopic-light-source-systems-to",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-08-17",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Hematology and Pathology Devices; Reclassification of In Situ Hybridization Test Systems for Use With a Corresponding Approved Oncology Therapeutic Product",
-      "summary": "The Food and Drug Administration (FDA, the Agency, or we) is issuing a final order reclassifying in situ hybridization (ISH) test systems indicated for use with a corresponding approved oncology therapeutic product (product codes NYQ, MVD, OWE, and PNK), all postamendments class III (premarket approval) devices, into class II (special controls), subject to premarket notification. FDA is also establishing a new device classification regulation, along with the special controls that are necessary to provide a reasonable assurance of safety and effectiveness of this device type.",
-      "url": "https://www.federalregister.gov/documents/2026/08/17/2026-16727/hematology-and-pathology-devices-reclassification-of-in-situ-hybridization-test-systems-for-use-with",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-08-17",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Agency Information Collection Activities; Announcement of Office of Management and Budget Approvals",
-      "summary": "The Food and Drug Administration (FDA) is publishing a list of information collections that have been approved by the Office of Management and Budget (OMB) under the Paperwork Reduction Act of 1995.",
-      "url": "https://www.federalregister.gov/documents/2026/08/17/2026-16716/agency-information-collection-activities-announcement-of-office-of-management-and-budget-approvals",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-08-17",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Agency Information Collection Activities; Proposed Collection; Comment Request; Investigational New Drug Application Requirements",
-      "summary": "The Food and Drug Administration (FDA) is announcing that a proposed collection of information has been submitted to the Office of Management and Budget (OMB) for review and clearance under the Paperwork Reduction Act of 1995.",
-      "url": "https://www.federalregister.gov/documents/2026/08/17/2026-16715/agency-information-collection-activities-proposed-collection-comment-request-investigational-new",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-08-17",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Agency Information Collection Activities; Proposed Collection; Comment Request; Third Party Disclosure and Recordkeeping Requirements for Reportable Food",
-      "summary": "The Food and Drug Administration (FDA or the Agency) is announcing an opportunity for public comment on the proposed collection of certain information by the Agency. Under the Paperwork Reduction Act of 1995 (PRA), Federal Agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension of an existing collection of information, and to allow 60 days for public comment in response to the notice. This notice solicits comments on the information collection provisions of FDA's third-party disclosure and recordkeeping requirements for reportable food.",
-      "url": "https://www.federalregister.gov/documents/2026/08/17/2026-16714/agency-information-collection-activities-proposed-collection-comment-request-third-party-disclosure",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-08-17",
-      "category": "closures_layoffs",
-      "relevance": 100,
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "Intraosseous Needle Set Recall: Becton Dickinson Removes Certain Intraosseous Vascular Access System Needle Sets",
-      "summary": "BD is recalling certain BD Intraosseous Vascular Access System Needle Sets due to difficulty removing the obturator (stylet) following placement.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/intraosseous-needle-set-recall-becton-dickinson-removes-certain-intraosseous-vascular-access-system",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-08-17",
-      "category": "ai_tech",
-      "relevance": 98,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "CVS 8-K filing - CVS Health Corporation",
-      "summary": "CVS Health Corporation filed 8-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/64803/000119312526354096/d129035d8k.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-08-17",
-      "category": "general_market",
-      "relevance": 90,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "UHS 8-K filing - Universal Health Services, Inc.",
-      "summary": "Universal Health Services, Inc. filed 8-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/352915/000119312526354078/uhs-20260817.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-08-17",
-      "category": "general_market",
-      "relevance": 90,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "CNC 8-K filing - Centene Corporation",
-      "summary": "Centene Corporation filed 8-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/1071739/000107173926000165/cnc-20260812.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-08-17",
-      "category": "general_market",
-      "relevance": 85,
-      "categoryLabel": "General Market"
     }
   ]
 }
