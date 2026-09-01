@@ -1,74 +1,81 @@
 {
-  "lastUpdated": "2026-09-01T07:30:30.392Z",
+  "lastUpdated": "2026-09-01T13:17:17.416Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
-    "totalSources": 9,
-    "staleSources": 3,
-    "healthySources": 6,
+    "totalSources": 10,
+    "staleSources": 2,
+    "healthySources": 8,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 219,
+        "articleCount": 212,
         "latestPublishedAt": "2026-09-01T00:00:00.000Z",
-        "staleHours": 7,
+        "staleHours": 13,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 154,
-        "latestPublishedAt": "2026-08-31T00:00:00.000Z",
-        "staleHours": 31,
+        "articleCount": 143,
+        "latestPublishedAt": "2026-09-01T00:00:00.000Z",
+        "staleHours": 13,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 61,
-        "latestPublishedAt": "2026-08-31T00:00:00.000Z",
-        "staleHours": 31,
+        "articleCount": 67,
+        "latestPublishedAt": "2026-09-01T00:00:00.000Z",
+        "staleHours": 13,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
-        "articleCount": 34,
-        "latestPublishedAt": "2026-08-31T00:00:00.000Z",
-        "staleHours": 31,
+        "articleCount": 37,
+        "latestPublishedAt": "2026-09-01T00:00:00.000Z",
+        "staleHours": 13,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 15,
         "latestPublishedAt": "2026-08-31T00:00:00.000Z",
-        "staleHours": 31,
+        "staleHours": 37,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
-        "articleCount": 11,
-        "latestPublishedAt": "2026-08-31T00:00:00.000Z",
-        "staleHours": 31,
+        "articleCount": 12,
+        "latestPublishedAt": "2026-09-01T00:00:00.000Z",
+        "staleHours": 13,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
-        "articleCount": 4,
-        "latestPublishedAt": "2026-08-27T00:00:00.000Z",
-        "staleHours": 127,
+        "articleCount": 10,
+        "latestPublishedAt": "2026-08-28T00:00:00.000Z",
+        "staleHours": 109,
         "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
+        "articleCount": 2,
+        "latestPublishedAt": "2026-09-01T00:00:00.000Z",
+        "staleHours": 13,
+        "status": "ok"
+      },
+      {
+        "source": "SEC Healthcare Filings",
         "articleCount": 1,
-        "latestPublishedAt": "2026-08-27T00:00:00.000Z",
-        "staleHours": 127,
-        "status": "stale"
+        "latestPublishedAt": "2026-09-01T00:00:00.000Z",
+        "staleHours": 13,
+        "status": "ok"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 1,
         "latestPublishedAt": "2026-08-27T00:00:00.000Z",
-        "staleHours": 127,
+        "staleHours": 133,
         "status": "stale"
       }
     ]
@@ -80,15 +87,15 @@
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 29
+      "count": 27
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 3
+      "count": 2
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 78
+      "count": 75
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -96,7 +103,7 @@
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
-      "count": 15
+      "count": 14
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
@@ -104,23 +111,21 @@
     },
     "general_market": {
       "label": "General Market",
-      "count": 201
+      "count": 208
     }
   },
   "quality": {
-    "status": "warning",
-    "failedChecks": [
-      "maxStaleSources"
-    ],
+    "status": "pass",
+    "failedChecks": [],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
-        "actual": 9,
+        "actual": 10,
         "pass": true
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 25,
+        "actual": 48,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -130,12 +135,255 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 3,
-        "pass": false
+        "actual": 2,
+        "pass": true
       }
     }
   },
   "articles": [
+    {
+      "title": "Agency Information Collection Activities: Proposed Collection; Comment Request",
+      "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information (including each proposed extension or reinstatement of an existing collection of information) and to allow 60 days for public comment on the proposed action. Interested persons are invited to send comments regarding our burden estimates or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
+      "url": "https://www.federalregister.gov/documents/2026/09/01/2026-17875/agency-information-collection-activities-proposed-collection-comment-request",
+      "source": "Federal Register - CMS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_cms",
+      "publishedAt": "2026-09-01",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Emergency Office of Management and Budget Review and Public Comment: Questionnaire for the Refugee Outreach and Well-Being Initiative",
+      "summary": "The Office of Refugee Resettlement (ORR), Administration for Children and Families (ACF), Department of Health and Human Services, is requesting emergency review of an information collection request from the Office of Management and Budget (OMB) and inviting public comments on and extension to the proposed collection. This questionnaire is used during brief telephone interviews with Afghan arrivals who might have received ORR benefits and services, to identify any additional service needs that may support assimilation, self- sufficiency, and citizenship for eligible populations.",
+      "url": "https://www.federalregister.gov/documents/2026/09/01/2026-17856/emergency-office-of-management-and-budget-review-and-public-comment-questionnaire-for-the-refugee",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-09-01",
+      "category": "mergers_mna",
+      "relevance": 100,
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Current List of HHS-Certified Laboratories and Instrumented Initial Testing Facilities Which Meet Minimum Standards To Engage in Urine and Oral Fluid Drug Testing for Federal Agencies",
+      "summary": "The Department of Health and Human Services (HHS) provides notice of the laboratories and Instrumented Initial Testing Facilities (IITFs) currently certified to meet the standards of the Mandatory Guidelines for Federal Workplace Drug Testing Programs (Mandatory Guidelines) using Urine and the laboratories currently certified to meet the standards of the Mandatory Guidelines using Oral Fluid.",
+      "url": "https://www.federalregister.gov/documents/2026/09/01/2026-17852/current-list-of-hhs-certified-laboratories-and-instrumented-initial-testing-facilities-which-meet",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-09-01",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Determination That NAMENDA (Memantine Hydrochloride) Tablets, 5 Milligrams and 10 Milligrams, Were Not Withdrawn From Sale for Reasons of Safety or Effectiveness",
+      "summary": "The Food and Drug Administration (FDA, Agency, or we) has determined that NAMENDA (memantine hydrochloride) tablets, 5 milligrams (mg) and 10 mg, were not withdrawn from sale for reasons of safety or effectiveness. This determination means that FDA will not begin procedures to withdraw approval of abbreviated new drug applications (ANDAs) that refer to these drug products, and it will allow FDA to continue to approve ANDAs that refer to the products as long as the ANDAs meet relevant legal and regulatory requirements.",
+      "url": "https://www.federalregister.gov/documents/2026/09/01/2026-17812/determination-that-namenda-memantine-hydrochloride-tablets-5-milligrams-and-10-milligrams-were-not",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-09-01",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Meeting of the Microbiome Subcommittee of the Presidential Advisory Council on Combating Antibiotic-Resistant Bacteria; Correction",
+      "summary": "The Department of Health and Human Services published a document in the Federal Register of August 26, 2026 concerning the first public meeting of the Microbiome Subcommittee of the Presidential Advisory Council on Combating Antibiotic-Resistant Bacteria (PACCARB). The document contained incorrect time for the meeting.",
+      "url": "https://www.federalregister.gov/documents/2026/09/01/2026-17793/meeting-of-the-microbiome-subcommittee-of-the-presidential-advisory-council-on-combating",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-09-01",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Breathing Circuit Recall: Medline Removes Neonatal and Infant Heated Wire Breathing Circuits",
+      "summary": "Medline is recalling certain neonatal and infant heated wire breathing circuits due to failures involving the electrical connector.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/breathing-circuit-recall-medline-removes-neonatal-and-infant-heated-wire-breathing-circuits",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-09-01",
+      "category": "ai_tech",
+      "relevance": 98,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "National Institute on Alcohol Abuse and Alcoholism; Notice of Closed Meeting",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/09/01/2026-17897/national-institute-on-alcohol-abuse-and-alcoholism-notice-of-closed-meeting",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-09-01",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Center for Scientific Review; Notice of Closed Meetings",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/09/01/2026-17896/center-for-scientific-review-notice-of-closed-meetings",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-09-01",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "National Institute on Drug Abuse; Notice of Meeting",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/09/01/2026-17879/national-institute-on-drug-abuse-notice-of-meeting",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-09-01",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Center for Scientific Review; Amended Notice of Meeting",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/09/01/2026-17850/center-for-scientific-review-amended-notice-of-meeting",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-09-01",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "National Institute of Allergy and Infectious Diseases; Amended Notice of Meeting",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/09/01/2026-17849/national-institute-of-allergy-and-infectious-diseases-amended-notice-of-meeting",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-09-01",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "HUM 8-K filing - Humana Inc.",
+      "summary": "Humana Inc. filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/49071/000004907126000052/hum-20260901.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-09-01",
+      "category": "general_market",
+      "relevance": 85,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Washington system taps chief medical officer",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/washington-system-taps-chief-medical-officer/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-01",
+      "summary": "Wenatchee, Wash.-based Confluence Health named Katie Peterson, MD, chief medical officer.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "20 smart hospitals to know &#124; 2026",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/20-smart-hospitals-to-know-2026/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-01",
+      "summary": "A smart hospital uses interconnected technologies such as AI, the internet of things and digital platforms to automate workflows, improve patient outcomes, and reduce costs across clinical and management systems.&#160; Here are 20 hospitals and health systems built around that approach.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "One in Five Insured Patients Was Denied Care Last Year. Hospitals Are Absorbing the Fallout.",
+      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/one-in-five-insured-patients-was-denied-care-last-year-hospitals-are-absorbing-the-fallout/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-01",
+      "summary": "Having insurance was supposed to mean a doctor’s recommendation gets covered. For a growing share of Americans, that is not holding up.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Where hospitals, health systems rank among highest-paying settings for physicians: Doximity",
+      "url": "https://www.beckershospitalreview.com/quality/hospital-physician-relationships/where-hospitals-health-systems-rank-among-highest-paying-settings-for-physicians-doximity/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-01",
+      "summary": "Single specialty and multi-specialty groups were the top two highest-paying settings for physicians, followed by hospitals, Doximity found.&#160; Doximity, a digital platform for U.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: FDA clears Stryker&#8217;s ‘surgical cockpit’ that uses Apple&#8217;s VR headset, Vision Pro",
+      "url": "https://www.statnews.com/2026/09/01/fda-stryker-surgical-cockpit-apple-vr-headset-health-tech/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-01",
+      "summary": "In this edition of STAT Health Tech: Stryker deploys Apple's VR headset Vision Pro for a surgical use case, chatbots for loneliness, and more.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Paxlovid did not help long Covid, study finds",
+      "url": "https://www.statnews.com/2026/09/01/health-news-paxlovid-did-not-help-long-covid-study-finds/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-01",
+      "summary": "New Trump drug pricing deals, weed edibles and driving research, and more health news from Morning Rounds",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Will House delay Trump plan to politicize NIH grants?",
+      "url": "https://www.statnews.com/2026/09/01/house-spending-bill-vote-grant-rule-trump-mfn-deals-dc-diagnois/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-01",
+      "summary": "The federal spending bill has an important provision for researchers, and Trump announced more MFN deals with pharma firms.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: NIH proposal to cap research grants draws mixed reception, agency says",
+      "url": "https://www.statnews.com/2026/09/01/nih-grant-cap-proposal-researcher-feedback/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-01",
+      "summary": "An NIH proposal to cap the number of research grants investigators can receive has drawn a mixed reception, the agency says.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Opinion: The Trump administration is burying science and health care in paperwork",
+      "url": "https://www.statnews.com/2026/09/01/white-house-science-medicaid-bureaucracy-paperwork/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-01",
+      "summary": "This White House has become the paperwork administration, write Brandon Marshall and Abdullah Shihipar.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "As MAHA champions nutrition, it’s ignoring the experts, dietitians say",
+      "url": "https://www.statnews.com/2026/09/01/maha-nutrition-makeover-hampered-dietitian-workforce-crisis/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-01",
+      "summary": "A key aspect of the Make America Healthy Again agenda could be hampered by a shrinking and underpaid workforce of registered dietitians.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Solera Health adds Noom to weight management offerings",
+      "url": "https://www.fiercehealthcare.com/digital-health/solera-health-adds-noom-weight-management-offerings",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-01",
+      "summary": "The partnership will bring Noom Weight, Diabetes Prevention Program and a no-cost GLP-1 companion to Solera Health members",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
     {
       "title": "10M expansion state adults risk losing Medicaid coverage over inconsistent work hours",
       "url": "https://www.fiercehealthcare.com/regulatory/20-medicaid-eligible-adults-risk-losing-coverage-due-inconsistent-work-hours",
@@ -1583,6 +1831,114 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "Agency Information Collection Activities; Proposed Collection; Comment Request; Qualitative Feedback on Agency Service Delivery",
+      "summary": "The Food and Drug Administration (FDA or Agency) is announcing an opportunity for public comment on the proposed collection of certain information by the Agency. Under the Paperwork Reduction Act of 1995 (PRA), Federal Agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension of an existing collection of information, and to allow 60 days for public comment in response to the notice. This notice solicits comments on a generic collection of information through which we intend to seek insights into customer or stakeholder perceptions, experiences and expectations, provide an early warning of issues with service, or focus attention on areas where communication, training, or changes in operations might improve delivery of products or services.",
+      "url": "https://www.federalregister.gov/documents/2026/08/28/2026-17605/agency-information-collection-activities-proposed-collection-comment-request-qualitative-feedback-on",
+      "source": "Federal Register - FDA",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_fda",
+      "publishedAt": "2026-08-28",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Agency Information Collection Activities; Submission for Office of Management and Budget Review; Comment Request; Importation of Prescription Drugs",
+      "summary": "The Food and Drug Administration (FDA) is announcing that a proposed collection of information has been submitted to the Office of Management and Budget (OMB) for review and clearance under the Paperwork Reduction Act of 1995.",
+      "url": "https://www.federalregister.gov/documents/2026/08/28/2026-17603/agency-information-collection-activities-submission-for-office-of-management-and-budget-review",
+      "source": "Federal Register - FDA",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_fda",
+      "publishedAt": "2026-08-28",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Agency Information Collection Activities; Submission for Office of Management and Budget Review; Comment Request; Reporting Associated With Animal Drug and Animal Generic Drug User Fees",
+      "summary": "The Food and Drug Administration (FDA) is announcing that a proposed collection of information has been submitted to the Office of Management and Budget (OMB) for review and clearance under the Paperwork Reduction Act of 1995.",
+      "url": "https://www.federalregister.gov/documents/2026/08/28/2026-17601/agency-information-collection-activities-submission-for-office-of-management-and-budget-review",
+      "source": "Federal Register - FDA",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_fda",
+      "publishedAt": "2026-08-28",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Agency Information Collection Activities; Proposed Collection; Comment Request; Food Canning Establishment Registration, Process Filing, and Recordkeeping for Acidified Foods and Thermally Processed Low-Acid Foods in Hermetically Sealed Containers",
+      "summary": "The Food and Drug Administration (FDA or Agency) is announcing an opportunity for public comment on the proposed collection of certain information by the Agency. Under the Paperwork Reduction Act of 1995 (PRA), Federal Agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension of an existing collection of information, and to allow 60 days for public comment in response to the notice. This notice solicits comments on the information collection provisions of reporting and recordkeeping requirements for firms that process acidified foods and thermally processed low-acid foods in hermetically sealed containers.",
+      "url": "https://www.federalregister.gov/documents/2026/08/28/2026-17599/agency-information-collection-activities-proposed-collection-comment-request-food-canning",
+      "source": "Federal Register - FDA",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_fda",
+      "publishedAt": "2026-08-28",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Agency Information Collection Activities; Proposed Collection; Comment Request; Focus Groups and Interviews as Used by the Food and Drug Administration",
+      "summary": "The Food and Drug Administration (FDA or Agency) is announcing an opportunity for public comment on the proposed collection of certain information by the Agency. Under the Paperwork Reduction Act of 1995 (PRA), Federal Agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension of an existing collection of information, and to allow 60 days for public comment in response to the notice. This notice solicits comments on the generic collection of focus group information as used by FDA for all FDA-regulated products.",
+      "url": "https://www.federalregister.gov/documents/2026/08/28/2026-17598/agency-information-collection-activities-proposed-collection-comment-request-focus-groups-and",
+      "source": "Federal Register - FDA",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_fda",
+      "publishedAt": "2026-08-28",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Compounding Animal Drugs From Bulk Drug Substances: Compounding Under CGMP in Federally-Registered Facilities; Draft Guidance for Industry; Availability; Agency Information Collection Activities; Proposed Collection; Comment Request",
+      "summary": "The Food and Drug Administration (FDA, Agency, or we) is announcing the availability of a draft guidance for industry (GFI) #256B entitled \"Compounding Animal Drugs from Bulk Drug Substances: Compounding under CGMP in Federally-Registered Facilities.\" This draft guidance, when finalized, will describe FDA's current thinking regarding the circumstances under which we generally do not intend to take action against the compounding of animal drug products from bulk drug substances (BDS) when done in accordance with Current Good Manufacturing Practice (CGMP) at drug production facilities that are registered with FDA.",
+      "url": "https://www.federalregister.gov/documents/2026/08/28/2026-17580/compounding-animal-drugs-from-bulk-drug-substances-compounding-under-cgmp-in-federally-registered",
+      "source": "Federal Register - FDA",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_fda",
+      "publishedAt": "2026-08-28",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Early Alert: IV Start Kit Issue from Avid Medical",
+      "summary": "Avid Medical is removing certain convenience kits affected by the BD ChloraPrep Applicator Recall that may be contaminated with Aspergillus penicillioides.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-iv-start-kit-issue-avid-medical",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-08-28",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "B. Braun Medical Inc. Issues Voluntary Nationwide Recall of 0.9% Sodium Chloride Injection USP, 100 mL, in a 150 mL PAB® Container Due to the Presence of Particulate Matter",
+      "summary": "FOR IMMEDIATE RELEASE – August 19, 2026– Bethlehem, PA, B. Braun Medical Inc (B. Braun) is voluntarily recalling three (3) lots of 0.9% Sodium Chloride Injection USP, 100 mL, in a 150 mL PAB® Container, to the hospital/healthcare facility/user level due to presence of particulate matter identified a",
+      "url": "http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/b-braun-medical-inc-issues-voluntary-nationwide-recall-09-sodium-chloride-injection-usp-100-ml-150",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-08-28",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Early Alert: Angiographic Catheter Issue from Boston Scientific",
+      "summary": "Boston Scientific Imager II Angiographic Catheters removed due to a manufacturing issue leading to tip detachment; could result in procedural delays, embolism",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-angiographic-catheter-issue-boston-scientific",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-08-28",
+      "category": "general_market",
+      "relevance": 98,
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "Agency Information Collection Activities: Proposed Collection: Public Comment Request; Information Collection Request Title: The National Health Service Corps Loan Repayment Programs OMB No. 0915-0127-Revision",
       "summary": "In compliance with the requirement for opportunity for public comment on proposed data collection projects of the Paperwork Reduction Act of 1995, HRSA announces plans to submit an Information Collection Request (ICR), described below, to the Office of Management and Budget (OMB). Prior to submitting the ICR to OMB, HRSA seeks comments from the public regarding the burden estimate, below, or any other aspect of the ICR.",
       "url": "https://www.federalregister.gov/documents/2026/08/28/2026-17625/agency-information-collection-activities-proposed-collection-public-comment-request-information",
@@ -1605,114 +1961,6 @@
       "category": "quality_safety",
       "relevance": 100,
       "categoryLabel": "Quality & Safety"
-    },
-    {
-      "title": "Agency Information Collection Activities; Proposed Collection; Comment Request; Qualitative Feedback on Agency Service Delivery",
-      "summary": "The Food and Drug Administration (FDA or Agency) is announcing an opportunity for public comment on the proposed collection of certain information by the Agency. Under the Paperwork Reduction Act of 1995 (PRA), Federal Agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension of an existing collection of information, and to allow 60 days for public comment in response to the notice. This notice solicits comments on a generic collection of information through which we intend to seek insights into customer or stakeholder perceptions, experiences and expectations, provide an early warning of issues with service, or focus attention on areas where communication, training, or changes in operations might improve delivery of products or services.",
-      "url": "https://www.federalregister.gov/documents/2026/08/28/2026-17605/agency-information-collection-activities-proposed-collection-comment-request-qualitative-feedback-on",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-08-28",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Agency Information Collection Activities; Submission for Office of Management and Budget Review; Comment Request; Importation of Prescription Drugs",
-      "summary": "The Food and Drug Administration (FDA) is announcing that a proposed collection of information has been submitted to the Office of Management and Budget (OMB) for review and clearance under the Paperwork Reduction Act of 1995.",
-      "url": "https://www.federalregister.gov/documents/2026/08/28/2026-17603/agency-information-collection-activities-submission-for-office-of-management-and-budget-review",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-08-28",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Agency Information Collection Activities; Submission for Office of Management and Budget Review; Comment Request; Reporting Associated With Animal Drug and Animal Generic Drug User Fees",
-      "summary": "The Food and Drug Administration (FDA) is announcing that a proposed collection of information has been submitted to the Office of Management and Budget (OMB) for review and clearance under the Paperwork Reduction Act of 1995.",
-      "url": "https://www.federalregister.gov/documents/2026/08/28/2026-17601/agency-information-collection-activities-submission-for-office-of-management-and-budget-review",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-08-28",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Agency Information Collection Activities; Proposed Collection; Comment Request; Food Canning Establishment Registration, Process Filing, and Recordkeeping for Acidified Foods and Thermally Processed Low-Acid Foods in Hermetically Sealed Containers",
-      "summary": "The Food and Drug Administration (FDA or Agency) is announcing an opportunity for public comment on the proposed collection of certain information by the Agency. Under the Paperwork Reduction Act of 1995 (PRA), Federal Agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension of an existing collection of information, and to allow 60 days for public comment in response to the notice. This notice solicits comments on the information collection provisions of reporting and recordkeeping requirements for firms that process acidified foods and thermally processed low-acid foods in hermetically sealed containers.",
-      "url": "https://www.federalregister.gov/documents/2026/08/28/2026-17599/agency-information-collection-activities-proposed-collection-comment-request-food-canning",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-08-28",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Agency Information Collection Activities; Proposed Collection; Comment Request; Focus Groups and Interviews as Used by the Food and Drug Administration",
-      "summary": "The Food and Drug Administration (FDA or Agency) is announcing an opportunity for public comment on the proposed collection of certain information by the Agency. Under the Paperwork Reduction Act of 1995 (PRA), Federal Agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension of an existing collection of information, and to allow 60 days for public comment in response to the notice. This notice solicits comments on the generic collection of focus group information as used by FDA for all FDA-regulated products.",
-      "url": "https://www.federalregister.gov/documents/2026/08/28/2026-17598/agency-information-collection-activities-proposed-collection-comment-request-focus-groups-and",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-08-28",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Compounding Animal Drugs From Bulk Drug Substances: Compounding Under CGMP in Federally-Registered Facilities; Draft Guidance for Industry; Availability; Agency Information Collection Activities; Proposed Collection; Comment Request",
-      "summary": "The Food and Drug Administration (FDA, Agency, or we) is announcing the availability of a draft guidance for industry (GFI) #256B entitled \"Compounding Animal Drugs from Bulk Drug Substances: Compounding under CGMP in Federally-Registered Facilities.\" This draft guidance, when finalized, will describe FDA's current thinking regarding the circumstances under which we generally do not intend to take action against the compounding of animal drug products from bulk drug substances (BDS) when done in accordance with Current Good Manufacturing Practice (CGMP) at drug production facilities that are registered with FDA.",
-      "url": "https://www.federalregister.gov/documents/2026/08/28/2026-17580/compounding-animal-drugs-from-bulk-drug-substances-compounding-under-cgmp-in-federally-registered",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-08-28",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "B. Braun Medical Inc. Issues Voluntary Nationwide Recall of 0.9% Sodium Chloride Injection USP, 100 mL, in a 150 mL PAB® Container Due to the Presence of Particulate Matter",
-      "summary": "FOR IMMEDIATE RELEASE – August 19, 2026– Bethlehem, PA, B. Braun Medical Inc (B. Braun) is voluntarily recalling three (3) lots of 0.9% Sodium Chloride Injection USP, 100 mL, in a 150 mL PAB® Container, to the hospital/healthcare facility/user level due to presence of particulate matter identified a",
-      "url": "http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/b-braun-medical-inc-issues-voluntary-nationwide-recall-09-sodium-chloride-injection-usp-100-ml-150",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-08-28",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Early Alert: IV Start Kit Issue from Avid Medical",
-      "summary": "Avid Medical is removing certain convenience kits affected by the BD ChloraPrep Applicator Recall that may be contaminated with Aspergillus penicillioides.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-iv-start-kit-issue-avid-medical",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-08-28",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Early Alert: Angiographic Catheter Issue from Boston Scientific",
-      "summary": "Boston Scientific Imager II Angiographic Catheters removed due to a manufacturing issue leading to tip detachment; could result in procedural delays, embolism",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-angiographic-catheter-issue-boston-scientific",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-08-28",
-      "category": "general_market",
-      "relevance": 98,
-      "categoryLabel": "General Market"
     },
     {
       "title": "Agency Forms Undergoing Paperwork Reduction Act Review",
@@ -2999,18 +3247,6 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Baxter Issues Voluntary Nationwide Recall for Two Lots of 0.9% Sodium Chloride Injection Due to Potential Presence of Particulate Matter",
-      "summary": "FOR IMMEDIATE RELEASE – AUG. 25, 2026 – DEERFIELD, Ill., Baxter International Inc. (NYSE:BAX) is voluntarily recalling two lots of 0.9% Sodium Chloride Injection due to the potential presence of particulate matter identified as fiberglass in the solution.",
-      "url": "http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/baxter-issues-voluntary-nationwide-recall-two-lots-09-sodium-chloride-injection-due-potential",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-08-26",
-      "category": "general_market",
-      "relevance": 98,
-      "categoryLabel": "General Market"
-    },
-    {
       "title": "Early Alert: Heart Pump Controller Purge Cassette Issue from Abiomed",
       "summary": "Abiomed is removing Automated Impella Controllers due to purge cassette recognition failures that may lead to prolonged delayed in mechanical circulatory support.",
       "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-heart-pump-controller-purge-cassette-issue-abiomed",
@@ -3026,6 +3262,18 @@
       "title": "Percutaneous Catheter Recall: Boston Scientific Removes ENROUTE Transcarotid Neuroprotection System",
       "summary": "ENROUTE Transcarotid Neuroprotection Systems may have arterial sheath tip separation or partial tip separation during use.",
       "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/percutaneous-catheter-recall-boston-scientific-removes-enroute-transcarotid-neuroprotection-system",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-08-26",
+      "category": "general_market",
+      "relevance": 98,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Baxter Issues Voluntary Nationwide Recall for Two Lots of 0.9% Sodium Chloride Injection Due to Potential Presence of Particulate Matter",
+      "summary": "FOR IMMEDIATE RELEASE – AUG. 25, 2026 – DEERFIELD, Ill., Baxter International Inc. (NYSE:BAX) is voluntarily recalling two lots of 0.9% Sodium Chloride Injection due to the potential presence of particulate matter identified as fiberglass in the solution.",
+      "url": "http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/baxter-issues-voluntary-nationwide-recall-two-lots-09-sodium-chloride-injection-due-potential",
       "source": "FDA MedWatch RSS",
       "sourceType": "rss",
       "sourceId": "fda_medwatch_rss",
@@ -4581,213 +4829,6 @@
       "summary": "Raleigh, N.C.",
       "category": "capacity_expansion",
       "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "From Corewell Health to UHS: 4 CFOs bracing for Medicaid, ACA cuts",
-      "url": "https://www.beckershospitalreview.com/finance/from-corewell-health-to-uhs-4-cfos-bracing-for-medicaid-aca-cuts/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-25",
-      "summary": "As we inch closer to 2027, hospital and health system leaders are gearing up to combat incoming effects of HR 1.&#160; The legislation, which was signed into law July 4, 2025, includes Medicaid work requirements, restrictions on state-directed payments and provider taxes, and more frequent eligibility redeterminations.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Alabama awards 138 RHTP grants totaling over $144M",
-      "url": "https://www.fiercehealthcare.com/regulatory/alabama-awards-138-rhtp-grants-totaling-over-144m",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-25",
-      "summary": "Grants cover five of 11 planned initiatives from the state’s RHTP, including rural health, rural workforce and collaborative EHR, IT and cybersecurity.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "California weighs penalties for healthcare providers that don't rein in costs",
-      "url": "https://www.fiercehealthcare.com/providers/california-weighs-penalties-healthcare-providers-dont-rein-costs",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-25",
-      "summary": "California is weighing stiff penalties for hospitals and other healthcare entities that don’t stay under state spending limits, potentially levying hundreds of millions of dollars in fines if these providers don’t take steps to rein in rising healthcare costs.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "VCU Health tops 1,000 hospital-at-home patients",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/innovation/vcu-health-tops-1000-hospital-at-home-patients/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-25",
-      "summary": "Richmond, Va.-based VCU Health&#8217;s Hospital at Home program has provided hospital-level care to more than 1,000 patients in the Richmond region since launching in 2023, the health system said Aug.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "25 best metro areas for healthcare access, per Indeed",
-      "url": "https://www.beckershospitalreview.com/rankings-and-ratings/25-best-metro-areas-for-healthcare-access-per-indeed/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-25",
-      "summary": "Rochester, Minn., ranks as the top U.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "54 health system IT leadership moves",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/7-health-system-it-leadership-moves/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-25",
-      "summary": "Health systems are strengthening their technology leadership benches, appointing new executives to lead areas like cybersecurity, innovation, digital platforms and enterprise systems. Here are the latest health IT leadership moves at hospitals and health systems, as reported by Becker’s since January: Editor&#8217;s note: This article was updated Aug.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "2 weeks after JPS Health Network outage, patients still dealing with fallout",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/cybersecurity/2-weeks-after-jps-health-network-outage-patients-still-dealing-with-fallout/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-25",
-      "summary": "Patients at Fort Worth, Texas-based JPS Health Network are facing lasting consequences from a network outage that stretched nearly two weeks, the Fort Worth Star-Telegram reported. JPS Health Network operated under a &#8220;controlled network downtime&#8221; starting Aug.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Trinity Health to anchor nursing programs rescued from closed Michigan school",
-      "url": "https://www.beckershospitalreview.com/quality/nursing/trinity-health-to-anchor-nursing-programs-rescued-from-closed-michigan-school/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-25",
-      "summary": "Pending regulatory approval, a Michigan university plans to revive a nursing school with the help of Trinity Health as a clinical partner.&#160; Siena Heights University in Adrian, Mich.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Nurses union protests Palantir",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/nurses-union-protests-palantir/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-25",
-      "summary": "National Nurses United will hold demonstrations against Palantir in eight U.S.",
-      "category": "labor_unions",
-      "categoryLabel": "Labor & Unions"
-    },
-    {
-      "title": "States reject Trump&#8217;s discounted Medicaid GLP-1 deal",
-      "url": "https://www.beckershospitalreview.com/glp-1s/states-reject-trumps-discounted-medicaid-glp-1-deal/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-25",
-      "summary": "Nine months after President Donald Trump announced a deal offering states discounted pricing on GLP-1 drugs for Medicaid patients, most states are declining to participate, according to an Aug. 22 Politico report.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Ascension hospital breaks ground on $11M rehab facility",
-      "url": "https://www.beckershospitalreview.com/post-acute/ascension-hospital-breaks-ground-on-11m-rehab-facility/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-25",
-      "summary": "Panama City, Fla.-based Ascension Sacred Heart Bay broke ground on its $11 million inpatient rehabilitation facility, WJHG reported Aug.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "10 health systems seeking revenue cycle vice presidents",
-      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/10-health-systems-seeking-revenue-cycle-vice-presidents-6/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-25",
-      "summary": "Ten hospitals and health systems recently posted job listings seeking revenue cycle vice presidents. Note: This is not an exhaustive list.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Memorial Hermann invests in clinical tech platform",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/digital-health/memorial-hermann-invests-in-clinical-tech-platform/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-25",
-      "summary": "Houston-based Memorial Hermann Health System made a strategic investment in PartsSource, deepening an existing partnership with the healthcare technology platform. PartsSource, headquartered in Hudson, Ohio, operates an enterprise platform that unifies parts sourcing, service contracts, asset intelligence and workforce capacity for hospitals managing clinical equipment.",
-      "category": "capacity_expansion",
-      "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "After Trump order, RFK Jr. seeks input on US pediatric vaccine recommendations",
-      "url": "https://www.fiercehealthcare.com/pharma/rfk-jr-seeks-public-input-how-us-formulates-childhood-vaccine-recommendations",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-25",
-      "summary": "HHS Secretary Robert F. Kennedy Jr.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Berry Street merges with India-based Healthify to expand AI metabolic care",
-      "url": "https://www.fiercehealthcare.com/digital-health/berry-street-merges-india-based-healthify-form-insurance-covered-ai-metabolic-health",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-25",
-      "summary": "The merger combines Healthify’s AI technology, including its nutrition and metabolic health assistant Ria, with Berry Street’s nationwide network of more than 2,000 clinicians and insurance-covered nutrition and GLP-1 care.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "OhioHealth hospital overhauls pharmacy system",
-      "url": "https://www.beckershospitalreview.com/pharmacy/ohiohealth-hospital-overhauls-pharmacy-system/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-25",
-      "summary": "OhioHealth Morrow County Hospital in Mount Gilead, Ohio, is switching its automated dispensing cabinets from Pyxis to Omnicell as part of the health system&#8217;s broader push to improve medication safety. The upgrade allows any OhioHealth hospital to view the medications available at Morrow County Hospital, improving coordination during shortages, overstock situations and urgent needs, according [&#8230;] The post OhioHealth hospital overhauls pharmacy system appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Days cash on hand at 25 health systems",
-      "url": "https://www.beckershospitalreview.com/finance/days-cash-on-hand-at-25-health-systems/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-25",
-      "summary": "As health systems continue to grapple with financial pressures from rising labor and supply costs and reimbursement challenges, days cash on hand remains an important measure of financial stability.&#160; Here are days cash on hand figures for 25 health systems as of June 30, according to their most recent financial reports: The post Days cash on hand at 25 health systems appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "5 systems improving ED efficiency",
-      "url": "https://www.beckershospitalreview.com/care-coordination/5-systems-improving-ed-efficiency/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-25",
-      "summary": "Across the nation, high-volume emergency departments are finding new ways to improve efficiency without sacrificing patient experience or quality care.&#160; EDs are continuing to face challenges in patient wait times, boarding and patients leaving without being seen.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "The Fluid Decision Happens in the ED. We&#8217;ve Been Treating It Like It Happens in the ICU.",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/the-fluid-decision-happens-in-the-ed-weve-been-treating-it-like-it-happens-in-the-icu/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-25",
-      "summary": "When a patient arrives in our emergency department with persistent hypotension, our team needs to quickly answer one question: will IV fluids help this patient, or will they cause harm? That question doesn&#8217;t wait for an ICU admission or a specialist consult.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Why Earlier CAR-T Conversations Matter in Multiple Myeloma: Perspectives from a Patient and Community Oncologist",
-      "url": "https://www.fiercehealthcare.com/sponsored/why-early-car-t-conversations-matter-multiple-myeloma",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-25",
-      "summary": "A patient and community oncologist share how trust, partnership and shared decision-making shaped a CAR-T journey in multiple myeloma.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "More tidbits from Epic UGM: Anthropic's Project Glasswing and a deeper partnership with UpToDate",
-      "url": "https://www.fiercehealthcare.com/health-tech/more-tidbits-epic-ugm-anthropics-project-glasswing-and-deeper-partnership-uptodate",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-25",
-      "summary": "Epic is participating in Anthropic's Project Glasswing, using the Claude Mythos model to find software vulnerabilities.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Employers brace for another year of healthcare cost increases",
-      "url": "https://www.fiercehealthcare.com/payers/employers-brace-another-year-healthcare-cost-increases",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-25",
-      "summary": "Employers' healthcare costs are set to climb yet again in 2027, with analysts at Aon projecting an increase of 9.5%.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "A look inside the expanded partnership between SCAN and Costco",
-      "url": "https://www.fiercehealthcare.com/payers/look-inside-expanded-partnership-between-scan-and-costco",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-25",
-      "summary": "SCAN Group and retailer Costco are expanding their partnership with the launch of new cobranded Medicare products.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
     }
   ]
 }
