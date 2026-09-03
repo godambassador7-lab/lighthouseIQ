@@ -1,0 +1,18 @@
+{
+  "name": "@lightkeeperiq/education",
+  "version": "0.1.0",
+  "private": true,
+  "description": "LightkeeperIQ Education early-childhood workforce marketplace intelligence",
+  "dependencies": {
+    "@vercel/edge": "^1.2.2"
+  },
+  "scripts": {
+    "build:data": "node scripts/build-data.js",
+    "build:locations": "node scripts/fetch-busy-bees-locations.js",
+    "build:jobs": "node scripts/fetch-brightpath-jobs.js",
+    "build": "npm run build:data",
+    "vercel-build": "node -e \"console.log('Using prebuilt LightkeeperIQ Education data')\"",
+    "dev": "npm run build:data && npx serve . -l 3200",
+    "serve": "npx serve . -l 3200"
+  }
+}

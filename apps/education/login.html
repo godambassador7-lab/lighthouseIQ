@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Sign in · LightkeeperIQ Education</title>
+  <link rel="icon" type="image/png" href="Lightkeeper.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="login-page">
+  <main class="login-shell">
+    <section class="login-card">
+      <img src="Lightkeeper.png" alt="LightkeeperIQ Education">
+      <p class="eyebrow">Protected intelligence</p>
+      <h1>Welcome to<br><span>LightkeeperIQ Education.</span></h1>
+      <p>Enter your authorized team passcode to access early-childhood workforce and validation intelligence.</p>
+      <form id="access-form">
+        <label><span>Passcode</span><input id="passcode" name="passcode" type="password" autocomplete="current-password" required autofocus></label>
+        <button class="button" type="submit">Access platform</button>
+        <p class="login-error" id="login-error" role="alert" aria-live="polite"></p>
+      </form>
+      <small>Authorized access only · Sessions expire after 12 hours</small>
+    </section>
+  </main>
+  <script src="login.js" defer></script>
+</body>
+</html>
