@@ -11,7 +11,7 @@
     "build:locations": "node scripts/fetch-busy-bees-locations.js",
     "build:jobs": "node scripts/fetch-brightpath-jobs.js",
     "build": "npm run build:data",
-    "vercel-build": "node -e \"console.log('Using prebuilt LightkeeperIQ Education data')\"",
+    "vercel-build": "node scripts/build-static.js",
     "dev": "npm run build:data && npx serve . -l 3200",
     "serve": "npx serve . -l 3200"
   }
