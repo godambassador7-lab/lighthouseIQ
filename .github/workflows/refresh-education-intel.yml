@@ -26,7 +26,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
 
       - name: Refresh nationwide market intelligence
         run: |
@@ -59,13 +59,6 @@ jobs:
           git diff --staged --quiet || git commit -m "Refresh Education market intelligence $(date -u +%Y-%m-%d)"
           git pull --rebase origin main
           git push origin HEAD:main
-
-      - name: Link Vercel project
-        working-directory: apps/education
-        run: npx vercel@59.11.2 pull --yes --environment=production --token="${{ secrets.EDUCATION_VERCEL_TOKEN }}"
-        env:
-          VERCEL_ORG_ID: ${{ secrets.EDUCATION_VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.EDUCATION_VERCEL_PROJECT_ID }}
 
       - name: Deploy refreshed intelligence
         working-directory: apps/education
