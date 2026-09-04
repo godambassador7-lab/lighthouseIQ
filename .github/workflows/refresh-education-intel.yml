@@ -1,0 +1,75 @@
+name: Refresh LightkeeperIQ Education Intelligence
+
+on:
+  schedule:
+    # 11:17 UTC daily (6:17 AM Central during daylight time).
+    - cron: "17 11 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: lightkeeperiq-education-daily-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Refresh nationwide market intelligence
+        run: |
+          node apps/education/scripts/fetch-busy-bees-locations.js
+          node apps/education/scripts/fetch-brightpath-jobs.js
+          node apps/education/scripts/build-data.js
+
+      - name: Validate generated coverage
+        run: |
+          node - <<'NODE'
+          const fs = require("fs");
+          const root = "apps/education/data";
+          const intel = JSON.parse(fs.readFileSync(`${root}/education-intel.json`, "utf8"));
+          const jobs = JSON.parse(fs.readFileSync(`${root}/brightpath-jobs.json`, "utf8"));
+          const locations = JSON.parse(fs.readFileSync(`${root}/busy-bees-us-locations.json`, "utf8"));
+          const failures = [];
+          if (!intel.notices?.length || !intel.markets?.length) failures.push("nationwide workforce intelligence is empty");
+          if (!jobs.jobs?.length) failures.push("BrightPath jobs are empty");
+          if (!locations.locations?.length) failures.push("facility locations are empty");
+          if (locations.metadata?.mappedCount !== locations.locations.length) failures.push("not every facility is mapped");
+          if (failures.length) throw new Error(failures.join("; "));
+          console.log(JSON.stringify({ signals: intel.notices.length, markets: intel.markets.length, jobs: jobs.jobs.length, facilities: locations.locations.length }));
+          NODE
+
+      - name: Commit refreshed snapshots
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f apps/education/data/*.json
+          git diff --staged --quiet || git commit -m "Refresh Education market intelligence $(date -u +%Y-%m-%d)"
+          git pull --rebase origin main
+          git push origin HEAD:main
+
+      - name: Link Vercel project
+        working-directory: apps/education
+        run: npx vercel@59.11.2 pull --yes --environment=production --token="${{ secrets.EDUCATION_VERCEL_TOKEN }}"
+        env:
+          VERCEL_ORG_ID: ${{ secrets.EDUCATION_VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.EDUCATION_VERCEL_PROJECT_ID }}
+
+      - name: Deploy refreshed intelligence
+        working-directory: apps/education
+        run: npx vercel@59.11.2 deploy --prod --yes --token="${{ secrets.EDUCATION_VERCEL_TOKEN }}"
+        env:
+          VERCEL_ORG_ID: ${{ secrets.EDUCATION_VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.EDUCATION_VERCEL_PROJECT_ID }}
