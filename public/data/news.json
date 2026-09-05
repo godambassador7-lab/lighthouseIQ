@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-09-05T05:25:06.360Z",
+  "lastUpdated": "2026-09-05T10:12:03.847Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 3,
-    "healthySources": 7,
+    "staleSources": 2,
+    "healthySources": 8,
     "sources": [
       {
         "source": "Fierce Healthcare",
         "articleCount": 241,
         "latestPublishedAt": "2026-09-05T00:00:00.000Z",
-        "staleHours": 5,
+        "staleHours": 10,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
         "articleCount": 125,
         "latestPublishedAt": "2026-09-04T00:00:00.000Z",
-        "staleHours": 29,
+        "staleHours": 34,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 58,
-        "latestPublishedAt": "2026-09-04T00:00:00.000Z",
-        "staleHours": 29,
+        "articleCount": 59,
+        "latestPublishedAt": "2026-09-05T00:00:00.000Z",
+        "staleHours": 10,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
-        "articleCount": 32,
-        "latestPublishedAt": "2026-09-04T00:00:00.000Z",
-        "staleHours": 29,
+        "articleCount": 33,
+        "latestPublishedAt": "2026-09-08T00:00:00.000Z",
+        "staleHours": -62,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 14,
         "latestPublishedAt": "2026-09-04T00:00:00.000Z",
-        "staleHours": 29,
-        "status": "ok"
-      },
-      {
-        "source": "FDA MedWatch RSS",
-        "articleCount": 12,
-        "latestPublishedAt": "2026-09-03T00:00:00.000Z",
-        "staleHours": 53,
+        "staleHours": 34,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
-        "articleCount": 12,
-        "latestPublishedAt": "2026-09-01T00:00:00.000Z",
-        "staleHours": 101,
+        "articleCount": 11,
+        "latestPublishedAt": "2026-09-02T00:00:00.000Z",
+        "staleHours": 82,
         "status": "stale"
+      },
+      {
+        "source": "FDA MedWatch RSS",
+        "articleCount": 10,
+        "latestPublishedAt": "2026-09-03T00:00:00.000Z",
+        "staleHours": 58,
+        "status": "ok"
+      },
+      {
+        "source": "Federal Register - CMS",
+        "articleCount": 3,
+        "latestPublishedAt": "2026-09-08T00:00:00.000Z",
+        "staleHours": -62,
+        "status": "ok"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 3,
         "latestPublishedAt": "2026-09-04T00:00:00.000Z",
-        "staleHours": 29,
+        "staleHours": 34,
         "status": "ok"
-      },
-      {
-        "source": "Federal Register - CMS",
-        "articleCount": 2,
-        "latestPublishedAt": "2026-09-02T00:00:00.000Z",
-        "staleHours": 77,
-        "status": "stale"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 1,
         "latestPublishedAt": "2026-09-01T00:00:00.000Z",
-        "staleHours": 101,
+        "staleHours": 106,
         "status": "stale"
       }
     ]
@@ -95,7 +95,7 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 74
+      "count": 75
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -107,18 +107,16 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 134
+      "count": 131
     },
     "general_market": {
       "label": "General Market",
-      "count": 213
+      "count": 215
     }
   },
   "quality": {
-    "status": "warning",
-    "failedChecks": [
-      "maxStaleSources"
-    ],
+    "status": "pass",
+    "failedChecks": [],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -127,7 +125,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 25,
+        "actual": 32,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -137,12 +135,93 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 3,
-        "pass": false
+        "actual": 2,
+        "pass": true
       }
     }
   },
   "articles": [
+    {
+      "title": "Medicare Program; Town Hall Meeting on the Fiscal Year 2028 Applications for New Technology Add-On Payments",
+      "summary": "This notice announces a town hall meeting in accordance with section 1886(d)(5)(K)(viii)(III) of the Social Security Act (the Act) to discuss fiscal year (FY) 2028 applications for add-on payments for new medical services and technologies under the hospital inpatient prospective payment system (IPPS). Interested parties are invited to this virtual meeting to present their comments, recommendations, and data regarding whether the FY 2028 applications for new technology add- on payments meet the substantial clinical improvement criterion.",
+      "url": "https://www.federalregister.gov/documents/2026/09/08/2026-18226/medicare-program-town-hall-meeting-on-the-fiscal-year-2028-applications-for-new-technology-add-on",
+      "source": "Federal Register - CMS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_cms",
+      "publishedAt": "2026-09-08",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Agency Information Collection Activities: Proposed Collection: Public Comment Request; Information Collection Request Title: Bureau of Health Workforce Performance Data Collection, OMB No. 0906-0086-Revision",
+      "summary": "In compliance with the requirement for opportunity for public comment on proposed data collection projects of the Paperwork Reduction Act of 1995, HRSA announces plans to submit an Information Collection Request (ICR), described below, to the Office of Management and Budget (OMB). Prior to submitting the ICR to OMB, HRSA seeks comments from the public regarding the burden estimate, below, or any other aspect of the ICR.",
+      "url": "https://www.federalregister.gov/documents/2026/09/08/2026-18235/agency-information-collection-activities-proposed-collection-public-comment-request-information",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-09-08",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Proposed Data Collection Submitted for Public Comment and Recommendations",
+      "summary": "The Centers for Disease Control and Prevention (CDC), as part of its continuing effort to reduce public burden and maximize the utility of government information, invites the general public and other federal agencies the opportunity to comment on a continuing information collection, as required by the Paperwork Reduction Act of 1995. This notice invites comment on a proposed information collection project titled Possession, Use, and Transfer of Select Agents and Toxins (42 CFR 73). This data collection allows CDC and APHIS have to collect information on the possession, use, and transfer of select agents and toxins.",
+      "url": "https://www.federalregister.gov/documents/2026/09/08/2026-18217/proposed-data-collection-submitted-for-public-comment-and-recommendations",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-09-08",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Submission for OMB Review; 30-Day Comment Request Data and Specimen Hub (DASH) (Eunice Kennedy Shriver National Institute of Child Health and Human Development)",
+      "summary": "In compliance with the Paperwork Reduction Act of 1995, the National Institutes of Health (NIH) has submitted to the Office of Management and Budget (OMB) a request for review and approval of the information collection listed below.",
+      "url": "https://www.federalregister.gov/documents/2026/09/08/2026-18191/submission-for-omb-review-30-day-comment-request-data-and-specimen-hub-dash-eunice-kennedy-shriver",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-09-08",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Center for Scientific Review; Amended Notice of Meeting",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/09/08/2026-18215/center-for-scientific-review-amended-notice-of-meeting",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-09-08",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Center for Scientific Review; Notice of Closed Meetings",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/09/08/2026-18193/center-for-scientific-review-notice-of-closed-meetings",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-09-08",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Opinion: What STAT readers think about M.D. vs. D.O., AI in medicine, surrogacy, and more",
+      "url": "https://www.statnews.com/2026/09/05/md-vs-do-surrogacy-ai-medicine-stat-letters-to-editor/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-05",
+      "summary": "“A click, signature, or brief review should not magically transfer responsibility from an AI developer or platform to a physician,” a reader tells STAT.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
     {
       "title": "Industry Voices—How AMCs can prevent healthcare deserts through strategic M&A",
       "url": "https://www.fiercehealthcare.com/providers/industry-voices-how-amcs-can-prevent-healthcare-deserts-through-strategic-ma",
@@ -1053,18 +1132,6 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Early Alert: Breathing Circuit Issue from Draeger",
-      "summary": "Removal of VentStar Resus Neo hoses due to the potential for cracks resulting in restricted ventilation or delayed therapy.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-breathing-circuit-issue-draeger",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-09-03",
-      "category": "general_market",
-      "relevance": 98,
-      "categoryLabel": "General Market"
-    },
-    {
       "title": "Early Alert: Heart Pump Controller Purge Cassette Issue from Abiomed",
       "summary": "Abiomed is removing Automated Impella Controllers due to purge cassette recognition failures that may lead to prolonged delayed in mechanical circulatory support.",
       "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-heart-pump-controller-purge-cassette-issue-abiomed",
@@ -1075,6 +1142,18 @@
       "category": "ai_tech",
       "relevance": 98,
       "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Early Alert: Breathing Circuit Issue from Draeger",
+      "summary": "Removal of VentStar Resus Neo hoses due to the potential for cracks resulting in restricted ventilation or delayed therapy.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-breathing-circuit-issue-draeger",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-09-03",
+      "category": "general_market",
+      "relevance": 98,
+      "categoryLabel": "General Market"
     },
     {
       "title": "Spinal Cord Stimulator Recall: Boston Scientific Removes Infinion CX Lead",
@@ -1896,9 +1975,9 @@
       "title": "Dental Composite Resin Devices and Dental Curing Lights-Premarket Notification (510(k)) Submissions Guidances; Guidances for Industry and Food and Drug Administration Staff; Availability",
       "summary": "The Food and Drug Administration (FDA or Agency) is announcing the availability of two final guidances titled \"Dental Composite Resin Devices--Premarket Notification (510(k)) Submissions\" and \"Dental Curing Lights--Premarket Notification (510(k)) Submissions.\" These guidance documents provide recommendations for device description, performance testing, and labeling to include in 510(k) submissions for dental composite resin devices and dental curing lights. These guidances supersede the guidances \"Dental Composite Resin Devices-- Premarket Notification [510(k)] Submissions\" dated October 26, 2005 and \"Dental Curing Lights--Premarket Notification [510(k)] Submissions\" dated March 27, 2006. The recommendations in these guidances are intended to promote consistency and facilitate efficient review of these submissions.",
       "url": "https://www.federalregister.gov/documents/2026/09/02/2026-17933/dental-composite-resin-devices-and-dental-curing-lights-premarket-notification-510k-submissions",
-      "source": "Federal Register - HHS",
+      "source": "Federal Register - FDA",
       "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
+      "sourceId": "federal_register_fda",
       "publishedAt": "2026-09-02",
       "category": "ai_tech",
       "relevance": 100,
@@ -1908,9 +1987,9 @@
       "title": "Issuance of Priority Review Voucher; Rare Pediatric Disease Product; GENGLYCOS (parisglasgene brecaparvovec-opnr)",
       "summary": "The Food and Drug Administration (FDA) is announcing the issuance of a priority review voucher to the sponsor of a rare pediatric disease product application. The Federal Food, Drug, and Cosmetic Act (FD&C Act) authorizes FDA to award priority review vouchers to sponsors of approved rare pediatric disease product applications that meet certain criteria. FDA is required to publish notice of the award of the priority review voucher. FDA has determined that GENGLYCOS (parisglasgene brecaparvovec-opnr), approved on August 19, 2026, manufactured by Ultragenyx Pharmaceutical, Inc., meets the criteria for a priority review voucher.",
       "url": "https://www.federalregister.gov/documents/2026/09/02/2026-17932/issuance-of-priority-review-voucher-rare-pediatric-disease-product-genglycos-parisglasgene",
-      "source": "Federal Register - HHS",
+      "source": "Federal Register - FDA",
       "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
+      "sourceId": "federal_register_fda",
       "publishedAt": "2026-09-02",
       "category": "ai_tech",
       "relevance": 100,
@@ -1920,9 +1999,9 @@
       "title": "International Cooperation on Harmonisation of Technical Requirements for Registration of Veterinary Medicinal Products; Studies To Evaluate the Safety of Residues of Veterinary Drugs in Human Food: Genotoxicity Testing (Revision 2); Guidance for Industry; Availability",
       "summary": "The Food and Drug Administration (FDA or Agency) is announcing the availability of a final guidance for industry (GFI) #116 (VICH GL23(R2)) titled \"Studies to Evaluate the Safety of Residues of Veterinary Drugs in Human Food: Genotoxicity Testing (Revision 2).\" This guidance has been developed for veterinary use by the International Cooperation on Harmonisation of Technical Requirements for Registration of Veterinary Medicinal Products (VICH). The objective of this guidance is to ensure international harmonization of genotoxicity testing of veterinary drug residues.",
       "url": "https://www.federalregister.gov/documents/2026/09/02/2026-17928/international-cooperation-on-harmonisation-of-technical-requirements-for-registration-of-veterinary",
-      "source": "Federal Register - HHS",
+      "source": "Federal Register - FDA",
       "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
+      "sourceId": "federal_register_fda",
       "publishedAt": "2026-09-02",
       "category": "ai_tech",
       "relevance": 100,
@@ -1932,25 +2011,13 @@
       "title": "International Cooperation on Harmonisation of Technical Requirements for Registration of Veterinary Medicinal Products; Studies To Evaluate the Safety of Residues of Veterinary Drugs in Human Food: Reproduction Testing (Revision 1); Guidance for Industry; Availability",
       "summary": "The Food and Drug Administration (FDA or Agency) is announcing the availability of a final guidance for industry (GFI) #115 (VICH GL22(R)) titled \"Studies to Evaluate the Safety of Residues of Veterinary Drugs in Human Food: Reproduction Testing (Revision 1).\" This guidance has been developed for veterinary use by the International Cooperation on Harmonisation of Technical Requirements for Registration of Veterinary Medicinal Products (VICH). The objective of this guidance is to ensure international harmonization of reproduction testing that is appropriate for the evaluation of effects on reproduction from long-term, low-dose exposures; these effects may be encountered from the presence of veterinary drug residues in food.",
       "url": "https://www.federalregister.gov/documents/2026/09/02/2026-17927/international-cooperation-on-harmonisation-of-technical-requirements-for-registration-of-veterinary",
-      "source": "Federal Register - HHS",
+      "source": "Federal Register - FDA",
       "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
+      "sourceId": "federal_register_fda",
       "publishedAt": "2026-09-02",
       "category": "ai_tech",
       "relevance": 100,
       "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Privacy Act of 1974; Matching Program",
-      "summary": "In accordance with the Privacy Act of 1974, as amended, and Office of Management and Budget (OMB) guidance on computer matching, the Department of Health and Human Services (HHS) is providing notice of the establishment of a new matching program. Pursuant to the Payment Integrity Information Act of 2019, HHS, including its component divisions and program offices, is establishing a new matching program consisting of the computerized comparison of an HHS system of records with the Do Not Pay (DNP) Working System, which is administered by Treasury's Bureau of the Fiscal Service. This matching program will enable HHS to compare records maintained in an HHS system of records covering HHS grantees and grant payments with records maintained in the DNP Working System for the purposes of identifying and preventing improper payments and conducting any related recovery activities.",
-      "url": "https://www.federalregister.gov/documents/2026/09/02/2026-17907/privacy-act-of-1974-matching-program",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-09-02",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
     },
     {
       "title": "Early Alert: Convenience Kit Issue from AVID Medical",
@@ -1962,6 +2029,18 @@
       "publishedAt": "2026-09-02",
       "category": "ai_tech",
       "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Convenience Kit Correction: Medline Issues Correction for Convenience Kits Containing BD ChloraPrep Applicators",
+      "summary": "Certain BD ChloraPrep Applicators in Convenience Kits manufactured by Medline may not be sterile.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/convenience-kit-correction-medline-issues-correction-convenience-kits-containing-bd-chloraprep",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-09-02",
+      "category": "ai_tech",
+      "relevance": 98,
       "categoryLabel": "AI & Digital Tech"
     },
     {
@@ -1977,16 +2056,16 @@
       "categoryLabel": "Quality & Safety"
     },
     {
-      "title": "Convenience Kit Correction: Medline Issues Correction for Convenience Kits Containing BD ChloraPrep Applicators",
-      "summary": "Certain BD ChloraPrep Applicators in Convenience Kits manufactured by Medline may not be sterile.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/convenience-kit-correction-medline-issues-correction-convenience-kits-containing-bd-chloraprep",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
+      "title": "Privacy Act of 1974; Matching Program",
+      "summary": "In accordance with the Privacy Act of 1974, as amended, and Office of Management and Budget (OMB) guidance on computer matching, the Department of Health and Human Services (HHS) is providing notice of the establishment of a new matching program. Pursuant to the Payment Integrity Information Act of 2019, HHS, including its component divisions and program offices, is establishing a new matching program consisting of the computerized comparison of an HHS system of records with the Do Not Pay (DNP) Working System, which is administered by Treasury's Bureau of the Fiscal Service. This matching program will enable HHS to compare records maintained in an HHS system of records covering HHS grantees and grant payments with records maintained in the DNP Working System for the purposes of identifying and preventing improper payments and conducting any related recovery activities.",
+      "url": "https://www.federalregister.gov/documents/2026/09/02/2026-17907/privacy-act-of-1974-matching-program",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
       "publishedAt": "2026-09-02",
-      "category": "ai_tech",
-      "relevance": 98,
-      "categoryLabel": "AI & Digital Tech"
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
     },
     {
       "title": "Proposed Collection; 60-Day Comment Request; Assurance (Interinstitutional, Foreign, and Domestic) and Annual Report (Office of the Director)",
@@ -4744,90 +4823,6 @@
       "category": "ai_tech",
       "relevance": 100,
       "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Agency Information Collection Activities; Submission for Office of Management and Budget Review; Comment Request; Importation of Prescription Drugs",
-      "summary": "The Food and Drug Administration (FDA) is announcing that a proposed collection of information has been submitted to the Office of Management and Budget (OMB) for review and clearance under the Paperwork Reduction Act of 1995.",
-      "url": "https://www.federalregister.gov/documents/2026/08/28/2026-17603/agency-information-collection-activities-submission-for-office-of-management-and-budget-review",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-08-28",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Agency Information Collection Activities; Submission for Office of Management and Budget Review; Comment Request; Reporting Associated With Animal Drug and Animal Generic Drug User Fees",
-      "summary": "The Food and Drug Administration (FDA) is announcing that a proposed collection of information has been submitted to the Office of Management and Budget (OMB) for review and clearance under the Paperwork Reduction Act of 1995.",
-      "url": "https://www.federalregister.gov/documents/2026/08/28/2026-17601/agency-information-collection-activities-submission-for-office-of-management-and-budget-review",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-08-28",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Agency Information Collection Activities; Proposed Collection; Comment Request; Food Canning Establishment Registration, Process Filing, and Recordkeeping for Acidified Foods and Thermally Processed Low-Acid Foods in Hermetically Sealed Containers",
-      "summary": "The Food and Drug Administration (FDA or Agency) is announcing an opportunity for public comment on the proposed collection of certain information by the Agency. Under the Paperwork Reduction Act of 1995 (PRA), Federal Agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension of an existing collection of information, and to allow 60 days for public comment in response to the notice. This notice solicits comments on the information collection provisions of reporting and recordkeeping requirements for firms that process acidified foods and thermally processed low-acid foods in hermetically sealed containers.",
-      "url": "https://www.federalregister.gov/documents/2026/08/28/2026-17599/agency-information-collection-activities-proposed-collection-comment-request-food-canning",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-08-28",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Agency Information Collection Activities; Proposed Collection; Comment Request; Focus Groups and Interviews as Used by the Food and Drug Administration",
-      "summary": "The Food and Drug Administration (FDA or Agency) is announcing an opportunity for public comment on the proposed collection of certain information by the Agency. Under the Paperwork Reduction Act of 1995 (PRA), Federal Agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension of an existing collection of information, and to allow 60 days for public comment in response to the notice. This notice solicits comments on the generic collection of focus group information as used by FDA for all FDA-regulated products.",
-      "url": "https://www.federalregister.gov/documents/2026/08/28/2026-17598/agency-information-collection-activities-proposed-collection-comment-request-focus-groups-and",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-08-28",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Compounding Animal Drugs From Bulk Drug Substances: Compounding Under CGMP in Federally-Registered Facilities; Draft Guidance for Industry; Availability; Agency Information Collection Activities; Proposed Collection; Comment Request",
-      "summary": "The Food and Drug Administration (FDA, Agency, or we) is announcing the availability of a draft guidance for industry (GFI) #256B entitled \"Compounding Animal Drugs from Bulk Drug Substances: Compounding under CGMP in Federally-Registered Facilities.\" This draft guidance, when finalized, will describe FDA's current thinking regarding the circumstances under which we generally do not intend to take action against the compounding of animal drug products from bulk drug substances (BDS) when done in accordance with Current Good Manufacturing Practice (CGMP) at drug production facilities that are registered with FDA.",
-      "url": "https://www.federalregister.gov/documents/2026/08/28/2026-17580/compounding-animal-drugs-from-bulk-drug-substances-compounding-under-cgmp-in-federally-registered",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-08-28",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Early Alert: IV Start Kit Issue from Avid Medical",
-      "summary": "Avid Medical is removing certain convenience kits affected by the BD ChloraPrep Applicator Recall that may be contaminated with Aspergillus penicillioides.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-iv-start-kit-issue-avid-medical",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-08-28",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Early Alert: Angiographic Catheter Issue from Boston Scientific",
-      "summary": "Boston Scientific Imager II Angiographic Catheters removed due to a manufacturing issue leading to tip detachment; could result in procedural delays, embolism",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-angiographic-catheter-issue-boston-scientific",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-08-28",
-      "category": "general_market",
-      "relevance": 98,
-      "categoryLabel": "General Market"
     }
   ]
 }
