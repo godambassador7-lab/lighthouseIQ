@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-09-08T15:04:54.636Z",
+  "lastUpdated": "2026-09-08T18:33:21.005Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 4,
-    "healthySources": 6,
+    "staleSources": 2,
+    "healthySources": 8,
     "sources": [
       {
         "source": "Fierce Healthcare",
         "articleCount": 235,
         "latestPublishedAt": "2026-09-08T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 125,
+        "articleCount": 123,
         "latestPublishedAt": "2026-09-08T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "STAT News",
         "articleCount": 66,
         "latestPublishedAt": "2026-09-08T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 33,
         "latestPublishedAt": "2026-09-08T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 14,
         "latestPublishedAt": "2026-09-08T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
-        "articleCount": 10,
-        "latestPublishedAt": "2026-09-03T00:00:00.000Z",
-        "staleHours": 135,
-        "status": "stale"
+        "articleCount": 11,
+        "latestPublishedAt": "2026-09-08T00:00:00.000Z",
+        "staleHours": 18,
+        "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 10,
         "latestPublishedAt": "2026-09-02T00:00:00.000Z",
-        "staleHours": 159,
+        "staleHours": 162,
         "status": "stale"
+      },
+      {
+        "source": "National Nurses United RSS",
+        "articleCount": 4,
+        "latestPublishedAt": "2026-09-08T00:00:00.000Z",
+        "staleHours": 18,
+        "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 3,
         "latestPublishedAt": "2026-09-08T00:00:00.000Z",
-        "staleHours": 15,
+        "staleHours": 18,
         "status": "ok"
-      },
-      {
-        "source": "National Nurses United RSS",
-        "articleCount": 3,
-        "latestPublishedAt": "2026-09-04T00:00:00.000Z",
-        "staleHours": 111,
-        "status": "stale"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 1,
         "latestPublishedAt": "2026-09-01T00:00:00.000Z",
-        "staleHours": 183,
+        "staleHours": 186,
         "status": "stale"
       }
     ]
@@ -83,7 +83,7 @@
   "categoryCoverage": {
     "closures_layoffs": {
       "label": "Closures & Layoffs",
-      "count": 20
+      "count": 21
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
@@ -91,11 +91,11 @@
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 9
+      "count": 7
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 61
+      "count": 60
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -103,22 +103,20 @@
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
-      "count": 16
+      "count": 15
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 133
+      "count": 134
     },
     "general_market": {
       "label": "General Market",
-      "count": 217
+      "count": 219
     }
   },
   "quality": {
-    "status": "warning",
-    "failedChecks": [
-      "maxStaleSources"
-    ],
+    "status": "pass",
+    "failedChecks": [],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -127,7 +125,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 61,
+        "actual": 75,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -137,8 +135,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 4,
-        "pass": false
+        "actual": 2,
+        "pass": true
       }
     }
   },
@@ -192,6 +190,30 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "BMC Medical Co., Ltd. Recalls Luna G3 APAP (Model LG3600) with Firmware G3-2.00.76 Due to Firmware Defect",
+      "summary": "On July 15, 2026, BMC Medical Co., Ltd. (BMC), Beijing, China, retrospectively reported to the US Food and Drug Administration (FDA) a recall of 20,160 Luna G3 APAP (Model LG3600) devices distributed in the United States due to firmware defect. This corrective action was not reported to customers. O",
+      "url": "http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/bmc-medical-co-ltd-recalls-luna-g3-apap-model-lg3600-firmware-g3-20076-due-firmware-defect",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-09-08",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "MedStar Washington Hospital Center nurses host community forum on maternal health care cuts, the future of health care in DC",
+      "summary": "Union registered nurses at MedStar Washington Hospital Center in Washington, D.C. will hold a community forum on Wednesday, Sept. 9, 2026, to discuss the closure of postpartum unit 5F at Washington Hospital Center, the devastating impact of Medicaid cuts in DC, and building a health care system that works for us all.",
+      "url": "https://www.nationalnursesunited.org/press/medstar-washington-hospital-center-nurses-host-community-forum-on-maternal-health-care-cuts",
+      "source": "National Nurses United RSS",
+      "sourceType": "rss",
+      "sourceId": "nnu_rss",
+      "publishedAt": "2026-09-08",
+      "category": "closures_layoffs",
+      "relevance": 100,
+      "categoryLabel": "Closures & Layoffs"
+    },
+    {
       "title": "Center for Scientific Review; Amended Notice of Meeting",
       "summary": "",
       "url": "https://www.federalregister.gov/documents/2026/09/08/2026-18215/center-for-scientific-review-amended-notice-of-meeting",
@@ -216,92 +238,101 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "MultiCare to shutter multiple clinics, affecting 83 workers",
-      "url": "https://www.beckershospitalreview.com/finance/multicare-to-shutter-multiple-clinics-affecting-83-workers/",
+      "title": "Retrospective risk adjustment is running out of road",
+      "url": "https://www.beckershospitalreview.com/strategy/retrospective-risk-adjustment-is-running-out-of-road/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-09-08",
-      "summary": "Tacoma, Wash.-based MultiCare Health System has shared plans to close multiple clinics due to healthcare&#8217;s &#8220;challenging financial landscape,&#8221; moves that will affect 83 employees a spokesperson for the health system confirmed Sept.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "UC Davis Health redesigned the revenue cycle workforce",
-      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/uc-davis-health-redesigned-the-revenue-cycle-workforce/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-08",
-      "summary": "For years, the measure of a medical coder was throughput. How many charts are processed?",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "3 epinephrine lots recalled over potentially dangerous particles",
-      "url": "https://www.beckershospitalreview.com/pharmacy/3-epinephrine-lots-recalled-over-potentially-dangerous-particles/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-08",
-      "summary": "American Regent has recalled three lots of Epinephrine Injection, USP, after leaking and cracked vials were found to contain particulate matter. The nationwide recall covers three lots of the 30 milligram/30 milliliter product, according to a Sept.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "7 called-off hospital deals",
-      "url": "https://www.beckershospitalreview.com/hospital-transactions-and-valuation/6-called-off-hospital-deals-2/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-08",
-      "summary": "Several hospital and health system partnerships, affiliations and proposed transactions have been called off or unwound this year, reflecting shifting strategic priorities, financial considerations and evolving market dynamics.&#160; From merger discussions that ended after years of negotiations to the dissolution of longstanding clinical collaborations and joint ventures, health systems across the country are reevaluating plans [&#8230;] The post 7 called-off hospital deals appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Logan Health providers union votes &#8216;no confidence&#8217; in primary care leadership",
-      "url": "https://www.beckershospitalreview.com/hr/logan-health-providers-union-votes-no-confidence-in-primary-care-leadership/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-08",
-      "summary": "Primary care providers at Kalispell, Mont.-based Logan Health, signed a vote of &#8220;no confidence&#8221; in the hospital&#8217;s primary care leadership, just over six months after the group unionized, the Flathead Beacon reported Sept.",
-      "category": "labor_unions",
-      "categoryLabel": "Labor & Unions"
-    },
-    {
-      "title": "Christus Santa Rosa Health System CEO to retire",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/christus-santa-rosa-health-system-ceo-to-retire/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-08",
-      "summary": "Grant Wicklund plans to retire as CEO of Christus Santa Rosa Health System in San Antonio, part of Irving, Texas-based Christus Health. Mr.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "OpenAI&#8217;s growing healthcare footprint",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/openais-growing-healthcare-footprint/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-08",
-      "summary": "OpenAI has steadily expanded its healthcare offerings, launching a consumer health feature, a suite of hospital-focused tools, a clinician-facing product, a biology research model and acquiring a health data startup. OpenAI&#8217;s healthcare push comes as some of the largest technology companies in the world are racing to establish positions in the sector.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Missouri hospital sues buyer after $10.5M sale collapses days before closing",
-      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/missouri-hospital-sues-buyer-after-10-5m-sale-collapses-days-before-closing/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-08",
-      "summary": "Marshall, Mo.-based John Fitzgibbon Memorial Hospital and its long-term care affiliate, Fitzgibbon Health Services, sued planned buyer Strawberry Fields and operator American Medical Administrators Sept.",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "Pennsylvania coroner confirms infant died from measles",
-      "url": "https://www.beckershospitalreview.com/quality/public-health/pennsylvania-coroner-confirms-infant-died-from-measles/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-08",
-      "summary": "After HHS Secretary Robert F. Kennedy Jr.",
+      "summary": "Roughly two-thirds of Medicare’s improper payments1 trace back to missing or insufficient documentation. For a decade, the industry’s answer has been to fix that downstream in the form of better queries, faster attestations, and bigger appeal teams.",
       "category": "policy_reimbursement",
       "categoryLabel": "Policy & Reimbursement"
     },
     {
-      "title": "AstraZeneca COPD drug delivers 2 phase 3 wins",
-      "url": "https://www.beckershospitalreview.com/pharmacy/astrazeneca-copd-drug-delivers-2-phase-3-wins/",
+      "title": "6 states finalize 2027 ACA rates",
+      "url": "https://www.beckershospitalreview.com/finance/5-states-finalize-2027-aca-rates/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-09-08",
-      "summary": "AstraZeneca&#8217;s tozorakimab is the first biologic to demonstrate statistically significant efficacy in reducing moderate and severe COPD exacerbations in a broad population of patients who continued to experience exacerbations while receiving inhaled standard-of-care therapy. Tozorakimab reduced moderate and severe COPD exacerbations among former smokers by 29% in Oberon and 34% in Titania, according to a [&#8230;] The post AstraZeneca COPD drug delivers 2 phase 3 wins appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "summary": "ACA insurers requested a median rate increase of 15% for 2027, according to a Peterson-KFF Health System Tracker analysis. However, some states are pushing back — while others are abiding by those requests — as they finalize increases.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Getting cardiology ready for CMS&#8217; mandatory heart failure payment model: 4 takeaways",
+      "url": "https://www.beckershospitalreview.com/strategy/getting-cardiology-ready-for-cms-mandatory-heart-failure-payment-model-4-takeaways/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-08",
+      "summary": "For a decade, cardiology&#8217;s exposure to value-based payment has run largely through the Merit-based Incentive Payment System, or MIPS — a program that scores group practices and moves payments modestly. The next model raises the stakes.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "5 Kansas systems form Astra Health collaboration",
+      "url": "https://www.beckershospitalreview.com/finance/5-kansas-systems-form-astra-health-collaboration/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-08",
+      "summary": "Lawrence, Kan.-based LMH Health and four other independent Kansas health systems have formed Astra Health, a regional collaboration to help improve patient care, strengthen access to specialty services and deliver affordable healthcare options.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Former Cleveland Clinic, Allegheny Health Network CEOs join Tennr as advisors",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/innovation/former-cleveland-clinic-allegheny-health-network-ceos-join-tennr-as-advisors/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-08",
+      "summary": "AI-powered referral management company Tennr has named two major healthcare heavyweights as industry advisors: Toby Cosgrove, MD, former president and CEO of Cleveland Clinic, and Cindy Hundorfean, former president and CEO of Pittsburgh-based Allegheny Health Network. Both advisors will work directly with Tennr&#8217;s product and clinical teams as the New York City-based company expands into [&#8230;] The post Former Cleveland Clinic, Allegheny Health Network CEOs join Tennr as advisors appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "China becoming CAR-T destination for US patients: WSJ",
+      "url": "https://www.beckershospitalreview.com/pharmacy/china-becoming-car-t-destination-for-us-patients-wsj/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-08",
+      "summary": "China is becoming a destination for U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "OpenEvidence&#8217;s new model achieves 1st perfect score on medical AI benchmark",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/openevidences-new-model-achieves-1st-perfect-score-on-medical-ai-benchmark/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-08",
+      "summary": "OpenEvidence said its new Darwin model has become the first AI system in history to score 100% on MedQA, a medical AI benchmark. Darwin also topped other major medical AI benchmarks, scoring 72.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "WellSpan Health names medical group&#8217;s physician leader",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/wellspan-health-names-medical-groups-physician-leader/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-08",
+      "summary": "WellSpan Health, a 12-hospital system based in York, Pa., said Sept.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Novo Nordisk secures injunction over Ozempic, Wegovy claims",
+      "url": "https://www.beckershospitalreview.com/glp-1s/novo-nordisk-secures-injunction-over-ozempic-wegovy-claims/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-08",
+      "summary": "Novo Nordisk has secured a permanent injunction restricting LifeRxMD from making certain claims involving Ozempic, Wegovy and Rybelsus in its marketing of compounded drugs. The injunction was entered as part of a confidential settlement between Novo Nordisk and LifeRxMD, according to a Sept.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "557 Trinity Health IT jobs affected by outsourcing shift",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/digital-health/557-trinity-health-it-jobs-affected-by-outsourcing-shift/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-08",
+      "summary": "Livonia, Mich.-based Trinity Health’s outsourcing of IT service desk and applications support work will affect 557 positions, according to a WARN notice filed with Michigan’s Department of Labor and Economic Opportunity.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: FDA warns an API supplier about residue on walls, a corroded product line, and open-toed sandals",
+      "url": "https://www.statnews.com/pharmalot/2026/09/08/fda-warns-api-supplier-residue-corroded-production-line-sandals/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-08",
+      "summary": "The FDA warned a supplier of active pharma ingredients about residue on walls, a corroded product line, and open-toed sandals at its facility. It also included photos.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
@@ -324,7 +355,7 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "STAT+: Oura goes public, reported $1.2B earnings in its last fiscal year",
+      "title": "STAT+: Oura files to goes public, reported $1.2B in earnings",
       "url": "https://www.statnews.com/2026/09/08/health-tech-newsletter-oura-goes-public-reports-profitability/?utm_campaign=rss",
       "source": "STAT News",
       "publishedAt": "2026-09-08",
@@ -475,6 +506,105 @@
       "summary": "<p>The key to better Star Ratings extends beyond the hospital stay.",
       "category": "policy_reimbursement",
       "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "MultiCare to shutter multiple clinics, affecting 83 workers",
+      "url": "https://www.beckershospitalreview.com/finance/multicare-to-shutter-multiple-clinics-affecting-83-workers/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-08",
+      "summary": "Tacoma, Wash.-based MultiCare Health System has shared plans to close multiple clinics due to healthcare&#8217;s &#8220;challenging financial landscape,&#8221; moves that will affect 83 employees a spokesperson for the health system confirmed Sept.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "UC Davis Health redesigned the revenue cycle workforce",
+      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/uc-davis-health-redesigned-the-revenue-cycle-workforce/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-08",
+      "summary": "For years, the measure of a medical coder was throughput. How many charts are processed?",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "3 epinephrine lots recalled over potentially dangerous particles",
+      "url": "https://www.beckershospitalreview.com/pharmacy/3-epinephrine-lots-recalled-over-potentially-dangerous-particles/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-08",
+      "summary": "American Regent has recalled three lots of Epinephrine Injection, USP, after leaking and cracked vials were found to contain particulate matter. The nationwide recall covers three lots of the 30 milligram/30 milliliter product, according to a Sept.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "7 called-off hospital deals",
+      "url": "https://www.beckershospitalreview.com/hospital-transactions-and-valuation/6-called-off-hospital-deals-2/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-08",
+      "summary": "Several hospital and health system partnerships, affiliations and proposed transactions have been called off or unwound this year, reflecting shifting strategic priorities, financial considerations and evolving market dynamics.&#160; From merger discussions that ended after years of negotiations to the dissolution of longstanding clinical collaborations and joint ventures, health systems across the country are reevaluating plans [&#8230;] The post 7 called-off hospital deals appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Logan Health providers union votes &#8216;no confidence&#8217; in primary care leadership",
+      "url": "https://www.beckershospitalreview.com/hr/logan-health-providers-union-votes-no-confidence-in-primary-care-leadership/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-08",
+      "summary": "Primary care providers at Kalispell, Mont.-based Logan Health, signed a vote of &#8220;no confidence&#8221; in the hospital&#8217;s primary care leadership, just over six months after the group unionized, the Flathead Beacon reported Sept.",
+      "category": "labor_unions",
+      "categoryLabel": "Labor & Unions"
+    },
+    {
+      "title": "Christus Santa Rosa Health System CEO to retire",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/christus-santa-rosa-health-system-ceo-to-retire/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-08",
+      "summary": "Grant Wicklund plans to retire as CEO of Christus Santa Rosa Health System in San Antonio, part of Irving, Texas-based Christus Health. Mr.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "OpenAI&#8217;s growing healthcare footprint",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/openais-growing-healthcare-footprint/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-08",
+      "summary": "OpenAI has steadily expanded its healthcare offerings, launching a consumer health feature, a suite of hospital-focused tools, a clinician-facing product, a biology research model and acquiring a health data startup. OpenAI&#8217;s healthcare push comes as some of the largest technology companies in the world are racing to establish positions in the sector.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Missouri hospital sues buyer after $10.5M sale collapses days before closing",
+      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/missouri-hospital-sues-buyer-after-10-5m-sale-collapses-days-before-closing/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-08",
+      "summary": "Marshall, Mo.-based John Fitzgibbon Memorial Hospital and its long-term care affiliate, Fitzgibbon Health Services, sued planned buyer Strawberry Fields and operator American Medical Administrators Sept.",
+      "category": "closures_layoffs",
+      "categoryLabel": "Closures & Layoffs"
+    },
+    {
+      "title": "Pennsylvania coroner confirms infant died from measles",
+      "url": "https://www.beckershospitalreview.com/quality/public-health/pennsylvania-coroner-confirms-infant-died-from-measles/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-08",
+      "summary": "After HHS Secretary Robert F. Kennedy Jr.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "AstraZeneca COPD drug delivers 2 phase 3 wins",
+      "url": "https://www.beckershospitalreview.com/pharmacy/astrazeneca-copd-drug-delivers-2-phase-3-wins/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-08",
+      "summary": "AstraZeneca&#8217;s tozorakimab is the first biologic to demonstrate statistically significant efficacy in reducing moderate and severe COPD exacerbations in a broad population of patients who continued to experience exacerbations while receiving inhaled standard-of-care therapy. Tozorakimab reduced moderate and severe COPD exacerbations among former smokers by 29% in Oberon and 34% in Titania, according to a [&#8230;] The post AstraZeneca COPD drug delivers 2 phase 3 wins appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Oura goes public, reported $1.2B earnings in its last fiscal year",
+      "url": "https://www.statnews.com/2026/09/08/health-tech-newsletter-oura-goes-public-reports-profitability/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-08",
+      "summary": "In health tech news today, Oura reports a profit, the FDA loses another key digital health leader, and more",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "Parakeet Health lands major AI partnership with national dermatology group Qualderm",
@@ -2109,9 +2239,9 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Early Alert: Breathing Circuit Issue from Draeger",
-      "summary": "Removal of VentStar Resus Neo hoses due to the potential for cracks resulting in restricted ventilation or delayed therapy.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-breathing-circuit-issue-draeger",
+      "title": "Spinal Cord Stimulator Recall: Boston Scientific Removes Infinion CX Lead",
+      "summary": "Infinion CX Lead bodies may experience mechanical stress at the anchor site resulting in inadequate stimulation requiring lead explant and replacement.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/spinal-cord-stimulator-recall-boston-scientific-removes-infinion-cx-lead",
       "source": "FDA MedWatch RSS",
       "sourceType": "rss",
       "sourceId": "fda_medwatch_rss",
@@ -2121,9 +2251,9 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "Spinal Cord Stimulator Recall: Boston Scientific Removes Infinion CX Lead",
-      "summary": "Infinion CX Lead bodies may experience mechanical stress at the anchor site resulting in inadequate stimulation requiring lead explant and replacement.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/spinal-cord-stimulator-recall-boston-scientific-removes-infinion-cx-lead",
+      "title": "Early Alert: Breathing Circuit Issue from Draeger",
+      "summary": "Removal of VentStar Resus Neo hoses due to the potential for cracks resulting in restricted ventilation or delayed therapy.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-breathing-circuit-issue-draeger",
       "source": "FDA MedWatch RSS",
       "sourceType": "rss",
       "sourceId": "fda_medwatch_rss",
@@ -4696,132 +4826,6 @@
       "summary": "The midterm election is right around the corner, and healthcare costs are a top issue on the ballot. More than half of voters said healthcare costs are extremely important for candidates to discuss, according to a July KFF poll.",
       "category": "policy_reimbursement",
       "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "The smartest move perioperative teams made this year, per 10 leaders",
-      "url": "https://www.beckershospitalreview.com/quality/the-smartest-move-perioperative-teams-made-this-year-per-10-leaders/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-31",
-      "summary": "The smartest move perioperative teams made this year rarely shows up as a single tool or technology purchase. Look closer at the specifics — an integrated operating model that puts surgery, anesthesia, nursing, and frontline staff around the same data and the same accountability structure; a weekly capacity huddle that catches resource conflicts before they [&#8230;] The post The smartest move perioperative teams made this year, per 10 leaders appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "capacity_expansion",
-      "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "Nurses at Prime Illinois hospital seek union election",
-      "url": "https://www.beckershospitalreview.com/hr/nurses-at-prime-illinois-hospital-seek-union-election/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-31",
-      "summary": "Registered nurses at Saint Francis Hospital in Evanston, Ill., have petitioned for a union election, according to a filing with the National Labor Relations Board.",
-      "category": "labor_unions",
-      "categoryLabel": "Labor & Unions"
-    },
-    {
-      "title": "Mount Sinai, Denver Health join AI trust coalition",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/innovation/mount-sinai-denver-health-join-ai-trust-coalition/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-31",
-      "summary": "New York City-based Mount Sinai Health System and Denver Health have joined PACT AI, a new coalition focused on building independent verification standards for artificial intelligence in healthcare and other industries. The Partnership for Assurance, Credibility and Trust on AI brings together enterprise AI deployers, technical assurance providers and civil society groups to develop shared [&#8230;] The post Mount Sinai, Denver Health join AI trust coalition appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "&#8216;Traditional solutions are no longer enough&#8217; to quell hospitals&#8217; workforce woes",
-      "url": "https://www.beckershospitalreview.com/hospital-management-administration/traditional-solutions-are-no-longer-enough-to-quell-hospitals-workforce-woes/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-31",
-      "summary": "The healthcare workforce crisis has been called urgent for years. What leaders across the country now describe is a problem that has moved past urgency into a breakdown across the pipeline, the employment relationship and the financial equation that has long made healthcare staffing viable.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Hospital, physician groups urge CMS to pull back 2027 outpatient proposed rule",
-      "url": "https://www.beckershospitalreview.com/finance/hospital-physician-groups-urge-cms-to-pull-back-2027-outpatient-rule/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-31",
-      "summary": "The comment period closed Aug. 31 for CMS&#8217; CY 2027 Hospital Outpatient Prospective Payment System and Ambulatory Surgical Center proposed rule, and healthcare groups laid out their objections in formal letters to the agency.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "10 states with the longest, shortest workweeks",
-      "url": "https://www.beckershospitalreview.com/workforce/10-states-with-the-longest-shortest-workweeks/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-31",
-      "summary": "Louisiana has the longest average workweek in the U.S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Vandalia Health adds 17th hospital",
-      "url": "https://www.beckershospitalreview.com/hospital-transactions-and-valuation/vandalia-health-adds-17th-hospital/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-31",
-      "summary": "Grafton (W.Va.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Former Chicago hospital CFO pleads not guilty in COVID-19 fraud case",
-      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/former-chicago-hospital-cfo-pleads-not-guilty-in-covid-19-fraud-case/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-31",
-      "summary": "Anosh Ahmed, MD, former CFO and COO of Chicago-based Loretto Hospital, pleaded not guilty Aug. 31 to a 15-count fraud and money laundering indictment connected to COVID-19 testing fraud claims, the Chicago Tribune reported.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Trinity to hire 1st chief AI and digital transformation officer",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/trinity-to-hire-1st-chief-ai-and-digital-transformation-officer/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-31",
-      "summary": "Livonia, Mich.-based Trinity Health is seeking its first chief AI and digital transformation officer, creating a new enterprise leadership role that will report directly to the health system&#8217;s CEO.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "28 health systems dropping Medicare Advantage plans &#124; 2026",
-      "url": "https://www.beckershospitalreview.com/finance/16-health-systems-dropping-medicare-advantage-plans-2026/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-31",
-      "summary": "Contract breaks between major health systems and certain Medicare Advantage insurers are continuing in 2026. Providers dropping plans often cite prior authorization denials and slow reimbursement; in other cases, insurers are terminating the contracts themselves.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "3 record hiring years and a contract labor plunge: Inside SSM Health&#8217;s nurse influencer bet",
-      "url": "https://www.beckershospitalreview.com/quality/nursing/3-record-hiring-years-and-a-contract-labor-plunge-inside-ssm-healths-nurse-influencer-bet/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-31",
-      "summary": "A nurse tiptoeing through a darkened unit on night rounds. A knowing groan about someone daring to say &#8220;the Q word&#8221; on shift.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "How to become a CMS 5-star hospital",
-      "url": "https://www.beckershospitalreview.com/quality/how-to-become-a-cms-5-star-hospital/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-31",
-      "summary": "Six years ago, Northwell&#8217;s Mather Hospital&#8217;s CMS rating hovered around three and four stars until leaders made reaching five-star status part of their strategic plan for their &#8220;little community hospital,&#8221; Kevin McGeachy, president of Mather Hospital, said in an upcoming &#8220;Becker&#8217;s Healthcare Podcast&#8221; episode. &#8220;It&#8217;s been a great rallying cry for us around the CMS [&#8230;] The post How to become a CMS 5-star hospital appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "New guidelines on migraine prevention reflect increasing options for patients",
-      "url": "https://www.statnews.com/2026/08/31/migraine-prevention-medication-guidelines/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-08-31",
-      "summary": "“There has been a wealth of new treatment available” for migraine prevention, said a co-author of new guidelines released Monday.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Trump strikes nine more deals with drugmakers to lower prices",
-      "url": "https://www.statnews.com/2026/08/31/trump-most-favored-nation-drug-pricing-new-round-price-cuts-announced/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-08-31",
-      "summary": "President Trump on Monday announced the next round of pricing deals with drugmakers, with nine new companies making such agreements.",
-      "category": "labor_unions",
-      "categoryLabel": "Labor & Unions"
     }
   ]
 }
