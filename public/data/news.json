@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-09-08T05:54:19.048Z",
+  "lastUpdated": "2026-09-08T10:52:26.594Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 6,
-    "healthySources": 4,
+    "staleSources": 5,
+    "healthySources": 5,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 243,
+        "articleCount": 241,
         "latestPublishedAt": "2026-09-08T00:00:00.000Z",
-        "staleHours": 5,
+        "staleHours": 10,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 125,
+        "articleCount": 117,
         "latestPublishedAt": "2026-09-04T00:00:00.000Z",
-        "staleHours": 101,
+        "staleHours": 106,
         "status": "stale"
       },
       {
         "source": "STAT News",
-        "articleCount": 58,
-        "latestPublishedAt": "2026-09-07T00:00:00.000Z",
-        "staleHours": 29,
+        "articleCount": 66,
+        "latestPublishedAt": "2026-09-08T00:00:00.000Z",
+        "staleHours": 10,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 33,
         "latestPublishedAt": "2026-09-08T00:00:00.000Z",
-        "staleHours": 5,
+        "staleHours": 10,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
-        "articleCount": 14,
-        "latestPublishedAt": "2026-09-04T00:00:00.000Z",
-        "staleHours": 101,
-        "status": "stale"
+        "articleCount": 16,
+        "latestPublishedAt": "2026-09-08T00:00:00.000Z",
+        "staleHours": 10,
+        "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 10,
         "latestPublishedAt": "2026-09-03T00:00:00.000Z",
-        "staleHours": 125,
+        "staleHours": 130,
         "status": "stale"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 10,
         "latestPublishedAt": "2026-09-02T00:00:00.000Z",
-        "staleHours": 149,
+        "staleHours": 154,
         "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 3,
         "latestPublishedAt": "2026-09-08T00:00:00.000Z",
-        "staleHours": 5,
+        "staleHours": 10,
         "status": "ok"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 3,
         "latestPublishedAt": "2026-09-04T00:00:00.000Z",
-        "staleHours": 101,
+        "staleHours": 106,
         "status": "stale"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 1,
         "latestPublishedAt": "2026-09-01T00:00:00.000Z",
-        "staleHours": 173,
+        "staleHours": 178,
         "status": "stale"
       }
     ]
@@ -95,7 +95,7 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 61
+      "count": 62
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -103,15 +103,15 @@
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
-      "count": 17
+      "count": 16
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 127
+      "count": 131
     },
     "general_market": {
       "label": "General Market",
-      "count": 225
+      "count": 221
     }
   },
   "quality": {
@@ -127,7 +127,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 31,
+        "actual": 41,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -137,7 +137,7 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 6,
+        "actual": 5,
         "pass": false
       }
     }
@@ -214,6 +214,96 @@
       "category": "general_market",
       "relevance": 96,
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Roivant lung disease drug hits mid-stage study goals",
+      "url": "https://www.statnews.com/2026/09/08/roivant-mosliciguat-pulmonary-hypertension-interstitial-lung-disease-results/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-08",
+      "summary": "These positive results could open up a new way to treat serious lung disease.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Reynolds is selling fruity new vapes unauthorized by FDA",
+      "url": "https://www.statnews.com/2026/09/08/fda-guidance-reynolds-selling-fruity-new-vapes-unauthorized/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-08",
+      "summary": "The decision to move ahead with new products in the absence of FDA authorization could spur other big manufacturers to do the same, one tobacco-nicotine expert said.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "A breakthrough pancreatic cancer drug won approval. They still struggle to access it",
+      "url": "https://www.statnews.com/2026/09/08/pancreatic-cancer-patients-caught-beween-fda-drug-approval-insurance-coverage/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-08",
+      "summary": "When the FDA approved a new pancreatic cancer drug called Rasonque, researchers celebrated. But some patients hoping for quick access have been stymied.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: UnitedHealth executives shower high-ranking Democrat with donations ahead of midterms",
+      "url": "https://www.statnews.com/2026/09/08/uhg-political-donations-katherine-clark-democratic-whip-medicare-for-all/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-08",
+      "summary": "Katherine Clark, a top House Democrat, received more than $100,000 in campaign donations from people linked to UnitedHealth Group.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Opinion: It’s time to take the gloves off during vaccination",
+      "url": "https://www.statnews.com/2026/09/08/flu-vaccination-season-gloves-waste-climate-changes/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-08",
+      "summary": "Most of the time, it’s unnecessary to use gloves to administer a flu shot, write Cassandra Thiel and Preeti Jaggi.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Opinion: I’m a fat medical student. I refuse to let myself be shamed for it",
+      "url": "https://www.statnews.com/2026/09/08/fat-medical-student-inclusivity-advocacy-health-at-any-size-physician/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-08",
+      "summary": "“As a medical student in a larger body, I have often been ostracized, othered, made to feel different, like I’ve invaded a secret society of thin people.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Hospitals pursue deals to ensure survival as Trump&#8217;s Medicaid cuts loom",
+      "url": "https://www.statnews.com/2026/09/08/rural-hospital-mergers-medicaid-cuts-part-3-unraveled-series/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-08",
+      "summary": "Rural health systems are seeking partnership to survive, fueling a debate over competition and the rising cost of medical care.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "STAT+: Neuromuscular drug from Novartis fails in key study, adding to pressure on company",
+      "url": "https://www.statnews.com/2026/09/08/novartis-del-desiran-myotonic-dystrophy-harbor-trial-failure-neuromuscular/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-08",
+      "summary": "A Novartis drug for a rare neuromuscular condition failed in a key study, the company's second major trial collapse in a matter of days.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "From fragmented healthcare data to intelligent action in the age of AI",
+      "url": "https://www.healthcaredive.com/spons/from-fragmented-healthcare-data-to-intelligent-action-in-the-age-of-ai/829602/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-09-08",
+      "summary": "<p>A strong data foundation is the key to scalable healthcare AI.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Why leading Medicare Advantage plans are rethinking care transitions",
+      "url": "https://www.healthcaredive.com/spons/why-leading-medicare-advantage-plans-are-rethinking-care-transitions/827174/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-09-08",
+      "summary": "<p>The key to better Star Ratings extends beyond the hospital stay.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
     },
     {
       "title": "Industry Voices—How AMCs can prevent healthcare deserts through strategic M&A",
@@ -1827,18 +1917,6 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Early Alert: Heart Pump Controller Purge Cassette Issue from Abiomed",
-      "summary": "Abiomed is removing Automated Impella Controllers due to purge cassette recognition failures that may lead to prolonged delayed in mechanical circulatory support.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-heart-pump-controller-purge-cassette-issue-abiomed",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-09-03",
-      "category": "ai_tech",
-      "relevance": 98,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
       "title": "Early Alert: Breathing Circuit Issue from Draeger",
       "summary": "Removal of VentStar Resus Neo hoses due to the potential for cracks resulting in restricted ventilation or delayed therapy.",
       "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-breathing-circuit-issue-draeger",
@@ -1849,6 +1927,18 @@
       "category": "general_market",
       "relevance": 98,
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "Early Alert: Heart Pump Controller Purge Cassette Issue from Abiomed",
+      "summary": "Abiomed is removing Automated Impella Controllers due to purge cassette recognition failures that may lead to prolonged delayed in mechanical circulatory support.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-heart-pump-controller-purge-cassette-issue-abiomed",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-09-03",
+      "category": "ai_tech",
+      "relevance": 98,
+      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "Spinal Cord Stimulator Recall: Boston Scientific Removes Infinion CX Lead",
@@ -2727,18 +2817,6 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Convenience Kit Correction: Medline Issues Correction for Convenience Kits Containing BD ChloraPrep Applicators",
-      "summary": "Certain BD ChloraPrep Applicators in Convenience Kits manufactured by Medline may not be sterile.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/convenience-kit-correction-medline-issues-correction-convenience-kits-containing-bd-chloraprep",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-09-02",
-      "category": "ai_tech",
-      "relevance": 98,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
       "title": "Catheter Recall Expansion: Medline Industries Removes Reprocessed Electrophysiology and Ultrasound Catheters",
       "summary": "Certain reprocessed catheters may contain residual particulates that could cause infection, embolism, or thrombosis",
       "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/catheter-recall-expansion-medline-industries-removes-reprocessed-electrophysiology-and-ultrasound",
@@ -2749,6 +2827,18 @@
       "category": "quality_safety",
       "relevance": 98,
       "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "Convenience Kit Correction: Medline Issues Correction for Convenience Kits Containing BD ChloraPrep Applicators",
+      "summary": "Certain BD ChloraPrep Applicators in Convenience Kits manufactured by Medline may not be sterile.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/convenience-kit-correction-medline-issues-correction-convenience-kits-containing-bd-chloraprep",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-09-02",
+      "category": "ai_tech",
+      "relevance": 98,
+      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "Privacy Act of 1974; Matching Program",
@@ -4730,96 +4820,6 @@
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-08-31",
       "summary": "Charlotte, N.C.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "2 HCA Florida hospitals name COO, COO-CNO",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/2-hca-florida-hospitals-name-coo-coo-cno/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-31",
-      "summary": "Two Florida hospitals within Nashville, Tenn.-based HCA Healthcare have appointed new COOs, including one who will also serve as chief nursing officer.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Louisiana hospital to go live with Epic",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/louisiana-hospital-to-go-live-with-epic/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-31",
-      "summary": "West Ascension Parish Hospital in Donaldsonville, La., will go live with Epic Community Connect on Sept.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "FDA approves 1st-of-its-kind drug for rare blood disorder",
-      "url": "https://www.beckershospitalreview.com/pharmacy/fda-approves-1st-of-its-kind-drug-for-rare-blood-disorder/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-31",
-      "summary": "The FDA has approved Mimrylo (rusfertide) to treat adults with polycythemia vera whose disease has not been adequately controlled with existing therapies. Mimrylo is the first approved treatment for polycythemia vera that mimics hepcidin, a hormone that regulates iron in the body, according to an Aug.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Ballad Health command center cuts bed assignment times 74%",
-      "url": "https://www.beckershospitalreview.com/care-coordination/ballad-health-command-center-cuts-bed-assignment-times-74/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-31",
-      "summary": "Johnson City, Tenn.-based Ballad Health has completed a nearly $8 million expansion of the clinical command center it credits with cutting bed assignment times 74%, the system said Aug.",
-      "category": "capacity_expansion",
-      "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "FDA expands Mounjaro approval to reduce cardiovascular risk",
-      "url": "https://www.beckershospitalreview.com/pharmacy/fda-expands-mounjaro-approval-to-reduce-cardiovascular-risk/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-31",
-      "summary": "The FDA has approved Mounjaro (tirzepatide) to reduce the risk of major adverse cardiovascular events, including cardiovascular death, nonfatal heart attack or nonfatal stroke, in adults with type 2 diabetes who are at high risk for these events. The approval was based on Surpass-Cvot, a trial that enrolled more than 13,000 participants across 30 countries [&#8230;] The post FDA expands Mounjaro approval to reduce cardiovascular risk appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Methodist hospital taps new COO",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/methodist-hospital-taps-new-coo/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-31",
-      "summary": "Felicia De La Garza, MSN, has been named COO of Methodist Hospital &#124; Stone Oak in San Antonio, effective Oct. 5, according to an Aug.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Walmart to pay $50M to settle invalid prescription allegations",
-      "url": "https://www.beckershospitalreview.com/pharmacy/walmart-doj-reach-50m-settlement-over-unlawful-opioid-prescriptions/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-31",
-      "summary": "Walmart has agreed to pay $50 million to resolve allegations that its pharmacies illegally filled thousands of invalid prescriptions for opioids and other controlled substances in violation of the Controlled Substances Act. The Justice Department alleged that Walmart&#8217;s compliance team and pharmacists knowingly filled invalid prescriptions beginning June 26, 2013, according to an Aug.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "10 providers seeking RCM talent",
-      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/10-providers-seeking-rcm-talent-61/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-08-31",
-      "summary": "Ten hospitals and health systems recently posted job listings seeking revenue cycle management expertise. Note: This is not an exhaustive list.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Maryland sues Optum over 'defective' computer system",
-      "url": "https://www.fiercehealthcare.com/payers/maryland-sues-optum-over-defective-computer-system",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-31",
-      "summary": "Maryland has filed a lawsuit against UnitedHealth Group, alleging that its Optum unit defrauded the state's Medicaid program by providing a faulty computer system.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Florida AG sues Prime Therapeutics, Express Scripts for alleged price-fixing",
-      "url": "https://www.fiercehealthcare.com/payers/florida-ag-sues-prime-therapeutics-express-scripts-alleged-price-fixing",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-08-31",
-      "summary": "Florida Attorney General James Uthmeier is suing Express Scripts and Prime Therapeutics, alleging that a partnership between the two pharmacy benefit managers allows them to illegally fix prices.",
       "category": "general_market",
       "categoryLabel": "General Market"
     }
