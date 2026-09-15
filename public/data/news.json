@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-09-15T13:19:20.217Z",
+  "lastUpdated": "2026-09-15T18:06:00.427Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 3,
-    "healthySources": 7,
+    "staleSources": 2,
+    "healthySources": 8,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 204,
+        "articleCount": 210,
         "latestPublishedAt": "2026-09-15T00:00:00.000Z",
-        "staleHours": 13,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 135,
+        "articleCount": 141,
         "latestPublishedAt": "2026-09-15T00:00:00.000Z",
-        "staleHours": 13,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 74,
+        "articleCount": 61,
         "latestPublishedAt": "2026-09-15T00:00:00.000Z",
-        "staleHours": 13,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 39,
         "latestPublishedAt": "2026-09-15T00:00:00.000Z",
-        "staleHours": 13,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 21,
         "latestPublishedAt": "2026-09-11T00:00:00.000Z",
-        "staleHours": 109,
+        "staleHours": 114,
         "status": "stale"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 16,
-        "latestPublishedAt": "2026-09-14T00:00:00.000Z",
-        "staleHours": 37,
+        "latestPublishedAt": "2026-09-15T00:00:00.000Z",
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 4,
         "latestPublishedAt": "2026-09-14T00:00:00.000Z",
-        "staleHours": 37,
+        "staleHours": 42,
+        "status": "ok"
+      },
+      {
+        "source": "National Nurses United RSS",
+        "articleCount": 3,
+        "latestPublishedAt": "2026-09-15T00:00:00.000Z",
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 3,
         "latestPublishedAt": "2026-09-13T00:00:00.000Z",
-        "staleHours": 61,
+        "staleHours": 66,
         "status": "ok"
-      },
-      {
-        "source": "National Nurses United RSS",
-        "articleCount": 2,
-        "latestPublishedAt": "2026-09-10T00:00:00.000Z",
-        "staleHours": 133,
-        "status": "stale"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 2,
         "latestPublishedAt": "2026-09-10T00:00:00.000Z",
-        "staleHours": 133,
+        "staleHours": 138,
         "status": "stale"
       }
     ]
@@ -91,11 +91,11 @@
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 1
+      "count": 2
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 65
+      "count": 66
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -103,7 +103,7 @@
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
-      "count": 14
+      "count": 15
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
@@ -111,14 +111,12 @@
     },
     "general_market": {
       "label": "General Market",
-      "count": 214
+      "count": 211
     }
   },
   "quality": {
-    "status": "warning",
-    "failedChecks": [
-      "maxStaleSources"
-    ],
+    "status": "pass",
+    "failedChecks": [],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -127,7 +125,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 55,
+        "actual": 79,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -137,8 +135,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 3,
-        "pass": false
+        "actual": 2,
+        "pass": true
       }
     }
   },
@@ -190,6 +188,18 @@
       "category": "general_market",
       "relevance": 100,
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "Orange County Global nurses ratify first, new contract with strong measures to improve patient safety and nurse retention",
+      "summary": "Registered nurses at Orange County Global Medical Center in Santa Ana, Calif. voted overwhelmingly in favor of ratifying their inclusion into the existing union contract covering KPC Health registered nurses represented by California Nurses Association. This first contract for Orange County Global nurses secures them important new protections to improve patient safety and nurse retention.",
+      "url": "https://www.nationalnursesunited.org/press/orange-county-global-nurses-ratify-first-new-contract",
+      "source": "National Nurses United RSS",
+      "sourceType": "rss",
+      "sourceId": "nnu_rss",
+      "publishedAt": "2026-09-15",
+      "category": "labor_unions",
+      "relevance": 100,
+      "categoryLabel": "Labor & Unions"
     },
     {
       "title": "Center for Scientific Review; Notice of Closed Meetings",
@@ -274,6 +284,276 @@
       "category": "general_market",
       "relevance": 96,
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "Health systems pivot to AI at scale",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/health-systems-pivot-to-ai-at-scale/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-15",
+      "summary": "Health systems have spent years running AI pilots. The question now is what comes after scaling them.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "How one Physician Advisor manages utilization review across 11 hospitals and overturns 78% of peer-to-peer denials",
+      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/how-one-physician-advisor-manages-utilization-review-across-11-hospitals-and-overturns-78-of-peer-to-peer-denials/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-15",
+      "summary": "Managing utilization review for a single hospital is demanding enough. Dr.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "&#8216;Cash is king&#8217;: 4 finance and leaders on where CFOs and revenue cycle overlap",
+      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/cash-is-king-4-finance-and-leaders-on-where-cfos-and-revenue-cycle-overlap/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-15",
+      "summary": "The line between the CFO&#8217;s office and the revenue cycle department is disappearing, four health system leaders said Sept. 15 during a panel discussion at Becker&#8217;s 11th Annual IT + Revenue Cycle Conference.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Mount Sinai digital executive joins Albany Med",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/mount-sinai-digital-executive-joins-albany-med/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-15",
+      "summary": "Albany (N.Y.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Sutter names hospital chief medical executive",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/sutter-names-hospital-chief-medical-executive/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-15",
+      "summary": "Sumbella Baqai, MD, was named chief medical executive of Sutter Eden Medical Center in Castro Valley, Calif., effective Oct.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "25 health systems build AI agents with Epic",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/25-health-systems-build-ai-agents-with-epic/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-15",
+      "summary": "Twenty-five health systems are developing artificial intelligence agents for clinical and operational workflows as part of an Epic event. The organizations are participating in Epic’s second Agent Factory Build-a-Thon in Verona, Wis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "RWJBarnabas, Rutgers launch innovation hub with Amazon Web Services",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/innovation/rwjbarnabas-rutgers-launch-innovation-hub-with-amazon-web-services/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-15",
+      "summary": "West Orange, N.J.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "CHOP names inaugural chief pharmacy officer",
+      "url": "https://www.beckershospitalreview.com/pharmacy/chop-names-inaugural-chief-pharmacy-officer/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-15",
+      "summary": "Children&#8217;s Hospital of Philadelphia has named Andrea DiPietro, PharmD, as associate vice president and the organization&#8217;s first chief pharmacy officer.&#160; Amy Gallagher, vice president of operations at CHOP, said in a Sept.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Association of American Medical Colleges CEO to retire",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/association-of-american-medical-colleges-ceo-to-retire/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-15",
+      "summary": "David Skorton, MD, will retire as president and CEO of the Association of American Medical Colleges on June 30, 2027, according to a Sept. 15 news release shared with Becker&#8217;s.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Mississippi awards $104M in rural health grants: 5 things to know",
+      "url": "https://www.beckershospitalreview.com/finance/mississippi-awards-104m-in-rural-health-grants-5-things-to-know/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-15",
+      "summary": "Mississippi has awarded 167 grants totaling $104.1 million through the state&#8217;s Rural Health Transformation Program.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: RFK Jr. returns to his roots",
+      "url": "https://www.statnews.com/2026/09/15/rfk-childrens-health-defense-chris-klomp-hearings-dc-diagnosis/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-15",
+      "summary": "Kennedy will keynote a Children's Health Defense event, and hospitals are disappointed by GOP's rural health fund.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Medicare to expand its pilot that pays for technology to manage chronic diseases",
+      "url": "https://www.statnews.com/2026/09/15/medicare-access-chronic-care-management-tech-pilot-expanding/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-15",
+      "summary": "A recently-launched Medicare experiment that pays for technology to help people manage chronic conditions is expanding.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "STAT+: FDA takes applications for new program to shorten drug approval times",
+      "url": "https://www.statnews.com/2026/09/15/fda-launches-program-to-shorten-drug-approval-times/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-15",
+      "summary": "The FDA is opening applications for a pilot program designed to shorten drug approval timelines and help the U.S.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "STAT+: Obesity drugmakers are testing in kids as young as 6",
+      "url": "https://www.statnews.com/2026/09/15/biotech-news-obesity-drugmakers-are-testing-in-kids-as-young-as-si/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-15",
+      "summary": "Vera seeks kidney drug approval, early data from Syntis Bio, and other biotech news from The Readout",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Pharmalittle: We&#8217;re reading about a GSK deal for a drug from China, job losses in the U.S., and more",
+      "url": "https://www.statnews.com/pharmalot/2026/09/15/gsk-china-drug-licensing-deal-job-losses/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-15",
+      "summary": "GSK has continued its drive to bulk up its pipeline, taking global rights to a multiple myeloma treatment developed in China",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: New documents reveal problems with Medicare&#8217;s prior-authorization pilot",
+      "url": "https://www.statnews.com/2026/09/15/medicare-ai-prior-authorization-pilot-problems-health-tech/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-15",
+      "summary": "In this edition of STAT Health Tech: The rushed launch of Medicare's AI prior-authorization pilot, policy hints from FDA, ONC officials, and more.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Businesses can now apply for NIH funding",
+      "url": "https://www.statnews.com/2026/09/15/health-news-businesses-can-now-apply-for-nih-funding/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-15",
+      "summary": "RFK Jr.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Vera kidney drug Trutakna shows strong final results in Phase 3 trial",
+      "url": "https://www.statnews.com/2026/09/15/vera-kidney-drug-trutakna-shows-strong-phase-3-results-igan/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-15",
+      "summary": "The drug stabilized kidney function and reduced the risk of death and other complications in IgAN patients",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Exercise — and echocardiograms — in space protected astronauts’ hearts in study",
+      "url": "https://www.statnews.com/2026/09/15/heart-research-in-space-cardiovascular-health-nasa-astronauts-mars-mission/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-15",
+      "summary": "If humans journey to Mars in 2035, exercise will be critical to keeping their hearts strong in microgravity.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Medicare&#8217;s AI prior authorization pilot was rushed and full of problems, new documents reveal",
+      "url": "https://www.statnews.com/2026/09/15/medicare-wiser-ai-prior-authorization-pilot-rushed-launch-delayed-care/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-15",
+      "summary": "The rushed launch of a Medicare pilot to use AI for prior authorization led to delayed care in some instances, new documents reveal.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Opinion: 3 lessons from the tobacco settlement on how states should use money from Meta",
+      "url": "https://www.statnews.com/2026/09/15/meta-facebook-social-media-addiction-lessons-learned-tobacco-master-settlement/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-15",
+      "summary": "“Whether it’s nicotine or algorithms, the result is the same: reinforcing a behavior that is harmful to users,” writes Susan Morrisey.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "HHS adds new IDR entity as surprise billing disputes surge",
+      "url": "https://www.healthcaredive.com/news/hhs-adds-new-idr-entity-surprise-billing-disputes-surge-physio-solutions-medlitix/830421/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-09-15",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "OIG urges crackdown on equipment suppliers in Medicare Advantage",
+      "url": "https://www.healthcaredive.com/news/oig-urges-crackdown-on-equipment-suppliers-in-medicare-advantage/830387/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-09-15",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Waystar weighs potential sale, according to Reuters report, as analysts see M&A appeal",
+      "url": "https://www.fiercehealthcare.com/health-tech/waystar-weighs-strategic-options-according-media-reports-analysts-see-ma-appeal",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-15",
+      "summary": "A new report from Reuters is fueling speculation that healthcare payment software maker Waystar is exploring strategic alternatives, including a potential sale that could take the company private.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Judge dismisses Ballad Health's MA claims denial lawsuit against UnitedHealth",
+      "url": "https://www.fiercehealthcare.com/payers/rural-health-system-ballad-health-sues-unitedhealth-over-medicare-advantage-claims-denials",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-15",
+      "summary": "Tennessee-based health system Ballad Health alleged the payer routinely denies or delays care physicians deemed necessary, and said it will continue to pursue the issue in arbitration as ordered by the court.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Providence receives $1.1B gift toward cardiac care, Oregon's first women's hospital",
+      "url": "https://www.fiercehealthcare.com/providers/providence-receives-11b-gift-toward-cardiac-care-oregons-first-womens-hospital",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-15",
+      "summary": "The gift comes from billionaire Nike founder Phil Knight and his wife Penny, who have already contributed $200 million to the Providence Heart Institute over the past decade.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Only 46% of Gen Z, Millennial health plan members trust payers: Accenture survey",
+      "url": "https://www.fiercehealthcare.com/payers/only-46-gen-z-millennial-health-plan-members-trust-payers-accenture-survey",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-15",
+      "summary": "This trust gap, according to analysts, could cost $3 billion in future member lifetime value for the largest commercial payers over the next decade.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "HCA closes acquisition of healthcare professional college acquisition",
+      "url": "https://www.fiercehealthcare.com/providers/hca-bolsters-workforce-pipeline-healthcare-professional-college-acquisition",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-15",
+      "summary": "Under the country's largest hospital chain, The College of Health Care Professions will be able to expand its offering of accredited programs and place its students in new clinical and externship positions across HCA.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Evvy raises $40M to expand precision medicine for vaginal health",
+      "url": "https://www.fiercehealthcare.com/finance/evvy-raises-40m-expand-precision-medicine-vaginal-health",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-15",
+      "summary": "Evvy makes an at-home vaginal health test whose results are clinician-reviewed and offers personalized treatment plans, also driving real-world data collection and research on women's health.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Knowtex launches frontier healthcare AI lab",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/knowtex-launches-frontier-healthcare-ai-lab",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-15",
+      "summary": "Knowtex initially began in oncology, but its platform now extends across more than 200 specialties at more than 300 organizations nationwide, executives say.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "HCA wraps acquisition of 8,000-student healthcare college",
@@ -364,69 +644,6 @@
       "summary": "U.S.",
       "category": "general_market",
       "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: New documents reveal problems with Medicare&#8217;s prior-authorization pilot",
-      "url": "https://www.statnews.com/2026/09/15/medicare-ai-prior-authorization-pilot-problems-health-tech/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-15",
-      "summary": "In this edition of STAT Health Tech: The rushed launch of Medicare's AI prior-authorization pilot, policy hints from FDA, ONC officials, and more.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Businesses can now apply for NIH funding",
-      "url": "https://www.statnews.com/2026/09/15/health-news-businesses-can-now-apply-for-nih-funding/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-15",
-      "summary": "RFK Jr.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Vera kidney drug Trutakna shows strong final results in Phase 3 trial",
-      "url": "https://www.statnews.com/2026/09/15/vera-kidney-drug-trutakna-shows-strong-phase-3-results-igan/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-15",
-      "summary": "The drug stabilized kidney function and reduced the risk of death and other complications in IgAN patients",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Exercise — and echocardiograms — in space protected astronauts’ hearts in study",
-      "url": "https://www.statnews.com/2026/09/15/heart-research-in-space-cardiovascular-health-nasa-astronauts-mars-mission/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-15",
-      "summary": "If humans journey to Mars in 2035, exercise will be critical to keeping their hearts strong in microgravity.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Medicare&#8217;s AI prior authorization pilot was rushed and full of problems, new documents reveal",
-      "url": "https://www.statnews.com/2026/09/15/medicare-wiser-ai-prior-authorization-pilot-rushed-launch-delayed-care/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-15",
-      "summary": "The rushed launch of a Medicare pilot to use AI for prior authorization led to delayed care in some instances, new documents reveal.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Opinion: 3 lessons from the tobacco settlement on how states should use money from Meta",
-      "url": "https://www.statnews.com/2026/09/15/meta-facebook-social-media-addiction-lessons-learned-tobacco-master-settlement/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-15",
-      "summary": "“Whether it’s nicotine or algorithms, the result is the same: reinforcing a behavior that is harmful to users,” writes Susan Morrisey.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Knowtex launches frontier healthcare AI lab",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/knowtex-launches-frontier-healthcare-ai-lab",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-09-15",
-      "summary": "Knowtex initially began in oncology, but its platform now extends across more than 200 specialties at more than 300 organizations nationwide, executives say.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "GE HealthCare launches AI-driven operations system",
@@ -4639,222 +4856,6 @@
       "summary": "David Price, who most recently served as senior vice president and chief growth officer at Scottsdale, Ariz.-based HonorHealth, was appointed CEO of Arizona Center for Cancer Care in Phoenix.",
       "category": "general_market",
       "categoryLabel": "General Market"
-    },
-    {
-      "title": "OU Health taps new COO",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/ou-health-taps-new-coo/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-08",
-      "summary": "Brent Smith has been named COO of Oklahoma City-based OU Health, the University of Oklahoma&#8217;s academic health system, according to a Sept. 8 news release shared with Becker&#8217;s.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: FDA names acting heads of drug and vaccine centers to permanent roles",
-      "url": "https://www.statnews.com/2026/09/08/fda-names-leaders-cder-cber-michael-davis-karim-mikhail/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-08",
-      "summary": "The moves bring stability to an agency that's been rocked by the exits of top leadership.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: FDA warns an API supplier about residue on walls, a corroded product line, and open-toed sandals",
-      "url": "https://www.statnews.com/pharmalot/2026/09/08/fda-warns-api-supplier-residue-corroded-production-line-sandals/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-08",
-      "summary": "The FDA warned a supplier of active pharma ingredients about residue on walls, a corroded product line, and open-toed sandals at its facility. It also included photos.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: UnitedHealth’s Democrat investment, and surprise billing bloat debate",
-      "url": "https://www.statnews.com/2026/09/08/unitedhealth-campaign-donations-katherine-clark-no-surprises-act-debate/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-08",
-      "summary": "UnitedHealth execs shower a top Democrats with cash, and the No Surprises Act debate heats up.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Health care features prominently in Democrats’ agenda",
-      "url": "https://www.statnews.com/2026/09/08/democrats-agenda-midterms-health-care-medicaid-cuts-aca-subsidies/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-08",
-      "summary": "Democrats are sharpening their health care plans as the midterm elections near.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Oura files to goes public, reported $1.2B in earnings",
-      "url": "https://www.statnews.com/2026/09/08/health-tech-newsletter-oura-goes-public-reports-profitability/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-08",
-      "summary": "In health tech news today, Oura reports a profit, the FDA loses another key digital health leader, and more",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: FDA approves AstraZeneca breast cancer drug",
-      "url": "https://www.statnews.com/2026/09/08/biotech-news-fda-approves-astrazeneca-breast-cancer-drug/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-08",
-      "summary": "Roivant drug delivers mid-stage results, Moonwalk raises funds to develop longer-lasting obesity drugs, and more biotech news",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: Pharmalittle: We&#8217;re reading about another Novartis trial failure, a Novo Nordisk setback, and more",
-      "url": "https://www.statnews.com/pharmalot/2026/09/08/novartis-reports-second-trial-failure-novo-nordisk-setback/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-08",
-      "summary": "An experimental Novartis drug for a rare neuromuscular condition failed to improve muscle function in a pivotal study",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: AstraZeneca’s experimental COPD treatment posts strong results in late-stage studies",
-      "url": "https://www.statnews.com/2026/09/08/astrazeneca-tozorakimab-copd-exacerbations-titania-oberon/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-08",
-      "summary": "An experimental COPD drug from AstraZeneca could prove competitive with existing treatments, and have a slice of the market to itself.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "An administrative gap delays access to new pancreatic cancer treatment",
-      "url": "https://www.statnews.com/2026/09/08/health-news-administrative-gap-delays-access-to-revmed-pancreatic-cancer-drug/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-08",
-      "summary": "A new wave of illegal fruity vapes, more and more kids on GLP-1s, and other health news from Morning Rounds",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Inhibrx claims first win for long-sought immunotherapy target",
-      "url": "https://www.statnews.com/2026/09/08/inhibrx-inbrx-106-ox40-immunotherapy-head-and-neck-cancer-hpv-positive/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-08",
-      "summary": "“Pushing this is like a rock up a hill, because there’s been so much failure in the space,” said Inhibrx CEO Mark Lappe.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: Roivant lung disease drug hits mid-stage study goals",
-      "url": "https://www.statnews.com/2026/09/08/roivant-mosliciguat-pulmonary-hypertension-interstitial-lung-disease-results/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-08",
-      "summary": "These positive results could open up a new way to treat serious lung disease.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Reynolds is selling fruity new vapes unauthorized by FDA",
-      "url": "https://www.statnews.com/2026/09/08/fda-guidance-reynolds-selling-fruity-new-vapes-unauthorized/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-08",
-      "summary": "The decision to move ahead with new products in the absence of FDA authorization could spur other big manufacturers to do the same, one tobacco-nicotine expert said.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "A breakthrough pancreatic cancer drug won approval. They still struggle to access it",
-      "url": "https://www.statnews.com/2026/09/08/pancreatic-cancer-patients-caught-beween-fda-drug-approval-insurance-coverage/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-08",
-      "summary": "When the FDA approved a new pancreatic cancer drug called Rasonque, researchers celebrated. But some patients hoping for quick access have been stymied.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: UnitedHealth executives shower high-ranking Democrat with donations ahead of midterms",
-      "url": "https://www.statnews.com/2026/09/08/uhg-political-donations-katherine-clark-democratic-whip-medicare-for-all/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-08",
-      "summary": "Katherine Clark, a top House Democrat, received more than $100,000 in campaign donations from people linked to UnitedHealth Group.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Opinion: It’s time to take the gloves off during vaccination",
-      "url": "https://www.statnews.com/2026/09/08/flu-vaccination-season-gloves-waste-climate-changes/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-08",
-      "summary": "Most of the time, it’s unnecessary to use gloves to administer a flu shot, write Cassandra Thiel and Preeti Jaggi.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Opinion: I’m a fat medical student. I refuse to let myself be shamed for it",
-      "url": "https://www.statnews.com/2026/09/08/fat-medical-student-inclusivity-advocacy-health-at-any-size-physician/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-08",
-      "summary": "“As a medical student in a larger body, I have often been ostracized, othered, made to feel different, like I’ve invaded a secret society of thin people.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Hospitals pursue deals to ensure survival as Trump&#8217;s Medicaid cuts loom",
-      "url": "https://www.statnews.com/2026/09/08/rural-hospital-mergers-medicaid-cuts-part-3-unraveled-series/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-08",
-      "summary": "Rural health systems are seeking partnership to survive, fueling a debate over competition and the rising cost of medical care.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "STAT+: Neuromuscular drug from Novartis fails in key study, adding to pressure on company",
-      "url": "https://www.statnews.com/2026/09/08/novartis-del-desiran-myotonic-dystrophy-harbor-trial-failure-neuromuscular/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-08",
-      "summary": "A Novartis drug for a rare neuromuscular condition failed in a key study, the company's second major trial collapse in a matter of days.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Mass General Brigham health plan drops MA coverage for Dana-Farber patients",
-      "url": "https://www.healthcaredive.com/news/mass-general-brigham-health-plan-drops-ma-coverage-for-dana-farber-patients/829790/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-09-08",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "From fragmented healthcare data to intelligent action in the age of AI",
-      "url": "https://www.healthcaredive.com/spons/from-fragmented-healthcare-data-to-intelligent-action-in-the-age-of-ai/829602/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-09-08",
-      "summary": "<p>A strong data foundation is the key to scalable healthcare AI.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "The AI operating model: How health systems turn AI into enterprise capability",
-      "url": "https://www.beckershospitalreview.com/academic-medical-center/technology-and-ai/the-ai-operating-model-how-health-systems-turn-ai-into-enterprise-capability/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-08",
-      "summary": "Health systems do not need more AI pilots. They need a better way to decide which AI opportunities to pursue, how to deploy them, who remains accountable after deployment and whether they create measurable value.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Democrats demand halt to hospital ER records collection",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/innovation/democrats-demand-halt-to-hospital-er-records-collection/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-08",
-      "summary": "A group of Democratic lawmakers is asking the Trump administration to suspend a Consumer Product Safety Commission program that collects identifiable health data from Americans who visit emergency rooms, KFF Health News reported Sept. 8.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Retrospective risk adjustment is running out of road",
-      "url": "https://www.beckershospitalreview.com/strategy/retrospective-risk-adjustment-is-running-out-of-road/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-08",
-      "summary": "Roughly two-thirds of Medicare’s improper payments1 trace back to missing or insufficient documentation. For a decade, the industry’s answer has been to fix that downstream in the form of better queries, faster attestations, and bigger appeal teams.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
     }
   ]
 }
