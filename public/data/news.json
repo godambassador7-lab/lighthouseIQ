@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-09-21T09:49:02.516Z",
+  "lastUpdated": "2026-09-21T16:24:36.898Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 6,
-    "healthySources": 4,
+    "staleSources": 4,
+    "healthySources": 6,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 210,
+        "articleCount": 214,
         "latestPublishedAt": "2026-09-21T00:00:00.000Z",
-        "staleHours": 9,
+        "staleHours": 16,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 132,
-        "latestPublishedAt": "2026-09-18T00:00:00.000Z",
-        "staleHours": 81,
-        "status": "stale"
+        "articleCount": 131,
+        "latestPublishedAt": "2026-09-21T00:00:00.000Z",
+        "staleHours": 16,
+        "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 66,
+        "articleCount": 62,
         "latestPublishedAt": "2026-09-21T00:00:00.000Z",
-        "staleHours": 9,
+        "staleHours": 16,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
-        "articleCount": 58,
+        "articleCount": 56,
         "latestPublishedAt": "2026-09-21T00:00:00.000Z",
-        "staleHours": 9,
+        "staleHours": 16,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
-        "articleCount": 16,
+        "articleCount": 17,
         "latestPublishedAt": "2026-09-21T00:00:00.000Z",
-        "staleHours": 9,
+        "staleHours": 16,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 7,
         "latestPublishedAt": "2026-09-18T00:00:00.000Z",
-        "staleHours": 81,
+        "staleHours": 88,
         "status": "stale"
+      },
+      {
+        "source": "FDA MedWatch RSS",
+        "articleCount": 5,
+        "latestPublishedAt": "2026-10-10T00:00:00.000Z",
+        "staleHours": -440,
+        "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 4,
         "latestPublishedAt": "2026-09-17T00:00:00.000Z",
-        "staleHours": 105,
-        "status": "stale"
-      },
-      {
-        "source": "FDA MedWatch RSS",
-        "articleCount": 3,
-        "latestPublishedAt": "2026-09-18T00:00:00.000Z",
-        "staleHours": 81,
+        "staleHours": 112,
         "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 3,
         "latestPublishedAt": "2026-09-17T00:00:00.000Z",
-        "staleHours": 105,
+        "staleHours": 112,
         "status": "stale"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 1,
         "latestPublishedAt": "2026-09-16T00:00:00.000Z",
-        "staleHours": 129,
+        "staleHours": 136,
         "status": "stale"
       }
     ]
@@ -83,7 +83,7 @@
   "categoryCoverage": {
     "closures_layoffs": {
       "label": "Closures & Layoffs",
-      "count": 11
+      "count": 9
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
@@ -95,7 +95,7 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 64
+      "count": 65
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -107,11 +107,11 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 146
+      "count": 140
     },
     "general_market": {
       "label": "General Market",
-      "count": 217
+      "count": 224
     }
   },
   "quality": {
@@ -127,7 +127,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 49,
+        "actual": 70,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -137,12 +137,24 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 6,
+        "actual": 4,
         "pass": false
       }
     }
   },
   "articles": [
+    {
+      "title": "Ventilator Recall: CooperSurgical Removes INCA Infant Nasal CPAP Sets",
+      "summary": "The cannula sets may exhibit a loose connection between the flexible tubing and the nasal cannula resulting in reduced effectiveness and decreased oxygenation.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/ventilator-recall-coopersurgical-removes-inca-infant-nasal-cpap-sets",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-10-10",
+      "category": "general_market",
+      "relevance": 98,
+      "categoryLabel": "General Market"
+    },
     {
       "title": "Agency Information Collection Activities; Submission for Office of Management and Budget Review; Comment Request; Orphan Drugs",
       "summary": "The Food and Drug Administration (FDA, Agency, or we) is announcing that a proposed collection of information has been submitted to the Office of Management and Budget (OMB) for review and clearance under the Paperwork Reduction Act of 1995.",
@@ -276,6 +288,18 @@
       "categoryLabel": "Quality & Safety"
     },
     {
+      "title": "Convenience Kit Correction: AVID Medical Issues Correction for Kits Containing Huons Sodium Chloride Ampules",
+      "summary": "AVID Medical is correcting convenience kits containing recalled Huons Co. sodium chloride ampules.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/convenience-kit-correction-avid-medical-issues-correction-kits-containing-huons-sodium-chloride",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-09-21",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
       "title": "Center for Scientific Review; Amended Notice of Meeting",
       "summary": "",
       "url": "https://www.federalregister.gov/documents/2026/09/21/2026-19226/center-for-scientific-review-amended-notice-of-meeting",
@@ -298,6 +322,132 @@
       "category": "general_market",
       "relevance": 96,
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "HCA Florida hospital taps new COO",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/hca-florida-hospital-taps-new-coo-3/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-21",
+      "summary": "Victor Melo has been named COO of Tamarac-based HCA Florida Woodmont Hospital. Prior to his new role, Mr.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "WakeMed reaches deal for UnitedHealthcare commercial members after nearly 1 year of negotiations",
+      "url": "https://www.beckershospitalreview.com/finance/wakemed-reaches-deal-for-unitedhealthcare-commercial-members-after-nearly-1-year-of-negotiations/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-21",
+      "summary": "Raleigh, N.C.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "The $10B expired drug problem facing pharmacies: 5 notes",
+      "url": "https://www.beckershospitalreview.com/pharmacy/the-10b-expired-drug-problem-facing-pharmacies-5-notes/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-21",
+      "summary": "Outdated and unsaleable medications account for an estimated 1.5% of the nearly $700 billion annual U.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "HHS to publish quarterly PPE demand forecast for manufacturers",
+      "url": "https://www.beckershospitalreview.com/supply-chain/hhs-to-publish-quarterly-ppe-demand-forecast-for-manufacturers/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-21",
+      "summary": "HHS is establishing a departmentwide forecast of its personal protective equipment demand, which the department said is the first official, recurring process to identify, consolidate and publish anticipated agency purchases of PPE covered by the Make PPE in America Act.&#160; First reported in Axios and in an HHS news release Sept.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "1 injured in Florida hospital shooting",
+      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/1-injured-in-florida-hospital-shooting/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-21",
+      "summary": "A police officer from the Ormond Beach (Fla.) Police Department was shot Sept.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Elevance wins dismissal of provider lawsuit over $1.7M in unpaid No Surprises awards",
+      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/elevance-wins-dismissal-of-provider-lawsuit-over-1-7m-in-unpaid-no-surprises-awards/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-21",
+      "summary": "A New York state court has dismissed a lawsuit brought by two medical practices seeking more than $1.7 million from Elevance Health subsidiaries over unpaid No Surprises Act arbitration awards, ruling that the providers failed to make a viable claim under state law.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Sutter Health taps COO",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/sutter-health-taps-coo/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-21",
+      "summary": "Sacramento, Calif.-based Sutter Health named Christina Oh executive vice president and COO, effective Sept.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "2 countries now supply 90% of new US drug ingredient filings: 5 notes",
+      "url": "https://www.beckershospitalreview.com/pharmacy/2-countries-now-supply-90-of-new-us-drug-ingredient-filings-5-notes/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-21",
+      "summary": "China and India together account for 90% of new active pharmaceutical ingredient drug master files submitted for U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "1 system&#8217;s program that fills the gaps between care silos",
+      "url": "https://www.beckershospitalreview.com/post-acute/1-systems-program-that-fills-the-gaps-between-care-silos/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-21",
+      "summary": "Providence, R.I.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Oracle Health&#8217;s biggest moves",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/oracle-healths-biggest-moves/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-21",
+      "summary": "Oracle Health spent the first half of 2026 accelerating its push to remake healthcare technology through AI, expanding its footprint across the Department of Veterans Affairs and introducing new interoperability tools, even as the company cut hundreds of jobs tied to its former Cerner business.&#160; Here is a look at Oracle Health&#8217;s biggest moves in [&#8230;] The post Oracle Health&#8217;s biggest moves appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "STAT+: Lilly&#8217;s breast cancer combo wins approval",
+      "url": "https://www.statnews.com/2026/09/21/biotech-news-lilly-breast-cancer-combo-wins-approval/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-21",
+      "summary": "The FDA just approved a new combination drug treatment for patients with an advanced form of breast cancer.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Pharmalittle: We’re reading about Novo plans to expand its pipeline, early Alkermes ADHD data, and more",
+      "url": "https://www.statnews.com/pharmalot/2026/09/21/novo-to-expand-pipeline-alkermes-releases-adhd-data/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-21",
+      "summary": "Novo Nodisk outlined plans to expand its pipeline and find new products that it could sell more like consumer goods than traditional medicines",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "President Trump&#8217;s newest vaccine &#8216;demands&#8217; repeat old misinformation",
+      "url": "https://www.statnews.com/2026/09/21/health-news-trump-newest-vaccine-demands-repeat-old-misinformation/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-21",
+      "summary": "A day after health secretary Robert F. Kennedy Jr.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Alkermes’ orexin agonist shows potential to treat ADHD in early-stage trial",
+      "url": "https://www.statnews.com/2026/09/21/alkermes-orexin-agonist-adhd-study/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-21",
+      "summary": "The drugmaker Alkermes said a therapy called an orexin agonist for the first time showed potential to treat people with ADHD in an early-stage study.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "STAT+: With new strategy, Novo outlines plans for obesity, direct-to-consumer work",
@@ -363,11 +513,11 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "Uncovering the hidden costs of healthcare payments",
-      "url": "https://www.healthcaredive.com/spons/uncovering-the-hidden-costs-of-healthcare-payments/830719/",
+      "title": "Mayo Clinic, Thermo Fisher partner to create biomedical database",
+      "url": "https://www.healthcaredive.com/news/mayo-clinic-thermo-fisher-partner-to-create-biomedical-database/830895/",
       "source": "Healthcare Dive",
       "publishedAt": "2026-09-21",
-      "summary": "<p>The true cost of payment operations sits in four budgets. What happens when you add them up?",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
@@ -388,6 +538,60 @@
       "summary": "<p>Healthcare organizations are rich in clinical data, but much of it is fragmented and unstructured. How can AI help transform it into structured, research-ready variables?",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Uncovering the hidden costs of healthcare payments",
+      "url": "https://www.healthcaredive.com/spons/uncovering-the-hidden-costs-of-healthcare-payments/830719/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-09-21",
+      "summary": "<p>The true cost of payment operations sits in four budgets. What happens when you add them up?",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Chutes & Ladders—Hackensack Meridian Health, AAMC CEOs announce retirements",
+      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-21",
+      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Weekly Rundown: Rutgers, RWJBarnabas Health tap AWS for new innovation hub; Luma Health launches new agentic outreach workflows",
+      "url": "https://www.fiercehealthcare.com/health-tech/weekly-rundown-rutgers-university-rwjbarnabas-health-aws-partner-innovation-hub-luma",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-21",
+      "summary": "The latest news from Rutgers University, Hello Patient, RWJBarnabas Health, Amazon Web Services, Luma Health, Vitality and more.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "White House plans to put NIH grants under political control: reports",
+      "url": "https://www.fiercehealthcare.com/research/white-house-plans-put-nih-grants-under-political-control-reports",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-21",
+      "summary": "President Donald Trump is attempting to seize further control of funding decisions made by the National Institutes of Health. According to multiple reports, senior officials met in the Oval Office on Friday to discuss plans for an executive order that would create an external panel with the power to shoot down NIH grants.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "The IDR Problem Payers Actually Have Isn't a Volume Problem. It's a Front-End Problem.",
+      "url": "https://www.fiercehealthcare.com/sponsored/idr-problem-payers-actually-have-isnt-volume-problem-its-front-end-problem",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-21",
+      "summary": "For health plans: the real fix for rising IDR disputes starts before arbitration. See how 93% get resolved early.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "From Detection to Prevention: A Better Approach to Medicaid Program Integrity",
+      "url": "https://www.fiercehealthcare.com/sponsored/detection-prevention-better-approach-medicaid-program-integrity",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-21",
+      "summary": "Real-time data, analytics and collaboration can help Medicaid programs resolve issues earlier—without sacrificing participant choice.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
     },
     {
       "title": "NCQA reports number of 5-star health plans jumps 64% in latest ratings",
@@ -424,15 +628,6 @@
       "summary": "The pause that began Sept. 1 had triggered alarm bells from provider groups and prompted an appeal from Texas Governor Greg Abbott.",
       "category": "policy_reimbursement",
       "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Weekly Rundown: Rutgers, RWJBarnabas Health tap AWS for new innovation hub; Luma Health launches new agentic outreach workflows",
-      "url": "https://www.fiercehealthcare.com/health-tech/weekly-rundown-rutgers-university-rwjbarnabas-health-aws-partner-innovation-hub-luma",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-09-21",
-      "summary": "The latest news from Rutgers University, Hello Patient, RWJBarnabas Health, Amazon Web Services, Luma Health, Vitality and more.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
     },
     {
       "title": "Angle Health snags $600M in equity financing to grow small-business healthcare benefits",
@@ -4674,201 +4869,6 @@
       "publishedAt": "2026-09-14",
       "category": "general_market",
       "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Solicitation for Nominations To Serve on the Advisory Council To Support Grandparents Raising Grandchildren",
-      "summary": "The Administration for Community Living (ACL) seeks nominations for individuals to serve on the Advisory Council to Support Grandparents Raising Grandchildren.",
-      "url": "https://www.federalregister.gov/documents/2026/09/14/2026-18728/solicitation-for-nominations-to-serve-on-the-advisory-council-to-support-grandparents-raising",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-09-14",
-      "category": "ai_tech",
-      "relevance": 96,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "10 trends shaping health IT and revenue cycle in 2026",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/10-trends-shaping-health-it-and-revenue-cycle-in-2026/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-14",
-      "summary": "Health system CIOs, revenue cycle leaders, and chief innovation officers gathered at Becker&#8217;s 11th Annual IT + Revenue Cycle Conference to share what is working — and what is not — as AI reshapes every corner of health system operations. Across five sessions on Sept.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Judge dismisses Ballad Health’s Medicare Advantage lawsuit against UnitedHealth",
-      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/judge-dismisses-ballad-healths-medicare-advantage-lawsuit-against-unitedhealth/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-14",
-      "summary": "A federal judge has dismissed Ballad Health&#8217;s lawsuit accusing UnitedHealth Group of denying and underpaying Medicare Advantage claims, ruling the dispute must go to arbitration. Johnson City, Tenn.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Mount Sinai hospital president retires, interim named",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/mount-sinai-hospital-president-retires-interim-named/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-14",
-      "summary": "Joshua Kugler, MD, has been appointed interim president of Mount Sinai South Nassau in Oceanside, N.Y.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Nebraska hospital names new CEO",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/nebraska-hospital-names-new-ceo-4/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-14",
-      "summary": "Kearney (Neb.) Regional Medical Center selected Danny Van Ranken as CEO.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "10 health systems cutting IT jobs, coding roles",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/digital-health/10-health-systems-cutting-it-jobs-coding-roles/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-14",
-      "summary": "Ten health systems are making targeted workforce reductions affecting IT and coding roles as organizations look to streamline operations and manage costs. Here are the health systems and hospitals making these cuts in 2026, as reported by Becker&#8217;s:&#160; September: Palo Alto, Calif.",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "Draft NIH Biosafety Policy for Research Involving Biohazards",
-      "summary": "As the world's largest public funder of biomedical research, the National Institutes of Health (NIH) is committed to ensuring that gold-standard science is conducted under gold-standard biosafety conditions. To achieve this goal, NIH is proposing a new policy that modernizes and strengthens biosafety practices to ensure that oversight keeps pace with evolving risks. NIH is requesting public input on a new, comprehensive biosafety policy proposal that, when finalized, will replace the current NIH Guidelines for Research Involving Recombinant or Synthetic Nucleic Acid Molecules (https://osp.od.nih.gov/wp-content/ uploads/NIH_Guidelines.pdf).",
-      "url": "https://www.federalregister.gov/documents/2026/09/14/2026-18646/draft-nih-biosafety-policy-for-research-involving-biohazards",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-09-14",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "The nursing metric ambient AI made obsolete",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/the-nursing-metric-ambient-ai-made-obsolete/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-14",
-      "summary": "Health systems have spent the past two years asking whether their AI tools work. A more challenging question is now coming into focus: whether the measures they are using to answer that question are still valuable.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Iowa health system&#8217;s CFO becomes permanent CEO",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/iowa-health-systems-cfo-becomes-permanent-ceo/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-14",
-      "summary": "Jeremy Alexander has been named permanent president and CEO of West Burlington, Iowa-based Great River Health. Mr.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Milwaukee Ascension flagship hospital responds after unsterilized surgical equipment found",
-      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/milwaukee-ascension-flagship-hospital-responds-after-unsterilized-surgical-equipment-found/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-14",
-      "summary": "Milwaukee-based Ascension Columbia St. Mary&#8217;s Hospital has delayed surgeries after finding unsterilized surgical equipment, the Milwaukee Journal Sentinel reported Sept.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Multiple Trinity Health hospital community board members resign: Report",
-      "url": "https://www.beckershospitalreview.com/hospital-management-administration/multiple-trinity-health-hospital-community-board-members-resign-report/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-14",
-      "summary": "Numerous members of the community board for Saint Francis Hospital in Hartford, Conn., have resigned, CT Mirror reported Sept.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "&#8216;We&#8217;re replacing 12 positions with 4&#8242;: Inside health systems&#8217; revenue cycle reskilling playbooks",
-      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/were-replacing-12-positions-with-4-inside-health-systems-revenue-cycle-reskilling-playbooks/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-14",
-      "summary": "At Becker&#8217;s 11th Annual Health IT + Digital Health + RCM Conference on Sept. 14 in Chicago, three revenue cycle leaders discussed what reskilling a finance team looks like once the easy automation wins are gone.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "How revenue cycle leaders&#8217; definition of success is evolving",
-      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/how-revenue-cycle-leaders-definition-of-success-is-evolving/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-14",
-      "summary": "Ask a Revenue Cycle Leader is a new series featuring insights from health system and hospital revenue cycle executives nationwide. Becker’s poses questions on the most pressing issues in healthcare finance — from payer relations and automation to workforce and patient experience.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Judge blocks Trump administration plans to limit visa length for grad students, postdocs",
-      "url": "https://www.statnews.com/2026/09/14/court-halts-dhs-visa-limits-foreign-scholars/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-14",
-      "summary": "A federal judge halted a Trump administration plan to place a four-year cap on the kinds of visas used by graduate students and postdocs",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Abbott agrees to settlement over closure of largest baby formula plant in the U.S.",
-      "url": "https://www.statnews.com/2026/09/14/abbott-settlement-closure-baby-formula-plant-shortages/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-14",
-      "summary": "Abbott has agreed to a $385 million settlement over the closure of the largest baby formula plant in the U.S.",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "Kennedy to deliver keynote for anti-vaccine group he once led",
-      "url": "https://www.statnews.com/2026/09/14/rfk-speech-childrens-health-defense-conference-washington/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-14",
-      "summary": "RFK Jr. worked to distance himself from Children's Health Defense, the anti-vaccine group he once led.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: How $500 explains Republican health policy, and the GLP-1 Rx wave",
-      "url": "https://www.statnews.com/2026/09/14/trump-cash-obamacare-plans-rural-hospitals-artificial-intelligence/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-14",
-      "summary": "The one health care policy Republicans agree on, and a look at how rural providers are approaching AI.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Pennsylvania officials report state&#8217;s third death involving measles",
-      "url": "https://www.statnews.com/2026/09/14/third-measles-related-death-pennsylvania-outbreak/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-14",
-      "summary": "A Pennsylvania woman has died from complications associated with measles, the third death in the state this year involving the virus.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: GSK touts lung cancer data from two drugs",
-      "url": "https://www.statnews.com/2026/09/14/biotech-news-gsk-touts-lung-cancer-data-from-two-drugs/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-14",
-      "summary": "Late-stage results for Definium's LSD treatment, AstraZeneca breast cancer drug fails key trial, and more biotech news from The Readout",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: Pharmalittle: We&#8217;re reading about another AstraZeneca trial failure, a Novo name change, and more",
-      "url": "https://www.statnews.com/pharmalot/2026/09/14/another-astrazeneca-trial-failure-novo-name-change/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-14",
-      "summary": "AstraZeneca disclosed that a breast cancer pill failed in a pivotal trial testing it as a first-line therapy in advanced tumors",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Pennsylvania records third measles-related death amid outbreak",
-      "url": "https://www.statnews.com/2026/09/14/health-enws-pennsylvania-records-third-measles-related-death-amid-outbreak/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-14",
-      "summary": "RSV season approaches, a federal judge pauses AAP challenge of RFK J.",
-      "category": "general_market",
       "categoryLabel": "General Market"
     }
   ]
