@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-09-22T14:33:21.275Z",
+  "lastUpdated": "2026-09-22T18:40:20.919Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 3,
-    "healthySources": 7,
+    "staleSources": 2,
+    "healthySources": 8,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 211,
+        "articleCount": 216,
         "latestPublishedAt": "2026-09-22T00:00:00.000Z",
-        "staleHours": 14,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 131,
+        "articleCount": 134,
         "latestPublishedAt": "2026-09-22T00:00:00.000Z",
-        "staleHours": 14,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 60,
+        "articleCount": 62,
         "latestPublishedAt": "2026-09-22T00:00:00.000Z",
-        "staleHours": 14,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
-        "articleCount": 57,
+        "articleCount": 47,
         "latestPublishedAt": "2026-09-22T00:00:00.000Z",
-        "staleHours": 14,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
-        "articleCount": 17,
+        "articleCount": 19,
         "latestPublishedAt": "2026-09-22T00:00:00.000Z",
-        "staleHours": 14,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
-        "articleCount": 8,
+        "articleCount": 7,
         "latestPublishedAt": "2026-10-10T00:00:00.000Z",
-        "staleHours": -418,
+        "staleHours": -414,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
-        "articleCount": 8,
+        "articleCount": 7,
         "latestPublishedAt": "2026-09-18T00:00:00.000Z",
-        "staleHours": 110,
+        "staleHours": 114,
         "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 4,
         "latestPublishedAt": "2026-09-22T00:00:00.000Z",
-        "staleHours": 14,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 3,
-        "latestPublishedAt": "2026-09-17T00:00:00.000Z",
-        "staleHours": 134,
-        "status": "stale"
+        "latestPublishedAt": "2026-09-22T00:00:00.000Z",
+        "staleHours": 18,
+        "status": "ok"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 1,
         "latestPublishedAt": "2026-09-16T00:00:00.000Z",
-        "staleHours": 158,
+        "staleHours": 162,
         "status": "stale"
       }
     ]
@@ -83,19 +83,19 @@
   "categoryCoverage": {
     "closures_layoffs": {
       "label": "Closures & Layoffs",
-      "count": 11
+      "count": 10
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 31
+      "count": 33
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 3
+      "count": 2
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 67
+      "count": 68
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -107,18 +107,16 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 139
+      "count": 141
     },
     "general_market": {
       "label": "General Market",
-      "count": 220
+      "count": 217
     }
   },
   "quality": {
-    "status": "warning",
-    "failedChecks": [
-      "maxStaleSources"
-    ],
+    "status": "pass",
+    "failedChecks": [],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -127,7 +125,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 59,
+        "actual": 79,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -137,8 +135,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 3,
-        "pass": false
+        "actual": 2,
+        "pass": true
       }
     }
   },
@@ -240,6 +238,18 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "Tucson nurses plan protests over unsafe staffing and working conditions amid contract negotiations",
+      "summary": "Registered nurses at Carondelet St. Mary’s and St. Joseph’s hospitals will hold informational pickets to demand that Carondelet management address serious staffing, patient care, and nurse recruitment and retention issues. The nurses are deeply concerned about eroding patient care conditions and the lack of experienced staff to adequately care for patients safely.",
+      "url": "https://www.nationalnursesunited.org/press/tucson-nurses-plan-protests-over-unsafe-staffing-and-working-conditions",
+      "source": "National Nurses United RSS",
+      "sourceType": "rss",
+      "sourceId": "nnu_rss",
+      "publishedAt": "2026-09-22",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "National Cancer Institute; Notice of Meeting",
       "summary": "",
       "url": "https://www.federalregister.gov/documents/2026/09/22/2026-19383/national-cancer-institute-notice-of-meeting",
@@ -274,6 +284,276 @@
       "category": "general_market",
       "relevance": 96,
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "The Four Commitments: An Off-Ramp from Contempt",
+      "url": "https://www.beckershospitalreview.com/quality/the-four-commitments-an-off-ramp-from-contempt/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-22",
+      "summary": "Healthcare has become remarkably sophisticated at solving technical problems and remarkably poor at solving human ones.&#160; We have more data, more technology, more expertise and more management tools than ever before.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Change in healthcare is constant — so is execution: Meritus Health CEO",
+      "url": "https://www.beckershospitalreview.com/uncategorized/change-in-healthcare-is-constant-so-is-execution-meritus-health-ceo/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-22",
+      "summary": "Over the last four decades, healthcare has faced one disruption after another. Hospitals fundamentally changed how they were paid.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "42% of women say poor health limited their career: Survey",
+      "url": "https://www.beckershospitalreview.com/workforce/42-of-women-say-poor-health-limited-their-career-survey/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-22",
+      "summary": "Women who could not get necessary healthcare were far more likely than others to report that their health had affected their job performance, family relationships and involvement in their community, according to a recent survey. The results were published Sept.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Florida hospital names CEO",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/florida-hospital-names-ceo-3/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-22",
+      "summary": "Stephen Demers has been promoted to CEO of Memorial Hospital West in Pembroke Pines, Fla., according to a Sept.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Penn State Health to launch Epic systemwide",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/penn-state-health-to-launch-epic-systemwide/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-22",
+      "summary": "Hershey, Pa.-based Penn State Health will launch Epic across the health system Oct.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Newly acquired Missouri hospital to end labor and delivery services due to &#8216;ongoing financial losses&#8217;",
+      "url": "https://www.beckershospitalreview.com/finance/newly-acquired-missouri-hospital-to-end-labor-and-delivery-services-due-to-ongoing-financial-losses/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-22",
+      "summary": "Marshall, Mo.-based Fitzgibbon Hospital, which was taken over this month by American Medical Administrators, will end labor and delivery services Sept.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Washington hospital chief projects officer retires",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/washington-hospital-chief-projects-officer-retires/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-22",
+      "summary": "Larry Cohen has retired as chief projects officer of Ilwaco, Wash.-based Ocean Beach Health.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Jefferson Health&#8217;s AI saved providers 1 million hours. Nursing is next",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/jefferson-healths-ai-saved-providers-1-million-hours-nursing-is-next/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-22",
+      "summary": "Philadelphia-based Jefferson Health set out to give its clinicians back 10 million hours by 2028, a systemwide commitment to strip administrative work out of medical — and now nursing — practice. One year in, the system has banked a little over 1 million of those hours, according to Luis Taveras, PhD, executive vice president and [&#8230;] The post Jefferson Health&#8217;s AI saved providers 1 million hours.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "144 US hospitals with 5+ Magnet designations",
+      "url": "https://www.beckershospitalreview.com/quality/144-us-hospitals-with-5-magnet-designations/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-22",
+      "summary": "The number of U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "The No Surprises Act for out-of-network providers, what is it?",
+      "url": "https://www.beckershospitalreview.com/finance/the-no-surprises-act-for-out-of-network-providers-what-is-it/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-09-22",
+      "summary": "The No Surprises Act is the most important piece of legislation for providers that most have never heard about. After years of patient complaints regarding balance billing, the NSA was launched Jan.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Opinion: Former FDA commissioners: Heidi Overton has an opportunity to strengthen the FDA",
+      "url": "https://www.statnews.com/2026/09/22/heidi-overton-fda-commissioner-confirmation-hearing/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-22",
+      "summary": "Two former FDA commissioners: Heidi Overton is the right pick in a difficult moment.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Did the Trump administration just cut Novo a huge financial win?",
+      "url": "https://www.statnews.com/2026/09/22/dc-diagnosis-did-trump-administration-cut-novo-huge-financial-win/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-22",
+      "summary": "The White House's GENEROUS plan was designed to make drugs more affordable for Medicaid users. There's one glaring potential exception.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "STAT+: Novo may be getting a better deal than expected with Medicare&#8217;s Bridge program",
+      "url": "https://www.statnews.com/2026/09/22/biotech-news-novo-may-be-getting-a-better-deal-than-expected-with-medicare-bridge/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-22",
+      "summary": "Eli Lilly and Novo Nordisk were already benefitting a great deal from the Trump administration's pilot program covering obesity drugs for seniors at a price of $245 a month.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "STAT+: Epic&#8217;s mortality model, and Omada&#8217;s future products",
+      "url": "https://www.statnews.com/2026/09/22/epics-mortality-model-omadas-future-products-health-tech/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-22",
+      "summary": "In this edition of STAT Health Tech: What Epic's mortality prediction algorithm tells us about AI in geriatrics, Omada's expansion plans, and more.",
+      "category": "quality_safety",
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "STAT+: Pharmalittle: We&#8217;re reading about pharma seeking to protect China deals, a Roche obesity drug, and more",
+      "url": "https://www.statnews.com/pharmalot/2026/09/22/pharma-seeks-to-protect-china-deals-roche-obesity-drug/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-22",
+      "summary": "Western pharmaceutical companies are urging the Trump administration to allow them to keep doing deals with Chinese companies for drug candidates",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "New federal autism committee head has financial ties to leucovorin",
+      "url": "https://www.statnews.com/2026/09/22/health-news-federal-autism-committee-head-has-financial-ties-to-leucovorin/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-22",
+      "summary": "RFK Jr.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Ohio governor’s race is a battle over Covid, health costs, and trust in science",
+      "url": "https://www.statnews.com/2026/09/22/ohio-governor-election-health-care-policy-acton-ramaswamy/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-22",
+      "summary": "The race between Amy Acton and Vivek Ramaswamy could be the election’s most direct test of where the heartland stands on health care and the pandemic.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Why an influential GOP health policy expert still backs the Medicaid cuts — and which policy target is next",
+      "url": "https://www.statnews.com/2026/09/22/brian-blase-paragon-health-institute-gop-aca-medicaid-reforms/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-22",
+      "summary": "Why an influential GOP health policy expert still backs $1 trillion in Medicaid cuts — and which policy target is next.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Opinion: Social media bans are passing around the world. How will we know if they help teens?",
+      "url": "https://www.statnews.com/2026/09/22/social-media-bans-australia-uk-teen-mental-health/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-22",
+      "summary": "“Researchers must seize this opportunity to examine how social media — and its regulation — impacts teenagers,” writes Wellcome’s Camilla Iannone.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Opinion: The science on relieving cancer symptoms is clear. Why isn’t insurance paying?",
+      "url": "https://www.statnews.com/2026/09/22/integrative-oncology-cancer-symptoms-insurance-asco-sio-pain-fatigue/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-22",
+      "summary": "Research shows that integrative therapies reduce cancer-related pain, fatigue, anxiety, and nausea. Why won't insurance pay?",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Hackensack Meridian Health CEO to retire next year",
+      "url": "https://www.healthcaredive.com/news/hackensack-meridian-health-ceo-to-retire-next-year/831025/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-09-22",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Texas hospitals sue Independence Blue Cross over denied claims",
+      "url": "https://www.healthcaredive.com/news/texas-hospitals-sue-independence-blue-cross-over-denied-claims/831010/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-09-22",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "New lawsuit targets Medicaid work requirements’ medical frailty rules",
+      "url": "https://www.healthcaredive.com/news/new-lawsuit-targets-medicaid-work-requirements-medical-frailty-rules/831006/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-09-22",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Cotiviti builds out insurer payment accuracy platform",
+      "url": "https://www.fiercehealthcare.com/payers/cotiviti-builds-out-insurer-payment-accuracy-platform",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-22",
+      "summary": "Health tech company Cotiviti is building out its payment accuracy platform for payers with two new additions that will allow plans to see all inpatient claims in one place.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Atrium Health's WakeMed Health acquisition notches key board approval with amended terms",
+      "url": "https://www.fiercehealthcare.com/providers/wakemed-healths-plans-join-atrium-health-face-swift-pushback-nc-officials",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-22",
+      "summary": "The contentious deal secured a 5-2 go-ahead vote after several changes to the proposed terms, including a new $150 million community fund.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Virtual SUD support platform Nosis launches to address lifestyle, diet needs",
+      "url": "https://www.fiercehealthcare.com/digital-health/virtual-sud-support-platform-nosis-launches-address-lifestyle-diet-needs",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-22",
+      "summary": "The virtual startup leverages labs with health coaches and dietitians to address the biological and metabolic health needs of individuals in recovery.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "OpenEvidence, Memorial Sloan Kettering Cancer Center partner to bring precision oncology AI to more doctors",
+      "url": "https://www.fiercehealthcare.com/health-tech/openevidence-deepens-oncology-push-expands-ai-decision-support-cancer-care",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-22",
+      "summary": "The partnership builds on OpenEvidence's vision to develop “medical super-intelligence” based on agentic artificial intelligence, or a system of AI agents that can be subspecialists in clinical areas.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Fierce Healthcare Fundraising Tracker '26: Blair Health lands CAD $4.24M; Epsilon Health nabs $27.6M",
+      "url": "https://www.fiercehealthcare.com/health-tech/fierce-healthcare-fundraising-tracker-26",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-22",
+      "summary": "Keep up with all the venture capital dollars being funneled into the health tech and digital health industries.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Teal Health raises $22M ahead of expected surge in demand with new coverage mandate",
+      "url": "https://www.fiercehealthcare.com/providers/teal-health-raises-22m-ahead-expected-surge-demand-new-coverage-mandate",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-22",
+      "summary": "Starting in 2027, most health plans are required to cover the cost of self-collected tests with no cost to consumers, including follow-up tests. Teal is working to coordinate billing with major commercial payers ahead of that deadline.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Smart ring maker Oura and its backers aim to raise $2.2B in IPO",
+      "url": "https://www.fiercehealthcare.com/digital-health/smart-ring-maker-oura-files-go-public-pitching-investors-ai-driven-preventive-health",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-22",
+      "summary": "Oura, the smart ring maker and health tracking company, filed to go public on Thursday to fuel its next phase of growth as it aims to build an artificial intelligence-powered health platform.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "MGB nurses rally outside AI forum ahead of strike vote",
@@ -364,105 +644,6 @@
       "summary": "Seven hospitals have earned the American Nurses Credentialing Center&#8217;s Magnet designation seven times — the most of any hospitals in the country. The Magnet Recognition Program is the ANCC&#8217;s highest honor for nursing excellence.",
       "category": "general_market",
       "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Novo may be getting a better deal than expected with Medicare&#8217;s Bridge program",
-      "url": "https://www.statnews.com/2026/09/22/biotech-news-novo-may-be-getting-a-better-deal-than-expected-with-medicare-bridge/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-22",
-      "summary": "Eli Lilly and Novo Nordisk were already benefitting a great deal from the Trump administration's pilot program covering obesity drugs for seniors at a price of $245 a month.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "STAT+: Epic&#8217;s mortality model, and Omada&#8217;s future products",
-      "url": "https://www.statnews.com/2026/09/22/epics-mortality-model-omadas-future-products-health-tech/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-22",
-      "summary": "In this edition of STAT Health Tech: What Epic's mortality prediction algorithm tells us about AI in geriatrics, Omada's expansion plans, and more.",
-      "category": "quality_safety",
-      "categoryLabel": "Quality & Safety"
-    },
-    {
-      "title": "STAT+: Pharmalittle: We&#8217;re reading about pharma seeking to protect China deals, a Roche obesity drug, and more",
-      "url": "https://www.statnews.com/pharmalot/2026/09/22/pharma-seeks-to-protect-china-deals-roche-obesity-drug/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-22",
-      "summary": "Western pharmaceutical companies are urging the Trump administration to allow them to keep doing deals with Chinese companies for drug candidates",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "New federal autism committee head has financial ties to leucovorin",
-      "url": "https://www.statnews.com/2026/09/22/health-news-federal-autism-committee-head-has-financial-ties-to-leucovorin/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-22",
-      "summary": "RFK Jr.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Ohio governor’s race is a battle over Covid, health costs, and trust in science",
-      "url": "https://www.statnews.com/2026/09/22/ohio-governor-election-health-care-policy-acton-ramaswamy/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-22",
-      "summary": "The race between Amy Acton and Vivek Ramaswamy could be the election’s most direct test of where the heartland stands on health care and the pandemic.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Why an influential GOP health policy expert still backs the Medicaid cuts — and which policy target is next",
-      "url": "https://www.statnews.com/2026/09/22/brian-blase-paragon-health-institute-gop-aca-medicaid-reforms/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-22",
-      "summary": "Why an influential GOP health policy expert still backs $1 trillion in Medicaid cuts — and which policy target is next.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Opinion: Social media bans are passing around the world. How will we know if they help teens?",
-      "url": "https://www.statnews.com/2026/09/22/social-media-bans-australia-uk-teen-mental-health/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-22",
-      "summary": "“Researchers must seize this opportunity to examine how social media — and its regulation — impacts teenagers,” writes Wellcome’s Camilla Iannone.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Opinion: The science on relieving cancer symptoms is clear. Why isn’t insurance paying?",
-      "url": "https://www.statnews.com/2026/09/22/integrative-oncology-cancer-symptoms-insurance-asco-sio-pain-fatigue/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-22",
-      "summary": "Research shows that integrative therapies reduce cancer-related pain, fatigue, anxiety, and nausea. Why won't insurance pay?",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "New lawsuit targets Medicaid work requirements’ medical frailty rules",
-      "url": "https://www.healthcaredive.com/news/new-lawsuit-targets-medicaid-work-requirements-medical-frailty-rules/831006/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-09-22",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Teal Health raises $22M ahead of expected surge in demand with new coverage mandate",
-      "url": "https://www.fiercehealthcare.com/providers/teal-health-raises-22m-ahead-expected-surge-demand-new-coverage-mandate",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-09-22",
-      "summary": "Starting in 2027, most health plans are required to cover the cost of self-collected tests with no cost to consumers, including follow-up tests. Teal is working to coordinate billing with major commercial payers ahead of that deadline.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Smart ring maker Oura and its backers aim to raise $2.2B in IPO",
-      "url": "https://www.fiercehealthcare.com/digital-health/smart-ring-maker-oura-files-go-public-pitching-investors-ai-driven-preventive-health",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-09-22",
-      "summary": "Oura, the smart ring maker and health tracking company, filed to go public on Thursday to fuel its next phase of growth as it aims to build an artificial intelligence-powered health platform.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "Medical groups, city of Columbus sue to challenge final Medicaid work requirements rule",
@@ -4666,225 +4847,6 @@
       "summary": "The latest news from Suki, Apple, Cleveland Clinic, Luminai, Rainfall Health and more.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Statistical Considerations for the Design of Rare Disease Clinical Investigations; Establishment of a Public Docket; Request for Information and Comments",
-      "summary": "The Food and Drug Administration (FDA, the Agency, or we) is establishing a public docket to collect feedback on statistical considerations for rare disease clinical investigations. This docket is open in conjunction with a Rare disease Innovation, Science, and Exploration (RISE) Workshop on the same topic. Feedback is welcome both on the attached pre-read documents and on the content covered in the Workshop itself.",
-      "url": "https://www.federalregister.gov/documents/2026/09/15/2026-18805/statistical-considerations-for-the-design-of-rare-disease-clinical-investigations-establishment-of-a",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-09-15",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Orange County Global nurses ratify first, new contract with strong measures to improve patient safety and nurse retention",
-      "summary": "Registered nurses at Orange County Global Medical Center in Santa Ana, Calif. voted overwhelmingly in favor of ratifying their inclusion into the existing union contract covering KPC Health registered nurses represented by California Nurses Association. This first contract for Orange County Global nurses secures them important new protections to improve patient safety and nurse retention.",
-      "url": "https://www.nationalnursesunited.org/press/orange-county-global-nurses-ratify-first-new-contract",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "2026-09-15",
-      "category": "labor_unions",
-      "relevance": 100,
-      "categoryLabel": "Labor & Unions"
-    },
-    {
-      "title": "Esophageal pH Monitoring Capsule Recall: Medtronic and Given Imaging Remove Esophageal pH Monitoring Capsule Delivery Device",
-      "summary": "The Medtronic and Given Imaging Bravo CF esophageal pH monitoring capsule can fail to attach to the esophagus or detach from its delivery device.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/esophageal-ph-monitoring-capsule-recall-medtronic-and-given-imaging-remove-esophageal-ph-monitoring",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-09-15",
-      "category": "ai_tech",
-      "relevance": 98,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "World Trade Center Health Program; Petition 048a-Peripheral Artery Disease; Finding of Insufficient Evidence",
-      "summary": "The Administrator of the World Trade Center (WTC) Health Program has received a petition (Petition 048a) to add \"peripheral vascular disease\" (referred to herein as \"peripheral artery disease\") to the List of WTC-Related Health Conditions. Upon reviewing the scientific and medical literature, including information provided by the petitioner, the Administrator has determined that there is insufficient evidence available to support taking further action at this time regarding peripheral artery disease. The Administrator also finds that insufficient evidence exists to request a recommendation of the WTC Health Program Scientific/Technical Advisory Committee, publish a proposed rule, or publish a determination not to publish a proposed rule.",
-      "url": "https://www.federalregister.gov/documents/2026/09/15/2026-18901/world-trade-center-health-program-petition-048a-peripheral-artery-disease-finding-of-insufficient",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-09-15",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "World Trade Center Health Program; Petitions 048 and 051a-Stroke; Finding of Insufficient Evidence",
-      "summary": "The Administrator of the World Trade Center (WTC) Health Program has received two petitions (Petitions 048 and 051a) to add \"stroke\" to the List of WTC-Related Health Conditions. Upon reviewing the scientific and medical literature, including information provided by the petitioners, the Administrator has determined that there is insufficient evidence available to support taking further action regarding stroke at this time. The Administrator also finds that insufficient evidence exists to request a recommendation of the WTC Health Program Scientific/Technical Advisory Committee, publish a proposed rule, or publish a determination not to publish a proposed rule.",
-      "url": "https://www.federalregister.gov/documents/2026/09/15/2026-18900/world-trade-center-health-program-petitions-048-and-051a-stroke-finding-of-insufficient-evidence",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-09-15",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Prospective Grant of an Exclusive Patent License: Development and Commercialization of Engineered Cell Therapies for the Treatment of HPV 16 E6-Expressing Cancers",
-      "summary": "The National Cancer Institute, an institute of the National Institutes of Health, Department of Health and Human Services, is contemplating the grant of an Exclusive Patent License to practice the inventions embodied in the patents and patent applications listed in the Supplementary Information section of this notice to MedGene Therapeutics, Inc. (\"MedGene\"), a company located in Silver Spring, Maryland, the United States of America.",
-      "url": "https://www.federalregister.gov/documents/2026/09/15/2026-18877/prospective-grant-of-an-exclusive-patent-license-development-and-commercialization-of-engineered",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-09-15",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Center for Scientific Review; Notice of Closed Meetings",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/09/15/2026-18875/center-for-scientific-review-notice-of-closed-meetings",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-09-15",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Center for Scientific Review; Amended Notice of Meeting",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/09/15/2026-18874/center-for-scientific-review-amended-notice-of-meeting",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-09-15",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Proposed Information Collection Activity; Multistate Financial Institution Data Match With Federally Assisted State Transmitted Levy",
-      "summary": "The Office of Child Support Enforcement (OCSE), Administration for Children and Families (ACF), is requesting a 3-year extension of the Multistate Financial Institution Data Match (MSFIDM) with Federally Assisted State Transmitted (FAST) Levy (Office of Management and Budget #: 0970-0196, expiration January 31, 2027). OCSE revised the MSFIDM handbook and the FAST Levy record specifications. Burden estimates were reduced by 32.71 percent to reflect the expected estimated number of respondents and responses per respondent over the next 3 years.",
-      "url": "https://www.federalregister.gov/documents/2026/09/15/2026-18841/proposed-information-collection-activity-multistate-financial-institution-data-match-with-federally",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-09-15",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Center for Scientific Review; Notice of Closed Meetings",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/09/15/2026-18826/center-for-scientific-review-notice-of-closed-meetings",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-09-15",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "&#8216;No one likes to be ignored&#8217;: The leadership habit that matters most to Jimmy Johnson",
-      "url": "https://www.beckershospitalreview.com/leadership/no-one-likes-to-be-ignored-the-leadership-habit-that-matters-most-to-jimmy-johnson/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-15",
-      "summary": "As a football coach, Jimmy Johnson won two Super Bowls with the Dallas Cowboys and a national championship at the University of Miami, but when he gave a keynote interview Sept. 15 at Becker&#8217;s 11th Annual IT + Revenue Cycle Conference, his sharpest leadership advice had nothing to do with strategy on the field.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "MUSC radiology chair Munden to step down; Lewis named successor",
-      "url": "https://www.beckershospitalreview.com/academic-medical-center/academic-medical-centers-workforce/musc-radiology-chair-munden-to-step-down-lewis-named-successor/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-15",
-      "summary": "Reginald Munden, MD, DMD, will step down as chair of the Department of Radiology at the Medical University of South Carolina in Charleston at the end of December 2026. Madelene Lewis, MD, will succeed him as department chair effective Jan.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Center for Scientific Review; Amended Notice of Meeting",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/09/15/2026-18825/center-for-scientific-review-amended-notice-of-meeting",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-09-15",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "National Cancer Institute; Notice of Closed Meeting",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/09/15/2026-18822/national-cancer-institute-notice-of-closed-meeting",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-09-15",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Center for Scientific Review; Notice of Closed Meetings",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/09/15/2026-18821/center-for-scientific-review-notice-of-closed-meetings",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-09-15",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Dartmouth Health lays off 124, cuts 303 open positions",
-      "url": "https://www.beckershospitalreview.com/finance/dartmouth-health-lays-off-124-cuts-303-open-positions/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-15",
-      "summary": "Lebanon, N.H.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Latest UVM Health cuts affect 199 positions",
-      "url": "https://www.beckershospitalreview.com/finance/latest-uvm-health-cuts-affect-199-positions/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-15",
-      "summary": "Burlington-based University of Vermont Health has begun implementing a workforce reduction affecting 199 positions. Five things to know: 1.",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "FDA approves brain imaging agent",
-      "url": "https://www.beckershospitalreview.com/radiology/fda-approves-brain-imaging-agent/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-15",
-      "summary": "The FDA has approved an amino acid positron emission tomography drug for brain cancer imaging. The drug — called Pixclara — differentiates recurrent or progressive glioma from treatment-related tissue changes, according to a Sept.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Franciscan Alliance names CEO",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/franciscan-alliance-names-ceo/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-15",
-      "summary": "Michael Englehart was named president and CEO of Mishawaka, Ind.-based Franciscan Alliance, effective Oct.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Federal judge blocks 4-year cap on student, physician visas",
-      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/federal-judge-blocks-4-year-cap-on-student-physician-visas/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-15",
-      "summary": "A federal judge on Sept. 14 blocked a rule that would cap J-1 and other visas at four years, one day before it was set to take effect.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
     }
   ]
 }
