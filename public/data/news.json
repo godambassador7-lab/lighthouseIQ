@@ -1,82 +1,89 @@
 {
-  "lastUpdated": "2026-09-30T11:03:36.679Z",
+  "lastUpdated": "2026-09-30T16:54:00.882Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
-    "totalSources": 9,
-    "staleSources": 1,
+    "totalSources": 10,
+    "staleSources": 2,
     "healthySources": 8,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 237,
+        "articleCount": 229,
         "latestPublishedAt": "2026-09-30T00:00:00.000Z",
-        "staleHours": 11,
+        "staleHours": 16,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
         "articleCount": 119,
         "latestPublishedAt": "2026-09-30T00:00:00.000Z",
-        "staleHours": 11,
+        "staleHours": 16,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 69,
+        "articleCount": 76,
         "latestPublishedAt": "2026-09-30T00:00:00.000Z",
-        "staleHours": 11,
+        "staleHours": 16,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
-        "articleCount": 34,
+        "articleCount": 36,
         "latestPublishedAt": "2026-09-30T00:00:00.000Z",
-        "staleHours": 11,
+        "staleHours": 16,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
-        "articleCount": 14,
-        "latestPublishedAt": "2026-09-29T00:00:00.000Z",
-        "staleHours": 35,
+        "articleCount": 15,
+        "latestPublishedAt": "2026-09-30T00:00:00.000Z",
+        "staleHours": 16,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
-        "articleCount": 11,
-        "latestPublishedAt": "2026-09-29T00:00:00.000Z",
-        "staleHours": 35,
-        "status": "ok"
+        "articleCount": 9,
+        "latestPublishedAt": "2026-09-25T00:00:00.000Z",
+        "staleHours": 136,
+        "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
-        "articleCount": 8,
+        "articleCount": 7,
         "latestPublishedAt": "2026-09-30T00:00:00.000Z",
-        "staleHours": 11,
+        "staleHours": 16,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 6,
         "latestPublishedAt": "2026-10-10T00:00:00.000Z",
-        "staleHours": -229,
+        "staleHours": -224,
         "status": "ok"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 2,
         "latestPublishedAt": "2026-09-25T00:00:00.000Z",
-        "staleHours": 131,
+        "staleHours": 136,
         "status": "stale"
+      },
+      {
+        "source": "SEC Healthcare Filings",
+        "articleCount": 1,
+        "latestPublishedAt": "2026-09-30T00:00:00.000Z",
+        "staleHours": 16,
+        "status": "ok"
       }
     ]
   },
   "categoryCoverage": {
     "closures_layoffs": {
       "label": "Closures & Layoffs",
-      "count": 18
+      "count": 17
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
@@ -88,11 +95,11 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 58
+      "count": 56
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 7
+      "count": 6
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
@@ -100,11 +107,11 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 177
+      "count": 180
     },
     "general_market": {
       "label": "General Market",
-      "count": 182
+      "count": 183
     }
   },
   "quality": {
@@ -113,12 +120,12 @@
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
-        "actual": 9,
+        "actual": 10,
         "pass": true
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 43,
+        "actual": 57,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -128,7 +135,7 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 1,
+        "actual": 2,
         "pass": true
       }
     }
@@ -181,6 +188,288 @@
       "category": "general_market",
       "relevance": 100,
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "CI 8-K filing - The Cigna Group",
+      "summary": "The Cigna Group filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1739940/000114036126038056/ef20082869_8k.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-09-30",
+      "category": "general_market",
+      "relevance": 85,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "U.S. poised to boot legal immigrants from Medicaid, including refugees and sex-trafficking victims",
+      "url": "https://www.statnews.com/2026/09/30/legal-immigrants-risk-losing-medicaid-coverage-trump/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-30",
+      "summary": "Hundreds of thousands of immigrants with legal status, including refugees and sex-trafficking victims, are at risk of losing government health coverage starting Oct. 1.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "STAT+: What health tech leaders are talking about in Washington policy circles",
+      "url": "https://www.statnews.com/2026/09/30/health-tech-policy-conversations-washington-ai-prognosis/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-30",
+      "summary": "In this edition of AI Prognosis: Dispatches from Health Datapalooza and MAHA Institute Open Data Summit, and other health AI news.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "STAT+: Eli Lilly’s Zepbound combined with amylin drug led to significant weight loss in mid-stage trial",
+      "url": "https://www.statnews.com/2026/09/30/eli-lilly-zepbound-amylin-combination-drug-study/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-30",
+      "summary": "An investigational combination therapy from Eli Lilly led to significant weight loss in a mid-stage study, but high discontinuation rates raise questions about tolerability.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Rural MAHA followers say Trump hasn&#8217;t improved health of their communities, poll finds",
+      "url": "https://www.statnews.com/2026/09/30/rural-maha-followers-poll-trump-hasnt-improved-community-health/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-30",
+      "summary": "About half of rural voters identify with MAHA movement, but most said President Trump’s health care policies have not benefited their communities, according to a new poll.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "STAT+: Three biotech updates, including accusations of theft and and a new lobbying leader",
+      "url": "https://www.statnews.com/2026/09/30/biotech-news-updates-accusations-of-theft-new-phrma-guy/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-30",
+      "summary": "Beam Therapeutics has filed a lawsuit alleging one of its former scientists stole intellectual property and used it to co-found a Chinese company that recently made a deal with prominent VC&#8230;",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Pharmalittle: We&#8217;re reading about Beam suing over IP theft, a Trump rule on importing meds, and more",
+      "url": "https://www.statnews.com/pharmalot/2026/09/30/beam-sues-over-trade-secret-theft-trump-drug-import-rule/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-30",
+      "summary": "Gene-editing company Beam Therapeutics is alleging that one of its scientists stole intellectual property and used it to co-found a Chinese company",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "CDC measles death count still lags Pennsylvania’s",
+      "url": "https://www.statnews.com/2026/09/30/health-news-cdc-measles-death-count-still-lags-pennsylvania/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-30",
+      "summary": "Pennsylvania officials count four measles-related deaths this year. The CDC only counts two.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Opinion: America&#8217;s biotech race with China must be won at home",
+      "url": "https://www.statnews.com/2026/09/30/china-america-biotech-race-security/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-30",
+      "summary": "“The surest way to secure our biotech lead is to build up our own capabilities,” write Gary Locke and Patrick McHenry.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Kratom and 7-OH should be regulated, experts agree. They&#8217;re split on how",
+      "url": "https://www.statnews.com/2026/09/30/dea-proposal-7-oh-kratom-schedule-1-drug/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-30",
+      "summary": "Kratom has skirted regulation for decades, but newer, highly concentrated 7-OH products have renewed interest in safeguards.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Opinion: STAT+: What to think about those mice with half-human brains",
+      "url": "https://www.statnews.com/2026/09/30/xeno-mice-human-brains-cortex-research-ethics/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-09-30",
+      "summary": "New research involving giving mice a human cell-based cortex brings to mind “Flowers for Algernon” and “Pinky and the Brain,” writes STAT Lab Dish columnist Paul Knoepfler.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Essentia, HealthPartners seek to combine amid wave of Minnesota hospital mergers",
+      "url": "https://www.healthcaredive.com/news/essentia-healthpartners-combine-amid-wave-minnesota-hospital-mergers/831685/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-09-30",
+      "summary": "<p>Three major health system mergers have been proposed in the state over the past six months, kicking off a rush of public hearings and regulatory reviews. Essentia and HealthPartners hope to close their deal early next year.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Ex-Genentech, Meta, AWS AI leaders launch health AI lab with $500M backing",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/ex-genentech-meta-aws-ai-leaders-launch-health-ai-lab-500m-backing",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-30",
+      "summary": "The AI startup, Ortet plans to build a full-stack platform for health, spanning compute and data infrastructure, frontier research and model development and deployment.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Hospital outpatient departments' higher drug reimbursement rates drive $12.7B in spending: EBRI",
+      "url": "https://www.fiercehealthcare.com/payers/hospital-outpatient-departments-higher-drug-reimbursement-rates-drive-127b-spending-ebri",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-30",
+      "summary": "An analysis of commercial claims for 106 physician-administered outpatient drugs suggests $101 of additional plan spending per member per year stemming from site-of-treatment pay differences.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "How Providence is tackling its climate footprint",
+      "url": "https://www.fiercehealthcare.com/hospitals/how-providence-tackling-its-climate-footprint",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-30",
+      "summary": "Senior Writer Anastassia Gliadkovskaya talks with Beth Schenk, Ph.D.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Heidi launches AI agents to automate clinical administrative tasks",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/heidi-launches-new-platform-tackle-administrative-work-ai-agents",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-30",
+      "summary": "Artificial intelligence healthcare startup Heidi unveiled an upgraded version of its AI clinical assistant that moves beyond documenting patient visits to helping complete administrative tasks.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "4 largest PBMs control 75% of U.S. market, AMA finds",
+      "url": "https://www.fiercehealthcare.com/payers/4-largest-pbms-control-75-national-market-70-2022-american-medical-association",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-30",
+      "summary": "The four largest PBMs by national market share were OptumRx (23%), Express Scripts (23%), CVS/Caremark (18%) and Prime Therapeutics (11%).",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Waltz Health, Fresenius Kabi partner for direct-to-payer biosimilar program",
+      "url": "https://www.fiercehealthcare.com/payers/waltz-health-fresenius-kabi-partner-direct-payer-biosimilar-program",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-30",
+      "summary": "Digital health company Waltz Health is teaming up with drugmaker Fresenius Kabi to support direct-to-employer efforts for key biosimilar medications.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Elevance Health rolls out new site-of-care billing policies",
+      "url": "https://www.fiercehealthcare.com/payers/elevance-health-rolls-out-new-site-care-billing-policies",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-30",
+      "summary": "Elevance Health is rolling out new billing policies that aim to ensure services are paid for at the appropriate level and drive greater transparency into where patients receive care.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Midwest nonprofits HealthPartners, Essentia Health announce merger plans",
+      "url": "https://www.fiercehealthcare.com/providers/healthpartners-essentia-health-announce-merger-plans",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-30",
+      "summary": "The deal would yield a roughly $12.5 billion, multi-state integrated nonprofit with 22 hospitals and a 1.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Health tech's dealmaking boom is back as firms chase scale and profitable growth",
+      "url": "https://www.fiercehealthcare.com/health-tech/health-tech-ma-accelerates-firms-chase-scale-and-profitable-growth",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-30",
+      "summary": "Health tech and digital health M&amp;A activity remains a major force in 2026, driven by strategic expansion and the race for competitive artificial intelligence capabilities.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "EliseAI banks $350M, hits $4B valuation for accelerated new product development",
+      "url": "https://www.fiercehealthcare.com/finance/eliseai-banks-350m-hits-4b-valuation-accelerated-new-product-development",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-30",
+      "summary": "The company surpassed $200 million in ARR in June, doubling revenue year-over-year for five consecutive years, executives said.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Smart ring maker Oura postpones public listing due to 'uncertainty in the IPO market'",
+      "url": "https://www.fiercehealthcare.com/health-tech/smart-ring-maker-oura-postpones-public-listing-due-uncertainty-ipo-market",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-30",
+      "summary": "Smart ring maker and health tracking company Oura is postponing its previously announced initial public offering on Nasdaq due to \"uncertainty in the IPO market,\" the company announced Tuesday morning.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "CMS projects Medicare Advantage premiums to decline by 16% in 2027",
+      "url": "https://www.fiercehealthcare.com/payers/cms-projects-medicare-advantage-premiums-decline-16-2027",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-30",
+      "summary": "The Trump administration is projecting significant declines in premiums for Medicare Advantage plans in 2027.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Memorial Hermann CEO set to retire at the end of this year",
+      "url": "https://www.fiercehealthcare.com/hospitals/memorial-hermann-ceo-set-retire-end-year",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-30",
+      "summary": "Memorial Hermann Health System's CEO, David Callender, will retire at the end of the year, the health system announced Monday.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "SCAN expands reach into Oregon in partnership with the Springs Living",
+      "url": "https://www.fiercehealthcare.com/payers/scan-expands-reach-oregon-partnership-springs-living",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-30",
+      "summary": "SCAN Health Plan is teaming up with the Springs Living, a senior living organization, to launch new co-branded products that aim to offer a more connected experience for people living in these communities.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Chutes & Ladders—UnitedHealthcare names president; Joint Commission CEO to retire",
+      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-30",
+      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "UnitedHealthcare, TeamHealth settle $100M fraud suit in Tennessee",
+      "url": "https://www.fiercehealthcare.com/payers/unitedhealthcare-team-health-settle-100m-fraud-suit-tennessee",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-30",
+      "summary": "A 2021 legal battle between UnitedHealthcare and TeamHealth was dismissed after the parties reached a settlement, per court documents.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "OpenEvidence partners with Anthropic, Penn Medicine to expand physician access to AI across Africa and Asia",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/openevidence-partners-anthropic-and-penn-medicine-expand-medical-ai",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-30",
+      "summary": "OpenEvidence is teaming up with Anthropic to expand its artificial intelligence-powered clinical decision support technology to physicians in low- and middle-income countries across Africa and Asia.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Why medtech’s next leap depends on systems thinking",
+      "url": "https://www.fiercehealthcare.com/sponsored/why-medtechs-next-leap-depends-systems-thinking",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-30",
+      "summary": "Art Butcher explains why medtech innovation must move beyond invention to solve for workflow, economics and scalable patient impact.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "How to combat the insurer payment delays that are destabilizing independent medicine",
+      "url": "https://www.fiercehealthcare.com/sponsored/how-combat-insurer-payment-delays-are-destabilizing-independent-medicine",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-09-30",
+      "summary": "The No Surprises Act has made significant strides in protecting patients from large, unexpected medical bills. Unfortunately, the same cannot be said for the NSA’s promise to protect payments to physician practices.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "Recharter for the Council on Graduate Medical Education",
@@ -312,141 +601,6 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Opinion: America&#8217;s biotech race with China must be won at home",
-      "url": "https://www.statnews.com/2026/09/30/china-america-biotech-race-security/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-30",
-      "summary": "“The surest way to secure our biotech lead is to build up our own capabilities,” write Gary Locke and Patrick McHenry.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Kratom and 7-OH should be regulated, experts agree. They&#8217;re split on how",
-      "url": "https://www.statnews.com/2026/09/30/dea-proposal-7-oh-kratom-schedule-1-drug/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-30",
-      "summary": "Kratom has skirted regulation for decades, but newer, highly concentrated 7-OH products have renewed interest in safeguards.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Opinion: STAT+: What to think about those mice with half-human brains",
-      "url": "https://www.statnews.com/2026/09/30/xeno-mice-human-brains-cortex-research-ethics/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-30",
-      "summary": "New research involving giving mice a human cell-based cortex brings to mind “Flowers for Algernon” and “Pinky and the Brain,” writes STAT Lab Dish columnist Paul Knoepfler.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Waltz Health, Fresenius Kabi partner for direct-to-payer biosimilar program",
-      "url": "https://www.fiercehealthcare.com/payers/waltz-health-fresenius-kabi-partner-direct-payer-biosimilar-program",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-09-30",
-      "summary": "Digital health company Waltz Health is teaming up with drugmaker Fresenius Kabi to support direct-to-employer efforts for key biosimilar medications.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Elevance Health rolls out new site-of-care billing policies",
-      "url": "https://www.fiercehealthcare.com/payers/elevance-health-rolls-out-new-site-care-billing-policies",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-09-30",
-      "summary": "Elevance Health is rolling out new billing policies that aim to ensure services are paid for at the appropriate level and drive greater transparency into where patients receive care.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Midwest nonprofits HealthPartners, Essentia Health announce merger plans",
-      "url": "https://www.fiercehealthcare.com/providers/healthpartners-essentia-health-announce-merger-plans",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-09-30",
-      "summary": "The deal would yield a roughly $12.5 billion, multi-state integrated nonprofit with 22 hospitals and a 1.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Health tech's dealmaking boom is back as firms chase scale and profitable growth",
-      "url": "https://www.fiercehealthcare.com/health-tech/health-tech-ma-accelerates-firms-chase-scale-and-profitable-growth",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-09-30",
-      "summary": "Health tech and digital health M&amp;A activity remains a major force in 2026, driven by strategic expansion and the race for competitive artificial intelligence capabilities.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "EliseAI banks $350M, hits $4B valuation for accelerated new product development",
-      "url": "https://www.fiercehealthcare.com/finance/eliseai-banks-350m-hits-4b-valuation-accelerated-new-product-development",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-09-30",
-      "summary": "The company surpassed $200 million in ARR in June, doubling revenue year-over-year for five consecutive years, executives said.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Smart ring maker Oura postpones public listing due to 'uncertainty in the IPO market'",
-      "url": "https://www.fiercehealthcare.com/health-tech/smart-ring-maker-oura-postpones-public-listing-due-uncertainty-ipo-market",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-09-30",
-      "summary": "Smart ring maker and health tracking company Oura is postponing its previously announced initial public offering on Nasdaq due to \"uncertainty in the IPO market,\" the company announced Tuesday morning.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "CMS projects Medicare Advantage premiums to decline by 16% in 2027",
-      "url": "https://www.fiercehealthcare.com/payers/cms-projects-medicare-advantage-premiums-decline-16-2027",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-09-30",
-      "summary": "The Trump administration is projecting significant declines in premiums for Medicare Advantage plans in 2027.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Memorial Hermann CEO set to retire at the end of this year",
-      "url": "https://www.fiercehealthcare.com/hospitals/memorial-hermann-ceo-set-retire-end-year",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-09-30",
-      "summary": "Memorial Hermann Health System's CEO, David Callender, will retire at the end of the year, the health system announced Monday.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "SCAN expands reach into Oregon in partnership with the Springs Living",
-      "url": "https://www.fiercehealthcare.com/payers/scan-expands-reach-oregon-partnership-springs-living",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-09-30",
-      "summary": "SCAN Health Plan is teaming up with the Springs Living, a senior living organization, to launch new co-branded products that aim to offer a more connected experience for people living in these communities.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "UnitedHealthcare, TeamHealth settle $100M fraud suit in Tennessee",
-      "url": "https://www.fiercehealthcare.com/payers/unitedhealthcare-team-health-settle-100m-fraud-suit-tennessee",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-09-30",
-      "summary": "A 2021 legal battle between UnitedHealthcare and TeamHealth was dismissed after the parties reached a settlement, per court documents.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Chutes & Ladders—UnitedHealthcare names president; Joint Commission CEO to retire",
-      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-09-30",
-      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "OpenEvidence partners with Anthropic, Penn Medicine to expand physician access to AI across Africa and Asia",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/openevidence-partners-anthropic-and-penn-medicine-expand-medical-ai",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-09-30",
-      "summary": "OpenEvidence is teaming up with Anthropic to expand its artificial intelligence-powered clinical decision support technology to physicians in low- and middle-income countries across Africa and Asia.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
       "title": "How CVS Caremark builds the next era of pharmacy benefits",
       "url": "https://www.fiercehealthcare.com/sponsored/how-cvs-caremark-builds-next-era-pharmacy-benefits",
       "source": "Fierce Healthcare",
@@ -461,24 +615,6 @@
       "source": "Fierce Healthcare",
       "publishedAt": "2026-09-30",
       "summary": "Healthcare loses billions a year to fragmented data. Here's how a unified, FHIR-native foundation cuts costs and makes AI dependable.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Why medtech’s next leap depends on systems thinking",
-      "url": "https://www.fiercehealthcare.com/sponsored/why-medtechs-next-leap-depends-systems-thinking",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-09-30",
-      "summary": "Art Butcher explains why medtech innovation must move beyond invention to solve for workflow, economics and scalable patient impact.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "How to combat the insurer payment delays that are destabilizing independent medicine",
-      "url": "https://www.fiercehealthcare.com/sponsored/how-combat-insurer-payment-delays-are-destabilizing-independent-medicine",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-09-30",
-      "summary": "The No Surprises Act has made significant strides in protecting patients from large, unexpected medical bills. Unfortunately, the same cannot be said for the NSA’s promise to protect payments to physician practices.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
     },
@@ -648,12 +784,24 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
+      "title": "Agency Information Collection Activities: Submission to OMB for Review and Approval; Public Comment Request; National Marrow Donor Program Patient Support Center Survey",
+      "summary": "In compliance with the Paperwork Reduction Act of 1995, HRSA submitted an Information Collection Request (ICR) to the Office of Management and Budget (OMB) for review and approval. Comments submitted during the first public review of this ICR will be provided to OMB. OMB will accept further comments from the public during the review and approval period. OMB may act on HRSA's ICR only after the 30-day comment period for this Notice has closed.",
+      "url": "https://www.federalregister.gov/documents/2026/09/29/2026-19883/agency-information-collection-activities-submission-to-omb-for-review-and-approval-public-comment",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-09-29",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "Agency Information Collection Activities; Submission for Office of Management and Budget Review; Comment Request; Submission of Petitions: Food Additive, Color Additive (Including Labeling), Submission of Information to a Master File in Support of Petitions; and Electronic Submission Using Food and Drug Administration Form 3503",
       "summary": "The Food and Drug Administration (FDA) is announcing that a proposed collection of information has been submitted to the Office of Management and Budget (OMB) for review and clearance under the Paperwork Reduction Act of 1995.",
       "url": "https://www.federalregister.gov/documents/2026/09/29/2026-19850/agency-information-collection-activities-submission-for-office-of-management-and-budget-review",
-      "source": "Federal Register - FDA",
+      "source": "Federal Register - HHS",
       "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
+      "sourceId": "federal_register_hhs",
       "publishedAt": "2026-09-29",
       "category": "general_market",
       "relevance": 100,
@@ -663,9 +811,9 @@
       "title": "Agency Information Collection Activities; Proposed Collection; Comment Request; Protection of Human Subjects and Institutional Review Boards",
       "summary": "The Food and Drug Administration (FDA, Agency, or we) is announcing an opportunity for public comment on the proposed collection of certain information by the Agency. Under the Paperwork Reduction Act of 1995 (PRA), Federal Agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension of an existing collection of information, and to allow 60 days for public comment in response to the notice. This notice solicits comments on information collection requirements for the tracking of medical devices.",
       "url": "https://www.federalregister.gov/documents/2026/09/29/2026-19849/agency-information-collection-activities-proposed-collection-comment-request-protection-of-human",
-      "source": "Federal Register - FDA",
+      "source": "Federal Register - HHS",
       "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
+      "sourceId": "federal_register_hhs",
       "publishedAt": "2026-09-29",
       "category": "ai_tech",
       "relevance": 100,
@@ -679,18 +827,6 @@
       "summary": "Minnesota has emerged as a health system M&#38;A battleground, with major deals reshaping the state&#8217;s market in less than six months. Bloomington, Minn.",
       "category": "mergers_mna",
       "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Agency Information Collection Activities: Submission to OMB for Review and Approval; Public Comment Request; National Marrow Donor Program Patient Support Center Survey",
-      "summary": "In compliance with the Paperwork Reduction Act of 1995, HRSA submitted an Information Collection Request (ICR) to the Office of Management and Budget (OMB) for review and approval. Comments submitted during the first public review of this ICR will be provided to OMB. OMB will accept further comments from the public during the review and approval period. OMB may act on HRSA's ICR only after the 30-day comment period for this Notice has closed.",
-      "url": "https://www.federalregister.gov/documents/2026/09/29/2026-19883/agency-information-collection-activities-submission-to-omb-for-review-and-approval-public-comment",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-09-29",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
     },
     {
       "title": "Alleged ShinyHunters leader arrested; group targeted healthcare",
@@ -4687,135 +4823,6 @@
       "summary": "Legislation reintroduced by Sens. Warner and Wyden set aside voluntary cybersecurity standards for tighter enforcement, but would also give hospitals $1.",
       "category": "general_market",
       "categoryLabel": "General Market"
-    },
-    {
-      "title": "One-third of privately insured have medical debt, Commonwealth Fund survey finds",
-      "url": "https://www.fiercehealthcare.com/payers/one-third-privately-insured-have-medical-debt-commonwealth-fund-survey-finds",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-09-23",
-      "summary": "Nearly two thirds said their debt stemmed from hospital care, though many pointed to several accumulating bills rather than a single high-cost procedure for their burdens. Additionally, focus group participants described provider-recommended services that were unexpectedly denied by an insurer.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Aetna expands bundled prior auths for cancer care",
-      "url": "https://www.fiercehealthcare.com/payers/aetna-expands-bundled-prior-auths-cancer-care",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-09-23",
-      "summary": "Aetna is expanding bundled prior authorizations across all types of cancer for enrollees in its Medicaid plans across eight states.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "No Surprises Act IDR arbitration driving high costs for employers, new report finds",
-      "url": "https://www.fiercehealthcare.com/regulatory/no-surprises-act-idr-arbitration-driving-high-costs-employers-eric-report",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-09-23",
-      "summary": "One plan sponsor interviewed for the report saw payments associated with the IDR process increase from approximately $3.5 million in 2025 to more than $6 million during the first half of 2026.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Texas judge signs off on bankruptcy plans for CVS' Omnicare unit",
-      "url": "https://www.fiercehealthcare.com/payers/cvs-omnicare-unit-files-bankruptcy-amid-ongoing-legal-fallout",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-09-23",
-      "summary": "CVS Health's Omnicare unit has started voluntary Chapter 11 bankruptcy proceedings as it navigates a series of legal challenges.",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "All 50 states apply to participate in new Medicaid drug pricing model, White House says",
-      "url": "https://www.fiercehealthcare.com/regulatory/cms-unveils-new-model-aims-bring-most-favored-nation-pricing-medicaid",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-09-23",
-      "summary": "The Trump administration is rolling out a new model that aims to bring most-favored nation pricing to the Medicaid space.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "White House plans to put NIH grants under political control: reports",
-      "url": "https://www.fiercehealthcare.com/research/white-house-plans-put-nih-grants-under-political-control-reports",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-09-23",
-      "summary": "President Donald Trump is attempting to seize further control of funding decisions made by the National Institutes of Health. According to multiple reports, senior officials met in the Oval Office on Friday to discuss plans for an executive order that would create an external panel with the power to shoot down NIH grants.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Business Group on Health taps BioRadar to boost workforce readiness for emerging threats",
-      "url": "https://www.fiercehealthcare.com/payers/business-group-health-taps-bioradar-boost-workforce-readiness-emerging-threats",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-09-23",
-      "summary": "Biological threat intelligence is increasingly becoming a workforce and business issue, not just a public health concern. Emerging threats—infectious disease outbreaks, pandemics and potential bioterrorism events—can cause workforce and operational disruptions.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "The IDR Problem Payers Actually Have Isn't a Volume Problem. It's a Front-End Problem.",
-      "url": "https://www.fiercehealthcare.com/sponsored/idr-problem-payers-actually-have-isnt-volume-problem-its-front-end-problem",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-09-23",
-      "summary": "For health plans: the real fix for rising IDR disputes starts before arbitration. See how 93% get resolved early.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "From Detection to Prevention: A Better Approach to Medicaid Program Integrity",
-      "url": "https://www.fiercehealthcare.com/sponsored/detection-prevention-better-approach-medicaid-program-integrity",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-09-23",
-      "summary": "Real-time data, analytics and collaboration can help Medicaid programs resolve issues earlier—without sacrificing participant choice.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "NCQA reports number of 5-star health plans jumps 64% in latest ratings",
-      "url": "https://www.fiercehealthcare.com/payers/ncqa-reports-number-5-star-health-plans-jumps-64-2026-ratings",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-09-23",
-      "summary": "The National Committee for Quality Assurance (NCQA) released its annual health plan ratings, highlighting that 18 plans earned top marks, up 64% from 2025.",
-      "category": "quality_safety",
-      "categoryLabel": "Quality & Safety"
-    },
-    {
-      "title": "Weekly Rundown: Rutgers, RWJBarnabas Health tap AWS for new innovation hub; Luma Health launches new agentic outreach workflows",
-      "url": "https://www.fiercehealthcare.com/health-tech/weekly-rundown-rutgers-university-rwjbarnabas-health-aws-partner-innovation-hub-luma",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-09-23",
-      "summary": "The latest news from Rutgers University, Hello Patient, RWJBarnabas Health, Amazon Web Services, Luma Health, Vitality and more.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "How Summa Health's new CEO is approaching her 'very unique' task of leading a VC-owned health system",
-      "url": "https://www.fiercehealthcare.com/providers/how-summa-healths-new-ceo-approaching-her-very-unique-task-leading-vc-owned-health-system",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-09-23",
-      "summary": "Jennifer Eslinger is joining a $2.2 billion integrated system that was recently acquired and taken for-profit by General Catalyst.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Arkansas pharmacies sue Express Scripts over alleged underpayments",
-      "url": "https://www.fiercehealthcare.com/payers/arkansas-pharmacies-sue-express-scripts-over-alleged-underpayments",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-09-23",
-      "summary": "Twelve independent pharmacies in Arkansas are suing Express Scripts alleging the pharmacy benefit manager repeatedly underpaid them on tends of thousands of drug prescriptions, in violation of state law.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Agency Information Collection Activities: Proposed Collection; Comment Request",
-      "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information (including each proposed extension or reinstatement of an existing collection of information) and to allow 60 days for public comment on the proposed action. Interested persons are invited to send comments regarding our burden estimates or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
-      "url": "https://www.federalregister.gov/documents/2026/09/22/2026-19366/agency-information-collection-activities-proposed-collection-comment-request",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-09-22",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
     }
   ]
 }
