@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-10-03T00:26:26.763Z",
+  "lastUpdated": "2026-10-03T06:15:39.715Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 1,
-    "healthySources": 9,
+    "staleSources": 3,
+    "healthySources": 7,
     "sources": [
       {
         "source": "Fierce Healthcare",
         "articleCount": 235,
         "latestPublishedAt": "2026-10-03T00:00:00.000Z",
-        "staleHours": 0,
+        "staleHours": 6,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
         "articleCount": 114,
         "latestPublishedAt": "2026-10-02T00:00:00.000Z",
-        "staleHours": 24,
+        "staleHours": 30,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 72,
+        "articleCount": 71,
         "latestPublishedAt": "2026-10-02T00:00:00.000Z",
-        "staleHours": 24,
+        "staleHours": 30,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 36,
         "latestPublishedAt": "2026-10-02T00:00:00.000Z",
-        "staleHours": 24,
+        "staleHours": 30,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 16,
         "latestPublishedAt": "2026-10-02T00:00:00.000Z",
-        "staleHours": 24,
+        "staleHours": 30,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 12,
         "latestPublishedAt": "2026-09-30T00:00:00.000Z",
-        "staleHours": 72,
-        "status": "ok"
+        "staleHours": 78,
+        "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 10,
         "latestPublishedAt": "2026-10-02T00:00:00.000Z",
-        "staleHours": 24,
+        "staleHours": 30,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
-        "articleCount": 3,
+        "articleCount": 4,
         "latestPublishedAt": "2026-10-10T00:00:00.000Z",
-        "staleHours": -168,
+        "staleHours": -162,
         "status": "ok"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 1,
         "latestPublishedAt": "2026-09-30T00:00:00.000Z",
-        "staleHours": 72,
-        "status": "ok"
+        "staleHours": 78,
+        "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 1,
         "latestPublishedAt": "2026-09-25T00:00:00.000Z",
-        "staleHours": 192,
+        "staleHours": 198,
         "status": "stale"
       }
     ]
@@ -115,8 +115,10 @@
     }
   },
   "quality": {
-    "status": "pass",
-    "failedChecks": [],
+    "status": "warning",
+    "failedChecks": [
+      "maxStaleSources"
+    ],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -135,8 +137,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 1,
-        "pass": true
+        "actual": 3,
+        "pass": false
       }
     }
   },
@@ -401,6 +403,18 @@
       "category": "quality_safety",
       "relevance": 100,
       "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "Breathing Circuit Recall: Draeger Removes VentStar Resus Neo Hoses",
+      "summary": "Removal of VentStar Resus Neo hoses due to the potential for cracks resulting in restricted ventilation or delayed therapy.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/breathing-circuit-recall-draeger-removes-ventstar-resus-neo-hoses",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-10-02",
+      "category": "general_market",
+      "relevance": 98,
+      "categoryLabel": "General Market"
     },
     {
       "title": "Proposed Information Collection Activity; U.S. Repatriation Forms",
@@ -4818,15 +4832,6 @@
       "source": "STAT News",
       "publishedAt": "2026-09-25",
       "summary": "From new hires to departures, promotions and transfers, here are the latest comings and goings in the pharmaceutical industry.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Pharmalittle: We&#8217;re reading about a reticent FDA commish nominee, a Novo deal, and more",
-      "url": "https://www.statnews.com/pharmalot/2026/09/25/reticent-fda-commish-nominee-novo-deal/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-25",
-      "summary": "President Trump’s nominee to lead the FDA was grilled by senators on hot button topics like China, vaccines, and abortion access",
       "category": "general_market",
       "categoryLabel": "General Market"
     }
