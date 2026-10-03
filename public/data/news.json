@@ -1,81 +1,74 @@
 {
-  "lastUpdated": "2026-10-03T06:15:39.715Z",
+  "lastUpdated": "2026-10-03T12:23:46.486Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
-    "totalSources": 10,
-    "staleSources": 3,
-    "healthySources": 7,
+    "totalSources": 9,
+    "staleSources": 1,
+    "healthySources": 8,
     "sources": [
       {
         "source": "Fierce Healthcare",
         "articleCount": 235,
         "latestPublishedAt": "2026-10-03T00:00:00.000Z",
-        "staleHours": 6,
+        "staleHours": 12,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 114,
+        "articleCount": 104,
         "latestPublishedAt": "2026-10-02T00:00:00.000Z",
-        "staleHours": 30,
+        "staleHours": 36,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 71,
+        "articleCount": 67,
         "latestPublishedAt": "2026-10-02T00:00:00.000Z",
-        "staleHours": 30,
+        "staleHours": 36,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
-        "articleCount": 36,
-        "latestPublishedAt": "2026-10-02T00:00:00.000Z",
-        "staleHours": 30,
+        "articleCount": 44,
+        "latestPublishedAt": "2026-10-05T00:00:00.000Z",
+        "staleHours": -36,
+        "status": "ok"
+      },
+      {
+        "source": "Federal Register - FDA",
+        "articleCount": 17,
+        "latestPublishedAt": "2026-10-01T00:00:00.000Z",
+        "staleHours": 60,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 16,
         "latestPublishedAt": "2026-10-02T00:00:00.000Z",
-        "staleHours": 30,
+        "staleHours": 36,
         "status": "ok"
       },
       {
-        "source": "Federal Register - FDA",
-        "articleCount": 12,
-        "latestPublishedAt": "2026-09-30T00:00:00.000Z",
-        "staleHours": 78,
-        "status": "stale"
-      },
-      {
         "source": "Federal Register - CMS",
-        "articleCount": 10,
-        "latestPublishedAt": "2026-10-02T00:00:00.000Z",
-        "staleHours": 30,
+        "articleCount": 13,
+        "latestPublishedAt": "2026-10-05T00:00:00.000Z",
+        "staleHours": -36,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
-        "articleCount": 4,
+        "articleCount": 3,
         "latestPublishedAt": "2026-10-10T00:00:00.000Z",
-        "staleHours": -162,
+        "staleHours": -156,
         "status": "ok"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 1,
         "latestPublishedAt": "2026-09-30T00:00:00.000Z",
-        "staleHours": 78,
-        "status": "stale"
-      },
-      {
-        "source": "National Nurses United RSS",
-        "articleCount": 1,
-        "latestPublishedAt": "2026-09-25T00:00:00.000Z",
-        "staleHours": 198,
+        "staleHours": 84,
         "status": "stale"
       }
     ]
@@ -87,47 +80,45 @@
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 25
+      "count": 26
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 11
+      "count": 10
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 70
+      "count": 72
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 11
+      "count": 13
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
-      "count": 20
+      "count": 19
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 155
+      "count": 150
     },
     "general_market": {
       "label": "General Market",
-      "count": 195
+      "count": 197
     }
   },
   "quality": {
-    "status": "warning",
-    "failedChecks": [
-      "maxStaleSources"
-    ],
+    "status": "pass",
+    "failedChecks": [],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
-        "actual": 10,
+        "actual": 9,
         "pass": true
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 26,
+        "actual": 44,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -137,8 +128,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 3,
-        "pass": false
+        "actual": 1,
+        "pass": true
       }
     }
   },
@@ -153,6 +144,222 @@
       "publishedAt": "2026-10-10",
       "category": "general_market",
       "relevance": 98,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Agency Information Collection Activities: Proposed Collection; Comment Request",
+      "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information (including each proposed extension or reinstatement of an existing collection of information) and to allow 60 days for public comment on the proposed action. Interested persons are invited to send comments regarding our burden estimates or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
+      "url": "https://www.federalregister.gov/documents/2026/10/05/2026-20364/agency-information-collection-activities-proposed-collection-comment-request",
+      "source": "Federal Register - CMS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_cms",
+      "publishedAt": "2026-10-05",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Agency Information Collection Activities: Proposed Collection; Comment Request",
+      "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information (including each proposed extension or reinstatement of an existing collection of information) and to allow 60 days for public comment on the proposed action. Interested persons are invited to send comments regarding our burden estimates or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
+      "url": "https://www.federalregister.gov/documents/2026/10/05/2026-20352/agency-information-collection-activities-proposed-collection-comment-request",
+      "source": "Federal Register - CMS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_cms",
+      "publishedAt": "2026-10-05",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Medicare Program; Alternative Payment Model (APM) Incentive Payment Advisory for Clinicians-Request for Current Billing Information for Qualifying APM Participants; Correction",
+      "summary": "This document corrects a technical error in the payment advisory that appeared in the August 13, 2026, Federal Register titled \"Medicare Program; Alternative Payment Model (APM) Incentive Payment Advisory for Clinicians--Request for Current Billing Information for Qualifying APM Participants\".",
+      "url": "https://www.federalregister.gov/documents/2026/10/05/2026-20334/medicare-program-alternative-payment-model-apm-incentive-payment-advisory-for-clinicians-request-for",
+      "source": "Federal Register - CMS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_cms",
+      "publishedAt": "2026-10-05",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Advisory Council on Alzheimer's Research, Care, and Services; Meeting",
+      "summary": "This notice announces the public meeting of the Advisory Council on Alzheimer's Research, Care, and Services (Advisory Council) and the U.S. Department of Health and Human Services Alzheimer's Disease and Related Dementias Summit. The Advisory Council provides advice on how to prevent or reduce the burden of Alzheimer's disease and related dementias on people living with the disease and their caregivers. During the Summit, attendees will hear updates on the coordinated national response to Alzheimer's disease and related dementias, including panel presentations on care, services, and supports, as well as research, innovation, and prevention. During the fourth and final Advisory Council meeting of 2026, the Advisory Council will hear from a panel organized by the clinical care subcommittee, receive budget updates from the National Institutes of Health, and hear a presentation on innovation in Alzheimer's disease interventions using focused ultrasound technology.",
+      "url": "https://www.federalregister.gov/documents/2026/10/05/2026-20385/advisory-council-on-alzheimers-research-care-and-services-meeting",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-10-05",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Agency Information Collection Activities: Proposed Collection; Comment Request",
+      "summary": "This notice announces the intention of the Agency for Healthcare Research and Quality (AHRQ) to request that the Office of Management and Budget (OMB) approve the extension without change of the previously approved information collection project \"Generic Clearance for the Collection of Qualitative Feedback on Agency Service Delivery\" (0935- 0179). This information collection was previously published in the Federal Register on July 30, 2026, and allowed 60 days for public comment. AHRQ did not receive any comments. The purpose of this notice is to allow an additional 30 days for public comment.",
+      "url": "https://www.federalregister.gov/documents/2026/10/05/2026-20361/agency-information-collection-activities-proposed-collection-comment-request",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-10-05",
+      "category": "quality_safety",
+      "relevance": 100,
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "Agency Information Collection Activities: Proposed Collection; Comment Request",
+      "summary": "This notice announces the intention of the Agency for Healthcare Research and Quality (AHRQ) to request that the Office of Management and Budget (OMB) approve the revision of a currently approved information collection project \"AHRQ Consumer Assessment of Healthcare Providers and Systems (CAHPS) Database for Health Plans\" (OMB No. 0935-0165). This information collection was previously published in the Federal Register on July 30, 2028, and allowed 60 days for public comment. AHRQ did not receive any comments. The purpose of this notice is to allow an additional 30 days for public comment.",
+      "url": "https://www.federalregister.gov/documents/2026/10/05/2026-20357/agency-information-collection-activities-proposed-collection-comment-request",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-10-05",
+      "category": "quality_safety",
+      "relevance": 100,
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "Proposed Data Collection Submitted for Public Comment and Recommendations",
+      "summary": "The Centers for Disease Control and Prevention (CDC), as part of its continuing effort to reduce public burden and maximize the utility of government information, invites the general public and other federal agencies the opportunity to comment on a continuing information collection, as required by the Paperwork Reduction Act of 1995. This notice invites comment on a proposed information collection project titled Respiratory Protective Devices--42 CFR 84. The purpose of this data collection is to enable 42 CFR part 84 respirator approval certification activities.",
+      "url": "https://www.federalregister.gov/documents/2026/10/05/2026-20348/proposed-data-collection-submitted-for-public-comment-and-recommendations",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-10-05",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Proposed Data Collection Submitted for Public Comment and Recommendations",
+      "summary": "The Centers for Disease Control and Prevention (CDC), as part of its continuing effort to reduce public burden and maximize the utility of government information, invites the general public and other federal agencies the opportunity to comment on a proposed information collection, as required by the Paperwork Reduction Act of 1995. This notice invites comment on a proposed information collection project titled Public Health Crisis Response (PHCR) Cooperative Agreement. The Public Health Crisis Response (PHCR) Cooperative Agreement provides rapid funding to help existing public health programs respond to major public health emergencies and crises.",
+      "url": "https://www.federalregister.gov/documents/2026/10/05/2026-20344/proposed-data-collection-submitted-for-public-comment-and-recommendations",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-10-05",
+      "category": "mergers_mna",
+      "relevance": 100,
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Submission for Office of Management and Budget Review; Mental Health Assessment Form and Onsite Health Intervention Form",
+      "summary": "The Administration for Children and Families (ACF) Office of Refugee Resettlement (ORR) is requesting a 3-year extension with changes of the Mental Health Assessment Form and Onsite Health Intervention Form (formerly Public Health Investigation Form: Non-TB Illness, and Public Health Investigation Form: Active TB, OMB #0970- 0509, expiration 9/30/2026). Proposed revisions include merging two forms (Public Health Investigation Forms, Active TB and Non-TB Illness) into the single Onsite Health Intervention (OHI) Form. The proposed restructuring and revisions will improve transparency, lessen burden, improve data quality, and ensure alignment with ORR requirements. In addition, to ensure continuity of care, the request has been revised to include the sharing of health information with the Department of Homeland Security (DHS) in specific circumstances.",
+      "url": "https://www.federalregister.gov/documents/2026/10/05/2026-20314/submission-for-office-of-management-and-budget-review-mental-health-assessment-form-and-onsite",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-10-05",
+      "category": "quality_safety",
+      "relevance": 100,
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "Center for Scientific Review; Amended Notice of Meeting",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/10/05/2026-20370/center-for-scientific-review-amended-notice-of-meeting",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-10-05",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Center for Scientific Review; Amended Notice of Meeting",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/10/05/2026-20368/center-for-scientific-review-amended-notice-of-meeting",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-10-05",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Center for Scientific Review; Notice of Closed Meetings",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/10/05/2026-20366/center-for-scientific-review-notice-of-closed-meetings",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-10-05",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Center For Scientific Review; Notice of Closed Meetings",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/10/05/2026-20365/center-for-scientific-review-notice-of-closed-meetings",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-10-05",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Submission for Office of Management and Budget Review; Federal Case Registry",
+      "summary": "The Office of Child Support Enforcement (OCSE), Administration for Children and Families (ACF), is requesting a three-year extension of the Federal Case Registry (FCR) (Office of Management and Budget (OMB) # 0970-0421, expiration November 30, 2026) There are no changes requested to the FGR.",
+      "url": "https://www.federalregister.gov/documents/2026/10/05/2026-20363/submission-for-office-of-management-and-budget-review-federal-case-registry",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-10-05",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Agency Forms Undergoing Paperwork Reduction Act Review",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/10/05/2026-20351/agency-forms-undergoing-paperwork-reduction-act-review",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-10-05",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Agency Forms Undergoing Paperwork Reduction Act Review",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/10/05/2026-20346/agency-forms-undergoing-paperwork-reduction-act-review",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-10-05",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Reforming Federal Reporting and Assessments in Child Welfare",
+      "summary": "ACF proposes to remove regulations that implement title IV-B of the Social Security Act (the Act) because they are outdated and refer to dates that have passed, have been superseded by subsequent amendments to the Act, duplicate or restate requirements already in title IV-B of the Act or other Federal law, and/or impose administrative and reporting requirements on agencies that do not meaningfully support Federal program oversight and administration of title IV-B programs. Four of these regulatory requirements are redesignated to the regulations addressing titles IV-E and IV-B plan requirements. ACF also proposes to remove the regulation that articulates the principles of child and family services reviews because it does not prescribe any requirements that states and tribes must follow, but rather provides unenforceable recommendations, and to remove redundant cross-references.",
+      "url": "https://www.federalregister.gov/documents/2026/10/05/2026-20329/reforming-federal-reporting-and-assessments-in-child-welfare",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-10-05",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Center For Scientific Review; Notice of Closed Meetings",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/10/05/2026-20284/center-for-scientific-review-notice-of-closed-meetings",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-10-05",
+      "category": "general_market",
+      "relevance": 96,
       "categoryLabel": "General Market"
     },
     {
@@ -393,18 +600,6 @@
       "categoryLabel": "Policy & Reimbursement"
     },
     {
-      "title": "Patient Safety Organizations: Delisting for Cause for the Hospital Rep Safety Solutions Corp. PSO",
-      "summary": "The Patient Safety and Quality Improvement Final Rule (Patient Safety Rule) authorizes AHRQ, on behalf of the Secretary of HHS, to list as a patient safety organization (PSO) an entity that attests that it meets the statutory and regulatory requirements for listing. A PSO can be \"delisted\" by the Secretary if it is found to no longer meet the requirements of the Patient Safety and Quality Improvement Act of 2005 (Patient Safety Act) and Patient Safety Rule, when a PSO chooses to voluntarily relinquish its status as a PSO for any reason, or when a PSO's listing expires. AHRQ delisted the Hospital Rep Safety Solutions Corp., PSO number P0264, of its status as a PSO, when it failed to correct a finding of deficiency, and has delisted the PSO accordingly.",
-      "url": "https://www.federalregister.gov/documents/2026/10/02/2026-20212/patient-safety-organizations-delisting-for-cause-for-the-hospital-rep-safety-solutions-corp-pso",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-10-02",
-      "category": "quality_safety",
-      "relevance": 100,
-      "categoryLabel": "Quality & Safety"
-    },
-    {
       "title": "Breathing Circuit Recall: Draeger Removes VentStar Resus Neo Hoses",
       "summary": "Removal of VentStar Resus Neo hoses due to the potential for cracks resulting in restricted ventilation or delayed therapy.",
       "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/breathing-circuit-recall-draeger-removes-ventstar-resus-neo-hoses",
@@ -420,18 +615,6 @@
       "title": "Proposed Information Collection Activity; U.S. Repatriation Forms",
       "summary": "The Administration for Children and Families (ACF) is requesting a 3-year extension of the U.S. Repatriation Program forms (OMB #0970-0474, expiration 1/31/2027). There are several changes requested to the thirteen forms. Burden estimates have also been updated.",
       "url": "https://www.federalregister.gov/documents/2026/10/02/2026-20265/proposed-information-collection-activity-us-repatriation-forms",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-10-02",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Center for Scientific Review; Notice of Closed Meetings",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/10/02/2026-20248/center-for-scientific-review-notice-of-closed-meetings",
       "source": "Federal Register - HHS",
       "sourceType": "federal_register",
       "sourceId": "federal_register_hhs",
@@ -483,6 +666,30 @@
       "publishedAt": "2026-10-02",
       "summary": "Keith Mueller, PhD, director of RUPRI at the University of Iowa in Iowa City, and a founding member of its Health Panel, died Sept. 26 following a brief illness.",
       "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Patient Safety Organizations: Delisting for Cause for the Hospital Rep Safety Solutions Corp. PSO",
+      "summary": "The Patient Safety and Quality Improvement Final Rule (Patient Safety Rule) authorizes AHRQ, on behalf of the Secretary of HHS, to list as a patient safety organization (PSO) an entity that attests that it meets the statutory and regulatory requirements for listing. A PSO can be \"delisted\" by the Secretary if it is found to no longer meet the requirements of the Patient Safety and Quality Improvement Act of 2005 (Patient Safety Act) and Patient Safety Rule, when a PSO chooses to voluntarily relinquish its status as a PSO for any reason, or when a PSO's listing expires. AHRQ delisted the Hospital Rep Safety Solutions Corp., PSO number P0264, of its status as a PSO, when it failed to correct a finding of deficiency, and has delisted the PSO accordingly.",
+      "url": "https://www.federalregister.gov/documents/2026/10/02/2026-20212/patient-safety-organizations-delisting-for-cause-for-the-hospital-rep-safety-solutions-corp-pso",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-10-02",
+      "category": "quality_safety",
+      "relevance": 100,
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "Center for Scientific Review; Notice of Closed Meetings",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/10/02/2026-20248/center-for-scientific-review-notice-of-closed-meetings",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-10-02",
+      "category": "general_market",
+      "relevance": 96,
       "categoryLabel": "General Market"
     },
     {
@@ -1134,6 +1341,78 @@
       "categoryLabel": "Policy & Reimbursement"
     },
     {
+      "title": "Advisory Committee; Antimicrobial Drugs Advisory Committee; Renewal",
+      "summary": "The Food and Drug Administration (FDA) is announcing the renewal of the Antimicrobial Drugs Advisory Committee by the Commissioner of Food and Drugs (the Commissioner). The Commissioner has determined that it is in the public interest to renew the Antimicrobial Drugs Advisory Committee for an additional 2 years beyond the charter expiration date. The new charter will be in effect until the October 7, 2028, expiration date.",
+      "url": "https://www.federalregister.gov/documents/2026/10/01/2026-20142/advisory-committee-antimicrobial-drugs-advisory-committee-renewal",
+      "source": "Federal Register - FDA",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_fda",
+      "publishedAt": "2026-10-01",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Advisory Committee; Dermatologic and Ophthalmic Drugs Advisory Committee; Renewal",
+      "summary": "The Food and Drug Administration (FDA) is announcing the renewal of the Dermatologic and Ophthalmic Drugs Advisory Committee by the Commissioner of Food and Drugs (the Commissioner). The Commissioner has determined that it is in the public interest to renew the Dermatologic and Ophthalmic Drugs Advisory Committee for an additional 2 years beyond the charter expiration date. The new charter will be in effect until the October 7, 2028, expiration date.",
+      "url": "https://www.federalregister.gov/documents/2026/10/01/2026-20141/advisory-committee-dermatologic-and-ophthalmic-drugs-advisory-committee-renewal",
+      "source": "Federal Register - FDA",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_fda",
+      "publishedAt": "2026-10-01",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Agency Information Collection Activities; Submission for Office of Management and Budget Review; Comment Request; Voluntary Improvement Program",
+      "summary": "The Food and Drug Administration (FDA) is announcing that a proposed collection of information has been submitted to the Office of Management and Budget (OMB) for review and clearance under the Paperwork Reduction Act of 1995.",
+      "url": "https://www.federalregister.gov/documents/2026/10/01/2026-20085/agency-information-collection-activities-submission-for-office-of-management-and-budget-review",
+      "source": "Federal Register - FDA",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_fda",
+      "publishedAt": "2026-10-01",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Request for Nominations for Individuals and Consumer Organizations for Advisory Committees",
+      "summary": "The Food and Drug Administration (FDA or Agency) is requesting that any consumer organizations interested in participating in the selection of voting and/or nonvoting consumer representatives to serve on its advisory committees or panels notify FDA in writing. FDA is also requesting nominations for voting and/or nonvoting consumer representatives to serve on advisory committees and/or panels for which vacancies currently exist or are expected to occur in the near future. Nominees recommended to serve as a voting or nonvoting consumer representative may be self-nominated or may be nominated by a consumer organization. FDA seeks to include the views of individuals on its advisory committees selected without regard to race, color, national origin, religion, age, or sex.",
+      "url": "https://www.federalregister.gov/documents/2026/10/01/2026-20065/request-for-nominations-for-individuals-and-consumer-organizations-for-advisory-committees",
+      "source": "Federal Register - FDA",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_fda",
+      "publishedAt": "2026-10-01",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Request for Nominations for Voting Members of Food and Drug Administration Advisory Committees",
+      "summary": "The Food and Drug Administration (FDA or Agency) is requesting nominations for qualified individuals to serve as voting members of FDA's standing public advisory committees and panels (collectively, advisory committees). This notice covers scientific, technical, professional, and other voting-member positions in which appointees serve as individuals rather than as designated representatives; it does not solicit nominations for consumer representative or industry representative positions. FDA will consider nominations for current and future vacancies as they arise. FDA encourages nominations of all appropriately qualified candidates whose expertise and perspectives would contribute to the work and balanced composition of its advisory committees.",
+      "url": "https://www.federalregister.gov/documents/2026/10/01/2026-20063/request-for-nominations-for-voting-members-of-food-and-drug-administration-advisory-committees",
+      "source": "Federal Register - FDA",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_fda",
+      "publishedAt": "2026-10-01",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Greenwich Rx Issues Voluntary Nationwide Recall of Compounded Glutathione Due to Elevated Endotoxin Levels",
+      "summary": "IMMEDIATE RELEASE - Tomball, Texas – October 1, 2026 – Greenwich Rx, a 503A compounding pharmacy, is voluntarily recalling specific lots of its compounded glutathione to the consumer level. The product is being recalled due to potential elevated endotoxin levels.",
+      "url": "http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/greenwich-rx-issues-voluntary-nationwide-recall-compounded-glutathione-due-elevated-endotoxin-levels",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-10-01",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "Notice of NIH Tribal Consultations and Listening Session",
       "summary": "In accordance with the National Institutes of Health (NIH), Tribal Consultation Policy, the NIH will hold two Tribal Consultations and one Tribal listening session at the National Congress of American Indians (NCAI) Annual Convention. The first consultation will discuss two new proposed initiatives of the NIH All of Us Research Program. The second consultation will discuss the National Institute of Minority Health and Health Disparities (NIMHD) proposed renewal initiative for the Resource Center for Tribal Epidemiological Centers (RC-TEC). The Tribal Health Research Office will also conduct a listening session to seek Tribal perspectives on the NIH Tribal Data Sovereignty Policy currently under development.",
       "url": "https://www.federalregister.gov/documents/2026/10/01/2026-20151/notice-of-nih-tribal-consultations-and-listening-session",
@@ -1146,45 +1425,9 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Advisory Committee; Antimicrobial Drugs Advisory Committee; Renewal",
-      "summary": "The Food and Drug Administration (FDA) is announcing the renewal of the Antimicrobial Drugs Advisory Committee by the Commissioner of Food and Drugs (the Commissioner). The Commissioner has determined that it is in the public interest to renew the Antimicrobial Drugs Advisory Committee for an additional 2 years beyond the charter expiration date. The new charter will be in effect until the October 7, 2028, expiration date.",
-      "url": "https://www.federalregister.gov/documents/2026/10/01/2026-20142/advisory-committee-antimicrobial-drugs-advisory-committee-renewal",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-10-01",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Advisory Committee; Dermatologic and Ophthalmic Drugs Advisory Committee; Renewal",
-      "summary": "The Food and Drug Administration (FDA) is announcing the renewal of the Dermatologic and Ophthalmic Drugs Advisory Committee by the Commissioner of Food and Drugs (the Commissioner). The Commissioner has determined that it is in the public interest to renew the Dermatologic and Ophthalmic Drugs Advisory Committee for an additional 2 years beyond the charter expiration date. The new charter will be in effect until the October 7, 2028, expiration date.",
-      "url": "https://www.federalregister.gov/documents/2026/10/01/2026-20141/advisory-committee-dermatologic-and-ophthalmic-drugs-advisory-committee-renewal",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-10-01",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
       "title": "Period for Refugee Cash Assistance and Refugee Medical Assistance; Correction",
       "summary": "The Office of Refugee Resettlement (ORR) published a notice in the Federal Register of July 14, 2026, extending the eligibility time period for Refugee Cash Assistance (RCA) and Refugee Medical Assistance (RMA). After further review of the considerations listed 45 CFR 400.211, ORR determined that the eligibility period should be 12 months. This submission is to correct the time eligibility period to 12 months for both programs.",
       "url": "https://www.federalregister.gov/documents/2026/10/01/2026-20111/period-for-refugee-cash-assistance-and-refugee-medical-assistance-correction",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-10-01",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Agency Information Collection Activities; Submission for Office of Management and Budget Review; Comment Request; Voluntary Improvement Program",
-      "summary": "The Food and Drug Administration (FDA) is announcing that a proposed collection of information has been submitted to the Office of Management and Budget (OMB) for review and clearance under the Paperwork Reduction Act of 1995.",
-      "url": "https://www.federalregister.gov/documents/2026/10/01/2026-20085/agency-information-collection-activities-submission-for-office-of-management-and-budget-review",
       "source": "Federal Register - HHS",
       "sourceType": "federal_register",
       "sourceId": "federal_register_hhs",
@@ -1204,42 +1447,6 @@
       "category": "policy_reimbursement",
       "relevance": 100,
       "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Request for Nominations for Individuals and Consumer Organizations for Advisory Committees",
-      "summary": "The Food and Drug Administration (FDA or Agency) is requesting that any consumer organizations interested in participating in the selection of voting and/or nonvoting consumer representatives to serve on its advisory committees or panels notify FDA in writing. FDA is also requesting nominations for voting and/or nonvoting consumer representatives to serve on advisory committees and/or panels for which vacancies currently exist or are expected to occur in the near future. Nominees recommended to serve as a voting or nonvoting consumer representative may be self-nominated or may be nominated by a consumer organization. FDA seeks to include the views of individuals on its advisory committees selected without regard to race, color, national origin, religion, age, or sex.",
-      "url": "https://www.federalregister.gov/documents/2026/10/01/2026-20065/request-for-nominations-for-individuals-and-consumer-organizations-for-advisory-committees",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-10-01",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Request for Nominations for Voting Members of Food and Drug Administration Advisory Committees",
-      "summary": "The Food and Drug Administration (FDA or Agency) is requesting nominations for qualified individuals to serve as voting members of FDA's standing public advisory committees and panels (collectively, advisory committees). This notice covers scientific, technical, professional, and other voting-member positions in which appointees serve as individuals rather than as designated representatives; it does not solicit nominations for consumer representative or industry representative positions. FDA will consider nominations for current and future vacancies as they arise. FDA encourages nominations of all appropriately qualified candidates whose expertise and perspectives would contribute to the work and balanced composition of its advisory committees.",
-      "url": "https://www.federalregister.gov/documents/2026/10/01/2026-20063/request-for-nominations-for-voting-members-of-food-and-drug-administration-advisory-committees",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-10-01",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Greenwich Rx Issues Voluntary Nationwide Recall of Compounded Glutathione Due to Elevated Endotoxin Levels",
-      "summary": "IMMEDIATE RELEASE - Tomball, Texas – October 1, 2026 – Greenwich Rx, a 503A compounding pharmacy, is voluntarily recalling specific lots of its compounded glutathione to the consumer level. The product is being recalled due to potential elevated endotoxin levels.",
-      "url": "http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/greenwich-rx-issues-voluntary-nationwide-recall-compounded-glutathione-due-elevated-endotoxin-levels",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-10-01",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
     },
     {
       "title": "National Institute of Neurological Disorders and Stroke; Notice of Closed Meeting",
@@ -1902,9 +2109,9 @@
       "title": "Medical Devices; Gastroenterology-Urology Devices; Classification of the Flushing and Storage Solution for Vascular Autografts at Room Temperature",
       "summary": "The Food and Drug Administration (FDA) is classifying the flushing and storage solution for vascular autografts at room temperature into class II (special controls). The special controls that apply to the device type are identified in this order and will be part of the codified language for classification of the flushing and storage solution for vascular autografts at room temperature. We are taking this action because we have determined that classifying the device into class II will provide a reasonable assurance of the safety and effectiveness of the device. We believe this action will also enhance patients' access to beneficial innovative devices, in part by reducing regulatory burdens.",
       "url": "https://www.federalregister.gov/documents/2026/09/30/2026-20075/medical-devices-gastroenterology-urology-devices-classification-of-the-flushing-and-storage-solution",
-      "source": "Federal Register - HHS",
+      "source": "Federal Register - FDA",
       "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
+      "sourceId": "federal_register_fda",
       "publishedAt": "2026-09-30",
       "category": "general_market",
       "relevance": 100,
@@ -1920,6 +2127,18 @@
       "publishedAt": "2026-09-30",
       "category": "general_market",
       "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "CI 8-K filing - The Cigna Group",
+      "summary": "The Cigna Group filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1739940/000114036126038056/ef20082869_8k.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-09-30",
+      "category": "general_market",
+      "relevance": 85,
       "categoryLabel": "General Market"
     },
     {
@@ -1944,18 +2163,6 @@
       "publishedAt": "2026-09-30",
       "category": "general_market",
       "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "CI 8-K filing - The Cigna Group",
-      "summary": "The Cigna Group filed 8-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/1739940/000114036126038056/ef20082869_8k.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-09-30",
-      "category": "general_market",
-      "relevance": 85,
       "categoryLabel": "General Market"
     },
     {
@@ -4660,180 +4867,6 @@
       "category": "ai_tech",
       "relevance": 100,
       "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Naveed Aslam: Final Debarment Order",
-      "summary": "The Food and Drug Administration (FDA or the Agency) is issuing an order under the Federal Food, Drug, and Cosmetic Act (FD&C Act) permanently debarring Naveed Aslam from providing services in any capacity to a person that has an approved or pending drug product application. FDA bases this order on a finding that Dr. Aslam was convicted of a felony under Federal law for conduct that relates to the regulation of a drug product under the FD&C Act. Dr. Aslam was given notice of the proposed debarment and an opportunity to request a hearing within the timeframe prescribed by regulation. As of July 9, 2026 (30 days after receipt of the notice), Dr. Aslam has not responded. Dr. Aslam's failure to respond and request a hearing constitutes a waiver of Dr. Aslam's right to a hearing concerning this matter.",
-      "url": "https://www.federalregister.gov/documents/2026/09/25/2026-19654/naveed-aslam-final-debarment-order",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-09-25",
-      "category": "capacity_expansion",
-      "relevance": 100,
-      "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "Central Maine Medical Center nurses vote overwhelmingly to join MSNA/National Nurses Organizing Committee",
-      "summary": "Registered nurses at Central Maine Medical Center in Lewiston, Maine, voted overwhelmingly tonight to join Maine State Nurses Association/National Nurses Organizing Committee, an affiliate of National Nurses United, the largest and fastest-growing registered nurse (RN) union in the nation. In an election held today, September 24, nurses voted 91 percent yes to forming a union.",
-      "url": "https://www.nationalnursesunited.org/press/central-maine-medical-center-nurses-vote-overwhelmingly-to-join-msna",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "2026-09-25",
-      "category": "labor_unions",
-      "relevance": 100,
-      "categoryLabel": "Labor & Unions"
-    },
-    {
-      "title": "Angiographic Catheter Recall: Boston Scientific Removes Imager II Angiographic Catheters",
-      "summary": "Boston Scientific Imager II Angiographic Catheters removed due to a manufacturing issue leading to tip detachment; could result in procedural delays, embolism",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/angiographic-catheter-recall-boston-scientific-removes-imager-ii-angiographic-catheters",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-09-25",
-      "category": "general_market",
-      "relevance": 98,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Draft NIH Policy on Sharing Summary Level Study Results With Clinical Research Participants",
-      "summary": "NIH seeks public input on its proposed NIH Policy on Sharing Summary Level Study Results with Clinical Research Participants, including ways to promote and enable the research community to share summary level study results with clinical research participants.",
-      "url": "https://www.federalregister.gov/documents/2026/09/25/2026-19706/draft-nih-policy-on-sharing-summary-level-study-results-with-clinical-research-participants",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-09-25",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Pointcore’s Perception Powers Smarter Operational Decisions",
-      "url": "https://www.beckershospitalreview.com/strategy/pointcores-perception-powers-smarter-operational-decisions/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-25",
-      "summary": "Healthcare organizations have more data than ever, but turning that data into insight can be a challenge. Perception, Pointcore’s data intelligence solution for healthcare, brings operational data together to create a clearer view of performance and opportunity.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "After losing a finger, Loma Linda Health CEO stresses the importance of a comeback",
-      "url": "https://www.beckershospitalreview.com/leadership/after-losing-a-finger-loma-linda-health-ceo-stresses-the-importance-of-a-comeback/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-25",
-      "summary": "It takes a lot to slow Anthony Hilliard, MD. At least physically.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Kaiser to lay off 147 workers across California",
-      "url": "https://www.beckershospitalreview.com/finance/kaiser-permanente-to-lay-off-147-workers-across-california/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-25",
-      "summary": "Kaiser Permanente is laying off 147 employees across several cities in California, the Oakland-based health system said in regulatory documents filed Sept. 21.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "How UChicago Medicine shifted staff to &#8216;more difficult&#8217; revenue cycle work",
-      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/how-uchicago-medicine-shifted-staff-to-more-difficult-revenue-cycle-work/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-25",
-      "summary": "UChicago Medicine is using automation to move revenue cycle staff away from routine insurance and prior authorization tasks and into more complex cases that require human judgment. Matthew Kennedy, director of patient access and financial clearance at UChicago Medicine, discussed the health system&#8217;s strategy during a panel at Becker’s 11th Annual Health IT + Digital [&#8230;] The post How UChicago Medicine shifted staff to &#8216;more difficult&#8217; revenue cycle work appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "House Democrats want to rein in healthcare giants, expand Medicare: Report",
-      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/house-democrats-want-to-rein-in-healthcare-giants-expand-medicare-report/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-25",
-      "summary": "House Democrats have drafted an 84-page health policy agenda outlining what the party would pursue if it wins a House majority in November, according to a Sept. 25 report from Politico, which first obtained the document.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "UNC Health system erases $45M loss with Epic rollout",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/unc-health-system-erases-45m-loss-with-epic-rollout/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-25",
-      "summary": "Boone, N.C.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Rising stars: 188 healthcare leaders under 40 &#124; 2026",
-      "url": "https://www.beckershospitalreview.com/hospital-management-administration/rising-stars-188-healthcare-leaders-under-40-2026/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-25",
-      "summary": "The next generation of healthcare leadership has arrived! The emerging leaders recognized on this list have already accomplished what takes many professionals a career to achieve, and they&#8217;re just getting started.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Adventist Health hospital settles sexual abuse lawsuit for $18.5M",
-      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/adventist-health-hospital-settles-sexual-abuse-lawsuit-for-18-5m/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-25",
-      "summary": "Adventist Health Sonora (Calif.) has reached a settlement of $18.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Google cybersecurity arm finds critical hospital exposures",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/cybersecurity/google-cybersecurity-arm-finds-critical-hospital-exposures/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-25",
-      "summary": "Google cybersecurity subsidiary Wiz has launched Scan for Good, an AI-driven initiative that has already uncovered critical security exposures at a public hospital and a private hospital. The program pairs Wiz&#8217;s AI-powered Red Agent penetration-testing tool with Google DeepMind&#8217;s Gemini 3.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "How FMOL Health cut sepsis deaths 24% with a rapid blood test",
-      "url": "https://www.beckershospitalreview.com/quality/infection-control/how-fmol-health-cut-sepsis-deaths-24-with-a-rapid-blood-test/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-09-25",
-      "summary": "In 2023, Baton Rouge, La.-based FMOL Health introduced a rapid sepsis diagnostic tool, and since then, the 10-hospital system has reduced sepsis mortality 24% and saved a life every three days.",
-      "category": "quality_safety",
-      "categoryLabel": "Quality & Safety"
-    },
-    {
-      "title": "STAT+: Licensing deals on generic versions of Roche flu drug aimed at preparing for pandemic",
-      "url": "https://www.statnews.com/pharmalot/2026/09/25/roche-xofluza-influenza-treatment-agreements/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-25",
-      "summary": "With an eye toward pandemic preparedness, a U.N.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: Lilly wins approval for once-weekly insulin shot",
-      "url": "https://www.statnews.com/2026/09/25/biotech-news-lilly-wins-approval-for-weekly-insulin-shot/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-25",
-      "summary": "The FDA approved Eli Lilly’s Onswik, a once-weekly basal insulin for adults with type 2 diabetes, offering patients an alternative to daily long-acting insulin injections.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Opinion: FDA commissioner nominee Heidi Overton is ignoring the science on abortion drug",
-      "url": "https://www.statnews.com/2026/09/25/heidi-overton-confirmation-hearing-mifepristone-abortion-evasive/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-25",
-      "summary": "“With this latest appointment, mifepristone has a new boss but an old problem,” writes Julie F. Kay, founder and CEO of Reproductive Futures.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Up and down the ladder: The latest comings and goings",
-      "url": "https://www.statnews.com/pharmalot/2026/09/25/up-and-down-the-ladder-latest-comings-goings-jobs-pharma-biotech/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-09-25",
-      "summary": "From new hires to departures, promotions and transfers, here are the latest comings and goings in the pharmaceutical industry.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
     }
   ]
 }
