@@ -1,74 +1,81 @@
 {
-  "lastUpdated": "2026-10-21T07:18:02.018Z",
+  "lastUpdated": "2026-10-21T13:39:13.982Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
-    "totalSources": 9,
+    "totalSources": 10,
     "staleSources": 1,
-    "healthySources": 8,
+    "healthySources": 9,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 230,
+        "articleCount": 215,
         "latestPublishedAt": "2026-10-21T00:00:00.000Z",
-        "staleHours": 7,
+        "staleHours": 13,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 129,
-        "latestPublishedAt": "2026-10-20T00:00:00.000Z",
-        "staleHours": 31,
+        "articleCount": 135,
+        "latestPublishedAt": "2026-10-21T00:00:00.000Z",
+        "staleHours": 13,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 60,
-        "latestPublishedAt": "2026-10-20T00:00:00.000Z",
-        "staleHours": 31,
+        "articleCount": 68,
+        "latestPublishedAt": "2026-10-21T00:00:00.000Z",
+        "staleHours": 13,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 40,
         "latestPublishedAt": "2026-10-21T00:00:00.000Z",
-        "staleHours": 7,
+        "staleHours": 13,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 16,
         "latestPublishedAt": "2026-10-20T00:00:00.000Z",
-        "staleHours": 31,
+        "staleHours": 37,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 10,
         "latestPublishedAt": "2026-10-16T00:00:00.000Z",
-        "staleHours": 127,
+        "staleHours": 133,
         "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 9,
         "latestPublishedAt": "2026-10-20T00:00:00.000Z",
-        "staleHours": 31,
+        "staleHours": 37,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 5,
         "latestPublishedAt": "2026-10-21T00:00:00.000Z",
-        "staleHours": 7,
+        "staleHours": 13,
+        "status": "ok"
+      },
+      {
+        "source": "SEC Healthcare Filings",
+        "articleCount": 1,
+        "latestPublishedAt": "2026-10-21T00:00:00.000Z",
+        "staleHours": 13,
         "status": "ok"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 1,
         "latestPublishedAt": "2026-10-20T00:00:00.000Z",
-        "staleHours": 31,
+        "staleHours": 37,
         "status": "ok"
       }
     ]
@@ -76,27 +83,27 @@
   "categoryCoverage": {
     "closures_layoffs": {
       "label": "Closures & Layoffs",
-      "count": 13
+      "count": 12
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 46
+      "count": 42
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 5
+      "count": 4
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 63
+      "count": 62
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 13
+      "count": 15
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
-      "count": 21
+      "count": 22
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
@@ -104,7 +111,7 @@
     },
     "general_market": {
       "label": "General Market",
-      "count": 216
+      "count": 220
     }
   },
   "quality": {
@@ -113,12 +120,12 @@
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
-        "actual": 9,
+        "actual": 10,
         "pass": true
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 37,
+        "actual": 58,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -264,6 +271,198 @@
       "publishedAt": "2026-10-21",
       "category": "general_market",
       "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "ELV 8-K filing - Elevance Health, Inc.",
+      "summary": "Elevance Health, Inc. filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1156039/000115603926000068/elv-20261021.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-10-21",
+      "category": "general_market",
+      "relevance": 90,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Boston Children&#8217;s leader heads to Rhode Island&#8217;s only pediatric psych hospital",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/boston-childrens-leader-heads-to-rhode-islands-only-pediatric-psych-hospital/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-10-21",
+      "summary": "East Providence, R.I.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Oregon hospitals&#8217; charity care spending more than doubles in 1st year of screening law",
+      "url": "https://www.beckershospitalreview.com/finance/oregon-hospitals-charity-care-spending-more-than-doubles-in-1st-year-of-screening-law/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-10-21",
+      "summary": "Oregon hospitals more than doubled their average spending on financial assistance in the first full fiscal year under a state law requiring them to proactively screen patients for aid, Tradeoffs and KFF Health News reported Oct. 21.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "10 systems ranked by fiscal 2026 operating margin",
+      "url": "https://www.beckershospitalreview.com/finance/10-systems-ranked-by-fiscal-2026-operating-margin/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-10-21",
+      "summary": "As fiscal year 2026 financial reports start rolling in from some of the country&#8217;s largest health systems, operating margins span a wide range. Baylor Scott &#38; White came in with an 8.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "How Intermountain Health plans to double nurses time at the bedside",
+      "url": "https://www.beckershospitalreview.com/quality/nursing/how-intermountain-health-plans-to-double-nurses-time-at-the-bedside/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-10-21",
+      "summary": "Intermountain Health is overhauling its care model to reshape how nursing care is delivered and increase the share of time nurses spend at the bedside to 42%.&#160; System leaders are redesigning and simplifying nurse workflows, and using technology to reduce routine work.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "NIH grant awards fall by 7,500 over 2 years: 6 findings",
+      "url": "https://www.beckershospitalreview.com/quality/public-health/nih-grant-awards-fall-by-7500-over-2-years-6-findings/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-10-21",
+      "summary": "The National Institutes of Health awarded about 56,600 extramural grants in fiscal 2026, roughly 7,500 fewer than in fiscal 2024, according to an Oct. 15 analysis from the Association of American Medical Colleges.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Epic takes aim at ‘swivel-chair’ work with AI Connectors",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/epic-takes-aim-at-swivel-chair-work-with-ai-connectors/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-10-21",
+      "summary": "Epic is introducing a new capability that will allow its software, including its AI assistants, to retrieve information and complete tasks in third-party applications, potentially reducing the need for patients and healthcare workers to move between systems. The Verona, Wis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Former hospital CMO sentenced in $1.9M Medicare brace scheme",
+      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/former-new-hampshire-physician-sentenced-for-role-in-1-9m-fraud-scheme/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-10-21",
+      "summary": "A former New Hampshire psychiatrist and onetime hospital chief medical officer has been sentenced to 12 months and a day in federal prison for signing hundreds of medically unnecessary orders for braces without ever examining patients, according to an Oct. 13 news release from the U.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "38 hospital and health system AI leaders to know &#124; 2026",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/38-hospital-and-health-system-ai-leaders-to-know-2026/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-10-21",
+      "summary": "Executives across healthcare are tasked with crafting, deploying and scaling AI strategies and tools at their hospitals and health systems, with the goal of easing clinician burnout and improving patient outcomes. Below are 38 AI leaders to know in 2026.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "St. Luke’s Health System Selects hellocare.ai for Enterprise AI Assisted Virtual Care Deployment in Southern Idaho",
+      "url": "https://www.beckershospitalreview.com/strategy/st-lukes-health-system-selects-hellocare-ai-for-enterprise-ai-assisted-virtual-care-deployment-in-southern-idaho/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-10-21",
+      "summary": "Clearwater, FL — hellocare.ai, a leading provider of AI assisted virtual care and intelligent hospital room technology, today announced that St.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "576 hospitals with lowest C. diff rates",
+      "url": "https://www.beckershospitalreview.com/quality/infection-control/536-hospitals-with-lowest-c-diff-rates/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-10-21",
+      "summary": "A total of 576 hospitals in the U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Pharmalittle: We&#8217;re reading about Mark Cuban eyeing rare disease drugs, a ketamine gold rush, and more",
+      "url": "https://www.statnews.com/pharmalot/2026/10/21/mark-cuban-eyes-rare-disease-drugs-ketamine-gold-rush/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-10-21",
+      "summary": "Mark Cuban has a new vision for his company Cost Plus Drugs: shake up the business of custom-made rare disease medicines",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Roivant says closely watched immune drug succeeded in new eye disease",
+      "url": "https://www.statnews.com/2026/10/21/roivant-immune-drug-lisraya-noninfectious-uveitis-trial-results/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-10-21",
+      "summary": "An immune drug from Roivant could be headed to a new market, after the company reported positive trials in the eye disease non-infectious uveitis.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Nigeria identifies travel-related Ebola case",
+      "url": "https://www.statnews.com/2026/10/21/health-news-nigeria-travel-related-ebola-case-outbreak/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-10-21",
+      "summary": "Nigeria has confirmed an imported Ebola case tied to the ongoing outbreak centered in the Democratic Republic of the Congo, becoming the fifth country to identify a related infection, health&#8230;",
+      "category": "quality_safety",
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "A counterintuitive way to build trust in measles vaccines and public health",
+      "url": "https://www.statnews.com/2026/10/21/measles-vaccination-uptake-experts-suggest-messaging-change/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-10-21",
+      "summary": "Some experts say public health messaging would be more credible if it focused less on measles deaths and acknowledged that most children survive.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Mark Cuban wants to crack open the market for rare disease treatments",
+      "url": "https://www.statnews.com/2026/10/21/mark-cuban-cost-plus-drugs-rare-disease-medicines/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-10-21",
+      "summary": "Mark Cuban's Cost Plus Drugs says it can reduce manufacturing costs for custom rare disease drugs and n-of-1 gene therapies.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Opinion: Replication is necessary even if scientists do everything right",
+      "url": "https://www.statnews.com/2026/10/21/nih-replication-process-type-1-error-bhattacharya/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-10-21",
+      "summary": "“Committing a Type 1 error does not reflect poorly on the quality of the science done,” writes Mark Louie F.",
+      "category": "quality_safety",
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "Opinion: How knocking on doors can help beat measles — again",
+      "url": "https://www.statnews.com/2026/10/21/measles-public-health-door-to-door-initiatives/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-10-21",
+      "summary": "“As measles outbreaks spread in the U.S.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "STAT+: A German biotech has big ambitions in cancer. Now it needs to get a medicine approved",
+      "url": "https://www.statnews.com/2026/10/21/immatics-cancer-cell-therapy-targets-prame-protein/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-10-21",
+      "summary": "After a quarter century of work, the German biotech Immatics is facing a pivotal moment as it awaits Phase 3 results for its lead candidate in melanoma.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Epic launches Connectors to link its AI tools with third-party apps",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/epic-launches-connectors-link-its-ai-tools-third-party-apps",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-10-21",
+      "summary": "Through \"Connectors,\" developers can connect their apps to Epic's AI tools—Emmie, Art and Penny—as well as custom AI agents organizations create through Agent Factory.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Elevance Health posts $1.4B in profit in Q3 earnings beat",
+      "url": "https://www.fiercehealthcare.com/payers/elevance-health-posts-14b-profit-q3-earnings-beat",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-10-21",
+      "summary": "Elevance Health is boosting its outlook for the year as it beat Wall Street analysts' expectations for both profit and revenue in the third quarter.",
+      "category": "general_market",
       "categoryLabel": "General Market"
     },
     {
@@ -537,9 +736,9 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Import Alert for Certain Olympus Medical Devices Manufactured in Japan - Letter to Health Care Providers",
-      "summary": "The U.S. Food and Drug Administration (FDA) is alerting health care providers about import alerts for certain medical devices manufactured in Japan by Olympus Medical Systems Corporation (Olympus) and its subsidiaries.",
-      "url": "http://www.fda.gov/medical-devices/letters-health-care-providers/import-alert-certain-olympus-medical-devices-manufactured-japan-letter-health-care-providers",
+      "title": "Early Alert: Cardinal Health Issues Correction for Presource Packs Containing BD Alaris Pump Infusion Sets",
+      "summary": "Cardinal Health Presource Kits containing recalled BD Alaris Pump Infusion Sets should be corrected prior to continued use.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-cardinal-health-issues-correction-presource-packs-containing-bd-alaris-pump-infusion",
       "source": "FDA MedWatch RSS",
       "sourceType": "rss",
       "sourceId": "fda_medwatch_rss",
@@ -561,9 +760,9 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "Early Alert: Cardinal Health Issues Correction for Presource Packs Containing BD Alaris Pump Infusion Sets",
-      "summary": "Cardinal Health Presource Kits containing recalled BD Alaris Pump Infusion Sets should be corrected prior to continued use.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-cardinal-health-issues-correction-presource-packs-containing-bd-alaris-pump-infusion",
+      "title": "Import Alert for Certain Olympus Medical Devices Manufactured in Japan - Letter to Health Care Providers",
+      "summary": "The U.S. Food and Drug Administration (FDA) is alerting health care providers about import alerts for certain medical devices manufactured in Japan by Olympus Medical Systems Corporation (Olympus) and its subsidiaries.",
+      "url": "http://www.fda.gov/medical-devices/letters-health-care-providers/import-alert-certain-olympus-medical-devices-manufactured-japan-letter-health-care-providers",
       "source": "FDA MedWatch RSS",
       "sourceType": "rss",
       "sourceId": "fda_medwatch_rss",
@@ -4065,18 +4264,6 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "Infusion Set Recall: BD and CareFusion 303, Inc. Remove BD Alaris Pump Infusion Sets",
-      "summary": "BD Alaris Pump Infusion Sets are being removed and discontinued; Alaris Pump Module model 8100 has updated performance data",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/infusion-set-recall-bd-and-carefusion-303-inc-remove-bd-alaris-pump-infusion-sets",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-10-14",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
       "title": "Par Health Issues Voluntary Nationwide Recall of Argatroban Injection Due to the Presence of Particulate Matter",
       "summary": "FOR IMMEDIATE RELEASE - ROCHESTER, MI– October 13, 2026 – Par Health is recalling 22 lots of Argatroban Injection 250 mg/2.5 mL (100 mg/mL) to the hospital/user level. This recall is being conducted due to the presence of particulate matter, identified as cellulose, polystyrene, polyethylene terepht",
       "url": "http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/par-health-issues-voluntary-nationwide-recall-argatroban-injection-due-presence-particulate-matter",
@@ -4099,6 +4286,18 @@
       "category": "ai_tech",
       "relevance": 100,
       "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Infusion Set Recall: BD and CareFusion 303, Inc. Remove BD Alaris Pump Infusion Sets",
+      "summary": "BD Alaris Pump Infusion Sets are being removed and discontinued; Alaris Pump Module model 8100 has updated performance data",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/infusion-set-recall-bd-and-carefusion-303-inc-remove-bd-alaris-pump-infusion-sets",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-10-14",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
     },
     {
       "title": "Center For Scientific Review; Notice of Closed Meetings",
@@ -4639,195 +4838,6 @@
       "summary": "Since its expansion nationwide last year, Allara has added urgent care visits, brought on more internal medicine providers and launched more supplements and medication delivery services.",
       "category": "capacity_expansion",
       "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "Confido Health nabs $12.5M to scale agentic AI across PE-backed medical groups",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/confido-health-expands-beyond-voice-ai-agentic-platform-medical-practices",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-14",
-      "summary": "The company secured a $12.5 million series A extension following its $10 million series A round announced in September to continue scaling an AI platform for end-to-end healthcare operations.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Six years, 23 new health systems",
-      "url": "https://www.beckershospitalreview.com/finance/six-years-23-new-health-systems/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-10-14",
-      "summary": "At least 23 health systems have formed or taken a new identity since 2020 through mergers, new launches or rebrands, according to ownership data from the Lown Institute and Becker’s coverage.&#160; The systems range from Advocate Health, a 69-hospital system created in 2022 when Advocate Aurora Health and Atrium Health combined, to Memorial Health System [&#8230;] The post Six years, 23 new health systems appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "‘A big risk and a big waste’: The leadership exits systems ignore",
-      "url": "https://www.beckershospitalreview.com/hospital-management-administration/a-big-risk-and-a-big-waste-the-leadership-exits-systems-ignore/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-10-14",
-      "summary": "Physician leaders should begin planning their exit from their first day on the administrative role, much like how clinicians plan patient discharge at admission, Jim Keller, MD, former chief medical officer of Park Ridge, Ill.-based Advocate Lutheran General Hospital and a practicing maternal-fetal medicine physician, said in an upcoming episode of &#8220;Becker&#8217;s Healthcare Podcast.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "197 top hospitals for physician communication",
-      "url": "https://www.beckershospitalreview.com/rankings-and-ratings/208-top-hospitals-for-physician-communication/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-10-14",
-      "summary": "Eleven fewer hospitals received a five-star physician communication rating than in May, according to CMS&#8217; Hospital Consumer Assessment of Healthcare Providers and Systems data. CMS shares 10 HCAHPS star ratings based on publicly reported HCAHPS measures.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "PeaceHealth taps nurse leader as chief executive of Oregon region",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/peacehealth-taps-nurse-leader-as-chief-executive-of-oregon-region/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-10-14",
-      "summary": "Vancouver, Wash.-based PeaceHealth named Heather Wall, MSN, RN, chief executive of its Oregon region.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Judge rejects NC State Health Plan's request to block Atrium Health's affordability program",
-      "url": "https://www.fiercehealthcare.com/payers/judge-rejects-nc-state-health-plans-request-block-atrium-affordability-program",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-14",
-      "summary": "The state's treasurer has said the large health system's Affordability Protection Program, a response to being left out of a preferred provider program, would bankrupt the public health plan.",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "VBC accelerator Diverge merges with Medical Home Network to support PCPs, FQHCs",
-      "url": "https://www.fiercehealthcare.com/providers/vbc-accelerator-diverge-merges-medical-home-network-support-pcps-fqhcs",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-14",
-      "summary": "Together, the organizations hope to reach broader swaths of patients in value-based arrangements.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "CVS, DOJ reach $315M settlement in opioid prescription case",
-      "url": "https://www.fiercehealthcare.com/payers/cvs-doj-reach-315m-settlement-opioid-prescription-case",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-14",
-      "summary": "CVS Health has reached a $315 million settlement with the Department of Justice that resolves allegations the pharmacy giant knowingly filled unlawful opioid prescriptions.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Measles update: US passes 4,000 cases, Pennsylvania reports sixth death",
-      "url": "https://www.fiercehealthcare.com/providers/measles-update-us-passes-4000-cases-pennsylvania-reports-sixth-death",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-14",
-      "summary": "Experts have pointed to sagging vaccination rates and friction between federal health leadership and the broader public health community as contributors to this year’s outbreaks of the vaccine-preventable disease.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "UnitedHealth Group execs detail continued improvements at Optum Health",
-      "url": "https://www.fiercehealthcare.com/payers/unitedhealth-group-beats-street-41b-profit-q3",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-14",
-      "summary": "Another round of healthcare industry earnings reports kicked off Tuesday morning, with UnitedHealth Group reporting $4.1 billion in profit for the third quarter.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "UNMC, Nebraska Medicine teaching hospital project upgrades to $2.75B planned investment",
-      "url": "https://www.fiercehealthcare.com/hospitals/unmc-nebraska-medicine-teaching-hospital-project-upgrades-275b-planned-investment",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-14",
-      "summary": "The project’s new scope reflects an approximate $500 million increase from its initial estimate.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Chutes & Ladders—Joint Commission names COO; Beth Israel Lahey unveils next CEO",
-      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-14",
-      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Samaritan Health Services, MultiCare Health System merger to close Nov. 1",
-      "url": "https://www.fiercehealthcare.com/providers/samaritan-health-services-join-multicare-health-system",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-14",
-      "summary": "The affiliation approved by the nonprofits' boards will create an 18-hospital system with more than $7.5 billion in revenue—and give MultiCare an acute-care foothold in Oregon.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Humana, BlackRock strike $2.8B deal to manage CenterWell clinics",
-      "url": "https://www.fiercehealthcare.com/payers/humana-blackrock-strike-28b-deal-manage-centerwell-clinics",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-14",
-      "summary": "Humana will enter a joint venture with investment firm BlackRock to manage and operate its CenterWell primary care clinics for older adults, swapping out its current partner Welsh, Carson, Anderson &amp; Stowe.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Brigham and Women's nurses postpone open-ended strike",
-      "url": "https://www.fiercehealthcare.com/providers/brigham-and-womens-nurses-authorize-open-ended-strike",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-14",
-      "summary": "With contract talks stalled since August, unionized Mass General Brigham employees had voted 93% in favor of a 4,000-nurse demonstration that could've become the largest in Massachusetts history.",
-      "category": "labor_unions",
-      "categoryLabel": "Labor & Unions"
-    },
-    {
-      "title": "Suki secures $90M in series E funding to accelerate growth, expand AI capabilities",
-      "url": "https://www.fiercehealthcare.com/finance/suki-secures-90m-series-e-funding-accelerate-growth-expand-ai-capabilities",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-14",
-      "summary": "The funding announcement comes less than a week after the company launched its newest AI capability.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Johns Hopkins Medicine taps OpenEvidence to bring AI into medical education, clinical care",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/johns-hopkins-medicine-taps-openevidence-design-ai-tools-medical-training",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-14",
-      "summary": "Johns Hopkins Medicine is teaming up with OpenEvidence to advance the use of artificial intelligence in medical education and clinical care.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Thoreau-backed Ensemble, Penelope Health partner to bring payer policy intelligence into RCM",
-      "url": "https://www.fiercehealthcare.com/health-tech/thoreau-backed-ensemble-penelope-health-partner-tackle-payer-denials-upstream",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-14",
-      "summary": "Two Thoreau-backed healthcare companies are partnering to bring real-time payer policy intelligence into revenue cycle workflows. The aim is to move claims denial management upstream into denial prevention, the companies said.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Alignment Healthcare sues CMS over its 2027 Medicare Advantage star ratings",
-      "url": "https://www.fiercehealthcare.com/payers/alignment-healthcare-sues-cms-over-its-2027-medicare-advantage-star-ratings",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-14",
-      "summary": "Alignment Healthcare sued federal regulators, alleging that its 2027 Medicare Advantage star ratings were determined \"in flagrant violation\" of statute.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Google unveils new Fitbit Edge tracker as tech giant expands health monitoring ambitions",
-      "url": "https://www.fiercehealthcare.com/health-tech/google-unveils-new-fitbit-edge-tracker-tech-giant-expands-health-monitoring-ambitions",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-14",
-      "summary": "The new device also builds on Google’s health tracking ambitions by combining advanced health sensors with AI-powered insights designed to identify changes in a user’s health and translate those signals into personalized guidance.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Marsh survey examines how health systems are managing capital, investment strategies",
-      "url": "https://www.fiercehealthcare.com/finance/marsh-survey-examines-how-health-orgs-are-managing-capital-investment-strategies",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-14",
-      "summary": "Forty-three percent of respondents report expecting to draw on reserves in 2026, up from 37% the year prior.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
     }
   ]
 }
