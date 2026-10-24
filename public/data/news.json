@@ -1,82 +1,82 @@
 {
-  "lastUpdated": "2026-10-24T00:26:06.880Z",
+  "lastUpdated": "2026-10-24T05:34:59.962Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 0,
-    "healthySources": 10,
+    "staleSources": 4,
+    "healthySources": 6,
     "sources": [
       {
         "source": "Fierce Healthcare",
         "articleCount": 231,
         "latestPublishedAt": "2026-10-24T00:00:00.000Z",
-        "staleHours": 0,
+        "staleHours": 5,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 125,
-        "latestPublishedAt": "2026-10-23T00:00:00.000Z",
-        "staleHours": 24,
+        "articleCount": 126,
+        "latestPublishedAt": "2026-10-24T00:00:00.000Z",
+        "staleHours": 5,
         "status": "ok"
       },
       {
         "source": "STAT News",
         "articleCount": 74,
         "latestPublishedAt": "2026-10-23T00:00:00.000Z",
-        "staleHours": 24,
+        "staleHours": 29,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
-        "articleCount": 35,
-        "latestPublishedAt": "2026-10-23T00:00:00.000Z",
-        "staleHours": 24,
+        "articleCount": 38,
+        "latestPublishedAt": "2026-10-26T00:00:00.000Z",
+        "staleHours": -43,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 15,
         "latestPublishedAt": "2026-10-23T00:00:00.000Z",
-        "staleHours": 24,
+        "staleHours": 29,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 7,
         "latestPublishedAt": "2026-10-21T00:00:00.000Z",
-        "staleHours": 72,
-        "status": "ok"
-      },
-      {
-        "source": "Federal Register - FDA",
-        "articleCount": 5,
-        "latestPublishedAt": "2026-10-21T00:00:00.000Z",
-        "staleHours": 72,
-        "status": "ok"
+        "staleHours": 77,
+        "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
-        "articleCount": 4,
+        "articleCount": 3,
         "latestPublishedAt": "2026-10-21T00:00:00.000Z",
-        "staleHours": 72,
-        "status": "ok"
+        "staleHours": 77,
+        "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 2,
         "latestPublishedAt": "2026-10-22T00:00:00.000Z",
-        "staleHours": 48,
+        "staleHours": 53,
         "status": "ok"
+      },
+      {
+        "source": "Federal Register - FDA",
+        "articleCount": 2,
+        "latestPublishedAt": "2026-10-21T00:00:00.000Z",
+        "staleHours": 77,
+        "status": "stale"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 2,
         "latestPublishedAt": "2026-10-21T00:00:00.000Z",
-        "staleHours": 72,
-        "status": "ok"
+        "staleHours": 77,
+        "status": "stale"
       }
     ]
   },
@@ -87,7 +87,7 @@
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 32
+      "count": 31
     },
     "labor_unions": {
       "label": "Labor & Unions",
@@ -95,11 +95,11 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 91
+      "count": 90
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 12
+      "count": 13
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
@@ -111,12 +111,14 @@
     },
     "general_market": {
       "label": "General Market",
-      "count": 218
+      "count": 219
     }
   },
   "quality": {
-    "status": "pass",
-    "failedChecks": [],
+    "status": "warning",
+    "failedChecks": [
+      "maxStaleSources"
+    ],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -125,7 +127,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 25,
+        "actual": 31,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -135,12 +137,81 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 0,
-        "pass": true
+        "actual": 4,
+        "pass": false
       }
     }
   },
   "articles": [
+    {
+      "title": "Eunice Kennedy Shriver National Institute of Child Health & Human Development; Notice of Meeting",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/10/26/2026-21815/eunice-kennedy-shriver-national-institute-of-child-health-and-human-development-notice-of-meeting",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-10-26",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Submission for Office of Management and Budget Review; Office of Refugee Resettlement (ORR) Unaccompanied Alien Child Health Forms",
+      "summary": "The Administration for Children and Families (ACF) Office of Refugee Resettlement (ORR) is requesting to move the Serious Medical Procedure Request (SMR) Form (Office of Management and Budget (OMB) #: 0970-0561, expiration December 31, 2026) under the Medical Assessment Form and Dental Assessment Form (OMB #: 0970-0466, expiration 10/31/ 2026) information collection and update the title of OMB # 0970-0466 to Office of Refugee Resettlement (ORR) Unaccompanied Alien Child Health Forms. Revisions are proposed to the forms. The proposed restructuring and revisions will improve transparency, lessen burden, improve data quality, and ensure alignment with ORR requirements. In addition, to ensure continuity of care, the request has been revised to include the sharing of health information with the Department of Homeland Security (DHS) in specific circumstances.",
+      "url": "https://www.federalregister.gov/documents/2026/10/26/2026-21762/submission-for-office-of-management-and-budget-review-office-of-refugee-resettlement-orr",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-10-26",
+      "category": "quality_safety",
+      "relevance": 100,
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "Issuance of Priority Review Voucher; Rare Pediatric Disease Product; ISEMBYLD (apitegromab-mstn)",
+      "summary": "The Food and Drug Administration (FDA) is announcing the issuance of a priority review voucher to the sponsor of a rare pediatric disease product application. The Federal Food, Drug, and Cosmetic Act (FD&C Act) authorizes FDA to award priority review vouchers to sponsors of approved rare pediatric disease product applications that meet certain criteria. FDA is required to publish notice of the award of the priority review voucher. FDA has determined that ISEMBYLD (apitegromab-mstn), approved September 11, 2026, manufactured by Scholar Rock, Inc., meets the criteria for a priority review voucher.",
+      "url": "https://www.federalregister.gov/documents/2026/10/26/2026-21718/issuance-of-priority-review-voucher-rare-pediatric-disease-product-isembyld-apitegromab-mstn",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-10-26",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Center for Scientific Review; Notice of Closed Meetings",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/10/26/2026-21816/center-for-scientific-review-notice-of-closed-meetings",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-10-26",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Fogarty International Center; Notice of Meeting",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/10/26/2026-21814/fogarty-international-center-notice-of-meeting",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-10-26",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "FDA approves 1st once-weekly insulin for children",
+      "url": "https://www.beckershospitalreview.com/pharmacy/fda-approves-1st-once-weekly-insulin-for-children/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-10-24",
+      "summary": "The FDA has approved Novo Nordisk&#8217;s Awiqli as the first once-weekly, long-acting basal insulin for children 10 years and older with Type 2 diabetes. Awiqli (insulin icodec-abae) injection, 700 units/milliliter, was approved as an adjunct to diet and exercise to improve glycemic control, according to an Oct.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
     {
       "title": "Chutes & Ladders—Johns Hopkins Health System CEO plans 2027 retirement; RFK Jr. advisor Calley Means resigns",
       "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
@@ -511,18 +582,6 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Request for Public Comment: 60-Day Notice for Reinstated Collection: Division of Urban Indian Affairs Uniform Data System and Budget Formulation",
-      "summary": "In compliance with the Paperwork Reduction Act of 1995, the Indian Health Service (IHS) invites the public to comment on the information collection titled, \"Division of Urban Indian Affairs (DUIA) Uniform Data System and Budget Formulation,\" Office of Management and Budget (OMB) Control Number 0917-0007. The IHS is requesting OMB to approve a reinstated collection.",
-      "url": "https://www.federalregister.gov/documents/2026/10/23/2026-21644/request-for-public-comment-60-day-notice-for-reinstated-collection-division-of-urban-indian-affairs",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-10-23",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
       "title": "Center for Scientific Review; Notice of Closed Meetings",
       "summary": "",
       "url": "https://www.federalregister.gov/documents/2026/10/23/2026-21689/center-for-scientific-review-notice-of-closed-meetings",
@@ -572,9 +631,9 @@
       "url": "https://www.beckershospitalreview.com/finance/back-to-the-future-uninsured-rate-backslide-stirs-pre-aca-comparisons/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-10-23",
-      "summary": "The uninsured rate among working-age adults is already climbing before looming coverage losses are expected to hit next year, leaving some healthcare leaders warning of the times before the Affordable Care Act when more Americans went without insurance and relied on emergency settings for receiving care. The Commonwealth Fund&#8217;s Biennial Health Insurance Survey, published Oct.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
+      "summary": "The U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
     },
     {
       "title": "Illinois hospital&#8217;s trauma status in limbo amid anesthesia pay dispute",
@@ -592,6 +651,18 @@
       "publishedAt": "2026-10-23",
       "summary": "Philadelphia-based Jefferson Health’s ambient AI rollout was associated with up to 16.6% less after-hours documentation and up to 39.",
       "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Request for Public Comment: 60-Day Notice for Reinstated Collection: Division of Urban Indian Affairs Uniform Data System and Budget Formulation",
+      "summary": "In compliance with the Paperwork Reduction Act of 1995, the Indian Health Service (IHS) invites the public to comment on the information collection titled, \"Division of Urban Indian Affairs (DUIA) Uniform Data System and Budget Formulation,\" Office of Management and Budget (OMB) Control Number 0917-0007. The IHS is requesting OMB to approve a reinstated collection.",
+      "url": "https://www.federalregister.gov/documents/2026/10/23/2026-21644/request-for-public-comment-60-day-notice-for-reinstated-collection-division-of-urban-indian-affairs",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-10-23",
+      "category": "ai_tech",
+      "relevance": 100,
       "categoryLabel": "AI & Digital Tech"
     },
     {
@@ -1897,18 +1968,6 @@
       "categoryLabel": "Policy & Reimbursement"
     },
     {
-      "title": "No Adjustment to HHS Civil Monetary Penalty Amounts for 2026",
-      "summary": "The Department of Health and Human Services (HHS or the Department) is notifying the public that there will be no Civil Monetary Penalty (CMP) inflation adjustment for 2026 in accordance with the April 17, 2026, guidance from the Office of Management and Budget (OMB). HHS will continue to use the 2025 civil monetary penalty levels because there will be no cost-of-living adjustment for 2026.",
-      "url": "https://www.federalregister.gov/documents/2026/10/21/2026-21524/no-adjustment-to-hhs-civil-monetary-penalty-amounts-for-2026",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-10-21",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
       "title": "Regulatory Considerations for Prescription Drug Use-Related Software; Guidance for Industry; Availability",
       "summary": "The Food and Drug Administration (FDA or Agency) is announcing the availability of a final guidance for industry titled \"Regulatory Considerations for Prescription Drug Use-Related Software.\" This final guidance describes FDA's application of its drug labeling authorities to certain software outputs that are disseminated by or on behalf of a drug sponsor for use with a prescription drug product or a prescription drug-led, drug-device combination product that is assigned to the Center for Drug Evaluation and Research or the Center for Biologics Evaluation and Research as the lead center. This guidance finalizes the draft guidance of the same title issued on September 19, 2023.",
       "url": "https://www.federalregister.gov/documents/2026/10/21/2026-21516/regulatory-considerations-for-prescription-drug-use-related-software-guidance-for-industry",
@@ -1931,6 +1990,42 @@
       "category": "ai_tech",
       "relevance": 100,
       "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "ELV 10-Q filing - Elevance Health, Inc.",
+      "summary": "Elevance Health, Inc. filed 10-Q with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1156039/000115603926000071/elv-20260930.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-10-21",
+      "category": "general_market",
+      "relevance": 90,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "ELV 8-K filing - Elevance Health, Inc.",
+      "summary": "Elevance Health, Inc. filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1156039/000115603926000068/elv-20261021.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-10-21",
+      "category": "general_market",
+      "relevance": 90,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "No Adjustment to HHS Civil Monetary Penalty Amounts for 2026",
+      "summary": "The Department of Health and Human Services (HHS or the Department) is notifying the public that there will be no Civil Monetary Penalty (CMP) inflation adjustment for 2026 in accordance with the April 17, 2026, guidance from the Office of Management and Budget (OMB). HHS will continue to use the 2025 civil monetary penalty levels because there will be no cost-of-living adjustment for 2026.",
+      "url": "https://www.federalregister.gov/documents/2026/10/21/2026-21524/no-adjustment-to-hhs-civil-monetary-penalty-amounts-for-2026",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-10-21",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
     },
     {
       "title": "Center for Scientific Review; Notice of Closed Meetings",
@@ -1966,30 +2061,6 @@
       "publishedAt": "2026-10-21",
       "category": "general_market",
       "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "ELV 10-Q filing - Elevance Health, Inc.",
-      "summary": "Elevance Health, Inc. filed 10-Q with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/1156039/000115603926000071/elv-20260930.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-10-21",
-      "category": "general_market",
-      "relevance": 90,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "ELV 8-K filing - Elevance Health, Inc.",
-      "summary": "Elevance Health, Inc. filed 8-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/1156039/000115603926000068/elv-20261021.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-10-21",
-      "category": "general_market",
-      "relevance": 90,
       "categoryLabel": "General Market"
     },
     {
@@ -2824,9 +2895,9 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Early Alert: Cardinal Health Updates Use Instructions for Presource Packs Containing BD Alaris Pump Infusion Sets",
-      "summary": "Cardinal Health Presource Kits may contain BD Alaris Pump Infusion Sets with Updated Use Instructions.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-cardinal-health-updates-use-instructions-presource-packs-containing-bd-alaris-pump",
+      "title": "Update: Import Alert for Certain Olympus Medical Devices Manufactured in Japan - Letter to Health Care Providers",
+      "summary": "The U.S. Food and Drug Administration (FDA) is alerting health care providers about import alerts for certain medical devices manufactured in Japan by Olympus Medical Systems Corporation (Olympus) and its subsidiaries.",
+      "url": "http://www.fda.gov/medical-devices/letters-health-care-providers/update-import-alert-certain-olympus-medical-devices-manufactured-japan-letter-health-care-providers",
       "source": "FDA MedWatch RSS",
       "sourceType": "rss",
       "sourceId": "fda_medwatch_rss",
@@ -2836,9 +2907,9 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Update: Import Alert for Certain Olympus Medical Devices Manufactured in Japan - Letter to Health Care Providers",
-      "summary": "The U.S. Food and Drug Administration (FDA) is alerting health care providers about import alerts for certain medical devices manufactured in Japan by Olympus Medical Systems Corporation (Olympus) and its subsidiaries.",
-      "url": "http://www.fda.gov/medical-devices/letters-health-care-providers/update-import-alert-certain-olympus-medical-devices-manufactured-japan-letter-health-care-providers",
+      "title": "Early Alert: Cardinal Health Updates Use Instructions for Presource Packs Containing BD Alaris Pump Infusion Sets",
+      "summary": "Cardinal Health Presource Kits may contain BD Alaris Pump Infusion Sets with Updated Use Instructions.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-cardinal-health-updates-use-instructions-presource-packs-containing-bd-alaris-pump",
       "source": "FDA MedWatch RSS",
       "sourceType": "rss",
       "sourceId": "fda_medwatch_rss",
@@ -4733,78 +4804,6 @@
       "category": "policy_reimbursement",
       "relevance": 100,
       "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Agency Information Collection Activities: Proposed Collection; Comment Request",
-      "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information (including each proposed extension or reinstatement of an existing collection of information) and to allow 60 days for public comment on the proposed action. Interested persons are invited to send comments regarding our burden estimates or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
-      "url": "https://www.federalregister.gov/documents/2026/10/16/2026-21150/agency-information-collection-activities-proposed-collection-comment-request",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-10-16",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Electronic Common Technical Document (eCTD); Data Standards; Supporting Forward Compatibility for eCTD 4.0",
-      "summary": "The Food and Drug Administration's (FDA or Agency) Center for Drug Evaluation and Research and Center for Biologics Evaluation and Research are announcing support for Forward Compatibility for Electronic Common Technical Document (eCTD) Version 4.0 (v4.0)-based electronic submissions.",
-      "url": "https://www.federalregister.gov/documents/2026/10/16/2026-21197/electronic-common-technical-document-ectd-data-standards-supporting-forward-compatibility-for-ectd",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-10-16",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Electronic Common Technical Document; Data Standards; Center for Drug Evaluation and Research and Center for Biologics Evaluation and Research Supporting Electronic Common Technical Document Version 3.2.2 and Version 4.0",
-      "summary": "The Food and Drug Administration's (FDA or Agency) Center for Drug Evaluation and Research and Center for Biologics Evaluation and Research are announcing the date FDA will begin rejecting electronic submissions that fail new Electronic Common Technical Document (eCTD) Version 3.22 (v3.22) and Version 4.0 (v4.0) based validations. The new eCTD v3.2.2 validations are 2024 and 2025, which are high-severity validation errors as described in the Specifications for eCTD Validation Criteria. The new eCTD v4.0 validations are eCTD4-084, eCTD4-085, US-eCTD4-561, US-eCTD4-562, US-eCTD4-563, and US-eCTD4-564, which are high-severity validation errors as described in the Specifications for eCTD v4.0 Validation Criteria.",
-      "url": "https://www.federalregister.gov/documents/2026/10/16/2026-21195/electronic-common-technical-document-data-standards-center-for-drug-evaluation-and-research-and",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-10-16",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Fit-for-Purpose Rare Disease Framework Initiative; Public Meeting; Request for Information and Comments",
-      "summary": "The Food and Drug Administration (FDA, the Agency, or we) is announcing a public meeting entitled \"Fit-for-Purpose Rare Disease Framework Initiative\". Convened by the Reagan-Udall Foundation for, and in collaboration with FDA, the meeting will focus on developing a fit-for-purpose framework for the development and regulatory review of rare disease therapies. There will be an opportunity to request to provide public comments at the meeting. In addition, FDA is establishing a public docket to collect feedback on and input related to its Rare Disease Framework Initiative.",
-      "url": "https://www.federalregister.gov/documents/2026/10/16/2026-21142/fit-for-purpose-rare-disease-framework-initiative-public-meeting-request-for-information-and",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-10-16",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "National Cancer Institute; Amended Notice of Meeting",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/10/16/2026-21235/national-cancer-institute-amended-notice-of-meeting",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-10-16",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Center for Scientific Review; Notice of Closed Meetings",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/10/16/2026-21234/center-for-scientific-review-notice-of-closed-meetings",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-10-16",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
     }
   ]
 }
