@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-10-27T07:31:41.484Z",
+  "lastUpdated": "2026-10-27T14:11:48.616Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 5,
-    "healthySources": 5,
+    "staleSources": 4,
+    "healthySources": 6,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 215,
+        "articleCount": 210,
         "latestPublishedAt": "2026-10-27T00:00:00.000Z",
-        "staleHours": 7,
+        "staleHours": 14,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 127,
+        "articleCount": 124,
         "latestPublishedAt": "2026-10-27T00:00:00.000Z",
-        "staleHours": 7,
+        "staleHours": 14,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 81,
-        "latestPublishedAt": "2026-10-26T00:00:00.000Z",
-        "staleHours": 31,
+        "articleCount": 86,
+        "latestPublishedAt": "2026-10-27T00:00:00.000Z",
+        "staleHours": 14,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 45,
         "latestPublishedAt": "2026-10-27T00:00:00.000Z",
-        "staleHours": 7,
+        "staleHours": 14,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 15,
         "latestPublishedAt": "2026-10-26T00:00:00.000Z",
-        "staleHours": 31,
+        "staleHours": 38,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 6,
         "latestPublishedAt": "2026-10-21T00:00:00.000Z",
-        "staleHours": 151,
+        "staleHours": 158,
         "status": "stale"
+      },
+      {
+        "source": "SEC Healthcare Filings",
+        "articleCount": 5,
+        "latestPublishedAt": "2026-10-27T00:00:00.000Z",
+        "staleHours": 14,
+        "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 5,
         "latestPublishedAt": "2026-10-23T00:00:00.000Z",
-        "staleHours": 103,
+        "staleHours": 110,
         "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 2,
         "latestPublishedAt": "2026-10-22T00:00:00.000Z",
-        "staleHours": 127,
+        "staleHours": 134,
         "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 2,
         "latestPublishedAt": "2026-10-21T00:00:00.000Z",
-        "staleHours": 151,
-        "status": "stale"
-      },
-      {
-        "source": "SEC Healthcare Filings",
-        "articleCount": 2,
-        "latestPublishedAt": "2026-10-21T00:00:00.000Z",
-        "staleHours": 151,
+        "staleHours": 158,
         "status": "stale"
       }
     ]
@@ -83,11 +83,11 @@
   "categoryCoverage": {
     "closures_layoffs": {
       "label": "Closures & Layoffs",
-      "count": 18
+      "count": 16
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 26
+      "count": 25
     },
     "labor_unions": {
       "label": "Labor & Unions",
@@ -95,7 +95,7 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 100
+      "count": 99
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -111,7 +111,7 @@
     },
     "general_market": {
       "label": "General Market",
-      "count": 218
+      "count": 222
     }
   },
   "quality": {
@@ -127,7 +127,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 36,
+        "actual": 55,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -137,7 +137,7 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 5,
+        "actual": 4,
         "pass": false
       }
     }
@@ -228,6 +228,18 @@
       "categoryLabel": "Policy & Reimbursement"
     },
     {
+      "title": "HCA 8-K filing - HCA Healthcare, Inc.",
+      "summary": "HCA Healthcare, Inc. filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/860730/000119312526432665/hca-20261027.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-10-27",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "Government-Owned Inventions; Availability for Licensing",
       "summary": "The invention listed below is owned by an agency of the U.S. Government and is available for licensing to achieve expeditious commercialization of results of federally-funded research and development. Foreign patent applications are filed on selected inventions to extend market coverage for companies and may also be available for licensing.",
       "url": "https://www.federalregister.gov/documents/2026/10/27/2026-21905/government-owned-inventions-availability-for-licensing",
@@ -264,11 +276,179 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "CNC 8-K filing - Centene Corporation",
+      "summary": "Centene Corporation filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1071739/000107173926000194/cnc-20261027.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-10-27",
+      "category": "general_market",
+      "relevance": 85,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "CNC 10-Q filing - Centene Corporation",
+      "summary": "Centene Corporation filed 10-Q with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1071739/000107173926000192/cnc-20260930.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-10-27",
+      "category": "general_market",
+      "relevance": 85,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Leader of General Catalyst&#8217;s Summa Health deal steps down",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/leader-of-general-catalysts-summa-health-deal-steps-down/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-10-27",
+      "summary": "Daryl Tol is stepping down as leader of Health Assurance Transformation Co., the healthcare unit of venture capital firm General Catalyst, which acquired Akron, Ohio-based Summa Health, according to a news release shared with Becker&#8217;s.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "455 top-ranked hospitals by state: Healthgrades",
+      "url": "https://www.beckershospitalreview.com/rankings-and-ratings/455-top-ranked-hospitals-by-state-healthgrades/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-10-27",
+      "summary": "Healthgrades released its 2027 Specialty State Rankings Oct. 27, naming the top three or five hospitals in each of 19 specialties across 30 states.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "5 revenue cycle AI results from Trinity Health",
+      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/5-revenue-cycle-ai-results-from-trinity-health/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-10-27",
+      "summary": "Livonia, Mich.-based Trinity Health’s AI coding tool let the system absorb 78 new providers and 176 new departments without adding staff, according to results Trinity shared during its fiscal 2026 investor call Oct.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Length of stay, surgical volume: The wins from Sentara&#8217;s market structure",
+      "url": "https://www.beckershospitalreview.com/strategy/length-of-stay-surgical-volume-the-wins-from-sentaras-market-structure/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-10-27",
+      "summary": "When Virginia Beach, Va.-based Sentara Health shifted to a four-market operating model in May 2025, each of its 12 hospitals was placed under one of four regional markets, each led by its own president.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "How hospitals can help nurses, patients and themselves",
+      "url": "https://www.beckershospitalreview.com/workforce/how-hospitals-can-help-nurses-patients-and-themselves/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-10-27",
+      "summary": "Hospitals across America face a persistent dilemma. Nurses report excessive workloads, burnout and unsafe staffing conditions.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "HCA absorbs $400M payer mix hit in Q3: 8 things to know",
+      "url": "https://www.beckershospitalreview.com/finance/hca-absorbs-400m-payer-mix-hit-in-q3-8-things-to-know/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-10-27",
+      "summary": "Nashville, Tenn.-based HCA Healthcare recorded net income of $1.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "6 medical schools slated to open in 2027",
+      "url": "https://www.beckershospitalreview.com/quality/hospital-physician-relationships/6-medical-schools-slated-to-open-in-2027/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-10-27",
+      "summary": "Six medical schools and campuses are slated to welcome their first students in 2027, adding to a wave of new programs aimed at easing projected physician shortages.&#160; Four have earned preliminary accreditation or pre-accreditation, which allows them to recruit their inaugural classes.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "CDC deputy director to depart after 6 months: Post",
+      "url": "https://www.beckershospitalreview.com/quality/public-health/cdc-deputy-director-to-depart-after-6-months/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-10-27",
+      "summary": "CDC deputy director and chief medical officer Jennifer Shuford, MD, is leaving the agency after six months, The Washington Post reported Oct. 26.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "How Inova sustained 152% patient-hour growth with fewer nurses",
+      "url": "https://www.beckershospitalreview.com/leadership/how-inova-sustained-152-patient-hour-growth-with-fewer-nurses/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-10-27",
+      "summary": "Infusion centers across the country are facing more patients, more complex regimens and fewer nurses to treat them. Inova Health System&#8217;s adult infusion center in Northern Virginia confronted those pressures after rapid growth and understaffing.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
       "title": "20 best places to retire: US News",
       "url": "https://www.beckershospitalreview.com/rankings-and-ratings/20-best-places-to-retire-us-news-2/",
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-10-27",
       "summary": "Midland, Mich., ranked No.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Pharmalittle: We&#8217;re reading about a Novo setback in court, a House probe into big PBMs, and more",
+      "url": "https://www.statnews.com/pharmalot/2026/10/27/novo-setback-in-court-house-probe-into-big-pbms/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-10-27",
+      "summary": "A U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "A possible treatment for brain-eating amoebas, found in the sea",
+      "url": "https://www.statnews.com/2026/10/27/health-news-possible-treatment-for-brain-eating-amoebas-found-in-sea/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-10-27",
+      "summary": "Brain-eating amoebas are hard to treat and nearly always fatal. But researchers have isolated a compound that could help stop the disease.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Opinion: Emergency pediatric care is now in permanent crisis mode",
+      "url": "https://www.statnews.com/2026/10/27/pediatric-emergency-care-rural-hospital-closures/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-10-27",
+      "summary": "“In 2026, the unprecedented pediatric patient crowding of 2022 has become a normal Tuesday,” write Jonathan Kohler and Mary King.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Opinion: Cancer vaccines are finally here. How do we get them to patients?",
+      "url": "https://www.statnews.com/2026/10/27/cancer-vaccines-intismeran-autogene-esmo-results-delivery-access/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-10-27",
+      "summary": "“If we want cancer vaccines to reach patients faster than BRCA testing did, there are several challenges to address now,” write Karen E. Knudsen and Othman Laraki.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Pennsylvania Dutch country, tired of waiting for biopharma, builds drug company of its own",
+      "url": "https://www.statnews.com/2026/10/27/gene-therapy-cow-rare-disease-amish-mennonite-patients-waiting/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-10-27",
+      "summary": "A small community tests if it can solve a crisis no one else could, for the simple reason that they have no other choice.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Vera Health secures $28.5M series A for AI-driven clinical search engine",
+      "url": "https://www.fiercehealthcare.com/finance/vera-health-secures-285m-series-ai-driven-clinical-search-engine",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-10-27",
+      "summary": "Vera Health’s platform scans more than 60 million peer-reviewed publications, clinical guidelines, consensus statements and drug labels, executives say.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Centene posts $71M loss, $50.6B in revenue for Q3",
+      "url": "https://www.fiercehealthcare.com/payers/centene-posts-71m-loss-506b-revenue-q3",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-10-27",
+      "summary": "Centene Corporation posted a $71 million loss in the third quarter of 2026, according to its earnings report released Tuesday.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
@@ -4657,177 +4837,6 @@
       "summary": "Tampa, Fla.-based Moffitt Cancer Center recorded operating income of $238.",
       "category": "general_market",
       "categoryLabel": "General Market"
-    },
-    {
-      "title": "Tower Health CEO: &#8216;Culture isn&#8217;t a soft thing, it&#8217;s a strategy&#8217;",
-      "url": "https://www.beckershospitalreview.com/hospital-management-administration/tower-health-ceo-culture-isnt-a-soft-thing-its-a-strategy/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-10-20",
-      "summary": "Health system turnarounds tend to be told as financial stories. Michael Stern, president and CEO of West Reading, Pa.",
-      "category": "capacity_expansion",
-      "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "MEDITECH and Lifemed AI Partner to Bring Revenue Cycle Automation to Health Systems",
-      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/meditech-and-lifemed-ai-partner-to-bring-revenue-cycle-automation-to-health-systems/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-10-20",
-      "summary": "Lifemed AI, a non-generative AI-driven healthcare technology company, today announced its formal partnership with MEDITECH as an Accelerator-level member of the MEDITECH Alliance program. The designation brings Lifemed&#8217;s non-generative deep-learning neural network platform, DeepClaim, which is purpose-built to eliminate claims denials, automate revenue cycle workflows, and recover lost reimbursement, directly to MEDITECH&#8217;s network of hospitals [&#8230;] The post MEDITECH and Lifemed AI Partner to Bring Revenue Cycle Automation to Health Systems appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "State Department advises Americans to reconsider travel to Kenya amid rising Ebola cases",
-      "url": "https://www.beckershospitalreview.com/quality/public-health/state-department-advises-americans-to-reconsider-travel-to-kenya-amid-rising-ebola-cases/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-10-20",
-      "summary": "The State Department raised its travel advisory for Kenya to Level 3, “reconsider travel,” on Oct. 19, citing health risks from Ebola.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "HCA opens new $22M Florida freestanding ED",
-      "url": "https://www.beckershospitalreview.com/capital/hca-opens-new-22m-florida-freestanding-ed/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-10-20",
-      "summary": "HCA Florida Lehigh Hospital in Lehigh Acres, Fla., opened its HCA Florida ER-Alico, a freestanding emergency department, on Oct.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Why Recruiting Alone Will Not Solve Your Staffing Problem",
-      "url": "https://www.beckershospitalreview.com/workforce/why-recruiting-alone-will-not-solve-your-staffing-problem/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-10-20",
-      "summary": "You fill the vacancy. Six months later, you’re recruiting for the same position.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Vizient quantifies financial loss of ED walkouts",
-      "url": "https://www.beckershospitalreview.com/care-coordination/vizient-quantifies-financial-loss-of-ed-walkouts/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-10-20",
-      "summary": "Vizient recently launched a calculator for hospital leaders to estimate financial losses from patients leaving the emergency department before receiving treatment.&#160; The ED throughput opportunity calculator asks for inputs of annual ED volume, a left-before-treatment-completion rate and whether the hospital is one that primarily serves community-based emergency care or is a complex hospital, including an [&#8230;] The post Vizient quantifies financial loss of ED walkouts appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "OpenEvidence, Doximity reach settlement in contentious AI legal battle",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/openevidence-doximity-reach-settlement-contentious-ai-lawsuit",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-20",
-      "summary": "Healthcare AI startups OpenEvidence and Doximity settled a contentious legal fight over allegations of corporate espionage and cyberattacks, alongside counterclaims of defamation and misinformation.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Trump EO creates new NIH division, White House task force centered on women’s health",
-      "url": "https://www.fiercehealthcare.com/regulatory/trump-eo-creates-new-nih-division-white-house-task-force-centered-womens-health",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-20",
-      "summary": "The goals of the new bodies are to address women’s health research gaps to improve health outcomes across the lifespan.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "The case for rethinking how ambulatory practices handle cybersecurity",
-      "url": "https://www.fiercehealthcare.com/sponsored/case-rethinking-how-ambulatory-practices-handle-cybersecurity",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-20",
-      "summary": "Healthcare is among the most targeted sectors for cybercriminals, and it's easy to see why.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Beyond the Recall Notice: Why Pharmacies Need Greater Visibility Into Recalled and Expired Medications",
-      "url": "https://www.fiercehealthcare.com/sponsored/beyond-recall-notice-why-pharmacies-need-greater-visibility-recalled-and-expired",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-20",
-      "summary": "Medication recalls and expirations are a routine part of pharmacy operations, but managing them often requires significant time, coordination and attention to detail.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Redesigning prior authorization around the patient",
-      "url": "https://www.fiercehealthcare.com/sponsored/redesigning-prior-authorization-around-patient",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-20",
-      "summary": "Abarca Health explores how shared standards, transparency and outcome-focused measures can reduce prior authorization friction.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "CMS proposes MA 'ghost network,' PBM transparency requirements",
-      "url": "https://www.fiercehealthcare.com/regulatory/cms-proposes-ma-ghost-network-pbm-transparency-requirements",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-20",
-      "summary": "The administration took steps to codify statutory reforms focused on maintaining accurate Medicare Advantage provider directories and collecting more pricing information from pharmacy benefit managers.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Centene to expand CHOICE Arrangements program to its employees in Ohio, Oklahoma",
-      "url": "https://www.fiercehealthcare.com/payers/centene-expand-choice-arrangements-program-ohio-oklahoma-2027",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-20",
-      "summary": "Centene is expanding its CHOICE Arrangements benefits program to its employees in Ohio and Oklahoma in the 2027 plan year.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Experian Health buys eInsights as Medicaid eligibility checks ramp up",
-      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/experian-health-buys-einsights-as-medicaid-eligibility-checks-ramp-up/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-10-20",
-      "summary": "Experian Health has acquired eInsights, a company that finds patient insurance coverage that providers missed at registration. eInsights searches for coverage after care is delivered, including retroactive Medicaid, secondary coverage and coordination of benefits, according to an Oct.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "ACGME weighs cutting residents’ post-call rest: 7 things to know",
-      "url": "https://www.beckershospitalreview.com/quality/hospital-physician-relationships/acgme-weighs-cutting-residents-post-call-rest-7-things-to-know/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-10-20",
-      "summary": "The Accreditation Council for Graduate Medical Education has proposed major revisions to the Common Program Requirements that govern U.S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "California hospital shelves residency proposal amid bankruptcy",
-      "url": "https://www.beckershospitalreview.com/quality/hospital-physician-relationships/california-hospital-shelves-residency-proposal-amid-bankruptcy/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-10-20",
-      "summary": "Oroville (Calif.) Hospital said Oct.",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "10 of the largest health systems on Meditech",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/10-of-the-largest-health-systems-on-meditech/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-10-20",
-      "summary": "Meditech&#8217;s biggest customer is one of the largest health systems in the country. Nashville, Tenn.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Epic explores AI agents for routine visits",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/epic-explores-ai-agents-for-routine-visits/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-10-20",
-      "summary": "Epic has developed AI agents that can execute clinical protocols and is exploring how they could help health systems manage routine patient visits, a company executive told Becker’s. Epic founder Judy Faulkner raised the possibility of an “Epic doctor” while discussing the company’s AI strategy during an Oct.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Cyberattack diverts critical patients from Nebraska hospital",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/cybersecurity/cyberattack-diverts-critical-patients-from-nebraska-hospital/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-10-20",
-      "summary": "Falls City, Neb.-based Community Medical Center shut down its computer network after a weekend cyberattack, prompting ambulances to take critical patients to other hospitals, MSC News reported Oct.",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
     }
   ]
 }
