@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-10-27T14:11:48.616Z",
+  "lastUpdated": "2026-10-27T19:58:38.531Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 4,
-    "healthySources": 6,
+    "staleSources": 2,
+    "healthySources": 8,
     "sources": [
       {
         "source": "Fierce Healthcare",
         "articleCount": 210,
         "latestPublishedAt": "2026-10-27T00:00:00.000Z",
-        "staleHours": 14,
+        "staleHours": 19,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 124,
+        "articleCount": 127,
         "latestPublishedAt": "2026-10-27T00:00:00.000Z",
-        "staleHours": 14,
+        "staleHours": 19,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 86,
+        "articleCount": 79,
         "latestPublishedAt": "2026-10-27T00:00:00.000Z",
-        "staleHours": 14,
+        "staleHours": 19,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 45,
         "latestPublishedAt": "2026-10-27T00:00:00.000Z",
-        "staleHours": 14,
+        "staleHours": 19,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
-        "articleCount": 15,
-        "latestPublishedAt": "2026-10-26T00:00:00.000Z",
-        "staleHours": 38,
+        "articleCount": 17,
+        "latestPublishedAt": "2026-10-27T00:00:00.000Z",
+        "staleHours": 19,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
-        "articleCount": 6,
-        "latestPublishedAt": "2026-10-21T00:00:00.000Z",
-        "staleHours": 158,
-        "status": "stale"
+        "articleCount": 7,
+        "latestPublishedAt": "2026-10-27T00:00:00.000Z",
+        "staleHours": 19,
+        "status": "ok"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 5,
         "latestPublishedAt": "2026-10-27T00:00:00.000Z",
-        "staleHours": 14,
+        "staleHours": 19,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 5,
         "latestPublishedAt": "2026-10-23T00:00:00.000Z",
-        "staleHours": 110,
+        "staleHours": 115,
         "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
-        "articleCount": 2,
-        "latestPublishedAt": "2026-10-22T00:00:00.000Z",
-        "staleHours": 134,
-        "status": "stale"
+        "articleCount": 3,
+        "latestPublishedAt": "2026-10-27T00:00:00.000Z",
+        "staleHours": 19,
+        "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 2,
         "latestPublishedAt": "2026-10-21T00:00:00.000Z",
-        "staleHours": 158,
+        "staleHours": 163,
         "status": "stale"
       }
     ]
@@ -83,15 +83,15 @@
   "categoryCoverage": {
     "closures_layoffs": {
       "label": "Closures & Layoffs",
-      "count": 16
+      "count": 15
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 25
+      "count": 24
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 5
+      "count": 4
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
@@ -99,26 +99,24 @@
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 9
+      "count": 10
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
-      "count": 6
+      "count": 7
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 118
+      "count": 120
     },
     "general_market": {
       "label": "General Market",
-      "count": 222
+      "count": 221
     }
   },
   "quality": {
-    "status": "warning",
-    "failedChecks": [
-      "maxStaleSources"
-    ],
+    "status": "pass",
+    "failedChecks": [],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -127,7 +125,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 55,
+        "actual": 82,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -137,8 +135,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 4,
-        "pass": false
+        "actual": 2,
+        "pass": true
       }
     }
   },
@@ -228,6 +226,18 @@
       "categoryLabel": "Policy & Reimbursement"
     },
     {
+      "title": "Nurses to hold emergency press conference denouncing ICE presence at Central Coast hospitals endangering patients, families, community",
+      "summary": "Nurses are demanding that ICE or any federal immigration agents stay away from their hospitals and that their employers refuse to cooperate, that ICE get out of their communities, and ultimately that the agency be abolished.",
+      "url": "https://www.nationalnursesunited.org/press/nurses-to-hold-emergency-press-conference-denouncing-ice-presence-at-central-coast-hospitals",
+      "source": "National Nurses United RSS",
+      "sourceType": "rss",
+      "sourceId": "nnu_rss",
+      "publishedAt": "2026-10-27",
+      "category": "mergers_mna",
+      "relevance": 100,
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
       "title": "HCA 8-K filing - HCA Healthcare, Inc.",
       "summary": "HCA Healthcare, Inc. filed 8-K with the SEC.",
       "url": "https://www.sec.gov/Archives/edgar/data/860730/000119312526432665/hca-20261027.htm",
@@ -237,6 +247,18 @@
       "publishedAt": "2026-10-27",
       "category": "general_market",
       "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Early Alert: B. Braun Removes Streamline Bloodline Set for Dialog+",
+      "summary": "The dialyzer connector may not be attached appropriately, resulting in leaking and potential blood loss.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-b-braun-removes-streamline-bloodline-set-dialog",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-10-27",
+      "category": "general_market",
+      "relevance": 98,
       "categoryLabel": "General Market"
     },
     {
@@ -298,6 +320,276 @@
       "category": "general_market",
       "relevance": 85,
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "Encompass Health plans 24-bed Texas rehab hospital",
+      "url": "https://www.beckershospitalreview.com/capital/encompass-health-plans-24-bed-texas-rehab-hospital/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-10-27",
+      "summary": "Birmingham, Ala.-based Encompass Health plans to build a 24-bed inpatient rehabilitation hospital in Richmond, Texas, its second announced small-format hospital and second in the greater Houston area.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Tower Health&#8217;s path out of years of losses: The CEO&#8217;s 3 moves",
+      "url": "https://www.beckershospitalreview.com/strategy/tower-healths-path-out-of-years-of-losses-the-ceos-3-moves/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-10-27",
+      "summary": "When Michael Stern became president and CEO of Tower Health, he came in with a clear read on what the system needed — and a plan that addressed those needs on three fronts simultaneously. Mr.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "Which health systems have AI chiefs",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/whos-leading-ai-at-top-health-systems/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-10-27",
+      "summary": "As hospitals and health systems further embed AI into healthcare delivery, they are increasingly appointing chief AI officers or equivalent senior executives with dedicated responsibility for AI governance, implementation and oversight. The growing presence of these roles reflects the industry&#8217;s recognition that AI may pose risks to patient safety, professional liability and regulatory compliance, and [&#8230;] The post Which health systems have AI chiefs appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "quality_safety",
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "19 drug-resistant pathogens threatening US health: CDC",
+      "url": "https://www.beckershospitalreview.com/quality/infection-control/19-drug-resistant-pathogens-threatening-us-health-cdc/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-10-27",
+      "summary": "The CDC found four drug-resistant pathogens require urgent and aggressive action, according to its 2026 Antimicrobial Resistance Threats Report. The 2026 report, published Oct.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "The evolution of patient experience: why it matters more than ever",
+      "url": "https://www.beckershospitalreview.com/ceo/the-evolution-of-patient-experience-why-it-matters-more-than-ever/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-10-27",
+      "summary": "Ten years ago, when healthcare leaders spoke about quality, the conversation centered largely on clinical outcomes, safety indicators and operational efficiency. Those priorities remain foundational.",
+      "category": "quality_safety",
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "Former R1 RCM chief named Xsolis CEO",
+      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/former-r1-rcm-chief-named-xsolis-ceo/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-10-27",
+      "summary": "Xsolis, which develops AI-driven technology for mid-revenue cycle management, has named Lee Rivas as CEO. He succeeds co-founder Joan Butters, effective immediately, according to an Oct.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "MU Health Care expands pharmacy network with acquisition",
+      "url": "https://www.beckershospitalreview.com/pharmacy/mu-health-care-expands-pharmacy-network-with-acquisition/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-10-27",
+      "summary": "Columbia, Mo.-based MU Health Care has signed an agreement to acquire Summit Pharmacy in Holts Summit, Mo.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "North Carolina Supreme Court cases could make CON awards easier to challenge",
+      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/north-carolina-supreme-court-cases-could-make-con-awards-easier-to-challenge/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-10-27",
+      "summary": "The North Carolina Supreme Court has agreed to hear two AdventHealth challenges to certificates of need that state regulators awarded to Asheville-based Mission Health, part of Nashville, Tenn.-based HCA Healthcare.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Novant exec heads to Atlantic Health",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/novant-exec-heads-to-atlantic-health/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-10-27",
+      "summary": "Bryan Edwards, MD, has been appointed senior vice president of clinical service lines at Morristown, N.J.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Intermountain breaks ground on $1B Nevada children&#8217;s hospital",
+      "url": "https://www.beckershospitalreview.com/capital/intermountain-breaks-ground-on-1b-nevada-childrens-hospital/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-10-27",
+      "summary": "Salt Lake City-based Intermountain Health broke ground Oct. 26 on its $1.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "STAT+: Missouri AG warns Lilly to stop requiring data from hospitals seeking 340B drug discounts",
+      "url": "https://www.statnews.com/pharmalot/2026/10/27/missouri-ag-warns-lilly-340b-drug-pricing-data/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-10-27",
+      "summary": "Missouri AG told Lilly to stop forcing hospitals to provide claims data to receive discounted medicines under 340B, a sign more states are pushing back against drugmakers.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "STAT+: After two deaths in autoimmune cell therapy trial, Artiva is shutting down",
+      "url": "https://www.statnews.com/2026/10/27/autoimmune-cell-therapy-trial-artiva-therapeutics-shutting-down/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-10-27",
+      "summary": "Recent deaths are setbacks in drug companies’ interest in applying cancer therapy strategies to autoimmune diseases.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: FDA offers new details on quicker approval pathway for personalized gene therapies",
+      "url": "https://www.statnews.com/2026/10/27/fda-personalized-gene-therapy-guidance-individualized-feature-space/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-10-27",
+      "summary": "Rare disease advocates applauded the FDA's move to speed access to treatments.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "STAT+: RFK Jr. goes for broke in Iowa",
+      "url": "https://www.statnews.com/2026/10/27/rfk-jr-campaigns-zach-lahn-iowa-coins-binsa-china-biotech-rules/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-10-27",
+      "summary": "Kennedy on the campaign trail for MAHA, and new rules loom for U.S.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "STAT+: Nonprofit resurrects shelved gene therapy after startup shuts down",
+      "url": "https://www.statnews.com/2026/10/27/biotech-news-nonprofit-resurrects-shelved-gene-therapy/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-10-27",
+      "summary": "Last year, U.K.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Pharmalittle: We&#8217;re reading about a Novo setback in court, a House probe into big PBMs, and more",
+      "url": "https://www.statnews.com/pharmalot/2026/10/27/novo-setback-in-court-house-probe-into-big-pbms/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-10-27",
+      "summary": "A U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "A possible treatment for brain-eating amoebas, found in the sea",
+      "url": "https://www.statnews.com/2026/10/27/health-news-possible-treatment-for-brain-eating-amoebas-found-in-sea/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-10-27",
+      "summary": "Brain-eating amoebas are hard to treat and nearly always fatal. But researchers have isolated a compound that could help stop the disease.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Opinion: Emergency pediatric care is now in permanent crisis mode",
+      "url": "https://www.statnews.com/2026/10/27/pediatric-emergency-care-rural-hospital-closures/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-10-27",
+      "summary": "“In 2026, the unprecedented pediatric patient crowding of 2022 has become a normal Tuesday,” write Jonathan Kohler and Mary King.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Opinion: Cancer vaccines are finally here. How do we get them to patients?",
+      "url": "https://www.statnews.com/2026/10/27/cancer-vaccines-intismeran-autogene-esmo-results-delivery-access/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-10-27",
+      "summary": "“If we want cancer vaccines to reach patients faster than BRCA testing did, there are several challenges to address now,” write Karen E. Knudsen and Othman Laraki.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Pennsylvania Dutch country, tired of waiting for biopharma, builds drug company of its own",
+      "url": "https://www.statnews.com/2026/10/27/gene-therapy-cow-rare-disease-amish-mennonite-patients-waiting/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-10-27",
+      "summary": "A small community tests if it can solve a crisis no one else could, for the simple reason that they have no other choice.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Centene progresses on profit recovery, drops 6,000 employees",
+      "url": "https://www.healthcaredive.com/news/centene-progresses-profit-recovery-cuts-workforce-by-6k/872816/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-10-27",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Bon Secours affiliate makes $5.7B bid for Surgery Partners",
+      "url": "https://www.healthcaredive.com/news/bon-secours-affiliate-5-7-billion-bid-surgery-partners/872887/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-10-27",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "HTI-5 final rule cuts ONC health IT certification criteria",
+      "url": "https://www.healthcaredive.com/news/hti-5-final-rule-cuts-onc-health-it-certification-criteria/872876/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-10-27",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Aetna sues to challenge 2027 MA star ratings",
+      "url": "https://www.fiercehealthcare.com/payers/alignment-healthcare-sues-cms-over-its-2027-medicare-advantage-star-ratings",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-10-27",
+      "summary": "CVS Heath's Aetna is joining the ranks of insurers suing over its results in the 2027 Medicare Advantage star ratings.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Chutes & Ladders—HATCo CEO steps down; CDC deputy director resigns",
+      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-10-27",
+      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "HCA Healthcare tops Q3 expectations on strong demand, but warns of persistent payer mix issues",
+      "url": "https://www.fiercehealthcare.com/providers/hca-healthcare-tops-q3-expectations-strong-demand-warns-persistent-payer-mix-issues",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-10-27",
+      "summary": "The country's largest for-profit health system opened up earnings season with strong numbers, but outlined ongoing and future headwinds that checked investor enthusiasm.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Democratic senators probe insurers' role in canceling ACA coverage for 760K",
+      "url": "https://www.fiercehealthcare.com/payers/democratic-senators-probe-insurers-role-canceling-aca-coverage-760k",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-10-27",
+      "summary": "Several prominent Democratic senators are seeking answers from health plans over the termination of 760,000 people from the Affordable Care Act's coverage rolls in September.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Why Centene's CEO sees opportunity for 'long-term growth' in Medicaid",
+      "url": "https://www.fiercehealthcare.com/payers/centene-posts-71m-loss-506b-revenue-q3",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-10-27",
+      "summary": "Centene is the latest insurer in the third quarter to highlight some positive signals in Medicaid.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "UT Austin unveils UT Dell Medicine as it bets big on new AI-native hospital",
+      "url": "https://www.fiercehealthcare.com/health-tech/university-texas-austin-unveils-new-academic-health-system-it-builds-ai-native-hospital",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-10-27",
+      "summary": "UT Dell Medicine wants to build the hospital of the future from the ground up. Health system leaders detail their tech-forward strategy.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Over 250 hospitals sign HHS' voluntary 'Make Hospital Food Healthier Pledge'",
+      "url": "https://www.fiercehealthcare.com/providers/hhs-calls-hospitals-sign-make-hospital-food-healthier-pledge",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-10-27",
+      "summary": "The administration is seeking voluntary commitments from hospitals to serve less processed foods in line with recently updated dietary guidelines, which officials said will boost chronic disease prevention and general long-term wellness.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
     },
     {
       "title": "Leader of General Catalyst&#8217;s Summa Health deal steps down",
@@ -388,51 +680,6 @@
       "summary": "Midland, Mich., ranked No.",
       "category": "general_market",
       "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Pharmalittle: We&#8217;re reading about a Novo setback in court, a House probe into big PBMs, and more",
-      "url": "https://www.statnews.com/pharmalot/2026/10/27/novo-setback-in-court-house-probe-into-big-pbms/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-10-27",
-      "summary": "A U.S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "A possible treatment for brain-eating amoebas, found in the sea",
-      "url": "https://www.statnews.com/2026/10/27/health-news-possible-treatment-for-brain-eating-amoebas-found-in-sea/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-10-27",
-      "summary": "Brain-eating amoebas are hard to treat and nearly always fatal. But researchers have isolated a compound that could help stop the disease.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Opinion: Emergency pediatric care is now in permanent crisis mode",
-      "url": "https://www.statnews.com/2026/10/27/pediatric-emergency-care-rural-hospital-closures/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-10-27",
-      "summary": "“In 2026, the unprecedented pediatric patient crowding of 2022 has become a normal Tuesday,” write Jonathan Kohler and Mary King.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Opinion: Cancer vaccines are finally here. How do we get them to patients?",
-      "url": "https://www.statnews.com/2026/10/27/cancer-vaccines-intismeran-autogene-esmo-results-delivery-access/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-10-27",
-      "summary": "“If we want cancer vaccines to reach patients faster than BRCA testing did, there are several challenges to address now,” write Karen E. Knudsen and Othman Laraki.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Pennsylvania Dutch country, tired of waiting for biopharma, builds drug company of its own",
-      "url": "https://www.statnews.com/2026/10/27/gene-therapy-cow-rare-disease-amish-mennonite-patients-waiting/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-10-27",
-      "summary": "A small community tests if it can solve a crisis no one else could, for the simple reason that they have no other choice.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "Vera Health secures $28.5M series A for AI-driven clinical search engine",
@@ -4365,21 +4612,9 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Hospital Glucose Meter Removal: Nova Biomedical Removes StatStrip Glucose Hospital Meter Systems",
-      "summary": "Software update for StatStrip Glucose Hospital Meter Systems due to the potential for glucose results to be assigned to the incorrect patient.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/hospital-glucose-meter-removal-nova-biomedical-removes-statstrip-glucose-hospital-meter-systems",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-10-20",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Update: Import Alert for Certain Olympus Medical Devices Manufactured in Japan - Letter to Health Care Providers",
-      "summary": "The U.S. Food and Drug Administration (FDA) is alerting health care providers about import alerts for certain medical devices manufactured in Japan by Olympus Medical Systems Corporation (Olympus) and its subsidiaries.",
-      "url": "http://www.fda.gov/medical-devices/letters-health-care-providers/update-import-alert-certain-olympus-medical-devices-manufactured-japan-letter-health-care-providers",
+      "title": "Early Alert: Cardinal Health Updates Use Instructions for Presource Packs Containing BD Alaris Pump Infusion Sets",
+      "summary": "Cardinal Health Presource Kits may contain BD Alaris Pump Infusion Sets with Updated Use Instructions.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-cardinal-health-updates-use-instructions-presource-packs-containing-bd-alaris-pump",
       "source": "FDA MedWatch RSS",
       "sourceType": "rss",
       "sourceId": "fda_medwatch_rss",
@@ -4401,9 +4636,9 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Early Alert: Cardinal Health Updates Use Instructions for Presource Packs Containing BD Alaris Pump Infusion Sets",
-      "summary": "Cardinal Health Presource Kits may contain BD Alaris Pump Infusion Sets with Updated Use Instructions.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-cardinal-health-updates-use-instructions-presource-packs-containing-bd-alaris-pump",
+      "title": "Update: Import Alert for Certain Olympus Medical Devices Manufactured in Japan - Letter to Health Care Providers",
+      "summary": "The U.S. Food and Drug Administration (FDA) is alerting health care providers about import alerts for certain medical devices manufactured in Japan by Olympus Medical Systems Corporation (Olympus) and its subsidiaries.",
+      "url": "http://www.fda.gov/medical-devices/letters-health-care-providers/update-import-alert-certain-olympus-medical-devices-manufactured-japan-letter-health-care-providers",
       "source": "FDA MedWatch RSS",
       "sourceType": "rss",
       "sourceId": "fda_medwatch_rss",
@@ -4411,6 +4646,18 @@
       "category": "ai_tech",
       "relevance": 100,
       "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Hospital Glucose Meter Removal: Nova Biomedical Removes StatStrip Glucose Hospital Meter Systems",
+      "summary": "Software update for StatStrip Glucose Hospital Meter Systems due to the potential for glucose results to be assigned to the incorrect patient.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/hospital-glucose-meter-removal-nova-biomedical-removes-statstrip-glucose-hospital-meter-systems",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-10-20",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
     },
     {
       "title": "Rush nurses hold rally for patient safety",
@@ -4592,249 +4839,6 @@
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-10-20",
       "summary": "In cases Becker&#8217;s has reported, hospitals and health systems that named permanent CEOs in 2026 took longer to fill than those in 2025. Several organizations have been led by interim CEOs for five months or more.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "‘Now’s the right time’: Why an Idaho health system is launching a Medicare Advantage plan",
-      "url": "https://www.beckershospitalreview.com/finance/nows-the-right-time-why-an-idaho-health-system-is-launching-a-medicare-advantage-plan/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-10-20",
-      "summary": "Boise, Idaho-based St. Luke&#8217;s Health System will begin offering Medicare Advantage coverage for the first time in 2027, making it one of just a handful of new entrants into the market.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Birth center use has nearly tripled in 20 years, but access varies: 6 things to know",
-      "url": "https://www.beckershospitalreview.com/finance/birth-center-use-has-nearly-tripled-in-20-years-but-access-varies-6-things-to-know/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-10-20",
-      "summary": "The share of U.S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "OpenAI acquires AI drug development platform",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/openai-acquires-ai-drug-development-platform/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-10-20",
-      "summary": "OpenAI has acquired Orchestra Bio, an AI-powered platform that helps biopharma teams coordinate the drug development process. OpenAI announced the deal Oct.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "STAT+: He’s slashing quality at nursing homes. This state is letting it happen",
-      "url": "https://www.statnews.com/2026/10/20/nursing-home-chains-slash-quality-massachusetts/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-10-20",
-      "summary": "The Boston Globe Spotlight Team found Eli Mirlis made grim cuts to resident care while steering millions of dollars from his nursing homes’ revenue into a constellation of real estate&#8230;",
-      "category": "quality_safety",
-      "categoryLabel": "Quality & Safety"
-    },
-    {
-      "title": "STAT+: State regulators move to seize licenses from nursing home chain that was focus of Boston Globe investigation",
-      "url": "https://www.statnews.com/2026/10/20/massachusetts-regulators-move-to-seize-regal-care-nursing-home-licenses-boston-globe-investigation/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-10-20",
-      "summary": "A Boston Globe investigation found that RegalCare acquired nursing homes across Massachusetts, then gutted the quality of care.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "STAT+: A bipartisan group of lawmakers urges the FDA to close a peptide loophole",
-      "url": "https://www.statnews.com/2026/10/20/health-policy-news-bipartisan-group-of-lawmaker-urges-fda-to-close-peptide-loophole/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-10-20",
-      "summary": "A bipartisan group of lawmakers is urging the FDA to plug a loophole used to import knockoff retatrutide, an investigational obesity drug made by Eli Lilly.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Roche continues to look to China for new drugs",
-      "url": "https://www.statnews.com/2026/10/20/biotech-news-roches-15b-hunt-for-new-drugs-in-china/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-10-20",
-      "summary": "China's Hansoh Pharmaceutical Group has announced that it struck a massive deal with Roche to develop a portfolio of antibody-drug conjugates.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Why I wish you didn’t want to see Nathan Fielder’s Elizabeth Holmes documentary",
-      "url": "https://www.statnews.com/2026/10/20/elizabeth-holmes-superpower-authenticity-vs-truth-matt-herper-take/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-10-20",
-      "summary": "A reporter who interviewed Elizabeth Holmes on why society confuses authenticity, honesty, and truth, and how she takes advantage.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: OpenEvidence&#8217;s JAMA paper leaves open questions",
-      "url": "https://www.statnews.com/2026/10/20/openevidence-jama-paper-leaves-open-questions-health-tech/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-10-20",
-      "summary": "In this edition of STAT Health Tech: A new paper in JAMA offers a glimpse into clinicians's use of OpenEvidence, and a look at Isomorphic Labs.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Pharmalittle: We&#8217;re reading about drug launch prices, an AstraZeneca AI deal, and more",
-      "url": "https://www.statnews.com/pharmalot/2026/10/20/drug-launch-prices-rose-astrazeneca-ai-deal/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-10-20",
-      "summary": "The median net price for newly launched medicines, when adjusted for inflation and manufacturer discounts, rose by 35% from 2022 to 2025.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "How voters feel about trans rights and abortion access will soon be put to the test",
-      "url": "https://www.statnews.com/2026/10/20/health-news-how-voters-feel-about-trans-rights-abortion-access-2026-midterms/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-10-20",
-      "summary": "How do voters feel about trans students participating in school sports teams? Or abortion access?",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Dana-Farber, Beth Israel to begin construction of new $1.68 billion cancer hospital",
-      "url": "https://www.statnews.com/2026/10/20/dana-farber-beth-israel-new-cancer-hospital-construction/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-10-20",
-      "summary": "Dana-Farber Cancer Institute and Beth Israel Lahey Health are starting work on a $1.68 billion cancer hospital in Boston, marking a new phase in their competition with Mass General Brigham.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Launch prices for new medicines dipped slightly last year but remain high, analysis finds",
-      "url": "https://www.statnews.com/pharmalot/2026/10/20/launch-price-of-new-medicines-drop-very-slightly-2025/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-10-20",
-      "summary": "The median net price for 202 newly launched medicines rose by 35%, to $257,000 last year from $173,000 in 2022.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: The key health care ballot measures we’re watching in the midterms",
-      "url": "https://www.statnews.com/2026/10/20/what-health-policy-battles-reveal-about-america-midterms-2026/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-10-20",
-      "summary": "State fights over issues like transgender rights and Medicaid offer clues to where Americans stand on contentious health matters.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Opinion: Resident physicians may lose some of their most important work hour protections",
-      "url": "https://www.statnews.com/2026/10/20/acgme-resident-physicians-work-hour-rules-time-off-between-shifts/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-10-20",
-      "summary": "“It is important to create barriers between high intensity shifts with physical, intellectual, and emotional burden to avoid burnout” in residents, writes Arifeen Rahman.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "OpenEvidence, Doximity settle thorny AI legal battle",
-      "url": "https://www.healthcaredive.com/news/openevidence-doximity-settle-explosive-ai-legal-battle/833480/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-10-20",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Chutes & Ladders—Centivo adds 2 executives; Inspira Health outlines leadership transition",
-      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-20",
-      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Hackensack Meridian Health signs definitive agreement to acquire Hunterdon Health, commits $230M",
-      "url": "https://www.fiercehealthcare.com/providers/hackensack-meridian-health-signs-230m-definitive-agreement-acquire-hunterdon-health",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-20",
-      "summary": "The announcement did not outline a potential timeline for the merger, which would add a nineteenth hospital to New Jersey's largest health system.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Centene, Oscar Health outline 2027 ACA marketplace plans",
-      "url": "https://www.fiercehealthcare.com/payers/centene-oscar-health-outline-2027-aca-marketplace-plans",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-20",
-      "summary": "Open enrollment for the Affordable Care Act's marketplaces begins on Nov. 1, and with more turbulence on deck, insurers are offering a look at their plans for the coming year.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Democrats demand tougher standards for companies running Medicaid systems",
-      "url": "https://www.fiercehealthcare.com/regulatory/democrats-demand-tougher-standards-companies-running-medicaid-systems",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-20",
-      "summary": "A group of Democratic senators is demanding that the federal agency overseeing Medicaid institute tougher standards for government contractors running complex computer systems that millions of people rely on to get benefits.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "DOJ streamlines voluntary self-disclosure of healthcare fraud",
-      "url": "https://www.fiercehealthcare.com/regulatory/doj-streamlines-voluntary-self-disclosure-healthcare-fraud",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-20",
-      "summary": "A policy change directs healthcare organizations seeking lighter repercussions from potentially criminal fraud activity to disclose to DOJ alone, rather than separately between law enforcement and Department of Health and Human Services Office of Inspector General.",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "Judi Health launching employer Medicare Part D plan with a focus on transparency",
-      "url": "https://www.fiercehealthcare.com/payers/judi-health-launching-employer-medicare-part-d-plan-focus-transparency",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-20",
-      "summary": "Judi Health is launching a new Part D plan that aims to lean on its tech stack to drive transparency and outcomes.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Commercial plans' mental health provider directories routinely inaccurate, secret shopper study finds",
-      "url": "https://www.fiercehealthcare.com/payers/commercial-plans-mental-health-provider-directories-routinely-inaccurate-secret-shopper",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-20",
-      "summary": "Fewer than a quarter of secret shopper phone calls to a listed mental health provider ended in a scheduled appointment, often due to inaccurate contact information or other issues with a plan's directory.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "21 healthcare strikes in 2026",
-      "url": "https://www.beckershospitalreview.com/hr/21-healthcare-strikes-in-2026/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-10-20",
-      "summary": "Union activity in healthcare continues in 2026, with 21 reported strikes since the beginning of the year. Some of these actions involve healthcare workers and leaders across hospitals and clinics in multiple states.",
-      "category": "labor_unions",
-      "categoryLabel": "Labor & Unions"
-    },
-    {
-      "title": "Breast screening method tied to nearly 5x fewer follow-ups: 5 notes",
-      "url": "https://www.beckershospitalreview.com/radiology/breast-screening-method-tied-to-nearly-5x-fewer-follow-ups-5-notes/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-10-20",
-      "summary": "Automated breast ultrasound was associated with fewer short-interval follow-up recommendations than handheld ultrasound among women with dense breasts, with no apparent difference in cancer detection, according to a study published in the Journal of the American College of Radiology. Here are five things to know: The post Breast screening method tied to nearly 5x fewer follow-ups: 5 notes appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Novant Health launches virtual men&#8217;s health clinic",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/telehealth/novant-health-launches-virtual-mens-health-clinic/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-10-20",
-      "summary": "Winston-Salem, N.C.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Moffitt Cancer Center’s operating margin climbs to 6.9% in FY 2026",
-      "url": "https://www.beckershospitalreview.com/finance/moffitt-cancer-centers-operating-margin-climbs-to-6-9-in-fy-2026/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-10-20",
-      "summary": "Tampa, Fla.-based Moffitt Cancer Center recorded operating income of $238.",
       "category": "general_market",
       "categoryLabel": "General Market"
     }
