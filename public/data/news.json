@@ -1,101 +1,94 @@
 {
-  "lastUpdated": "2026-11-04T09:01:34.675Z",
+  "lastUpdated": "2026-11-04T17:02:20.069Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
-    "totalSources": 10,
-    "staleSources": 2,
+    "totalSources": 9,
+    "staleSources": 1,
     "healthySources": 8,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 234,
+        "articleCount": 215,
         "latestPublishedAt": "2026-11-04T00:00:00.000Z",
-        "staleHours": 9,
+        "staleHours": 17,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 113,
-        "latestPublishedAt": "2026-11-03T00:00:00.000Z",
-        "staleHours": 33,
+        "articleCount": 123,
+        "latestPublishedAt": "2026-11-04T00:00:00.000Z",
+        "staleHours": 17,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 61,
+        "articleCount": 71,
         "latestPublishedAt": "2026-11-04T00:00:00.000Z",
-        "staleHours": 9,
+        "staleHours": 17,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 42,
         "latestPublishedAt": "2026-11-04T00:00:00.000Z",
-        "staleHours": 9,
+        "staleHours": 17,
+        "status": "ok"
+      },
+      {
+        "source": "Healthcare Dive",
+        "articleCount": 15,
+        "latestPublishedAt": "2026-11-04T00:00:00.000Z",
+        "staleHours": 17,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
-        "articleCount": 16,
+        "articleCount": 14,
         "latestPublishedAt": "2026-10-30T00:00:00.000Z",
-        "staleHours": 129,
+        "staleHours": 137,
         "status": "stale"
-      },
-      {
-        "source": "Healthcare Dive",
-        "articleCount": 13,
-        "latestPublishedAt": "2026-11-03T00:00:00.000Z",
-        "staleHours": 33,
-        "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 8,
         "latestPublishedAt": "2026-11-04T00:00:00.000Z",
-        "staleHours": 9,
+        "staleHours": 17,
+        "status": "ok"
+      },
+      {
+        "source": "SEC Healthcare Filings",
+        "articleCount": 6,
+        "latestPublishedAt": "2026-11-04T00:00:00.000Z",
+        "staleHours": 17,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 6,
         "latestPublishedAt": "2026-11-03T00:00:00.000Z",
-        "staleHours": 33,
+        "staleHours": 41,
         "status": "ok"
-      },
-      {
-        "source": "SEC Healthcare Filings",
-        "articleCount": 6,
-        "latestPublishedAt": "2026-11-03T00:00:00.000Z",
-        "staleHours": 33,
-        "status": "ok"
-      },
-      {
-        "source": "National Nurses United RSS",
-        "articleCount": 1,
-        "latestPublishedAt": "2026-10-27T00:00:00.000Z",
-        "staleHours": 201,
-        "status": "stale"
       }
     ]
   },
   "categoryCoverage": {
     "closures_layoffs": {
       "label": "Closures & Layoffs",
-      "count": 14
+      "count": 12
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 27
+      "count": 26
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 5
+      "count": 4
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 79
+      "count": 80
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -111,7 +104,7 @@
     },
     "general_market": {
       "label": "General Market",
-      "count": 207
+      "count": 210
     }
   },
   "quality": {
@@ -120,12 +113,12 @@
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
-        "actual": 10,
+        "actual": 9,
         "pass": true
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 28,
+        "actual": 53,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -135,7 +128,7 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 2,
+        "actual": 1,
         "pass": true
       }
     }
@@ -166,6 +159,222 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
+      "title": "CVS 10-Q filing - CVS Health Corporation",
+      "summary": "CVS Health Corporation filed 10-Q with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/64803/000006480326000108/cvs-20260930.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-11-04",
+      "category": "general_market",
+      "relevance": 90,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "CVS 8-K filing - CVS Health Corporation",
+      "summary": "CVS Health Corporation filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/64803/000119312526446150/d148827d8k.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-11-04",
+      "category": "general_market",
+      "relevance": 90,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "CVS 8-K filing - CVS Health Corporation",
+      "summary": "CVS Health Corporation filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/64803/000006480326000107/cvs-20261104.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-11-04",
+      "category": "general_market",
+      "relevance": 90,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "CommonSpirit signs definitive agreement to sell 3 North Dakota hospitals",
+      "url": "https://www.beckershospitalreview.com/hospital-transactions-and-valuation/commonspirit-signs-definitive-agreement-to-sell-3-north-dakota-hospitals/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-11-04",
+      "summary": "Chicago-based CommonSpirit Health signed a definitive agreement Nov. 4 to transfer three North Dakota hospitals to Grand Forks-based Altru Health System, according to a news release shared with Becker&#8217;s.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Montana system to cut staff, services in December",
+      "url": "https://www.beckershospitalreview.com/finance/montana-system-to-cut-staff-services-in-december/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-11-04",
+      "summary": "Great Falls, Mont.-based Benefis Health System will cut and consolidate several services starting Dec.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Medicare’s 2nd round of negotiated drug prices starts in 2 months: 6 things to know",
+      "url": "https://www.beckershospitalreview.com/pharmacy/medicares-2nd-round-of-negotiated-drug-prices-starts-in-2-months-6-things-to-know/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-11-04",
+      "summary": "On Jan. 1, Medicare’s negotiated prices for 15 more drugs take effect, including the semaglutide products Ozempic, Wegovy and Rybelsus.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Pennsylvania health system names supply chain director",
+      "url": "https://www.beckershospitalreview.com/supply-chain/pennsylvania-health-system-names-supply-chain-director/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-11-04",
+      "summary": "Mountains Health has named Angie Nelson its director of supply chain operations. Ms.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "15 recent hospital, health system CEO moves",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/10-recent-hospital-health-system-ceo-moves-21/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-11-04",
+      "summary": "Hospital and health system CEOs across the U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "How 4 health systems are tackling growth on 2 fronts",
+      "url": "https://www.beckershospitalreview.com/academic-medical-center/how-4-health-systems-are-tackling-growth-on-2-fronts/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-11-04",
+      "summary": "Care is leaving the hospital. Hospitals are getting busier anyway.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Democrats gain control of Congress: 5 midterm takeaways for healthcare leaders",
+      "url": "https://www.beckershospitalreview.com/legal-regulatory-issues/democrats-gain-control-of-congress-5-midterm-takeaways-for-healthcare-leaders/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-11-04",
+      "summary": "The 2026 midterm elections carry several implications for healthcare policy, from voters choosing a Democratic-led Congress to physicians headed to the Senate and new state abortion protections. The new Congress is scheduled to be sworn in Jan.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "VisiQuate acquires Artiva HCx from Finvi to expand revenue cycle tools",
+      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/visiquate-acquires-artiva-hcx-from-finvi-to-expand-revenue-cycle-tools/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-11-04",
+      "summary": "VisiQuate has acquired Finvi’s Artiva HCx business, adding a revenue cycle workflow platform, the team that runs it and its clients to the company’s analytics and automation offerings. Artiva HCx routes and manages insurance follow-up, denial management and collections work, according to a Nov.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "8 health systems outsourcing RCM functions",
+      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/7-health-systems-outsourcing-rcm-functions-2/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-11-04",
+      "summary": "Amid mounting reimbursement complexity, rising denial rates and staffing challenges, organizations ranging from independent rural hospitals to large, multihospital systems are striking partnerships with revenue cycle management firms.&#160; Here are eight hospitals and health systems that have outsourced revenue cycle functions or struck collaborative partnerships with RCM companies in 2026: 1.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Nebraska hospital CEO resigns",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/nebraska-hospital-ceo-resigns-5/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-11-04",
+      "summary": "Ned Resch has resigned as president and CEO of Scottsbluff, Neb.-based Regional West Health Services.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: CVS Health to split, reversing years of deal-making to combine pharmacies and insurance",
+      "url": "https://www.statnews.com/2026/11/04/cvs-splits-pharmacy-from-insurance/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-04",
+      "summary": "CVS Health’s decision to split comes amid federal and state scrutiny over vertical integration.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: A looming deadline to fund the government will shape Congress’ unusual lame duck session",
+      "url": "https://www.statnews.com/2026/11/04/lame-duck-session-congress-health-policy-aca-subsidies-medicaid-funding/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-04",
+      "summary": "Before Democrats take control, Congress must fund expiring health care programs and confirm HHS nominees.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "STAT+: Five midterm winners and losers: MAHA mowed down, Dem docs scrub in, &#8216;Medicare for All&#8217; returns",
+      "url": "https://www.statnews.com/2026/11/04/midterm-health-policy-winners-losers-medicare-for-all-rfk-jr/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-04",
+      "summary": "Democratic doctors were among the winners in the midterm elections, while the MAHA movement and President Trump's health agenda were losers.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "STAT+: Ultragenyx cuts staff after another study fails",
+      "url": "https://www.statnews.com/2026/11/04/biotech-news-ultragenyx-cuts-staff-after-another-study-fails/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-04",
+      "summary": "Ultragenyx announced that it's laying off about 20% of its staff as it ends development of two rare disease drugs.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "STAT+: Pharmalittle: We&#8217;re reading about CVS plans to split up, FDA inspections in India and China and more",
+      "url": "https://www.statnews.com/pharmalot/2026/11/04/cvs-plans-to-split-up-fda-inspections-in-india-and-china/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-04",
+      "summary": "The Trump administration will survey key components of pharmaceutical production in order to identify domestic supply chain vulnerabilities.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "STAT+: Sens. Wyden and Sanders, backers of &#8216;Medicare for All,&#8217; set to take charge of key committees",
+      "url": "https://www.statnews.com/2026/11/04/democratic-wins-medicare-for-all-momentum/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-04",
+      "summary": "The Democratic flip of the Senate is expected to put two Democrats who support Medicare for All in charge of key committees.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "STAT+: The biotech startups skipping AI for drug discovery",
+      "url": "https://www.statnews.com/2026/11/04/the-biotech-startups-skipping-ai-for-drug-discovery-ai-prognosis/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-04",
+      "summary": "In this edition of AI Prognosis: These biotech startups don't think drug discovery is where AI can make the biggest difference.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "STAT+: Former Madrigal Pharmaceuticals executive alleges coverup of safety issues tied to its drug",
+      "url": "https://www.statnews.com/2026/11/04/former-madrigal-pharmaceuticals-executive-rezdiffra-lawsuit/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-04",
+      "summary": "A top former executive at Madrigal Pharmaceuticals has filed a lawsuit in federal court alleging a coverup of drug safety issues.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Top health takeaways from the midterm elections",
+      "url": "https://www.statnews.com/2026/11/04/health-news-midterm-elections-2026-democrats-control-congress/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-04",
+      "summary": "Democrats gained control of both chambers of Congress, and doctors and scientists won key seats. Here are the top health takeaways from the midterms.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Opinion: I moved to Europe for free health care. I miss my patient portal",
+      "url": "https://www.statnews.com/2026/11/04/moving-to-europe-free-health-care-differences/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-04",
+      "summary": "“To be honest, in Malta, I pay for medical care all the time. I just pay differently,” writes Mariska Breland.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "STAT+: Democrats win power to push back on Trump’s health care moves",
       "url": "https://www.statnews.com/2026/11/03/midterm-elections-what-democratic-control-senate-means-healthcare/?utm_campaign=rss",
       "source": "STAT News",
@@ -173,6 +382,24 @@
       "summary": "Democrats win Senate control, and with it the power to push back on Trump’s health care moves.",
       "category": "general_market",
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "CVS to split into two companies in stunning strategic about-face",
+      "url": "https://www.healthcaredive.com/news/cvs-split-two-companies-strategic-about-face/873660/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-11-04",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Patients want a human in the loop for AI healthcare tools",
+      "url": "https://www.healthcaredive.com/news/patients-want-human-in-loop-ai-healthcare-tools/873704/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-11-04",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "Medicare Part D premiums projected to rise 50% in 2027 without plan switching: KFF",
@@ -496,6 +723,69 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "STAT+: Servier’s $1.55 billion muscular dystrophy drug fails first major test",
+      "url": "https://www.statnews.com/2026/11/03/becker-muscular-dystrophy-servier-edgewise-sevasemten-fail/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-03",
+      "summary": "Servier reports a surprise setback for a drug being tested for a form of muscular dystrophy that lacks treatment.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "STAT+: Amid Mass General Brigham layoffs, CEO pens vague letter, stirring staff anxiety",
+      "url": "https://www.statnews.com/2026/11/03/mass-general-brigham-layoffs-ceo-letter-staff-anxiety/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-03",
+      "summary": "A cryptic email sent to Mass General Brigham employees by the health system's CEO is stirring staff anxiety less than two weeks after a round of layoffs.",
+      "category": "closures_layoffs",
+      "categoryLabel": "Closures & Layoffs"
+    },
+    {
+      "title": "STAT+: Who will get the first psychedelic approved?",
+      "url": "https://www.statnews.com/2026/11/03/biotech-news-who-will-get-the-first-psychedelic-approved/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-03",
+      "summary": "The biotech Compass Pathways has been seen as one of the frontrunners in the race to get the first psychedelic drug approved.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: What do the midterms mean for health care?",
+      "url": "https://www.statnews.com/2026/11/03/midterm-election-health-care-issues-dc-diagnosis-newsletter/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-03",
+      "summary": "STAT unpacks what the midterms mean for health policy, MAHA, and health insurance.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: FDA, CMS look to collaborate with states on health AI",
+      "url": "https://www.statnews.com/2026/11/03/fda-cms-collaborate-with-states-on-ai-heath-tech/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-03",
+      "summary": "In this edition of STAT Health Tech: Federal officials look to work with states on regulating AI, protecting doctors from AI liability, and more.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "STAT+: Pharmalittle: We&#8217;re reading about a generic HIV prevention shot, Lonza buying U.S. facilities, and more",
+      "url": "https://www.statnews.com/pharmalot/2026/11/03/generic-hiv-prevention-shot-lonza-buying-facilities-in-us/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-03",
+      "summary": "The FDA gave tentative approval to Dr.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Child dies of measles in New York&#8217;s first such death in 30 years",
+      "url": "https://www.statnews.com/2026/11/03/child-dies-measles-new-york-first-death-30-years/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-03",
+      "summary": "A child in rural northern New York has died after contracting measles, marking the state's first death from the disease in 30 years.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "Humana, Athenahealth expand electronic prior authorization",
       "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/humana-athenahealth-expand-electronic-prior-authorization/",
       "source": "Becker's Hospital Review",
@@ -627,69 +917,6 @@
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-11-03",
       "summary": "The FDA has granted tentative approval to Dr. Reddy’s Laboratories for the first generic version of lenacapavir, the twice-yearly injection for HIV prevention, according to a Nov.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Servier’s $1.55 billion muscular dystrophy drug fails first major test",
-      "url": "https://www.statnews.com/2026/11/03/becker-muscular-dystrophy-servier-edgewise-sevasemten-fail/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-03",
-      "summary": "Servier reports a surprise setback for a drug being tested for a form of muscular dystrophy that lacks treatment.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: Amid Mass General Brigham layoffs, CEO pens vague letter, stirring staff anxiety",
-      "url": "https://www.statnews.com/2026/11/03/mass-general-brigham-layoffs-ceo-letter-staff-anxiety/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-03",
-      "summary": "A cryptic email sent to Mass General Brigham employees by the health system's CEO is stirring staff anxiety less than two weeks after a round of layoffs.",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "STAT+: Who will get the first psychedelic approved?",
-      "url": "https://www.statnews.com/2026/11/03/biotech-news-who-will-get-the-first-psychedelic-approved/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-03",
-      "summary": "The biotech Compass Pathways has been seen as one of the frontrunners in the race to get the first psychedelic drug approved.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: What do the midterms mean for health care?",
-      "url": "https://www.statnews.com/2026/11/03/midterm-election-health-care-issues-dc-diagnosis-newsletter/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-03",
-      "summary": "STAT unpacks what the midterms mean for health policy, MAHA, and health insurance.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: FDA, CMS look to collaborate with states on health AI",
-      "url": "https://www.statnews.com/2026/11/03/fda-cms-collaborate-with-states-on-ai-heath-tech/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-03",
-      "summary": "In this edition of STAT Health Tech: Federal officials look to work with states on regulating AI, protecting doctors from AI liability, and more.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "STAT+: Pharmalittle: We&#8217;re reading about a generic HIV prevention shot, Lonza buying U.S. facilities, and more",
-      "url": "https://www.statnews.com/pharmalot/2026/11/03/generic-hiv-prevention-shot-lonza-buying-facilities-in-us/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-03",
-      "summary": "The FDA gave tentative approval to Dr.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Child dies of measles in New York&#8217;s first such death in 30 years",
-      "url": "https://www.statnews.com/2026/11/03/child-dies-measles-new-york-first-death-30-years/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-03",
-      "summary": "A child in rural northern New York has died after contracting measles, marking the state's first death from the disease in 30 years.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
@@ -1192,9 +1419,9 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Early Alert: B. Braun Medical Inc. Removes Streamline Bloodline Set for Dialog+",
-      "summary": "The dialyzer connector may not be attached appropriately, resulting in leaking and potential blood loss.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-b-braun-medical-inc-removes-streamline-bloodline-set-dialog",
+      "title": "FDA Advises Consumers Not to Buy or Serve Once Upon a Farm Tractor Wheels Organic Toddler Soft-Baked Bars",
+      "summary": "Consumers Should Not Buy or Serve Once Upon a Farm Tractor Wheels, Organic Toddler Soft-Baked Bars Due to a Potentially Fatal Choking Hazard",
+      "url": "http://www.fda.gov/safety/medical-product-safety-information/fda-advises-consumers-not-buy-or-serve-once-upon-farm-tractor-wheels-organic-toddler-soft-baked-bars",
       "source": "FDA MedWatch RSS",
       "sourceType": "rss",
       "sourceId": "fda_medwatch_rss",
@@ -1204,9 +1431,9 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "FDA Advises Consumers Not to Buy or Serve Once Upon a Farm Tractor Wheels Organic Toddler Soft-Baked Bars",
-      "summary": "Consumers Should Not Buy or Serve Once Upon a Farm Tractor Wheels, Organic Toddler Soft-Baked Bars Due to a Potentially Fatal Choking Hazard",
-      "url": "http://www.fda.gov/safety/medical-product-safety-information/fda-advises-consumers-not-buy-or-serve-once-upon-farm-tractor-wheels-organic-toddler-soft-baked-bars",
+      "title": "Early Alert: B. Braun Medical Inc. Removes Streamline Bloodline Set for Dialog+",
+      "summary": "The dialyzer connector may not be attached appropriately, resulting in leaking and potential blood loss.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-b-braun-medical-inc-removes-streamline-bloodline-set-dialog",
       "source": "FDA MedWatch RSS",
       "sourceType": "rss",
       "sourceId": "fda_medwatch_rss",
@@ -4633,249 +4860,6 @@
       "publishedAt": "2026-10-28",
       "summary": "Several prominent Democratic senators are seeking answers from health plans over the termination of 760,000 people from the Affordable Care Act's coverage rolls in September.",
       "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Why Centene's CEO sees opportunity for 'long-term growth' in Medicaid",
-      "url": "https://www.fiercehealthcare.com/payers/centene-posts-71m-loss-506b-revenue-q3",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-28",
-      "summary": "Centene is the latest insurer in the third quarter to highlight some positive signals in Medicaid.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "UT Austin unveils UT Dell Medicine as it bets big on new AI-native hospital",
-      "url": "https://www.fiercehealthcare.com/health-tech/university-texas-austin-unveils-new-academic-health-system-it-builds-ai-native-hospital",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-28",
-      "summary": "UT Dell Medicine wants to build the hospital of the future from the ground up. Health system leaders detail their tech-forward strategy.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Over 250 hospitals sign HHS' voluntary 'Make Hospital Food Healthier Pledge'",
-      "url": "https://www.fiercehealthcare.com/providers/hhs-calls-hospitals-sign-make-hospital-food-healthier-pledge",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-28",
-      "summary": "The administration is seeking voluntary commitments from hospitals to serve less processed foods in line with recently updated dietary guidelines, which officials said will boost chronic disease prevention and general long-term wellness.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Vera Health secures $28.5M series A for AI-driven clinical search engine",
-      "url": "https://www.fiercehealthcare.com/finance/vera-health-secures-285m-series-ai-driven-clinical-search-engine",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-28",
-      "summary": "Vera Health’s platform scans more than 60 million peer-reviewed publications, clinical guidelines, consensus statements and drug labels, executives say.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "UnitedHealthcare expands AI companion Avery to 21M members",
-      "url": "https://www.fiercehealthcare.com/payers/unitedhealthcare-expands-ai-companion-avery-21m-members",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-28",
-      "summary": "Earlier this year, UnitedHealthcare unveiled Avery, a generative AI companion aimed at supporting care coordination for its members.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "South Carolina's rural hospitals receive free cyber support under pilot program",
-      "url": "https://www.fiercehealthcare.com/providers/south-carolinas-rural-hospitals-receiving-free-cyber-support-under-pilot-program",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-28",
-      "summary": "A six-month partnership between the state, the White House and tech vendors will bolster rural hospitals' defenses while evaluating technologies for nationwide deployment.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Medical societies release female-specific framework for cardiovascular disease prevention, care",
-      "url": "https://www.fiercehealthcare.com/providers/new-female-specific-framework-cardiovascular-disease-prevention-and-care",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-28",
-      "summary": "Four major medical societies developed the framework, calling on providers to approach cardiovascular risk through a female-specific lens.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Anthropic lays out drug R&D ambitions, risks in mammoth IPO filing",
-      "url": "https://www.fiercehealthcare.com/biotech/anthropic-extols-ais-drug-rd-potential-including-risks-mammoth-ipo-filing",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-28",
-      "summary": "Artificial intelligence giant Anthropic is pushing deeper into drug discovery, building its own molecular biology lab and investing in research that could eventually produce drug candidates, according to the company's blockbuster IPO filing.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "HHS finalizes rule to ease health IT certification requirements but punts info blocking proposals",
-      "url": "https://www.fiercehealthcare.com/regulatory/hhs-finalizes-hti-5-rule-streamline-onc-health-it-certification-and-cut-compliance-costs",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-28",
-      "summary": "The final rule retains most of the core objectives from the December 2025 proposal, but ONC significantly scaled back its approach, stopping short of the sweeping overhaul of the health IT certification program it initially proposed.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "DOJ charges 15 in healthcare fraud schemes totaling $2B",
-      "url": "https://www.fiercehealthcare.com/regulatory/doj-charges-15-healthcare-fraud-schemes-totaling-2b",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-28",
-      "summary": "The alleged fraud includes more than $1.6 billion in a scheme targeting individuals in California for “sham substance abuse treatment,” officials say.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Bon Secours Mercy Health to acquire majority stake in Surgery Partners in $5.7B deal",
-      "url": "https://www.fiercehealthcare.com/providers/bon-secours-mercy-health-acquire-majority-stake-surgery-partners",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-28",
-      "summary": "The pending deal values the short-stay surgical platform at $5.7 billion and is the latest example of large health systems' push to build out their ambulatory networks.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "After postponing strike, Brigham and Women's nurses reject contract proposal",
-      "url": "https://www.fiercehealthcare.com/providers/brigham-and-womens-nurses-authorize-open-ended-strike",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-28",
-      "summary": "The nurses' union had postponed a 4,000-nurse open-ended strike, potentially the largest in Massachusetts history, to consider Mass General Brigham's \"last, best and final offer.",
-      "category": "labor_unions",
-      "categoryLabel": "Labor & Unions"
-    },
-    {
-      "title": "Technology That Personalizes Healthcare Hospitality",
-      "url": "https://www.fiercehealthcare.com/sponsored/technology-personalizes-healthcare-hospitality",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-28",
-      "summary": "See how robotics, culinary expertise and human-centered design are expanding personalized nutrition in healthcare.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Walmart taps startup General Medicine to expand Better Care Services",
-      "url": "https://www.fiercehealthcare.com/health-tech/walmart-taps-startup-general-medicine-expand-better-care-services",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-28",
-      "summary": "Walmart is teaming up with startup General Medicine to expand its Better Care Services, turning the digital healthcare platform into a more comprehensive healthcare marketplace.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "A progress report on Aetna's efforts to bridge trust gaps with providers",
-      "url": "https://www.fiercehealthcare.com/payers/progress-report-aetnas-efforts-bridge-trust-gaps-providers",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-28",
-      "summary": "Building stronger bridges between payers and providers will prove critical in addressing the biggest challenges facing healthcare: affordability and access.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Mass General Brigham cuts jobs impacting clinical, operational programs amid $300M budget shortfall",
-      "url": "https://www.fiercehealthcare.com/providers/mass-general-brigham-cuts-jobs-impacting-clinical-operational-programs-amid-300m-budget",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-28",
-      "summary": "Less than two years after a wave of administrative layoffs, Mass General Brigham began a new round of job cuts last week that affect clinical and operational programs, according to media reports.",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "CMS launches $275M nurse staffing initiative for nursing homes",
-      "url": "https://www.fiercehealthcare.com/regulatory/cms-launches-275m-nurse-staffing-initiative-nursing-homes",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-28",
-      "summary": "The agency predicts the effort will support more than 4,000 nurses nationwide.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "House Oversight Committee chair probes PBMs on independent pharmacy audits",
-      "url": "https://www.fiercehealthcare.com/payers/house-oversight-committee-chair-probes-pbms-independent-pharmacy-audits",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-28",
-      "summary": "The chair of a key House panel is pressing major pharmacy benefit managers on whether they retaliated against independent pharmacies for publicly supporting reform efforts.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "HHS, DOJ unveil pilot program for self-disclosure of False Claims Act violations",
-      "url": "https://www.fiercehealthcare.com/payers/hhs-doj-unveil-pilot-program-self-disclosure-false-claims-act-violations",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-10-28",
-      "summary": "The Trump administration is rolling out a new pilot program for companies that voluntarily self-disclose False Claims Act violations.",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "Determination That PEPCID RPD (Famotidine) Orally Disintegrating Tablets, 20 Milligrams and 40 Milligrams Were Not Withdrawn From Sale for Reasons of Safety or Effectiveness",
-      "summary": "The Food and Drug Administration (FDA, Agency, or we) has determined that PEPCID RPD (famotidine) orally disintegrating tablets, 20 milligrams (mg) and 40 mg, were not withdrawn from sale for reasons of safety or effectiveness. This determination will allow FDA to approve abbreviated new drug applications (ANDAs) for famotidine) orally disintegrating tablets, 20 mg and 40 mg, if all other legal and regulatory requirements are met.",
-      "url": "https://www.federalregister.gov/documents/2026/10/27/2026-21897/determination-that-pepcid-rpd-famotidine-orally-disintegrating-tablets-20-milligrams-and-40",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-10-27",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "U.S.-Origin Statements on Seafood; Draft Guidance for Industry; Availability",
-      "summary": "The Food and Drug Administration (FDA or we) is announcing the availability of a draft guidance for industry entitled \"U.S.-Origin Statements on Seafood.\" The draft guidance, when finalized, will provide examples of U.S.-origin statements in seafood product labeling that FDA would consider to be truthful and not misleading.",
-      "url": "https://www.federalregister.gov/documents/2026/10/27/2026-21838/us-origin-statements-on-seafood-draft-guidance-for-industry-availability",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-10-27",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Nurses to hold emergency press conference denouncing ICE presence at Central Coast hospitals endangering patients, families, community",
-      "summary": "Nurses are demanding that ICE or any federal immigration agents stay away from their hospitals and that their employers refuse to cooperate, that ICE get out of their communities, and ultimately that the agency be abolished.",
-      "url": "https://www.nationalnursesunited.org/press/nurses-to-hold-emergency-press-conference-denouncing-ice-presence-at-central-coast-hospitals",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "2026-10-27",
-      "category": "mergers_mna",
-      "relevance": 100,
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "HCA 8-K filing - HCA Healthcare, Inc.",
-      "summary": "HCA Healthcare, Inc. filed 8-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/860730/000119312526432665/hca-20261027.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-10-27",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "UHS 8-K filing - Universal Health Services, Inc.",
-      "summary": "Universal Health Services, Inc. filed 8-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/352915/000119312526434414/uhs-20261027.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-10-27",
-      "category": "general_market",
-      "relevance": 90,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "CNC 8-K filing - Centene Corporation",
-      "summary": "Centene Corporation filed 8-K with the SEC.",
-      "url": "https://www.sec.gov/Archives/edgar/data/1071739/000107173926000194/cnc-20261027.htm",
-      "source": "SEC Healthcare Filings",
-      "sourceType": "sec_filings",
-      "sourceId": "sec_healthcare_filings",
-      "publishedAt": "2026-10-27",
-      "category": "general_market",
-      "relevance": 85,
       "categoryLabel": "General Market"
     }
   ]
