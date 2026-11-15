@@ -1,101 +1,101 @@
 {
-  "lastUpdated": "2026-11-14T23:49:36.280Z",
+  "lastUpdated": "2026-11-15T05:27:34.553Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 1,
-    "healthySources": 9,
+    "staleSources": 3,
+    "healthySources": 7,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 227,
-        "latestPublishedAt": "2026-11-14T00:00:00.000Z",
-        "staleHours": 23,
+        "articleCount": 246,
+        "latestPublishedAt": "2026-11-15T00:00:00.000Z",
+        "staleHours": 5,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 101,
+        "articleCount": 96,
         "latestPublishedAt": "2026-11-13T00:00:00.000Z",
-        "staleHours": 47,
+        "staleHours": 53,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 78,
+        "articleCount": 67,
         "latestPublishedAt": "2026-11-13T00:00:00.000Z",
-        "staleHours": 47,
+        "staleHours": 53,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 34,
         "latestPublishedAt": "2026-11-16T00:00:00.000Z",
-        "staleHours": -25,
+        "staleHours": -19,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
-        "articleCount": 17,
+        "articleCount": 14,
         "latestPublishedAt": "2026-11-13T00:00:00.000Z",
-        "staleHours": 47,
+        "staleHours": 53,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 13,
         "latestPublishedAt": "2026-11-16T00:00:00.000Z",
-        "staleHours": -25,
+        "staleHours": -19,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 10,
         "latestPublishedAt": "2026-11-12T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 77,
+        "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 9,
         "latestPublishedAt": "2026-11-13T00:00:00.000Z",
-        "staleHours": 47,
+        "staleHours": 53,
         "status": "ok"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 6,
         "latestPublishedAt": "2026-11-10T00:00:00.000Z",
-        "staleHours": 119,
+        "staleHours": 125,
         "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 5,
         "latestPublishedAt": "2026-11-12T00:00:00.000Z",
-        "staleHours": 71,
-        "status": "ok"
+        "staleHours": 77,
+        "status": "stale"
       }
     ]
   },
   "categoryCoverage": {
     "closures_layoffs": {
       "label": "Closures & Layoffs",
-      "count": 18
+      "count": 16
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 36
+      "count": 35
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 6
+      "count": 7
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 88
+      "count": 89
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -107,16 +107,18 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 148
+      "count": 150
     },
     "general_market": {
       "label": "General Market",
-      "count": 189
+      "count": 188
     }
   },
   "quality": {
-    "status": "pass",
-    "failedChecks": [],
+    "status": "warning",
+    "failedChecks": [
+      "maxStaleSources"
+    ],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -125,7 +127,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 36,
+        "actual": 34,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -135,8 +137,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 1,
-        "pass": true
+        "actual": 3,
+        "pass": false
       }
     }
   },
@@ -248,6 +250,231 @@
       "category": "general_market",
       "relevance": 96,
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "Trump administration delays enforcement of Medicaid work requirements for six months",
+      "url": "https://www.fiercehealthcare.com/regulatory/trump-administration-delays-enforcement-medicaid-work-requirements-six-months",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-15",
+      "summary": "CMS is offering states an optional six-month enforcement grace period for new Medicaid work requirements, allowing them to test and improve eligibility systems without denying or terminating otherwise eligible beneficiaries for noncompliance through June 30, 2027.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "CommonSpirit Health logs $544M operating loss to begin its FY2027",
+      "url": "https://www.fiercehealthcare.com/providers/commonspirit-health-logs-544m-operating-loss-begin-its-fy2027",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-15",
+      "summary": "The major Catholic nonprofit system said its strong volumes and efficiency gains were hamstrung by weakened payer mix and rising costs.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Plan sponsor expectations, policy shifts set to pressure payers in 2027",
+      "url": "https://www.fiercehealthcare.com/payers/plan-sponsor-expectations-policy-shifts-set-pressure-payers-2027",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-15",
+      "summary": "2027 is shaping up to be a complex year for health plans, as demands from clients to demonstrate value get louder, according to a new report.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Ardent Health acquiring Missouri nonprofit Boone Health for $47M",
+      "url": "https://www.fiercehealthcare.com/providers/ardent-health-acquiring-missouri-nonprofit-boone-health-47m",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-15",
+      "summary": "The purchase of the $500 million Missouri nonprofit includes a 10-year, $200 million capital commitment, and is expected to bring Ardent at least $30 million annual EBITDA by its third year.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Chutes & Ladders—Mayo Clinic names next CEO; Novant Health CEO to retire",
+      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-15",
+      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Policy Brief: Trump admin unveils $10B in second-year rural health awards; HHS invests $9.7M to combat elder abuse",
+      "url": "https://www.fiercehealthcare.com/regulatory/policy-brief-trump-admin-awards-10b-rhtp-funds-year-two-hhs-invests-97m-preventing-elder",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-15",
+      "summary": "The latest news from CMS and HHS: RHTP second year funding announced, CMS issues two new key rules and more.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Patient experience has improved across the healthcare industry. Now comes consistency",
+      "url": "https://www.fiercehealthcare.com/providers/patient-experience-has-improved-across-healthcare-industry-now-comes-consistency",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-15",
+      "summary": "As metrics like patients' average likelihood to recommend reach or surpass pre-pandemic levels, inconsistency and operational friction are the next hurdles for providers to surmount, according to a new report pulling data from 43.1 million patient encounters.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Industry Voices—From pledges to progress: Kill the clipboard, keep an eye on consistency",
+      "url": "https://www.fiercehealthcare.com/health-tech/industry-voices-pledges-progress-kill-clipboard-keep-eye-consistency",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-15",
+      "summary": "Reaching CMS' goal to kill the clipboard will require more than voluntary commitments from individual technology developers, writes Altera's Leigh Burchell.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Dyania Health, Nvidia team up to bring clinical reasoning AI inside hospital networks",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/dyania-health-nvidia-cleveland-clinic",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-15",
+      "summary": "Dyania Health is teaming up with Nvidia to run its Synapsis AI clinical reasoning platform inside hospitals’ own IT environments, allowing health systems to analyze years of patient records at population scale without sending protected patient data outside their networks.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Weekly Rundown: Ohio State Wexner, Microsoft ink tech deal; OpenEvidence launches free Access Intelligence tools",
+      "url": "https://www.fiercehealthcare.com/health-tech/weekly-rundown-openevidence-launches-free-access-intelligence-tools-clinicians-r1",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-15",
+      "summary": "The latest news from R1, OpenEvidence, Microsoft, Ohio State Wexner Medical Center, Clear, Epic, Ellipsis Health and Kouper Health.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "UnitedHealth releases independent audit of its medical policy development practices",
+      "url": "https://www.fiercehealthcare.com/payers/unitedhealth-releases-independent-audit-its-medical-policy-development-practices",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-15",
+      "summary": "Over the past year, UnitedHealth Group has conducted a series of independent reviews of its practices as part of a broader turnaround effort at the company.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "CMS extends moratorium on new Medicare enrollments for hospice, home health agencies",
+      "url": "https://www.fiercehealthcare.com/regulatory/cms-pauses-hospice-home-health-medicare-enrollments-fraud-crackdown",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-15",
+      "summary": "The Trump administration is extending its moratorium on new Medicare enrollments from hospice and home health agencies.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Zus Health secures $33M to build the infrastructure for AI-powered clinical workflows",
+      "url": "https://www.fiercehealthcare.com/health-tech/zus-health-secures-33m-build-infrastructure-ai-powered-clinical-workflows",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-15",
+      "summary": "As healthcare companies race to build AI copilots and agents, startup Zus Health is betting that the bigger opportunity is creating the connected patient data layer those applications need to work reliably.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Medical transport platform MedHaul, focused on high-needs patients, raises $4.1M",
+      "url": "https://www.fiercehealthcare.com/digital-health/medical-transport-booking-platform-medhaul-raises-41m-expand",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-15",
+      "summary": "The latest capital will be used to expand deeper in oncology, which represents 60% of rides booked on the platform, and to support a forthcoming Epic integration.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Texas AG narrows lawsuit against Epic, dropping claims over parental access settings",
+      "url": "https://www.fiercehealthcare.com/health-tech/texas-ag-drops-allegations-epic-restricts-parents-access-health-data-antitrust-lawsuit",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-15",
+      "summary": "The case will unfold under new state leadership, with Democrat Nathan Johnson set to replace Ken Paxton as Texas attorney general and Democrat Katherine Kim replacing the Republican incumbent as the presiding judge.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "No Surprises Act IDR claims cost employer plans an additional $8.4B last year, study finds",
+      "url": "https://www.fiercehealthcare.com/payers/no-surprises-act-idr-claims-cost-employer-plans-additional-84b-last-year-study-finds",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-15",
+      "summary": "The No Surprises Act's independent dispute resolution process cost employer plans $8.39 billion in 2025, according to a new analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Bon Secours Mercy Health bumps up offer for majority stake in Surgery Partners to $6B valuation",
+      "url": "https://www.fiercehealthcare.com/providers/bon-secours-mercy-health-acquire-majority-stake-surgery-partners",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-15",
+      "summary": "The updated deal values the short-stay surgical platform at $6 billion and is the latest example of large health systems' push to build out their ambulatory networks.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "ONC, CMS move electronic prior authorization into real-world testing",
+      "url": "https://www.fiercehealthcare.com/regulatory/onc-cms-launch-electronic-prior-authorization-testing-initiative",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-15",
+      "summary": "CMS and ONC are launching a voluntary industry testing initiative to help healthcare organizations prepare for federal electronic prior authorization requirements taking effect in 2027.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Brigham and Women's avoids 4,000-nurse strike with 11th hour deal",
+      "url": "https://www.fiercehealthcare.com/providers/brigham-and-womens-nurses-authorize-open-ended-strike",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-15",
+      "summary": "The potential strike, set to begin the morning of Nov. 12, would have been the largest nurses strike in Massachusetts history.",
+      "category": "labor_unions",
+      "categoryLabel": "Labor & Unions"
+    },
+    {
+      "title": "Norwest closes $4B global, multi-stage fund to fuel investments in healthcare, biotech and AI",
+      "url": "https://www.fiercehealthcare.com/finance/norwest-closes-4b-global-multi-stage-fund-fuel-investments-healthcare-biotech-and-ai",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-15",
+      "summary": "Norwest closes $4B fund to invest in healthcare AI, biotech",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Duet nabs $15M series A, plans to launch first NP-led ACO in 2027",
+      "url": "https://www.fiercehealthcare.com/finance/duet-nabs-15m-series-plans-launch-first-np-led-aco-2027",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-15",
+      "summary": "Alongside the funding round, Duet announced it plans to launch the first-ever NP-led Medicare Accountable Care Organization in 2027.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "BJC Health, St. Luke's reveal plans to merge",
+      "url": "https://www.fiercehealthcare.com/hospitals/bjc-health-st-lukes-reveal-plans-merge",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-15",
+      "summary": "The providers announced on Wednesday that they have signed a letter of intent to come together, bringing the community hospital into the fold with the Show Me State's largest health system.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Carelon agrees to pay $10M to settle ghost network, coverage denial allegations in New York",
+      "url": "https://www.fiercehealthcare.com/payers/carelon-agrees-pay-10m-settle-ghost-network-coverage-denial-allegations-new-york",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-15",
+      "summary": "Carelon will pay more than $10 million across two settlements in New York over mental health networks and coverage denials.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "CareSource launches $1M grant program to support AI-powered solutions",
+      "url": "https://www.fiercehealthcare.com/payers/caresource-launches-1m-grant-program-support-ai-powered-solutions",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-15",
+      "summary": "Nonprofit insurer CareSource is launching a $1 million program that aims to back responsible AI solutions in healthcare.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Recapping the headwinds and tailwinds from Q3",
+      "url": "https://www.fiercehealthcare.com/payers/recapping-headwinds-and-tailwinds-q3",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-15",
+      "summary": "The Fierce Healthcare team breaks down Q3 earnings for insurers and health systems, plus what the latest trends signal for 2027, on \"Podnosis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "Trump administration delays enforcement of Medicaid work requirements for six months",
@@ -4646,231 +4873,6 @@
       "summary": "Hospitals&#8217; bad debt and charity care per calendar day rose 49% in the first eight months of 2026 compared with the same period in 2023, according to Kaufman Hall&#8217;s National Hospital Flash Report. The report, which draws on data from more than 1,300 hospitals, named rising bad debt and charity care as one of several [&#8230;] The post &#8216;The payer of last resort&#8217;: Where hospital bad debt, charity care rocketed the most appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
       "category": "general_market",
       "categoryLabel": "General Market"
-    },
-    {
-      "title": "Lee Health&#8217;s $6B ambition: Growth without the bloat",
-      "url": "https://www.beckershospitalreview.com/finance/lee-healths-6b-ambition-growth-without-the-bloat/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-11-06",
-      "summary": "Fort Myers, Fla.-based Lee Health has roughly doubled in size over the past six years.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Illinois board OKs Prime hospital&#8217;s pediatric unit closure",
-      "url": "https://www.beckershospitalreview.com/finance/illinois-board-oks-prime-hospitals-pediatric-unit-closure/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-11-06",
-      "summary": "The Illinois Health Facilities and Services Review Board voted 8-1 Nov. 5 to approve the closure of the inpatient pediatric unit at Joliet, Ill.",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "STAT+: Democrats’ midterm landslide spells relief for hospitals",
-      "url": "https://www.statnews.com/2026/11/06/why-democrats-midterm-landslide-helps-hospital-industry/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-06",
-      "summary": "Democrats are likely to focus on reversing Medicaid cuts and expanding insurance coverage, giving a boost to health care providers.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Democrats&#8217; midterm victory, and a questionable fertility procedure",
-      "url": "https://www.statnews.com/2026/11/06/readout-loud-podcast-midterm-elections-fertility-ivf-mrt-therapy/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-06",
-      "summary": "How will the midterm results affect drug pricing policy? And why are women traveling to fertility clinics abroad?",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Up and down the ladder: The latest comings and goings",
-      "url": "https://www.statnews.com/pharmalot/2026/11/06/pharma-biotech-jobs-ladder-pfizer-amgen-astrazeneca-novonordisk/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-06",
-      "summary": "From new hires to departures, promotions and transfers, here are the latest comings and goings in the pharmaceutical industry.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: New tumor cases show common gene therapy tool can come with risk",
-      "url": "https://www.statnews.com/2026/11/06/novartis-zolgensma-gene-therapy-tumor-risk/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-06",
-      "summary": "New cases show AAV gene therapies like Zolgensma carry tumor risks, raising key concerns for SMA patients and gene therapy researchers in general.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: Amgen&#8217;s Repatha linked to fewer heart attacks",
-      "url": "https://www.statnews.com/2026/11/06/biotech-news-amgen-repatha-linked-to-fewer-heart-attacks/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-06",
-      "summary": "Pithy intro text about the biopharma milieu.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "New evidence for ancient cannabis use",
-      "url": "https://www.statnews.com/2026/11/06/health-news-new-evidence-for-ancient-cannabis-use/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-06",
-      "summary": "A new paper, published yesterday in Science, offers compelling evidence of ritual cannabis use in a 2,800-year-old Siberian tomb.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Pharmalittle: We&#8217;re reading about a Novartis gene therapy, faster U.K. drug reviews, and more",
-      "url": "https://www.statnews.com/pharmalot/2026/11/06/novartis-gene-therapy-tumors-found-faster-uk-drug-reviews/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-06",
-      "summary": "Novartis acknowledged seven instances of tumors being found in children who were treated with Zolgensma for spinal muscular atrophy",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: After Medicare punts RPM overhaul to 2029, advocates see window to fight back",
-      "url": "https://www.statnews.com/2026/11/06/new-medicare-overhaul-of-remote-patient-monitoring-hospital-pushback/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-06",
-      "summary": "Medicare pushed forward a controversial plan to ban hospitals from using third parties to deliver remote patient monitoring services, despite overwhelming opposition.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Opinion: AI depends on medical records that don’t always tell the full truth about women",
-      "url": "https://www.statnews.com/2026/11/06/women-medical-records-artificial-intelligence-diagnosis-mental-health-pain/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-06",
-      "summary": "“For AI to achieve its full potential in women’s health, medical records need to tell the complete story,” experts write.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Most people haven&#8217;t heard of kratom. What is it, and who&#8217;s using it?",
-      "url": "https://www.statnews.com/2026/11/06/what-is-kratom-addiction-risks-explained-7-oh/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-06",
-      "summary": "Few Americans are familiar with kratom, despite public health messaging and rising use. So what is it, and who's using it?",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Opinion: STAT+: What it’s like to live with cognitively unimpaired Alzheimer’s disease",
-      "url": "https://www.statnews.com/2026/11/06/pre-clinical-alzheimers-disease-biomarkers-tests-mental-health/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-06",
-      "summary": "People with cognitively unimpaired Alzheimer’s “may be asymptomatic, but they do have a disease experience,” writes Jason Karlawish.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Judge sides with ACA brokers, lifts moratorium on new registrations",
-      "url": "https://www.healthcaredive.com/news/judge-sides-with-aca-brokers-lifts-moratorium-on-new-registrations/873994/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-11-06",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "CMS ousts 2 No Surprises arbiters as critics question impartiality",
-      "url": "https://www.healthcaredive.com/news/cms-ousts-two-no-surprises-arbiters-island-peer-network-medical/873896/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-11-06",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "New CMS rule ties Medicare billing privileges to owners’ misconduct",
-      "url": "https://www.healthcaredive.com/news/new-cms-rule-ties-medicare-billing-privileges-to-owners-misconduct/873975/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-11-06",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "CMS makes it official, codifying Medicare drug price negotiations established under IRA",
-      "url": "https://www.fiercehealthcare.com/pharma/cms-makes-it-official-codifying-medicare-drug-price-negotiations-rolled-out-under-ira",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-06",
-      "summary": "Against a backdrop of repeated industry challenges in court, the Centers for Medicare and Medicaid Services is locking in the drug price negotiation framework established under the Biden-era Inflation Reduction Act.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Omada Health hikes 2026 outlook after ‘strongest quarter ever’ in Q3",
-      "url": "https://www.fiercehealthcare.com/finance/omada-health-hikes-2026-outlook-after-strongest-quarter-ever-q3",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-06",
-      "summary": "Omada Health saw its \"strongest quarter ever\" in the third quarter of 2026, CEO and co-founder Sean Duffy told investors and analysts during a Thursday evening earnings call.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Healthcare Dealmakers—Chicago's $11B hospital merger, another health system ASC deal and more",
-      "url": "https://www.fiercehealthcare.com/finance/healthcare-dealmakers-chicagos-11b-hospital-merger-another-health-system-asc-deal-and-more",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-06",
-      "summary": "Kaiser Permanente's next regional health system acquisition, Redesign Health's merger with Sheba Medical Center's innovation arm and more merger and acquisition news from a busy October.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Mayo Clinic Platform launches AI-driven clinical decision support tool",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/mayo-clinic-launches-ai-driven-clinical-decision-support-tool",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-06",
-      "summary": "Beginning in November, eligible clinicians will have access to two key capabilities: a specialty-specific chat that covers more than 35 specialties and 22 clinical calculators available via chat or voice dictation.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Industry Voices—New majority, new targets: Where healthcare fraud enforcement goes next",
-      "url": "https://www.fiercehealthcare.com/regulatory/industry-voices-new-majority-new-targets-where-healthcare-fraud-enforcement-goes-next",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-06",
-      "summary": "A new Congress may bring closer scrutiny of how the healthcare industry is organized, owned and paid, writes Miller &amp; Chevalier member and former Department of Justice fraud head Kevin Lowell.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "CMS proposes rollbacks of 'excessively burdensome' Conditions of Participation",
-      "url": "https://www.fiercehealthcare.com/providers/cms-proposes-rollbacks-excessively-burdensome-conditions-participation",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-06",
-      "summary": "The proposed changes, estimated to save $320 million, include reversals of Biden-era requirements for hospital emergency departments related to obstetric care.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Epic&#8217;s biggest moves in 2026: AI, EHR expansion and more",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/epics-biggest-moves-in-2026-so-far/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-11-06",
-      "summary": "Epic is expanding its reach beyond traditional electronic health records in 2026, introducing new AI capabilities, developing tools that connect with third-party applications and deepening its role in healthcare interoperability. From AI agents and pharmacy partnerships to federal policy and continued market expansion, here is a look at Epic Systems&#8217; biggest moves so far in [&#8230;] The post Epic&#8217;s biggest moves in 2026: AI, EHR expansion and more appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "2 hospital bankruptcies, 2 days apart",
-      "url": "https://www.beckershospitalreview.com/finance/2-hospital-bankruptcies-2-days-apart/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-11-06",
-      "summary": "Two hospital operators, a Pennsylvania Catholic health system and a Chicago safety-net hospital, filed for Chapter 11 bankruptcy protection two days apart.&#160; Meadowbrook, Pa.",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "Weill Cornell patient data entered into AI tools without authorization",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/weill-cornell-patient-data-entered-into-ai-tools-without-authorization/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-11-06",
-      "summary": "New York City-based Weill Cornell Medicine disclosed that patient health information was entered into AI tools and processed using machine learning without authorization as part of a radiology research study. Weill Cornell learned of the incident Sept.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
     }
   ]
 }
