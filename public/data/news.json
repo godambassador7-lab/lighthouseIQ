@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-11-17T08:58:12.459Z",
+  "lastUpdated": "2026-11-17T18:22:16.540Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 4,
-    "healthySources": 6,
+    "staleSources": 2,
+    "healthySources": 8,
     "sources": [
       {
         "source": "Fierce Healthcare",
         "articleCount": 225,
         "latestPublishedAt": "2026-11-17T00:00:00.000Z",
-        "staleHours": 8,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
         "articleCount": 99,
         "latestPublishedAt": "2026-11-17T00:00:00.000Z",
-        "staleHours": 8,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "STAT News",
-        "articleCount": 74,
-        "latestPublishedAt": "2026-11-16T00:00:00.000Z",
-        "staleHours": 32,
+        "articleCount": 75,
+        "latestPublishedAt": "2026-11-17T00:00:00.000Z",
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 45,
         "latestPublishedAt": "2026-11-17T00:00:00.000Z",
-        "staleHours": 8,
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
-        "articleCount": 20,
-        "latestPublishedAt": "2026-11-16T00:00:00.000Z",
-        "staleHours": 32,
+        "articleCount": 17,
+        "latestPublishedAt": "2026-11-17T00:00:00.000Z",
+        "staleHours": 18,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 12,
         "latestPublishedAt": "2026-11-16T00:00:00.000Z",
-        "staleHours": 32,
+        "staleHours": 42,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 10,
         "latestPublishedAt": "2026-11-13T00:00:00.000Z",
-        "staleHours": 104,
+        "staleHours": 114,
         "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
-        "articleCount": 8,
-        "latestPublishedAt": "2026-11-13T00:00:00.000Z",
-        "staleHours": 104,
-        "status": "stale"
+        "articleCount": 9,
+        "latestPublishedAt": "2026-11-17T00:00:00.000Z",
+        "staleHours": 18,
+        "status": "ok"
+      },
+      {
+        "source": "SEC Healthcare Filings",
+        "articleCount": 4,
+        "latestPublishedAt": "2026-11-17T00:00:00.000Z",
+        "staleHours": 18,
+        "status": "ok"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 4,
         "latestPublishedAt": "2026-11-12T00:00:00.000Z",
-        "staleHours": 128,
-        "status": "stale"
-      },
-      {
-        "source": "SEC Healthcare Filings",
-        "articleCount": 3,
-        "latestPublishedAt": "2026-11-10T00:00:00.000Z",
-        "staleHours": 176,
+        "staleHours": 138,
         "status": "stale"
       }
     ]
@@ -83,11 +83,11 @@
   "categoryCoverage": {
     "closures_layoffs": {
       "label": "Closures & Layoffs",
-      "count": 11
+      "count": 10
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 26
+      "count": 24
     },
     "labor_unions": {
       "label": "Labor & Unions",
@@ -95,7 +95,7 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 86
+      "count": 85
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -103,22 +103,20 @@
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
-      "count": 11
+      "count": 14
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 157
+      "count": 153
     },
     "general_market": {
       "label": "General Market",
-      "count": 196
+      "count": 201
     }
   },
   "quality": {
-    "status": "warning",
-    "failedChecks": [
-      "maxStaleSources"
-    ],
+    "status": "pass",
+    "failedChecks": [],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -127,7 +125,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 43,
+        "actual": 75,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -137,8 +135,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 4,
-        "pass": false
+        "actual": 2,
+        "pass": true
       }
     }
   },
@@ -240,6 +238,18 @@
       "categoryLabel": "Quality & Safety"
     },
     {
+      "title": "Convenience Kit Correction: Cardinal Health Issues Correction for Presource Packs Containing BD Alaris Pump Infusion Sets",
+      "summary": "Cardinal Health Presource Kits containing recalled BD Alaris Pump Infusion Sets should be corrected prior to continued use",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/convenience-kit-correction-cardinal-health-issues-correction-presource-packs-containing-bd-alaris",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-11-17",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
       "title": "Office of the Secretary; Amended Notice of Meeting",
       "summary": "",
       "url": "https://www.federalregister.gov/documents/2026/11/17/2026-23379/office-of-the-secretary-amended-notice-of-meeting",
@@ -322,6 +332,288 @@
       "category": "general_market",
       "relevance": 96,
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "HUM 8-K filing - Humana Inc.",
+      "summary": "Humana Inc. filed 8-K with the SEC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/49071/000004907126000070/hum-20261116.htm",
+      "source": "SEC Healthcare Filings",
+      "sourceType": "sec_filings",
+      "sourceId": "sec_healthcare_filings",
+      "publishedAt": "2026-11-17",
+      "category": "general_market",
+      "relevance": 85,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "2 competing Iowa hospitals to build cancer treatment center in joint venture",
+      "url": "https://www.beckershospitalreview.com/care-coordination/2-competing-iowa-hospitals-to-build-cancer-treatment-center-in-joint-venture/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-11-17",
+      "summary": "Pella (Iowa) Regional Health Center and Knoxville (Iowa) Hospital &#38; Clinics have entered into a joint venture to construct a cancer center in Marion County, according to a news release sent to Becker&#8217;s.&#160; The 7,800-square-foot facility will house a linear accelerator to deliver precise radiation treatments and a PET/CT scanner.",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "Banner Health&#8217;s operating margin rises to 5% through Q3: 6 things to know",
+      "url": "https://www.beckershospitalreview.com/finance/banner-healths-operating-margin-rises-to-5-through-q3-6-things-to-know/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-11-17",
+      "summary": "Phoenix-based Banner Health recorded operating income of $636.1 million (5% operating margin) through the third quarter of 2026, up from $338.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "RWJBarnabas plans $1B campus redevelopment",
+      "url": "https://www.beckershospitalreview.com/capital/rwjbarnabas-plans-1b-campus-redevelopment/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-11-17",
+      "summary": "West Orange, N.J.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "Turning the stool upside down: Advancing enterprise medication strategy in health systems",
+      "url": "https://www.beckershospitalreview.com/pharmacy/turning-the-stool-upside-down-advancing-enterprise-medication-strategy-in-health-systems/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-11-17",
+      "summary": "Author&#8217;s note: The concepts described herein are intended as a strategic framework rather than a prescriptive operating model. Health systems vary in structure, clinical capabilities, financial models, technology, market characteristics and local operating environments.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "LA County plans $563M switch from Oracle Health to Epic",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ehrs/la-county-plans-563m-switch-from-oracle-health-to-epic/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-11-17",
+      "summary": "Los Angeles County is seeking approval for four sets of agreements totaling up to $563 million to switch from Oracle Health to Epic, citing concerns about its aging EHR system, rising costs and the need for a more integrated technology platform. The Los Angeles County Board of Supervisors is scheduled to consider the proposal Nov.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "70% shorter ED stays, 281% ROI: The impact of telepsychiatry",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/telehealth/70-shorter-ed-stays-281-roi-the-impact-of-telepsychiatry/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-11-17",
+      "summary": "The demand for psychiatric care is projected to grow about 45% in the next decade while the psychiatry workforce is expected to decline about 12%. To address this gap, many organizations are now prioritizing telepsychiatry to reach more patients and better serve their communities.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Boston Children’s, U of Utah land up to $42M for medical AI platform",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/digital-health/boston-childrens-u-of-utah-land-up-to-42m-for-medical-ai-platform/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-11-17",
+      "summary": "Boston Children’s Hospital and the University of Utah in Salt Lake City won a three-year contract worth up to $42 million from the Advanced Research Projects Agency for Health to build a national platform for medical AI development on hospital imaging data. The platform, called HARBOR, short for Health Asset Registry for Bioimaging, Orchestration &#38; [&#8230;] The post Boston Children’s, U of Utah land up to $42M for medical AI platform appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Manning Family Children&#8217;s opens 1st hospital-attached children&#8217;s museum",
+      "url": "https://www.beckershospitalreview.com/hospital-management-administration/manning-family-childrens-opens-1st-hospital-attached-childrens-museum/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-11-17",
+      "summary": "New Orleans-based Manning Family Children&#8217;s is the first hospital to open an attached children&#8217;s museum, it said in a Nov. 17 news release shared with Becker&#8217;s.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "New Hampshire hospital&#8217;s network outage caused by cyber incident",
+      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/cybersecurity/new-hampshire-hospitals-weeklong-network-outage-caused-by-cyber-incident/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-11-17",
+      "summary": "A cyber incident caused the ongoing network outage at Peterborough, N.H.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Measles infected 112 pregnant women, 13 newborns in 21 months: Study",
+      "url": "https://www.beckershospitalreview.com/quality/public-health/measles-infected-112-pregnant-women-13-newborns-in-21-months-study/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-11-17",
+      "summary": "During U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: GOP, MAHA leaders clash over FDA nominee’s record on vapes",
+      "url": "https://www.statnews.com/2026/11/17/heidi-overton-fda-commissioner-nomination-vote-vaping-controversy/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-17",
+      "summary": "Heidi Overton is facing an uphill climb to become the next FDA commissioner. The latest challenge is her work on vaping.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: What to know about the new AI roadmap from CMS, and news from HLTH",
+      "url": "https://www.statnews.com/2026/11/17/cms-ai-roadmap-and-news-from-hlth-health-tech/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-17",
+      "summary": "In this edition of STAT Health Tech: What you need to know about CMS' recently released AI roadmap, and highlights from HLTH.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "STAT+: Flagship opens biotech-creation outpost in the U.K.",
+      "url": "https://www.statnews.com/2026/11/17/biotech-news-flagship-opens-biotech-creation-uk-outpost/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-17",
+      "summary": "Flagship is putting up 100 million pounds to start “AI-native platform companies\" focused on human and planetary health in the U.K.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "U.S. loses measles elimination status, marking embarrassing stain on its public health record",
+      "url": "https://www.statnews.com/2026/11/17/us-loses-measles-elimination-status-public-health-victory-lost/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-17",
+      "summary": "Measles is no longer considered eliminated in the U.S.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "STAT+: &#8216;Medicare for More&#8217; gains traction",
+      "url": "https://www.statnews.com/2026/11/17/democrats-new-health-policy-medicare-for-more-stephen-miller-embraces-maha/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-17",
+      "summary": "Democrats coalesce around a new health care policy, and Trump's new chief of staff embraces MAHA.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "STAT+: Pharmalittle: We&#8217;re reading about a Roche breast cancer pill, obesity drugs in children, and more",
+      "url": "https://www.statnews.com/pharmalot/2026/11/17/roche-breast-cancer-pill-obesity-drugs-in-children/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-17",
+      "summary": "The FDA approved a breast cancer drug from Roche, teeing up the launch of what the company has said could become its top-selling product",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "NIH&#8217;s infectious disease unit has a new head at last",
+      "url": "https://www.statnews.com/2026/11/17/health-news-nih-infectious-disease-unit-has-a-new-head-at-last/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-17",
+      "summary": "The NIH has been without a permanent director since 2025. Now officials announce that acting director John Powers III will take the helm.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: With $173 million, new startup takes aim at sickle cell",
+      "url": "https://www.statnews.com/2026/11/17/new-startup-developing-novel-sickle-cell-anemia-infusion-no-gene-therapy/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-17",
+      "summary": "Researchers are seeking a sickle cell treatment as effective as gene therapy, without the drawbacks. This entrepreneur thinks he might have one.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "STAT+: Sellas&#8217; experimental blood cancer immunotherapy reduced risk of death in clinical trial",
+      "url": "https://www.statnews.com/2026/11/17/sellas-blood-cancer-immunotherapy-succeeds-clinical-trial/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-17",
+      "summary": "Sellas' experimental blood cancer immunotherapy reduced the risk of death in clinical trial.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: After death in gene therapy trial for a brain disease, progress is reported",
+      "url": "https://www.statnews.com/2026/11/17/capsida-gene-therapy-trial-death-follow-up-investigation/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-17",
+      "summary": "An unexpected patient death rattled researchers who sought to pierce the blood-brain barrier. Now some think they have a better way of mitigating risks.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Flavored nicotine tablets, the tobacco industry’s latest product, worry public health advocates",
+      "url": "https://www.statnews.com/2026/11/17/zyn-melts-tobacco-firms-test-market-nicotine-pouch-alternatives/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-17",
+      "summary": "The latest product from the tobacco industry is a flavorful nicotine tablet that melts in your mouth, allowing users to get a buzz as discreetly as popping a mint",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Opinion: The problem with ‘zero tolerance for bad behavior’ signs at hospitals",
+      "url": "https://www.statnews.com/2026/11/17/hospital-signs-violence-health-care-workers-research-stigma/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-17",
+      "summary": "“Hospitals do not have to choose between protecting hospital staff and preserving patient/family trust in the institution.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Faith-based addiction recovery groups don’t often get federal funding. RFK Jr. wants to change that",
+      "url": "https://www.statnews.com/2026/11/17/rfk-jr-federal-funding-faith-based-recovery-groups/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-17",
+      "summary": "As RFK Jr. pushes federal support for faith-based recovery groups, medical experts express concern over access to addiction medications.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Mayo Clinic taps AI, strategy leader as CEO",
+      "url": "https://www.healthcaredive.com/news/mayo-clinic-taps-ai-strategy-leader-as-ceo/874909/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-11-17",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "‘Selling and marketing snake oil’: The debate over compounded GLP-1s",
+      "url": "https://www.healthcaredive.com/news/compounded-glp-1s-telehealth-debate-snake-oil-fda/874840/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-11-17",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Updated HIPAA privacy law sets rules for sharing health data with apps",
+      "url": "https://www.healthcaredive.com/news/updated-hipaa-privacy-law-sets-rules-for-sharing-health-data-with-apps/874845/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-11-17",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "From pilot to platform: Johns Hopkins researcher on healthcare AI’s next chapter",
+      "url": "https://www.healthcaredive.com/news/from-pilot-to-platform-johns-hopkins-researcher-on-healthcare-ais-next-ch/874708/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-11-17",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Chutes & Ladders—SimpliFed adds COO; Mayo Clinic names next CEO",
+      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-17",
+      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Humana launches national provider Gold Card program",
+      "url": "https://www.fiercehealthcare.com/payers/humana-launches-provider-gold-card-program",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-17",
+      "summary": "Humana is continuing its push to reform prior authorization with the launch of a national provider gold card program, which will initially focus on MRI, CT and MRA imaging as well as physical and occupational therapy.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "HLTH 2026: GLP-1 costs remain a challenge. A new CVS study aims to identify the right price",
+      "url": "https://www.fiercehealthcare.com/payers/hlth-2026-glp-1-costs-remain-challenge-new-cvs-study-aims-identify-right-price",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-17",
+      "summary": "Cost and access to GLP-1s remains a challenge, but the benefits of these drugs aren't in doubt. A new study from CVS Health aims to quantify at what price a GLP-1 drug has generated enough savings elsewhere through improved clinical outcomes.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "Half of US nonprofit hospitals get more in tax breaks than they give back: Report",
@@ -4431,6 +4723,18 @@
       "categoryLabel": "Policy & Reimbursement"
     },
     {
+      "title": "Convenience Kit Correction: Cardinal Health Updates Use Instructions for Presource Packs Containing BD Alaris Pump Infusion Sets",
+      "summary": "Cardinal Health Presource Kits may contain BD Alaris Pump Infusion Sets with Updated Use Instructions.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/convenience-kit-correction-cardinal-health-updates-use-instructions-presource-packs-containing-bd",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-11-09",
+      "category": "ai_tech",
+      "relevance": 100,
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
       "title": "Eugia US LLC (f/k/a Auro Medics Pharma LLC) Issues Voluntary Nationwide Recall of Vancomycin Hydrochloride for Injection USP 1.25g/Vial-30mL (Single Dose Vial) Due to Presence of Particulate Matter",
       "summary": "FOR IMMEDIATE RELEASE –November 06,2026 – East Windsor, New Jersey, Eugia US LLC (f/k/a Auro Medics Pharma LLC) is voluntarily recalling lot number 3VM26026A of Vancomycin Hydrochloride for Injection USP 1.25g/Vial-30mL (Single Dose Vial) to the hospital/healthcare facility/user level due to the pre",
       "url": "http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/eugia-us-llc-fka-auro-medics-pharma-llc-issues-voluntary-nationwide-recall-vancomycin-hydrochloride",
@@ -4453,18 +4757,6 @@
       "category": "general_market",
       "relevance": 100,
       "categoryLabel": "General Market"
-    },
-    {
-      "title": "Convenience Kit Correction: Cardinal Health Updates Use Instructions for Presource Packs Containing BD Alaris Pump Infusion Sets",
-      "summary": "Cardinal Health Presource Kits may contain BD Alaris Pump Infusion Sets with Updated Use Instructions.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/convenience-kit-correction-cardinal-health-updates-use-instructions-presource-packs-containing-bd",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-11-09",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "Heart Pump Controller Recall: Abiomed Removes Automated Impella Controllers (AIC)",
@@ -4598,294 +4890,6 @@
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-11-09",
       "summary": "Since December 2025, the following hospitals and health systems have said they plan to raise their workers&#8217; pay.&#160; Editor&#8217;s note: This webpage was published Jan.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Why Ardent&#8217;s payer negotiations have been &#8216;a little more contentious&#8217; this year",
-      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/why-ardents-payer-negotiations-have-been-a-little-more-contentious-this-year/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-11-09",
-      "summary": "It&#8217;s been a big year for payer contract negotiations at Brentwood, Tenn.-based Ardent Health, CFO Alfred Lumsdaine said on the system&#8217;s Nov.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Cincinnati Children&#8217;s plans $1.4B capital investment: 6 things to know",
-      "url": "https://www.beckershospitalreview.com/finance/cincinnati-childrens-plans-1-4b-capital-investment-6-things-to-know/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-11-09",
-      "summary": "Cincinnati Children&#8217;s is planning roughly $1.4 billion in capital investments through fiscal 2031, the system said in a statement shared with Becker&#8217;s.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Rural health awards: Biggest winners, losers in round 2",
-      "url": "https://www.beckershospitalreview.com/finance/rural-health-awards-biggest-winners-losers-in-round-2/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-11-09",
-      "summary": "North Dakota posted the largest gain in competitive Rural Health Transformation Program funding in the program’s second year, adding about $7.4 million, while Florida saw the steepest drop, losing about $6.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "An &#8216;often overlooked&#8217; ED boarding fix: Study",
-      "url": "https://www.beckershospitalreview.com/quality/nursing/an-often-overlooked-ed-boarding-fix-study/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-11-09",
-      "summary": "Hospitals with better nurse staffing levels had lower average emergency department boarding times than hospitals with high patient-to-nurse ratios, a recent study found. The study, published in the November issue of the Journal of Emergency Nursing, analyzed nurse staffing data and ED boarding times from 335 hospitals in Florida, New Jersey and Pennsylvania.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "HCA hospital taps new vice president of operations",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/hca-hospital-taps-new-vice-president-of-operations-3/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-11-09",
-      "summary": "Nehal Jaiswal has been named vice president of operations for HCA Florida Fawcett in Port Charlotte, according to a Nov. 7 LinkedIn post.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Trinity Health of New England announces 4 clinical leadership changes",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/trinity-health-of-new-england-announces-4-clinical-leadership-changes/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-11-09",
-      "summary": "Hartford, Conn.-based Trinity Health of New England has named new chief medical officers and nursing leaders across three of its Connecticut hospitals.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "3 biotech groups sue CMS over drug pricing rule",
-      "url": "https://www.beckershospitalreview.com/pharmacy/3-biotech-groups-sue-cms-over-drug-pricing-rule/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-11-09",
-      "summary": "Three biotechnology trade groups filed a lawsuit Nov. 6 challenging CMS’ Global Benchmark for Efficient Drug Pricing Model, known as GLOBE, arguing the agency exceeded its statutory authority in finalizing the model.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "AMA flags moral injury as &#8216;distinct and significant threat&#8217; to physicians",
-      "url": "https://www.beckershospitalreview.com/workforce/ama-flags-moral-injury-as-distinct-and-significant-threat-to-physicians/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-11-09",
-      "summary": "The American Medical Association’s House of Delegates on Nov. 9 classified moral injury as a &#8220;distinct and significant threat&#8221; to the well-being of physicians, residents and medical students, adopting policy that frames the problem as systemic rather than personal.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Argenx to acquire peptide biotech for up to $1.15B",
-      "url": "https://www.beckershospitalreview.com/pharmacy/argenx-to-acquire-peptide-biotech-for-up-to-1-15b/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-11-09",
-      "summary": "Amsterdam-based immunology innovation company Argenx will acquire Santa Cruz, Calif.-based biotech company Unnatural Products in a deal valued at up to about $1.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "UAMS plans network of combined ED, urgent care facilities",
-      "url": "https://www.beckershospitalreview.com/care-coordination/uams-plans-network-of-combined-ed-urgent-care-facilities/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-11-09",
-      "summary": "Little Rock-based University of Arkansas for Medical Sciences is launching a network of freestanding facilities that combine emergency departments and urgent care clinics. The facilities will be open 24/7, and have on-site laboratory services and imaging capabilities, according to a Nov.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "STAT+: Bill Ackman’s bold plan to transform brain research",
-      "url": "https://www.statnews.com/2026/11/09/bill-ackman-launches-new-brain-research-institute/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-09",
-      "summary": "Billionaire Bill Ackman as a bold plan to transform brain research, spurred by a tragic backstory.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: Hospitals win the midterms, and Chopping Very Strategically",
-      "url": "https://www.statnews.com/2026/11/09/midterm-elections-good-news-for-hospitals-cvs-breakup-explained/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-09",
-      "summary": "We explain the CVS breakup, and why Democrats' election victories are good news for hospitals.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: Heart association meeting’s readout is trending ‘neutral’",
-      "url": "https://www.statnews.com/2026/11/09/aha-2026-news-neutral-clinical-trials-lessons-learned/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-09",
-      "summary": "The theme of the American Heart Association meetings was \"neutral\" results. Yet no one wants to stop pursuing inflammation or Lp(a) lowering.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: FDA warns GLP-1 drugs carry potential risk of rare eye condition",
-      "url": "https://www.statnews.com/2026/11/09/glp-1-drugs-potential-risk-rare-eye-condition-naion-fda/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-09",
-      "summary": "The FDA on Monday warned that GLP-1 drugs carry a potential risk for a rare but serious eye condition that's sometimes referred to as an \"eye stroke.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Gene therapy&#8217;s long-debated cancer risk materializes",
-      "url": "https://www.statnews.com/2026/11/09/biotech-news-gene-therapy-long-debated-cancer-risk-materializes/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-09",
-      "summary": "For years, gene therapy researchers debated whether the viruses they use to ferry replacement genes into cells could cause tumors.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Eli Lilly’s GLP-1 pill Foundayo helped alleviate sleep apnea in studies",
-      "url": "https://www.statnews.com/2026/11/09/eli-lilly-foundayo-sleep-apnea/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-09",
-      "summary": "Eli Lilly’s GLP-1 pill Foundayo helped alleviate sleep apnea in two late-stage studies, but it doesn’t appear as effective as Lilly’s injectable drug Zepbound.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Pharmalittle: We&#8217;re reading about a Novartis heart drug, BIO fighting a Trump program, and more",
-      "url": "https://www.statnews.com/pharmalot/2026/11/09/novartis-abandons-heart-drug-bio-fighting-trump-program/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-09",
-      "summary": "Novartis is largely abandoning a drug once considered a potential blockbuster after a study found it had little promise for preventing heart attacks and deaths",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: A new rule to prevent the spread of bioweapons",
-      "url": "https://www.statnews.com/2026/11/09/health-news-new-rule-to-prevent-bioweapon-spread/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-09",
-      "summary": "AI makes it easier for people to come up with new potential medicines, but may also increase the possibility of bad actors creating new bioweapons.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Opinion: STAT+: CVS’ split doesn’t fix its fundamental problem",
-      "url": "https://www.statnews.com/2026/11/09/cvs-health-split-pbm-conflict-examined-anthony-loiacono-judi-health/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-09",
-      "summary": "CVS’ split into two doesn’t fix its fundamental problem, writes Judi Health CEO A.J.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Liver experts finally agree on what acute-on-chronic liver failure is",
-      "url": "https://www.statnews.com/2026/11/09/acute-on-chronic-liver-failure-new-definition/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-09",
-      "summary": "\"Patients are suffering with this condition that everyone has their own way of defining.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: Democrats begin asking: How far can we go on health care?",
-      "url": "https://www.statnews.com/2026/11/09/democrat-healthcare-agenda-new-lawmakers-weigh-popular-vs-possible/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-09",
-      "summary": "Many in the party are pushing for Democratic lawmakers to go big on health care, but their dreams may crash into reality.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "AI chatbots aren&#8217;t therapists. But can they finally get men to open up?",
-      "url": "https://www.statnews.com/2026/11/09/ai-chatbots-can-overcome-mental-health-barriers-in-men/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-09",
-      "summary": "AI chatbots are imperfect therapists. But can they finally get men to talk?",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Hospitals write off $132B as AI fails to move the needle with finances",
-      "url": "https://www.healthcaredive.com/news/hospitals-write-off-132b-ai-fails-to-move-needle-with-finances/874161/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-11-09",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "AWS pledges $100M in cloud, AI credits to close health equity gaps",
-      "url": "https://www.healthcaredive.com/news/aws-pledges-100m-in-cloud-ai-credits-to-close-health-equity-gaps/874103/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-11-09",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "12% of U.S. hospitals are owned by private equity",
-      "url": "https://www.healthcaredive.com/news/12-of-us-hospitals-are-owned-by-private-equity/874098/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-11-09",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "CMS postpones RPM payment halt for 2 years",
-      "url": "https://www.healthcaredive.com/news/cms-postpones-rpm-payment-halt-for-2-years/874050/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-11-09",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "What does AI governance really mean in healthcare?",
-      "url": "https://www.healthcaredive.com/spons/what-does-ai-governance-really-mean-in-healthcare/873027/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-11-09",
-      "summary": "<p>AI governance doesn't stop at launch. Here are the five must-ask questions.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "More AI won’t fix healthcare’s revenue cycle. Orchestration will.",
-      "url": "https://www.healthcaredive.com/spons/more-ai-wont-fix-healthcares-revenue-cycle-orchestration-will/873614/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-11-09",
-      "summary": "<p>Most providers automate revenue with AI. Only 4% have connected it.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "How rural healthcare organizations are turning AI investments into measurable performance improvements",
-      "url": "https://www.healthcaredive.com/spons/how-rural-healthcare-organizations-are-turning-ai-investments-into-measurab/873543/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-11-09",
-      "summary": "<p>Better data, stronger governance and targeted use cases are driving results in rural healthcare.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Elevance Health sues over 2027 Medicare Advantage star ratings",
-      "url": "https://www.fiercehealthcare.com/payers/alignment-healthcare-sues-cms-over-its-2027-medicare-advantage-star-ratings",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-09",
-      "summary": "CVS Heath's Aetna is joining the ranks of insurers suing over its results in the 2027 Medicare Advantage star ratings.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Fierce Healthcare Layoff Tracker—Abridge, Heidi cut headcount as part of restructuring efforts; Children's Mercy lays off 1.2% of workforce",
-      "url": "https://www.fiercehealthcare.com/finance/fierce-healthcare-layoff-tracker-2026-job-cuts-eliminations-health-systems-hospitals",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-09",
-      "summary": "Stick with this tracker for the latest layoff and workforce updates from across healthcare.",
-      "category": "closures_layoffs",
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "Weekly Rundown: Hims & Hers adds new partners for benefits program; Hippocratic unveils updates to healthcare-focused AI model",
-      "url": "https://www.fiercehealthcare.com/health-tech/weekly-rundown-hims-hers-adds-new-partners-benefits-program-hippocratic-ai-debuts",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-09",
-      "summary": "Stay up to date on the latest in health tech, digital health and health AI news with this weekly brief.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
     }
