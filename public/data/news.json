@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-11-20T23:49:06.062Z",
+  "lastUpdated": "2026-11-21T06:07:39.078Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 1,
-    "healthySources": 9,
+    "staleSources": 2,
+    "healthySources": 8,
     "sources": [
       {
         "source": "Fierce Healthcare",
         "articleCount": 221,
         "latestPublishedAt": "2026-11-20T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 30,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
         "articleCount": 97,
         "latestPublishedAt": "2026-11-20T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 30,
         "status": "ok"
       },
       {
         "source": "STAT News",
         "articleCount": 75,
         "latestPublishedAt": "2026-11-20T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 30,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
-        "articleCount": 43,
-        "latestPublishedAt": "2026-11-20T00:00:00.000Z",
-        "staleHours": 23,
+        "articleCount": 50,
+        "latestPublishedAt": "2026-11-23T00:00:00.000Z",
+        "staleHours": -42,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 24,
         "latestPublishedAt": "2026-11-20T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 30,
         "status": "ok"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 12,
         "latestPublishedAt": "2026-11-20T00:00:00.000Z",
-        "staleHours": 23,
-        "status": "ok"
-      },
-      {
-        "source": "Federal Register - FDA",
-        "articleCount": 12,
-        "latestPublishedAt": "2026-11-18T00:00:00.000Z",
-        "staleHours": 71,
+        "staleHours": 30,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
-        "articleCount": 10,
+        "articleCount": 9,
         "latestPublishedAt": "2026-11-20T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 30,
         "status": "ok"
       },
       {
+        "source": "Federal Register - FDA",
+        "articleCount": 7,
+        "latestPublishedAt": "2026-11-18T00:00:00.000Z",
+        "staleHours": 78,
+        "status": "stale"
+      },
+      {
         "source": "National Nurses United RSS",
-        "articleCount": 5,
+        "articleCount": 4,
         "latestPublishedAt": "2026-11-20T00:00:00.000Z",
-        "staleHours": 23,
+        "staleHours": 30,
         "status": "ok"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 1,
         "latestPublishedAt": "2026-11-17T00:00:00.000Z",
-        "staleHours": 95,
+        "staleHours": 102,
         "status": "stale"
       }
     ]
@@ -83,7 +83,7 @@
   "categoryCoverage": {
     "closures_layoffs": {
       "label": "Closures & Layoffs",
-      "count": 7
+      "count": 6
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
@@ -91,11 +91,11 @@
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 9
+      "count": 8
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 88
+      "count": 91
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -107,16 +107,18 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 173
+      "count": 169
     },
     "general_market": {
       "label": "General Market",
-      "count": 193
+      "count": 196
     }
   },
   "quality": {
-    "status": "pass",
-    "failedChecks": [],
+    "status": "warning",
+    "failedChecks": [
+      "minArticles24h"
+    ],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -125,8 +127,8 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 73,
-        "pass": true
+        "actual": 7,
+        "pass": false
       },
       "minRequiredCategoriesCovered": {
         "threshold": 4,
@@ -135,12 +137,96 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 1,
+        "actual": 2,
         "pass": true
       }
     }
   },
   "articles": [
+    {
+      "title": "National Institute for Occupational Safety and Health (NIOSH) Center for Occupational Robotics Research (CORR); Request for Information",
+      "summary": "The Centers for Disease Control and Prevention's (CDC) National Institute for Occupational Safety and Health (NIOSH), in the Department of Health and Human Services, requests public input on research priorities and prevention needs related to humanoid robots in workplaces. Through its Center for Occupational Robotics Research (CORR), NIOSH conducts research and provides scientific leadership to improve the safety, health, and well-being of workers who use, wear, or work near robots. NIOSH seeks information on workplace applications, human-robot interaction, performance measurement and validation, and ways to prevent injuries and illnesses throughout design, deployment, and use. This request is for information-gathering purposes only and does not propose new regulations, requirements, or policies.",
+      "url": "https://www.federalregister.gov/documents/2026/11/23/2026-23799/national-institute-for-occupational-safety-and-health-niosh-center-for-occupational-robotics",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-11-23",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Request for Public Comment on the Proposed Short-Term Exposure Limit for Occupational Exposure to Carbon Monoxide",
+      "summary": "The National Institute for Occupational Safety and Health (NIOSH) in the Centers for Disease Control and Prevention (CDC), an operating division of the Department of Health and Human Services (HHS), requests public comment on the draft document, Proposed Short- Term Exposure Limit for Occupational Exposure to Carbon Monoxide.",
+      "url": "https://www.federalregister.gov/documents/2026/11/23/2026-23798/request-for-public-comment-on-the-proposed-short-term-exposure-limit-for-occupational-exposure-to",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-11-23",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Meeting of the Microbiome Subcommittee of the Presidential Advisory Council on Combating Antibiotic-Resistant Bacteria",
+      "summary": "As stipulated by the Federal Advisory Committee Act, the Department of Health and Human Services (HHS) is hereby giving notice that a virtual meeting is scheduled to be held for the Presidential Advisory Council on Combating Antibiotic-Resistant Bacteria (PACCARB).",
+      "url": "https://www.federalregister.gov/documents/2026/11/23/2026-23797/meeting-of-the-microbiome-subcommittee-of-the-presidential-advisory-council-on-combating",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-11-23",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Tobacco Products Scientific Advisory Committee; Notice of Meeting; Establishment of a Public Docket; Request for Comments",
+      "summary": "The Food and Drug Administration (FDA) announces a forthcoming public advisory committee meeting of the Tobacco Products Scientific Advisory Committee (TPSAC, the Committee). The general function of the Committee is to provide advice and recommendations to FDA on regulatory issues related to tobacco products. The meeting will be open to the public. FDA is establishing a docket for public comments related to the TPSAC meeting.",
+      "url": "https://www.federalregister.gov/documents/2026/11/23/2026-23750/tobacco-products-scientific-advisory-committee-notice-of-meeting-establishment-of-a-public-docket",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-11-23",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Federal Financial Participation in State Assistance Expenditures; Federal Matching Shares for Medicaid, the Children's Health Insurance Program, and Aid to Needy Aged, Blind, or Disabled Persons for October 1, 2027, Through September 30, 2028",
+      "summary": "The Federal Medical Assistance Percentages (FMAP) and Enhanced Federal Medical Assistance Percentages (eFMAP) for fiscal year 2028 have been calculated pursuant to the Social Security Act (the Act). These percentages will be effective from October 1, 2027, through September 30, 2028. This notice announces the calculated FMAP rates, in accordance with the Act, that the U.S. Department of Health and Human Services (HHS) will use in determining the amount of Federal matching for State medical assistance (Medicaid), Temporary Assistance for Needy Families (TANF) Contingency Funds, Child Support collections, Child Care Mandatory and Matching Funds of the Child Care and Development Fund, Title IV-E Foster Care Maintenance payments, Adoption Assistance payments and Kinship Guardianship Assistance payments, and the eFMAP rates for the Children's Health Insurance Program (CHIP) expenditures. Table 1 gives figures for each of the 50 states, the District of Columbia, Puerto Rico, the Virgin Islands, Guam, American Samoa, and the Commonwealth of the Northern Mariana Islands. This notice reminds states of adjustments available for states meeting requirements for disproportionate employer pension or insurance fund contributions and adjustments for disaster recovery. At this time, no state qualifies for such adjustments, and territories are not eligible.",
+      "url": "https://www.federalregister.gov/documents/2026/11/23/2026-23741/federal-financial-participation-in-state-assistance-expenditures-federal-matching-shares-for",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-11-23",
+      "category": "policy_reimbursement",
+      "relevance": 100,
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Agency Information Collection Activities; Submission for Office of Management and Budget Review; Comment Request; Extralabel Drug Use in Animals",
+      "summary": "The Food and Drug Administration (FDA) is announcing that a proposed collection of information has been submitted to the Office of Management and Budget (OMB) for review and clearance under the Paperwork Reduction Act of 1995.",
+      "url": "https://www.federalregister.gov/documents/2026/11/23/2026-23740/agency-information-collection-activities-submission-for-office-of-management-and-budget-review",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-11-23",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Agency Information Collection Activities: Proposed Collection; Comment Request",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/11/23/2026-23788/agency-information-collection-activities-proposed-collection-comment-request",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-11-23",
+      "category": "general_market",
+      "relevance": 96,
+      "categoryLabel": "General Market"
+    },
     {
       "title": "Agency Information Collection Activities: Submission for OMB Review; Comment Request; Correction",
       "summary": "On November 13, 2026, CMS published a notice in the Federal Register that sought comment on a collection of information concerning CMS-10858 (OMB control number 0938-1474) entitled \"Rebate Reduction Requests under Sections 11101 and 11102 of the Inflation Reduction Act (IRA).\" The OMB control number is incorrectly listed in 35th line within the left column of the notice. This document corrects the error.",
@@ -496,15 +582,6 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "AI and affordability steal the show: 6 takeaways from HLTH",
-      "url": "https://www.healthcaredive.com/news/ai-affordability-glp-1s-longevity-hlth-2026-takeaways/875048/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-11-20",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
       "title": "Medicare ACO program posts $2.5B in savings as CMS pushes growth",
       "url": "https://www.healthcaredive.com/news/medicare-aco-program-posts-25b-in-savings-as-cms-pushes-growth/875312/",
       "source": "Healthcare Dive",
@@ -512,6 +589,15 @@
       "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
       "category": "policy_reimbursement",
       "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "AI and affordability steal the show: 6 takeaways from HLTH",
+      "url": "https://www.healthcaredive.com/news/ai-affordability-glp-1s-longevity-hlth-2026-takeaways/875048/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-11-20",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "Yale New Haven Health to open $838M neuroscience center February 2027",
@@ -925,30 +1011,6 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "Statement of Organization, Functions, and Delegations of Authority",
-      "summary": "National Center for the Advancement of Translational Sciences of the National Institute of Health has modified its organizational structure.",
-      "url": "https://www.federalregister.gov/documents/2026/11/19/2026-23537/statement-of-organization-functions-and-delegations-of-authority",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-11-19",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "National Institute of Nursing Research; Notice of Meeting",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/11/19/2026-23532/national-institute-of-nursing-research-notice-of-meeting",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-11-19",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
       "title": "Early Alert: Outset Medical Updates Use Instructions for the Tablo Console and the TabloCart with Prefiltration Drawer",
       "summary": "Outset Medical Tablo Console and TabloCart with Prefiltration Drawer power cord connections may overheat, posing fire, burn, and treatment interruption risks.",
       "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-outset-medical-updates-use-instructions-tablo-console-and-tablocart-prefiltration-drawer",
@@ -997,6 +1059,57 @@
       "categoryLabel": "Labor & Unions"
     },
     {
+      "title": "Opinion: The U.S. lost measles elimination status. The next Congress should help restore it",
+      "url": "https://www.statnews.com/2026/11/19/measles-elimination-status-congress-should-prioritize-restoration/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-19",
+      "summary": "Infectious disease physician and STAT “ID Consult” columnist Krutika Kuppalli offers Congress a must-do list on measles.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Study raises doubts about combining vaccine, monoclonal antibody to protect against malaria",
+      "url": "https://www.statnews.com/2026/11/19/malaria-monoclonal-antibody-l9ls-vaccine-r21-infant-study-mali/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-19",
+      "summary": "A monoclonal antibody holds promise in preventing malaria, but researchers found it interfered with a new vaccine when used in babies.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "STAT+: Lawmakers want U.S. biotech to outcompete China",
+      "url": "https://www.statnews.com/2026/11/19/biotech-news-lawmakers-want-us-biotech-to-outcompete-china/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-19",
+      "summary": "Lawmakers leading the congressional BIOTech Caucus say Washington needs to act in the sector — and fast:",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Statement of Organization, Functions, and Delegations of Authority",
+      "summary": "National Center for the Advancement of Translational Sciences of the National Institute of Health has modified its organizational structure.",
+      "url": "https://www.federalregister.gov/documents/2026/11/19/2026-23537/statement-of-organization-functions-and-delegations-of-authority",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-11-19",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "National Institute of Nursing Research; Notice of Meeting",
+      "summary": "",
+      "url": "https://www.federalregister.gov/documents/2026/11/19/2026-23532/national-institute-of-nursing-research-notice-of-meeting",
+      "source": "Federal Register - HHS",
+      "sourceType": "federal_register",
+      "sourceId": "federal_register_hhs",
+      "publishedAt": "2026-11-19",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "National Institute of Neurological Disorders and Stroke; Notice of Meeting",
       "summary": "",
       "url": "https://www.federalregister.gov/documents/2026/11/19/2026-23538/national-institute-of-neurological-disorders-and-stroke-notice-of-meeting",
@@ -1043,24 +1156,6 @@
       "category": "general_market",
       "relevance": 96,
       "categoryLabel": "General Market"
-    },
-    {
-      "title": "Opinion: The U.S. lost measles elimination status. The next Congress should help restore it",
-      "url": "https://www.statnews.com/2026/11/19/measles-elimination-status-congress-should-prioritize-restoration/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-19",
-      "summary": "Infectious disease physician and STAT “ID Consult” columnist Krutika Kuppalli offers Congress a must-do list on measles.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Study raises doubts about combining vaccine, monoclonal antibody to protect against malaria",
-      "url": "https://www.statnews.com/2026/11/19/malaria-monoclonal-antibody-l9ls-vaccine-r21-infant-study-mali/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-19",
-      "summary": "A monoclonal antibody holds promise in preventing malaria, but researchers found it interfered with a new vaccine when used in babies.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "Nurses at Providence hospital in California vote to unionize",
@@ -1197,15 +1292,6 @@
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-11-19",
       "summary": "Boston-based Dana-Farber Cancer Institute has hired Adam Petrick, a former Puma and SharkNinja marketing executive, as senior vice president and chief communications and marketing officer, effective Nov. 30.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Lawmakers want U.S. biotech to outcompete China",
-      "url": "https://www.statnews.com/2026/11/19/biotech-news-lawmakers-want-us-biotech-to-outcompete-china/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-19",
-      "summary": "Lawmakers leading the congressional BIOTech Caucus say Washington needs to act in the sector — and fast:",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
@@ -4805,90 +4891,6 @@
       "category": "policy_reimbursement",
       "relevance": 100,
       "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Hematology and Pathology Devices; Reclassification of Immunohistochemistry Test Systems for Use With a Corresponding Approved Oncology Therapeutic Product",
-      "summary": "The Food and Drug Administration (FDA) is proposing to reclassify immunohistochemistry (IHC) test systems indicated for use with a corresponding approved oncology therapeutic product (product codes MVC, NKF, QQT, NQF, PLS, PKW, QUL, QNH, QZJ, SBL, SER, and SHF), which are postamendments class III devices, from class III (premarket approval) into class II (special controls), subject to premarket notification. FDA is proposing minor revisions to an existing classification regulation and also proposing a new device classification regulation, along with the special controls that FDA believes are necessary to provide a reasonable assurance of safety and effectiveness for these devices.",
-      "url": "https://www.federalregister.gov/documents/2026/11/12/2026-23005/hematology-and-pathology-devices-reclassification-of-immunohistochemistry-test-systems-for-use-with",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-11-12",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Patient-Level Data for Drugs and Biological Products Submissions Containing Real-World Data and Real-World Evidence; Request for Information",
-      "summary": "The Food and Drug Administration (FDA or Agency), is announcing a request for information (RFI) from interested parties to share perspectives on patient-level data access related to the use of real-world evidence (RWE) in regulatory decision-making for drugs and biological product submissions. The purpose of this RFI is to solicit input from interested parties on innovative solutions to address the challenges in submitting patient-level data for real-world data (RWD) analyzed in clinical studies included in a marketing application. Interested parties may include regulated industry, health information technology (HIT) vendors, academic medical centers, electronic data capture vendors, patient advocates, and other interested parties.",
-      "url": "https://www.federalregister.gov/documents/2026/11/12/2026-22996/patient-level-data-for-drugs-and-biological-products-submissions-containing-real-world-data-and",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-11-12",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Early-Phase IND Protocol Recommendations for Solid Tumors; Draft Guidance for Industry; Availability",
-      "summary": "The Food and Drug Administration (FDA or Agency) is announcing the availability of a draft guidance for industry titled \"Early-Phase IND Protocol Recommendations for Solid Tumors.\" The purpose of this draft guidance is to provide recommendations to sponsors and clinical investigators developing early-phase trials, which include first-in- human (FIH) protocols or protocols for drugs and biologic products with limited human experience, submitted under an Investigational New Drug Application (IND) to the appropriate disease-specific division located within the Office of Oncologic Diseases (OOD) in the Center for Drug Evaluation and Research (CDER) and the Office of Clinical Evaluation (OCE) in the Center for Biologics Evaluation and Research (CBER.) This draft guidance is specific to solid tumors and does not address protocols for investigational drugs intended to treat hematologic malignancies.",
-      "url": "https://www.federalregister.gov/documents/2026/11/12/2026-22970/early-phase-ind-protocol-recommendations-for-solid-tumors-draft-guidance-for-industry-availability",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-11-12",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Agency Information Collection Activities; Proposed Collection; Comment Request; Voluntary Qualified Importer Program",
-      "summary": "The Food and Drug Administration (FDA or Agency) is announcing an opportunity for public comment on the proposed collection of certain information by the Agency. Under the Paperwork Reduction Act of 1995 (PRA), Federal Agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed reinstatement of an existing collection of information, and to allow 60 days for public comment in response to the notice. This notice solicits comments on information collection associated with FDA's Voluntary Qualified Importer Program.",
-      "url": "https://www.federalregister.gov/documents/2026/11/12/2026-22965/agency-information-collection-activities-proposed-collection-comment-request-voluntary-qualified",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-11-12",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Agency Information Collection Activities; Proposed Collection; Comment Request; Veterinary Feed Directive",
-      "summary": "The Food and Drug Administration (FDA or Agency) is announcing an opportunity for public comment on the proposed collection of certain information by the Agency. Under the Paperwork Reduction Act of 1995 (PRA), Federal Agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension of an existing collection of information, and to allow 60 days for public comment in response to the notice. This notice solicits comments on the reporting, recordkeeping, and third- party disclosure burden associated with the veterinary feed directive regulations.",
-      "url": "https://www.federalregister.gov/documents/2026/11/12/2026-22964/agency-information-collection-activities-proposed-collection-comment-request-veterinary-feed",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-11-12",
-      "category": "closures_layoffs",
-      "relevance": 100,
-      "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "Game Changer Products LLC Issues Voluntary Nationwide Recall of 10 Day Forecast Capsules Due to the Presence of Undeclared Sildenafil and Acetaminophen",
-      "summary": "FOR IMMEDIATE RELEASE – November 12, 2026 - Tampa, Florida. Game Changer Products LLC is voluntarily recalling all lots of 10 Day Forecast capsules to the consumer level. FDA analysis has found the product to be tainted with sildenafil and acetaminophen. Sildenafil is an active ingredient in an FDA",
-      "url": "http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/game-changer-products-llc-issues-voluntary-nationwide-recall-10-day-forecast-capsules-due-presence",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-11-12",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Global Nurses United congratulates member union, Irish Nurses and Midwives Organisation, on its recent bargaining victory",
-      "summary": "Global Nurses United (GNU), representing more than 2.5 million nurses and other health care workers in 35 countries around the world, congratulates Irish Nurses and Midwives Organisation (INMO) and other Irish public-sector workers on their momentous breakthrough in negotiations with the Irish government ahead of their now-averted public-sector strike.",
-      "url": "https://www.nationalnursesunited.org/press/global-nurses-united-congratulates-member-union-irish-nurses-and-midwives-organisation-on-its-recent-bargaining-victory",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "2026-11-12",
-      "category": "labor_unions",
-      "relevance": 100,
-      "categoryLabel": "Labor & Unions"
     }
   ]
 }
