@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-11-22T22:25:49.562Z",
+  "lastUpdated": "2026-11-23T03:38:37.285Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 2,
-    "healthySources": 8,
+    "staleSources": 7,
+    "healthySources": 3,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 244,
-        "latestPublishedAt": "2026-11-22T00:00:00.000Z",
-        "staleHours": 22,
+        "articleCount": 261,
+        "latestPublishedAt": "2026-11-23T00:00:00.000Z",
+        "staleHours": 3,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 90,
+        "articleCount": 82,
         "latestPublishedAt": "2026-11-20T00:00:00.000Z",
-        "staleHours": 70,
-        "status": "ok"
+        "staleHours": 75,
+        "status": "stale"
       },
       {
         "source": "STAT News",
         "articleCount": 63,
         "latestPublishedAt": "2026-11-21T00:00:00.000Z",
-        "staleHours": 46,
+        "staleHours": 51,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
-        "articleCount": 50,
+        "articleCount": 47,
         "latestPublishedAt": "2026-11-23T00:00:00.000Z",
-        "staleHours": -2,
+        "staleHours": 3,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 21,
         "latestPublishedAt": "2026-11-20T00:00:00.000Z",
-        "staleHours": 70,
-        "status": "ok"
+        "staleHours": 75,
+        "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
-        "articleCount": 11,
+        "articleCount": 8,
         "latestPublishedAt": "2026-11-20T00:00:00.000Z",
-        "staleHours": 70,
-        "status": "ok"
+        "staleHours": 75,
+        "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
-        "articleCount": 9,
+        "articleCount": 8,
         "latestPublishedAt": "2026-11-20T00:00:00.000Z",
-        "staleHours": 70,
-        "status": "ok"
+        "staleHours": 75,
+        "status": "stale"
       },
       {
         "source": "Federal Register - FDA",
-        "articleCount": 7,
+        "articleCount": 5,
         "latestPublishedAt": "2026-11-18T00:00:00.000Z",
-        "staleHours": 118,
+        "staleHours": 123,
         "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 4,
         "latestPublishedAt": "2026-11-20T00:00:00.000Z",
-        "staleHours": 70,
-        "status": "ok"
+        "staleHours": 75,
+        "status": "stale"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 1,
         "latestPublishedAt": "2026-11-17T00:00:00.000Z",
-        "staleHours": 142,
+        "staleHours": 147,
         "status": "stale"
       }
     ]
@@ -83,11 +83,11 @@
   "categoryCoverage": {
     "closures_layoffs": {
       "label": "Closures & Layoffs",
-      "count": 7
+      "count": 8
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
-      "count": 10
+      "count": 8
     },
     "labor_unions": {
       "label": "Labor & Unions",
@@ -95,11 +95,11 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 98
+      "count": 99
     },
     "quality_safety": {
       "label": "Quality & Safety",
-      "count": 9
+      "count": 10
     },
     "capacity_expansion": {
       "label": "Capacity & Expansion",
@@ -107,16 +107,18 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 167
+      "count": 172
     },
     "general_market": {
       "label": "General Market",
-      "count": 188
+      "count": 182
     }
   },
   "quality": {
-    "status": "pass",
-    "failedChecks": [],
+    "status": "warning",
+    "failedChecks": [
+      "maxStaleSources"
+    ],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -135,8 +137,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 2,
-        "pass": true
+        "actual": 7,
+        "pass": false
       }
     }
   },
@@ -224,6 +226,231 @@
       "category": "general_market",
       "relevance": 96,
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "CMS issues Medicare Advantage proposals aimed at boosting competition",
+      "url": "https://www.fiercehealthcare.com/regulatory/cms-issues-medicare-advantage-proposals-aimed-boosting-competition",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-23",
+      "summary": "The Trump administration has proposed a slew of changes to Medicare Advantage and Part D designed to \"revitalize care\" in these markets.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "UnitedHealth the latest insurer to sue over the 2027 Medicare Advantage star ratings",
+      "url": "https://www.fiercehealthcare.com/payers/alignment-healthcare-sues-cms-over-its-2027-medicare-advantage-star-ratings",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-23",
+      "summary": "CVS Heath's Aetna is joining the ranks of insurers suing over its results in the 2027 Medicare Advantage star ratings.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "CMS to withdraw moratorium on new ACA broker registrations",
+      "url": "https://www.fiercehealthcare.com/payers/nabip-sues-cms-over-moratorium-new-aca-broker-registrations",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-23",
+      "summary": "CMS had instituted the moratorium in late September as part of its broader push to combat fraud on the Affordable Care Act's exchanges.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Consumers believe AI will be key in making healthcare simpler: survey",
+      "url": "https://www.fiercehealthcare.com/payers/consumers-believe-ai-will-be-key-making-healthcare-simpler-survey",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-23",
+      "summary": "Americans want a healthcare experience that's simpler and easier to understand, and artificial intelligence may be the key to getting there, a new survey shows.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "HLTH 2026: Elsevier upgrades ClinicalKey AI with full patient EHR context",
+      "url": "https://www.fiercehealthcare.com/health-tech/hlth-2026-elsevier-upgrades-clinicalkey-ai-full-patient-ehr-context",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-23",
+      "summary": "San Juan Regional Medical Center is using ClinicalKey AI to give clinicians faster access to evidence-based guidance combined with patient-specific EHR data, with the goal of improving care and easing workforce constraints.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Cigna Group Foundation making $31.5M in grants available to community organizations in 10 states",
+      "url": "https://www.fiercehealthcare.com/payers/cigna-group-foundation-making-315m-grants-available-community-organizations-10-states",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-23",
+      "summary": "Cigna is making $31.5 million in grant funding available over the next three years to nonprofits in 10 states that are aiming to tackle several key community health priorities.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Florida court tosses Tampa General Hospital's suit against Eli Lilly over 340B discounts",
+      "url": "https://www.fiercehealthcare.com/providers/tampa-general-hospital-sues-eli-lilly-over-pulled-340b-discounts",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-23",
+      "summary": "The hospital initially sued the pharmaceutical company over a policy it implemented that requires providers to submit claims-level data on pharmacy and medical dispensing if they participate in 340B.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Healthcare purchasers must weigh hospital quality alongside their prices, Leapfrog says",
+      "url": "https://www.fiercehealthcare.com/providers/healthcare-purchasers-must-weigh-hospital-quality-alongside-their-prices",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-23",
+      "summary": "The hospital safety watchdog paired the latest release of its hospital safety scores with calls for policymakers, purchasers and other stakeholders to consider hospital price and quality transparency side by side.",
+      "category": "quality_safety",
+      "categoryLabel": "Quality & Safety"
+    },
+    {
+      "title": "Aetna unveils new program aimed at offering end-to-end support for moms and babies",
+      "url": "https://www.fiercehealthcare.com/payers/aetna-unveils-new-program-aimed-offering-end-end-support-moms-and-babies",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-23",
+      "summary": "Aetna is rolling out a new program that aims to provide key end-to-end care for pregnant women, new mothers and infants.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "UnitedHealthcare's new care model leans on community pharmacies",
+      "url": "https://www.fiercehealthcare.com/payers/unitedhealthcare-unveils-new-care-model-leans-community-pharmacies",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-23",
+      "summary": "UnitedHealthcare is teaming up with CPSEN for its UHC Pharmacy Care Hub model, a new program that aims to lean on community pharmacists to reach Medicaid patients.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Department of Labor moves to end expedited green cards for nurses, physical therapists",
+      "url": "https://www.fiercehealthcare.com/regulatory/department-labor-moves-end-expedited-green-cards-nurses-physical-therapists",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-23",
+      "summary": "The Trump administration proposed eliminating a longstanding exemption to the permanent labor certification program, the latest in a string of policies raising the bar for foreign-born healthcare workers seeking employer sponsorship.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "HLTH 2026: Viz.ai’s chief clinical officer on takeaways, goals of AI collab with National Rural Health Association",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/hlth-2026-vizais-chief-clinical-officer-takeaways-goals-national-rural",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-23",
+      "summary": "Viz.ai Chief Clinical Officer Andrew Ibrahim, M.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "HLTH 2026: Noom, Hims & Hers roll out peptide offerings",
+      "url": "https://www.fiercehealthcare.com/health-tech/hlth-2026-hims-hers-noom-launch-peptide-brands",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-23",
+      "summary": "Noom and Hims &amp; Hers are making a play for the booming peptide market as the federal government loosens restrictions on compounded treatments.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "How bait-and-switch tactics complicate the search for mental healthcare",
+      "url": "https://www.fiercehealthcare.com/providers/how-bait-and-switch-tactics-complicate-search-mental-healthcare",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-23",
+      "summary": "In the latest episode of \"Podnosis,\" we explore how deceptive online marketing tactics and other barriers make it harder for people to find appropriate mental healthcare.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Longevity platform Hone Health nabs $228M to build out offerings",
+      "url": "https://www.fiercehealthcare.com/digital-health/longevity-platform-hone-health-nabs-228m-build-out-offerings",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-23",
+      "summary": "The investment, which includes equity and growth financing, will support Hone's expansion into more clinical programming, more diagnostics, its clinical AI and clinical trial infrastructure.",
+      "category": "capacity_expansion",
+      "categoryLabel": "Capacity & Expansion"
+    },
+    {
+      "title": "HLTH 2026: How Whoop aims to play a bigger role in healthcare",
+      "url": "https://www.fiercehealthcare.com/health-tech/hlth-2026-how-whoop-aims-play-bigger-role-healthcare",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-23",
+      "summary": "The company is positioning itself as a continuous health monitor that goes beyond fitness tracking. The device's 24/7 physiological data can function almost like an ongoing health check, becoming a bridge between everyday health and medical care, Whoop's CEO said.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Heidi Overton’s FDA nomination pulled by White House",
+      "url": "https://www.fiercehealthcare.com/pharma/overtons-fda-nomination-has-been-pulled-white-house",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-23",
+      "summary": "The White House is pulling Heidi Overton’s nomination to lead the FDA just hours before the Senate was scheduled to vote on her confirmation.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Medicare Shared Savings Program saved $2.5B last year: CMS",
+      "url": "https://www.fiercehealthcare.com/regulatory/medicare-shared-savings-program-saved-25b-last-year-cms",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-23",
+      "summary": "The Medicare Shared Savings Program has reached the highest savings number in its history, according to new federal data.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Optum Rx rolls out new pharmacy tools aimed at transparency",
+      "url": "https://www.fiercehealthcare.com/payers/optum-rx-rolls-out-new-pharmacy-tools-aimed-transparency",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-23",
+      "summary": "Earlier this year, Optum Rx teased the rollout of new pharmacy tools designed to address medication cost and access.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "HLTH 2026: Teladoc Health's weight care program lets employers partially contribute to GLP-1 costs",
+      "url": "https://www.fiercehealthcare.com/health-tech/hlth-2026-teladoc-health-expands-weight-care-program-new-employer-offering",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-23",
+      "summary": "Through the new option, employers can offer employees partially comped access to the medications from Eli Lilly and Novo Nordisk alongside other benefits, like personalized lifestyle coaching.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "HLTH 2026 Daily Tracker: F1 mania takes over HLTH; Why DJ Steve Aoki is investing in innovative science",
+      "url": "https://www.fiercehealthcare.com/health-tech/hlth26-daily-tracker-health-techs-ai-powered-pitch-falling-flat-survey-finds-vynca",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-23",
+      "summary": "The Fierce Healthcare team is on the ground at HLTH 2026. Stick with this news tracker to catch all the highlights from the show floor, and click here for additional coverage from the conference.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Payer mix, non-labor expenses dragged hospital margins in September",
+      "url": "https://www.fiercehealthcare.com/providers/payer-mix-non-labor-expenses-dragged-hospital-margins-september",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-23",
+      "summary": "Uncompensated care and cost pressures haven't gone away for hospitals, leading to a “historically large portion” of the nation’s hospitals running on negative or near-zero operating margins, Kaufman Hall warned in its latest industry benchmark.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "HLTH 2026: American Hospital Association, West Health Institute announce new collaboration with BD",
+      "url": "https://www.fiercehealthcare.com/health-tech/hlth-2026-american-hospital-association-west-health-institute-announce-new",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-23",
+      "summary": "The collaboration, which begins with a cohort of 10 hospitals, aims to accelerate the adoption of technologies shown to improve patient care.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Restoring trust: Embattled CDC, HHS officials on their priorities for 2027",
+      "url": "https://www.fiercehealthcare.com/regulatory/restoring-trust-cdc-hhs-officials-break-down-priorities-milken-summit",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-23",
+      "summary": "CDC Director Erica Schwartz, M.D.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Fierce Healthcare Layoff Tracker—athenahealth cutting 4% of workforce; Ascension lays off 51 amid outsourcing",
+      "url": "https://www.fiercehealthcare.com/finance/fierce-healthcare-layoff-tracker-2026-job-cuts-eliminations-health-systems-hospitals",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-23",
+      "summary": "Stick with this tracker for the latest layoff and workforce updates from across healthcare.",
+      "category": "closures_layoffs",
+      "categoryLabel": "Closures & Layoffs"
     },
     {
       "title": "CMS issues Medicare Advantage proposals aimed at boosting competition",
@@ -742,18 +969,6 @@
       "categoryLabel": "AI & Digital Tech"
     },
     {
-      "title": "Early Alert: Heraeus Medical Components Removes Vascular Guidewires",
-      "summary": "Vascular guidewire coating may displace or detach and enter patient bloodstream.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-heraeus-medical-components-removes-vascular-guidewires",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-11-20",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
       "title": "Greenwich Rx Issues Voluntary Nationwide Recall of Compounded Sterile Products Due to Lack of Sterility Assurance",
       "summary": "FOR IMMEDIATE RELEASE - Tomball, Texas – November 20, 2026 – Greenwich Rx, a 503A compounding pharmacy, is voluntarily recalling specific lots of compounded sterile products that remain within their beyond-use dates to the consumer level, including some products that were compounded by Greenwich Rx",
       "url": "http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/greenwich-rx-issues-voluntary-nationwide-recall-compounded-sterile-products-due-lack-sterility",
@@ -764,6 +979,18 @@
       "category": "ai_tech",
       "relevance": 100,
       "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Early Alert: Heraeus Medical Components Removes Vascular Guidewires",
+      "summary": "Vascular guidewire coating may displace or detach and enter patient bloodstream.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-heraeus-medical-components-removes-vascular-guidewires",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-11-20",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
     },
     {
       "title": "For the second time in two days, RNs at Tennessee CommonSpirit hospital vote to join National Nurses Organizing Committee",
@@ -1477,16 +1704,16 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "Early Alert: Outset Medical Updates Use Instructions for the Tablo Console and the TabloCart with Prefiltration Drawer",
-      "summary": "Outset Medical Tablo Console and TabloCart with Prefiltration Drawer power cord connections may overheat, posing fire, burn, and treatment interruption risks.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-outset-medical-updates-use-instructions-tablo-console-and-tablocart-prefiltration-drawer",
+      "title": "Early Alert: B. Braun Medical Inc. Updates Use Instructions for Caresite Micro Luer Access Device",
+      "summary": "BBMI corrects Caresite devices due to issue with internal piston remaining depressed following disconnection, preventing the valve from fully closing.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-b-braun-medical-inc-updates-use-instructions-caresite-micro-luer-access-device",
       "source": "FDA MedWatch RSS",
       "sourceType": "rss",
       "sourceId": "fda_medwatch_rss",
       "publishedAt": "2026-11-19",
-      "category": "general_market",
+      "category": "closures_layoffs",
       "relevance": 100,
-      "categoryLabel": "General Market"
+      "categoryLabel": "Closures & Layoffs"
     },
     {
       "title": "Medical Device Correction Update Luna® G3 BPAP System (Model LG3800-30VT)",
@@ -1501,16 +1728,16 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "Early Alert: B. Braun Medical Inc. Updates Use Instructions for Caresite Micro Luer Access Device",
-      "summary": "BBMI corrects Caresite devices due to issue with internal piston remaining depressed following disconnection, preventing the valve from fully closing.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-b-braun-medical-inc-updates-use-instructions-caresite-micro-luer-access-device",
+      "title": "Early Alert: Outset Medical Updates Use Instructions for the Tablo Console and the TabloCart with Prefiltration Drawer",
+      "summary": "Outset Medical Tablo Console and TabloCart with Prefiltration Drawer power cord connections may overheat, posing fire, burn, and treatment interruption risks.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-outset-medical-updates-use-instructions-tablo-console-and-tablocart-prefiltration-drawer",
       "source": "FDA MedWatch RSS",
       "sourceType": "rss",
       "sourceId": "fda_medwatch_rss",
       "publishedAt": "2026-11-19",
-      "category": "closures_layoffs",
+      "category": "general_market",
       "relevance": 100,
-      "categoryLabel": "Closures & Layoffs"
+      "categoryLabel": "General Market"
     },
     {
       "title": "Nurses at Providence St. Joseph Hospital Orange vote to join California Nurses Association",
@@ -4634,258 +4861,6 @@
       "summary": "The potential strike, set to begin the morning of Nov. 12, would have been the largest nurses strike in Massachusetts history.",
       "category": "labor_unions",
       "categoryLabel": "Labor & Unions"
-    },
-    {
-      "title": "Norwest closes $4B global, multi-stage fund to fuel investments in healthcare, biotech and AI",
-      "url": "https://www.fiercehealthcare.com/finance/norwest-closes-4b-global-multi-stage-fund-fuel-investments-healthcare-biotech-and-ai",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-14",
-      "summary": "Norwest closes $4B fund to invest in healthcare AI, biotech",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Duet nabs $15M series A, plans to launch first NP-led ACO in 2027",
-      "url": "https://www.fiercehealthcare.com/finance/duet-nabs-15m-series-plans-launch-first-np-led-aco-2027",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-14",
-      "summary": "Alongside the funding round, Duet announced it plans to launch the first-ever NP-led Medicare Accountable Care Organization in 2027.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "BJC Health, St. Luke's reveal plans to merge",
-      "url": "https://www.fiercehealthcare.com/hospitals/bjc-health-st-lukes-reveal-plans-merge",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-14",
-      "summary": "The providers announced on Wednesday that they have signed a letter of intent to come together, bringing the community hospital into the fold with the Show Me State's largest health system.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Carelon agrees to pay $10M to settle ghost network, coverage denial allegations in New York",
-      "url": "https://www.fiercehealthcare.com/payers/carelon-agrees-pay-10m-settle-ghost-network-coverage-denial-allegations-new-york",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-14",
-      "summary": "Carelon will pay more than $10 million across two settlements in New York over mental health networks and coverage denials.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "CareSource launches $1M grant program to support AI-powered solutions",
-      "url": "https://www.fiercehealthcare.com/payers/caresource-launches-1m-grant-program-support-ai-powered-solutions",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-14",
-      "summary": "Nonprofit insurer CareSource is launching a $1 million program that aims to back responsible AI solutions in healthcare.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Recapping the headwinds and tailwinds from Q3",
-      "url": "https://www.fiercehealthcare.com/payers/recapping-headwinds-and-tailwinds-q3",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-14",
-      "summary": "The Fierce Healthcare team breaks down Q3 earnings for insurers and health systems, plus what the latest trends signal for 2027, on \"Podnosis.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Maven Clinic takes new DTC vertical in-network with 475+ commercial plans",
-      "url": "https://www.fiercehealthcare.com/digital-health/maven-clinic-takes-new-dtc-vertical-network-475-commercial-plans",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-14",
-      "summary": "The fee-for-service contracts represent about 80% of commercially insured lives, according to the company. It is able to tap into the vast network through direct contracts and a third-party partner that it can’t name on the record.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Amazon Web Services commits $100M to AI, cloud tech health initiatives over next 5 years",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/amazon-web-services-commits-100m-ai-cloud-tech-initiatives-over-next-5",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-14",
-      "summary": "The funds are part of the AWS Health Impact Initiative, a five-year program, announced Monday.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Agency Information Collection Activities: Proposed Collection; Comment Request",
-      "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information (including each proposed extension or reinstatement of an existing collection of information) and to allow 60 days for public comment on the proposed action. Interested persons are invited to send comments regarding our burden estimates or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
-      "url": "https://www.federalregister.gov/documents/2026/11/13/2026-23189/agency-information-collection-activities-proposed-collection-comment-request",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-11-13",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Agency Information Collection Activities: Submission for OMB Review; Comment Request",
-      "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension or reinstatement of an existing collection of information, and to allow a second opportunity for public comment on the notice. Interested persons are invited to send comments regarding the burden estimate or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
-      "url": "https://www.federalregister.gov/documents/2026/11/13/2026-23146/agency-information-collection-activities-submission-for-omb-review-comment-request",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-11-13",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Agency Information Collection Activities: Submission for OMB Review; Comment Request",
-      "summary": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension or reinstatement of an existing collection of information, and to allow a second opportunity for public comment on the notice. Interested persons are invited to send comments regarding the burden estimate or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
-      "url": "https://www.federalregister.gov/documents/2026/11/13/2026-23119/agency-information-collection-activities-submission-for-omb-review-comment-request",
-      "source": "Federal Register - CMS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_cms",
-      "publishedAt": "2026-11-13",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Determination That DIBENZYLINE (Phenoxybenzamine Hydrochloride) Oral Capsule, 10 Milligrams, and Other Drug Products Were Not Withdrawn From Sale for Reasons of Safety or Effectiveness",
-      "summary": "The Food and Drug Administration (FDA or Agency) has determined that the drug products listed in this document were not withdrawn from sale for reasons of safety or effectiveness. This determination means that FDA will not begin procedures to withdraw approval of abbreviated new drug applications (ANDAs) that refer to these drug products, and it will allow FDA to continue to approve ANDAs that refer to the products as long as they meet relevant legal and regulatory requirements.",
-      "url": "https://www.federalregister.gov/documents/2026/11/13/2026-23141/determination-that-dibenzyline-phenoxybenzamine-hydrochloride-oral-capsule-10-milligrams-and-other",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-11-13",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Revocation of the Color Additive Listing for Use of Orange B on Casings or Surfaces of Frankfurters and Sausages; Confirmation of Effective Date",
-      "summary": "The Food and Drug Administration (FDA or we) is confirming the effective date of September 8, 2026, for the final order that appeared in the Federal Register of July 23, 2026, and that repealed the color additive regulation that allows for the use of Orange B for coloring the casings or surfaces of frankfurters and sausages.",
-      "url": "https://www.federalregister.gov/documents/2026/11/13/2026-23112/revocation-of-the-color-additive-listing-for-use-of-orange-b-on-casings-or-surfaces-of-frankfurters",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-11-13",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Medline Updates Customers and Patients on Repair and Replace Program for Recall of Medline Brand Beds, Rails, Mattresses and Accessories",
-      "summary": "On October 14, 2026, Medline initiated a product recall, market exit and discontinuation of all Medline Brand beds, rails, mattresses, and accessories (e.g., pendants and motor boxes) due to a potential fire hazard and entrapment risk, which may result in patient injury or death. As of November 8, 2",
-      "url": "http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/medline-updates-customers-and-patients-repair-and-replace-program-recall-medline-brand-beds-rails",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-11-13",
-      "category": "capacity_expansion",
-      "relevance": 100,
-      "categoryLabel": "Capacity & Expansion"
-    },
-    {
-      "title": "Order Under Sections 362 and 365 of the Public Health Service Act Continuing the Suspension of the Right To Introduce Certain Persons From Countries Where a Quarantinable Communicable Disease Exists",
-      "summary": "The Centers for Disease Control and Prevention (CDC), a component of the Department of Health and Human Services (HHS), announces it is issuing an Order under Sections 362 and 365 of the Public Health Service Act, and associated implementing regulations, continuing the suspension of the right to introduce certain persons from countries where an outbreak of a quarantinable communicable disease exists. This Order was issued on November 10 and shall remain in effect through 4:59 p.m. Eastern Standard Time (EST) on Thursday, December 10, 2026. This Order may be amended or rescinded prior to that time at the discretion of the Director.",
-      "url": "https://www.federalregister.gov/documents/2026/11/13/2026-23114/order-under-sections-362-and-365-of-the-public-health-service-act-continuing-the-suspension-of-the",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-11-13",
-      "category": "policy_reimbursement",
-      "relevance": 100,
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Center for Scientific Review; Notice of Closed Meetings",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/11/13/2026-23130/center-for-scientific-review-notice-of-closed-meetings",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-11-13",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Center for Scientific Review; Notice of Closed Meetings",
-      "summary": "",
-      "url": "https://www.federalregister.gov/documents/2026/11/13/2026-23129/center-for-scientific-review-notice-of-closed-meetings",
-      "source": "Federal Register - HHS",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_hhs",
-      "publishedAt": "2026-11-13",
-      "category": "general_market",
-      "relevance": 96,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "126 critical access hospital presidents and CEOs to know &#124; 2026",
-      "url": "https://www.beckershospitalreview.com/hospital-management-administration/126-critical-access-hospital-presidents-and-ceos-to-know-2026/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-11-13",
-      "summary": "When the nearest hospital is miles away, critical access hospitals function as both everyday care providers and emergency rooms. These institutions deliver round-the-clock care to rural and underserved communities, and the CEOs recognized on this list are the ones keeping them strong.",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "Cone Health wins ASHP award for pharmacist-led primary care",
-      "url": "https://www.beckershospitalreview.com/pharmacy/cone-health-wins-ashp-award-for-pharmacist-led-primary-care/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-11-13",
-      "summary": "Greensboro, N.C.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "CommonSpirit posts $544M operating loss in Q1",
-      "url": "https://www.beckershospitalreview.com/finance/commonspirit-posts-544m-operating-loss-in-q1/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-11-13",
-      "summary": "Chicago-based CommonSpirit recorded an operating loss of $544 million (-5.3% operating margin) before special charges in the first quarter of fiscal 2027, which ended Sept.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Mayo Clinic appoints AI leader as next CEO",
-      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/mayo-clinic-appoints-ai-leader-as-next-ceo/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-11-13",
-      "summary": "Rochester, Minn.-based Mayo Clinic’s board of trustees elected Matthew Callstrom, MD, PhD, medical director for Mayo Clinic Strategy and the system’s AI program, as its next president and CEO.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "16 pharmacy leaders on how their health systems are evolving for future success",
-      "url": "https://www.beckershospitalreview.com/pharmacy/16-pharmacy-leaders-on-how-their-health-systems-are-evolving-for-future-success/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-11-13",
-      "summary": "Becker&#8217;s asked pharmacy executives from hospitals and health systems, along with academic medical centers and universities across the U.S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "UHealth drops 3, adds 2 Medicare Advantage plans",
-      "url": "https://www.beckershospitalreview.com/finance/uhealth-drops-3-adds-2-medicare-advantage-plans/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-11-13",
-      "summary": "University of Miami Health System, known as UHealth, announced it will remove Medicare Advantage plans from Aetna, Preferred Care Network and Solis Health Plans from its network, effective Dec. 31, according to a report from the Miami Herald.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "10 providers seeking RCM talent",
-      "url": "https://www.beckershospitalreview.com/finance/revenue-cycle-management/10-providers-seeking-rcm-talent-67/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-11-13",
-      "summary": "Ten hospitals and health systems recently posted job listings seeking revenue cycle management expertise. Note: This is not an exhaustive list.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Cincinnati Children’s seeks chief AI officer to oversee multimillion-dollar AI investments",
-      "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/cincinnati-childrens-seeks-chief-ai-officer-to-oversee-multimillion-dollar-ai-investments/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-11-13",
-      "summary": "Cincinnati Children’s Hospital Medical Center is seeking a senior vice president and chief artificial intelligence officer to oversee its enterprisewide AI strategy, investments and governance across clinical care, research and operations. The executive will be responsible for developing and executing a multiyear AI roadmap, establishing governance frameworks and building the organizational structure needed to scale [&#8230;] The post Cincinnati Children’s seeks chief AI officer to oversee multimillion-dollar AI investments appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
     }
   ]
 }
