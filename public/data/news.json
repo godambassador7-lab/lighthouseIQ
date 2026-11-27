@@ -1,89 +1,89 @@
 {
-  "lastUpdated": "2026-11-26T21:26:58.432Z",
+  "lastUpdated": "2026-11-27T04:02:27.028Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 2,
-    "healthySources": 8,
+    "staleSources": 3,
+    "healthySources": 7,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 240,
-        "latestPublishedAt": "2026-11-26T00:00:00.000Z",
-        "staleHours": 21,
+        "articleCount": 245,
+        "latestPublishedAt": "2026-11-27T00:00:00.000Z",
+        "staleHours": 4,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
         "articleCount": 90,
         "latestPublishedAt": "2026-11-25T00:00:00.000Z",
-        "staleHours": 45,
+        "staleHours": 52,
         "status": "ok"
       },
       {
         "source": "STAT News",
         "articleCount": 66,
         "latestPublishedAt": "2026-11-26T00:00:00.000Z",
-        "staleHours": 21,
+        "staleHours": 28,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 41,
         "latestPublishedAt": "2026-11-27T00:00:00.000Z",
-        "staleHours": -3,
+        "staleHours": 4,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 22,
         "latestPublishedAt": "2026-11-25T00:00:00.000Z",
-        "staleHours": 45,
+        "staleHours": 52,
         "status": "ok"
       },
       {
         "source": "FDA MedWatch RSS",
-        "articleCount": 15,
+        "articleCount": 14,
         "latestPublishedAt": "2026-11-25T00:00:00.000Z",
-        "staleHours": 45,
+        "staleHours": 52,
         "status": "ok"
-      },
-      {
-        "source": "Federal Register - FDA",
-        "articleCount": 11,
-        "latestPublishedAt": "2026-11-23T00:00:00.000Z",
-        "staleHours": 93,
-        "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 10,
         "latestPublishedAt": "2026-11-27T00:00:00.000Z",
-        "staleHours": -3,
+        "staleHours": 4,
         "status": "ok"
       },
       {
+        "source": "Federal Register - FDA",
+        "articleCount": 8,
+        "latestPublishedAt": "2026-11-23T00:00:00.000Z",
+        "staleHours": 100,
+        "status": "stale"
+      },
+      {
         "source": "National Nurses United RSS",
-        "articleCount": 4,
+        "articleCount": 3,
         "latestPublishedAt": "2026-11-20T00:00:00.000Z",
-        "staleHours": 165,
+        "staleHours": 172,
         "status": "stale"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 1,
         "latestPublishedAt": "2026-11-24T00:00:00.000Z",
-        "staleHours": 69,
-        "status": "ok"
+        "staleHours": 76,
+        "status": "stale"
       }
     ]
   },
   "categoryCoverage": {
     "closures_layoffs": {
       "label": "Closures & Layoffs",
-      "count": 16
+      "count": 17
     },
     "mergers_mna": {
       "label": "Mergers & M&A",
@@ -91,11 +91,11 @@
     },
     "labor_unions": {
       "label": "Labor & Unions",
-      "count": 7
+      "count": 8
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 96
+      "count": 99
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -111,12 +111,14 @@
     },
     "general_market": {
       "label": "General Market",
-      "count": 177
+      "count": 172
     }
   },
   "quality": {
-    "status": "pass",
-    "failedChecks": [],
+    "status": "warning",
+    "failedChecks": [
+      "maxStaleSources"
+    ],
     "checks": {
       "minUniqueSources": {
         "threshold": 8,
@@ -125,7 +127,7 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 37,
+        "actual": 34,
         "pass": true
       },
       "minRequiredCategoriesCovered": {
@@ -135,8 +137,8 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 2,
-        "pass": true
+        "actual": 3,
+        "pass": false
       }
     }
   },
@@ -248,6 +250,231 @@
       "category": "general_market",
       "relevance": 96,
       "categoryLabel": "General Market"
+    },
+    {
+      "title": "Rural communities face heavier chronic disease burden, increasing pressure on PCPs: athenaInstitute",
+      "url": "https://www.fiercehealthcare.com/providers/rural-communities-face-heavier-chronic-disease-burden-increasing-pressure-pcps",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-27",
+      "summary": "The report analyzed athenahealth data across 12.3 million rural patients between 2021 and 2025.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Weekly Rundown: Waystar integrates into Google Cloud’s Gemini for healthcare; Oracle debuts AI agents for clinical trials",
+      "url": "https://www.fiercehealthcare.com/health-tech/weekly-rundown-waystar-integrates-google-clouds-gemini-healthcare-oracle-debuts-ai",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-27",
+      "summary": "The latest news from Waystar, OpenAI, Amazon, Artera and more.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Catching up with the new CEO of UnitedHealthcare's Surest",
+      "url": "https://www.fiercehealthcare.com/payers/catching-new-ceo-unitedhealthcares-surest",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-27",
+      "summary": "Joe Clark is stepping into the CEO chair at UnitedHealthcare's Surest unit with an eye on affordability.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Fewer choices available to enrollees on ACA exchanges: RWJF",
+      "url": "https://www.fiercehealthcare.com/payers/fewer-choices-available-enrollees-aca-exchanges-rwjf",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-27",
+      "summary": "The number of regions where patients have limited choices for Affordable Care Act plans is on the rise, according to a new analysis.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Voters expect lawmakers to address healthcare affordability, access: poll",
+      "url": "https://www.fiercehealthcare.com/payers/voters-expect-lawmakers-address-healthcare-affordability-access-poll",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-27",
+      "summary": "Half of voters said they are paying more this year in premiums and out-of-pocket costs, according to a new national poll.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Academic hospital heads petition Congress for 2-year delay to CMS' 340B cuts",
+      "url": "https://www.fiercehealthcare.com/providers/academic-hospital-heads-petition-congress-2-year-delay-cms-340b-cuts",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-27",
+      "summary": "A reimbursement change finalized this month would hit 340B hospitals for nearly $5.5 billion, with academic institutions shouldering more than half of the impact, 95 executives of academic institutions wrote to congressional leaders.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Centralized platform for submitting, managing out-of-network billing disputes launches",
+      "url": "https://www.fiercehealthcare.com/payers/centralized-platform-submitting-managing-out-network-billing-disputes-launches",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-27",
+      "summary": "The IDR Gateway replaces the web forms providers, payers and other parties previously used to trigger and pursue payment arbitration under the Independent Dispute Resolution process.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Measles update: First death in Virginia, ninth in Pennsylvania",
+      "url": "https://www.fiercehealthcare.com/providers/measles-update-us-passes-4000-cases-pennsylvania-reports-sixth-death",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-27",
+      "summary": "Experts have pointed to sagging vaccination rates and friction between federal health leadership and the broader public health community as contributors to this year’s outbreaks of the vaccine-preventable disease.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "WebMD Ignite brings OpenAI’s ChatGPT to platform for healthcare advertising",
+      "url": "https://www.fiercehealthcare.com/health-tech/webmd-ignite-brings-openais-chatgpt-platform-healthcare-org-advertising",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-27",
+      "summary": "The new collaboration combines direct platform support with healthcare advertising campaign strategies, the companies say.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "WTW: Global health insurance costs set to rise 10.2% next year",
+      "url": "https://www.fiercehealthcare.com/payers/wtw-global-health-insurance-costs-set-rise-102-next-year",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-27",
+      "summary": "Global health insurance costs are set to rise by double digits in 2027 for the second straight year, according to a new survey.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "HHS: Medicaid state-directed payment savings 'primarily' stem from slowing growth",
+      "url": "https://www.fiercehealthcare.com/providers/hhs-medicaid-state-directed-payment-savings-primarily-stem-slowing-growth",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-27",
+      "summary": "A policy analysis and commentary from the department showed an estimated 7.8% of all state-directed payment spending went to rural hospitals in FY2025, and that 92.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Unpacking the implications from CMS' latest proposed Medicare Advantage changes",
+      "url": "https://www.fiercehealthcare.com/regulatory/unpacking-implications-cms-latest-proposed-medicare-advantage-changes",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-27",
+      "summary": "Analysts dove into the beefy regulation, and project that changes to MA's star ratings program would likely cull more than $100 billion in federal spending over the next decade.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Florida sues The Leapfrog Group for 'misrepresenting' its hospital safety grades to consumers",
+      "url": "https://www.fiercehealthcare.com/providers/florida-sues-leapfrog-group-misrepresenting-its-hospital-safety-grades-consumers",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-27",
+      "summary": "The complaint follows a similar suit brought by Tenet hospitals that successfully convinced a judge that nonparticipating hospitals were being “unfairly” penalized in Leapfrog’s methodology.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Court strikes down anti-trans Ryan White funding rules 'based in animus, loathing and discrimination'",
+      "url": "https://www.fiercehealthcare.com/providers/provider-groups-file-lawsuit-against-hhs-over-new-ryan-white-funding-rules",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-27",
+      "summary": "The funding requirements, challenged by HIV providers, mandated recipients of Ryan White funds to not acknowledge the identities of trans patients or use funds for gender-affirming care.",
+      "category": "labor_unions",
+      "categoryLabel": "Labor & Unions"
+    },
+    {
+      "title": "How messaging could be the next source of clinician burnout",
+      "url": "https://www.fiercehealthcare.com/providers/how-messaging-could-be-next-source-clinician-burnout",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-27",
+      "summary": "Leaders at health communications platform TigerConnect spoke with Fierce about the trend and potential solutions for health leaders.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Innovaccer integrates Grok Voice into Gravity Voice AI agents",
+      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/innovaccer-integrates-grok-voice-gravity-voice-ai-agents",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-27",
+      "summary": "Innovaccer patient voice interactions have grown from roughly 250,000 to more than five million since its launch six months ago, executives say.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Industry Voices—The case for social prescribing in older adult care",
+      "url": "https://www.fiercehealthcare.com/providers/industry-voices-case-social-prescribing-older-adult-care",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-27",
+      "summary": "To truly address the public health epidemic of social isolation among older adults, healthcare providers must be part of the solution, write heads of the Humana Foundation and The John A. Hartford Foundation.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Fierce Healthcare Layoff Tracker—RWJBarnabas Health cuts 106; athenahealth trimming 4% of workforce",
+      "url": "https://www.fiercehealthcare.com/finance/fierce-healthcare-layoff-tracker-2026-job-cuts-eliminations-health-systems-hospitals",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-27",
+      "summary": "Stick with this tracker for the latest layoff and workforce updates from across healthcare.",
+      "category": "closures_layoffs",
+      "categoryLabel": "Closures & Layoffs"
+    },
+    {
+      "title": "Photon pharmacy marketplace integrated with ChatGPT for clinicians",
+      "url": "https://www.fiercehealthcare.com/health-tech/photon-pharmacy-marketplace-integrated-chatgpt-clinicians",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-27",
+      "summary": "The patient experience remains the same through Photon. What is new is where the clinician can write a prescription.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "CMS issues Medicare Advantage proposals aimed at boosting competition",
+      "url": "https://www.fiercehealthcare.com/regulatory/cms-issues-medicare-advantage-proposals-aimed-boosting-competition",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-27",
+      "summary": "The Trump administration has proposed a slew of changes to Medicare Advantage and Part D designed to \"revitalize care\" in these markets.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "UnitedHealth the latest insurer to sue over the 2027 Medicare Advantage star ratings",
+      "url": "https://www.fiercehealthcare.com/payers/alignment-healthcare-sues-cms-over-its-2027-medicare-advantage-star-ratings",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-27",
+      "summary": "CVS Heath's Aetna is joining the ranks of insurers suing over its results in the 2027 Medicare Advantage star ratings.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "CMS to withdraw moratorium on new ACA broker registrations",
+      "url": "https://www.fiercehealthcare.com/payers/nabip-sues-cms-over-moratorium-new-aca-broker-registrations",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-27",
+      "summary": "CMS had instituted the moratorium in late September as part of its broader push to combat fraud on the Affordable Care Act's exchanges.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Consumers believe AI will be key in making healthcare simpler: survey",
+      "url": "https://www.fiercehealthcare.com/payers/consumers-believe-ai-will-be-key-making-healthcare-simpler-survey",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-27",
+      "summary": "Americans want a healthcare experience that's simpler and easier to understand, and artificial intelligence may be the key to getting there, a new survey shows.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "HLTH 2026: Elsevier upgrades ClinicalKey AI with full patient EHR context",
+      "url": "https://www.fiercehealthcare.com/health-tech/hlth-2026-elsevier-upgrades-clinicalkey-ai-full-patient-ehr-context",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-27",
+      "summary": "San Juan Regional Medical Center is using ClinicalKey AI to give clinicians faster access to evidence-based guidance combined with patient-specific EHR data, with the goal of improving care and easing workforce constraints.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "Cigna Group Foundation making $31.5M in grants available to community organizations in 10 states",
+      "url": "https://www.fiercehealthcare.com/payers/cigna-group-foundation-making-315m-grants-available-community-organizations-10-states",
+      "source": "Fierce Healthcare",
+      "publishedAt": "2026-11-27",
+      "summary": "Cigna is making $31.5 million in grant funding available over the next three years to nonprofits in 10 states that are aiming to tackle several key community health priorities.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
     },
     {
       "title": "In a fertility advance, engineered molecular glue stabilizes chromosomes in aging eggs",
@@ -3475,6 +3702,18 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "Early Alert: Outset Medical Updates Use Instructions for the Tablo Console and the TabloCart with Prefiltration Drawer",
+      "summary": "Outset Medical Tablo Console and TabloCart with Prefiltration Drawer power cord connections may overheat, posing fire, burn, and treatment interruption risks.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-outset-medical-updates-use-instructions-tablo-console-and-tablocart-prefiltration-drawer",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-11-19",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "Early Alert: B. Braun Medical Inc. Updates Use Instructions for Caresite Micro Luer Access Device",
       "summary": "BBMI corrects Caresite devices due to issue with internal piston remaining depressed following disconnection, preventing the valve from fully closing.",
       "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-b-braun-medical-inc-updates-use-instructions-caresite-micro-luer-access-device",
@@ -3490,18 +3729,6 @@
       "title": "Medical Device Correction Update Luna® G3 BPAP System (Model LG3800-30VT)",
       "summary": "React Health (3B Medical, Inc.) is providing notice of a voluntary medical device correction (recall) involving specific Luna G3 BPAP System (Model LG3800-30VT) devices due to a data handling issue that may result in incorrect therapy pressure statistical data when the device is operated with Target",
       "url": "http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/medical-device-correction-update-lunar-g3-bpap-system-model-lg3800-30vt",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-11-19",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Early Alert: Outset Medical Updates Use Instructions for the Tablo Console and the TabloCart with Prefiltration Drawer",
-      "summary": "Outset Medical Tablo Console and TabloCart with Prefiltration Drawer power cord connections may overheat, posing fire, burn, and treatment interruption risks.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-outset-medical-updates-use-instructions-tablo-console-and-tablocart-prefiltration-drawer",
       "source": "FDA MedWatch RSS",
       "sourceType": "rss",
       "sourceId": "fda_medwatch_rss",
@@ -4646,246 +4873,6 @@
       "summary": "Stick with this tracker for the latest layoff and workforce updates from across healthcare.",
       "category": "closures_layoffs",
       "categoryLabel": "Closures & Layoffs"
-    },
-    {
-      "title": "CMS proposes sweeping Medicare integrity rule it says will save $90B",
-      "url": "https://www.fiercehealthcare.com/regulatory/cms-proposes-sweeping-medicare-integrity-rule-it-says-will-save-90b",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-18",
-      "summary": "The Comprehensive Regulations to Uncover Suspicious Healthcare (CRUSH) proposed rule spans Medicare, Medicaid, the Children’s Health Insurance Program (CHIP) and the Health Insurance Marketplace.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Chutes & Ladders—SimpliFed adds COO; Mayo Clinic names next CEO",
-      "url": "https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-18",
-      "summary": "Welcome to this week's Chutes &amp; Ladders, our roundup of hirings, firings and retirings throughout the industry. Please submit the good news—or the bad—from your shop, and we will feature it here at the end of each week.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Fierce Healthcare Fundraising Tracker '26: Aevius launches with $22M for clinical insights; Abby Care secures $82M for family-led care",
-      "url": "https://www.fiercehealthcare.com/health-tech/fierce-healthcare-fundraising-tracker-26",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-18",
-      "summary": "Keep up with all the venture capital dollars being funneled into the health tech and digital health industries.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Humana launches national provider Gold Card program",
-      "url": "https://www.fiercehealthcare.com/payers/humana-launches-provider-gold-card-program",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-18",
-      "summary": "Humana is continuing its push to reform prior authorization with the launch of a national provider gold card program, which will initially focus on MRI, CT and MRA imaging as well as physical and occupational therapy.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "HLTH 2026: GLP-1 costs remain a challenge. A new CVS study aims to identify the right price",
-      "url": "https://www.fiercehealthcare.com/payers/hlth-2026-glp-1-costs-remain-challenge-new-cvs-study-aims-identify-right-price",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-18",
-      "summary": "Cost and access to GLP-1s remains a challenge, but the benefits of these drugs aren't in doubt. A new study from CVS Health aims to quantify at what price a GLP-1 drug has generated enough savings elsewhere through improved clinical outcomes.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "HHS finalizes updates to HIPAA privacy rule to ease patient access to health information",
-      "url": "https://www.fiercehealthcare.com/health-tech/hhs-finalizes-updates-hipaa-privacy-rule-ease-patient-access-health-information",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-18",
-      "summary": "The Trump administration finalized a major update to the HIPAA Privacy Rule designed to give patients easier, faster access to their health records and streamline care coordination.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Most nonprofit hospitals' tax breaks outpaced their community spending in 2023: Lown Institute",
-      "url": "https://www.fiercehealthcare.com/providers/most-nonprofit-hospitals-tax-breaks-outpaced-their-community-spending-2023-lown-institue",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-18",
-      "summary": "The differences between tax exemptions and community benefit amounts vary substantially from hospital to hospital, with some of the country's biggest names logging a \"fair share deficit\" of hundreds of millions in 2023, the think tank found.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "hellocare.ai Named to the 2026 CB Insights’ 50 Most Promising Digital Health Startups",
-      "url": "https://www.fiercehealthcare.com/sponsored/hellocareai-named-2026-cb-insights-50-most-promising-digital-health-startups",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-18",
-      "summary": "NEW YORK, November 16, 2026 – CB Insights today named hellocare.ai to its eighth annual Digital Health 50, showcasing the 50 most promising Digital Health startups in the world.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Allina Health, Sutter Health notch Minn. AG's approval for $26B combination",
-      "url": "https://www.fiercehealthcare.com/providers/allina-health-join-sutter-health-26b-proposed-merger",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-18",
-      "summary": "Approval of the cross-regional deal to create a 39-hospital nonprofit system is a key milestone, with the organizations now targeting a Jan. 1 close.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "The Permanente Medical Group launches tech incubation company",
-      "url": "https://www.fiercehealthcare.com/health-tech/permanente-medical-group-launches-tech-incubation-company",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-18",
-      "summary": "Kaiser Permanente's 10,000-strong physician group will co-develop, validate and help launch home-grown and partner health technologies via Permanentech, a new wholly owned subsidiary.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "HLTH 2026: CVS Health, Cigna and Abridge collaborating with OpenAI to test computer-use agents",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/hlth26-cvs-health-cigna-and-ambience-collaborating-openai-test-computer-use",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-18",
-      "summary": "OpenAI is expanding computer-use agents for healthcare, enabling AI to navigate electronic health record systems, payer portals and other software to tackle repetitive and manual tasks.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Measles update: US loses measles elimination status; more deaths reported",
-      "url": "https://www.fiercehealthcare.com/providers/measles-update-us-passes-4000-cases-pennsylvania-reports-sixth-death",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-18",
-      "summary": "Experts have pointed to sagging vaccination rates and friction between federal health leadership and the broader public health community as contributors to this year’s outbreaks of the vaccine-preventable disease.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "HLTH 2026: Suki unveils agentic OS to automate complex healthcare workflows",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/suki-launches-agentic-operating-system",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-18",
-      "summary": "Executives say Suki OS is built on three pillars: unified AI agents, a partner ecosystem and performance guarantee.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "HLTH 2026: Viz.ai, Wolters Kluwer partner on platform integration",
-      "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/vizai-wolters-kluwer-partner-platform-integration",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-18",
-      "summary": "The companies say it is the first integration to bring UpToDate into AI-driven care coordination workflows.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "HLTH 2026: Calibrate, Withings study finds wraparound care boosts GLP-1 weight loss by more than 60%",
-      "url": "https://www.fiercehealthcare.com/payers/calibrate-health-withings-glp-1-study",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-18",
-      "summary": "A two-year real-world study from Withings Health Solutions and Calibrate Health suggests that pairing GLP-1 medications with Calibrate’s integrated obesity care program produced substantially greater weight loss than GLP-1 treatment alone.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "How the eClinicalWorks AI-Native Hospital EHR Is Advancing the Next Frontier of Patient Care",
-      "url": "https://www.fiercehealthcare.com/sponsored/how-eclinicalworks-ai-native-hospital-ehr-advancing-next-frontier-patient-care",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-18",
-      "summary": "Discover how the eClinicalWorks AI-native hospital EHR uses embedded AI, automation, and connected workflows to boost efficiency and care.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "How Smarter Healthcare Environments Improve Patient Experience",
-      "url": "https://www.fiercehealthcare.com/sponsored/how-smarter-healthcare-environments-improve-patient-experience",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-18",
-      "summary": "Connected facilities, data and technology can reduce friction for patients and support overburdened caregivers",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Engaging Medicaid’s Hardest-to-Reach Members Helps Plans Control Medical Spend",
-      "url": "https://www.fiercehealthcare.com/sponsored/engaging-medicaids-hardest-reach-members-helps-plans-control-medical-spend",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-18",
-      "summary": "Medicaid’s hardest-to-reach members are often among the costliest. Here’s how plans can engage them, improve care and reduce avoidable spending.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Moving healthcare AI from pilot to practice",
-      "url": "https://www.fiercehealthcare.com/sponsored/moving-healthcare-ai-pilot-practice",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-18",
-      "summary": "There’s a growing tension between the urgency to innovate and the barriers to enterprise adoption in healthcare. Here's what it takes to move from promising pilots to enterprise-wide deployment.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "HLTH 2026: Noom pushes deeper into connected health with new wearable, Noom Band",
-      "url": "https://www.fiercehealthcare.com/health-tech/hlth26-noom-expands-metabolic-health-strategy-new-wearable-noom-band",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-18",
-      "summary": "The device, called Noom Band, will be bundled into Noom’s existing enterprise partnerships at no additional upfront cost, starting in early 2027. The wearable is also free for Noom Health employer and health plan customers.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Determination That M.V.I. PEDIATRIC (Multiple Vitamins for Injection) Was Not Withdrawn From Sale for Reasons of Safety or Effectiveness",
-      "summary": "The Food and Drug Administration (FDA, Agency, or we) has determined that M.V.I. PEDIATRIC (ascorbic acid 80 milligrams (mg)/ vial; biotin 0.02 mg/vial; cyanocobalamin 0.001 mg/vial; dexpanthenol 5 mg/vial; ergocalciferol 0.01 mg/vial; folic acid 0.14 mg/vial; niacinamide 17 mg/vial; phytonadione 0.2 mg/vial; pyridoxine hydrochloride 1 mg/vial; riboflavin 5'-phosphate sodium 1.4 mg/vial; thiamine hydrochloride equivalent (EQ) 1.2 mg base/vial; vitamin A 0.7 mg/vial; vitamin E 7 mg/vial), for injection, was not withdrawn from sale for reasons of safety or effectiveness. This determination will allow FDA to approve abbreviated new drug applications (ANDAs) for ascorbic acid 80 mg/vial; biotin 0.02 mg/vial; cyanocobalamin 0.001 mg/ vial; dexpanthenol 5 mg/vial; ergocalciferol 0.01 mg/vial; folic acid 0.14 mg/vial; niacinamide 17 mg/vial; phytonadione 0.2 mg/vial; pyridoxine hydrochloride 1 mg/vial; riboflavin 5'-phosphate sodium 1.4 mg/vial; thiamine hydrochloride EQ 1.2 mg base/vial; vitamin A 0.7 mg/ vial; vitamin E 7 mg/vial, for injection, if all other legal and regulatory requirements are met.",
-      "url": "https://www.federalregister.gov/documents/2026/11/17/2026-23367/determination-that-mvi-pediatric-multiple-vitamins-for-injection-was-not-withdrawn-from-sale-for",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-11-17",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Determination That M.V.I. ADULT (Multiple Vitamins for Injection) Was Not Withdrawn From Sale for Reasons of Safety or Effectiveness",
-      "summary": "The Food and Drug Administration (FDA, Agency, or we) has determined that M.V.I. ADULT (ascorbic acid 200 milligrams (mg)/vial; biotin 0.06 mg/vial; cyanocobalamin 0.005 mg/vial; dexpanthenol 15 mg/ vial; ergocalciferol 0.005 mg/vial; folic acid 0.6 mg/vial; niacinamide 40 mg/vial; pyridoxine hydrochloride 6 mg/vial; riboflavin 5'-phosphate sodium 3.6 mg/vial; thiamine hydrochloride 6 mg/vial; vitamin A 1 mg/ vial; vitamin E 10 mg/vial; vitamin K 0.15 mg/vial), for injection, was not withdrawn from sale for reasons of safety or effectiveness. This determination will allow FDA to approve abbreviated new drug applications (ANDAs) for ascorbic acid 200 mg/vial; biotin 0.06 mg/ vial; cyanocobalamin 0.005 mg/vial; dexpanthenol 15 mg/vial; ergocalciferol 0.005 mg/vial; folic acid 0.6 mg/vial; niacinamide 40 mg/vial; pyridoxine hydrochloride 6 mg/vial; riboflavin 5'-phosphate sodium 3.6 mg/vial; thiamine hydrochloride 6 mg/vial; vitamin A 1 mg/ vial; vitamin E 10 mg/vial; vitamin K 0.15 mg/vial, for injection, if all other legal and regulatory requirements are met.",
-      "url": "https://www.federalregister.gov/documents/2026/11/17/2026-23366/determination-that-mvi-adult-multiple-vitamins-for-injection-was-not-withdrawn-from-sale-for-reasons",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-11-17",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Rulemaking To Provide That N-acetyl-L-cysteine Is Not Excluded From the Dietary Supplement Definition",
-      "summary": "The Food and Drug Administration (FDA or we) is proposing to issue a regulation finding that N-acetyl-L-cysteine (NAC) is not excluded from the dietary supplement definition in the Federal Food, Drug, and Cosmetic Act (FD&C Act). This action, if finalized, would allow products containing NAC to be lawfully marketed as dietary supplements, provided that such products are not otherwise in violation of the FD&C Act. We also propose to provide that the addition of NAC to a dietary supplement is not a prohibited act under section 301(ll) of the FD&C Act.",
-      "url": "https://www.federalregister.gov/documents/2026/11/17/2026-23351/rulemaking-to-provide-that-n-acetyl-l-cysteine-is-not-excluded-from-the-dietary-supplement",
-      "source": "Federal Register - FDA",
-      "sourceType": "federal_register",
-      "sourceId": "federal_register_fda",
-      "publishedAt": "2026-11-17",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Convenience Kit Correction: Cardinal Health Issues Correction for Presource Packs Containing BD Alaris Pump Infusion Sets",
-      "summary": "Cardinal Health Presource Kits containing recalled BD Alaris Pump Infusion Sets should be corrected prior to continued use",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/convenience-kit-correction-cardinal-health-issues-correction-presource-packs-containing-bd-alaris",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-11-17",
-      "category": "ai_tech",
-      "relevance": 100,
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "UC doctors, nurses, and community allies rally to demand ICE out of UC hospitals",
-      "summary": "Resident physicians and nurses from across the University of California, alongside community members, rallied outside the Board of Regents Meeting. The coalition is demanding that UC get Immigration and Customs Enforcement (ICE) out of its hospitals and establish clear, systemwide protections for patients and health care workers.",
-      "url": "https://www.nationalnursesunited.org/press/uc-doctors-nurses-and-community-allies-rally-to-demand-ice-out-of-uc-hospitals",
-      "source": "National Nurses United RSS",
-      "sourceType": "rss",
-      "sourceId": "nnu_rss",
-      "publishedAt": "2026-11-17",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
     }
   ]
 }
