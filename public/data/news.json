@@ -1,81 +1,81 @@
 {
-  "lastUpdated": "2026-11-27T22:36:38.726Z",
+  "lastUpdated": "2026-11-28T04:43:58.101Z",
   "scope": "US healthcare",
   "retentionDays": 90,
   "maxArticles": 500,
   "sourceHealth": {
     "totalSources": 10,
-    "staleSources": 3,
-    "healthySources": 7,
+    "staleSources": 6,
+    "healthySources": 4,
     "sources": [
       {
         "source": "Fierce Healthcare",
-        "articleCount": 241,
+        "articleCount": 237,
         "latestPublishedAt": "2026-11-27T00:00:00.000Z",
-        "staleHours": 22,
+        "staleHours": 28,
         "status": "ok"
       },
       {
         "source": "Becker's Hospital Review",
-        "articleCount": 89,
+        "articleCount": 91,
         "latestPublishedAt": "2026-11-25T00:00:00.000Z",
-        "staleHours": 70,
-        "status": "ok"
+        "staleHours": 76,
+        "status": "stale"
       },
       {
         "source": "STAT News",
-        "articleCount": 71,
+        "articleCount": 73,
         "latestPublishedAt": "2026-11-27T00:00:00.000Z",
-        "staleHours": 22,
+        "staleHours": 28,
         "status": "ok"
       },
       {
         "source": "Federal Register - HHS",
         "articleCount": 41,
         "latestPublishedAt": "2026-11-27T00:00:00.000Z",
-        "staleHours": 22,
+        "staleHours": 28,
         "status": "ok"
       },
       {
         "source": "Healthcare Dive",
         "articleCount": 22,
         "latestPublishedAt": "2026-11-25T00:00:00.000Z",
-        "staleHours": 70,
-        "status": "ok"
+        "staleHours": 76,
+        "status": "stale"
       },
       {
         "source": "FDA MedWatch RSS",
         "articleCount": 14,
         "latestPublishedAt": "2026-11-25T00:00:00.000Z",
-        "staleHours": 70,
-        "status": "ok"
+        "staleHours": 76,
+        "status": "stale"
       },
       {
         "source": "Federal Register - CMS",
         "articleCount": 10,
         "latestPublishedAt": "2026-11-27T00:00:00.000Z",
-        "staleHours": 22,
+        "staleHours": 28,
         "status": "ok"
       },
       {
         "source": "Federal Register - FDA",
         "articleCount": 8,
         "latestPublishedAt": "2026-11-23T00:00:00.000Z",
-        "staleHours": 118,
+        "staleHours": 124,
         "status": "stale"
       },
       {
         "source": "National Nurses United RSS",
         "articleCount": 3,
         "latestPublishedAt": "2026-11-20T00:00:00.000Z",
-        "staleHours": 190,
+        "staleHours": 196,
         "status": "stale"
       },
       {
         "source": "SEC Healthcare Filings",
         "articleCount": 1,
         "latestPublishedAt": "2026-11-24T00:00:00.000Z",
-        "staleHours": 94,
+        "staleHours": 100,
         "status": "stale"
       }
     ]
@@ -95,7 +95,7 @@
     },
     "policy_reimbursement": {
       "label": "Policy & Reimbursement",
-      "count": 99
+      "count": 98
     },
     "quality_safety": {
       "label": "Quality & Safety",
@@ -107,16 +107,17 @@
     },
     "ai_tech": {
       "label": "AI & Digital Tech",
-      "count": 177
+      "count": 175
     },
     "general_market": {
       "label": "General Market",
-      "count": 174
+      "count": 177
     }
   },
   "quality": {
     "status": "warning",
     "failedChecks": [
+      "minArticles24h",
       "maxStaleSources"
     ],
     "checks": {
@@ -127,8 +128,8 @@
       },
       "minArticles24h": {
         "threshold": 20,
-        "actual": 39,
-        "pass": true
+        "actual": 0,
+        "pass": false
       },
       "minRequiredCategoriesCovered": {
         "threshold": 4,
@@ -137,7 +138,7 @@
       },
       "maxStaleSources": {
         "threshold": 2,
-        "actual": 3,
+        "actual": 6,
         "pass": false
       }
     }
@@ -975,6 +976,132 @@
       "categoryLabel": "Closures & Layoffs"
     },
     {
+      "title": "GLP-1 weight loss linked to unexpected mammogram changes: 4 notes",
+      "url": "https://www.beckershospitalreview.com/radiology/glp-1-weight-loss-linked-to-unexpected-mammogram-changes-4-notes/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-11-25",
+      "summary": "Women who lost substantial weight on GLP-1 drugs were more likely to have denser breasts on follow-up mammograms and to be called back for additional screening, according to a study to be presented at the Radiological Society of North America’s annual meeting. Here are four things to know: The post GLP-1 weight loss linked to unexpected mammogram changes: 4 notes appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "8 recent hospital, health system CFO moves",
+      "url": "https://www.beckershospitalreview.com/hospital-executive-moves/7-recent-hospital-health-system-cfo-moves-in-2026/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-11-25",
+      "summary": "Here are the hospital and health system CFO moves that&#160;Becker’s&#160;has reported on in 2026: Nov. 12-24 1.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "40 highly successful CEO-CFO duos &#124; 2026",
+      "url": "https://www.beckershospitalreview.com/hospital-management-administration/40-highly-successful-ceo-cfo-duos-2026/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-11-25",
+      "summary": "A hospital or health system&#8217;s mission and its margin are two sides of the same coin, and for an organization to thrive, CEOs and CFOs have to move in lockstep, aligning vision with financial strategy and ambition with discipline.&#160; In recent years, that partnership has been tested by workforce shortages, the economic fallout of the [&#8230;] The post 40 highly successful CEO-CFO duos | 2026 appeared first on Becker&#039;s Hospital Review | Healthcare News & Analysis.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Iowa, Illinois hospitals monitor fallout from Army lead azide detonation",
+      "url": "https://www.beckershospitalreview.com/quality/public-health/iowa-illinois-hospitals-monitor-fallout-from-army-lead-azide-detonation/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-11-25",
+      "summary": "After the U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "5 rural hospital leaders on expanding access without overreaching",
+      "url": "https://www.beckershospitalreview.com/finance/5-rural-hospital-leaders-on-expanding-access-without-overreaching/",
+      "source": "Becker's Hospital Review",
+      "publishedAt": "2026-11-25",
+      "summary": "Mary Casillas&#8217; first assignment as CEO of Hazel Hawkins Memorial Hospital was to write a plan to close it. She stepped into the role in October 2022.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Why Medicare’s 2027 physician pay changes worry some specialists",
+      "url": "https://www.statnews.com/2026/11/25/medicare-physician-fee-schedule-change-worry-some-specialists/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-25",
+      "summary": "Cuts to Medicare physician payment rates for certain same-day services could impact some specialists more than others.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "STAT+: FDA approves Cogent&#8217;s drug for rare stomach cancer",
+      "url": "https://www.statnews.com/2026/11/25/biotech-news-fda-approves-cogents-drug-for-rare-stomach-cancer/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-25",
+      "summary": "Cogent Biosciences won FDA clearance for its stomach cancer treatment, in combination with a much older drug from Pfizer called Sutent.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: We’re reading about BioNTech founders’ oncology startup, a long-acting GSK drug, and more",
+      "url": "https://www.statnews.com/pharmalot/2026/11/25/biontech-founders-oncology-startup-gsk-egpa-drug-exdensur/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-25",
+      "summary": "The cofounders of BioNTech are in talks to raise about $1 billion for a new oncology company",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
+      "title": "RFK Jr. weighs in on plan to detonate toxic material in Iowa",
+      "url": "https://www.statnews.com/2026/11/25/health-news-rfk-jr-weighs-in-on-plan-to-detonate-toxic-material-in-iowa/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-25",
+      "summary": "This morning, the Army plans to detonate a cache of “dangerously degraded” toxic material in Iowa, with experts warning of dangerous health consequences:",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Opinion: Washington and Beijing are building walls around biotechnology. That’s the wrong approach",
+      "url": "https://www.statnews.com/2026/11/25/us-china-biotech-race-policy-data/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-25",
+      "summary": "“Data show that the U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Despite stalling in court, Trump restrictions on foreign students have had a chilling effect on enrollment",
+      "url": "https://www.statnews.com/2026/11/25/foreign-students-us-biomedical-science-enrollment-drop-trump/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-25",
+      "summary": "New data show a clear drop in the enrollment of international graduate students, a key piece of the U.S.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Medicare sets 2028 prices for 13 new drugs under Biden-era law",
+      "url": "https://www.healthcaredive.com/news/inflation-reduction-act-2028-final-medicare-drug-price/875783/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-11-25",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "policy_reimbursement",
+      "categoryLabel": "Policy & Reimbursement"
+    },
+    {
+      "title": "Inside HLTH 2026",
+      "url": "https://www.healthcaredive.com/news/inside-hlth-conference-2026/875665/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-11-25",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Just a handful of payers control US health insurance markets, AMA warns",
+      "url": "https://www.healthcaredive.com/news/just-a-handful-of-payers-control-us-health-insurance-markets-ama-warns/875719/",
+      "source": "Healthcare Dive",
+      "publishedAt": "2026-11-25",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
       "title": "11 large health systems selling hospitals",
       "url": "https://www.beckershospitalreview.com/hospital-transactions-and-valuation/7-large-health-systems-selling-hospitals/",
       "source": "Becker's Hospital Review",
@@ -1061,69 +1188,6 @@
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-11-25",
       "summary": "Median total compensation for top HR executives at the largest U.S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: We’re reading about BioNTech founders’ oncology startup, a long-acting GSK drug, and more",
-      "url": "https://www.statnews.com/pharmalot/2026/11/25/biontech-founders-oncology-startup-gsk-egpa-drug-exdensur/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-25",
-      "summary": "The cofounders of BioNTech are in talks to raise about $1 billion for a new oncology company",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "RFK Jr. weighs in on plan to detonate toxic material in Iowa",
-      "url": "https://www.statnews.com/2026/11/25/health-news-rfk-jr-weighs-in-on-plan-to-detonate-toxic-material-in-iowa/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-25",
-      "summary": "This morning, the Army plans to detonate a cache of “dangerously degraded” toxic material in Iowa, with experts warning of dangerous health consequences:",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Opinion: Washington and Beijing are building walls around biotechnology. That’s the wrong approach",
-      "url": "https://www.statnews.com/2026/11/25/us-china-biotech-race-policy-data/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-25",
-      "summary": "“Data show that the U.S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Despite stalling in court, Trump restrictions on foreign students have had a chilling effect on enrollment",
-      "url": "https://www.statnews.com/2026/11/25/foreign-students-us-biomedical-science-enrollment-drop-trump/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-25",
-      "summary": "New data show a clear drop in the enrollment of international graduate students, a key piece of the U.S.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Medicare sets 2028 prices for 13 new drugs under Biden-era law",
-      "url": "https://www.healthcaredive.com/news/inflation-reduction-act-2028-final-medicare-drug-price/875783/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-11-25",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Inside HLTH 2026",
-      "url": "https://www.healthcaredive.com/news/inside-hlth-conference-2026/875665/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-11-25",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Just a handful of payers control US health insurance markets, AMA warns",
-      "url": "https://www.healthcaredive.com/news/just-a-handful-of-payers-control-us-health-insurance-markets-ama-warns/875719/",
-      "source": "Healthcare Dive",
-      "publishedAt": "2026-11-25",
-      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.",
       "category": "general_market",
       "categoryLabel": "General Market"
     },
@@ -1425,6 +1489,42 @@
       "categoryLabel": "General Market"
     },
     {
+      "title": "STAT+: RFK Jr. spills his calendar into public, but leaves much to the imagination",
+      "url": "https://www.statnews.com/2026/11/24/rfk-jr-calendar-hhs-records-rollout/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-24",
+      "summary": "A partially redacted calendar showing health secretary Robert F. Kennedy Jr.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Pharmalittle: We’re reading about Sanofi buying Insmed, Roche touting its breast cancer pill, and more",
+      "url": "https://www.statnews.com/pharmalot/2026/11/24/sanofi-buying-insmed-roche-breast-cancer-pill/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-24",
+      "summary": "Sanofi is buying the biotech Insmed for $41 billion, the largest biopharma acquisition in years and one that will give the French firm two new approved drugs",
+      "category": "mergers_mna",
+      "categoryLabel": "Mergers & M&A"
+    },
+    {
+      "title": "STAT+: Roche&#8217;s potential breast cancer blockbuster drug wins second FDA nod",
+      "url": "https://www.statnews.com/2026/11/24/biotech-news-roche-potential-breast-cancer-blockbluster-drug-wins-second-fda-nod/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-24",
+      "summary": "Roche's breast cancer pill has picked up its second FDA clearance in a week, this time in early-stage breast cancer for use after surgery.",
+      "category": "general_market",
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "STAT+: Alaskan hospitals use AI to improve stroke care, peptides go mainstream, and RSNA 2026",
+      "url": "https://www.statnews.com/2026/11/24/alaskan-hospitals-using-ai-rsna-2026-peptides-health-tech/?utm_campaign=rss",
+      "source": "STAT News",
+      "publishedAt": "2026-11-24",
+      "summary": "In this edition of STAT Health Tech: Alaskan hospitals using AI to improve stroke care, a look ahead at RSNA 2026, and peptides go mainstream.",
+      "category": "ai_tech",
+      "categoryLabel": "AI & Digital Tech"
+    },
+    {
       "title": "Proposed Data Collection Submitted for Public Comment and Recommendations",
       "summary": "The Centers for Disease Control and Prevention (CDC), as part of its continuing effort to reduce public burden and maximize the utility of government information, invites the general public and other federal agencies the opportunity to comment on a continuing information collection, as required by the Paperwork Reduction Act of 1995. This notice invites comment on an information collection project titled Pulmonary Function Testing Course Approval Program. The program consists of an application submitted by potential sponsors (universities, hospitals, and private consulting firms) who seek NIOSH approval to conduct courses, and if approved, notification to NIOSH of any course or faculty changes during the approval period, which is limited to five years.",
       "url": "https://www.federalregister.gov/documents/2026/11/24/2026-23909/proposed-data-collection-submitted-for-public-comment-and-recommendations",
@@ -1547,42 +1647,6 @@
       "source": "Becker's Hospital Review",
       "publishedAt": "2026-11-24",
       "summary": "The FDA has issued formal notices of noncompliance to two drugmakers for failing to submit required trial results to the ClinicalTrials.gov database, its first such notices since August 2025, according to the agency’s public list of enforcement actions.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "STAT+: RFK Jr. spills his calendar into public, but leaves much to the imagination",
-      "url": "https://www.statnews.com/2026/11/24/rfk-jr-calendar-hhs-records-rollout/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-24",
-      "summary": "A partially redacted calendar showing health secretary Robert F. Kennedy Jr.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Pharmalittle: We’re reading about Sanofi buying Insmed, Roche touting its breast cancer pill, and more",
-      "url": "https://www.statnews.com/pharmalot/2026/11/24/sanofi-buying-insmed-roche-breast-cancer-pill/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-24",
-      "summary": "Sanofi is buying the biotech Insmed for $41 billion, the largest biopharma acquisition in years and one that will give the French firm two new approved drugs",
-      "category": "mergers_mna",
-      "categoryLabel": "Mergers & M&A"
-    },
-    {
-      "title": "STAT+: Roche&#8217;s potential breast cancer blockbuster drug wins second FDA nod",
-      "url": "https://www.statnews.com/2026/11/24/biotech-news-roche-potential-breast-cancer-blockbluster-drug-wins-second-fda-nod/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-24",
-      "summary": "Roche's breast cancer pill has picked up its second FDA clearance in a week, this time in early-stage breast cancer for use after surgery.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "STAT+: Alaskan hospitals use AI to improve stroke care, peptides go mainstream, and RSNA 2026",
-      "url": "https://www.statnews.com/2026/11/24/alaskan-hospitals-using-ai-rsna-2026-peptides-health-tech/?utm_campaign=rss",
-      "source": "STAT News",
-      "publishedAt": "2026-11-24",
-      "summary": "In this edition of STAT Health Tech: Alaskan hospitals using AI to improve stroke care, a look ahead at RSNA 2026, and peptides go mainstream.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
     },
@@ -3747,18 +3811,6 @@
       "categoryLabel": "General Market"
     },
     {
-      "title": "Early Alert: Outset Medical Updates Use Instructions for the Tablo Console and the TabloCart with Prefiltration Drawer",
-      "summary": "Outset Medical Tablo Console and TabloCart with Prefiltration Drawer power cord connections may overheat, posing fire, burn, and treatment interruption risks.",
-      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-outset-medical-updates-use-instructions-tablo-console-and-tablocart-prefiltration-drawer",
-      "source": "FDA MedWatch RSS",
-      "sourceType": "rss",
-      "sourceId": "fda_medwatch_rss",
-      "publishedAt": "2026-11-19",
-      "category": "general_market",
-      "relevance": 100,
-      "categoryLabel": "General Market"
-    },
-    {
       "title": "Early Alert: B. Braun Medical Inc. Updates Use Instructions for Caresite Micro Luer Access Device",
       "summary": "BBMI corrects Caresite devices due to issue with internal piston remaining depressed following disconnection, preventing the valve from fully closing.",
       "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-b-braun-medical-inc-updates-use-instructions-caresite-micro-luer-access-device",
@@ -3774,6 +3826,18 @@
       "title": "Medical Device Correction Update Luna® G3 BPAP System (Model LG3800-30VT)",
       "summary": "React Health (3B Medical, Inc.) is providing notice of a voluntary medical device correction (recall) involving specific Luna G3 BPAP System (Model LG3800-30VT) devices due to a data handling issue that may result in incorrect therapy pressure statistical data when the device is operated with Target",
       "url": "http://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/medical-device-correction-update-lunar-g3-bpap-system-model-lg3800-30vt",
+      "source": "FDA MedWatch RSS",
+      "sourceType": "rss",
+      "sourceId": "fda_medwatch_rss",
+      "publishedAt": "2026-11-19",
+      "category": "general_market",
+      "relevance": 100,
+      "categoryLabel": "General Market"
+    },
+    {
+      "title": "Early Alert: Outset Medical Updates Use Instructions for the Tablo Console and the TabloCart with Prefiltration Drawer",
+      "summary": "Outset Medical Tablo Console and TabloCart with Prefiltration Drawer power cord connections may overheat, posing fire, burn, and treatment interruption risks.",
+      "url": "http://www.fda.gov/medical-devices/medical-device-recalls-and-early-alerts/early-alert-outset-medical-updates-use-instructions-tablo-console-and-tablocart-prefiltration-drawer",
       "source": "FDA MedWatch RSS",
       "sourceType": "rss",
       "sourceId": "fda_medwatch_rss",
@@ -4810,69 +4874,6 @@
       "summary": "The company is positioning itself as a continuous health monitor that goes beyond fitness tracking. The device's 24/7 physiological data can function almost like an ongoing health check, becoming a bridge between everyday health and medical care, Whoop's CEO said.",
       "category": "ai_tech",
       "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "Heidi Overton’s FDA nomination pulled by White House",
-      "url": "https://www.fiercehealthcare.com/pharma/overtons-fda-nomination-has-been-pulled-white-house",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-18",
-      "summary": "The White House is pulling Heidi Overton’s nomination to lead the FDA just hours before the Senate was scheduled to vote on her confirmation.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Medicare Shared Savings Program saved $2.5B last year: CMS",
-      "url": "https://www.fiercehealthcare.com/regulatory/medicare-shared-savings-program-saved-25b-last-year-cms",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-18",
-      "summary": "The Medicare Shared Savings Program has reached the highest savings number in its history, according to new federal data.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Optum Rx rolls out new pharmacy tools aimed at transparency",
-      "url": "https://www.fiercehealthcare.com/payers/optum-rx-rolls-out-new-pharmacy-tools-aimed-transparency",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-18",
-      "summary": "Earlier this year, Optum Rx teased the rollout of new pharmacy tools designed to address medication cost and access.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "HLTH 2026: Teladoc Health's weight care program lets employers partially contribute to GLP-1 costs",
-      "url": "https://www.fiercehealthcare.com/health-tech/hlth-2026-teladoc-health-expands-weight-care-program-new-employer-offering",
-      "source": "Fierce Healthcare",
-      "publishedAt": "2026-11-18",
-      "summary": "Through the new option, employers can offer employees partially comped access to the medications from Eli Lilly and Novo Nordisk alongside other benefits, like personalized lifestyle coaching.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
-    },
-    {
-      "title": "Star ratings of Leapfrog&#8217;s 14 straight-‘A’ and ‘F’ hospitals",
-      "url": "https://www.beckershospitalreview.com/rankings-and-ratings/star-ratings-of-leapfrogs-14-straight-a-and-f-hospitals/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-11-18",
-      "summary": "All 11 hospitals that earned consecutive straight-“A” safety grades from The Leapfrog Group earned a three-, four- or five-star rating from CMS. Of the three hospitals that earned an “F” grade from Leapfrog, two received a one-star rating from CMS and one did not have an available star rating.",
-      "category": "policy_reimbursement",
-      "categoryLabel": "Policy & Reimbursement"
-    },
-    {
-      "title": "Leapfrog&#8217;s 11 straight-&#8216;A&#8217; + 3 &#8216;F&#8217; hospitals",
-      "url": "https://www.beckershospitalreview.com/rankings-and-ratings/leapfrogs-11-straight-a-3-f-hospitals/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-11-18",
-      "summary": "The Leapfrog Group has given 11 hospitals their 30th consecutive &#8220;A&#8221; safety grade and three hospitals an “F” in its fall 2026 Hospital Safety Grade update, released Nov. 18.",
-      "category": "ai_tech",
-      "categoryLabel": "AI & Digital Tech"
-    },
-    {
-      "title": "States ranked by share of ‘A’ hospitals: Leapfrog",
-      "url": "https://www.beckershospitalreview.com/rankings-and-ratings/states-ranked-by-percentage-of-a-hospitals-leapfrog/",
-      "source": "Becker's Hospital Review",
-      "publishedAt": "2026-11-18",
-      "summary": "States ranked by percentage of &#8216;A&#8217; hospitals: Leapfrog Among all states, Connecticut had the largest share of hospitals earning an &#8220;A&#8221; in The Leapfrog Group&#8217;s fall 2026 Hospital Safety Grades. Iowa, North Dakota, South Dakota, Vermont and Wyoming were the only states with no &#8220;A&#8221; hospitals on Leapfrog&#8217;s fall 2026 rankings.",
-      "category": "general_market",
-      "categoryLabel": "General Market"
     }
   ]
 }
